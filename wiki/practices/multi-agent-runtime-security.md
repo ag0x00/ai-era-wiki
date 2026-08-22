@@ -167,7 +167,7 @@ flowchart TD
   Q1 -- no --> Q2{Can blast radius<br/>be bounded by isolation<br/>of N agents?}
   Q2 -- yes --> Iso[ISOLATE:<br/>quarantine N agents via ACL deny;<br/>traffic shadow-recorded for forensics]
   Q2 -- no --> Stop
-  Iso --> Q3{After 5 min, is propagation<br/>still active outside the quarantined set?}
+  Iso --> Q3{After 5 min, is propagation<br/>still active outside<br/>the quarantined set?}
   Q3 -- yes --> Stop
   Q3 -- no --> Forensics[Begin cross-agent forensics]
   Stop --> Forensics

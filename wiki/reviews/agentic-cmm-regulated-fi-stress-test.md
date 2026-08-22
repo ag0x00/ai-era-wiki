@@ -52,7 +52,7 @@ Per the CMM's deployment-shape table, a chatbot targets L3 across all domains an
 | D3 Control / least-agency | L1–L2 | Few tools; informal HITL on write actions |
 | D4 Runtime guardrails | L2–L3 | Prompt Shields + Content Safety default; Groundedness lifts to L3 |
 | D5 Egress | L2 | Destination allowlist; no agent-aware gateway, but little egress need |
-| **D6 Data / RAG** | **L1–L2** | **Member-PII oversharing is the real risk; Purview AI half-deployed** |
+| **D6 Data, Memory and RAG** | **L1–L2** | **Member-PII oversharing is the real risk; Purview AI half-deployed** |
 | D7 Observability | L2–L3 | Sentinel/Defender ingest; no behavioral baselines or multi-tool red team |
 | D8 Supply chain / AI-BOM | L1–L2 | Manual model/version tracking; no AI-BOM |
 | D9 Operations | L1–L2 | No formal decommission or HITL-fatigue tracking |

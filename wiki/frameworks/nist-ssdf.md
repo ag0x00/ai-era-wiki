@@ -151,7 +151,7 @@ SSDF is a **policy-anchor framework** for the wiki's secure-SDLC ecosystem. It d
 | D1 — Governance & Accountability | PO.1 (Define Security Requirements), PO.2 (Roles and Responsibilities), PO.4 (Define Criteria) |
 | D2 — Risk Management | PW.1 (Risk Modeling at Design Time) |
 | D6 — Supply Chain & Component Governance | PS.3.2 (Provenance / SBOM / SLSA), PW.4 (Reuse Well-Secured Components), PO.1.3 (Communicate to Third Parties) |
-| D7 — Observability & Anomaly Detection | PO.5.3 (Continuous Monitoring — added by 218A) |
+| D7 — Observability and Detection | PO.5.3 (Continuous Monitoring — added by 218A) |
 | D9 — Incident Response & Recovery | RV.1–RV.3 (Identify, Remediate, Root-Cause Analyze) |
 
 The [[agentic-ai-security-cmm-2026|CMM]]'s D6 cites both SP 800-218 and SP 800-218A as the supply-chain references. The [[agentic-ai-security-cmm-crosswalk|CMM crosswalk]] details each domain's SSDF anchors.

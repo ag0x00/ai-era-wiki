@@ -85,7 +85,7 @@ Surfaced by [[lint-report-2026-05-04|the 2026-05-04 lint pass]] as wikilinks poi
 
 ### Conference-catalog org stubs (15)
 
-Referenced from [[unprompted-conference-march-2026|the Unprompted conference catalog]] and [[unprompted-march-2026-talks-vs-ra-cmm|the talks-vs-RA/CMM comparison]] for talk attribution: `airbnb`, `aws`, `block`, `crowdstrike`, `datadog`, `elastic`, `greynoise`, `intel`, `microsoft`, `netflix`, `nvidia`, `perplexity`, `snowflake`, `sysdig`, `zenity`.
+Referenced from [[unprompted-conference-march-2026|the Unprompted conference catalog]] for talk attribution: `airbnb`, `aws`, `block`, `crowdstrike`, `datadog`, `elastic`, `greynoise`, `intel`, `microsoft`, `netflix`, `nvidia`, `perplexity`, `snowflake`, `sysdig`, `zenity`.
 
 These are well-known orgs with no agentic-AI-security material that's wiki-load-bearing yet. Decision: **leave as dead links**; the wikilink itself is the backlog signal. If/when one of these orgs publishes a talk, paper, or product the wiki ingests, the stub gets created at that point.
 

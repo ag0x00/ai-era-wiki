@@ -89,7 +89,7 @@ The [[csa-maestro|CSA MAESTRO]] layer names in the right-hand column are primary
 
 | MAAIS Layer | Closest wiki [[agentic-ai-security-cmm-2026\|CMM]] domain | Closest wiki [[agentic-ai-security-reference-architecture\|RA]] plane | [[csa-maestro\|CSA MAESTRO]] layer |
 |---|---|---|---|
-| 1 Infrastructure | D8 Supply Chain & Tooling (partial); cross-cutting infra | (Hosting plane — implicit; not a named RA plane) | L1 Foundation Models; L2 Data Operations |
+| 1 Infrastructure | D8 Supply Chain and AI-BOM (partial); cross-cutting infra | (Hosting plane — implicit; not a named RA plane) | L1 Foundation Models; L2 Data Operations |
 | 2 Data Security | D6 Data, Memory & RAG | Data plane | L2 Data Operations |
 | 3 Model Security | D6 Data, Memory & RAG (partial); D4 Runtime & Guardrails (model-side) | (Spans Runtime + Data planes) | L1 Foundation Models |
 | 4 Agent Execution & Control | D3 Control & Least-Agency; D4 Runtime & Guardrails | Control plane; Runtime plane | L4 Deployment & Infrastructure (sandboxing); L3 Agent Frameworks |

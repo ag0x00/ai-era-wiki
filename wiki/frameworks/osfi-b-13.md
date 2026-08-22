@@ -126,7 +126,7 @@ B-13 maps onto the wiki's [[agentic-ai-security-cmm-2026|CMM]] across multiple d
 | D2 — Risk Management | 1.3 |
 | D4 — Threat Modeling & Adversarial Defense | 3.1.6 (threat modelling); 3.1.2 (red teaming and pentest) |
 | D6 — Supply Chain & Component Governance | 2.4.4 (acquired system risk assessment); 2.4.5 (third-party / open-source code) |
-| D7 — Observability & Anomaly Detection | 3.3.1, 3.3.2 (logging, SIEM); 2.8 |
+| D7 — Observability and Detection | 3.3.1, 3.3.2 (logging, SIEM); 2.8 |
 | D8 — Cyber Defense | 3.2.x (Defend) |
 | D9 — Incident Response & Recovery | 2.7, 3.4 |
 

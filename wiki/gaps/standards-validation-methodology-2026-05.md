@@ -167,7 +167,7 @@ Existing absence claims are **not** retroactively required to meet the falsifiab
 1. **The current [[agentic-cmm-vs-standards-validation|2026-04-30 validation page]]** stays in place but is reframed as a **first-pass synthesis** with explicit caveats about its sourcing. Its `status:` flips from `addressed` to `superseded-by-methodology` when this page is adopted, and it gains a banner pointing here.
 
 2. **Existing CMM / RA / concept pages** that make absence claims keep them (no flag-and-pull) but get a structural marker indicating which absence claims have been validated under this methodology and which haven't:
-   - Validated claims: cite the per-standard review page (e.g. *"per [[standards-review-nist-ai-rmf-2026-Q3|NIST AI RMF review (2026-Q3)]]"*).
+   - Validated claims: cite the per-standard review page (e.g. *"per [[standards-review-nist-ai-rmf-2026-Q2|NIST AI RMF review (2026-Q2)]]"*).
    - Pending claims: marked with `> [!gap] Pending standards-validation backlog (P1/P2/P3)`.
 
 3. **New absence claims** (anything written after this methodology lands) MUST conform to §2 Step 3.

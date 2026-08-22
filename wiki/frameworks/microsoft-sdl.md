@@ -73,7 +73,7 @@ Per [[microsoft-sdl-evolving-security-practices|the 2026-02-03 announcement]], M
 | SDL-for-AI focus area | Wiki concept anchor | CMM domain | RA plane |
 |---|---|---|---|
 | **Threat modeling for AI** | [[threat-modeling-for-ai\|Threat modeling for AI]] *(gap)* | D4 — Threat Modeling & Adversarial Defense | Control |
-| **AI system observability** | [[agent-observability\|Agent observability]] | D7 — Observability & Anomaly Detection | Observability |
+| **AI system observability** | [[agent-observability\|Agent observability]] | D7 — Observability and Detection | Observability |
 | **AI memory protections** | [[agent-memory-isolation\|Agent memory isolation]] | D5 — Data & Memory Governance | Identity / Data |
 | **Agent identity and RBAC enforcement** | [[agent-identity-architecture\|Agent identity architecture]] | D3 — Identity & Access Management | Identity |
 | **AI model publishing** | [[supply-chain-security-for-agents\|Supply chain security for agents]] | D6 — Supply Chain & Component Governance | Identity / Egress |
