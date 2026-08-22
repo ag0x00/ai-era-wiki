@@ -1,0 +1,29 @@
+block-beta
+  columns 2
+  
+  User(["Human user"]):2
+  
+  Identity["Identity plane"]:2
+  
+  Control["Control plane"]:2
+  
+  Runtime["Runtime plane"]:2
+  
+  Egress["Egress plane"]
+  Data["Data plane"]
+  
+  Obs["Observability plane"]:2
+
+  classDef pip stroke:#0d6efd
+  classDef pdp stroke:#fd7e14
+  classDef pep stroke:#dc3545
+  classDef mixed stroke:#6f42c1
+  classDef user stroke:#198754
+  
+  class User user
+  class Identity pip
+  class Control pdp
+  class Runtime pep
+  class Egress pep
+  class Data mixed
+  class Obs pip
