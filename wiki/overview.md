@@ -197,7 +197,7 @@ Most pages on the wiki are **aggregated**. The **produced** set below is what a 
   - [[wiki/gaps/_index|Gaps]] · [[wiki/reviews/_index|Reviews]] · [[wiki/incidents/_index|Incidents]] · [[wiki/playbooks/_index|Playbooks]]
   - [[wiki/entities/_index|Entities]]: organizations, products, and people.
 
-For wiki conventions and the writing register, see [[conventions]].
+For wiki conventions and the writing register, see [[conventions|Wiki Conventions]].
 
 ## Notes
 

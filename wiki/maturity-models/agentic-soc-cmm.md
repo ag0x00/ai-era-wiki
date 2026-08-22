@@ -136,7 +136,7 @@ A function may run at autonomy L_k only if the domains that govern that level ar
 |---|---|
 | **L2** (act with approval) | D1 Data Readiness · D4 Identity & Action-Authority |
 | **L3** (autonomous in-bounds) | + D3 Evaluation/Ground-Truth · D5 Observability/Oversight |
-| **L4** (delegated) | + D7 Resilience/Supply-Chain · D8 People & Governance |
+| **L4** (delegated) | + D7 Resilience/Agent Supply Chain · D8 People & Governance |
 
 "Support it" maps to the domain's maturity level. The [[ai-augmented-soc-survey|MDPI survey]] supplies the correspondence: its autonomy levels map onto SOC-CMM maturity roughly as L0–L1 ↔ maturity 1–2, L2–L3 ↔ 3–4, L4 ↔ 5. Applied here, a governing domain must be at about maturity **L_{k+1}** to support function-autonomy **L_k**.
 
