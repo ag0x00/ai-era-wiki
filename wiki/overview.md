@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-22
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
