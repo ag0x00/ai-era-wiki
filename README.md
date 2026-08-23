@@ -6,11 +6,13 @@ Research wiki on the bidirectional intersection of agentic AI and enterprise sec
 
 - `wiki/frameworks/` — NIST AI RMF, MITRE ATLAS, OWASP LLM Top 10, ISO 42001, CLASP, CoSAI, etc.
 - `wiki/architectures/` — reference architectures, agent design patterns, control planes
-- `wiki/practices/` — emerging best practices, controls, playbooks, guardrails
+- `wiki/practices/` — emerging best practices, controls, guardrails
 - `wiki/maturity-models/` — capability maturity models, tier definitions
 - `wiki/papers/` — one summary page per paper / report
 - `wiki/concepts/` — domain concepts (lethal trifecta, LLM-as-a-judge, ECBD, etc.)
 - `wiki/entities/` — people, organizations, products, vendors
+- `wiki/incidents/` — named real-world incidents, one page each
+- `wiki/playbooks/` — operational deliverables: scorecards, assessment guides, program plans
 - `wiki/thesis/` — evolving synthesis pages — "where is the field" narratives
 - `wiki/gaps/` — open questions and contradictions
 - `wiki/reviews/` — point-in-time assessments
