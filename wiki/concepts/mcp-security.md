@@ -2,7 +2,7 @@
 type: concept
 title: "MCP Security"
 created: 2026-04-30
-updated: 2026-07-30
+updated: 2026-08-22
 tags:
   - concepts
   - mcp
@@ -20,6 +20,7 @@ aliases:
   - "MCP monitoring"
 source_url: "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
 related:
+  - "[[mcp-exposure-measurements]]"
   - "[[agent-identity-architecture]]"
   - "[[agent-observability]]"
   - "[[owasp-agentic-ai-threats-mitigations]]"
@@ -52,6 +53,8 @@ MCP introduces several novel attack surfaces beyond traditional API security:
 | **[[prompt-injection\|Prompt injection]] via MCP** | MCP server returns a response containing injected instructions that override the agent's intended behavior |
 | **MCP scope creep** | Agents granted overly broad MCP permissions over time; no governance equivalent to OAuth scope auditing |
 | **Data exfiltration through MCP** | An agent (or compromised agent) sends sensitive data out via MCP calls to an attacker-controlled server |
+| **Unauthenticated network exposure** | Server bound to a public interface with no client authentication and no transport encryption. Exploiting it needs no software defect ([[mcp-exposure-measurements\|measurements]]) |
+| **Shared-credential privilege collapse** | One hardcoded data-source credential, so every client inherits the same access and no action is attributable |
 
 ## Required Controls
 
@@ -71,7 +74,18 @@ As internet traffic increasingly originates from bots and agents, identifying ma
 - Detection of AATO patterns (session anomalies, unusual call patterns)
 - Filtering of traffic from known-bad MCP servers
 
-### 4. MCP Governance at Scale
+### 4. Exposure Management and Token Delegation
+
+The proxy, monitoring and threat-intelligence controls above all assume the server is reached through a controlled path. Measurement says that assumption often fails: a scan in April 2026 found 1,467 internet-reachable MCP servers running with neither client authentication nor traffic encryption, up from 492 nine months earlier.[^exposure] Those deployments need no vulnerability to leak their data source, so they sit below the proxy layer rather than behind it.
+
+- Bind to loopback or a private subnet by default, and prefer the stdio transport where network exposure is not required.
+- Where network exposure is required, terminate it at a reverse proxy or gateway that authenticates the client, and enforce TLS.
+- Replace the server's hardcoded data-source credential with per-request OAuth token delegation, so each call runs in the calling user's permission scope and stays attributable.
+- Grant read scopes in preference to write scopes, and audit configurations for embedded secrets.
+
+Token delegation is the control the primary research recommends first, and it is what the [[agentic-ai-security-reference-architecture|AAI-S reference architecture]] egress plane implements through per-tool token exchange.
+
+### 5. MCP Governance at Scale
 Enterprise estates will accumulate many MCP server registrations. Required capabilities:
 - Inventory and discovery of all MCP servers in use
 - Per-server allow/deny policies
@@ -99,6 +113,7 @@ MCP support became a market entry condition in 2026: [[gartner-mq-enterprise-ai-
 
 - [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safety, and Reliability of Agentic AI]] — primary source; introduces MCP proxy, AATO, and governance requirements
 - [[adr-agentic-detection-system|ADR — Agentic Detection for Enterprise AI]] — production MCP detection-and-response at Uber; sensor-over-gateway observability; [[adr-bench|ADR-Bench]] MCP-native benchmark
+- [[mcp-exposure-measurements|MCP Exposure Measurements]] — the four published measurements of MCP risk, what each supports, and which to cite
 - [[agent-identity-architecture|AI Agent Identity Architecture]] — agent identity is exercised at the MCP boundary
 - [[agent-observability|Agent Observability]] — MCP traffic is part of the full-stack observability requirement
 
@@ -108,6 +123,8 @@ MCP support became a market entry condition in 2026: [[gartner-mq-enterprise-ai-
 - [[agent-observability|Agent Observability]] — MCP call logs feed behavioral monitoring
 - [[non-human-identity|Non-Human Identity (NHI)]] — MCP access credentials must be governed as NHIs
 - [[agentshield|AgentShield]] — open-source static scanner with 23 MCP-specific rules (high-risk server types, `npx -y` typosquat surface, hardcoded secrets in env config, remote SSE/HTTP transports, shell metacharacters in args, sensitive-file args, `0.0.0.0` binding, missing timeouts, `autoApprove`) and a `--supply-chain[-online]` provenance mode; provenance-aware `runtimeConfidence` separates `mcp.json` / `.claude/mcp.json` / `.claude.json` (active runtime) from `mcp-configs/` / `config/mcp/` (template-example catalogs)
+
+[^exposure]: Alfredo Oliveira and David Fiser, [*Update on Exposed MCP Servers: The Threat Widens to the Cloud*](https://www.trendmicro.com/vinfo/us/security/news/vulnerabilities-and-exploits/update-on-exposed-mcp-servers-the-threat-widens-to-the-cloud), Trend Micro, 2026-04-28, updating the 492-server count from their 2025-07-16 scan. The three measurement families are separated on [[mcp-exposure-measurements|MCP Exposure Measurements]].
 
 [^adr]: §3.1 *Observability: The ADR Sensor*, [arXiv:2605.17380](https://arxiv.org/abs/2605.17380): the rejected LLM/MCP gateway alternative (host changes, streaming incompatibility, partial context) and the cache-parsing sensor that reconstructs the full causal chain.
 

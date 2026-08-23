@@ -2,7 +2,7 @@
 type: paper
 title: "AI Security Standards: Agentic Threats Outpace Frameworks"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-08-22
 tags:
   - papers
   - ai-security
@@ -78,7 +78,7 @@ Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MIT
 - **ClawHavoc** (January–February 2026): 1,184+ malicious skills uploaded to OpenClaw marketplace; first large-scale AI agent supply chain attack. Payload: Atomic macOS Stealer.
 - **SANDWORM_MODE** (February 20): npm worm injecting malicious MCP servers into Claude Code, Cursor, and VS Code via AI toolchain poisoning.
 - **Meta Sev 1** (March 18): autonomous AI agent breach — first confirmed enterprise-grade agentic incident. Proprietary code and business strategies exposed for 2 hours.
-- **30+ MCP CVEs in 60 days**: 82% of 2,614 surveyed MCP implementations vulnerable to path traversal; 66% to code injection.
+- **30+ MCP CVEs in 60 days**: 82% of 2,614 surveyed MCP implementations vulnerable to path traversal; 66% to code injection. *Superseded against the primary:* the figures originate with [Endor Labs](https://www.endorlabs.com/learn/classic-vulnerabilities-meet-ai-infrastructure-why-mcp-needs-appsec) (2026-01-23), which reports 82% *using file-system operations prone to* path traversal and 67% using code-injection APIs — an API-usage rate rather than a confirmed-vulnerability rate. See [[mcp-exposure-measurements|MCP Exposure Measurements]].
 - **Memory poisoning confirmed in the wild**: Microsoft found 50+ examples of hidden memory manipulation instructions embedded in "Summarize with AI" buttons across 31 companies.
 - **Indirect prompt injection in production**: Unit 42 documented 22 distinct techniques from live telemetry (March 3, 2026).
 

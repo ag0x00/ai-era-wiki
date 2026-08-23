@@ -2,7 +2,7 @@
 type: domain
 title: "Incidents"
 created: 2026-04-30
-updated: 2026-08-20
+updated: 2026-08-22
 tags: [domain, incidents]
 status: developing
 subdomain_of: ""
@@ -64,7 +64,7 @@ Recorded attacks **on AI** (AI systems compromised) and **with AI** (AI used as 
 
 ## Ongoing
 
-- **MCP CVEs Q1 2026** — 30+ filed Jan–Feb 2026; 82% of 2,614 surveyed MCP implementations vulnerable to path traversal. See [[mcp-cves-q1-2026|MCP CVEs Q1 2026]].
+No incident page is currently maintained as a rolling tally. [[mcp-cves-q1-2026|MCP CVEs Q1 2026]] held that status until 2026-08-22 and is now a closed snapshot; current Model Context Protocol figures are tracked on [[mcp-exposure-measurements|MCP Exposure Measurements]].
 
 ## Adding a New Incident
 

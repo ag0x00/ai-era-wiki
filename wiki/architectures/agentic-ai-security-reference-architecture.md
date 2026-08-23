@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - architectures
   - reference-architecture
@@ -30,6 +30,7 @@ related:
   - "[[security-controls-for-ai-stacks]]"
   - "[[agent-identity-architecture]]"
   - "[[mcp-security]]"
+  - "[[mcp-exposure-measurements]]"
   - "[[mcp-cves-q1-2026]]"
   - "[[agent-observability]]"
   - "[[agent-sandboxing]]"
@@ -293,7 +294,7 @@ Making the broker the only inter-agent path concentrates authority in it, and th
 
 The rows above secure a channel and do not authenticate what crosses it. The Exchange gives [[agent-message-structure-manipulation|agent message structure manipulation]] its own threat entry: forged, replayed, or altered structured messages between agents, tools, and orchestration layers, where the manipulated field is a task parameter, a tool argument, routing metadata, conversation state, or a schema field rather than natural-language content.[^aix-amsm-ra] Two consequences reach this plane. The controls are signed delegation tokens validated across the full chain with scope non-expansion, and deny-by-default schema validation at tool and message boundaries, neither of which any listed reference implementation emits evidence for. And the threat reaches single agentic flows, where a poisoned metadata field in a retrieved chunk alters parameter binding with no inter-agent link involved,[^aix-amsm-ra] which is outside the scope this plane's rows assume.
 
-The egress plane contains the [[mcp-security|MCP attack surface]]. Q1 2026 produced 30+ MCP CVEs (see [[mcp-cves-q1-2026|MCP CVEs Q1 2026]]), revealing systematic path traversal and injection vulnerabilities across server implementations; AgentGateway's automatic token exchange limits each tool's permissions to exactly what it needs.
+The egress plane contains the [[mcp-security|MCP attack surface]]. Q1 2026 produced 30+ MCP CVEs (see [[mcp-cves-q1-2026|MCP CVEs Q1 2026]]), revealing systematic path traversal and injection vulnerabilities across server implementations; AgentGateway's automatic token exchange limits each tool's permissions to exactly what it needs. Token exchange also answers the failure mode that needs no CVE: a scan in April 2026 found 1,467 internet-reachable MCP servers with no client authentication and no transport encryption, each holding a single hardcoded credential that every caller inherits.[^mcp-exposure-ra] That population sits outside any gateway, so the plane's control depends on an exposure-management precondition it does not itself enforce — the measurements and their methods are separated on [[mcp-exposure-measurements|MCP Exposure Measurements]].
 
 ### 5. Data plane
 
@@ -553,3 +554,5 @@ The primary contribution is the synthesis: a single vendor-neutral document conn
 [^aix-devsec-ra]: [OWASP AI Exchange — DEV SECURITY](https://owaspai.org/go/devsecurity/), retrieved 2026-08-20. The dataset-by-reference integrity problem, with LAION-400M's URL entries as the example and dataset-entry hashing as the answer.
 [^aix-devtime-ra]: [OWASP AI Exchange — Development-time threats](https://owaspai.org/go/developmenttime/), retrieved 2026-08-20. The seven stated particularities of the AI development environment and the five controls the section routes to.
 [^dream-taiwan]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia) (2026-08-12); corroborated by Taiwan's Ministry of Digital Affairs, which independently named "Open Claw" in its own statement (Reuters, 2026-08-13). See [[taiwan-ai-agent-government-intrusion|the incident record]].
+
+[^mcp-exposure-ra]: Alfredo Oliveira and David Fiser, [*Update on Exposed MCP Servers: The Threat Widens to the Cloud*](https://www.trendmicro.com/vinfo/us/security/news/vulnerabilities-and-exploits/update-on-exposed-mcp-servers-the-threat-widens-to-the-cloud), Trend Micro, 2026-04-28. The same scan disclosed CVE-2026-5058 and CVE-2026-5059 against `aws-mcp-server`, both command injection at CVSS 9.8.
