@@ -3,7 +3,7 @@ type: entity
 title: "Security Guidance Plugin"
 address: c-000246
 created: 2026-07-30
-updated: 2026-07-30
+updated: 2026-08-22
 tags:
   - entities
   - product
@@ -24,6 +24,7 @@ related:
   - "[[anthropic|Anthropic]]"
   - "[[claude-code-security|Claude Code Security]]"
   - "[[hooking-coding-agents-with-cedar-talk|Hooking Coding Agents with Cedar]]"
+  - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
   - "[[agentshield|AgentShield]]"
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails|D4 Runtime & Guardrails]]"
   - "[[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]"
@@ -66,3 +67,5 @@ Only the GitHub Action can hold a merge. An organization treating the plugin as 
 ## Placement
 
 Runtime plane of the [[agentic-ai-security-reference-architecture|AAI-S RA]], and the cheapest available [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] artifact for the generative-coding shape — zero cost, first-party, hook-based. It does not on its own carry a D4 level, because the level criteria ask for controls that stop an action, and this one does not.
+
+[[injecting-security-context-vibe-coding-talk|Gupta's security-context MCP server]] is the closest non-Anthropic instrument and inverts this one on both axes. The plugin fires deterministically, because it is a hook, and carries fixed content — roughly 25 general dangerous-construct patterns that are the same in every organization. Gupta's server fires only when the model chooses to call it, and carries the content the plugin cannot hold: the organization's own data-classification rules, the ticket, and the trust boundaries in the design document. Neither combination is the one an enforcement point needs, which is deterministic firing over organization-specific content, and each product's weakness is the other's strength. The two share the deficiency recorded in the gap callout above — both report benefit and neither publishes a residual-defect rate.

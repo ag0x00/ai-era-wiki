@@ -2,7 +2,7 @@
 type: talk
 title: "Hooking Coding Agents with Cedar"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - papers
   - talks
@@ -47,6 +47,7 @@ related:
   - "[[lethal-trifecta]]"
   - "[[guard-canonicalization-gap]]"
   - "[[securing-agentic-coding]]"
+  - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[agentic-ai-security-cmm-dependency-rules|CMM: Effective-Score Dependency Rules]]"
 sources:
@@ -117,6 +118,8 @@ Each major coding agent has its own hook system:
 | **Cursor** | Granular hooks for MCP calls, shell commands, and generic tool calls |
 
 These hooks become the **policy enforcement points** — each hook type maps to one of the four trajectory event types, giving the harness a way to intercept, evaluate, and allow/modify/stop the agent at each lifecycle stage.
+
+The per-agent variation in that table is the cost of the choice, and a talk on the following day of the same conference paid it the other way. [[injecting-security-context-vibe-coding-talk|Srajan Gupta]] rejected hooks for a security-context server precisely because support was confined to Claude Code and Cursor, and delivered his control over MCP to reach every harness. He accepts in exchange what Maisel's design refuses: an MCP tool runs when the model reads its description and decides to call it, which Gupta states does not happen every time. Determinism against portability is the standing trade for in-IDE controls, and Gupta names hooks as the correct instrument wherever an organization can accept the narrower coverage.
 
 ## Basis for Cedar as the policy language
 

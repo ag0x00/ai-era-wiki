@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-08-16
+updated: 2026-08-22
 tags:
   - practices
   - agentic-coding
@@ -34,6 +34,7 @@ related:
   - "[[accidental-meltdown|Accidental Meltdown]]"
   - "[[perplexity-numbat-agent-security|Numbat Agent Security Suite]]"
   - "[[mcp-security|MCP Security]]"
+  - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
   - "[[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]"
   - "[[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]]"
   - "[[gemini-cli|Gemini CLI]]"
@@ -224,7 +225,9 @@ Each step in the ordering removes a dependency on a weaker layer. OS enforcement
 
 **Several load-bearing instruments are single-sourced.** Sandbox runtime is a beta research preview. The COTS control plane in the attribution, harness-audit, and fleet-inventory rows is [[endor-labs-ai-code-governance|Endor Labs AI Code Governance]] in all three cases — one vendor's product material, with no dated GA announcement and no independent evaluation. AgentShield is one open-source scanner. No competing implementation of the fleet-inventory capability is sourced here, so that row records a market gap as much as a control.
 
-**Nothing here addresses code quality.** Every control in the catalog governs what the agent may *do*. Whether the code it writes is correct is a separate problem, addressed by review capacity that the [[microsoft-cli-coding-agent-adoption-study|throughput data]] suggests is already the binding constraint.
+**Nothing here addresses code quality.** Every control in the catalog governs what the agent may *do*. Whether the code it writes is correct is a separate problem, addressed by review capacity that the [[microsoft-cli-coding-agent-adoption-study|throughput data]] suggests is already the binding constraint. One practitioner pattern attacks that problem from the other end, by governing what the agent is told before it writes: [[injecting-security-context-vibe-coding-talk|Gupta's MCP server]] retrieves the ticket, the architecture document, the applicable OWASP cheat sheets and the organization's own standards into the prompt, then verifies the generated code against those same requirements. It belongs to no plane above because it constrains generation rather than execution, and it carries the enforcement weakness that placement implies — the agent calls the server because the tool description persuaded it to, which Gupta states does not happen every time.
+
+That pattern also answers the cross-harness limit above from a second direction. Numbat narrows the gap for observability across harnesses; a control delivered over MCP is portable for the same structural reason, since every product in this market ships MCP support as a condition of entry. For a fleet whose majority sits on a harness whose keys this catalog does not carry, the pre-generation control and the telemetry instrument are the two entries here that transfer by design, and both are weaker than the harness-native rows they stand in for. An organization in that position should treat this catalog as the specification for the harness it can configure, and read the two portable instruments as partial cover for the remainder of the fleet.
 
 ## Promotion Path
 

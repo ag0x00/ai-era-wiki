@@ -3,7 +3,7 @@ type: talk
 title: "Unprompted Conference I"
 address: c-000167
 created: 2026-05-02
-updated: 2026-06-02
+updated: 2026-08-22
 origin: aggregated
 scope_axis:
   - sec-of-ai
@@ -132,7 +132,7 @@ Two-day single-narrative practitioner conference, San Francisco, March 3–4, 20
 | Total Recon: How We Discovered 1000s of Open Agents in the Wild | Avishai Efrat + Roey Ben Chaim, [[zenity\|Zenity]] | **1000s of exposed agents** (copilots, custom agents, AI middleware) reachable + enumerable + over-permissioned; releases **PowerPwn** recon tool |
 | [[your-agent-works-for-me-now-talk\|Your Agent Works for Me Now]] | [[johann-rehberger\|Johann Rehberger]] (Red Team Director) | **[[promptware\|Promptware]]** = engineered prompts that act like malware; **[[delayed-tool-invocation\|delayed tool invocation]]** bypasses Google's Workspace tool deactivation control; **[[agent-commander-prompt-c2\|Agent Commander]]** prompt-level C2 with zero-click Gmail enrollment; previously undisclosed exploits against Gemini, Copilot, Xcode, OpenClaw, KimiCloud |
 | [[capability-based-authorization-talk\|Capability-Based Authorization for AI Agents — Warrants That Survive Prompt Injection]] | [[niki-aimable-niyikiza\|Niki Aimable Niyikiza]], Founder @ [[tenuo\|Tenuo]] / SE @ [[snap\|Snap]] | **Cryptographic [[tenuo-warrant\|Tenuo Warrants]]** (Macaroons/UCAN/Biscuits/CaMeL lineage) — six properties: signed, scoped, ephemeral, holder-bound, verifiable offline, delegation-aware; **[[monotonic-attenuation\|monotonic attenuation]]** across hops freezes the blast radius; 4 deployment modes; ~55μs auth / ~200ns deny; 53/53 violations rejected on 5,700 fuzz probes; **baseline 90%→0% multi-agent ASR** on custom harness; live LangGraph demo with 4 enforcement scenarios |
-| Injecting Security Context During Vibe Coding | Srajan Gupta, **Dave** (Sr Security Engineer) | **MCP server** that injects threat models + security requirements + OWASP guidance into the AI coding loop pre-generation; verifies output post-generation |
+| [[injecting-security-context-vibe-coding-talk\|Injecting Security Context During Vibe Coding]] | Srajan Gupta, **Dave** (Sr Security Engineer) | **MCP server** that injects threat models + security requirements + OWASP guidance into the AI coding loop pre-generation; verifies output post-generation |
 | Source to Sink: How to Improve LLM First-Party Vuln Discovery | Scott Behrens + Justice Cassel, [[netflix\|Netflix]] | "Mass-closed 200 AI-generated findings" therapy; **agentic pipeline that thinks before it screams** |
 | The Parseltongue Protocol: A Deep Dive into 100+ Textual Obfuscation Methods | Joey Melo, [[crowdstrike\|CrowdStrike]] (AI Red Teaming Specialist) | **100+ encoding/encryption techniques × 9 leading AI models × 17,000+ malicious prompts**; safety-system gaps |
 | Why Most ML Vulnerability Detection Fails (And What Actually Worked for Kernel Bugs) | Jenny Guanni Qu, **Pebblebed** (AI Researcher) | **125K Linux kernel commits**; "hard negatives" hurt; subsystem boundaries are where bugs hide; **average kernel security bug survives 2.1 years undetected** |

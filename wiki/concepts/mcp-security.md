@@ -26,6 +26,7 @@ related:
   - "[[owasp-agentic-ai-threats-mitigations]]"
   - "[[gartner-mq-enterprise-ai-coding-agents-2026]]"
   - "[[securing-agentic-coding]]"
+  - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
 ---
@@ -108,6 +109,10 @@ The proxy-layer control above is the gateway pattern. A counter-position has now
 ## MCP as a market baseline
 
 MCP support became a market entry condition in 2026: [[gartner-mq-enterprise-ai-coding-agents-2026|Gartner's Magic Quadrant for enterprise AI coding agents]] lists *"native Model Context Protocol (MCP) support"* among its inclusion criteria, so every vendor in the category ships it. That promotes MCP server provenance and authorization from a per-product concern to a property of the whole coding-agent market. Harness-side controls are catalogued in [[securing-agentic-coding|Securing Agentic Coding]].
+
+The same ubiquity makes MCP a delivery channel for controls, and the threat surface above does not cover that direction. [[injecting-security-context-vibe-coding-talk|Gupta's security-context server]] uses the protocol to push threat models, compliance rules and OWASP guidance into a coding agent before it generates, choosing it over IDE hooks specifically because it is portable across harnesses. The properties selected for there are the properties this page treats as risk: the server reaches into the IDE, composes with Jira, Confluence and scanners, and occupies one central position every agent consults.
+
+The last two threat rows read differently against such a server. Unauthenticated network exposure and shared-credential privilege collapse are scored above as defects in someone else's infrastructure; on a *defensive* server they describe the failure of a control the organization has come to depend on, with every generation loop it feeds inside the blast radius. The [[mcp-exposure-measurements|exposure measurements]] apply to it unchanged — a network scan counts a security server bound to a public interface the same way it counts any other. Every control on this page therefore governs a control delivered over MCP, and its purpose earns it no exemption.
 
 ## Occurrences
 

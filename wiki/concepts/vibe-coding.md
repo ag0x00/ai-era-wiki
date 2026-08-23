@@ -3,7 +3,7 @@ type: concept
 title: "Vibe Coding"
 address: c-000041
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - concepts
   - agentic-coding
@@ -26,6 +26,7 @@ related:
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[microsoft-cli-coding-agent-adoption-study]]"
   - "[[gartner-mq-enterprise-ai-coding-agents-2026]]"
+  - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
 sources:
   - ".raw/papers/pwc-future-of-solutions-dev-gen-ai-2026.pdf"
 ---
@@ -73,6 +74,8 @@ Vibe-coded artifacts inherit specific risk patterns:
 - **Cognitive file integrity exposure**: vibe-coded changes to identity files (system prompts, `SOUL.md`, `IDENTITY.md`) can introduce subtle behavioral shifts that the operator doesn't notice. See [[cognitive-file-integrity|Cognitive File Integrity]] for the defensive control.
 - **Coding-agent governance**: applying vibe coding through coding agents (Cursor, Claude Code, Copilot) bypasses traditional code-review chokepoints. See [[ai-coding-agent-governance|Knostic's AI Coding Agent Governance]] framework for the operational response.
 - **Supply-chain exposure**: vibe-coded artifacts often pull in dependencies the operator hasn't vetted. See [[supply-chain-security-for-agents|Supply Chain Security for Agents]] for the AI-BOM perspective.
+
+One practitioner response treats the first of these as a context problem rather than a review problem. [[injecting-security-context-vibe-coding-talk|Srajan Gupta's Unprompted talk]] argues that an underspecified prompt produces insecure code because the requirements that would have constrained it — data classification rules, internal standards, the trust boundaries in the design document — exist in the organization but never reach the model, and that retrieving them into the prompt before generation is cheaper than finding their absence in review. The position is worth recording for what it concedes as much as for what it claims: Gupta reports no measurement of residual defects, and states the pattern leaves threat modeling for new systems and human review of large changes untouched.
 
 [[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] pairs vibe coding with [[shadow-ai|shadow AI]] as the two named drivers of the agentic governance gap: code that bypasses review and AI use outside any sanctioned policy both expand the surface faster than oversight can cover it. The report frames the underlying constraint as human oversight at machine speed — when an agent acts far faster than a reviewer can evaluate, sampled review covers only a fraction of decisions, so the governance answer is continuous, policy-enforced oversight rather than periodic inspection.
 
