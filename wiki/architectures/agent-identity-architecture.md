@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-08-15
+updated: 2026-08-22
 tags:
   - architectures
   - identity
@@ -65,7 +65,7 @@ The conceptual identity architecture for AI agents comprises three elements: the
 
 ## Problem
 
-AI agents must authenticate to and be authorized for services inside and outside the enterprise. Unlike human users, they may be ephemeral, numerous, and capable of acting either on behalf of a human (delegated) or under their own identity (autonomous). Incumbent IAM and PAM tooling was not designed for this scale or rate of change, and bearer-token protocols do not model *who directed an action* — the agent or a human — or bound an agent's authority to a single task rather than to its whole workload (per [[securing-the-autonomous-future|Securing the Autonomous Future]]).
+AI agents must authenticate to and be authorized for services inside and outside the enterprise. Unlike human users, they may be ephemeral, numerous, and capable of acting either on behalf of a human (delegated) or under their own identity (autonomous). Incumbent identity governance, vaulting and PAM capabilities can likely manage the credential half of this, and the open question is whether they adapt to an environment this dynamic, sprawling and in places ephemeral. Existing protocols such as OAuth 2.0 do not model *who directed an action* — the agent or a human (per [[securing-the-autonomous-future|Securing the Autonomous Future]]).
 
 Two design problems sit underneath: a **principal problem** (every agent needs a verifiable identity that traces to a human) and an **authority problem** (a verified identity still carries workload-wide ambient authority, far wider than any one task needs). The layers below address the first; the [[#Layers|capability-token layer]] addresses the second.
 
@@ -88,7 +88,7 @@ The agent has a **unique identity** and authenticates independently to carry out
 
 ### SPIFFE / SPIRE workload identity foundation
 
-[[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. SPIFFE/SPIRE is the established approach to machine-to-machine workload identity inside the enterprise and underpins the platform-native agent identities: GCP Agent Identity issues SPIFFE-based IDs directly. Its primary role is solving the **Credential Zero** problem: an agent must authenticate *to* a vault or IdP to retrieve further credentials, and a SPIFFE SVID provisioned at deploy time handles that bootstrap without a pre-stored secret.
+[[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. SPIFFE/SPIRE is the established approach to machine-to-machine workload identity inside the enterprise and underpins the platform-native agent identities: GCP Agent Identity issues SPIFFE-based IDs directly. It also solves the **Credential Zero** problem: an agent must authenticate *to* a vault or IdP to retrieve further credentials, and a SPIFFE SVID provisioned at deploy time handles that bootstrap without a pre-stored secret.
 
 > [!note] Authentication only
 > SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) must be added to define *what* an authenticated agent may do, and a [[#Capability-token layer]] to bound *which task* a given grant covers.
