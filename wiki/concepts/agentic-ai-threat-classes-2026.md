@@ -3,7 +3,7 @@ type: concept
 title: "Agentic AI Threat Classes"
 address: c-000260
 created: 2026-05-02
-updated: 2026-08-20
+updated: 2026-08-22
 tags:
   - concepts
   - threat-modeling
@@ -145,7 +145,7 @@ A second, differently-shaped instance followed within the month. The [[taiwan-ai
 
 A published taxonomy now states the general form of this mechanism. The [[owasp-ai-exchange|OWASP AI Exchange]] models agent memory as three surfaces — working memory in context, vector stores, and cross-session stores — and classifies a persistent write as a future read attack on other agents, applying `#AUGMENTATION DATA INTEGRITY` and cross-linking to data poisoning where memory acts as a training-like data source ([`/go/agenticaioverview/`](https://owaspai.org/go/agenticaioverview/)). It states two further positions that bear on this class: no transitive trust between agents, and enforcement of inter-agent security at the message bus or orchestrator rather than in agent prompts. Class 3's coverage gap therefore narrows on the mechanism and holds on the measurement. The Exchange states the class's structural property in general form as well. Individual per-agent controls are named necessary and not sufficient, on the ground that emergent collective behaviour can violate policy even where every agent complies in isolation.[^aix-amsm] Per-agent compliance is therefore not evidence of system compliance, which is the claim the mutual-blindness argument above reaches from one incident and from reasoning about shared media. What no source supplies is a rate: the Exchange states that tools and methods to evaluate agentic security architecture and deployments are still evolving, which is the same validation gap recorded in open issue 1 below.
 
-**RA + CMM mapping.** Control (PDP), Runtime (PEP, supervisor agents), Observability (deception probes, monitor isolation). CMM domains: D3 Control & Least-Agency, D4 Runtime & Guardrails, D7 Observability & Detection, D9 Operations & Human Factors. Justifies a future *agent-oversight* practice page and a CMM evidence item on monitor isolation at D7 L4+.
+**RA + CMM mapping.** Control (PDP), Runtime (PEP, supervisor agents), Observability (deception probes, monitor isolation). CMM domains: [[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]], [[agentic-ai-security-cmm-d4-runtime-guardrails|D4 Runtime & Guardrails]], [[agentic-ai-security-cmm-d7-observability|D7 Observability & Detection]], [[agentic-ai-security-cmm-d9-operations|D9 Operations & Human Factors]]. Justifies a future *agent-oversight* practice page and a CMM evidence item on monitor isolation at D7 L4+, which no rung grades today.
 
 ## Class 4 — Model-version-degradation attacks
 

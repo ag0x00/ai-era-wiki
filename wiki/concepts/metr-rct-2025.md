@@ -3,7 +3,7 @@ type: concept
 title: "METR RCT: AI Productivity Counter-Evidence"
 address: c-000042
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - concepts
   - metr
@@ -95,8 +95,8 @@ METR's 19% slowdown is consistent with [[collaboration-paradox|the collaboration
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D9 (Operations & Human Factors) L3+** — METR's findings are the load-bearing evidence for "verification-loop-aware deployment" as a D9 maturity practice.
-- **[[agentic-ai-security-cmm-2026|CMM]] D7 (Observability & Detection) L4** — the verification-cost framing argues for closer telemetry on agent-assisted work to measure actual productivity vs assumed productivity.
+- **[[agentic-ai-security-cmm-d9-operations|CMM D9 (Operations & Human Factors)]] L3+** — METR's findings are the load-bearing evidence for "verification-loop-aware deployment" as a D9 maturity practice.
+- **[[agentic-ai-security-cmm-d7-observability|CMM D7 (Observability & Detection)]] L4** — the verification-cost framing argues for closer telemetry on agent-assisted work to measure actual productivity vs assumed productivity.
 
 ## Open Questions
 

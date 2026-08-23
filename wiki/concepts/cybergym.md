@@ -3,7 +3,7 @@ type: concept
 title: "CyberGym Benchmark"
 address: c-000030
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - concepts
   - benchmarks
@@ -137,7 +137,7 @@ The contamination caveat above and this exposure are one mechanism running at tw
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D7 (Observability & Detection) L4** — fits the four-quadrant red-team grid's "real-world reproduction benchmark" slot. Should be cited alongside [[agentdojo|AgentDojo]] in CMM evidence checklists for D7 L4.
+- **[[agentic-ai-security-cmm-d7-observability|CMM D7 (Observability & Detection)]] L4** — fits the four-quadrant red-team grid's "real-world reproduction benchmark" slot. Should be cited alongside [[agentdojo|AgentDojo]] in CMM evidence checklists for D7 L4.
 
 ## See Also
 

@@ -3,7 +3,7 @@ type: concept
 title: "Identity-Credential Coupling"
 address: c-000190
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-22
 tags:
   - concepts
   - identity
@@ -62,7 +62,7 @@ The [[agentic-ai-security-cmm-d2-identity|D2 Identity deep dive]] folds coupling
 
 - **D2 L3** inventory must distinguish coupled from decoupled NHIs. Every coupled credential is a candidate for migration to a decoupled alternative — SAS token or storage access key → Azure Managed Identity + RBAC; long-term cloud keys → AWS IAM Roles Anywhere (X.509 → short-lived STS) or GCP Workload Identity Federation.
 - **D2 L4** keeps an *active migration plan* off coupled credentials and ties rotation to a documented consumer-dependency map; rotating a coupled credential without one breaks production (cf. [[what-are-non-human-identities|What Are Non-Human Identities? (Oasis Security)]] on operational rotation risk).
-- **D9 L4** dependency-mapping applies acutely here: before rotating any coupled credential, the consumer graph must be known.
+- **[[agentic-ai-security-cmm-d9-operations|D9]] L4** dependency-mapping applies acutely here: before rotating any coupled credential, the consumer graph must be known.
 
 [[anti-patterns-and-failure-modes|RA and CMM Anti-Patterns and Failure Modes]] records the assessment failure this creates. An organization can hold a credential proxy at the workflow boundary and state a true D2 L4 claim while SAS tokens, storage access keys, and PATs in production route around that boundary, because the proxy intermediates access without decoupling the credential from the principal. A D2 L4 audit therefore has to name which credentials remain coupled and what the migration plan for each is, rather than scoring the presence of the proxy.
 

@@ -2,7 +2,7 @@
 type: concept
 title: "Sentinels and Operatives"
 created: 2026-05-01
-updated: 2026-05-01
+updated: 2026-08-22
 tags:
   - concepts
   - guardian-agent
@@ -82,8 +82,8 @@ A complete guardian-agent deployment typically uses 2–4 Sentinel products and 
 
 [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] D7 (Observability & Detection) and D4 (Runtime & Guardrails) already split assurance from enforcement. Adopting Sentinels/Operatives terminology in the CMM:
 
-- **D7 L3+ evidence** should explicitly cite which Sentinels are deployed and what signals they emit
-- **D4 L3+ evidence** should explicitly cite which Operatives consume those signals and what actions they take
+- **[[agentic-ai-security-cmm-d7-observability|D7]] L3+ evidence** should explicitly cite which Sentinels are deployed and what signals they emit
+- **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L3+ evidence** should explicitly cite which Operatives consume those signals and what actions they take
 - **D7→D4 integration** becomes a measurable: are Sentinel signals actually feeding Operative decisions, or are they collected and ignored?
 
 This sharpens the L3 vs L4 distinction at both domains.

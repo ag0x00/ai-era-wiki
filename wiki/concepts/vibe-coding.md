@@ -81,8 +81,8 @@ One practitioner response treats the first of these as a context problem rather 
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D8 (Supply Chain & AI-BOM) L3+** — vibe-coded artifacts inherit dependency-graph risk; D8 controls (AI-BOM, dependency scanning) gate this.
-- **[[agentic-ai-security-cmm-2026|CMM]] D9 (Operations & Human Factors)** — vibe coding sits on a spectrum from disposable prototypes to production deployment; D9 controls (code review, change management) govern the transition.
+- **[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 (Supply Chain & AI-BOM)]] L3+** — vibe-coded artifacts inherit dependency-graph risk; D8 controls (AI-BOM, dependency scanning) gate this.
+- **[[agentic-ai-security-cmm-d9-operations|CMM D9 (Operations & Human Factors)]]** — vibe coding sits on a spectrum from disposable prototypes to production deployment; D9 controls (code review, change management) govern the transition.
 
 ## Provenance Note
 
