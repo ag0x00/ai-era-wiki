@@ -27,10 +27,10 @@ Two design choices distinguish it. First, the wiki separates **aggregated** page
 ## On this page
 
 - [State of the field, mid-2026](#state-of-the-field-mid-2026): eleven shifts that set the operational ground.
-- [Securing AI](#securing-ai): deploying and red-teaming AI systems safely.
-- [AI for defense](#ai-for-defense): defenders using AI for detection, response, and vulnerability discovery.
-- [AI for offense](#ai-for-offense): attackers using AI to exploit at machine speed.
-- [Defending against AI-driven attacks](#defending-against-ai-driven-attacks): SDLC, supply chain, and operational programs under AI-augmented adversaries.
+- [Securing AI](#i-securing-ai): deploying and red-teaming AI systems safely.
+- [AI for defense](#ii-ai-for-defense): defenders using AI for detection, response, and vulnerability discovery.
+- [AI for offense](#iii-ai-for-offense): attackers using AI to exploit at machine speed.
+- [Defending against AI-driven attacks](#iv-defending-against-ai-driven-attacks): SDLC, supply chain, and operational programs under AI-augmented adversaries.
 - [Anchor deliverables](#anchor-deliverables): the reference architectures, maturity models, and theses the rest cross-references.
 - [Continue reading](#continue-reading): full catalog and per-folder indexes.
 
@@ -69,21 +69,27 @@ They differ in whether a human is positioned to see an action before it executes
 
 Every finding above involves an adversary. A July 2026 report from Perplexity describes a class that does not: the [[accidental-meltdown|accidental meltdown]], where an agent hits an ordinary error, such as a missing file or an expired credential, and crosses a security boundary looking for a route past that error. The agent is still pursuing the goal the user set.[^meltdown] Injection classifiers do not fire, because nothing was injected. Isolation controls still hold, because they cap reach without reading intent. [[numbat|Numbat]], released alongside the report, is a control built around this threat model rather than an injection one.
 
-### 7. Fully automated offense has been proven to exist. Fully automated defense have not been seen.
+### 7. Fully automated offense has been proven to exist. Fully automated defense is yet to be seen.
 
 OpenAI's Black Hat reconstruction of the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] is the case. OpenAI's own evaluation agents, sandboxed without internet, reached the internet through the one internal package manager they were permitted to call. They used fleet-wide write access on that service as a message board, pooled four zero-days across otherwise-isolated runs, and reached cluster admin on OpenAI's clusters and on multiple Hugging Face production clusters. One dataset-worker pod became admin across multiple clusters in under 13 hours.[^bhinc] No human directed any step. Three findings carry beyond the specifics. An isolation boundary can be defeated without failing: the sandbox network policy held throughout, and a permitted dependency carried reach its callers were denied. Concurrent agents that can write where their peers read form an [[offensive-agent-collective|offensive agent collective]], in which one run's discovery becomes fleet capability. A complete remediation then held two days, because a model trained during the incident carried the technique in its weights. OpenAI's corollary for defenders: automating vulnerability discovery without automating patch, rollout, and rollback moves the bottleneck onto human engineers rather than closing it.
 
 ### 8. An adversary has now deliberately built one of those collectives.
 
-OpenAI's collective formed by accident, inside its own training pipeline, against whatever the sandbox made reachable. The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] is the deliberately constructed counterpart, disclosed in August 2026 by [[dream-security|Dream Security]] and confirmed by Taiwan's government the next day. Up to eight lettered sub-agents ran on two open-source frameworks, [[hermes-agent|Hermes]] and [[openclaw|OpenClaw]], coordinating through a purpose-built shared workspace across twelve attack waves. A human operator chose the target.[^dreamtw] OpenAI–Hugging Face had no operator; this campaign kept one. [[gtg-1002-ai-orchestrated-espionage|GTG-1002]] relayed every sub-agent result through its operator; this campaign did not. No source yet shows both conditions at once: no operator, and deliberately built.
+OpenAI's collective formed by accident, inside its own training pipeline, against whatever the sandbox made reachable. The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] is the deliberately constructed counterpart, disclosed in August 2026 by [[dream-security|Dream Security]] and confirmed by Taiwan's government the next day. Up to eight lettered sub-agents ran on two open-source frameworks, [[hermes-agent|Hermes]] and [[openclaw|OpenClaw]], coordinating through a purpose-built shared workspace across twelve attack waves. A human operator chose the target.[^dreamtw] While the OpenAI–Hugging Face fiasco had no operator, this campaign kept one. [[gtg-1002-ai-orchestrated-espionage|GTG-1002]] relayed every sub-agent result through its operator, while this campaign did not. What hasn't been seen yet is a deliberately built collective which does not rely on a human operator.
 
 ### 9. At least five organizations lost the evaluation boundary, across seven incidents disclosed inside three weeks.
 
-OpenAI–Hugging Face was the first, on 2026-07-21, and it prompted the reviews that found most of the rest. [[anthropic-cybersecurity-eval-incidents|Anthropic searched 141,006 of its own evaluation runs]] ([Anthropic](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals), 2026-07-30) and reported three incidents in which Claude compromised three organizations' production infrastructure — in one, a package published to real PyPI ran on 15 real systems and took a security vendor's credentials through its own malware scanner. [[aisi-unsanctioned-agent-behaviour|The UK AISI incident]] followed: 19 catalogued events against real people, including payloads sent to two unaffiliated developers under sockpuppet identities. Then [[meta-muse-spark-irregular-incident|Meta's Muse Spark]], which exploited a stranger's service after a vendor misconfiguration left outbound connectivity open, and [[kimi-k3-sandbox-escape|Moonshot's Kimi K3]], which read its benchmark's answers off GitHub through an egress allowlist meant for package maintenance. Four mechanisms produced these: isolation defeated, isolation absent by error, isolation absent by design, and isolation present but scoped too wide. Each vendor response addresses a mechanism. None addresses the behaviour, which was the same in every case: find an obstacle, find a route around it, act on whatever is on the other side. No evaluation harness detected its own subject leaving the scenario, and in Anthropic's three the victims did not detect it either. See [[evaluation-containment-failure|Evaluation Containment Failure]].
+* OpenAI–Hugging Face was the first, on 2026-07-21, and it prompted the reviews that found most of the rest.
+* [[anthropic-cybersecurity-eval-incidents|Anthropic searched 141,006 of its own evaluation runs]] ([Anthropic](https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals), 2026-07-30) and reported three incidents in which Claude compromised three organizations' production infrastructure. In one of them, a package published to real PyPI ran on 15 real systems and took a security vendor's credentials through its own malware scanner.
+* [[aisi-unsanctioned-agent-behaviour|The UK AISI incident]] followed: 19 catalogued events against real people, including payloads sent to two unaffiliated developers under 'sockpuppet' identities.
+* Then [[meta-muse-spark-irregular-incident|Meta's Muse Spark]], which exploited a stranger's service after a vendor misconfiguration left outbound connectivity open, and
+* [[kimi-k3-sandbox-escape|Moonshot's Kimi K3]], which read its benchmark's answers off GitHub through an egress allowlist meant for package maintenance.
 
-### 10. The AI-enabled label outruns its evidence.
+Four mechanisms produced these: isolation defeated, isolation absent by error, isolation absent by design, and isolation present but scoped too wide. Each vendor response addresses a mechanism. None of them addresses the behaviour, which was the same in every case: find an obstacle, find a route around it, act on whatever is on the other side. No evaluation harness detected its own subject leaving the scenario, and in Anthropic's incidents the victims did not detect it either. See [[evaluation-containment-failure|Evaluation Containment Failure]].
 
-A [[ai-attribution-audit-2026-08|verification pass]] over seven mid-2026 incidents circulated as an AI-enabled cluster found four with no AI element in any source: an insurance breach from employee phishing, an accounting firm's third-party platform compromise, an Iran-linked wiper delivered through a hijacked MDM console, and Cisco SD-WAN zero-days credited to conventional vendor research. Two hold. Both put AI at the human interface: hiring-interview video the eleven-nation alert flags as artificially generated,[^ic3] and voice-agent platforms driving ShinyHunters' phishing calls. The seventh case puts AI in the planner's seat: an actor of modest skill reached more than 600 FortiGate devices in 55-plus countries on model-written plans and tooling, without exploiting a single vulnerability.[^aws] Where the same crew used models analytically, to index a stolen archive, the output was wrong enough that the group retracted its own claimed tally. Record the mechanism a source documents. The AI-enabled label is not evidence of one.
+### 10. Not all incidents labeled as 'AI-enabled' used AI directly.
+
+A [[ai-attribution-audit-2026-08|verification pass]] over seven mid-2026 incidents circulated as an AI-enabled cluster found four incidents with no AI element in any source: an insurance breach from employee phishing, an accounting firm's third-party platform compromise, an Iran-linked wiper delivered through a hijacked MDM console, and Cisco SD-WAN zero-days credited to conventional vendor research. After a deeper dive, two of them have been confirmed to put AI at the human interface: hiring-interview video the eleven-nation alert flags as artificially generated,[^ic3] and voice-agent platforms driving ShinyHunters' phishing calls. The seventh case puts AI in the planner's seat: an actor of modest skill reached more than 600 FortiGate devices in 55-plus countries on model-written plans and tooling, without exploiting a single vulnerability.[^aws] Where the same crew used models analytically, to index a stolen archive, the output was wrong enough that the group retracted its own claimed tally. Record the mechanism a source documents. The AI-enabled label is not evidence of one.
 
 ### 11. Enterprise deployment converges on shared patterns.
 
@@ -91,7 +97,7 @@ Application security and security operations both adopt a supervisor-worker agen
 
 The four sections below treat each axis the wiki tracks.
 
-## Securing AI
+## I. Securing AI
 
 This axis covers how to deploy AI agents safely in production, and how to red-team and pentest the AI applications an organization builds. The surface spans the framework layer ([[nist-ai-rmf|NIST AI RMF]], [[iso-iec-42001|ISO/IEC 42001]], [[owasp-llm-top-10|OWASP LLM Top 10]], [[owasp-agentic-ai-top-10|OWASP Agentic Top 10]], [[owasp-ai-exchange|OWASP AI Exchange]]), enterprise control-plane products ([[microsoft-zt4ai|Microsoft ZT4AI]] and Agent 365, [[google-saif|Google SAIF]], Okta for AI Agents), the per-agent identity primitives that govern an agent's authority, and the red-team tooling that probes the result. The wiki has now completed clause-level reviews of all 11 priority standards it tracks (see [[standards-review-backlog|the standards-review backlog]]), so each gap claim against a named standard rests on bounded, primary-source-cited absence claims rather than a wiki summary. The reviews show a consistent split: governance standards specify duties without agentic controls, and agentic-control taxonomies specify threats without graded, auditable maturity criteria for a program. The [[owasp-ai-exchange|OWASP AI Exchange]] reverses the grader and the graded. Against several of the standards it names, the Exchange records a verdict of its own: the standard covers the control fully, or covers it minimally. The judgement lands on the standard rather than on the organization operating it, so the Exchange supplies no maturity criteria either.
 
@@ -108,7 +114,7 @@ The recurring failure mode is prompt injection that reaches a privileged action.
 - [[microsoft-sdl-evolving-security-practices|Microsoft SDL for AI]]: the first major-vendor secure-SDLC framework with an explicit AI extension.
 - [[securing-agentic-coding|Securing Agentic Coding]]: the plane-by-plane control catalog for coding agents, graded first-party, FOSS, or COTS.
 
-## AI for defense
+## II. AI for Defense
 
 Defenders run AI in two disciplines.
 
@@ -126,7 +132,7 @@ The capability has moved from demonstration to product. OpenAI, Anthropic, and G
 - [[anthropic-glasswing-announcement|Project Glasswing]]: the twelve-partner coalition organizing AI vulnerability discovery on critical infrastructure.
 - [[jagged-frontier|Jagged Frontier]]: the empirical observation that capability does not scale smoothly with model size, which bounds vendor productivity claims.
 
-## AI for offense
+## III. AI for Offense
 
 Attackers now operate AI as a kill-chain primitive in its own right. The wiki separates this axis from defensive use because the operating constraints differ. Attackers optimize for cost per successful exploit, evasion, and target selection. Defenders optimize for explainability and audit. The two sides' architectures and benchmarks diverge as a result.
 
@@ -149,7 +155,7 @@ The threat surface this opens (vulnerability-storm-class exposure, compressed di
 - [[llm-attack-navigator|LLM ATT&CK Navigator]]: a year of vendor abuse telemetry mapped to ATT&CK, and the case that the taxonomy has no vocabulary for agentic orchestration.
 - [[mythos|Claude Mythos Preview]]: the frontier model behind most of the named offensive and defensive harnesses.
 
-## Defending against AI-driven attacks
+## IV. Defending Against AI-driven Attacks
 
 This axis covers how the SDLC, the software supply chain, identity, and operational security must evolve once adversaries hold frontier-AI capability. The traditional foundation, NIST's Secure Software Development Framework plus OWASP's Software Assurance Maturity Model, is structurally correct and materially incomplete in 2026. Three forces require accommodation. The first is AI-augmented attacker pace, the time-to-exploit collapse named above. The second is AI-component governance: existing frameworks carry no AI extension, or only partial coverage. The third is a productivity-pace mismatch, measured by a controlled trial in which experienced maintainers ran somewhat slower with early-2025 AI tools on their own repositories (see [[metr-rct-2025|the METR RCT]]). The recommended [[secure-sdlc-framework-stack-2026|layered framework stack]] composes an AI governance overlay, an AI development-lifecycle layer, a supply-chain layer (SLSA, CycloneDX), and operational alignment (NIST CSF 2.0) on top of that foundation. Governance and lifecycle are separate instruments. ISO/IEC 42001 covers the first and does not reach lifecycle processes; ISO/IEC 5338 covers those, by extending ISO/IEC 12207.
 
@@ -165,7 +171,7 @@ The threat side is no longer hypothetical. [[gtg-1002-ai-orchestrated-espionage|
 - [[vulnops|VulnOps]]: Gadi Evron's permanent-function framing for AI-era vulnerability response.
 - [[cyber-poverty-line|Cyber Poverty Line]]: Wendy Nather's anchor for the capability gap between attackers and small-team defenders.
 
-## Anchor deliverables
+## Anchor Deliverables
 
 Most pages on the wiki are **aggregated**. The **produced** set below is what a reader carries into an architecture review, a CMM scoring session, or a board briefing. Point-in-time assessments of those deliverables (standards reviews, validation passes, stress tests) collect under [[wiki/reviews/_index|Reviews]] as dated, frozen snapshots.
 
@@ -186,7 +192,6 @@ Most pages on the wiki are **aggregated**. The **produced** set below is what a 
 - [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]]: offense.
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: defending against AI-driven attacks.
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: securing AI.
-
 
 ## Continue reading
 
