@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "CMM Known Limitations (current state)"
 created: 2026-05-06
-updated: 2026-05-06
+updated: 2026-08-23
 tags: [gaps, cmm, known-limitations, current-state]
 status: developing
 scope_axis:
@@ -38,7 +38,7 @@ The L5+ clause requires "cryptographic attestation that guardrails executed in a
 
 ### 3. `D2 L5` — Microsoft Agent 365 Registry "or equivalent" remains underspecified
 
-The clause references "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01; deployment evidence is now possible but not yet published at scale. "Or equivalent" softens the dependency on a single vendor, but no other product offers the documented Agent 365 capability set, so "equivalent" is currently undefined in practice. A CISO at L5 needs to either pick Agent 365 or build the equivalent capability set themselves.
+The clause references "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01; deployment evidence is now possible but not yet published at scale. "Or equivalent" softens the dependency on a single vendor, but the criterion does not state which capabilities an equivalent must match, so an assessor has no basis for grading a non-Microsoft deployment against it. A CISO at L5 needs to either pick Agent 365 or build the equivalent capability set themselves.
 
 **Status:** [verified-current]. Re-check by 2026-Q3 once Agent 365 deployment evidence and competing-product feature parity are observable.
 
