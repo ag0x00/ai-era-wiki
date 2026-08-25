@@ -3,7 +3,7 @@ type: concept
 title: "Zero Day Clock"
 address: c-000070
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-08-24
 tags:
   - concepts
   - zero-day-clock
@@ -37,6 +37,7 @@ related:
   - "[[capability-floor-collapse|Capability Floor Collapse]]"
   - "[[gtg-5004-no-code-ransomware|No-Code Ransomware Operation]]"
   - "[[llm-attack-navigator|LLM ATT&CK Navigator]]"
+  - "[[autonomous-code-security-google-talk|Autonomous Code Security at Google]]"
 sources:
   - "[[.raw/articles/zero-day-clock-the-collapse-2026-05-25.md]]"
   - "[[.raw/articles/zero-day-clock-call-to-action-2026-05-25.md]]"
@@ -80,7 +81,7 @@ The clock frames the current state as a structural inversion. An exploit is crea
 > "It is worth noting that the historical collapse in time-to-exploit has not yet produced a proportional increase in the impact of exploitation. Many of the most consequential incidents of recent years involved credential abuse, social engineering, or supply chain compromise rather than zero-day exploitation. The Zero Day Clock trend is a leading indicator of where attacker capability is heading, not a direct measure of current damage."
 > — [[mythos-ready-briefing|Mythos-ready briefing]], Appendix A
 
-The clock measures where attacker capability is heading, not present-day damage. Current losses are still dominated by credential abuse, social engineering, and supply chain compromise. The argument is that AI-driven capability eventually flows into the impact channel; the clock is the leading indicator of when.
+The clock measures where attacker capability is heading. Current losses are still dominated by credential abuse, social engineering, and supply chain compromise. The argument is that AI-driven capability eventually flows into the impact channel; the clock is the leading indicator of when.
 
 Two further caveats bound the reading:
 
@@ -107,10 +108,11 @@ A parallel, adversary-side case makes the same point without CVEs at all. In the
 - **It is the motivation for [[vulnops|VulnOps]].** When the median exploit arrives on or before disclosure, periodic vulnerability management — a quarterly pen test plus patch-as-CVE-arrives — is structurally outmatched. VulnOps is the continuous response to a continuous-discovery, continuous-exploitation environment.
 - **It pairs with the remediation-side lag.** The clock measures attacker-side TTE; the [[anthropic-glasswing-initial-update|Glasswing funnel]] (6,202 estimated high/critical found, 75 patched) measures defender-side discovery-to-patch lag. The two curves define the window of exposure, and they are diverging — the operational case for VulnOps. As Glasswing puts it, the constraint has moved from finding vulnerabilities to verifying, disclosing, and patching them.
 - **MOAK supplies the mechanism.** [[moak-how-it-works|MOAK's five-agent pipeline]] autonomously exploits 174 of 178 CISA KEVs (97.8%) within hours of disclosure, with Claude Opus 4.6 reaching 98% on post-knowledge-cutoff KEVs. The clock documents that exploitation now precedes or coincides with disclosure; MOAK demonstrates how — no human bottleneck in the exploit-derivation loop.
+- **The queue in front of the clock may stop being sortable.** [[autonomous-code-security-google-talk|Heather Adkins argued at [un]prompted in March 2026]] that agentic frameworks are close to finding every vulnerability in every system, and that CVSS will therefore stop being meaningful as a ranking instrument. The clock measures how fast exploitation follows disclosure; her claim is about whether the disclosures in front of it can still be ordered by severity.
 
 Corroborating the trend from outside the clock's own dataset: VulnCheck reported that, of 159 vulnerabilities first observed exploited in Q1 2025, 28.3% had exploitation evidence within a day of disclosure — nearly one in three.[^vulncheck] Rapid7's 2026 Cyber Threat Landscape Report, on a separate dataset, found confirmed exploitation of newly disclosed high/critical vulnerabilities up 105% year over year (to 146 in 2025) and mean time-to-exploit down from 61.0 to 28.5 days.[^rapid7] The Rapid7 figure is a mean and the clock's is a median; the gap is expected, because a near-zero median with a multi-week mean describes a right-skewed distribution — most exploited flaws are weaponized at or before disclosure, while a slow-exploited tail lifts the mean.
 
-**The clock measures the interval, not the population holding it.** Every figure on this page is a time: days from disclosure to exploitation, hours from KEV publication to a working exploit. Anthropic's vendor telemetry measures the orthogonal quantity, which is who is now able to hold the clock at all — [[gtg-5004-no-code-ransomware|GTG-5004]] shipped ransomware with two direct-syscall EDR bypasses while, per Anthropic's assessment of the prompt record, being unable to implement any of its components unaided, and across 832 banned accounts assessed technical sophistication correlates with the remaining components of Anthropic's risk score at r = 0.28.[^floor] A collapsing interval and a collapsing entry qualification compound: the exposure window is defined by the fastest adversary, and the number of adversaries who can move at that speed is no longer bounded by how many people can write the exploit. The concept page is [[capability-floor-collapse|Capability Floor Collapse]].
+**The clock measures the interval, not the population holding it.** Every figure on this page is a time: days from disclosure to exploitation, hours from KEV publication to a working exploit. Anthropic's vendor telemetry measures the orthogonal quantity, which is who is now able to hold the clock at all — [[gtg-5004-no-code-ransomware|GTG-5004]] shipped ransomware with two direct-syscall EDR bypasses while, per Anthropic's assessment of the prompt record, being unable to implement any of its components unaided, and across 832 banned accounts assessed technical sophistication correlates with the remaining components of Anthropic's risk score at r = 0.28.[^floor] A collapsing interval and a collapsing entry qualification compound: the exposure window is defined by the fastest adversary, and the population able to move at that speed is no longer bounded by how many people can write the exploit. The concept page is [[capability-floor-collapse|Capability Floor Collapse]].
 
 On the remediation side, the Qualys 2026 benchmark puts the mean time to remediation for the most-delayed complex applications (Java, .NET, Citrix) at 5 months and 10 days, even as roughly 40 million of 150 million deployed patches now ship autonomously.[^qualys] The attacker-side and defender-side curves are moving in opposite directions.
 
@@ -122,7 +124,7 @@ The Zero Day Clock pairs its data with a ten-point policy agenda, each attribute
 2. **Build security into the platform** — "shift down," so applications inherit secure defaults from frameworks and infrastructure (Phil Venables).
 3. **Stop patching, start rebuilding** — distributed, immutable, ephemeral systems, the DIE triad (Sounil Yu; Heather Adkins).
 4. **Eliminate the root cause** — memory-safe languages for new critical code; approximately 70% of critical flaws in large C/C++ codebases are memory-safety bugs (Mark Russinovich).[^memsafe]
-5. **Open-source the defense** — make AI defensive tooling free to every defender, not only those who can afford six-figure contracts (Daniel Miessler; Loris Degioanni).
+5. **Open-source the defense** — make AI defensive tooling free to every defender, including those priced out of six-figure contracts (Daniel Miessler; Loris Degioanni).
 6. **Regulation for machine speed** — safe harbors and pre-authorized response for autonomous defense, instead of quarterly-audit assumptions (Rob T. Lee).
 7. **Bridge the gap between hackers and policy** (Jeff Moss).
 8. **Zero trust everywhere** (John Kindervag).
@@ -131,11 +133,11 @@ The Zero Day Clock pairs its data with a ten-point policy agenda, each attribute
 
 ### Scope of the memory-safety demand
 
-Carrying out Demand 4 eliminates the property set the language addresses and leaves the rest standing. The evidence is a shipped one: 79 CVEs dropped against a Rust reimplementation of coreutils *after* it shipped in the current Ubuntu release, carrying time-of-check/time-of-use flaws in critical utilities rather than memory corruption.[^asu-keynote] The roughly 70% memory-safety share cited above is what the demand is calibrated against;[^memsafe] the remaining 30% is what a rewrite inherits, and it inherits it into new code that has no analysis history.
+Carrying out Demand 4 eliminates the property set the language addresses and leaves the rest standing. The evidence is a shipped one: 79 CVEs dropped against a Rust reimplementation of coreutils *after* it shipped in the current Ubuntu release, carrying time-of-check/time-of-use flaws in critical utilities rather than memory corruption.[^asu-keynote] The demand is calibrated against the roughly 70% memory-safety share cited above;[^memsafe] a rewrite inherits the remaining 30% into new code that has no analysis history.
 
 Agentic rewriting makes the demand tractable at a scale it was not tractable at before, and does not change that arithmetic. [[vulnerability-research-agentic-age-keynote|Shoshitaishvili's Black Hat 2026 keynote]] reports agents reimplementing libssl, libpng, and libxml as millions of lines of Rust, in which the crypto library reproduced the classic non-memory-safety cryptographic attacks the original was vulnerable to — under explicit instruction naming those historical vulnerabilities and forbidding them. [[vulnerability-properties|Vulnerability properties]] survive a change of language; instructing the model not to reproduce them is not a control.
 
-Demand 4 stands. What it delivers is one property class retired, not a clean codebase, and a rewrite planned as a security control needs its post-rewrite threat model derived from the original's non-memory-safety vulnerability history.
+Demand 4 stands: it retires one property class rather than delivering a clean codebase, and a rewrite planned as a security control needs its post-rewrite threat model derived from the original's non-memory-safety vulnerability history.
 
 ## Notes
 

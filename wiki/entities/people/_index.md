@@ -35,6 +35,7 @@ Researchers, practitioners, authors, speakers.
 - [[dongdong-sun|Dongdong Sun]] — |                  |                                        |                        |
 | ---------------- | -----------------------------...
 - [[eric-wallace|Eric Wallace]] — Alignment and safety research at OpenAI.
+- [[four-flynn|Four Flynn]] — VP of Security and Privacy at Google DeepMind, where he leads security for Google's frontier-model lab and runs the CodeMender programme.
 - [[gadi-evron|Gadi Evron]] — Sources: Mythos-ready paper (lead author); OpenAnt announcement (Knostic CEO); Knostic org page (referenced via Knostic's product family).
 - [[heather-adkins|Heather Adkins]] — Sources: [Wikipedia](https://en.wikipedia.org/wiki/Heather_Adkins)
 - [[jeffrey-zhang|Jeffrey Zhang]] — Security Engineer at Stripe.

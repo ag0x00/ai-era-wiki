@@ -3,7 +3,7 @@ type: paper
 title: "CodeMender: AI Agent for Code Security"
 address: c-000034
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-08-24
 tags:
   - papers
   - google
@@ -43,8 +43,11 @@ related:
   - "[[google-big-sleep-projectzero]]"
   - "[[anthropic-glasswing-announcement]]"
   - "[[frontier-ai-for-vuln-discovery]]"
+  - "[[autonomous-code-security-google-talk]]"
+  - "[[four-flynn]]"
 sources:
   - "[[.raw/articles/google-codemender-deepmind-2025-10-06.md]]"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
 ---
 
 # Introducing CodeMender — an AI Agent for Code Security
@@ -53,7 +56,7 @@ sources:
 
 ## Source Summary
 
-Foundational announcement of **CodeMender** — Google DeepMind's AI agent that *patches* software vulnerabilities, complementing the discovery-side capability of [[big-sleep|Big Sleep]]. CodeMender operates **reactively** (instantly patching new vulnerabilities) and **proactively** (rewriting existing code to eliminate entire vulnerability classes). Over the six months before announcement, the team had already **upstreamed 72 security fixes to OSS projects** including codebases as large as 4.5 million lines of code. All patches are reviewed by human researchers before submission.
+Foundational announcement of **CodeMender** — Google DeepMind's AI agent that *patches* software vulnerabilities, complementing the discovery-side capability of [[big-sleep|Big Sleep]]. CodeMender operates **reactively** (instantly patching new vulnerabilities) and **proactively** (rewriting existing code to eliminate entire vulnerability classes). Over the six months before announcement, the team had already **upstreamed 72 security fixes to OSS projects** including codebases as large as 4.5 million lines of code. All patches are reviewed by human researchers before submission as of this announcement. [[autonomous-code-security-google-talk|Google's March 2026 account]] presents a pluggable verifier stack as the gate and states the design intent as an engine that runs without human intervention, naming no reviewer at submission.
 
 The strategic frame: as AI-powered vulnerability discovery accelerates ("it will become increasingly difficult for humans alone to keep up"), the patching pipeline becomes the bottleneck. CodeMender addresses the bottleneck.
 
@@ -80,7 +83,7 @@ The architecture parallels [[mdash|Microsoft MDASH]]'s five-stage Prepare-Scan-V
 
 - **72 security patches upstreamed** to OSS projects in the six months before announcement.
 - Some target codebases as large as **4.5 million lines of code**.
-- All patches **human-reviewed before submission**.
+- All patches **human-reviewed before submission**, as stated in October 2025.
 - Patches "have already been accepted and upstreamed."
 
 ### CVE-2023-4863 / libwebp reference
@@ -92,26 +95,26 @@ The post cites [CVE-2023-4863](https://www.cve.org/CVERecord?id=CVE-2023-4863) �
 - **[[agentic-ai-security-cmm-2026|CMM]] D6 (Data, Memory & RAG) L5+** — proactive rewriting of vulnerable data-handling code (libwebp, XML parsers) is a D6-adjacent primitive.
 - **[[agentic-ai-security-cmm-2026|CMM]] D8 (Supply Chain & AI-BOM) L5+** — upstreaming patches to OSS codebases is a supply-chain hardening primitive; the 4.5M-LOC scale suggests dependency-graph-wide reach.
 - **[[agentic-ai-security-reference-architecture|RA]] Observability Plane** — patch validation (regression checks, functional equivalence) extends agent-output auditing.
-- **[[agentic-ai-security-cmm-2026|CMM]] D9 (Operations & Human Factors)** — human-review-before-submission is the explicit HITL pattern; analogous to [[plan-validate-execute|Plan-Validate-Execute]] but applied to autonomous-patch generation.
+- **[[agentic-ai-security-cmm-2026|CMM]] D9 (Operations & Human Factors)** — human-review-before-submission is the HITL pattern this announcement describes, analogous to [[plan-validate-execute|Plan-Validate-Execute]] applied to autonomous patch generation. [[autonomous-code-security-google-talk|The March 2026 account]] presents verification as the gate and states full autonomy as the design intent, naming no reviewer; the mapping holds for this announcement's own description.
 
 ## Convergence with Other Wiki Sources
 
-- **Big Sleep → CodeMender as discovery → patching**: Google's two-pronged DeepMind-affiliated stack. Big Sleep finds, CodeMender patches. The integration / handoff architecture is not documented in either post, but the symmetry is structural.
+- **Big Sleep and CodeMender as discovery-then-patching**: Google's two-pronged DeepMind-affiliated stack. Big Sleep finds, CodeMender patches. The integration / handoff architecture is not documented in either post, but the symmetry is structural.
 - **Multi-agent + LLM-judge pattern**: shared with [[mdash|MDASH]] (debater + critique stages), [[clasp|CLASP]]-style capability evaluation, and Stripe's [[guardrails-beyond-vibes-talk|Guardrails Beyond Vibes]] LLM-judge usage. The pattern is converging.
-- **OSS-Fuzz lineage**: CodeMender's announcement cites OSS-Fuzz and [AI-powered fuzzing](https://security.googleblog.com/2023/08/ai-powered-fuzzing-breaking-bug-hunting.html) as prior Google AI security work. The Google AI-security stack lineage: OSS-Fuzz → AI-powered fuzzing → Naptime → Big Sleep → CodeMender.
+- **OSS-Fuzz lineage**: CodeMender's announcement cites OSS-Fuzz and [AI-powered fuzzing](https://security.googleblog.com/2023/08/ai-powered-fuzzing-breaking-bug-hunting.html) as prior Google AI security work. The Google AI-security stack lineage: OSS-Fuzz, then AI-powered fuzzing, then Naptime, then Big Sleep, then CodeMender.
 
 ## Limitations
 
-- **Research-stage productization.** "We're taking a cautious approach, focusing on reliability." No GA pricing, no public API. Patches arrive through human OSS-maintainer outreach. [[google-cloud-codemender-preview|A managed preview on Google Cloud]] (2026-07-21) superseded this on availability, defining three purchasing paths and an enterprise data-handling posture. It publishes no efficacy figures, so the recall gap below is unchanged nine months on.
-- **No raw recall / precision numbers.** "72 patches upstreamed" is a forward-looking activity metric, not a recall-against-ground-truth measurement.
-- **All patches human-reviewed**. CodeMender is described as a research/HITL system; the autonomy boundary is conservatively drawn.
+- **Research-stage productization.** "We're taking a cautious approach, focusing on reliability." No GA pricing, no public API. Patches arrive through human OSS-maintainer outreach. [[google-cloud-codemender-preview|A managed preview on Google Cloud]] (2026-07-21) superseded this on availability, defining three purchasing paths and an enterprise data-handling posture. It publishes no efficacy figures, so the recall gap below is unchanged nine months on. Google did publish a further activity count in between: 178 fixes landed in open source, split 48 patched and 130 hardening, given at a conference in March 2026.[^google-talk] That count measures output volume on a different basis than recall, and 48 is fewer than the 72 here.
+- **No raw recall / precision numbers.** "72 patches upstreamed" is a forward-looking activity metric rather than a recall-against-ground-truth measurement.
+- **The research programme's stated goal and the shipped product's control differ.** This announcement places human review before patch submission. Five months later Flynn stated the design intent as an engine that "runs completely without human intervention," naming no reviewer at submission, with the pluggable verifier stack presented as the gate.[^google-talk] The July 2026 [[google-cloud-codemender-preview|managed preview]] keeps a person in the loop, with developers retaining control before anything is committed. The wiki has no source describing one review step moving between the three accounts.
 - **No model attribution beyond family.** "Gemini Deep Think" is named; specific model size, tuning, and inference characteristics are not.
 - **Annotated language**: the announcement emphasizes "early results"; the formal technical papers and reports are promised but not yet published.
 
 ## Open Questions
 
 - **CodeMender vs SAST**: at scale, does CodeMender replace traditional static-analysis tools, augment them, or run alongside?
-- **Patch acceptance rate by maintainers**: 72 patches upstreamed — what fraction were accepted vs rejected? Maintainer feedback patterns?
+- **Patch acceptance rate by maintainers**: neither the 72 patches upstreamed here nor the 178 fixes reported in March 2026 carry an accepted-versus-rejected breakdown, and no source describes maintainer feedback patterns. Flynn named supporting maintainers struggling with volume and AI slop as one of three unsolved problems, which is the same constraint from the receiving side.[^google-talk]
 - **Big Sleep + CodeMender integration**: do they exchange artifacts directly, or are they independent agents operating on the same codebase?
 - **Glasswing role**: [[anthropic-glasswing-announcement|Glasswing]] (May 2026) names Big Sleep and CodeMender as Google's parallel AI-cyber tools but does not describe operational integration with Mythos / Glasswing-partner work.
 - **Authorship overlap**: 13 named authors. Several names (e.g., Oliver Chang on OSS-Fuzz) are recognizable across Google AI-security publications. The team continuity is the human-capital signal.
@@ -125,3 +128,6 @@ The post cites [CVE-2023-4863](https://www.cve.org/CVERecord?id=CVE-2023-4863) �
 - [[anthropic-glasswing-announcement|Glasswing announcement]] — May 2026 coalition that names Big Sleep + CodeMender.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] — wiki thesis CodeMender co-anchors.
 - [[mdash|MDASH]] — parallel multi-agent discovery system from Microsoft, with similar critique+validation patterns.
+- [[autonomous-code-security-google-talk|Autonomous Code Security at Google]] — March 2026 talk revising the human-review gate and giving the 178-fix output.
+
+[^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].

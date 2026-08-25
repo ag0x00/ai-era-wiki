@@ -3,7 +3,7 @@ type: paper
 title: "Google Project Zero"
 address: c-000033
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-08-24
 tags:
   - papers
   - google
@@ -31,8 +31,10 @@ related:
   - "[[codemender]]"
   - "[[google-codemender-deepmind]]"
   - "[[frontier-ai-for-vuln-discovery]]"
+  - "[[autonomous-code-security-google-talk]]"
 sources:
   - "[[.raw/articles/google-big-sleep-projectzero-2024-10-31.md]]"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
 ---
 
 # From Naptime to Big Sleep
@@ -72,6 +74,7 @@ While not part of this October 2024 post, public follow-ups establish Big Sleep'
 - **August 2025**: Google reports Big Sleep has found ~20 security vulnerabilities ([TechCrunch coverage](https://techcrunch.com/2025/08/04/google-says-its-ai-based-bug-hunter-found-20-security-vulnerabilities/)).
 - **July 2025**: SQLite **CVE-2025-6965** disclosure — Big Sleep finds a vulnerability that was "known only to threat actors and was at risk of being exploited." Google claims this is the first time an AI agent has directly foiled efforts to exploit a vulnerability in the wild.
 - **May 2026**: [[anthropic-glasswing-announcement|Anthropic Glasswing announcement]] names Big Sleep in Heather Adkins's quote as Google's parallel AI-powered cybersecurity tool — positioning Big Sleep as Google's defender-side analogue to Anthropic's Mythos deployment.
+- **March 2026**: Adkins discloses Big Sleep's five-phase architecture at [un]prompted and gives the false-positive rate as zero, end-to-end and without human involvement, on deep memory-safety bugs. The control is a working exploit built as proof of vulnerability before any finding is reported, and Gemini writes the report.[^google-talk] Findings go to a public issue tracker; as of the morning of the talk, all but five were fixed.
 
 ## CMM / RA Maps-to
 
@@ -81,21 +84,21 @@ While not part of this October 2024 post, public follow-ups establish Big Sleep'
 
 ## Convergence with Other Wiki Sources
 
-- **Naptime → CyberSecEval2 lineage**: Meta's [[cyberseceval|CyberSecEval2]] benchmark predates Big Sleep; Project Naptime achieved state-of-the-art on it. CyberSecEval sits alongside [[cybergym|CyberGym]] as benchmark surface for AI vulnerability discovery.
+- **Naptime-to-CyberSecEval2 lineage**: Meta's [[cyberseceval|CyberSecEval2]] benchmark predates Big Sleep; Project Naptime achieved state-of-the-art on it. CyberSecEval sits alongside [[cybergym|CyberGym]] as benchmark surface for AI vulnerability discovery.
 - **Team Atlanta — Project Zero, then Microsoft**: Team Atlanta's DARPA AIxCC SQLite null-pointer-dereference work inspired Big Sleep's SQLite testing focus. Several Team Atlanta members later joined Microsoft's ACS team that built [[mdash|MDASH]]. The cross-organization personnel flow is the human-capital signal underlying the May 2026 tri-vendor convergence.
 - **CodeMender symmetry**: [[google-codemender-deepmind|CodeMender (Oct 2025)]] is Google's parallel agent for the *patching* half of the workflow that Big Sleep solves on the *discovery* half. Both DeepMind-affiliated; both AI-agent design.
 
 ## Limitations
 
 - **Single-finding paper.** This is one disclosed vulnerability with detailed walkthrough; broader recall numbers are not published.
-- **Research-stage at publication.** Project Zero explicitly notes "Our project is still in the research stage" — productization signal is from subsequent posts, not this one.
+- **Research-stage at publication.** Project Zero explicitly notes "Our project is still in the research stage"; the productization signal comes from subsequent posts.
 - **No model attribution.** The post does not name which LLM Big Sleep uses (Gemini-family is presumed but unconfirmed in this source).
 - **Variant analysis only.** This methodology assumes a previously-fixed vulnerability to seed each search. Open-ended discovery (find-anything-from-scratch) is explicitly out-of-scope for the framing.
 
 ## Open Questions
 
-- Big Sleep's full production capability surface as of 2026 (per the May 2026 Glasswing reference, Big Sleep continues to operate as Google's parallel to Anthropic's Mythos / Microsoft's MDASH — but the public technical detail layer is older than the other two).
-- Relationship between Big Sleep and [[google-codemender-deepmind|CodeMender]] — Big Sleep finds, CodeMender patches; integration / handoff architecture is not documented.
+- Big Sleep's production capability surface. [[autonomous-code-security-google-talk|The March 2026 talk]] refreshed the technical detail layer with a five-phase architecture and a false-positive figure, so the disclosure gap against Mythos and MDASH is narrower than it was. What is still missing is a result against a shared corpus: Big Sleep appears on no public leaderboard, and Google has published no recall or precision figure for it.
+- Relationship between Big Sleep and [[google-codemender-deepmind|CodeMender]]. Google states that CodeMender's input is a verified Big Sleep vulnerability and presents the pair as one end-to-end discovery-and-fixing engine.[^google-talk] The interface is still undocumented: no source states what artifact passes, how findings queue, or what happens when no patch clears validation.
 - Google Cloud Security operationalization — Big Sleep is the Project Zero+DeepMind research surface, but how it surfaces to Google Cloud / Vertex AI customers is not in this post.
 
 ## See Also
@@ -107,3 +110,6 @@ While not part of this October 2024 post, public follow-ups establish Big Sleep'
 - [[anthropic-glasswing-announcement|Glasswing announcement]] — names Big Sleep + CodeMender as Google's parallel AI-cyber tools.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] — wiki thesis Big Sleep co-anchors.
 - [[mdash|MDASH]] / [[xbow|XBOW]] / [[mythos|Claude Mythos Preview]] — the other May 2026 anchors.
+- [[autonomous-code-security-google-talk|Autonomous Code Security at Google]] — March 2026 talk disclosing the five-phase architecture.
+
+[^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].

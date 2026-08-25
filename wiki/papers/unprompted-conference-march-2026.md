@@ -3,7 +3,7 @@ type: talk
 title: "Unprompted Conference I"
 address: c-000167
 created: 2026-05-02
-updated: 2026-08-22
+updated: 2026-08-24
 origin: aggregated
 scope_axis:
   - sec-of-ai
@@ -46,6 +46,7 @@ related:
   - "[[supply-chain-security-for-agents]]"
   - "[[agent-sandboxing]]"
   - "[[credential-proxy-pattern]]"
+  - "[[autonomous-code-security-google-talk]]"
 sources:
   - .raw/articles/unprompted-conference-march-2026-agenda-2026-05-02.md
   - .raw/talks/unprompted-conference-talks-mar-2026.md
@@ -72,7 +73,7 @@ Two-day single-narrative practitioner conference, San Francisco, March 3–4, 20
 | Talk | Speaker(s) / Org | Notable data points |
 |---|---|---|
 | Opening Words — "Research conferences aren't effective" | Gadi Evron, [[knostic\|Knostic]] | Format pitch: structured matchmaking over random encounters; nods to Joe Stewart's ACoD talk |
-| Evaluating Threats & Automating Defense: How Google is Advancing Code Security | Heather Adkins, [[google\|Google]] (VP Security Engineering) | **CodeMender** (Google's AI-driven code security tool); Google's full AI security strategy |
+| [[autonomous-code-security-google-talk\|Autonomous Code Security at Google]] | [[heather-adkins\|Heather Adkins]], [[google\|Google]] (VP Security Engineering) + [[four-flynn\|Four Flynn]], [[google\|Google DeepMind]] (VP Security and Privacy) | **[[big-sleep\|Big Sleep]]** zero false positives, deep memory-safety bugs; **[[codemender\|CodeMender]]** 178 OSS fixes (48 patched, 130 hardening); pluggable verifier stack; coins **vulnpocalypse** |
 | [[measuring-agent-effectiveness-talk\|The Hard Part Isn't Building the Agent: On Measuring Agent Effectiveness]] | Joshua Saxe, [[meta\|Meta]] (AI Security Tech Lead) | From naive precision/recall to multi-dim eval (reasoning quality, evidence gathering, tool-calling); **genetic algorithms + AI coding tools for automated agent improvement**; live demo |
 | Security Guidance as a Service: AI-Native Blueprint for Defensive Security | Shruti Datta Gupta + Chandrani Mukherjee, [[adobe\|Adobe]] | Centralized security knowledge powering multiple defensive AI capabilities; "consistent, evaluated, bespoke guidance" |
 | [[guardrails-beyond-vibes-talk\|Guardrails Beyond Vibes: Shipping Security Agents in Production]] | [[jeffrey-zhang\|Jeffrey Zhang]] + [[sid-shah\|Siddh Shah]], [[stripe\|Stripe]] | **Threat modeling + security request routing agents** in production; modular orchestrator/child sequential pipeline; golden-standard + [[llm-as-a-judge\|LLM-as-a-Judge]] offline eval; phased rollout to all Stripe devs; AlphaEvolve prompt evolution failed at cost constraints; five concrete learnings |
@@ -147,6 +148,7 @@ Two-day single-narrative practitioner conference, San Francisco, March 3–4, 20
 Representative capability evidence and incident metrics from the agenda:
 
 - **AISLE** — 12 OpenSSL 0-days fixed Jan 2026, **3 hiding 20+ years**; hundreds more across curl / Linux kernel / wolfSSL.
+- **Google Big Sleep / CodeMender** — Big Sleep at **zero false positives** end-to-end on deep memory-safety bugs; CodeMender at **178 OSS fixes (48 patched + 130 hardening)**; libwebp and Chrome pointer hardening named.
 - **TrendAI FENRIR** — 100+ vulns since mid-2025, **21 CVEs incl. multiple CVSS 9.8 RCEs**.
 - **Sysdig** — **8-minute AWS escalation** caught in the wild; **EtherRAT** fileless Node.js with Ethereum smart-contract C2.
 - **Adam Laurie / Alpitronic** — Claude glitched an LPC in **7 minutes** vs human 6 weeks.
@@ -166,9 +168,9 @@ Representative capability evidence and incident metrics from the agenda:
 - **Production agent containment is now the practitioner topic.** Stripe (×2), Google Workspace, Block, Perplexity, Dropbox, Salesforce (×2), Airbnb, and Snap all present production-agent defenses, not lab work.
 - **Agentic vuln discovery is a category.** AISLE, TrendAI FENRIR, XBOW, Interrupt Labs, NVIDIA Marinade, Datadog/macOS, Pebblebed, Netflix, Carlini/Anthropic — all describe AI agents as production vuln finders.
 - **Reference-monitor-by-policy is a concrete pattern.** Sondera (Cedar), Snap (capability warrants / UCAN), Dave (MCP context injection), Stripe (CI-time tool annotations), Trail of Bits (sandboxing) — converging on policy-evaluated tool calls.
-- **Observability is glass-box, not black-box.** Starseer (mechanistic interp), Realm Labs (white-box backdoor analysis), Elastic (OTel for GenAI), Salesforce (behavioral baselines), GreyNoise (Orbie) — model internals + behavioral telemetry > output filters.
+- **Observability practices open the black box.** Starseer (mechanistic interp), Realm Labs (white-box backdoor analysis), Elastic (OTel for GenAI), Salesforce (behavioral baselines), GreyNoise (Orbie) — model internals and behavioral telemetry take priority over output filters.
 - **Browser + IDE agents are the new attack surface.** Perplexity BrowseSafe, Mindgard (Codex/Kiro/Antigravity/Cursor), Stripe (lethal trifecta), Google Workspace (calendar injection), Johann Rehberger (Gemini/Copilot promptware).
-- **Governance talks are operational, not aspirational.** Snowflake, FFF Enterprises, US Army, Trail of Bits — describe the failure modes of governance, not the framework checklists.
+- **Governance talks describe operational failure modes.** Snowflake, FFF Enterprises, US Army, Trail of Bits detail where governance breaks down in practice, rather than reciting framework checklists.
 
 ## Cross-references in this wiki
 

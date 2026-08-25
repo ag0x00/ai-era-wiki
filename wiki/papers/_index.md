@@ -34,6 +34,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[anthropic-glasswing-announcement|Project Glasswing: Securing Critical Software]] — Source: [Anthropic, Project Glasswing](https://www.anthropic.com/glasswing) (May 12, 2026).
 - [[anthropic-glasswing-initial-update|Project Glasswing: Initial Update]] — Source: [Anthropic — Project Glasswing: An initial update](https://www.anthropic.com/research/glasswing-initial-update) (May 22, 2026).
 - [[anthropic-threat-intelligence-reports|Anthropic Threat Intelligence Reports]] — Source: [Anthropic — Threat Intelligence Report: August 2025](https://www-cdn.anthropic.com/b2a76c6f6992465c09a6f2fce282f6c0cea8c200.pdf)...
+- [[autonomous-code-security-google-talk|Autonomous Code Security at Google]] — Source: [un]prompted, San Francisco, March 3, 2026 — [conference abstracts](https://unpromptedcon.org/abstract-march2026/) ·...
 - [[aws-agentic-ai-security-scoping-matrix-blog|Agentic AI Security Scoping Matrix]] — The AWS Security Blog post that introduced the Agentic AI Security Scoping Matrix on 2025-11-21.
 - [[beyond-the-chatbot-talk|Beyond the Chatbot: Delivering an Agentic SOC]] — Source: [Conference abstracts page](https://unpromptedcon.org/abstract-march2026/) · [Conference agenda](https://unpromptedcon.org/#)
 - [[binaryshield-ai-fingerprints-talk|AI Fingerprints for Threat Detection]] — A practitioner talk by Natalie Isak and Waris Gill (Microsoft) at the Unprompted Conference (March 2026) on BinaryShield.
