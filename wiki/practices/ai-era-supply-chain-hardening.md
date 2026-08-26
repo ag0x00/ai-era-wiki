@@ -3,7 +3,7 @@ type: practice
 title: "AI-Era Software Supply Chain Hardening"
 address: c-000105
 created: 2026-05-24
-updated: 2026-08-20
+updated: 2026-08-25
 tags:
   - practices
   - supply-chain
@@ -35,6 +35,7 @@ related:
   - "[[guardfall-shell-injection-audit]]"
   - "[[securing-agentic-coding]]"
   - "[[owasp-ai-exchange]]"
+  - "[[agentic-ai-threat-classes-2026]]"
 sources:
   - https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/03/CSA_research_note_nsa_allied_ai_supply_chain_security_guidance_20260317-csa-styled.pdf
   - https://labs.cloudsecurityalliance.org/research/csa-whitepaper-collapsing-exploit-window-ai-speed-vulnerabil/
@@ -150,7 +151,7 @@ Existing SDLC threat models assume a human-paced attacker. The [[sdlc-in-the-ai-
 
 Controls:
 - Add AI-augmented adversary scenarios to existing threat modeling sessions: how would an attacker use LLMs to scan this dependency graph, identify hallucination targets in our AI-generated code, and exploit a newly published CVE in our supply chain before we see the KEV alert?
-- Include training data, model weights, and MCP servers as supply chain assets in the threat model, per the [[nsa-ai-ml-supply-chain-guidance-2026|NSA six-component taxonomy]].
+- Include training data, model weights, and MCP servers as supply chain assets in the threat model, per the [[nsa-ai-ml-supply-chain-guidance-2026|NSA six-component taxonomy]]. The confidentiality threat against the first two is named: the [[owasp-ai-exchange|OWASP AI Exchange]] scopes development-time data leak and direct development-time model leak to theft from the development environment including the supply chain ([`/go/devdataleak/`](https://owaspai.org/go/devdataleak/), [`/go/devmodelleak/`](https://owaspai.org/go/devmodelleak/)).[^aix-devleak-scm] [[agentic-ai-threat-classes-2026|The insider-threat class page]] names the route (insider access, compromised repositories, or weak storage controls) and the answering controls, `SEGREGATE DATA` and `CONF COMPUTE`.
 - Update the threat model at least quarterly given the pace of AI capability advancement.
 
 ### ST-4 [Builds with AI] — Migrate to Safer Model Formats for Internal AI Assets
@@ -234,5 +235,6 @@ The agent's own configuration belongs in the hardening plan alongside its depend
 [^federal-ssdf]: [OMB M-26-05 — Adopting a Risk-based Approach to Software and Hardware Security](https://www.whitehouse.gov/wp-content/uploads/2026/01/M-26-05-Adopting-a-Risk-based-Approach-to-Software-and-Hardware-Security.pdf), January 23 2026. Rescinds the government-wide SSDF self-attestation mandate of M-22-18 (2022, under EO 14028) and its companion M-23-16; agencies now set risk-based, tailored assurance requirements and the CISA Common Form becomes optional.
 [^slsa-l3]: [SLSA v1.0 — Security levels](https://slsa.dev/spec/v1.0/levels), 2023. Build Level 3 requires a hardened build platform and non-falsifiable provenance.
 [^cpcsc]: [Public Services and Procurement Canada — Government of Canada introduces Level 1 of the Canadian Program for Cyber Security Certification](https://www.canada.ca/en/public-services-procurement/news/2026/04/government-of-canada-introduces-level-1-of-canadian-program-for-cyber-security-certification.html), April 2026. Defence-procurement supplier certification based on the Cyber Centre's ITSP.10.171 (NIST SP 800-171-aligned); Level 1 is an annual self-assessment/attestation, required in select defence contracts from Summer 2026.
+[^aix-devleak-scm]: [OWASP AI Exchange — Development-time data leak](https://owaspai.org/go/devdataleak/), retrieved 2026-08-25, and [OWASP AI Exchange — Direct development-time model leak](https://owaspai.org/go/devmodelleak/), retrieved 2026-08-25. Both threats scope unauthorized access to train/test data or model attributes to theft from the development environment, including the supply chain.
 [^aix-devsecurity-scm]: [OWASP AI Exchange — DEV SECURITY](https://owaspai.org/go/devsecurity/), retrieved 2026-08-20. The statement that models comprise associated artifacts of varying file formats rather than a single homogeneous file, that all of them must be considered to verify integrity, that no standard yet exists, and that the OpenSSF Model Signing SIG is defining a specification.
 [^aix-scm-scm]: [OWASP AI Exchange — SUPPLY CHAIN MANAGE](https://owaspai.org/go/supplychainmanage/), retrieved 2026-08-20. The pre-execution assessment set for models from less trusted sources: format and serialization validation, opcode and serialized-pattern scanning, architecture inspection by listing layers without loading, and sandboxed runtime behaviour testing under resource, system-call and network monitoring.

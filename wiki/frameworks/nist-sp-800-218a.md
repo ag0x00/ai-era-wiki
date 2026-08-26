@@ -3,7 +3,7 @@ type: framework
 title: "NIST SP 800-218A: SSDF GenAI Profile"
 address: c-000048
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-25
 tags:
   - frameworks
   - nist
@@ -61,6 +61,7 @@ related:
   - "[[model-layer-attacks]]"
   - "[[memory-poisoning]]"
   - "[[supply-chain-security-for-agents]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[securing-agentic-coding]]"
 sources:
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
@@ -219,7 +220,7 @@ SP 800-218A is the federal-anchor citation across multiple [[agentic-ai-security
 | D8 Supply Chain & AI-BOM | `PS.3.2` (provenance via SBOM/SLSA); `PW.4.4.R1`/`R2` (verify acquired models); `PS.1.3.R4` (weight protection); `PS.2.1.R1`/`R2` (hashes/signatures) — strong, no AI-BOM schema |
 | D9 Operations & Human Factors | `RV.2.2.R2`/`C1` (stop-using-model criteria and rollback); `RV.1.3.R1`/`R2` (disclosure policy) — partial |
 
-The [[agentic-ai-security-cmm-2026|CMM]]'s D8 cites 218A as the supply-chain reference; this page and the [[agentic-ai-security-cmm-crosswalk|CMM crosswalk]] now carry the task-level anchors per the standards review.
+The [[agentic-ai-security-cmm-2026|CMM]]'s [[agentic-ai-security-cmm-d8-supply-chain|D8]] cites 218A as the supply-chain reference; this page and the [[agentic-ai-security-cmm-crosswalk|CMM crosswalk]] now carry the task-level anchors per the standards review. D8's federal anchor requires provenance tracking and points at generic SBOM/SLSA but prescribes no AI-specific bill-of-materials schema, which is the gap D8's own AI-BOM discussion names.
 
 ## Placement in this wiki
 

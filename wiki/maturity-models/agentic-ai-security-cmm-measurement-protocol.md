@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Measurement Protocol (Assessor's Handbook)"
 address: c-000157
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-25
 tags:
   - maturity-models
   - measurement
@@ -67,7 +67,7 @@ This protocol measures deployments; [[standards-validation-methodology-2026-05|t
 - **D8 splits model-consumer from model-producer.** Producer-grade AI-BOM generation, training-data provenance, and ML-VEX are not required of a consumer, and SLSA Build has no Level 4 in v1.0.
 - **Per-task capability tokens are L5 with a regulated-buyer L5+ caveat**, because no platform-native implementation ships.
 - **D4/D7 reasoning-layer controls — CoT auditing, groundedness, behavioral detection — sit at preview or experimental status, short of GA**, so a defensible L4 may be assembled from preview and OSS components with a documented production date.
-- Per [[owasp-ai-exchange|OWASP AI Exchange]] `LEAST MODEL PRIVILEGE` and `OVERSIGHT`: **D3 L3 grades a synchronous fail-closed gate, D3 L4 grades a cumulative-session ledger and depth-limited subset-only delegation, D3 L5 grades per-request approval tokens alongside capability tokens, D4 L4 grades semantic tool validation on high-impact calls (evidenced in-house, since the dry-run and cross-family-judge specifications have no named product), D7 L4 grades a routed disposition on the session-drift signal plus control-state-change monitoring, D9 L3 grades the high-risk approval record, and D9 L4 grades a stated involvement measure and an adversarially tested oversight path.**
+- **`LEAST MODEL PRIVILEGE` and `OVERSIGHT` add graded criteria across four domains.** Per [[owasp-ai-exchange|OWASP AI Exchange]]: D3 L3 grades a synchronous fail-closed gate, D3 L4 grades a cumulative-session ledger and depth-limited subset-only delegation, D3 L5 grades per-request approval tokens alongside capability tokens, D4 L4 grades semantic tool validation on high-impact calls (evidenced in-house, since the dry-run and cross-family-judge specifications have no named product), D7 L4 grades a routed disposition on the session-drift signal plus control-state-change monitoring, D9 L3 grades the high-risk approval record, and D9 L4 grades a stated involvement measure and an adversarially tested oversight path.
 
 ## Three-stage assessment
 
@@ -87,7 +87,7 @@ The org under assessment delivers:
 1. **Scope letter** identifying which agents are in-scope. Each agent gets an Agent Card (system manifest) with: name, owner (human), purpose, data classifications touched, tools/MCP servers used, deployment shape (chatbot / RAG / MCP server / mesh, and for coding agents the specific variant — interactive local, unattended local, delegated cloud, CI-runner, or fleet, per [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], since the variants differ in which plane carries enforcement), production status, downstream consumers.
 2. **Agent inventory** export — the full registry, even if some agents are out-of-scope for this assessment. Required so the assessor can detect shadow agents.
 3. **Document request list response.** Standard requests: AI security policy, IR runbook, last red-team report, AI-BOM artifact, gateway config, identity graph export, latest decommission drill report, last quarterly board AI-risk pack.
-4. **AI impact assessment** for each in-scope agent, with the signatory and the conclusion recorded. The Exchange makes impact analysis a first-class program element and lists what it must consider, including whether the required transparency can be provided, whether privacy rights can be achieved, whether unwanted bias can be sufficiently mitigated, whether the data may be used for the purpose, and whether AI is needed to solve the problem at all ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). ISO/IEC 42001 A.5 already anchors D1 in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]; this request is what makes it assessable.
+4. **AI impact assessment** for each in-scope agent, with the signatory and the conclusion recorded. The Exchange makes impact analysis a first-class program element and lists what it must consider, including whether the required transparency can be provided, whether privacy rights can be achieved, whether unwanted bias can be sufficiently mitigated, whether the data may be used for the purpose, and whether AI is needed to solve the problem at all ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). ISO/IEC 42001 A.5 already anchors D1 in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]; this request makes that anchor assessable.
 5. **AI-initiative inventory** covering deployed *and* proposed uses, distinct from the agent-registry export at item 2. The registry holds what was built; the Exchange's first governance iteration surveys current AI use, AI ideas, concerns, and where the AI expertise sits ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). An initiative that has not reached deployment appears in one and not the other.
 
 A document missing from item 3 scores automatic L1 in the relevant domain. Items 4 and 5 carry no such rule yet: the D1 ladder grades neither the impact assessment nor the initiative inventory at any rung, so the assessor collects both as context and records their absence as a finding rather than scoring it. Closing that gap is a change to [[agentic-ai-security-cmm-d1-governance|the D1 criteria]], not to this protocol.
@@ -142,7 +142,7 @@ Each domain has a structured interview block. Sample questions are NOT exhaustiv
 - For RAG: show me document attestation at ingest. Show a poisoned-document detection.
 - For memory: how do you detect memory poisoning? Show a recent detection.
 - Show me the [[cognitive-file-integrity|cognitive file integrity]] baseline for agent `[X]`'s `IDENTITY.md` / system prompt.
-- Where is the corpus you validate the model against stored, and who can write to it? Show that reaching the model or its training data does not reach that corpus.
+- Where is the corpus you validate the model against stored, and who can read or write to it? Show that reaching the model or its training data does not reach that corpus.
 - Are canary tokens deployed in the system prompt? When was the last leak alert?
 
 **D7 Observability & Detection**
@@ -204,7 +204,7 @@ The assessor MUST observe at least one live action per high-risk-tier agent in t
 
 - One L3+ assessment requires: live OTel trace + live PDP decision + live HITL gate fire (synthetic if necessary; where D3 scores L5, the fire is checked against a bound approval token).
 - One L4 assessment requires the above plus: live behavioral-drift event from the agent behavioral monitoring system + live red-team eval run.
-- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the L4→L5 prerequisite gate (≥2-quarter L4 evidence, AIUC-1/ISO 42001 cert dated within last quarter, continuity-test execution proof).
+- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the prerequisite gate into L5 (≥2-quarter L4 evidence, AIUC-1/ISO 42001 cert dated within last quarter, continuity-test execution proof).
 - One L5+ assessment requires the above plus: live attestation chain verification (TEE-backed guardrail execution proof) OR live cascade-detection rule fire OR live cross-vendor AI-BOM reconciliation, AND verification of the named-contributor artifact.
 
 Static configs alone do not satisfy live-observation requirements at L3+.
@@ -304,7 +304,7 @@ Borrowed from ISO/IEC 42006:2025 (auditor competence) and CMMC C3PAO licensing p
 ## Open gaps in this protocol
 
 > [!gap] Known unfilled spots
-> 1. **Quantitative metric thresholds at L4.** "Quantitative HITL-fatigue indicators" should have specific thresholds (rubber-stamp rate < X%, queue age p95 < Y minutes) — these are TBD pending production data from early adopters.
+> 1. **Quantitative metric thresholds at L4.** "Quantitative HITL-fatigue indicators" lacks specific thresholds (rubber-stamp rate < X%, queue age p95 < Y minutes) — TBD pending production data from early adopters.
 > 2. **Synthetic incident library.** Stage 2 calls for synthetic incidents but no library exists yet. Candidates: PoisonedRAG corpus injection, ClawHavoc-class skill swap, prompt-injection via retrieved doc, A2A impersonation.
 > 3. **Self-attestation form.** Some orgs will start with a self-assessment before engaging an external assessor. A self-attestation form would mirror this protocol but with relaxed live-observation requirements.
 > 4. **Continuous-assessment mode.** Some orgs will want continuous (vs annual) assessment — what does the protocol look like in always-on mode? Mindgard CART is the closest model on the testing side.

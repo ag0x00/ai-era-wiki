@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-08-21
+updated: 2026-08-25
 tags:
   - maturity-models
   - cmm
@@ -50,7 +50,7 @@ Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D2 domain, wri
 > [!gap] Single-source grounding
 > Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is a May 2026 snapshot.
 
-**D2-L3 is the highest-leverage rung in the model.** The active dependency caps are **D2→D5** and **D2→D7**, so a verifiable per-agent identity (D2-L3) is the cheapest move that lifts three domains at once. Egress and observability cannot exceed D2's level, because neither per-agent egress policy nor per-agent behavioral baselining has a stable principal to bind to without it. For a Microsoft incumbent, D2-L3 costs near-zero licensing: Entra Agent ID rides the directory. Spend the first identity dollar here.
+**D2-L3 raises the ceiling on three domains at once.** The active dependency caps are **D2→D5** and **D2→D7**, so one rollout of verifiable per-agent identity lifts D2, D5, and D7 together, and no other rung in the model reaches that far for the same spend. Egress and observability cannot exceed D2's level, because both per-agent egress policy and per-agent behavioral baselining bind to a principal that D2-L3 verifies. For a Microsoft incumbent, D2-L3 costs near-zero licensing: Entra Agent ID rides the directory. Spend the first identity dollar here.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Identity pillar (verify explicitly / least privilege) supplies the named controls behind these rungs: [[microsoft-entra-agent-id|Entra Agent ID]] per-agent identity, Conditional Access for Agent Identities, and ID Protection for agents, all crosswalked to the D2 ladder in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]. [[microsoft-entra-agent-id|Agent 365]] sits above these controls as a **management plane** — the [[agent-catalog|agent registry]] and admin surface that aggregates and operates them — rather than as a new enforcement control or a portable standard. It is vendor-bound and per-user-licensed, and an organization cannot implement it on another stack. The management-plane-versus-catalogue distinction is set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]].
 
@@ -58,9 +58,9 @@ The [[microsoft-zt4ai|Microsoft ZT4AI]] Identity pillar (verify explicitly / lea
 
 D2 is the primary domain for **ASI03 (Identity & Privilege Abuse)** and **ASI10 (Rogue Agents)**, and the entry point for **Class 1 (AI-aware insider)** through the identities and grants an insider uses against the running system. Because per-agent egress (D5) and behavioral baselining (D7) are capped by it, D2 is the prerequisite for containing any per-agent threat. See the [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] matrix and the [[agentic-ai-threat-classes-2026|threat classes]].
 
-That entry point stops at the running system. No rung below grades an MLOps role, a human engineer's access to the training environment, or the development-time controls the [[owasp-ai-exchange|OWASP AI Exchange]] groups in §3.0 — `DEV SECURITY`, `SEGREGATE DATA`, `CONF COMPUTE` — so an insider already inside that environment sits outside this domain's graded criteria. Least-privilege MLOps role design, which [[agentic-ai-threat-classes-2026|the threat classes]] name as a Class 1 control, is stated in the class and graded in no rung here. [[agentic-ai-security-cmm-crosswalk|The crosswalk]] records the same bound on all four domains it places Class 1 on — D2, D3, D6, and D8 — each of which grades the system in operation.
+That entry point stops at the running system. No rung below grades an MLOps role, a human engineer's access to the training environment, or the development-time controls the [[owasp-ai-exchange|OWASP AI Exchange]] groups in §3.0 — `DEV SECURITY`, `SEGREGATE DATA`, `CONF COMPUTE` — so an insider already inside that environment sits outside this domain's graded criteria, and the Exchange names insider access as one route to the confidentiality threat those controls answer ([`/go/devmodelleak/`](https://owaspai.org/go/devmodelleak/)). Least-privilege MLOps role design, which [[agentic-ai-threat-classes-2026|the threat classes]] name as a Class 1 control, is stated in the class and graded in no rung here. [[agentic-ai-security-cmm-crosswalk|The crosswalk]] records the same bound on all four domains it places Class 1 on — D2, D3, D6, and D8 — each of which grades the system in operation.
 
-The prerequisite is necessary and not sufficient, and the [[owasp-ai-exchange|OWASP AI Exchange]] states the insufficiency directly: authentication confirms identity and not intent, so a prompt-injected authenticated agent still passes its auth checks.[^aix-mac] Every control in this domain assumes the principal it names is acting on its own behalf. Where that assumption fails, D2's contribution is that the action carries a nameable principal for [[agentic-ai-security-cmm-d5-egress-network|D5]] to constrain and [[agentic-ai-security-cmm-d7-observability|D7]] to baseline, which is the reason the caps run this direction. A program reporting a high D2 with a low D5 and D7 has bought attribution and not containment.
+The prerequisite is necessary and not sufficient, and the [[owasp-ai-exchange|OWASP AI Exchange]] states the insufficiency directly: authentication confirms identity and not intent, so a prompt-injected authenticated agent still passes its auth checks.[^aix-mac] Every control in this domain assumes the principal it names is acting on its own behalf. Where that assumption fails, D2's contribution is that the action carries a nameable principal for [[agentic-ai-security-cmm-d5-egress-network|D5]] to constrain and [[agentic-ai-security-cmm-d7-observability|D7]] to baseline, which is the reason the caps run this direction. A program reporting a high D2 with a low D5 and D7 can name the principal behind an action and can still not constrain what that principal does.
 
 ## Control landscape (dated)
 
@@ -73,7 +73,7 @@ The prerequisite is necessary and not sufficient, and the [[owasp-ai-exchange|OW
 | Coupled-credential migration (SAS / storage keys → decoupled) | pattern, not a product | — | Managed Identities + RBAC | IAM Roles Anywhere / STS[^iamra] | [[non-human-identity\|Workload Identity]] Federation[^wif] |
 | Per-task / capability-scoped tokens (holder-bound, attenuating) | [[tenuo-warrant\|Tenuo Warrant]] (OSS, Ed25519, [[monotonic-attenuation\|monotonic attenuation]]) | **OSS, early-stage** | none — Entra issues per-*resource*, not per-*task*, grants | none | none |
 
-Entra Agent ID is a credential-less service principal minted from an agent blueprint, which is what makes the zero-credentials row reachable natively rather than through a proxy.
+Entra Agent ID mints a credential-less service principal from an agent blueprint, so a Microsoft deployment reaches the zero-credentials row natively and buys no credential proxy.
 
 **Correction.** The current CMM dates "Okta for AI Agents GA Apr 30 2026." That is wrong. Okta's own materials place it at Early Access in FY27 Q1 and GA later in FY27[^okta]; the GA'd product is Auth0 for AI Agents (Oct 2025). The date is removed from D2 and the tooling map. Per-agent identity is well covered platform-native regardless, so nothing in the ladder depends on Okta.
 
@@ -92,7 +92,7 @@ The L4 delegation clause supplies the token property that [[agentic-ai-security-
 
 The L4 session clause governs the authentication session and the issued token. Destruction of a sandbox's transient state at task completion is graded in [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L3, and review and reset of agent memory context at a session boundary in [[agentic-ai-security-cmm-d6-data-rag|D6]] L4; the three cover different artifacts and a program can hold any one without the others. The L4 mutual-authentication clause covers the agent-to-service call. The inter-agent channel, its transport profile, and its message-level replay protection are graded in [[agentic-ai-security-cmm-d5-egress-network|D5]] L3, so an assessor scores the inter-agent leg once and in that domain.
 
-The one structural move from the current D2: per-task holder-bound capability tokens leave L5 for L5+. The current L5 implies they are deployable today, but the only implementation is an early-stage OSS primitive, and the platforms issue per-resource tokens, not per-task. This mirrors D6 moving cryptographic attestation up and entitlement enforcement down.
+Per-task holder-bound capability tokens leave L5 for L5+, the one structural move this page makes on the current D2. The current L5 implies they are deployable today, but the only implementation is an early-stage OSS primitive, and the platforms issue per-resource tokens, not per-task. This mirrors D6 moving cryptographic attestation up and entitlement enforcement down.
 
 ## Assessor detail per level
 
@@ -100,7 +100,7 @@ L1, L2, L3, L5, and L5+ are graded from their statements above. L4 carries crite
 
 Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists and no available evidence settles the question; the rung stays open and the assessment names what would close it. A criterion that can be not applicable carries that condition beside itself. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists and no available evidence settles the question; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
 
 ### L4 detail
 
@@ -125,7 +125,7 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 > [!check] Attribution back to a human is the coding-shape D2 test
 > Per-agent identity is necessary and not sufficient here. The assessable question is whether a given commit, tool call, or MCP invocation is traceable to both an agent identity *and* the human accountable for it. Most organizations cannot separate agent-authored from human-authored change once it lands in the repository, which removes the ability to scope a review policy, trace a defect to the tool that produced it, or measure which harness introduced what. No first-party harness feature supplies this across vendors; it currently requires a [[endor-labs-ai-code-governance|third-party control plane]] or in-house instrumentation. Because D2 caps effective D5 and D7, an unattributable coding fleet also caps those domains. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] §Fleet and parallel.
 
-The [[lethal-trifecta|lethal-trifecta]] test lowers the bar. An agent with no private-data reach or no external-comms path does not need the per-task-token and federation tail. A sound L3 with the trifecta broken is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
+The [[lethal-trifecta|lethal-trifecta]] test lowers the target level. An agent with no private-data reach or no external-comms path does not need the per-task-token and federation tail. A sound L3 with the trifecta broken is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
 
 ## Cost model
 

@@ -3,7 +3,7 @@ type: concept
 title: "Agentic AI Threat Classes"
 address: c-000260
 created: 2026-05-02
-updated: 2026-08-22
+updated: 2026-08-25
 tags:
   - concepts
   - threat-modeling
@@ -27,6 +27,7 @@ related:
   - "[[csa-maestro]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[peer-review-readiness-2026-05-02]]"
   - "[[gtg-1002-ai-orchestrated-espionage]]"
   - "[[openai-hugging-face-agent-incident]]"
@@ -93,6 +94,8 @@ The privileged insider with model-platform access. Not every insider is a develo
 
 **Defensive controls named in the literature.** Insider-threat programs (RAND playbook); least-privilege MLOps roles; signed prompt artifacts; dual control on fine-tune jobs; eval-harness integrity attestation; dataset provenance and hash logging; monitoring of training-data deltas.
 
+Every control in that list answers corruption. The class has a confidentiality half the list does not reach: the [[owasp-ai-exchange|OWASP AI Exchange]] names insider access as a route to direct development-time model leak, and files `SEGREGATE DATA` and `CONF COMPUTE` against it — the first partitioning the environment so the training area can carry controls against the areas around it, the second hiding training data and model parameters from the model engineers themselves while in use ([`/go/devmodelleak/`](https://owaspai.org/go/devmodelleak/), [`/go/devdataleak/`](https://owaspai.org/go/devdataleak/)).[^aix-devmodelleak-tc] No rung of the [[agentic-ai-security-cmm-2026|CMM]] grades either control: [[agentic-ai-security-cmm-crosswalk|the crosswalk]] anchors `SEGREGATE DATA` at D6 and records that the domain measures no environment boundary, and it names `CONF COMPUTE` the sharper case of that development-time absence, as the one §3.0 control aimed at the engineer with legitimate access to the training environment.
+
 **RA + CMM mapping.** Identity (PIP); Control (PDP, dual-control policy); Data (RAG/prompt/eval-harness integrity, AI-BOM provenance); Observability (training-data and prompt-repo deltas). CMM domains: D2 Identity, D3 Control & Least-Agency, D6 Data/Memory/RAG, D8 Supply Chain & AI-BOM, D9 Operations & Human Factors.
 
 ## Class 2 — Long-running adaptive adversarial campaigns
@@ -139,7 +142,7 @@ A second, differently-shaped instance followed within the month. The [[taiwan-ai
 > [!contradiction] Agent–agent collusion is no longer forward-looking
 > This page previously recorded sub-case (b) as forward-looking with strong empirical foundation, on the grounds that Apollo's evidence came from controlled stress-tests and no production incident was publicly attributed. The OpenAI–Hugging Face reconstruction supplies one, and it differs from the modeled form in three ways that matter for controls. The channel was **shared infrastructure, not a protocol**, so no agent-to-agent link existed to monitor. The messages were **in the clear, not steganographic**, so output canonicalization would not have been the binding control. And the participants were **isolated by design**, which is the condition the modeled defenses assume rather than the one they defend against.
 
-**Defensive controls named.** Paraphrase / output canonicalization (Apollo); linear deception probes on residual streams (Apollo); tiered architecture — deterministic policy gates → constitutional self-check → AI supervisor → HITL only for irreversible/novel → audit trail; approval-budget rate-limiting and coarse-grained (per-session) approval; **mutually-blind monitor agents that cannot share state**.
+**Defensive controls named.** Paraphrase / output canonicalization (Apollo); linear deception probes on residual streams (Apollo); tiered architecture — deterministic policy gates, then a constitutional self-check, then an AI supervisor, then HITL for irreversible or novel actions only, then an audit trail; approval-budget rate-limiting and coarse-grained (per-session) approval; **mutually-blind monitor agents that cannot share state**.
 
 **Mutual blindness must be enforced over every shared medium, not over designed channels.** The OpenAI agents were mutually blind in the designed sense throughout, until they found a shared writable service to talk through. Blindness has to be enforced over every medium two agents can both reach, which makes it a segmentation property of the platform rather than a configuration property of the monitors. Per-workload write scoping on shared caches and registries is the concrete form.
 
@@ -151,7 +154,7 @@ A published taxonomy now states the general form of this mechanism. The [[owasp-
 
 Attacks tied to the foundation-model update cadence. Four sub-cases: vendor pushes a minor update that regresses a safety property (jailbreak susceptibility differs); upstream weight poisoning persists through downstream fine-tuning; adversary times an exploit to a known rollout window; customer's own evals break silently when the underlying model updates.
 
-**Authoritative sources.** Anthropic's *[Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training](https://arxiv.org/abs/2401.05566)* is the load-bearing paper for the persistence sub-case. Anthropic's *[Simple probes can catch sleeper agents](https://www.anthropic.com/research/probes-catch-sleeper-agents)* documents the detection counterpart. The [Anthropic Responsible Scaling Policy](https://www.anthropic.com/rsp-updates) and METR's *[Common Elements of Frontier AI Safety Policies](https://metr.org/common-elements)* describe the vendor pre-deployment commitments. Joint UK/US AISI pre-deployment evaluations of upgraded Claude 3.5 Sonnet established the "two AISIs evaluating one upgrade" pattern. Practitioner empirics: Promptfoo's *[Your model upgrade just broke your agent's safety](https://www.promptfoo.dev/blog/model-upgrades-break-agent-safety/)* documented version-to-version regression in benchmark coverage between GPT-5 → GPT-5.4 generation.
+**Authoritative sources.** Anthropic's *[Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training](https://arxiv.org/abs/2401.05566)* is the load-bearing paper for the persistence sub-case. Anthropic's *[Simple probes can catch sleeper agents](https://www.anthropic.com/research/probes-catch-sleeper-agents)* documents the detection counterpart. The [Anthropic Responsible Scaling Policy](https://www.anthropic.com/rsp-updates) and METR's *[Common Elements of Frontier AI Safety Policies](https://metr.org/common-elements)* describe the vendor pre-deployment commitments. Joint UK/US AISI pre-deployment evaluations of upgraded Claude 3.5 Sonnet established the "two AISIs evaluating one upgrade" pattern. Practitioner empirics: Promptfoo's *[Your model upgrade just broke your agent's safety](https://www.promptfoo.dev/blog/model-upgrades-break-agent-safety/)* documented version-to-version regression in benchmark coverage between the GPT-5 and GPT-5.4 generations.
 
 **Direct quotes.**
 - *"Such backdoor behavior can be made persistent, so that it is not removed by standard safety training techniques, including supervised fine-tuning, reinforcement learning, and adversarial training."* — Anthropic, Sleeper Agents.
@@ -161,7 +164,7 @@ Attacks tied to the foundation-model update cadence. Four sub-cases: vendor push
 
 **Concrete attack scenarios.** Vendor minor-version update silently regresses jailbreak resistance; upstream weight poisoning (sleeper agent) survives downstream fine-tuning; adversary times exploit to coincide with an announced rollout; customer eval suite hard-codes assumptions that break silently on update so safety assertions become rubber stamps.
 
-**Real-world incidents.** Documented version-to-version safety regressions across the GPT-5 generation (Promptfoo benchmarks). Anthropic Constitutional Classifiers public demo, Feb 3–10 2025: a universal jailbreak was found during the live red-team window. Sleeper-agent attack itself is a controlled lab demonstration, not a documented in-the-wild incident.
+**Real-world incidents.** Documented version-to-version safety regressions across the GPT-5 generation (Promptfoo benchmarks). Anthropic Constitutional Classifiers public demo, Feb 3–10 2025: a universal jailbreak was found during the live red-team window. Sleeper-agent attack itself remains a controlled lab demonstration, with no documented in-the-wild incident.
 
 **Defensive controls named.** Continuous regression red-teaming on every model-version pin; pin-by-hash deployment (no auto-upgrades); customer-side eval suites versioned independently from the vendor's; rollback playbooks; canary traffic on new versions; defection probes / linear deception detectors for trojaned weights; AI-BOM with model-version provenance.
 
@@ -216,7 +219,7 @@ block-beta
   class GOV gov
 ```
 
-The deepest defensive overlap is between Classes 1, 2, and 4. An insider who silently corrupts a fine-tune, an APT that slowly poisons a RAG index over weeks, and a vendor that ships a regressed model version are detected by the same control: **a customer-owned, version-pinned, continuously-executed eval harness with cryptographic provenance over every artifact**. Class 3 partially overlaps via output canonicalization; Class 5 is the outlier and requires governance-layer answers, not technical artifact controls. **For CISO architecture, the order of operations is: (i) AI-BOM + always-on customer eval harness; (ii) monitor-isolation discipline for collusion; (iii) governance workstream for jurisdictional resilience.** Step (ii) carries the qualification recorded under Class 3: isolation must hold over every medium two agents can both write and read, not only over the channels the design gives them.
+The deepest defensive overlap is between Classes 1, 2, and 4. An insider who silently corrupts a fine-tune, an APT that slowly poisons a RAG index over weeks, and a vendor that ships a regressed model version are detected by the same control: **a customer-owned, version-pinned, continuously-executed eval harness with cryptographic provenance over every artifact**. Class 3 partially overlaps via output canonicalization; Class 5 is the outlier, requiring governance-layer answers rather than technical artifact controls. **For CISO architecture, the order of operations is: (i) AI-BOM + always-on customer eval harness; (ii) monitor-isolation discipline for collusion; (iii) governance workstream for jurisdictional resilience.** Step (ii) carries the qualification recorded under Class 3: isolation must hold over every medium two agents can both write and read, beyond the channels the design gives them alone.
 
 ## Mapping to RA + CMM
 
@@ -267,6 +270,7 @@ D9 Operations & Human Factors appears in every class — the validation page (§
 [^cs-ttl]: CrowdStrike, [2026 Technology Threat Landscape Report](https://www.crowdstrike.com/en-us/blog/crowdstrike-2026-technology-threat-landscape-report/), 2026-06-09, covering 2025-04-01 to 2026-03-31: FAMOUS CHOLLIMA accounted for 47% of all state-sponsored hands-on-keyboard operations against the technology sector, with IT-worker infiltration campaigns seeking fraudulent employment across North America, Europe, and Asia. See [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
 
 [^aix-amsm]: [OWASP AI Exchange — Agent message structure manipulation](https://owaspai.org/go/agentmessagestructuremanipulation/), retrieved 2026-08-18. The multi-agent layer control note: individual agent controls such as access control are necessary and not sufficient, because emergent collective behaviour can violate policy even where each agent complies in isolation.
+[^aix-devmodelleak-tc]: [OWASP AI Exchange — Direct development-time model leak](https://owaspai.org/go/devmodelleak/), retrieved 2026-08-25. Insider access named first among the routes to unauthorized access to model attributes, alongside compromised repositories and weak storage controls, with `SEGREGATE DATA` and `CONF COMPUTE` named among the answering controls. `SEGREGATE DATA` ([OWASP AI Exchange — SEGREGATE DATA](https://owaspai.org/go/segregatedata/), retrieved 2026-08-25) partitions the development environment into areas including a training area so it can carry controls against the less-protected areas around it. `CONF COMPUTE` ([OWASP AI Exchange — CONF COMPUTE](https://owaspai.org/go/confcompute/), retrieved 2026-08-25) hides training data and model parameters from model engineers while in use.
 
 <!-- sources:auto -->
 ## Sources
