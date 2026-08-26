@@ -32,7 +32,9 @@ related:
   - "[[owasp-ai-exchange]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[standards-validation-methodology-2026-05]]"
+  - "[[threat-modeling-for-ai]]"
 sources:
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
   - "BSIMM observation/assertion model"
   - "CMMC 2.0 three-level assessment guides"
@@ -42,7 +44,7 @@ sources:
 
 > Companion to [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]. Supplies the assessment instrument the model lacked.
 
-The assessment instrument the validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 rec #2) flagged as missing. It fixes the evidence bar, so two assessors auditing the same organization reach the same verdict.
+This protocol is the assessment instrument the validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 rec #2) flagged as missing. It fixes the evidence bar, so two assessors auditing the same organization reach the same verdict.
 
 The protocol is modeled on **BSIMM's observation/assertion structure** (descriptive: record what is actually done) layered with **CMMC 2.0's three-level assessment guide pattern** (prescriptive: match observed state against documented criteria). It applies to all 9 CMM domains.
 
@@ -86,7 +88,7 @@ The org under assessment delivers:
 
 1. **Scope letter** identifying which agents are in-scope. Each agent gets an Agent Card (system manifest) with: name, owner (human), purpose, data classifications touched, tools/MCP servers used, deployment shape (chatbot / RAG / MCP server / mesh, and for coding agents the specific variant — interactive local, unattended local, delegated cloud, CI-runner, or fleet, per [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], since the variants differ in which plane carries enforcement), production status, downstream consumers.
 2. **Agent inventory** export — the full registry, even if some agents are out-of-scope for this assessment. Required so the assessor can detect shadow agents.
-3. **Document request list response.** Standard requests: AI security policy, IR runbook, last red-team report, AI-BOM artifact, gateway config, identity graph export, latest decommission drill report, last quarterly board AI-risk pack.
+3. **Document request list response.** Standard requests: AI security policy, IR runbook, last red-team report, AI-BOM artifact, gateway config, identity graph export, latest decommission drill report, last quarterly board AI-risk pack, and the current [[threat-modeling-for-ai|threat model]]. The input surfaces, trust boundaries, and agents that threat model enumerates set the coverage baseline for Stage 2's evidence collection and Stage 3's coverage statement.
 4. **AI impact assessment** for each in-scope agent, with the signatory and the conclusion recorded. The Exchange makes impact analysis a first-class program element and lists what it must consider, including whether the required transparency can be provided, whether privacy rights can be achieved, whether unwanted bias can be sufficiently mitigated, whether the data may be used for the purpose, and whether AI is needed to solve the problem at all ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). ISO/IEC 42001 A.5 already anchors D1 in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]; this request makes that anchor assessable.
 5. **AI-initiative inventory** covering deployed *and* proposed uses, distinct from the agent-registry export at item 2. The registry holds what was built; the Exchange's first governance iteration surveys current AI use, AI ideas, concerns, and where the AI expertise sits ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). An initiative that has not reached deployment appears in one and not the other.
 
@@ -98,7 +100,7 @@ Three parallel tracks: interviews, artifacts, live observation. The interview tr
 
 #### Interview script (per domain)
 
-Each domain has a structured interview block. Sample questions are NOT exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier.
+Each domain has a structured interview block. Sample questions are not exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier.
 
 **D1 Governance**
 - Who chairs the AI Risk Committee? When did it last meet? Show the minutes.
@@ -121,6 +123,7 @@ Each domain has a structured interview block. Sample questions are NOT exhaustiv
 - Trigger a synthetic high-risk-tier action for agent `[X]` — does HITL fire?
 - Show me a lethal-trifecta detection event from the last 30 days.
 - Show me a sequence of individually permitted actions that your policy engine blocked in aggregate.
+- Send a crafted tool invocation directly to the access-control or API gateway layer, bypassing the LLM entirely. Show it denied. A restriction that exists only in the system prompt is not enforced against an injected instruction.
 
 **D4 Runtime & Guardrails**
 - What guardrails sit in front of agent `[X]`'s LLM call? In-line, sidecar, or external?
@@ -129,6 +132,7 @@ Each domain has a structured interview block. Sample questions are NOT exhaustiv
 - What's your sandbox grain — per-call, per-task, per-agent? Show the sandbox config.
 - For a high-impact tool, show me what the call would have done before it ran, and show me who or what compared that to the user's request.
 - Which operations require a human approval that no automated check can discharge? Show one approval recorded on a call that passed every automated check.
+- Present a crafted instruction through the same route untrusted data actually takes into the agent — a retrieved document, a tool output — rather than through the user channel. Show it filtered. A vendor's indirect-mode flag states the capability exists, not that this deployment's augmentation route reaches it.
 
 **D5 Egress & Network**
 - What proxy / gateway sits between agent `[X]` and external tools?
@@ -136,6 +140,7 @@ Each domain has a structured interview block. Sample questions are NOT exhaustiv
 - Show me a tool-poisoning detection event. What does the gateway do when it fires?
 - Where does agent `[X]`'s outbound traffic actually go? Show the egress allowlist.
 - Show me the orchestrator's own network policy. Which outbound paths does it hold, and which sub-agent carries the external access it needs?
+- Which of your MCP servers has been tested as a web service — SSRF, injection, and cross-site scripting — rather than only as a prompt surface? Show the report.
 
 **D6 Data, Memory & RAG**
 - For a closed-corpus bot (the common shape): when user `[A]` and user `[B]` ask the same question, does the agent trim answers to each one's entitlements? Show answer-time enforcement under the *querying* user's identity, not a service identity. Show the last oversharing assessment and the remediation record on the reachable corpus.
@@ -151,6 +156,7 @@ Each domain has a structured interview block. Sample questions are NOT exhaustiv
 - Walk me through a multi-tool red-team eval — which tools were used ([[promptfoo|Promptfoo]] / [[pyrit|PyRIT]] / [[garak|Garak]] / [[mindgard-cart|Mindgard CART]])?
 - Show me a [[mcp-cves-q1-2026|MCP CVEs Q1 2026]]-class CVE alert flowing through your detection pipeline.
 - Show me an alert that fired because a control was relaxed rather than because an agent misbehaved.
+- Show me the result of a test in which the agent attempted to suppress or alter its own action records. What did the log store do?
 
 **D8 Supply Chain & AI-BOM**
 - First establish scope: is the org a model *consumer* or a model *producer* for agent `[X]`? Producer-grade evidence (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) is required only of producers; a consumer is scored on verification and reconciliation of acquired artifacts.
@@ -188,11 +194,11 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 |---|---|---|---|---|---|
 | D1 | Policy doc; RACI | Risk Committee minutes; deployment-gate evidence; decision-rights matrix per agent type; prohibited-action and oversight-tier list; reaper SLA report; provider responsibility matrix with residue | KPI dashboard; board pack; gap report; **standards crosswalk matrix**; readiness assessment against a recognized scheme | Current third-party assurance (ISO/IEC 42001 preferred, or AIUC-1, or reviewed internal-equivalent); board-attested risk metrics; ≥1-year committee minutes | Named-contributor evidence; published research; external observability dataset |
 | D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens | Cred-proxy logs; Cedar/OPA repo; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
-| D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny | Promotion-gate runbook (org-authored); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
-| D4 | Provider safety config | Hook code; firewall logs; sandbox config | AlignmentCheck logs; CodeShield findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval | Platform-enforcement coverage report (zero opt-outs); multi-language eval log; classifier refresh receipts; response-leak alert log; latency/cost dashboard with fail-closed proof | TEE attestation chain; CaMeL split production evidence; bypass-class eval with remediation timeline |
+| D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny; direct-gateway invocation test showing deny | Promotion-gate runbook (org-authored); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
+| D4 | Provider safety config | Hook code; firewall logs; sandbox config; indirect-injection test routed through the augmentation path | AlignmentCheck logs; CodeShield findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval | Platform-enforcement coverage report (zero opt-outs); multi-language eval log; classifier refresh receipts; response-leak alert log; latency/cost dashboard with fail-closed proof | TEE attestation chain; CaMeL split production evidence; bypass-class eval with remediation timeline |
 | D5 | Outbound proxy config | Gateway config; certs; A2A enforcement profile | Token-exchange logs; rule sets; CVE-tagged log; orchestrator network policy showing no outbound path | Mesh topology with zero-bypass proof; per-task token samples; SSRF closure verification; CVE-feed auto-quarantine log | Sigstore-for-MCP verifier; A2A drift rule library; cross-cloud reconciliation report |
 | D6 | Source labels | Scan results; CFI baseline; validation-corpus storage and access policy; corpus scope decision; retained-identifier exception list | Attestation logs; rollback drill report; removal justification measured against model performance; source-to-derived linkage record; recorded obfuscation residuals | Drift dashboard; threshold-justification memo; conflict-flagging logs; canary-token deployment log; rollback drill RTO report | Per-doc attestation chain; taint-lattice implementation; ZK-proof verifier logs |
-| D7 | Tool-call audit log | Trace samples; span schema validation | Behavioral-monitoring dashboards; multi-tool eval reports with ID tags; session-drift disposition log (review-routed or suspended); control-state-change alert samples | DeepTracing graph; agent-aware playbook samples; prompt-volume-to-alert dashboard ≥1 quarter; analyst-actionable rate report | Cascade rule registry with thresholds; multi-agent joint-baseline statistics; forward-pass activation monitor |
+| D7 | Tool-call audit log | Trace samples; span schema validation | Behavioral-monitoring dashboards; multi-tool eval reports with ID tags; session-drift disposition log (routed or suspended); control-state-change alert samples; adversarial log-integrity test record | DeepTracing graph; agent-aware playbook samples; prompt-volume-to-alert dashboard ≥1 quarter; analyst-actionable rate report | Cascade rule registry with thresholds; multi-agent joint-baseline statistics; forward-pass activation monitor |
 | D8 | Inventory (consumer + producer); model and development documentation register | AI-BOM artifact; sigstore log; lockfile/SCA evidence | Sig-verified registry; reconciliation report; ID-tagged ML-VEX `[P]` | Closed-loop diagram with SLA evidence; SLSA Build L3 attestation; runtime/build AI-BOM reconciliation; ML-VEX feed `[P]` | hermetic/reproducible-build evidence beyond SLSA L3 (research-stage — SLSA v1.0 has no L4); cross-vendor AI-BOM federation; MCP name-to-binary signing; standards-WG named contribution |
 | D9 | Runbook artifact | Latency/cost dashboard; reaper logs; canary proof; IR runbook naming notification instrument, owner, clock; high-risk category definition; tamper-evident audit extract; highest-risk delay + SoD config | HITL-fatigue KPIs; benign-drift dashboard; drill reports; AI-VEX feed; involvement-measure record (method stated); oversight red-team report; approval-rate-limit config with baseline-exceedance alerts | SLA-bounded controls-update log; clean-state attestations; quarterly continuity-test report; HITL-fatigue dashboard within thresholds | External observability dataset; named contributions to CoSAI IR / OWASP / ATLAS; coordinated-disclosure leadership artifacts |
 
@@ -225,16 +231,16 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 | 5 | L4 + L5 artifacts AND closed-loop evidence over ≥2 quarters AND **L4→L5 prerequisite gate met** (see below). |
 | 5+ | L5 + L5+ artifacts AND research-stage primitives in production with documented exit criteria AND active named contribution to one or more standards bodies (PR / RFC / spec authorship). |
 
-**Level 3 is the auditable inflection.** Below L3, the org is structurally vulnerable and the assessment is largely about whether evidence supports L2 vs L1. At L3+, the assessor is checking platform-level enforcement, ID tagging, and live behavior.
+**Auditability begins at Level 3.** Below L3, the org is structurally vulnerable and the assessment is largely about whether evidence supports L2 over L1. At L3+, the assessor checks platform-level enforcement, ID tagging, and live behavior.
 
-**Reaching L5 from a stable L4 is a campaign that runs over quarters.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
+**Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
 
 1. **≥2 quarters of stable L4 operation** across all 9 domains — no regression in the per-domain matrix during the look-back window. Evidence: prior assessment reports OR continuous-monitoring artifacts (KPIs, drift telemetry, red-team results, AI-BOM reconciliation) covering the period.
 2. **Independent third-party assurance scheduled or current** against a recognized scheme — ISO/IEC 42001 surveillance cycle (preferred), an AIUC-1 readiness assessment with an accredited auditor, or a documented internal-equivalent attestation under independent review. The scheme is the org's choice; no single certification is mandated (see [[aiuc-1-critical-evaluation|the AIUC-1 evaluation]] and [[agentic-ai-security-cmm-d1-governance|D1 deep dive]]). Evidence: signed engagement letter, surveillance-audit report, or reviewed attestation.
 3. **Bus-factor ≥2** with documented continuity test — a deputy has executed the runbook end-to-end at least once in the look-back window ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery). Evidence: continuity-test report.
 4. **Gap-closure plan from floor-domain to L5** — even if the floor is L5, the program must document what L5+ work it is or is not pursuing in each domain.
 
-Meeting every per-domain L5 row without the gate evidence scores **L4-stable** rather than L5. The gate is asymmetric: claiming L4 from L3 does not require it, because that jump is a step rather than a campaign.
+Meeting every per-domain L5 row without the gate evidence scores **L4-stable** rather than L5. The gate is asymmetric: claiming L4 from L3 does not require it, because that jump is a single step rather than a sustained campaign.
 
 **L5+ Leading Edge tier.** A separate, optional tier that requires L5 across all 9 domains *plus* (a) at least one research-stage primitive in production deployment with documented exit criteria back to L5 if the pilot fails, and (b) active named contribution to one or more standards bodies (PR / RFC / spec authorship, not membership only). L5+ is bleeding-edge and unachievable without category-creation work. Most assessments terminate at L5; L5+ scoring is appropriate for frontier labs, hyperscaler platforms, and dedicated AI-security research shops.
 
@@ -261,10 +267,12 @@ Final report contains, at minimum:
 2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion`. The L5+ column may be left as "n/a" if the engagement does not target L5+.
 3. **Weakest-domain explanation** — which domain holds the weakest effective score, whether a dependency cap fired, and the strategic rationale (if any) for an intentional trade-off (Stripe-style architectural-containment).
 4. **ID-tagged finding registry** — every finding with `ASI##` / AIVSS score / `AML.T####` / CVE.
-5. **Crosswalk extract** — for each L4+ finding, the corresponding Annex IV / AIUC-1 / ISO 42001 anchor (per [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]).
-6. **Top 5 prioritized recommendations** — what would move the weakest effective score up by one level (and any candidate dependency-rule promotions to monitor).
-7. **Re-assessment cadence** — recommendation for next assessment date (tied to AIUC-1 quarterly cadence at L5).
-8. **Active rule-set version** — must be cited (e.g. "scored under dependency-rules v1, 2026-05-04"). When the rule set is revised, prior assessments retain their original version; re-scoring under a new version is a separate engagement.
+5. **Test-coverage statement** — for each of the four agentic test layers (LLM reasoning, tool execution, infrastructure, inter-agent communication), which was exercised, to what depth, and against what corpus size. A threat category the programme did not test is reported as a finding rather than omitted.
+6. **Reproduction rate per finding** — each finding carries reproduction steps and the rate at which the attack succeeded across runs. A single successful run and a run that succeeds nine times in ten are different findings, and a pass/fail verdict records neither.
+7. **Crosswalk extract** — for each L4+ finding, the corresponding Annex IV / AIUC-1 / ISO 42001 anchor (per [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]).
+8. **Top 5 prioritized recommendations** — what would move the weakest effective score up by one level (and any candidate dependency-rule promotions to monitor).
+9. **Re-assessment cadence** — recommendation for next assessment date (tied to AIUC-1 quarterly cadence at L5).
+10. **Active rule-set version** — must be cited (e.g. "scored under dependency-rules v1, 2026-05-04"). When the rule set is revised, prior assessments retain their original version; re-scoring under a new version is a separate engagement.
 
 ## Sample assessment timeline
 
@@ -305,7 +313,7 @@ Borrowed from ISO/IEC 42006:2025 (auditor competence) and CMMC C3PAO licensing p
 
 > [!gap] Known unfilled spots
 > 1. **Quantitative metric thresholds at L4.** "Quantitative HITL-fatigue indicators" lacks specific thresholds (rubber-stamp rate < X%, queue age p95 < Y minutes) — TBD pending production data from early adopters.
-> 2. **Synthetic incident library.** Stage 2 calls for synthetic incidents but no library exists yet. Candidates: PoisonedRAG corpus injection, ClawHavoc-class skill swap, prompt-injection via retrieved doc, A2A impersonation.
+> 2. **Synthetic incident library.** Stage 2 calls for synthetic incidents and no library exists yet. Document 5 of the [[owasp-ai-exchange|Exchange]] supplies the procedure for one of the four candidates without supplying the corpus: its prompt-injection procedure specifies, for the prompt-injection-via-retrieved-doc candidate, how an attack set is assembled, tailored, paired with detections, routed through the augmentation path, and varied. That candidate's gap is now the corpus and its curation rather than the method. Document 5 also publishes an evasion procedure — feasibility criteria and the four search types — for a threat outside this candidate list. Remaining candidates with no published procedure: PoisonedRAG corpus injection, ClawHavoc-class skill swap, A2A impersonation.
 > 3. **Self-attestation form.** Some orgs will start with a self-assessment before engaging an external assessor. A self-attestation form would mirror this protocol but with relaxed live-observation requirements.
 > 4. **Continuous-assessment mode.** Some orgs will want continuous (vs annual) assessment — what does the protocol look like in always-on mode? Mindgard CART is the closest model on the testing side.
 > 5. **Provenance-labeled evidence records.** The evidence schema carries no field distinguishing a finding observed in active runtime from one read out of a template, a doc example, or a declarative manifest, so a single template catalog can weigh as heavily as a running control. The [[agentshield|AgentShield]] design is the only sourced instance and stays parked:

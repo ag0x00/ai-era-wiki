@@ -39,17 +39,21 @@ related:
   - "[[artifactory]]"
   - "[[owasp-ai-exchange]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[ai-era-supply-chain-hardening]]"
   - "[[nist-sp-800-218a]]"
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 ---
 
 # Agentic AI Security CMM — D8 Supply Chain & AI-BOM (Deep Dive)
 
-Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D8 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. The threat this domain answers is Supply Chain Compromise (T17) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] — tampered models, libraries, tools, or build environments entering the agent — whose mitigation playbook calls for signed agent cards, prompt templates, and model definitions backed by verifiable AI SBOMs, the same artifacts the levels below grade. The recalibration splits D8 along the **model-consumer vs model-producer axis**. Much of the current D8 (build-time ML-BOM generation for self-trained models, training-data provenance, weight protection, ML-VEX publishing) is producer-grade and over-scoped for the common enterprise, which is a model consumer. This is why the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] landed D8 at L1: the domain measured producer controls [[agentic-ai-security-cmm-recalibration-method-2026|the persona]] has no occasion to operate and gave no credit for the consumer controls it could switch on cheaply. The split holds outside this recalibration: the Exchange states it as a general property of its whole catalogue, since most of its controls are familiar conventional security countermeasures unless the organization trains its own model ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/seceducate/`](https://owaspai.org/go/seceducate/)).
+Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D8 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. The threat this domain answers is Supply Chain Compromise (T17) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] — tampered models, libraries, tools, or build environments entering the agent — whose mitigation playbook calls for signed agent cards, prompt templates, and model definitions backed by verifiable AI SBOMs, the same artifacts the levels below grade. The recalibration splits D8 along the **model-consumer vs model-producer axis**. The common enterprise is a model consumer, and much of the current D8 — build-time ML-BOM generation for self-trained models, training-data provenance, weight protection, ML-VEX publishing — is producer-grade and over-scoped for it.
+
+This is why the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] landed D8 at L1: the domain measured producer controls [[agentic-ai-security-cmm-recalibration-method-2026|the persona]] has no occasion to operate and gave no credit for the consumer controls it could switch on cheaply. The split holds outside this recalibration: the Exchange states it as a general property of its whole catalogue, since most of its controls are familiar conventional security countermeasures unless the organization trains its own model ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/seceducate/`](https://owaspai.org/go/seceducate/)).
 
 ## On this page
 
@@ -76,6 +80,8 @@ The consequence for this domain is a scope addition rather than a level change: 
 
 The development-environment half of that finding now has a normative source alongside the incident. Software components run inside AI development as well as in production — tooling to prepare training data or train a model — so the development environment carries open-source package vulnerabilities, CWEs, exposed secrets and sensitive-data leaks, and standard application security testing tools leave those risks undetected ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/secdevprogram/`](https://owaspai.org/go/secdevprogram/)). The same control confirms this domain's agentic scope from a second permalink: the AI supply chain encompasses the capabilities agents interact with dynamically, skills and services reached through MCP among them.
 
+**No rung in this domain grades a test of the verification it requires.** Document 5 of the [[owasp-ai-exchange|OWASP AI Exchange]] lists supply-chain scenarios among the agentic red-teaming paths a programme extends beyond single-turn LLM tests: substituted model variants and tampered tool implementations, run to see whether they bypass output filtering.[^aix-testing] That is the adversarial counterpart to the signature verification the ladder grades at L4, which is read from the deployed configuration and from load-time records. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] already asks a supply-chain question — how a `ClawHavoc`-class event is detected — and the two questions differ: detection asks what the monitoring surfaced, and the substitution scenario asks what the load-time and output-filtering controls did while a tampered artifact ran.
+
 ## Control landscape (dated)
 
 | Capability | What ships today | Status (May 2026) | Platform-native (MS / AWS / GCP) |
@@ -89,7 +95,7 @@ The development-environment half of that finding now has a normative source alon
 | MCP server / skill provenance | Official MCP Registry — namespace auth | **preview; no cryptographic name-to-binary signing in the spec**[^mcpreg] | MS publish path; no single Azure service for MCP-specific protection |
 | Runtime AI-BOM (reconciliation) | Miggo DeepTracing | newly GA (≈2 months past launch)[^miggo] | vendor platform, not hyperscaler-native |
 
-Three corrections apply to the rungs above. First, CycloneDX ML-BOM has been stable since v1.5 and **v1.7 is current**, so a pinned version dates the criterion and the capability form ("a CycloneDX or SPDX-3.0 ML-BOM") is the durable one. Second, **SLSA Level 4 does not exist in SLSA v1.0** (the Build Track is L1–L3), so the current L5+ "SLSA Level 4" criterion references deprecated numbering and belongs at research-stage. Third, **GitHub Artifact Attestations (GA; SLSA L2 free, L3 via reusable workflows) is the platform-native build-integrity path the current D8 omits**.
+Three corrections apply to the D8 rungs as the CMM currently states them. First, CycloneDX ML-BOM has been stable since v1.5 and **v1.7 is current**, so a pinned version dates the criterion and the capability form ("a CycloneDX or SPDX-3.0 ML-BOM") is the durable one. Second, **SLSA Level 4 does not exist in SLSA v1.0** (the Build Track is L1–L3), so the current L5+ "SLSA Level 4" criterion references deprecated numbering and belongs at research-stage. Third, **GitHub Artifact Attestations (GA; SLSA L2 free, L3 via reusable workflows) is the platform-native build-integrity path the current D8 omits**.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Devices / supply-chain pillar (verify explicitly) supplies the Microsoft-native controls behind these rungs — Defender for Cloud AI model scanning in CI/CD and AI-SPM AI-BOM discovery — crosswalked to D8 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which keeps MCP tool-integrity a documented gap.
 
@@ -139,7 +145,7 @@ The documentation clause at L2 is a scope addition rather than a level change, a
 
 **A model consumer reaches L3 on verification alone.** Inventory plus an AI-BOM at deploy, dependency scanning with lockfiles, and signature-verification and backdoor-scanning of acquired models covers it; producer-grade generation, provenance, and ML-VEX do not apply. A closed first-party model supply leaves a low artifact-swap surface.
 
-**The coding copilot is the slopsquatting frontier and carries the heaviest D8.** Lockfile enforcement, pre-install SCA on AI-suggested dependencies, MCP and IDE-extension provenance, and AI-assisted dependency remediation are all first-order. Its dependency channel is irreducibly external, so the trifecta lever that lowers the target level in other domains does not apply here.
+**The coding copilot carries the heaviest D8 load, because slopsquatting lands on its dependency channel.** Lockfile enforcement, pre-install SCA on AI-suggested dependencies, MCP and IDE-extension provenance, and AI-assisted dependency remediation are all first-order. That channel is irreducibly external, so the trifecta lever that lowers the target level in other domains leaves this shape where it is.
 
 **A provider owes its consumers a signature over every artifact it publishes** — namespace provenance today, cryptographic signing when it ships, and federated disclosure throughout.
 
@@ -169,7 +175,7 @@ For an E5 + GitHub-Enterprise incumbent, licensing is near-zero through L3 and l
 
 ## Open questions
 
-- Runtime AI-BOM (Miggo) is press-release-fresh with no independent deployment evidence. That evidence is the variable that moves runtime reconciliation from L4-aspirational to L4-standard.
+- Runtime AI-BOM (Miggo) launched in March 2026 and carries no independent deployment evidence. Runtime reconciliation stays L4-aspirational until that evidence exists.
 - The MCP Registry gives namespace provenance only; no name-to-binary signing exists, so the MCP-provider L5+ rung references a capability that does not yet ship.
 - No GA hyperscaler-native ML-BOM generator exists; consumers rely on OSS or COTS.
 - SLSA v1.0 has no L4 and no model-specific track; reproducible builds for stochastic weights are unsolved.
@@ -182,7 +188,7 @@ For an E5 + GitHub-Enterprise incumbent, licensing is near-zero through L3 and l
 
 ## Cross-domain dependency note
 
-D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 caps D6)** in [[agentic-ai-security-cmm-dependency-rules|the dependency rules]], a candidate rather than an active rule: a poisoned skill, MCP server, or model can corrupt the retrieval corpus, so a weak D8 will eventually cap D6. It is gated on a second documented cross-domain incident and not yet binding; the D8 deep-dive should not assume independence from D6.
+D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 caps D6)** in [[agentic-ai-security-cmm-dependency-rules|the dependency rules]], a candidate rather than an active rule: a poisoned skill, MCP server, or model can corrupt the retrieval corpus, so a weak D8 will eventually cap D6. It is gated on a second documented cross-domain incident and not yet binding, so a D8 assessment reads D6 alongside it.
 
 ## Notes
 
@@ -196,6 +202,7 @@ D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 
 [^jfrog]: [JFrog — Detect malicious AI models](https://docs.jfrog.com/security/docs/detect-malicious-ai-models), 2026. Pickle / backdoor detection.
 [^mcpreg]: [Model Context Protocol — official registry](https://modelcontextprotocol.io/registry/about), 2026. Namespace-level provenance; no cryptographic name-to-binary signing.
 [^miggo]: [Miggo Security — runtime AI-BOM, agentic detection, MCP monitoring](https://securityboulevard.com/2026/03/miggo-security-expands-runtime-defense-platform-with-ai-bom-agentic-detection-and-mcp-monitoring/), 2026. DeepTracing launch (Mar 2026).
+[^aix-testing]: [OWASP AI Exchange — AI security testing](https://owaspai.org/go/testing/), retrieved 2026-08-19. Document 5, agentic red-teaming exercise paths: the supply-chain scenario names substituted model variants and tampered tool implementations that bypass output filtering.
 [^aix-discrete]: [OWASP AI Exchange — DISCRETE](https://owaspai.org/go/discrete/), retrieved 2026-08-20. The implementation statement placing technical details of the AI system as an asset inside information security management, yielding asset management, data classification, awareness education, policy and inclusion in risk analysis, and the three stated examples, of which the second is preferring a model type or implementation attackers are less familiar with.
 [^aix-supplychainmanage]: [OWASP AI Exchange — SUPPLY CHAIN MANAGE](https://owaspai.org/go/supplychainmanage/), retrieved 2026-08-20. The four new supplied assets (data, models, model hosting, abilities) including fine-tuning artifacts such as LoRA modules; the statement that the supply chain may include the own organization, making data provenance part of the control; the provenance record set (origin and versioning of models and datasets including pre-trained model lineage, checksums or hashes, training-data sources and augmentation steps, dependencies and environment requirements, ownership and authorship); the lifecycle update points; the supplier-evaluation dimensions; the pre-execution model-assessment set; and the Limitations block on incomplete provenance claims and probabilistic trust decisions.
 [^aix-devdataleak-d8]: [OWASP AI Exchange — Development-time data leak](https://owaspai.org/go/devdataleak/), retrieved 2026-08-25. The scoping of training- or test-data theft to unauthorized access through the development environment, including the supply chain.

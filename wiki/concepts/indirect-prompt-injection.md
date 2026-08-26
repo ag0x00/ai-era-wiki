@@ -2,7 +2,7 @@
 type: concept
 title: "Indirect Prompt Injection"
 created: 2026-04-30
-updated: 2026-08-20
+updated: 2026-08-25
 origin: aggregated
 tags:
   - concepts
@@ -44,9 +44,21 @@ related:
   - "[[orchestration-hijacking|Orchestration Hijacking]]"
 sources:
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 ---
 
 # Indirect Prompt Injection
+
+## On this page
+
+- [Definition](#definition)
+- [Anatomy of an indirect injection](#anatomy-of-an-indirect-injection)
+- [Limits of model-level IPI resolution](#limits-of-model-level-ipi-resolution)
+- [The Three Retrieval Paths](#the-three-retrieval-paths)
+- [Containment Patterns](#containment-patterns)
+- [Notable Real-World IPI Cases](#notable-real-world-ipi-cases)
+- [Mapping to Frameworks](#mapping-to-frameworks)
+- [See Also](#see-also)
 
 ## Definition
 
@@ -103,6 +115,8 @@ Real-world attacks almost exclusively use paths 2 and 3.
 | [[cognitive-file-integrity\|Cognitive file integrity]] | Detect when retrieved content modifies behavioral rules persisted to disk (SOUL.md, IDENTITY.md). See [[supply-chain-security-for-agents\|Supply Chain Security for Agentic AI]]. |
 | Egress filtering | Make the "send" leg of the [[lethal-trifecta\|Lethal Trifecta]] detectable and constrainable |
 
+Each row above names a control visible in configuration; its operation is not. The Exchange's prompt-injection test procedure specifies the route that establishes the difference: attack inputs are presented to the insertion mechanism the untrusted data uses — the retrieved document, the tool output, the augmented field — as well as to the user channel, which may require a dedicated testing API that lets the input follow that route through every filtering, detection, and insertion step.[^aix-testing] The procedure also notes that inserting the attack inputs may require tactics typical of indirect injection, "Ignore previous instructions" among them. A control tested only from the user channel proves resistance to direct injection alone; it says nothing about the paths in this table.
+
 ## Notable Real-World IPI Cases
 
 - **[[jules-ai-kill-chain|Jules AI compromise]]** (Aug 2025): hidden injection in a GitHub issue body hijacked Google's Jules coding agent into full RCE.
@@ -138,6 +152,7 @@ Coding agents widened the delivery surface in mid-2026. [[guardfall-shell-inject
 
 [^aix-ipi]: [OWASP AI Exchange — Indirect prompt injection](https://owaspai.org/go/indirectpromptinjection/), retrieved 2026-08-18. Indirect injection as the typically dominant threat class where a system retrieves external content, invokes tools, or shares memory across sessions; the comparison to remote code execution.
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Stored injection as a subclass of indirect injection; multi-agent propagation to a higher-privileged agent; the statement that prompt injection is not solvable at the model layer alone.
+[^aix-testing]: [OWASP AI Exchange — Testing against Prompt injection](https://owaspai.org/go/testingpromptinjection/), retrieved 2026-08-19. The requirement to route attack inputs through the same insertion mechanism untrusted data uses, the dedicated-testing-API note, and the "Ignore previous instructions" tactic named for indirect payloads.
 
 <!-- sources:auto -->
 ## Sources

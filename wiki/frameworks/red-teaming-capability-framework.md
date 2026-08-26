@@ -3,7 +3,7 @@ type: framework
 title: "Red Teaming Capability Framework"
 address: c-000211
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-08-25
 tags:
   - frameworks
   - red-teaming
@@ -27,7 +27,9 @@ related:
   - "[[ai-security-larsen-effect-talk]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-reference-architecture]]"
+  - "[[owasp-ai-exchange]]"
 sources:
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "[[.raw/reports/red-teaming-project/00-readme.md]]"
   - "[[.raw/reports/red-teaming-project/01-gap-analysis.md]]"
   - "[[.raw/reports/red-teaming-project/03-summary-opinion.md]]"
@@ -35,9 +37,19 @@ sources:
 
 # Red Teaming Capability Framework
 
-The Red Teaming Capability Framework is an internal proposal for structuring a red-teaming services capability for first-party agentic AI. It organizes the work into five tiers, each answering one operational question, from the governance constraints that authorize a test down to the evaluation of outside vendors. Its governing principle is that a capability is what a team can demonstrate, not the set of standards it can name.
+The Red Teaming Capability Framework is an internal proposal for structuring a red-teaming services capability for first-party agentic AI. It organizes the work into five tiers, each answering one operational question, from the governance constraints that authorize a test down to the evaluation of outside vendors.
 
-**A standard named is not a capability owned.** Each tier below is defined by a question it must answer and by the evidence that answers it; the named standards are reference inputs to that work, not substitutes for it. A team that can cite every framework in Tier 2 but cannot produce an attack transcript, a coverage matrix, or a deterministic replay holds no Tier 2 capability.
+A team holds a tier when it can demonstrate that tier's work. Each tier is defined by a question it must answer and by the evidence that answers it; the standards named under it are reference inputs to that work. A team that can cite every framework in Tier 2 and cannot produce an attack transcript, a coverage matrix, or a deterministic replay holds no Tier 2 capability. [Criteria for a capability tier](#criteria-for-a-capability-tier) sets out what counts as evidence.
+
+## On this page
+
+- [The five tiers](#the-five-tiers)
+- [Criteria for a capability tier](#criteria-for-a-capability-tier)
+- [Critical appraisal](#critical-appraisal)
+- [Mapping to the Agentic AI Security CMM and Reference Architecture](#mapping-to-the-agentic-ai-security-cmm-and-reference-architecture)
+- [Open questions and caveats](#open-questions-and-caveats)
+- [See also](#see-also)
+- [Notes](#notes)
 
 ## The five tiers
 
@@ -57,7 +69,7 @@ Reference inputs by layer:
 
 - **Model layer** — [[owasp-llm-top-10|OWASP LLM Top 10 (2025)]].
 - **Agent reasoning and orchestration** — [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]].
-- **Skill and behavior execution** — OWASP Agentic Skills Top 10 (AST01–AST10). This is an OWASP project in active development, not a ratified Top 10; treat its coverage as provisional.[^ast]
+- **Skill and behavior execution** — OWASP Agentic Skills Top 10 (AST01–AST10). This OWASP project is in active development and ratification as a Top 10 is still pending; treat its coverage as provisional.[^ast]
 - **Protocol and infrastructure** — an MCP Top 10. No standalone OWASP list is ratified; the most concrete instantiation is Microsoft's Azure-scoped "OWASP MCP Top 10 for Azure" mapping.[^mcp] See [[mcp-security|MCP security]].
 - **Cross-cutting techniques** — [[mitre-atlas|MITRE ATLAS]].
 - **Cross-layer model** — [[csa-maestro|CSA MAESTRO]] for tracing a threat across the layers above.
@@ -66,13 +78,15 @@ Reference inputs by layer:
 
 *How do we test, and how do we judge the result?* Scenario design, non-determinism handling, evidence standards, metrics, severity models, and human validation.
 
-Reference inputs: the OWASP GenAI Red Teaming Guide and the CSA Agentic AI Red Teaming Guide for method; [[owasp-aivss|OWASP AIVSS]] (v0.8, pre-1.0) for severity scoring; [[google-saif|Google SAIF]] and [[cosai|CoSAI]] principles as the secure-by-design anchor. A numeric severity scale answers *how severe* only when paired with calibration of *what each score requires* — see [Critical appraisal](#critical-appraisal).
+Reference inputs: the OWASP GenAI Red Teaming Guide; the CSA Agentic AI Red Teaming Guide, which the [[owasp-ai-exchange|OWASP AI Exchange]] describes as a collaboration between the CSA and the Exchange and directs readers to use as the primary agentic methodology; the Exchange's own document 5, which publishes step-by-step test procedures for prompt injection and for evasion;[^aix-testing] [[owasp-aivss|OWASP AIVSS]] (v0.8, pre-1.0) for severity scoring; [[google-saif|Google SAIF]] and [[cosai|CoSAI]] principles as the secure-by-design anchor. A numeric severity scale answers *how severe* only when paired with calibration of *what each score requires* — see [Critical appraisal](#critical-appraisal).
+
+The same document answers the tier's non-determinism question, and its answer is an evidence rule: a finding carries reproduction steps and an observed reproduction rate across runs, because probabilistic model behaviour makes a single pass or fail an unreliable reading.[^aix-testing] A rate separates an attack that lands once in ten attempts from one that lands nine times in ten, and a pass/fail verdict records neither.
 
 ### Tier 4 — Continuous operations (when and how often to test)
 
 *When, and how often, do we test?* Regression testing, drift detection, observability, and safe re-testing.
 
-Required capability, stated independent of any product: continuous and automated red teaming integrated into CI/CD and MLOps pipelines; behavioral baseline monitoring with runtime anomaly detection; scan-on-change triggers for model updates, tool additions, and prompt modifications; and ingestion of current campaign intelligence, such as Snyk's ToxicSkills audit of the agent-skill registry[^toxic] and the [[clawhavoc|ClawHavoc]] skill-marketplace compromise. Automation augments human adversaries; it does not replace them, and emergent or cross-agent behavior still requires [[hitl|human review]].
+Required capability, stated independent of any product: continuous and automated red teaming integrated into CI/CD and MLOps pipelines; behavioral baseline monitoring with runtime anomaly detection; scan-on-change triggers for model updates, tool additions, and prompt modifications; and ingestion of current campaign intelligence, such as Snyk's ToxicSkills audit of the agent-skill registry[^toxic] and the [[clawhavoc|ClawHavoc]] skill-marketplace compromise. Automation augments human adversaries by supplying scale and repeatability, and emergent or cross-agent behavior still requires [[hitl|human review]].
 
 ### Tier 5 — Vendor evaluation and compliance reporting
 
@@ -82,26 +96,27 @@ Reference inputs: the OWASP Vendor Evaluation Criteria for AI Red Teaming Provid
 
 ## Criteria for a capability tier
 
-The tiers describe coverage; the following rules are what convert coverage into a defensible capability, and they are the part the standards lists alone do not supply.
+The tiers describe coverage. Four rules turn coverage into a defensible capability, and the standards lists supply none of them.
 
+- **A tier is held per element, and holding the tier means holding every element it names.** Tier 2 names four layers (model, agent, skill, protocol); Tier 3 names six (scenario design, non-determinism handling, evidence standards, metrics, severity models, human validation). A team evidencing two of Tier 3's six holds Tier 3 capability for those two and not the tier — record coverage as `N of M elements held`, never as the bare tier number, until every named element carries its own evidence.
 - **Stable capability IDs.** Every capability carries a fixed identifier (for example, `T3.MET.04`). Assets — questionnaires, response tables, decks, training material — map to capabilities; an asset that references no capability is out of scope.
-- **Evidence is mandatory for any capability claimed as primary.** Acceptable evidence is a threat model, a coverage matrix, an attack transcript or trace, a deterministic replay artifact, a scoring output, a proof-of-concept result, or an authorization artifact. Marketing language, context-free screenshots, "we can build it" statements, and one-off demos without logs do not count. A capability that cannot be evidenced must not be claimed as primary.
+- **Evidence is mandatory for any capability claimed as primary.** Acceptable evidence is a threat model, a coverage matrix, an attack transcript or trace, a deterministic replay artifact, an observed reproduction rate across runs, a scoring output, a proof-of-concept result, or an authorization artifact. Marketing language, context-free screenshots, "we can build it" statements, and one-off demos without logs do not count. A capability that cannot be evidenced must not be claimed as primary.
 - **Named anti-patterns are prohibited.** Claiming full coverage without evidence, conflating jailbreak demos with systemic red teaming, and selling capabilities that cannot be staffed or evidenced are explicit failure modes the framework exists to prevent.
 
 ## Critical appraisal
 
-The framework's weaknesses are structural, not in its choice of standards. The standards selection is current and well-targeted; the risks lie in how the framework is read and in what it asserts without showing.
+The framework's weaknesses are structural. Its standards selection is current and well-targeted; the risks lie in how the framework is read and in what it asserts without showing.
 
 **Inventory read as capability.** Presented as five lists of standards, the framework invites the exact failure its own governing rules prohibit: treating an enumeration of frameworks as proof of capability. The evidence rules above are the corrective, and they belong at the front of the framework rather than as an appendix to the lists.
 
 > [!contradiction] Coverage list vs. evidence rule
 > A tier rendered as a bullet list of standards reads as "we cover this." The framework's own rule is that coverage is unproven until a threat model, transcript, replay, or score exists. The lists and the evidence requirement must be read together, or the framework contradicts itself.
 
-**Maturity is not flat.** The tiers place ratified, load-bearing standards (NIST AI RMF 1.0, ISO/IEC 42001, MITRE ATLAS, OWASP LLM Top 10) alongside pre-1.0 and in-flight artifacts (the AST proposal, AIVSS v0.8, the MCP list as a vendor-scoped mapping). Citing all of them at equal authority overstates what can currently anchor an evidence-defensible claim. The skill-layer and protocol-layer taxonomies will move as they ratify, and any coverage claim built on them moves with them.
+**The tiers cite ratified standards and in-flight drafts at equal authority.** They place ratified, load-bearing standards (NIST AI RMF 1.0, ISO/IEC 42001, MITRE ATLAS, OWASP LLM Top 10) alongside pre-1.0 and in-flight artifacts (the AST proposal, AIVSS v0.8, the MCP list as a vendor-scoped mapping). Citing all of them at equal authority overstates what can currently anchor an evidence-defensible claim. The skill-layer and protocol-layer taxonomies will move as they ratify, and any coverage claim built on them moves with them.
 
-**Automation does not replace adversaries.** Tier 4's continuous-platform language risks the documented evaluation pitfall of treating automation as a substitute for experienced red teamers. The framework's own operating rule is augmentation: automation supplies scale, repeatability, and regression coverage, while human testers supply novelty and the discovery of emergent and cross-agent behavior. Tier 4 should name the human-to-automation division explicitly rather than leave it implied.
+**Tier 4 leaves the human-to-automation division implied.** Its continuous-platform language risks the documented evaluation pitfall of treating automation as a substitute for experienced red teamers. The framework's own operating rule is augmentation: automation supplies scale, repeatability, and regression coverage, while human testers supply novelty and the discovery of emergent and cross-agent behavior. Tier 4 should state that division outright.
 
-**A scale without calibration is false precision.** A 0–5 rubric or an AIVSS score produces consistent-looking numbers only when each level is calibrated — when the evidence that distinguishes an exemplary finding from an adequate one is written down per item. Without that calibration, inter-rater reliability is low and a precise-looking score conceals subjective judgment. This is the gap an evaluator most easily misses, because the number appears objective.
+**A 0–5 rubric or an AIVSS score produces reliable numbers only where each level is calibrated** — where the evidence that distinguishes an exemplary finding from an adequate one is written down per item. Without that calibration, inter-rater reliability is low and a precise-looking score conceals subjective judgment. Calibration is the gap an evaluator most easily misses, because the number appears objective. Document 5 of the Exchange names four dimensions for the agentic case — autonomous execution scope, persistence across sessions, multi-agent propagation potential, and irreversibility of impact — and attaches no thresholds to any of them,[^aix-testing] so it supplies the axes a calibration would run along and not the calibration.
 
 > [!gap] Grounding is argued, not measured
 > The framework asserts the five-tier partition as what a 2026 capability "should be founded on" without comparative evidence that this partition outperforms alternatives, and without adoption data. It is a defensible reasoned proposal; its authority is argumentative, not empirical. A later revision should cite engagement outcomes or external adoption to move it from proposal to evidenced standard.
@@ -129,11 +144,11 @@ The five tiers align to the [[agentic-ai-security-cmm-2026|Agentic AI Security C
 - [[ai-security-larsen-effect-talk|The AI Security Larsen Effect]] — the buyer-side counterpart: a capability-based configure/buy/build vendor framework.
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] — the maturity model the tiers map to.
 - [[mcp-security|MCP security]] — the protocol-layer threat surface named in Tier 2.
-
 - [[cybersecurity-cmms-exemplars|Cybersecurity CMM exemplars]] — places this framework alongside [[clasp|CLASP]] as one of the narrower maturity models targeting a specific agentic-AI capability rather than a whole program.
 
 ## Notes
 
 [^ast]: [OWASP — Agentic Skills Top 10 Project Proposal](https://owasp.org/www-project-agentic-skills-top-10/proposal.html), 2026. OWASP project in active development (v1.0, 2026 edition), covering agent-skill supply-chain risks (AST01–AST10). Not a ratified OWASP Top 10 at time of writing.
 [^mcp]: [Microsoft — OWASP MCP Top 10 for Azure, MCP03 Tool Poisoning](https://microsoft.github.io/mcp-azure-security-guide/mcp/mcp03-tool-poisoning/), 2026. The most concrete instantiation of an MCP Top 10 is Microsoft's Azure-scoped mapping, not a standalone ratified OWASP list.
+[^aix-testing]: [OWASP AI Exchange — AI security testing](https://owaspai.org/go/testing/), retrieved 2026-08-19. Document 5, testing-strategies half: the CSA Agentic AI Red Teaming Guide named as a CSA × AI Exchange collaboration and directed to as the primary agentic methodology; the reproduction-rate reporting rule; the four agentic severity dimensions, stated without thresholds; and the two named test procedures, [testing against prompt injection](https://owaspai.org/go/testingpromptinjection/) and [testing against evasion](https://owaspai.org/go/testingevasion/).
 [^toxic]: [Snyk — ToxicSkills: Malicious AI Agent Skills in ClawHub](https://snyk.io/blog/toxicskills-malicious-ai-agent-skills-clawhub/), 2026. First broad security audit of the agent-skill ecosystem (ClawHub and skills.sh); coined "ToxicSkills" for skills that read as benign but act maliciously when executed by a capable agent.

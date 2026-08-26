@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-08-21
+updated: 2026-08-25
 tags:
   - maturity-models
   - cmm
@@ -41,6 +41,7 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[least-agency-principle]]"
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 ---
 
 # Agentic AI Security CMM — D3 Control & Least-Agency (Deep Dive)
@@ -72,9 +73,11 @@ The Class 3 coverage claim needs a bound the [[openai-hugging-face-agent-inciden
 | Agentic authorization framework | [[owasp-ai-exchange\|OWASP AI Exchange]] `LEAST MODEL PRIVILEGE` — the agentic authorization framework set out below the table | Standard; stable as of Aug 2026 | implemented via any PDP above |
 | Formal policy verification | Cedar Analysis — SMT/Lean symbolic compiler (inconsistency, redundancy, permission-diff) | **OSS, shipping** (was framed research-only)[^cedaranalysis] | — |
 
-The durable D3 capabilities: a PDP mediating every tool call outside the model context; least-agency tiering; per-task scoped authorization with binding; human-approval gates; auto-downgrade on anomaly. The product names are the perishable layer; they live in the tooling map.
+Five capabilities survive the product churn: a PDP mediating every tool call outside the model context, least-agency tiering, per-task scoped authorization with binding, human-approval gates, and auto-downgrade on anomaly. The product names perish, and the tooling map holds them.
 
-The Exchange's agentic authorization framework runs to seven parts, and the rungs below grade four of them.[^aix-leastmodelpriv] Agents hold no permissions until granted, and each grant is scoped to a task, a time window, and a resource set, expiring when the task completes, times out, or is cancelled. Evaluation happens at API gateways, service meshes, or tool-execution proxies, through a dedicated policy decision point that returns permit or deny and withholds the policy logic behind it; that decision point and its enforcement point both sit outside the agent execution context, since a policy expressed in a system prompt is a policy the agent can reason around. Each grant binds a context chain — human principal, verified agent identity, tool and operation, target resource classification — and re-authorisation is required when scope expands, a read elevates to a write, a trust domain is crossed, or work is delegated downstream. For dynamic task decomposition the Exchange prefers task-bound capability tokens, narrowable across delegation and subset-only when one agent delegates to another, with ABAC layered over them for time, data classification, input trust, and task stage.
+The Exchange's agentic authorization framework runs to seven parts, and the rungs below grade four of them.[^aix-leastmodelpriv] Agents hold no permissions until granted, and each grant is scoped to a task, a time window, and a resource set, expiring when the task completes, times out, or is cancelled. Evaluation happens at API gateways, service meshes, or tool-execution proxies, through a dedicated policy decision point that returns permit or deny and withholds the policy logic behind it; that decision point and its enforcement point both sit outside the agent execution context, since an agent can reason around a policy expressed in a system prompt.
+
+Each grant binds a context chain — human principal, verified agent identity, tool and operation, target resource classification — and re-authorisation is required when scope expands, a read elevates to a write, a trust domain is crossed, or work is delegated downstream. For dynamic task decomposition the Exchange prefers task-bound capability tokens, narrowable across delegation and subset-only when one agent delegates to another, with ABAC layered over them for time, data classification, input trust, and task stage.
 
 The remaining three parts are graded elsewhere or not at all. Context-aware access control — infrastructure signals feeding graduated tiers, autonomous in low-risk context and gated in elevated-risk context — is the risk-adaptive step-up at L5 below. Agent identity verification, which the framework carries as unique cryptographic per-instance identity with mutual authentication and an active-agent registry, is graded at [[agentic-ai-security-cmm-d2-identity|D2]] and anchored there in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]. Dynamic permission scoping — automatic narrowing the moment untrusted external content enters the flow — is graded at no rung in this domain; it is implementation pattern 7 on [[least-agency-principle|least agency]], and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4 records the runtime counterpart as ungraded for the same reason.
 
@@ -107,7 +110,7 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 
 ### L3 detail
 
-- **A PDP outside the model context mediating every tool call**, in a deny-by-default policy language — Cedar or OPA/Rego.
+- **A PDP outside the model context mediating every tool call**, in a deny-by-default policy language — Cedar or OPA/Rego. Where the PDP exposes an interface a tester can reach, the "outside the model context" property is established by presenting a crafted invocation directly to the access-control or API gateway layer and observing the deny, since a restriction expressed only in a system prompt is not enforced against an injected instruction.[^aix-testing] A deployment whose PDP is in-process and exposes no such interface records the item **not applicable** and evidences the property from the deployed configuration alone.
 - **Least-agency action-risk tiering implemented.** The four action-risk tiers — auto, notify, confirm, block — are enforced by the PDP.
 - **Each action's risk tier documented.** The tier assignment for every action the agent can invoke is recorded ahead of runtime.
 - **A [[decision-rights|decision-rights]] matrix operationalized in the PDP** — action class × decision right × approver × justification × time bound.
@@ -149,9 +152,9 @@ AWS AgentCore Policy (GA), the Microsoft Agent Governance Toolkit (OSS), and Ver
 
 **A copilot touches the SDLC, which makes segregation of duties load-bearing.** Proposer, approver, and deployer must be distinct agents, and JIT elevation stops a maintenance grant from becoming permanent.
 
-**Third-party blast radius is what justifies per-task scoped tokens.** An MCP or skill provider is consumed by callers it does not control, so scoping is enforced at issue time rather than trusted at call time.
+**Per-task scoped tokens bound third-party blast radius.** An MCP or skill provider is consumed by callers it does not control, so scoping is enforced at issue time rather than trusted at call time.
 
-**Delegation-aware capability tokens freeze blast radius at the top of the chain**, which is the only shape where the [[camel-pattern|CaMeL]] split earns its cost.
+**Delegation-aware capability tokens freeze blast radius at the top of the chain.** Of the four shapes above, only the mesh carries enough exposure for the [[camel-pattern|CaMeL]] split to earn its cost.
 
 The [[lethal-trifecta|lethal-trifecta]] test is the primary instrument for lowering the required level: removing the sensitive-action or external-comms capability costs less than buying controls to govern it. Its design-constraint restatement, the [[agents-rule-of-two|Agents Rule of Two]], gives the assessor the same test in actionable form.
 
@@ -191,7 +194,7 @@ The L3 labor line assumes tool access already exists as configuration the PDP ca
 
 ## D3→D4 dependency cap
 
-The active rule set caps D4's effective score at D3's raw score (`effective(D4) ≤ raw(D3)`): runtime guardrails (D4 / PEP) can only enforce decisions a competent PDP (D3) actually makes. A program with strong D4 guardrails but no out-of-context PDP has its D4 effective score capped at the D3 level. For the persona (D4 raw L2–L3 from Prompt Shields and Groundedness, but D3 L1–L2), the cap pulls effective D4 down to roughly L1–L2. The cheapest high-leverage D4 investment is therefore not more guardrails but standing up the PDP (D3-L3), which makes the already-owned guardrails load-bearing. See [[agentic-ai-security-cmm-dependency-rules|the dependency rules]].
+The active rule set caps D4's effective score at D3's raw score (`effective(D4) ≤ raw(D3)`): runtime guardrails (D4 / PEP) can only enforce decisions a competent PDP (D3) actually makes. A program with strong D4 guardrails but no out-of-context PDP has its D4 effective score capped at the D3 level. For the persona (D4 raw L2–L3 from Prompt Shields and Groundedness, but D3 L1–L2), the cap pulls effective D4 down to roughly L1–L2. The cheapest high-leverage D4 investment is therefore standing up the PDP (D3-L3), which makes the already-owned guardrails load-bearing. See [[agentic-ai-security-cmm-dependency-rules|the dependency rules]].
 
 ## Notes
 
@@ -203,5 +206,6 @@ The active rule set caps D4's effective score at D3's raw score (`effective(D4) 
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 [^aix-escape]: [OWASP AI Exchange — Agent escape](https://owaspai.org/go/agentescape/), retrieved 2026-08-18.
 [^aix-leastmodelpriv]: [OWASP AI Exchange — LEAST MODEL PRIVILEGE](https://owaspai.org/go/leastmodelprivilege/), retrieved 2026-08-19.
+[^aix-testing]: [OWASP AI Exchange — AI security testing](https://owaspai.org/go/testing/), retrieved 2026-08-19. Document 5's agentic-testing methodology, including the direction to test tool-call validation independently of the LLM by sending crafted invocations directly to the access-control or API gateway layer, and its statement that controls existing only in a system prompt are not enforced against injection.
 [^aix-oversight]: [OWASP AI Exchange — OVERSIGHT](https://owaspai.org/go/oversight/), retrieved 2026-08-19.
 [^taiwan]: Dream Security, "[Inside a Multi-Agent AI Framework Used to Compromise Government Entities in Asia](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia)," 2026-08-12. See [[taiwan-ai-agent-government-intrusion|Taiwan AI-Agent Government Intrusion]].

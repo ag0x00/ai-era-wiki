@@ -3,7 +3,7 @@ type: concept
 title: "Prompt Injection"
 address: c-000114
 created: 2026-05-24
-updated: 2026-08-18
+updated: 2026-08-25
 origin: aggregated
 tags:
   - concepts
@@ -37,9 +37,18 @@ related:
   - "[[agent-message-structure-manipulation|Agent Message Structure Manipulation]]"
 sources:
   - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+  - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 ---
 
 # Prompt Injection
+
+## On this page
+
+- [Definition](#definition)
+- [Variants on the wiki](#variants-on-the-wiki)
+- [Basis for its load-bearing status](#basis-for-its-load-bearing-status)
+- [Testing resistance](#testing-resistance)
+- [See also](#see-also)
 
 ## Definition
 
@@ -64,6 +73,10 @@ The [[owasp-ai-exchange|OWASP AI Exchange]] names three further subtypes that ap
 
 Prompt injection is one leg of the [[lethal-trifecta|lethal trifecta]] (untrusted input, private data access, exfiltration channel). The Exchange states the position as a rule: prompt injection is not solvable at the model layer alone, and static or model-only defenses evaluated against a fixed set of example attacks provide no security guarantee against an adaptive adversary.[^aix-pi] The reason is structural. User data and system commands occupy one context plane, and the model has no parameterized-query equivalent that would let an application declare which span is data.[^aix-pi] In agentic deployments this shifts the dominant risk from safety violations in generated text to integrity compromises, where the adversary hijacks the agent's actions through its tools and their side effects.[^aix-pi] It is the recurring entry vector across the [[threat-modeling-for-ai|threat-modeling spine]]'s worked example: ASI01 goal hijack, ASI06 memory poisoning, and ASI02 tool misuse all begin with injected content. The [[threat-taxonomy-reconciliation|reconciliation matrix]] maps it to the Runtime plane (`LLM01`, `AML.T0051`), where detection is capped by the policy decision that follows.
 
+### Testing resistance
+
+The Exchange's own test procedure for prompt injection answers the "fixed set of example attacks" problem in one step and bounds what that step buys. Step 5 adds variation algorithms to the attack corpus — synonym substitution, encoding, reformatting — which the procedure itself describes as an evasion attack against the detection mechanisms in place, whether those sit in the model's own training and system prompts or in detectors external to it.[^aix-testing] The Exchange then states the limit: variation-tested robustness has limited impact on estimated risk, because widely available tooling means some robustness only defers an attacker who invests no effort, and for attacks with severe impact the argument does not apply at all — a system is expected to resist an attacker who does invest effort. Two further constraints on the test carry the same weight. Attack inputs are presented to the system API rather than to the model, so the production filtering and detection stack is in the path. And the test is run repeatedly, because a model's non-determinism makes a single pass or fail an unreliable reading.
+
 ## See also
 
 - [[syara-semantic-detection-talk|SYARA Semantic Detection]] — a detection-side response: semantic rules that catch injection intent at scale.
@@ -75,6 +88,7 @@ Prompt injection is one leg of the [[lethal-trifecta|lethal trifecta]] (untruste
 
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. The threat group, the shared context plane and the absent parameterized-query equivalent, the agentic risk shift toward integrity compromise, the three agentic subtypes, and the model-layer statement.
 [^aix-dpi]: [OWASP AI Exchange — Direct prompt injection](https://owaspai.org/go/directpromptinjection/), retrieved 2026-08-18. Multimodal input as an instruction channel, on the stated basis that models fuse visual and textual, and sometimes audio, embeddings into a shared latent space.
+[^aix-testing]: [OWASP AI Exchange — Testing against Prompt injection](https://owaspai.org/go/testingpromptinjection/), retrieved 2026-08-19. The variation-algorithm step, its framing as an evasion attack against the detection mechanism, the stated limited impact on estimated risk, the production-API presentation requirement, and the repeated-run requirement against model non-determinism.
 
 <!-- sources:auto -->
 ## Sources
