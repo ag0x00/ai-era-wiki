@@ -3,7 +3,7 @@ type: entity
 title: "Arizona State University"
 address: c-000275
 created: 2026-08-16
-updated: 2026-08-16
+updated: 2026-08-31
 tags:
   - entities
   - organizations
@@ -32,14 +32,19 @@ related:
   - "[[analyzer-ordering-confound|Analyzer Ordering Confound]]"
   - "[[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]"
   - "[[cybergym|CyberGym Benchmark]]"
+  - "[[exploit-benchmarks|ExploitBench & ExploitGym]]"
+  - "[[uc-berkeley-rdi|UC Berkeley RDI]]"
 sources:
   - "https://www.youtube.com/watch?v=VNYe3Cnk5Pw"
   - ".raw/talks/2026-08-06_Yan-Shoshitaishvili_Vulnerability-Research-in-the-Agentic-Age_transcript.md"
+  - "https://www.cybergym.io/exploitgym/"
 ---
 
 # Arizona State University
 
-Academic home of the [SEFCOM lab](https://sefcom.asu.edu/) and the Center for Cybersecurity and Trusted Foundations, where [[yan-shoshitaishvili|Yan Shoshitaishvili]]'s group works on vulnerability analysis, exploitation, and automated repair. **The lab is one of two non-vendor sources of primary agentic vulnerability-discovery results on this wiki, and the only one that reports a harness ablation at fixed model capability.** The other is the Berkeley group behind [[cybergym|CyberGym]], whose open-ended runs produced 35 zero-days but no comparison across harness configurations.
+Academic home of the [SEFCOM lab](https://sefcom.asu.edu/) and the Center for Cybersecurity and Trusted Foundations, where [[yan-shoshitaishvili|Yan Shoshitaishvili]]'s group works on vulnerability analysis, exploitation, and automated repair. **The lab is one of two non-vendor sources of primary agentic vulnerability-discovery results on this wiki, and the only one that reports a harness ablation at fixed model capability.** The other is the [[uc-berkeley-rdi|UC Berkeley RDI]] group behind [[cybergym|CyberGym]], whose open-ended runs report zero-day discovery outcomes against real upstream code and no comparison across harness configurations.
+
+The two are separate author sets on the results this wiki cites from each, and they overlap on one benchmark. Shoshitaishvili is a named co-author of [[exploit-benchmarks|ExploitGym]] alongside the Berkeley group, and the benchmark's attribution names Arizona State University among seven contributing organizations rather than naming SEFCOM.[^exploitgym]
 
 Its position on the [[frontier-ai-for-vuln-discovery|frontier-AI-for-vuln-discovery]] axis differs from the vendor sources there in what it is free to publish. Vendor pipelines report benchmark scores and CVE counts that serve a product claim; the ASU results reported in the [[vulnerability-research-agentic-age-keynote|Black Hat USA 2026 keynote]] include a negative result on Rust rewrites, an admission that the lab's disclosure capacity is an order of magnitude behind its discovery rate, and a headline count the keynote itself declines to present as a like-for-like win over the model it benchmarks against.[^keynote]
 
@@ -57,3 +62,4 @@ Its position on the [[frontier-ai-for-vuln-discovery|frontier-AI-for-vuln-discov
 The lab runs pwn.college, an open security-education platform with about 10,000 people actively learning on it monthly ([Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw)).[^keynote] The keynote uses the platform as the setting for a claim about the field rather than about the platform: the question its learners ask most often is whether security remains worth learning, and Shoshitaishvili's answer is that the human step in his own pipeline, deciding which vulnerability properties to extract and how to present them to the agents, is what produced the final doubling in his lab's Linux-kernel experiment. He states that as a position, not as a measured comparison against any other use of the same effort.
 
 [^keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
+[^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.

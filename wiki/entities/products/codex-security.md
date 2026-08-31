@@ -3,7 +3,7 @@ type: entity
 title: "Codex Security"
 address: c-000064
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-08-31
 tags:
   - entities
   - product
@@ -31,6 +31,7 @@ related:
   - "[[big-sleep|Big Sleep]]"
   - "[[codemender|CodeMender]]"
   - "[[google-cloud-codemender-preview]]"
+  - "[[aisle-openssl-12-of-12|AISLE OpenSSL 12 of 12]]"
 sources:
   - https://openai.com/index/introducing-aardvark/
   - https://openai.com/index/codex-security-now-in-research-preview/
@@ -54,7 +55,7 @@ Fifth sourced AI vulnerability-discovery production path as of 2026-05-15, along
 
 ## Outputs / Numbers
 
-- **92% recall on "golden" repositories** (internal benchmark with known + synthetically-introduced vulnerabilities). Not directly comparable to MDASH's 88.45% / raw Mythos's 83.1% on the public [[cybergym|CyberGym]] leaderboard because the benchmark sets are different.
+- **92% recall on "golden" repositories** (internal benchmark with known + synthetically-introduced vulnerabilities). Not directly comparable to MDASH's 88.45% / raw Mythos's 83.1% on the public [[cybergym|CyberGym]] leaderboard because the benchmark sets are different. [[aisle-openssl-12-of-12|AISLE's OpenSSL cohort]] cites this figure as one side of that non-comparison.
 - **Ten CVE IDs** assigned from OSS responsibly-disclosed Aardvark findings as of the original announcement.
 - **Pro-bono OSS scanning** committed for select non-commercial open-source repositories.
 - **Updated outbound coordinated-disclosure policy** released in tandem — explicit shift away from rigid timelines toward collaboration to absorb the discovery-rate increase the tool enables.

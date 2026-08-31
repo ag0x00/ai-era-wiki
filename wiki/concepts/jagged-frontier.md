@@ -3,16 +3,18 @@ type: concept
 title: "Jagged Frontier (AI Cybersecurity Capability)"
 address: c-000155
 created: 2026-05-26
-updated: 2026-08-16
+updated: 2026-08-31
 tags:
   - concepts
   - vulnerability-discovery
   - model-capability
   - evaluation
   - ai-vuln-discovery
-status: seed
+status: developing
 scope_axis:
   - ai-in-sec-defense
+  - ai-in-sec-offense
+  - sec-against-ai
 related:
   - "[[ai-cybersecurity-after-mythos-jagged-frontier]]"
   - "[[frontier-ai-for-vuln-discovery]]"
@@ -21,9 +23,14 @@ related:
   - "[[stanislav-fort]]"
   - "[[trajectory-aware-post-training-talk]]"
   - "[[vulnerability-research-agentic-age-keynote]]"
+  - "[[exploit-benchmarks]]"
+  - "[[uc-berkeley-rdi]]"
+  - "[[autonomous-exploit-generation]]"
 sources:
   - "[[ai-cybersecurity-after-mythos-jagged-frontier]]"
   - "https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier"
+  - "https://www.cybergym.io/exploitgym/"
+  - ".raw/articles/exploitgym-2026-08-31.md"
 ---
 
 # Jagged Frontier (AI Cybersecurity Capability)
@@ -38,7 +45,13 @@ Fort tested the showcase vulnerabilities from Anthropic's [[mythos|Claude Mythos
 - **Hard reasoning separates models, but not by size.** The 27-year-old OpenBSD TCP SACK bug, which needs reasoning about signed-integer overflow, was recovered in full by a ~5.1B-active open model (GPT-OSS-120b), while a larger 32B dense model declared the same code "robust."[^aisle]
 - **Near-inverse scaling appears.** On a trivial OWASP false-positive task (a Java servlet that only looks injectable), small open models outperformed most frontier models from every major lab.[^aisle]
 
-There is no stable "best model for cybersecurity." The capability ranking is task-dependent.
+There is no stable "best model for cybersecurity". The capability ranking is task-dependent, and the divergence survives the move from isolated-function probes to end-to-end agentic tasks.
+
+### The divergence holds at end-to-end agentic scale
+
+ExploitGym measures the same task-dependence with whole agents on whole exploitation tasks rather than with single calls on isolated functions. Claude Mythos Preview and GPT-5.5 lead the benchmark, and their success sets diverge: **56 targets are solved only by Mythos Preview, 26 only by GPT-5.5, and 91 by both**. The remaining models contribute another 61 successes, four of them unique to that group.[^exploitgym] The benchmark authors read the split as the models relying on qualitatively different exploitation strategies, and state that an ensemble would substantially expand coverage.
+
+The ranking and the coverage therefore answer different questions, and 82 of the targets the two leading models solve are solved by exactly one of them. The pipeline consequence is on [[autonomous-exploit-generation|Autonomous Exploit Generation]].
 
 ## Sensitivity versus specificity
 
@@ -54,9 +67,11 @@ If capability is jagged and much of the detection work is commoditized, the desi
 
 [^aisle]: Stanislav Fort (AISLE), "AI Cybersecurity After Mythos: The Jagged Frontier" (2026). [aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier](https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier). Figures and per-model results are from the post's published test tables and linked transcripts; these are scoped single-call probes on isolated functions, not end-to-end autonomous discovery.
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
+[^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
 
 <!-- sources:auto -->
 ## Sources
 
 - [aisle.com](https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier)
+- [cybergym.io](https://www.cybergym.io/exploitgym/)
 <!-- /sources -->

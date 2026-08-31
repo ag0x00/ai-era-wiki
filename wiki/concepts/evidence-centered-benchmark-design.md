@@ -2,7 +2,7 @@
 type: concept
 title: "Evidence Centered Benchmark Design"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-08-31
 tags:
   - concepts
   - evaluation
@@ -18,6 +18,8 @@ aliases:
 source_url: "https://arxiv.org/abs/2406.08723"
 related:
   - "[[llm-as-a-judge]]"
+  - "[[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]]"
+  - "[[end-to-end-harness-evaluation|End-to-End Harness Evaluation]]"
   - "[[clasp]]"
   - "[[measuring-agent-effectiveness-talk]]"
   - "[[automated-prompt-optimization]]"
@@ -31,6 +33,7 @@ sources: []
 
 ## See also
 
+- [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]] and [[end-to-end-harness-evaluation|End-to-End Harness Evaluation]] instantiate this design method on one capability, with differential crash validation and cumulative stage gating as the concrete evidence-to-claim links.
 - [[measuring-agent-effectiveness-talk|Measuring Security-Agent Effectiveness]] is a practitioner instance: security ground truth is irreducibly noisy (double-digit analyst disagreement), so evaluation must score multi-dimensional reasoning rather than assume a transparent-label oracle.
 
 <!-- sources:auto -->

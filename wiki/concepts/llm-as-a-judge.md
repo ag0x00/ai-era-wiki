@@ -2,7 +2,7 @@
 type: concept
 title: "LLM-as-a-Judge"
 created: 2026-04-30
-updated: 2026-08-24
+updated: 2026-08-31
 tags:
   - concepts
   - evaluation
@@ -30,9 +30,12 @@ related:
   - "[[google-cloud-codemender-preview]]"
   - "[[autonomous-code-security-google-talk]]"
   - "[[four-flynn]]"
+  - "[[exploit-benchmarks]]"
+  - "[[autonomous-exploit-generation]]"
 sources:
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md"
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
+  - "https://www.cybergym.io/exploitgym/"
 ---
 
 # LLM-as-a-Judge
@@ -84,6 +87,12 @@ A second production pattern uses the judge as a release gate on generated code r
 
 The circularity problem applies here in a weaker form. The judge is not asked whether the patch is *secure* (the scan and verify stages establish that) but whether two versions of a function are semantically equivalent outside the fixed defect. That is the same narrowed semantic-matching task the [[guardrails-beyond-vibes-talk|Stripe pattern]] isolates, and it has a stronger ground truth than most: the original code is the gold standard, and the test suite is an independent check on the judge's verdict. Google publishes no data on how often the judge is right.
 
+## As a validity oracle in an exploitation benchmark
+
+[[exploit-benchmarks|ExploitGym]] runs an agent-as-a-judge beside a deterministic oracle. Capturing the flag establishes that the agent achieved unauthorized code execution; the judge then establishes whether the exploit targeted the vulnerability the task supplied, which is why the benchmark reports intended-bug counts separately from total flag captures.[^exploitgym] The split matters because agents frequently reach code execution through a different bug, by pivoting to an adjacent code path with weaker validation or by auditing and fuzzing for new attack surface after concluding the supplied bug is not exploitable.
+
+The division of labour is the [[guardrails-beyond-vibes-talk|Stripe pattern]] applied to a benchmark. Execution decides the hard verdict, and the judge answers only whether two things are the same vulnerability. The benchmark publishes no measurement of the judge's own accuracy, so the same gap that applies to [[codemender|CodeMender]]'s patch judge applies here. [[end-to-end-harness-evaluation|End-to-End Harness Evaluation]] names an LLM patch-quality judge as the missing complement to execution-based grading, which is the same role in a different stage.
+
 ## Contraindications
 
 - **Open-ended routing tasks** with no fixed ground truth (e.g., "which security team should handle this question?"). In this case, a gold standard is hard to define and user feedback in production is a stronger signal. The Stripe security routing agent used a **phased user-feedback rollout** instead of an offline LLM-as-a-Judge pipeline.
@@ -97,8 +106,10 @@ The circularity problem applies here in a weaker form. The judge is not asked wh
 - [[hitl|Human-in-the-Loop (HITL) for Agentic AI]]
 - Three Unprompted talks as production uses: [[measuring-agent-effectiveness-talk|Saxe]] calibrates a judge with ~100 samples and a Bayesian disagreement-weighting model; [[osint-to-knowledge-graph-talk|Sun]] runs a production judge secondary to a curated eval set; [[syara-semantic-detection-talk|SYARA]] uses an LLM matcher as the most expensive layer of a cost-ordered cascade.
 - [[autonomous-code-security-google-talk|Autonomous Code Security at Google]] — March 2026 talk disclosing the pluggable four-group verifier stack the judge sits in.
+- [[exploit-benchmarks|ExploitGym]] — the agent-as-a-judge validity oracle for exploit attribution.
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
 
 <!-- sources:auto -->
 ## Sources

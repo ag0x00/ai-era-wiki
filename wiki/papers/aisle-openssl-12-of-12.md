@@ -3,7 +3,7 @@ type: paper
 title: "AISLE: 12 of 12 OpenSSL Vulnerabilities"
 address: c-000083
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-08-31
 tags:
   - papers
   - vuln-discovery
@@ -34,6 +34,7 @@ related:
   - "[[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]"
   - "[[zero-day-clock|Zero Day Clock]]"
   - "[[cybergym|CyberGym Benchmark]]"
+  - "[[uc-berkeley-rdi|UC Berkeley RDI]]"
   - "[[openant|OpenAnt]]"
   - "[[codex-security|Codex Security]]"
   - "[[claude-code-security|Claude Code Security]]"
@@ -44,6 +45,7 @@ sources:
   - https://aisle.com/blog/aisle-discovers-three-of-the-four-openssl-vulnerabilities-of-2025
   - https://www.schneier.com/blog/archives/2026/02/ai-found-twelve-new-vulnerabilities-in-openssl.html
   - https://openssl-library.org/news/vulnerabilities/
+  - https://www.cybergym.io/cybergym/
 aliases:
   - papers/aisle-openssl-12-of-12-2026
   - aisle-openssl-12-of-12-2026
@@ -108,6 +110,8 @@ Three of the twelve bugs date to 1998–2000. They survived **millions of CPU-ho
 - **Supports** [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] thesis — AISLE is now the wiki's sourced anchor for *AI-driven discovery of decade-class latent vulnerabilities in widely deployed open-source cryptographic libraries*. Pairs with [[anthropic-glasswing-announcement|Glasswing]]'s 27-year-old OpenBSD vuln + 16-year-old FFmpeg vuln disclosures.
 - **Strengthens** [[mythos-ready-briefing|Mythos-ready briefing]] — the AISLE-OpenSSL data point is cited inline by the briefing's timeline; the [[aisle|dedicated AISLE org page]] and this paper page now close that gap.
 - **Cross-references [[unprompted-conference-march-2026|Unprompted Conference March 2026]]** — AISLE is named in the conference's overall key-claim alongside FENRIR, Promp2Pwn, and XBOW as systems running autonomous bug-finding agents at production scale.
-- **Adjacent to** [[cybergym|CyberGym Benchmark]] — UC Berkeley team's *Open-Ended Discovery* mode published 35 zero-days + 10 unique zero-days at 969-day mean persistence; AISLE's 12-of-12 OpenSSL result sits in a similar conceptual frame but on a specific high-value target rather than across a benchmark corpus.
+- **Adjacent to** [[cybergym|CyberGym Benchmark]] — the [[uc-berkeley-rdi|UC Berkeley RDI]] group published 10 deduplicated zero-days at 969-day mean persistence, recovered by re-validating benchmark-evaluation proof-of-concept inputs against the latest releases; AISLE's 12-of-12 OpenSSL result sits in a similar conceptual frame but on a specific high-value target rather than across a benchmark corpus.[^cybergym-site]
 
 **AISLE's 6 pre-release catches are the operational signal.** The 12 assigned CVEs are the publicly visible artifact. The **6 additional findings caught before the vulnerable code ever appeared in a release** are the structural innovation — they document operational integration of autonomous analysis *into the development workflow*. This is the AI-driven realization of what the [[mythos-ready-security-program|Mythos-ready playbook]] calls *PA 1: Point Agents at Your Code and Pipelines*, with the additional commitment that *"all code (human or AI-generated) should pass LLM-driven security review before merge"* — applied at the OpenSSL upstream-development level rather than at the consumer-application level. Pre-release catches are the *no-CVE-needed* outcome the discipline is designed to produce.
+
+[^cybergym-site]: UC Berkeley RDI, [CyberGym](https://www.cybergym.io/cybergym/) (fetched 2026-08-31). Published at ICLR 2026, [OpenReview `2YvbLQEdYt`](https://openreview.net/forum?id=2YvbLQEdYt); preprint [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Local copy: `.raw/articles/cybergym-benchmark-2026-08-31.md`.

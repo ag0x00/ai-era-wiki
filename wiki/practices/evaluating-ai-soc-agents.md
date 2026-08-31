@@ -3,7 +3,7 @@ type: practice
 title: "Evaluating AI SOC Agents: Gartner's Seven Questions"
 address: c-000144
 created: 2026-05-25
-updated: 2026-05-25
+updated: 2026-08-31
 tags:
   - practices
   - agentic-soc
@@ -15,6 +15,7 @@ maturity: emerging
 addresses_threat: "Misaligned AI-SOC-agent procurement: adopting agents that demo well but do not improve TDIR outcomes, carry hidden cost or autonomy risk, or cannot be audited"
 scope_axis: [ai-in-sec-defense]
 related:
+  - "[[end-to-end-harness-evaluation]]"
   - "[[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]]"
   - "[[gartner|Gartner]]"
   - "[[mate-cd-cr-continuous-detection-response|Mate CD/CR]]"
@@ -54,6 +55,7 @@ This is the buyer-side complement to the [[agentic-soc-state-of-the-field|Agenti
 
 ## See Also
 
+- [[end-to-end-harness-evaluation|End-to-End Harness Evaluation]] — the same buyer's question applied to an autonomous discover-and-patch harness rather than a SOC agent.
 - [[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]] — the synthesis page this evaluation guidance serves
 - [[gartner|Gartner]] — the analyst firm behind the framework
 - [[plan-validate-execute|Plan-Validate-Execute]] — the human-in/on-the-loop autonomy pattern Question 5 invokes

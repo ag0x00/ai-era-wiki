@@ -3,7 +3,7 @@ type: practice
 title: "VulnOps Implementation Roadmap (Enterprise)"
 address: c-000101
 created: 2026-05-23
-updated: 2026-05-29
+updated: 2026-08-31
 tags:
   - practices
   - vulnops
@@ -14,6 +14,7 @@ status: developing
 scope_axis:
   - ai-in-sec-defense
 related:
+  - "[[agentic-vulnerability-discovery]]"
   - "[[vulnops]]"
   - "[[vulnerability-operations-center]]"
   - "[[mythos-ready-security-program]]"
@@ -81,3 +82,8 @@ Track execution, not vulnerability counts: mean time to detect, mean time to rem
 - **Autonomous patching has a ceiling.** Gartner projects that by 2028 more than half of threat exposures will stem from nontechnical causes that automated patching cannot fix: misconfiguration, identity, and process. A VulnOps function scoped only around code patches will close a shrinking fraction of real exposure; the remediation-steering mission has to reach configuration and identity owners, not just developers. (Source: Gartner, via [Vectra's CTEM summary](https://www.vectra.ai/topics/ctem).)
 - **Below the [[cyber-poverty-line|Cyber Poverty Line]],** standing up an independent VulnOps function is not feasible; collective defense through ISACs and sector coordinating groups is the realistic path.
 - **The remediation commons is the new bottleneck.** When discovery outruns patching, the inversion the [[zero-day-clock|Zero Day Clock]] tracks, virtual patching and mitigation buy time. The durable fix is remediation throughput: the capacity this roadmap is designed to build.
+
+## See Also
+
+- [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]] — the discovery capability this roadmap builds out, with the levers that move its success rate and the oracle that grades it.
+

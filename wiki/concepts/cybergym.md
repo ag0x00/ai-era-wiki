@@ -3,7 +3,7 @@ type: concept
 title: "CyberGym Benchmark"
 address: c-000030
 created: 2026-05-13
-updated: 2026-08-22
+updated: 2026-08-31
 tags:
   - concepts
   - benchmarks
@@ -16,6 +16,7 @@ scope_axis:
   - sec-of-ai
   - ai-in-sec-defense
   - ai-in-sec-offense
+  - sec-against-ai
 aliases:
   - "CyberGym"
 authors:
@@ -27,7 +28,8 @@ authors:
   - "Dawn Song"
 affiliation: "UC Berkeley (Sky Computing Lab / Sunblaze group; RDI — Center for Responsible Decentralized Intelligence)"
 homepage: "https://www.cybergym.io"
-paper: "https://arxiv.org/abs/2506.02548"
+paper: "https://openreview.net/forum?id=2YvbLQEdYt"
+preprint: "https://arxiv.org/abs/2506.02548"
 repo: "https://github.com/sunblaze-ucb/cybergym"
 dataset: "https://huggingface.co/datasets/sunblaze-ucb/cybergym"
 blog: "https://rdi.berkeley.edu/blog/cybergym/"
@@ -46,26 +48,35 @@ related:
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[analyzer-ordering-confound]]"
   - "[[arizona-state-university]]"
+  - "[[cybergym-e2e]]"
+  - "[[uc-berkeley-rdi]]"
+  - "[[agentic-vulnerability-discovery]]"
 sources:
   - https://www.cybergym.io
+  - https://www.cybergym.io/cybergym/
   - https://arxiv.org/abs/2506.02548
+  - https://openreview.net/forum?id=2YvbLQEdYt
   - https://github.com/sunblaze-ucb/cybergym
   - https://rdi.berkeley.edu/blog/cybergym/
   - "https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
 ---
 
 # CyberGym Benchmark
 
-**CyberGym** is a large-scale public benchmark for AI-driven vulnerability analysis — a corpus of **1,507 real-world vulnerability reproduction tasks** derived from historical vulnerabilities across **188 major OSS-Fuzz projects**. Created by researchers at **UC Berkeley** (Sunblaze group; RDI — Center for Responsible Decentralized Intelligence): **Zhun Wang, Tianneng Shi, Jingxuan He, Matthew Cai, Jialin Zhang, and Dawn Song**. Paper: [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Code: [`github.com/sunblaze-ucb/cybergym`](https://github.com/sunblaze-ucb/cybergym). Dataset: [`huggingface.co/datasets/sunblaze-ucb/cybergym`](https://huggingface.co/datasets/sunblaze-ucb/cybergym). Blog: [`rdi.berkeley.edu/blog/cybergym`](https://rdi.berkeley.edu/blog/cybergym/). It is the load-bearing third-party evaluation surface for agentic vulnerability discovery systems, analogous in function to [[agentdojo|AgentDojo]] for prompt-injection robustness or MMLU for general-capability ranking.
+**CyberGym** is a large-scale public benchmark for AI-driven vulnerability analysis — a corpus of **1,507 real-world vulnerability reproduction tasks** derived from historical vulnerabilities across **188 major OSS-Fuzz projects**. Created at [[uc-berkeley-rdi|UC Berkeley RDI]], the Center for Responsible Decentralized Intelligence: **Zhun Wang, Tianneng Shi, Jingxuan He, Matthew Cai, Jialin Zhang, and Dawn Song**. Published at ICLR 2026, the Fourteenth International Conference on Learning Representations, under the same six-author list.[^cybergym-site] Preprint: [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Code: [`github.com/sunblaze-ucb/cybergym`](https://github.com/sunblaze-ucb/cybergym). Dataset: [`huggingface.co/datasets/sunblaze-ucb/cybergym`](https://huggingface.co/datasets/sunblaze-ucb/cybergym). Blog: [`rdi.berkeley.edu/blog/cybergym`](https://rdi.berkeley.edu/blog/cybergym/). It is the load-bearing third-party evaluation surface for agentic vulnerability discovery systems, analogous in function to [[agentdojo|AgentDojo]] for prompt-injection robustness or MMLU for general-capability ranking. CyberGym is the reproduction stage of a three-benchmark observatory that also runs [[exploit-benchmarks|ExploitGym]] for exploit generation and [[cybergym-e2e|CyberGym-E2E]] for end-to-end discover-and-patch.[^cybergym-site]
 
 ## Significance
 
-CyberGym is presently the **most-cited public leaderboard** for AI-driven vulnerability reproduction. Its level-1 configuration (vulnerable source provided + high-level vulnerability description) makes it tractable for evaluation while remaining grounded in real CVEs. Higher difficulty levels — not yet covered in detail here — remove context to test blind discovery.
+CyberGym is presently the **most-cited public leaderboard** for AI-driven vulnerability reproduction. Its level-1 configuration (vulnerable source provided plus a high-level vulnerability description) makes it tractable for evaluation while remaining grounded in real CVEs. Four difficulty levels vary how much input information the agent receives.
 
 The benchmark's role on the wiki:
 
 - The first independently-verifiable comparison surface for agentic-AI-vuln-discovery claims by [[mdash|MDASH]], future Anthropic Glasswing releases, and any subsequent vendor entries in [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]].
 - Counterpart to [[agentdojo|AgentDojo]] (prompt-injection) and [[clasp|CLASP]] (capability-centric agent evaluation) in the [[red-teaming-for-ai-synthesis|four-quadrant red-team grid]] — CyberGym sits in the "real-world reproduction" slot.
+
+The operational reading of these results — which levers move a discovery pipeline's yield, and how a reproduction claim is validated — is on [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]]; this page is the instrument.
 
 ## Known Results
 
@@ -93,25 +104,39 @@ A third-party aggregator (llm-stats) published a six-model Level-1 snapshot. Tre
 > [!contradiction] Opus 4.6 score varies by source
 > Anthropic's Glasswing material reports raw Opus 4.6 at **66.6%**; the llm-stats snapshot lists **73.8%**. Different harnesses or snapshot dates likely explain the ~7-point gap — a concrete instance of why cross-source CyberGym numbers are not directly comparable. The [[mythos|Mythos]] 83.1% figure is consistent across both.
 
-> [!check] Direct CyberGym sourcing — resolved 2026-05-15
-> Homepage, paper (arXiv 2506.02548), GitHub repo (`sunblaze-ucb/cybergym`), Hugging Face dataset, and RDI Berkeley blog all sourced. UC Berkeley team attributed (Wang, Shi, He, Cai, Zhang, Dawn Song).
-
 ## Evaluation Modes
 
 Per [the CyberGym homepage](https://www.cybergym.io) and the [arXiv methodology paper](https://arxiv.org/abs/2506.02548):
 
 - **Vulnerability Reproduction (Level 1)** — agents receive a vulnerability description and an unpatched codebase, then must generate a working proof-of-concept (PoC) exploit that triggers the target vulnerability. Success is verified when the PoC crashes the pre-patch version but does **not** crash the patched version. This is the mode the published vendor numbers in the Known Results table above target.
-- **Open-Ended Discovery** — agents analyze latest codebases **without prior vulnerability knowledge** to identify new security flaws, mirroring real-world vulnerability discovery scenarios. This is the harder, blind-discovery mode and the bridge to the *real-world impact* numbers below.
+- **Open-Ended Discovery** — agents analyze latest codebases **without prior vulnerability knowledge** to identify new security flaws, mirroring real-world vulnerability discovery scenarios. This is the harder, blind-discovery mode, and the open-ended campaign in the *real-world impact* section below runs it.
 
-## Real-World Impact (as published)
+### Difficulty levels
 
-CyberGym is not just a benchmark; the open-ended-discovery side has produced concrete novel findings:
+The four levels differ only in the input information supplied with the unpatched codebase.[^cybergym-site]
 
-- **35 zero-day vulnerabilities** discovered.
-- **17 incomplete patches** identified across **15 projects** — vulnerabilities that *had been patched* but where the patch did not fully close the issue.
-- **10 unique zero-days** that had persisted an **average of 969 days** (~2.65 years) in upstream code before discovery — a load-bearing data point for the [[mythos-ready-briefing|Mythos-ready briefing]]'s argument that AI-driven vuln discovery surfaces decade-class latent bugs.
+| Level | Input the agent receives | Note |
+|---|---|---|
+| Level 0 | No text description of the target vulnerability | 3.5% of instances reproduced |
+| Level 1 | A vulnerability description | The primary task and the leaderboard task |
+| Level 2 | Level 1 plus the stack trace | Richer input than level 1 |
+| Level 3 | Level 2 plus the ground-truth patch | Richest input in the set |
 
-These findings make the Berkeley group behind CyberGym one of two non-vendor sources of primary agentic vulnerability-discovery results on the wiki. The other is [[arizona-state-university|Arizona State University]]'s SEFCOM lab. The two measure different things and are complementary rather than competing: CyberGym's open-ended runs report discovery outcomes against real upstream code, while the ASU work reports a harness ablation at fixed model capability, which no CyberGym result isolates.
+The benchmark reports that the richer inputs at levels 2 and 3 greatly increase the reproduction success rate over level 1. Level 0 sets the floor of the set at 3.5%.[^cybergym-site]
+
+The benchmark also measures what moves an agent's score: reasoning budget, the richness of the input the agent is given, the byte length of the ground-truth proof-of-concept, and the step budget. Those results and their operational reading are on [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]].
+
+## Real-world impact
+
+CyberGym has produced findings against live upstream code from two separate exercises: the benchmark evaluation runs, and a later open-ended campaign against current codebases.
+
+Evaluation runs against the benchmark corpus generated proof-of-concept inputs that triggered **759 crashes across 60 projects**. Manual inspection confirmed **17 incomplete patches spanning 15 projects**, none of them affecting the latest releases. Further validation of post-patch crashes found **35 proof-of-concept inputs that still crashed the latest versions**; after deduplication and analysis those corresponded to **10 unique, previously unknown zero-day vulnerabilities**, each persisting an average of **969 days** before discovery.[^cybergym-site] The 969-day figure anchors the [[mythos-ready-briefing|Mythos-ready briefing]]'s argument that AI-driven discovery surfaces decade-class latent bugs.
+
+A separate open-ended campaign ran OpenHands with GPT-4.1 and GPT-5 against latest codebases alone, across **431 OSS-Fuzz projects** holding **1,748 executables**. GPT-4.1 produced 16 crashes and 7 confirmed zero-days. GPT-5 produced 56 crashes and 22 confirmed zero-days, 4 of them overlapping with GPT-4.1's. The benchmark authors read the campaign as evidence that LLM agents discover new vulnerabilities at scale, and that CyberGym performance correlates with real-world discovery capability.[^cybergym-site]
+
+The site's headline counters state **34 zero-day vulnerabilities** and **18 incomplete patches**. The zero-day components it names sum to 35: 10 from the reproduction runs, plus 7 from GPT-4.1, plus 22 from GPT-5, less the 4 overlaps; the incomplete-patch figure it confirms in the body is 17. The site reconciles neither pair.
+
+CyberGym's open-ended runs make the [[uc-berkeley-rdi|UC Berkeley RDI]] group one of two non-vendor sources of primary agentic vulnerability-discovery results on the wiki. The other is [[arizona-state-university|Arizona State University]]. The two report different quantities and are complementary rather than competing: CyberGym's open-ended runs give discovery outcomes against real upstream code, while the ASU work gives a harness ablation at fixed model capability, which no CyberGym result isolates. Their author sets are separate on CyberGym and on [[cybergym-e2e|CyberGym-E2E]], and they overlap on one benchmark, [[exploit-benchmarks|ExploitGym]], where [[yan-shoshitaishvili|Yan Shoshitaishvili]] is a named co-author alongside the Berkeley group.[^exploitgym]
 
 ## Limitations and Caveats
 
@@ -120,6 +145,8 @@ These findings make the Berkeley group behind CyberGym one of two non-vendor sou
 - **OSS-Fuzz domain**: CyberGym is biased toward C/C++ memory-safety bug classes typical of OSS-Fuzz; coverage of web vulns, [[prompt-injection|prompt-injection]], supply-chain, or AI-application classes is structurally limited.
 - **Public-benchmark contamination risk**: as vendors target the leaderboard, model training data may absorb the corpus; the same concern that motivated XBOW's StorageDrive private-benchmark design.
 - **Ordering confound**: the [[analyzer-ordering-confound|analyzer ordering confound]] gives this contamination risk a causal mechanism — a second analyzer's apparent gain over a first is often an artifact of running order rather than capability, and the same training contamination blocks the rewind-and-reanalyze experiment that would isolate the two.[^asu-keynote]
+- **The operators state their own limits on the leaderboard.** Results are evaluated and submitted by individual teams, and agent runs are stochastic, so scores vary across evaluations. Vulnerability descriptions can be ambiguous, and the authors state that with leading systems already scoring high, modest score differences may not reflect meaningful capability gaps.[^cybergym-site]
+- **Two leaderboard labels denote evaluation strategy rather than an easier task.** `dynamic` marks an agent running against a sanitized vulnerable Docker image or the compiled binary of the target. `test-time mem.` marks an agent relying on a test-time-updated knowledge base or memory carried across instances. The authors state both denote different evaluation strategies rather than a reduction in task difficulty.[^cybergym-site]
 
 ## Hosting as attack surface
 
@@ -146,14 +173,19 @@ The contamination caveat above and this exposure are one mechanism running at tw
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] — the wiki thesis CyberGym anchors as a benchmark surface.
 - [[agentdojo|AgentDojo]] — sibling public benchmark, different bug class (prompt injection).
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]] — wiki position on the four-quadrant grid.
+- [[cybergym-e2e|CyberGym-E2E]] — sibling benchmark from the same group, scoring the whole discover-prove-fix loop rather than reproduction alone.
 
+[^cybergym-site]: UC Berkeley RDI, [CyberGym](https://www.cybergym.io/cybergym/) (fetched 2026-08-31). Published at ICLR 2026, [OpenReview `2YvbLQEdYt`](https://openreview.net/forum?id=2YvbLQEdYt); preprint [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Local copy: `.raw/articles/cybergym-benchmark-2026-08-31.md`.
+[^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
 
 <!-- sources:auto -->
 ## Sources
 
 - [CyberGym Benchmark](https://www.cybergym.io)
+- [cybergym.io](https://www.cybergym.io/cybergym/)
 - [arxiv.org](https://arxiv.org/abs/2506.02548)
+- [openreview.net](https://openreview.net/forum?id=2YvbLQEdYt)
 - [github.com](https://github.com/sunblaze-ucb/cybergym)
 - [rdi.berkeley.edu](https://rdi.berkeley.edu/blog/cybergym/)
 - [microsoft.com](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/)

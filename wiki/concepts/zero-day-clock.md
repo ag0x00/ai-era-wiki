@@ -3,7 +3,7 @@ type: concept
 title: "Zero Day Clock"
 address: c-000070
 created: 2026-05-15
-updated: 2026-08-24
+updated: 2026-08-31
 tags:
   - concepts
   - zero-day-clock
@@ -38,12 +38,14 @@ related:
   - "[[gtg-5004-no-code-ransomware|No-Code Ransomware Operation]]"
   - "[[llm-attack-navigator|LLM ATT&CK Navigator]]"
   - "[[autonomous-code-security-google-talk|Autonomous Code Security at Google]]"
+  - "[[cybergym|CyberGym Benchmark]]"
 sources:
   - "[[.raw/articles/zero-day-clock-the-collapse-2026-05-25.md]]"
   - "[[.raw/articles/zero-day-clock-call-to-action-2026-05-25.md]]"
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - "[[anthropic-glasswing-initial-update|Glasswing initial update]]"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
+  - "https://www.cybergym.io/cybergym/"
 homepage: "https://zerodayclock.com"
 coined_by:
   - "[[sysdig]]"
@@ -83,9 +85,10 @@ The clock frames the current state as a structural inversion. An exploit is crea
 
 The clock measures where attacker capability is heading. Current losses are still dominated by credential abuse, social engineering, and supply chain compromise. The argument is that AI-driven capability eventually flows into the impact channel; the clock is the leading indicator of when.
 
-Two further caveats bound the reading:
+Four further caveats bound the reading:
 
 - **Defender-biased sample.** CISA KEV + VulnCheck KEV + XDB captures vulnerabilities *observed* exploited, not vulnerabilities that could be exploited but have not been seen yet. If AI-driven discovery outruns KEV listing, the curve understates the true pace.
+- **Residence time before discovery sits outside the clock entirely.** The clock starts at disclosure, so it cannot measure how long a vulnerability existed before anyone found it. [[cybergym|CyberGym]]'s open-ended runs put a figure on that interval: ten deduplicated zero-days still present in current releases had each persisted an average of **969 days** before an agent found them.[^cybergym-site] A separate campaign across **431 OSS-Fuzz projects** confirmed 7 zero-days under GPT-4.1 and 22 under GPT-5, four of the latter overlapping with the former. Those vulnerabilities were exploitable throughout their residence and appear in no time-to-exploit series.
 - **CVE-exploit pairs miss un-cataloged AI findings.** The [[mozilla|Mozilla]]-via-Mythos finding (271 vulnerabilities, 3 warranted CVEs) indicates that most AI-discovered vulnerabilities are never assigned CVEs, which makes any CVE-based TTE a lower bound on AI-driven discovery-to-exploit pace. [[anthropic-glasswing-initial-update|Anthropic's Glasswing update]] confirms the 271 figure directly (Firefox 150, more than ten times the Firefox 148 count under Opus 4.6).
 - **AI-augmented campaigns that involve no vulnerability stay outside the dataset entirely.** Amazon Threat Intelligence's FortiGate campaign used AI-generated attack plans and reconnaissance tooling to compromise more than 600 devices across more than 55 countries, with no FortiGate vulnerability exploited: access ran on exposed management ports and single-factor credentials.[^aws-fg] No CVE means no clock starts. The campaign is a negative datum outside the curve's scope. See the [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
 
@@ -154,6 +157,7 @@ Demand 4 stands: it retires one property class rather than delivering a clean co
 [^vulncheck]: [VulnCheck — 2025 Q1 Trends in Vulnerability Exploitation](https://www.vulncheck.com/blog/exploitation-trends-q1-2025), Patrick Garrity, April 2025. Of 159 vulnerabilities first reported exploited in the wild in Q1 2025, 28.3% had exploitation evidence within one day of CVE publication. See [[vulncheck-exploitation-trends-q1-2025|VulnCheck Q1 2025 exploitation trends]].
 [^dream-taiwan]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia) (2026-08-12). See [[dream-taiwan-multi-agent-ai-attack|the source summary]] and [[taiwan-ai-agent-government-intrusion|the incident record]].
 [^aws-fg]: Amazon Threat Intelligence, [AI-augmented threat actor accesses FortiGate devices at scale](https://aws.amazon.com/blogs/security/ai-augmented-threat-actor-accesses-fortigate-devices-at-scale/), AWS (2026-02-20). More than 600 devices across more than 55 countries, 2026-01-11 to 2026-02-18, with no exploitation of any FortiGate vulnerability. See [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
+[^cybergym-site]: UC Berkeley RDI, [CyberGym](https://www.cybergym.io/cybergym/) (fetched 2026-08-31). Published at ICLR 2026, [OpenReview `2YvbLQEdYt`](https://openreview.net/forum?id=2YvbLQEdYt); preprint [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Local copy: `.raw/articles/cybergym-benchmark-2026-08-31.md`.
 
 <!-- sources:auto -->
 ## Sources

@@ -3,7 +3,7 @@ type: concept
 title: "VulnOps: Vulnerability Operations"
 address: c-000069
 created: 2026-05-15
-updated: 2026-08-24
+updated: 2026-08-31
 tags:
   - concepts
   - vulnops
@@ -14,6 +14,7 @@ status: developing
 scope_axis: [ai-in-sec-defense, sec-against-ai]
 no_public_url: "Emerging operating-model term from two independent framings; no single canonical external source."
 related:
+  - "[[agentic-vulnerability-discovery]]"
   - "[[mythos-ready-security-program|Mythos-ready Security Program]]"
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - "[[vulnops-l1-soc-extinction|CYBR.SEC.Media VulnOps article]]"
@@ -75,6 +76,8 @@ Two independent, non-vendor sources bound the problem from outside the term's ow
 
 The volume is also mostly noise. JFrog's 2026 analysis found that **66% of analyzed CVEs had a low applicability rate (0–20%)**, meaning the conditions to exploit them are rarely met in practice, and only **12% were highly exploitable** in real environments.[^jfrog-ssc] The scarce resource is therefore not patching capacity but the exploitability triage that separates the reachable flaws from the rest. VulnOps treats that triage as a first-class discipline.
 
+Triage scope is the second half of that discipline. [[autonomous-exploit-generation|Autonomous Exploit Generation]] records agents reaching code execution through a code path adjacent to the defect they were handed, so a remediation scoped to the reported line leaves the path the agent used. The queue inherits that difference, and a closed ticket bounds the fix rather than the finding.
+
 **Primary-source confirmation of the bottleneck inversion (2026-05-22).** [[anthropic-glasswing-initial-update|Anthropic's one-month Glasswing update]] states the VulnOps premise as a direct finding from roughly 50 coalition partners: *"Progress on software security used to be limited by how quickly we could find new vulnerabilities. Now it's limited by how quickly we can verify, disclose, and patch."*[^glasswing] The open-source funnel makes it concrete: 6,202 estimated high/critical found, only 1,752 assessed and 75 patched, at a roughly two-week mean patch time, and maintainers asked Anthropic to slow down disclosures.[^glasswing] The update provides the strongest primary-source evidence to date that the scarce resource has shifted from discovery to triage-and-remediation, the premise VulnOps exists to address.
 
 **The bottleneck moves rather than clears.** The August 2026 [[openai-hugging-face-agent-incident|OpenAI–Hugging Face disclosure]] states the same finding as a design constraint on how much of the loop is automated: automating discovery alone relocates the bottleneck to patching and drowns human engineers in findings, so the loop has to close through identification, proposed patch, rollout, and rollback on an availability regression.[^bh] The rollback leg is the part the current framings omit. Applying a fix without a tested automated reversal converts a bad patch into an outage, and the operator's response is to re-insert the human approval the automation was built to remove — which restores the original bottleneck one stage later. The same disclosure motivates continuous agentic red teaming as the input side of the function: the estate will be examined by model intelligence regardless, and the operational question is whether the organization spends enough of it on its own infrastructure before a threat actor does.[^bh] JFrog's applicability figures and the Glasswing funnel bound the triage problem; this source bounds the remediation problem the triage feeds.
@@ -113,6 +116,7 @@ This bounds what VulnOps can claim, and [[sdlc-in-the-ai-attacker-era|SDLC in th
 
 ## See Also
 
+- [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]] — the discovery stage whose validated output this function receives and triages.
 - [[mythos-ready-briefing|Mythos-ready paper]] — source and the canonical PA 11 (*Stand Up VulnOps*) description.
 - [[mythos-ready-security-program|Mythos-ready Security Program (Playbook)]] — operational instrument.
 - [[zero-day-clock|Zero Day Clock]] — quantitative anchor for the speed-of-exploitation problem VulnOps responds to.
