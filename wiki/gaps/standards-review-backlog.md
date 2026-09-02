@@ -3,7 +3,7 @@ type: gap-analysis
 title: "Standards Review Backlog"
 created: 2026-05-27
 address: c-000311
-updated: 2026-07-30
+updated: 2026-08-26
 tags:
   - gaps
   - standards-review
@@ -30,7 +30,7 @@ related:
 
 This board tracks the per-standard deep dives defined by [[standards-validation-methodology-2026-05|the Standards Validation Methodology]]. The methodology fixes the process (source primary docs, build a clause-level coverage matrix, state falsifiable absence claims, run an adversarial second pass) and the priority tiers. Each completed review lands at `wiki/reviews/standards-review-<standard>-YYYY-Qn.md` and becomes the load-bearing evidence for any gap claim the wiki makes against that standard.
 
-The wiki anchors gap claims against 11 priority standards. **All 11 are now reviewed** (Standards Reviews milestone closed 2026-06-22). The four 2026-Q2 first-wave reviews ([[standards-review-microsoft-zt4ai-2026-Q2|Microsoft ZT4AI]], [[standards-review-mitre-atlas-2026-Q2|MITRE ATLAS]], the [[standards-review-nist-ai-rmf-2026-Q2|NIST AI RMF stack (100-1 / 600-1 / 800-4)]], and the [[standards-review-owasp-agentic-aivss-2026-Q2|OWASP ASI Top 10 + AIVSS pair]]) were joined by the seven that close the milestone:
+The wiki anchors gap claims against 11 priority standards. **All 11 are now reviewed** (Standards Reviews milestone closed 2026-06-22) — 10 at clause level; the ISO/IEC 42001 + 27090 review below is citation-only, bounded by a paywall. The four 2026-Q2 first-wave reviews ([[standards-review-microsoft-zt4ai-2026-Q2|Microsoft ZT4AI]], [[standards-review-mitre-atlas-2026-Q2|MITRE ATLAS]], the [[standards-review-nist-ai-rmf-2026-Q2|NIST AI RMF stack (100-1 / 600-1 / 800-4)]], and the [[standards-review-owasp-agentic-aivss-2026-Q2|OWASP ASI Top 10 + AIVSS pair]]) were joined by the seven that close the milestone:
 
 - [[standards-review-csa-maestro-atf-2026-Q2|CSA MAESTRO + ATF]]: seven-layer threat model plus the Agentic Trust Framework's five elements, four maturity levels, and five promotion gates (corrected from fabricated gate names).
 - [[standards-review-eu-ai-act-2026-Q2|EU AI Act incl. Annex IV]]: risk-management and conformity-assessment law; Art. 15 cybersecurity is outcome-stated; the Annex IV item-map mislabels were corrected.

@@ -3,7 +3,7 @@ type: concept
 title: "Threat Modeling for AI"
 address: c-000112
 created: 2026-05-24
-updated: 2026-08-25
+updated: 2026-08-26
 tags:
   - concepts
   - threat-modeling
@@ -75,7 +75,7 @@ Seven taxonomies are in active use, plus three structural tests and the wiki's f
 - **[[owasp-llm-top-10|OWASP LLM Top 10]]** is the *non-agentic GenAI base*. Use it for the model-layer risks an agentic system inherits regardless of its autonomy.
 - **[[mitre-atlas|MITRE ATLAS]]** is the *adversary technique catalog*, the attacker's-eye view. Use it for detection engineering and red-team planning, where the question is which techniques will be used rather than which risks exist.
 - **[[csa-maestro|CSA MAESTRO]]** is a *layered decomposition* (seven layers, Foundation Models through Agent Ecosystem). Use it when the threat-modeling conversation is architectural: which layer owns a boundary, where cross-layer movement is possible.
-- **[[owasp-ai-exchange|OWASP AI Exchange]]** is a *matrix and control catalogue* covering all AI, keyed on asset and impact rather than on the application ([`/go/aisecuritymatrix/`](https://owaspai.org/go/aisecuritymatrix/)). Use it for the development-time, model-layer, runtime application-security, and non-generative threats the agentic lists leave outside their scope; the [[threat-taxonomy-reconciliation|reconciliation matrix]] carries the eleven categories no ASI row anchors. It is also the entry to start from where the deliverable must map to prEN 18282 or ISO/IEC 27090, on the Exchange's own account of its liaison contribution to both.[^aix-liaison]
+- **[[owasp-ai-exchange|OWASP AI Exchange]]** is a *matrix and control catalogue* covering all AI, keyed on asset and impact rather than on the application ([`/go/aisecuritymatrix/`](https://owaspai.org/go/aisecuritymatrix/)). Use it for the development-time, model-layer, runtime application-security, and non-generative threats the agentic lists leave outside their scope; the [[threat-taxonomy-reconciliation|reconciliation matrix]] carries the fourteen categories no ASI row anchors. It is also the entry to start from where the deliverable must map to prEN 18282 or ISO/IEC 27090, on the Exchange's own account of its liaison contribution to both.[^aix-liaison]
 
 Three **structural tests** sit before enumeration. The [[lethal-trifecta|Lethal Trifecta]] (private data access + untrusted content exposure + external communication) is a necessary condition for exfiltration at scale; the [[lethal-bifecta|Lethal Bifecta]] (untrusted content + sensitive write capability) is the write-side analogue for damaging action; and **egress-allowlist transitivity** asks whether any allowlisted destination can itself reach further than the agent may, since an allowlist bounds reach only to the transitive closure of what it permits. They are go/no-go checks applied at design time: if the architecture satisfies the condition, the risk is structural and one leg must be removed regardless of which catalog threat is in play.
 
