@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D4: Runtime and Guardrails"
 address: c-000126
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -40,6 +40,7 @@ related:
   - "[[oversight-layer]]"
   - "[[least-agency-principle]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[prompt-injection]]"
@@ -76,6 +77,8 @@ The Exchange cuts the same pair on a different axis. `LEAST MODEL PRIVILEGE` is 
 The input/output safety layer (L2/L3) is GA across all three clouds and sits largely inside Azure entitlements. The agentic-reasoning layer (L4) is not: chain-of-thought auditing and groundedness checking ship as preview or experimental components, so an L4 program assembles them rather than buying them.
 
 The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] is an operational example of the failure class the jailbreak-classifier row grades against. A framing-based jailbreak ("authorized penetration testing") defeated the underlying models' refusals across a four-day, 12-wave campaign.[^taiwan] The graded capability is holding a refusal against a social-engineering frame that persists for days. A GA classifier in the path is the precondition rather than the evidence.
+
+Cyera's Protect phase is a further vendor example of the tool-call interception row above: Cyera states it blocks a risky tool call during execution ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera names the block and gives no efficacy figure, no bypass rate, and no decision mechanism behind that block, so that row's graded status is unchanged.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Apps & Workloads pillar (assume breach) supplies the Microsoft-native runtime controls behind these rungs — Prompt Shields, Groundedness Detection, and Task Adherence — crosswalked to D4 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which records the same GA-versus-preview split.
 

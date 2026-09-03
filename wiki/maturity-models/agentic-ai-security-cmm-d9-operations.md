@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -39,6 +39,7 @@ related:
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
@@ -73,6 +74,8 @@ The load-bearing center of D9 has no product on any stack: HITL-fatigue measurem
 What the [[microsoft-zt4ai|Microsoft ZT4AI]] Governance pillar does supply for D9 is the lifecycle-accountability layer — Entra ID Governance sponsors with manager-transfer, and the [[microsoft-entra-agent-id|Entra Agent ID]] disable/delete-with-cascade reaper — crosswalked to D9 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which confirms the human-factors center has no product on any stack. The [[microsoft-rai|RAI Standard]]'s A5 (Human oversight and control) goal sets the human-oversight outcome at the goal level, and [[microsoft-entra-agent-id|Agent 365]]'s lifecycle management (create / review / decommission via the registry plus the Entra ID Governance sponsor model) supplies the management-plane mechanism behind it — the goal-and-mechanism pairing is set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]]. Neither instrument supplies the human-factors instrumentation (HITL-fatigue measurement, continuity testing) at the center of this domain.
 
 Regulatory-notification coordination belongs to the compliance function. The Exchange routes it to `CHECK COMPLIANCE` and states the placement outright: a serious incident may trigger parallel obligations such as [[eu-ai-act|EU AI Act]] Art. 73 reporting and NIS2 timelines, and the response is coordinated there rather than inside the monitoring controls ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/secprogram/`](https://owaspai.org/go/secprogram/)). D9's IR content and [[agentic-ai-security-cmm-d7-observability|D7]]'s monitoring content both sit on that line. The runbook names the instrument, the owner and the clock; the telemetry pipeline carries none of the obligation.
+
+Cyera's Incident Materiality Assessment is a vendor example of the data-impact half of the IR runbook: a scoped inventory of exposed records by class, a timeline of who accessed what and when, and a report framed for legal, board, and regulatory readers ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera states the service pairs data scanning with expert-led analysis, so the assessment is delivered as expert work and this domain's product landscape is unchanged. The release leaves the four load-bearing gaps at the center of this domain — HITL-fatigue measurement, bus-factor continuity, IR-runbook drilling, decommission cadence — untouched.
 
 ## Capability-decoupled levels
 

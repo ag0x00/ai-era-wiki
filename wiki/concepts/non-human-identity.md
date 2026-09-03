@@ -3,7 +3,7 @@ type: concept
 title: "Non-Human Identity (NHI)"
 address: c-000187
 created: 2026-04-30
-updated: 2026-08-15
+updated: 2026-08-31
 tags:
   - concepts
   - identity
@@ -38,6 +38,7 @@ related:
   - "[[owasp-state-of-agentic-ai-security-governance]]"
   - "[[owasp-agentic-ai-threats-mitigations]]"
   - "[[microsoft-zt4ai]]"
+  - "[[cyera-agent-guardian-release]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
 sources:
@@ -92,11 +93,12 @@ The **coupled** rows are where the credential string IS the identity — rotatio
 
 ## Relevance to agentic AI
 
-AI agent deployments amplify the NHI problem in three ways:
+AI agent deployments amplify the NHI problem in four ways:
 
 1. **Scale.** Each agent — often each agent task — may require one or more credentials. Large multi-agent systems generate thousands of identities quickly.
 2. **Ephemerality.** Agents are spun up and torn down dynamically; their credentials may not be systematically revoked.
 3. **Autonomy.** Unlike a human who can be asked to justify an action, an agent may exercise credentials in ways that are opaque without purpose-built tracing.
+4. **Onset.** A human grows into a permission set over months and may never exercise most of it; an agent launched under that human's credentials can use the whole set from day one. Cyera argues from this asymmetry that agentic AI security is a data security problem first: "A new hire typically grows into permissions over time and may never touch most of what they’re technically allowed to see. An agent is different. On day one, it can inherit broad entitlements and use them immediately whenever a task requires it" ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera publishes no measurement behind the claim. Onset differs from the ambient authority described below: ambient authority measures granted permissions against what one task needs, and onset measures them against what the holder ever exercises.
 
 The combined effect is a rapidly growing NHI estate that is poorly inventoried and a high-value attack surface.
 

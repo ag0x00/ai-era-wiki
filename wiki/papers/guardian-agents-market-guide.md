@@ -2,7 +2,7 @@
 type: paper
 title: "Gartner Market Guide for Guardian Agents"
 created: 2026-05-01
-updated: 2026-08-20
+updated: 2026-08-31
 tags:
   - papers
   - gartner
@@ -36,6 +36,8 @@ supports:
   - "[[ai-spm]]"
   - "[[agent-observability]]"
 related:
+  - "[[cyera|Cyera]]"
+  - "[[cyera-agent-guardian-release|Cyera Agent Guardian Release]]"
   - "[[gartner]]"
   - "[[avivah-litan]]"
   - "[[daryl-plummer]]"
@@ -132,6 +134,8 @@ This is the single concept Gartner adds that our existing CMM does not have. Wor
 | AI content governance | Bynder, Fujitsu, Markup.AI | None yet |
 
 Knostic appears in the Agent security and risk specialists segment — confirming the wiki's existing positioning of Knostic as a GA vendor.
+
+[[cyera|Cyera]] appears in none of the six segments. Note 9 of the guide names it under information governance, alongside Bigeye, Concentric AI, Touchdown and Collibra, as a sample vendor whose products "complement agent identity and other GA solutions", and states that those vendors are expanding into agent discovery and inventory and contextual risk mapping. The [[cyera-agent-guardian-release|Cyera Agent Guardian release]] is that expansion in product form.
 
 ### 6. Market predictions
 

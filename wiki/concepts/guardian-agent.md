@@ -2,7 +2,7 @@
 type: concept
 title: "Guardian Agent"
 created: 2026-05-01
-updated: 2026-08-20
+updated: 2026-08-31
 tags:
   - concepts
   - guardian-agent
@@ -27,6 +27,7 @@ related:
   - "[[agent-catalog]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
 coined_by:
@@ -112,6 +113,10 @@ Wiki connection: this is essentially [[ai-spm|AI Security Posture Management (AI
 Common sub-features: **automatic blocking**, **autoremediation** (revoke privileges, quarantine agents), **continuous compliance monitoring**.
 
 Wiki connection: maps to **D4 Runtime & Guardrails** + **D3 Control & Least-Agency** in the CMM.
+
+### Vendor grading against the three categories
+
+Cyera's Agent Guardian names capabilities in all three categories and covers category 1 only in part ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]): Discover supplies the catalog and the map, and the release names no ownership or lineage tracking and no agent-level audit trail, since Access Trail audits data stores. Govern and Validate carry continuous assurance with its security-testing sub-feature, and Protect carries runtime enforcement. The release never cites Gartner's categories, and a capability list is not evidence of meeting the bar.
 
 ## Sentinels and Operatives
 

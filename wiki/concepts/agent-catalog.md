@@ -2,7 +2,7 @@
 type: concept
 title: "AI Agent Catalog"
 created: 2026-05-01
-updated: 2026-06-23
+updated: 2026-08-31
 tags:
   - concepts
   - agent-catalog
@@ -28,6 +28,7 @@ related:
   - "[[shadow-ai]]"
   - "[[shadow-automation]]"
   - "[[nist-ai-rmf]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
@@ -75,7 +76,7 @@ The catalog must enumerate all four populations:
 |---|---|
 | **Registered** | The agent self-registers with the IAM / agent platform on creation |
 | **Unregistered** | Discovered via network telemetry, identity provider observation, or platform-API enumeration; backfilled into the catalog |
-| **Shadow** | [[shadow-ai\|Shadow AI]] / [[shadow-automation\|shadow automation]] — agents created outside sanctioned platforms (developer-side, BYOAI, ungoverned IDE extensions) |
+| **Shadow** | [[shadow-ai\|Shadow AI]] / [[shadow-automation\|shadow automation]] — agents created outside sanctioned platforms (developer-side, BYOAI, ungoverned IDE extensions and desktop agent harnesses) |
 | **Rogue** | Agents whose behavior diverges from declared intent or whose identity has been compromised |
 
 **No catalog discipline = no governance.** This is the entry-level failure mode for AI agent security programs.
@@ -104,8 +105,11 @@ Risk scores feed back into runtime decisions: high-risk agents get tighter Opera
 | CrowdStrike, SentinelOne | Endpoint-level agent discovery via process telemetry |
 | Wiz AI-SPM, Palo Alto Prisma AIRS | AI asset inventory across cloud environments |
 | Internal CMDB extensions | Many enterprises extend their CMDB to track AI agents |
+| Cyera Agent Guardian | Cloud, SaaS, endpoint and Shadow AI agent discovery (vendor-stated; no published coverage figure) |
 
 No single tool covers all four populations comprehensively. Gartner's prediction is that **independent guardian-agent vendors will provide unified catalog discovery as a category in 2027–2028**, displacing the current hyperscaler-specific tools for cross-vendor enterprises.
+
+Cyera is marketing that unified position ahead of the predicted window, and from outside the population the prediction covers: the same Market Guide places this data security posture management incumbent in none of its six vendor segments, naming it under information governance instead ([[guardian-agents-market-guide|Guardian Agents Market Guide]]). An incumbent outside the guardian-agent category reaching for the unified catalog is a stronger timing signal than an independent vendor doing so, because it prices the category as worth entering before Gartner's window opens. Cyera's Agent Guardian release, fetched 2026-08-31, claims a live inventory spanning cloud platforms, SaaS tools, endpoints and Shadow AI in one product, alongside an endpoint agent covering desktop harnesses ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The claim is a vendor self-report with no published coverage figure and no third-party evaluation, so it bears on when the category forms rather than on whether any tool has closed the four-population gap.
 
 ## Placement in this wiki
 

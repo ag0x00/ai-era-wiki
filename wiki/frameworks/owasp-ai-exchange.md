@@ -3,7 +3,7 @@ type: framework
 title: "OWASP AI Exchange"
 address: c-000296
 created: 2026-08-17
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - frameworks
   - owasp
@@ -23,6 +23,7 @@ audience: "Security, privacy, engineering, testing, and governance practitioners
 adoption_signal: active
 last_substantive_update: 2025-10-01
 related:
+  - "[[cyera-agent-guardian-release|Cyera Agent Guardian Release]]"
   - "[[owasp-llm-top-10]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-aivss]]"
@@ -350,6 +351,8 @@ Direct prompt injection is described as social engineering of a generative AI, s
 Indirect prompt injection is likened to remote code execution and named the dominant threat class for systems that retrieve external content, invoke tools, or share memory across sessions.[^aix-ipi] Five structural mitigations are named as a bundle: capping concurrent risk factors and otherwise requiring human oversight; privilege-based data flow control, which the Exchange identifies with [[camel-pattern|CaMeL]]; instruction and data separation; paired input and output firewalls at the agent-to-tool boundary; and detection operating at text, model, and execution levels, of which execution-level detection is called often the most reliable.[^aix-pi]
 
 The seven layers of protection are the Exchange's defense-in-depth ordering for this threat, carried with their stated per-layer weaknesses on [[prompt-injection-containment|Prompt Injection Containment]].[^aix-7l] Two controls sit behind them: `PROMPT INJECTION I/O HANDLING`, which specifies Unicode normalization, locale-independent case-folding, confusable collapsing under Unicode UTS #39, and instruction-token escaping ahead of detection;[^aix-piioh] and `INPUT SEGREGATION`, which delimits untrusted data with hard-to-spoof markers and is stated to be a partial mitigation, because models may still attend to marked text and may not follow instructions to ignore it.[^aix-inputseg] The wiki carries the second technique as [[sentinel-tokens|sentinel tokens]].
+
+A commercial position runs against the Exchange's detection-layer ranking. Cyera's agent-security release, fetched 2026-08-31, argues that tooling watching "prompts, outputs, or individual tool calls" misses what data an agent can reach and whose permissions it inherits, and sells discovery and classification as the prior control ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The Exchange ranks execution-level detection above the text and model layers for reliability, and [[agentic-ai-security-reference-architecture|the AAI-S reference architecture]] carries that ranking and records the disagreement as open. Cyera publishes no measurement on either side of it.
 
 **Agent message structure manipulation** carries its own permalink and threat entry: forging, replaying, or altering the structured messages passing between agents, tools, and orchestration layers, so that task parameters, tool arguments, routing metadata, conversation state, or schema fields drive a downstream component into an unintended action.[^aix-amsm] The Exchange separates it from indirect prompt injection by target — the message fabric and its protocol fields rather than natural-language content — and states that it reaches single agentic flows as well as multi-agent systems.[^aix-amsm] [[agent-message-structure-manipulation|The threat page]] carries the control set.
 

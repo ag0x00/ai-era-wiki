@@ -2,7 +2,7 @@
 type: practice
 title: "Oversharing Controls for AI Search"
 created: 2026-05-01
-updated: 2026-08-20
+updated: 2026-08-31
 tags:
   - practices
   - oversharing
@@ -21,6 +21,8 @@ related:
   - "[[dspm]]"
   - "[[rag-hardening]]"
   - "[[knostic]]"
+  - "[[cyera|Cyera]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
 ---
@@ -76,7 +78,7 @@ Every disclosure decision logged: who asked, what was retrieved, why it was allo
 - **Knostic** — pure-play knowledge-layer governance for Microsoft Copilot, Glean, Gemini. See [[knostic|Knostic]].
 - **Microsoft Purview + Sensitivity Labels** — built-in for the M365 ecosystem; less effective on cross-source aggregation than dedicated knowledge-layer tooling.
 - **Glean's own permissioning** — vendor-internal RBAC enforcement; limited to Glean's own retrieval scope.
-- **DSPM vendors with AI extensions** — Cyera, [[varonis|Varonis]], BigID, others moving into the AI-feed-DSPM space.
+- **DSPM vendors with AI extensions** — [[cyera|Cyera]], [[varonis|Varonis]], BigID, others moving into the AI-feed-DSPM space; Cyera's [[cyera-agent-guardian-release|Agent Guardian release]], fetched 2026-08-31, is a dated instance of that movement.
 
 The category is fragmenting. As of Q2 2026 it is not a single market but at least three: knowledge-layer governance, sensitivity-label-management, DSPM-with-AI-extensions.
 

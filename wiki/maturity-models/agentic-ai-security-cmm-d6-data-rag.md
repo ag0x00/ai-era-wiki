@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D6: Data, Memory and RAG"
 address: c-000139
 created: 2026-05-24
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -40,6 +40,7 @@ related:
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[microsoft-sdl-evolving-security-practices]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[inference-exposure]]"
@@ -79,6 +80,8 @@ The two risk families sit at different tooling maturity.
 This grade corrects two errors in the CMM's current D6 tooling map. That map under-weighted the GA assessment-and-labeling stack (DSPM for AI, label-aware DLP), and it over-credited exploratory tools (RAGShield/TrustRAG/Brain Git) as deployable controls.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Data pillar (least privilege / assume breach) supplies these controls — Purview answer-time entitlement, DSPM for AI oversharing assessment, and label-aware DLP — crosswalked to D6 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]].
+
+Cyera states its Protect phase strips sensitive fields out of a response before the response reaches somewhere it should not, which is a further vendor example of the answer-time / output-controls row above. Cyera's on-premises database coverage (MySQL, MariaDB, Oracle RAC, MSSQL 2025, Db2 for i) extends the same classification control to more stores and adds no control to the row ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]).
 
 ## Capability-decoupled levels
 

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D7: Observability and Detection"
 address: c-000128
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -49,6 +49,7 @@ related:
   - "[[tiered-detection-cascade]]"
   - "[[llm-as-a-judge]]"
   - "[[prompt-volume-to-alert-ratio]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[agent-observability]]"
@@ -90,6 +91,8 @@ Memory poisoning reaches D7 through the write, and the write is only visible whe
 The recalibration corrects two things in the current D7 tooling presentation. It adds the OTel-not-stable caveat at L3. And it re-grades the Microsoft-native behavioral detector (Defender XDR AI-agent detection) as preview and Agent 365-licensed, mirroring the D4 "L4 looks GA but isn't" correction. Google SecOps adds a second platform-native behavioral detector, Agent Anomaly Detection, which pairs statistical models with an [[llm-as-a-judge|LLM-as-a-judge]] check on agent reasoning (preview; see [[google-agentic-soc|Google Agentic SOC]]).
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Visibility / Orchestration pillar (assume breach) supplies the Microsoft-native detection and SOC controls behind these rungs — Defender XDR AI-agent detection and the Sentinel agentic-SOC tooling — crosswalked to D7 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which records the same preview status. Above those controls, [[microsoft-entra-agent-id|Agent 365]]'s `observe` layer — the [[agent-catalog|agent registry]], Registry sync (including cross-cloud agents), and the Agent Map — is its strongest native D7 contribution: an agent-inventory and telemetry surface that aggregates the underlying detections rather than replacing them. The inventory-versus-detection distinction, and the absence-claim that the `observe` layer inventories but does not verify supply-chain integrity (no AI-BOM), are set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]].
+
+Cyera states that Agent Guardian counts behavioral baselines among its inputs, that its Govern phase watches posture issues and intent drift as they form, and that its Validate phase runs a continuous adversarial red-team cadence; all three are further vendor examples in this landscape ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera's Access Trail audits data-store events — message access, deletions, delegated access — so it instruments the data plane, supplies no agent telemetry, and adds no row to the table above.
 
 ## Capability-decoupled levels
 

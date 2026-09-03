@@ -2,7 +2,7 @@
 type: domain
 title: "Organizations"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-08-31
 tags: [domain, entities, organizations]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
@@ -37,6 +37,7 @@ Companies, standards bodies, consortia, vendors.
 - [[csa|CSA (Cloud Security Alliance)]] — Sources: [Cloud Security Alliance (homepage)](https://cloudsecurityalliance.org)
 - [[cset-georgetown|CSET (Georgetown)]] — Georgetown University-based policy research center.
 - [[cyberark|CyberArk]] — Sources: [CyberArk (homepage)](https://www.cyberark.com) ·...
+- [[cyera|Cyera]] — Sources: [Cyera (homepage)](https://www.cyera.com) ·...
 - [[datadog|Datadog]] — Sources: [Datadog (homepage)](https://www.datadoghq.com) · [LLM Observability](https://www.datadoghq.com/product/llm-observability/)
 - [[deloitte|Deloitte]] — Sources:...
 - [[dream-security|Dream Security]] — Israeli cybersecurity vendor building AI-native defensive products; its research arm, DREAM Lab, publishes threat-intelligence analysis o...

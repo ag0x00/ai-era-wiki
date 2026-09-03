@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-08-21
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -39,6 +39,7 @@ related:
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
   - "[[security-controls-for-ai-stacks]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[aiuc-1-critical-evaluation]]"
@@ -78,6 +79,8 @@ The Exchange supplies no organizational maturity criteria. It does grade standar
 The AIUC-1 certified population is small; [[aiuc-1-critical-evaluation|the evaluation]] carries the count and its provenance. Purview governance is included in E5 entitlements, so the licensing delta on the evidence layer is near zero for an incumbent.
 
 The platform-native column matters for single-stack buyers. An all-Microsoft enterprise reaches the L4 evidence layer (crosswalk, board metrics, risk register) on Purview and Compliance Manager already in its licensing, without a separate GRC purchase. The [[microsoft-zt4ai|Microsoft ZT4AI]] Governance pillar (verify explicitly) grounds this layer in named controls — the [[microsoft-rai|Responsible AI Standard]] and the Purview Compliance Manager AI templates — crosswalked to D1 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]. The RAI Standard states responsible-AI **goals** and leaves the control catalogue to ZT4AI: its Accountability and Transparency goals carry D1 at the goal level — A1 Impact Assessment, A2 Oversight of significant adverse impacts, A5 Human oversight and control, T1 System intelligibility, T2 Communication to stakeholders. The goal-level mapping is set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]], which separates RAI's goals from the ZT4AI control catalogue.
+
+Cyera's Discover phase is a vendor example of the inventory half of the decision-rights and inventory row above: Cyera states it builds a live inventory of agents across cloud, SaaS, endpoint, and Shadow AI. Cyera states its Validate phase produces audit-ready regulatory evidence of the kind the platforms in the evidence and crosswalk row hold ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The release names no reaper and no decommission action, so the decision-rights and inventory row keeps its pattern-level status.
 
 ## Capability-decoupled levels
 

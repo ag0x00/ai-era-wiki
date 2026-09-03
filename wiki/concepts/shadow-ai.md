@@ -2,7 +2,7 @@
 type: concept
 title: "Shadow AI"
 created: 2026-05-01
-updated: 2026-06-23
+updated: 2026-08-31
 tags:
   - concepts
   - shadow-ai
@@ -26,6 +26,7 @@ related:
   - "[[ai-spm]]"
   - "[[non-human-identity]]"
   - "[[mcp-security]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
 ---
@@ -77,7 +78,7 @@ The Knostic article frames mitigation as a triad:
 Mature implementations add:
 
 - **Sanctioned alternatives provided proactively.** If users have a sanctioned tool that does what they need, BYOAI rates drop.
-- **Discovery via [[ai-spm|AI-SPM]].** Inventory production-grade AI assets, including locally installed MCP servers and IDE extensions.
+- **Discovery via [[ai-spm|AI-SPM]].** Inventory production-grade AI assets, including locally installed MCP servers and IDE extensions. Cyera Endpoint, described in [[cyera-agent-guardian-release|the Cyera Agent Guardian release]], is a vendor example of this discovery extended to desktop agent harnesses, naming Claude Code, Cowork and ChatGPT Desktop among them, and not only IDE extensions.
 - **Knowledge-layer controls** ([[oversharing-controls|Oversharing Controls for AI Search]]) to limit damage when sanctioned AI is misused for unsanctioned data.
 
 ## Distinction from Sanctioned AI

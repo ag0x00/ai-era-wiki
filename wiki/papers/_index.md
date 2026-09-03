@@ -2,7 +2,7 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-08-31
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
@@ -45,6 +45,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[claude-code-security-announcement|Claude Code Security Announcement]] — Source:...
 - [[claude-partners-opus-cybersecurity|Partners Putting Opus to Work for Cybersecurity]] — Source:...
 - [[codex-security-announcement|Aardvark / Codex Security Announcement]] — Source: [OpenAI blog — Introducing Aardvark](https://openai.com/index/introducing-aardvark/) (fetched 2026-05-15).
+- [[cyera-agent-guardian-release|Cyera Agent Guardian Release]] — Source:...
 - [[detection-deception-engineering-orbie-talk|Detection & Deception Engineering in the Matrix (Orbie)]] — A practitioner talk by Bob Rudis and Glenn Thorpe (GreyNoise) at Unprompted (March 2026) on Orbie, an AI agent that operates over interne...
 - [[dream-taiwan-multi-agent-ai-attack|Taiwan Multi-Agent Attack Reconstruction]] — Source:...
 - [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] — Source: Anton Goncharov, original research (March 2026).

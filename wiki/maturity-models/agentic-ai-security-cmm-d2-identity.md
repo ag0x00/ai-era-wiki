@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -38,6 +38,7 @@ related:
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails]]"
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
   - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[identity-credential-coupling]]"
@@ -76,6 +77,8 @@ The prerequisite is necessary and not sufficient, and the [[owasp-ai-exchange|OW
 Entra Agent ID mints a credential-less service principal from an agent blueprint, so a Microsoft deployment reaches the zero-credentials row natively and buys no credential proxy.
 
 **Correction.** The current CMM dates "Okta for AI Agents GA Apr 30 2026." That is wrong. Okta's own materials place it at Early Access in FY27 Q1 and GA later in FY27[^okta]; the GA'd product is Auth0 for AI Agents (Oct 2025). The date is removed from D2 and the tooling map. Per-agent identity is well covered platform-native regardless, so nothing in the ladder depends on Okta.
+
+Cyera states that an agent inherits the access of the person who launched it and exercises that access from day one. That is the entitlement model the L2 rung below already grades, where delegation runs only through the human user. Cyera also states its Discover phase inventories agents across cloud, SaaS, endpoint, and Shadow AI, which is a vendor example of the shadow-agent discovery tooling L5 requires ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]).
 
 ## Capability-decoupled levels
 

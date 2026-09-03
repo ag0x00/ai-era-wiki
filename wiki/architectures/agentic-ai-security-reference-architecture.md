@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - architectures
   - reference-architecture
@@ -74,6 +74,7 @@ related:
   - "[[hermes-agent]]"
   - "[[gemini-cli-workspace-trust-rce]]"
   - "[[harness-config-as-supply-chain-artifact]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[ai-security-standards-in-q1-2026]]"
   - "[[emerging-cybersecurity-practices-for-agentic-ai-applications]]"
@@ -274,6 +275,8 @@ The Exchange requires quota enforcement at the platform rather than through agen
 **The Exchange describes the CaMeL pattern by what enforcement acts on rather than by its topology:** capability metadata is attached to values, and the user's intent is converted into sandboxed code steps in place of unconstrained natural-language tool calls.[^aix-pi-ra] The two-model split named in that row implements the control. The Exchange also lists the pattern among five structural mitigations it recommends against agentic prompt injection, a standing above the Research-stage grade the row records; recommended in a standards-liaison publication and unshipped in production are both current, and [[camel-pattern|CaMeL]] carries the reconciliation.
 
 **The Exchange ranks three detection layers and puts execution-level detection — observing the tool calls and side effects an agent actually produces — above text-level and model-level detection for reliability.**[^aix-pi-ra] This table's grades run the other way for a defensible reason: the text-layer row is Mature because classifiers ship as products, and behavioural monitoring in the Observability plane is Developing because it is assembled. Maturity and reliability are separate axes, and the ordering means this plane's most purchasable detection row and the layer the Exchange calls most reliable are different controls. The precedence claim agrees with design principle 1, because the Exchange states that its own I/O-handling layer raises the bar so later layers become more effective — the hierarchy-not-exclusivity reading the callout under that principle already carries.
+
+Cyera's Agent Guardian release runs against this precedence claim. Cyera criticizes tools that "monitor prompts, outputs, or individual tool calls" for missing what an agent can reach and whose permissions it inherits, and markets its own product on a data-first and identity-first premise instead ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The release names no benchmark for either position, so the precedence claim above stands and this page records the disagreement as open.
 
 ### 4. Egress plane
 

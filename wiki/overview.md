@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-08-26
+updated: 2026-08-31
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -72,13 +72,15 @@ The recurring failure mode is prompt injection that reaches a privileged action.
 
 The Exchange sorts on asset and impact rather than on runtime model use, so it reaches fourteen development-time, model-layer, and runtime application-security categories that the [[owasp-agentic-ai-top-10|OWASP Agentic Top 10]] does not rank. It leaves four multi-agent ASI categories unanchored in turn. Its runtime deep dive also separates [[agent-escape|agent escape]] from jailbreaking by the layer each defeats, and the two failures take different controls. The reference architecture then organizes the responses: deterministic policy enforcement, plan-validate-execute patterns, and runtime guardrails.
 
+Agent inventory is forming as a product category ahead of the schedule the field predicted. Gartner places unified catalog discovery with independent guardian-agent vendors in 2027–2028. A data-security incumbent that the same guide puts in none of its six vendor segments is already marketing the unified position ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). That claim is a vendor self-report carrying no coverage figure, so it bears on when the category forms. The four-population gap [[agent-catalog|the agent catalog]] describes stays open.
+
 **Start here:**
 
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: the six-plane structural model (Identity, Control, Runtime, Egress, Data, Observability).
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: the five-level by nine-domain capability maturity model with cross-domain dependency caps and ID-tagged evidence.
 - [[threat-modeling-for-ai|Threat Modeling for AI]]: the spine that reconciles the seven threat taxonomies and walks one worked example from threat to control.
 - [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]]: the agent-orchestration risk taxonomy.
-- [[non-human-identity|Non-Human Identity]]: the machine credential an AI agent carries, now a GA platform-native capability on the three hyperscalers.
+- [[non-human-identity|Non-Human Identity]]: the machine credential an AI agent carries, now a GA platform-native capability on the three hyperscalers. Its fourth amplifier is onset: an agent exercises its launcher's entitlement set from day one, where a human hire grows into one.
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: the testing thesis covering probe libraries, orchestration, and continuous adversarial evaluation.
 - [[microsoft-sdl-evolving-security-practices|Microsoft SDL for AI]]: the first major-vendor secure-SDLC framework with an explicit AI extension.
 - [[securing-agentic-coding|Securing Agentic Coding]]: the plane-by-plane control catalog for coding agents, graded first-party, FOSS, or COTS.

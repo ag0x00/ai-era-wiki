@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-08-31
 tags:
   - maturity-models
   - cmm
@@ -38,6 +38,7 @@ related:
   - "[[offensive-agent-collective]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
   - "[[agent-escape]]"
+  - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[least-agency-principle]]"
@@ -82,6 +83,8 @@ Each grant binds a context chain — human principal, verified agent identity, t
 The remaining three parts are graded elsewhere or not at all. Context-aware access control — infrastructure signals feeding graduated tiers, autonomous in low-risk context and gated in elevated-risk context — is the risk-adaptive step-up at L5 below. Agent identity verification, which the framework carries as unique cryptographic per-instance identity with mutual authentication and an active-agent registry, is graded at [[agentic-ai-security-cmm-d2-identity|D2]] and anchored there in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]. Dynamic permission scoping — automatic narrowing the moment untrusted external content enters the flow — is graded at no rung in this domain; it is implementation pattern 7 on [[least-agency-principle|least agency]], and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4 records the runtime counterpart as ungraded for the same reason.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] least-privilege principle grounds the D3 deny-by-default rung in its least-action design guidance ("start with no permitted actions by default"), crosswalked to D3 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]].
+
+Cyera states its Protect phase blocks a risky tool call during execution; the release names no policy language, no deny-by-default configuration, and no risk tier behind that block, so the release adds no entry to the table above ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera states its Govern phase watches high autonomy as a risk signal, and the release names no permission-narrowing or capability-attenuation mechanism this domain's tooling map would carry.
 
 ## Capability-decoupled levels
 
