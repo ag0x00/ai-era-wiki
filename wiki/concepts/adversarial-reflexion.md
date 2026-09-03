@@ -3,14 +3,14 @@ type: concept
 title: "Adversarial Reflexion"
 address: c-000061
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-09-01
 tags:
   - concepts
   - vuln-discovery
   - false-positives
   - persona
   - verification
-status: seed
+status: developing
 no_public_url: "wiki term coined in the OpenAnt/Knostic source; no separate canonical external page"
 scope_axis: [ai-in-sec-defense]
 related:
@@ -24,8 +24,17 @@ related:
   - "[[xbow-mythos-evaluation|XBOW × Mythos]]"
   - "[[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]"
   - "[[agentic-ai-security-cmm-measurement-protocol|CMM Measurement Protocol]]"
+  - "[[security-audit-skill|security-audit-skill]]"
+  - "[[vvah|VVAH]]"
+  - "[[trail-of-bits-skills|trailofbits/skills]]"
+  - "[[defending-code-harness|defending-code-harness]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[semgrep|Semgrep]]"
 sources:
   - "[[openant-announcement|Introducing OpenAnt (Knostic blog, 2026-05-15)]]"
+  - ".raw/articles/openant-2026-05-15.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # Adversarial Reflexion (Constrained-Persona Vulnerability Verification)
@@ -50,11 +59,11 @@ The composite effect is to eliminate a structural class of false positives — t
 
 Adversarial Reflexion is OpenAnt's specific implementation, but the underlying discipline — *FP-control via architectural constraint at the harness layer* — is convergent across AI vulnerability discovery generally and across at least two surfaces (vuln discovery + config audit):
 
-- [[mdash-defense-at-ai-speed|MDASH]] reaches the same discipline via *ensemble + debater + prover-stage* architecture. Multiple independent perspectives are run against the same candidate; consensus is required for confirmation.
-- [[codex-security-announcement|Aardvark / Codex Security]] reaches the same discipline via *sandboxed exploit-trigger validation*. Each candidate vulnerability is attempted in an isolated sandboxed environment to confirm exploitability; the validation steps are described to support quality assessment.
-- [[claude-code-security-announcement|Claude Code Security]] reaches the same discipline via *self-critique prove/disprove verification*. *"Claude re-examines each result, attempting to prove or disprove its own findings and filter out false positives."* The model-vs-itself adversarial loop is the FP-control primitive.
-- [[xbow-mythos-evaluation|XBOW × Mythos]] reaches the same discipline via *live-site validation* — the wedge between *finding a candidate* and *confirming a live-site exploit*.
-- [[agentshield|AgentShield]] reaches the analogous discipline on the **config-audit side** (different domain) via *provenance-aware `runtimeConfidence` weighting* — same rule, different weight by source kind (`active-runtime` vs. `template-example` vs. `docs-example`).
+- [[mdash-defense-at-ai-speed|MDASH]] runs the discipline as *ensemble + debater + prover-stage* architecture: multiple independent perspectives evaluate the same candidate, and confirmation requires consensus.
+- For [[codex-security-announcement|Aardvark / Codex Security]] the mechanism is *sandboxed exploit-trigger validation* — each candidate vulnerability is attempted in an isolated sandboxed environment to confirm exploitability, with the validation steps described to support quality assessment.
+- [[claude-code-security-announcement|Claude Code Security]] implements *self-critique prove/disprove verification*: *"Claude re-examines each result, attempting to prove or disprove its own findings and filter out false positives."* The model-vs-itself adversarial loop is the FP-control primitive.
+- [[xbow-mythos-evaluation|XBOW × Mythos]] draws the same line through *live-site validation*, the wedge between *finding a candidate* and *confirming a live-site exploit*.
+- On the **config-audit side** (a different domain), [[agentshield|AgentShield]] reaches the analogous discipline via *provenance-aware `runtimeConfidence` weighting* — same rule, different weight by source kind (`active-runtime` vs. `template-example` vs. `docs-example`).
 
 | Instrument | Vendor | Domain | Mechanism |
 | :--- | :--- | :--- | :--- |
@@ -64,8 +73,14 @@ Adversarial Reflexion is OpenAnt's specific implementation, but the underlying d
 | [[claude-code-security\|Claude Code Security]] | Anthropic | App-code vuln discovery | Self-critique prove/disprove |
 | [[mdash\|MDASH]] | Microsoft | App-code vuln discovery | Ensemble + debater + prover-stage |
 | [[xbow-mythos-evaluation\|XBOW × Mythos]] | XBOW | Live-web exploit | Live-site validation |
+| [[security-audit-skill\|security-audit-skill]] | Cloudflare | App-code vuln discovery | Phase 3: a second independent agent tries to falsify each finding |
+| [[vvah\|VVAH]] | Visa | App-code vuln discovery | Stage S6: a second independent agent tries to falsify each finding |
+| [[trail-of-bits-skills\|trailofbits/skills]] | Trail of Bits | Multi-domain code review | `fp-check`: a second independent agent tries to falsify each finding |
+| [[defending-code-harness\|defending-code-harness]] | Anthropic / Semgrep | C/C++ memory safety | Fresh-container grader: a second independent agent tries to falsify each finding |
 
-Across **five vendors and six sourced instruments**, the mechanism varies but the disciplinary observation is identical: **the agreeable-judge failure mode arises from the structure of agentic verification stages rather than from prompt phrasing, and the production-grade response removes the cheap-yes path at the architecture level rather than coaxing the model into saying no.** As of 2026-05-15 the discipline is sourced widely enough that it should be treated as **established** — a maturity expectation, independent of any one vendor's design choice. See the parent [[agentic-ai-security-cmm-2026|CMM]] page's *Revision-pass candidates* info callout for the §*What is now established* split.
+Six of the ten instruments above are vendor products; the other four are open-source releases from four separately owned projects — Cloudflare's security-audit-skill, Visa's VVAH, Trail of Bits' skills marketplace, and Anthropic's defending-code-harness, now forked and maintained by Semgrep — and Semgrep's July 2026 survey of the open-source field reports the technique as widely adopted for increasing accuracy.[^semgrep] The instruments also divide on which model performs the disproof. Semgrep reports the technique working especially well when a different model attempts the disproof, and finds the split falling along category lines: almost every SAST+LLM hybrid separates discovery from validation and many run separate models across the two stages, while harnesses driving to a crashing end-state tend to use one model for both.[^semgrep] VVAH is the separated case, running Sonnet 4.6 for detection and Opus 4.8 for remediation and validation, per Semgrep's LLM-generated summary. Self-critique, where one model prove-disproves its own finding, is the same discipline with the weaker independence guarantee, because the reviewer inherits the reasoning it is checking.
+
+Across **ten sourced instruments**, the mechanism varies but the disciplinary observation is identical: **the agreeable-judge failure mode arises from the structure of agentic verification stages rather than from prompt phrasing, and the production-grade response removes the cheap-yes path at the architecture level rather than coaxing the model into saying no.** Convergence across two structurally different groups — six commercial products and four open-source releases under separate licences — carries this further than the vendor count alone did. As of 2026-05-15 the discipline is sourced widely enough that it should be treated as **established** — a maturity expectation, independent of any one vendor's design choice. See the parent [[agentic-ai-security-cmm-2026|CMM]] page's *Revision-pass candidates* info callout for the §*What is now established* split.
 
 ## Naming Note
 
@@ -85,3 +100,7 @@ The concept is sometimes called *constrained-persona verification* or *capabilit
 - Shinn et al., *Reflexion: Language Agents with Verbal Reinforcement Learning* (NeurIPS 2023) — the prior-art Reflexion technique OpenAnt borrows from. Not yet on the wiki as a paper page.
 
 - [[raptor|RAPTOR]] — structurally the offensive twin to OpenAnt's use of this mechanism: where OpenAnt applies constrained-attacker-persona FP control inside a discovery pipeline, RAPTOR carries the same pipeline further into exploitation.
+
+## Notes
+
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The adversarial-validation instance names and the different-model observation are human-written; the VVAH model split is from Semgrep's LLM-generated repository summary. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-09-01
 tags:
   - maturity-models
   - cmm
@@ -40,10 +40,17 @@ related:
   - "[[owasp-ai-exchange]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[agentic-ai-security-cmm-measurement-protocol]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison]]"
+  - "[[trail-of-bits-skills]]"
+  - "[[security-audit-skill]]"
+  - "[[defending-code-harness]]"
+  - "[[semgrep]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[ai-era-supply-chain-hardening]]"
   - "[[nist-sp-800-218a]]"
+  - "[[semgrep-oss-ai-security-harness-comparison]]"
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
@@ -92,7 +99,7 @@ The development-environment half of that finding now has a normative source alon
 | Dependency / SCA scanning + AI-dep remediation | Snyk, Black Duck, Wiz | GA | **MS/GitHub:** GHAS + Dependabot GA; Dependabot alerts assignable to AI agents for auto-fix (Apr 2026)[^dependabot]. AWS Inspector; GCP Artifact Analysis |
 | Slopsquatting defense | hash-pinned lockfiles (`npm ci`-class); private-registry allowlisting | GA technique | all three CI systems enforce lockfiles; **no major registry flags LLM-hallucinated names at publish time — an ecosystem gap**[^slop] |
 | Malicious-model scanning | JFrog, ReversingLabs (Pickle / backdoor detection) | GA (COTS)[^jfrog] | not first-party-native; HF-side + COTS |
-| MCP server / skill provenance | Official MCP Registry — namespace auth | **preview; no cryptographic name-to-binary signing in the spec**[^mcpreg] | MS publish path; no single Azure service for MCP-specific protection |
+| MCP server / skill provenance | Official MCP Registry — namespace auth; third-party security-skill packs distributed for coding agents[^semgrep] | **preview; no cryptographic name-to-binary signing in the spec**[^mcpreg]; the skill half of the row now has a populated acquisition channel and no signing over it | MS publish path; no single Azure service for MCP-specific protection |
 | Runtime AI-BOM (reconciliation) | Miggo DeepTracing | newly GA (≈2 months past launch)[^miggo] | vendor platform, not hyperscaler-native |
 
 Three corrections apply to the D8 rungs as the CMM currently states them. First, CycloneDX ML-BOM has been stable since v1.5 and **v1.7 is current**, so a pinned version dates the criterion and the capability form ("a CycloneDX or SPDX-3.0 ML-BOM") is the durable one. Second, **SLSA Level 4 does not exist in SLSA v1.0** (the Build Track is L1–L3), so the current L5+ "SLSA Level 4" criterion references deprecated numbering and belongs at research-stage. Third, **GitHub Artifact Attestations (GA; SLSA L2 free, L3 via reusable workflows) is the platform-native build-integrity path the current D8 omits**.
@@ -102,6 +109,8 @@ The [[microsoft-zt4ai|Microsoft ZT4AI]] Devices / supply-chain pillar (verify ex
 The federal anchor for this domain, [[nist-sp-800-218a|NIST SP 800-218A]], requires provenance tracking and points at generic SBOM/SLSA but prescribes no AI-specific bill-of-materials format or field set — [[standards-review-nist-sp-800-218a-2026-Q2|the 2026-Q2 standards review]] (claim 3) records this AI-BOM-artifact absence, which the CycloneDX ML-BOM / SPDX-3.0 formats above fill.
 
 Of the domains [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI standards review]] assessed, the [[google-saif|SAIF]] / [[cosai|CoSAI]] pair covers D8 most completely: CoSAI WS1 (Software Supply Chain Security for AI Systems) ships Establish Risks and Controls for the AI Supply Chain (2025-06-25) and Signing ML Artifacts (2025-09-29, SLSA-based, building "tamper-proof ML metadata records"), and SAIF supplies Model and Data Inventory Management, Model and Data Integrity Management, and Secure-by-Default ML Tooling. That review also confirmed neither instrument mandates a named AI-BOM artifact with required fields — Signing ML Artifacts builds provenance metadata, not a BOM schema — so the AI-BOM grading below remains this domain's net-new contribution.
+
+The skill half of the provenance row now has a populated acquisition channel. Semgrep's July 2026 survey records four third-party security-skill sets, three of them naming a host agent: [[trail-of-bits-skills|Trail of Bits' plugin marketplace]] under CC-BY-SA, for Claude Code and Codex; [[cloudflare|Cloudflare]]'s [[security-audit-skill|security-audit-skill]] under MIT, a Claude Code skill; Capital One's `vulnhunter` under Apache 2.0, optimized for Claude Code; and Google's `mantis` under Apache 2.0, with no host agent named.[^semgrep] The L3 pre-install scan below therefore runs against instruction packs a security team installs by choice, and no registry in that channel carries cryptographic name-to-binary signing, so that criterion is graded on registry provenance and the scan alone. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the per-project comparison.
 
 ## Capability-decoupled levels
 
@@ -182,6 +191,7 @@ For an E5 + GitHub-Enterprise incumbent, licensing is near-zero through L3 and l
 - No major registry flags LLM-hallucinated package names at publish time — an ecosystem gap; the buyer-side control is lockfile plus allowlist.
 - No FFIEC/GLBA/NCUA mapping yet for third-party-model risk; deferred to the crosswalk, where D8 is likely material (vendor/third-party risk is squarely an examiner topic).
 - Per-workload write scoping on internal registries has no measurement protocol here and no named platform-native product; the L4 criterion above states the capability without an evidence artifact. It also sits on a domain boundary: [[agentic-ai-security-cmm-d5-egress-network|D5]] raises the same gap but weighs it against D4, not D8, and neither page grades it today. Which domain should own the score is unresolved.
+- Maintenance transfer is ungraded, and the survey above supplies the L4 retirement criterion's hardest live case. Semgrep reports the [[defending-code-harness|reference harness Anthropic published]] as unmaintained and maintains a fork of it under its own name, and states that the release norm produces this outcome: harnesses ship marked unmaintained or closed to external contributions because the field moves faster than a reference implementation can settle.[^semgrep] The L4 criterion names retirement and four compensating controls, and none of the five covers repointing to a third-party fork, which substitutes a new supplier and returns the component to the L3 supplier-assessment criterion under that supplier's name. No rung in any domain of this model names a maintenance transfer, so the gap is model-wide rather than local to D8, and one sourced instance is too few to write a criterion on.
 - Legacy and unauthenticated endpoints on artifact repositories (the WebDAV path used to rebuild the covert channel after remediation) are inventory the ladder never asks for.
 - No signing specification covers the model bundle. `DEV SECURITY` states that a model is a set of associated artifacts in varying formats rather than one homogeneous file, that any change to a file the model needs to run can introduce malicious behaviour or degrade performance, and that no standard yet exists for this, with the OpenSSF Model Signing SIG working toward one and a possible interplay with ML-BOM and AI-BOM codified into the certificate (§3.0).[^aix-devsecurity] The L4 criterion above states the bundle as the verified unit and names no artifact that carries the signature over it, so an assessor reads the criterion off the deployment's own signing manifest.
 - Remediation of an acquired model is ungraded and its owner is the assessed organization. `POISON ROBUST MODEL` applies to a model that has already been trained, including one obtained externally, and names pruning, fine-tuning on clean data, and their combination as fine-pruning, with Selective Amnesia recovering primary functionality from roughly 0.1% of the original training data and without prior knowledge of the trigger (§3.1.1).[^aix-poisonrobustmodel] Every other model-engineering control §3.1 names sits with the party that trains the model, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] leaves that class unanchored for exactly that reason. This one does not, and the ladder above grades verification of an acquired artifact and nothing about repairing one. Whether the criterion belongs here or at [[agentic-ai-security-cmm-d6-data-rag|D6]] is unresolved.
@@ -192,6 +202,7 @@ D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 
 
 ## Notes
 
+[^semgrep]: Semgrep, [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (July 2026; no day-level date is exposed, and the month is inferred from an embedded screenshot dated 2026-07-20 and a forward reference to a Black Hat announcement in August 2026): four third-party security-skill sets under CC-BY-SA, MIT and Apache 2.0, of which only Trail of Bits' is named for both Claude Code and Codex; Anthropic's `defending-code-reference-harness` reported unmaintained with a Semgrep-maintained fork; the pace of the field named as the reason harnesses ship unmaintained or closed to contributions. The per-tool detail sections are labelled LLM-generated. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
 [^cdx]: [CycloneDX — v1.7 released](https://cyclonedx.org/news/cyclonedx-v1.7-released/), 2025. ML-BOM stable since v1.5; v1.6 the Ecma-standardization milestone; v1.7 current.
 [^spdx]: [SPDX 3.0.1 — AI profile](https://spdx.github.io/spdx-spec/v3.0.1/model/AI/AI/), 2024–2026. AI + Dataset profiles.
 [^slsa]: [SLSA v1.0 — Security levels](https://slsa.dev/spec/v1.0/levels), 2023. Build Track L1–L3; no L4 in v1.0.

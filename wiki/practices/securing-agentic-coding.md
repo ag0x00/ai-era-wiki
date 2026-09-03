@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-08-22
+updated: 2026-09-01
 tags:
   - practices
   - agentic-coding
@@ -39,6 +39,11 @@ related:
   - "[[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]]"
   - "[[gemini-cli|Gemini CLI]]"
   - "[[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[security-audit-skill|security-audit-skill]]"
+  - "[[trail-of-bits-skills|Trail of Bits skills]]"
+  - "[[cloudflare|Cloudflare]]"
 sources:
   - https://code.claude.com/docs/en/security
   - https://code.claude.com/docs/en/sandboxing
@@ -51,6 +56,8 @@ sources:
   - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
   - https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
+  - https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses
+  - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
 ---
 
 # Securing Agentic Coding
@@ -59,7 +66,7 @@ sources:
 
 The control set for the generative-coding deployment shape, mapped to the six planes of the [[agentic-ai-security-reference-architecture|AAI-S RA]] and the nine domains of the [[agentic-ai-security-cmm-2026|AAI-S CMM]].
 
-**Every configuration key and control name on this page belongs to [[claude-code-security|Claude Code]].** The catalog is single-harness-deep by choice: Anthropic documents Claude Code's security model in public at a level its competitors do not match, so it is the only harness where a control can be named, graded, and checked rather than inferred. The *structure* transfers to Cursor, Codex, and the open-source harnesses; the keys do not, and an organization running one of those must locate each equivalent and will sometimes find it absent. Read a key below as an instance of its control, not as a portable instruction.
+**Every configuration key and control name on this page belongs to [[claude-code-security|Claude Code]].** The catalog is single-harness-deep by choice: Anthropic documents Claude Code's security model in public at a level its competitors do not match, which lets this catalog name, grade, and check a control here instead of inferring it. The *structure* transfers to Cursor, Codex, and the open-source harnesses; the keys do not, and an organization running one of those must locate each equivalent and will sometimes find it absent. Read a key below as an instance of its control, local to this harness rather than a portable instruction.
 
 The organizing claim is a ranking. **Controls that constrain the process outrank controls that inspect a string, and both outrank controls that instruct the model.** The [[guardfall-shell-injection-audit|GuardFall audit]] is the empirical basis: ten of eleven surveyed harnesses had string-inspecting guards that could be walked past with shell syntax older than the tools themselves.
 
@@ -77,7 +84,7 @@ Whenever an agentic coding harness reads a repository. Which controls are load-b
 
 **Grade** is availability as of July 2026.
 
-**RA capability → CMM** anchors the row to the [[agentic-ai-security-reference-architecture|AAI-S RA]] capability it implements and the [[agentic-ai-security-cmm-2026|CMM]] domain that scores it. The rows in this catalog are not restatements of the RA's capability rows. The RA lists technology-neutral capabilities for agentic systems in general; this catalog lists controls for one deployment shape, at the granularity of the person configuring a harness. Some rows map onto an RA capability exactly, some map onto one at a coarser granularity, and nine map onto no RA row at all. Those nine carry `—` and are analyzed in [Controls with no RA capability](#controls-with-no-ra-capability).
+**`RA capability → CMM`** anchors the row to the [[agentic-ai-security-reference-architecture|AAI-S RA]] capability it implements and the [[agentic-ai-security-cmm-2026|CMM]] domain that scores it. The rows in this catalog are not restatements of the RA's capability rows. The RA lists technology-neutral capabilities for agentic systems in general; this catalog lists controls for one deployment shape, at the granularity of the person configuring a harness. Some rows map onto an RA capability exactly, some map onto one at a coarser granularity, and nine map onto no RA row at all. Those nine carry `—` and are analyzed in [Controls with no RA capability](#controls-with-no-ra-capability).
 
 ### Settings-key locations
 
@@ -102,7 +109,7 @@ The distinction that decides whether a managed key is authoritative: **boolean k
 
 **The organization pin covers fewer login paths than it appears to.** Terminal, IDE-extension, and SDK logins are held. The two token-minting commands check only the login *method*, not the organization, so both can produce a credential in a different tenant. Gateway sign-in never authenticates against an Anthropic organization at all, which makes the gateway's own identity provider the control. Bedrock, Vertex, and Foundry sessions authenticate against the cloud provider and are not blocked, so cloud IAM policy is the control there. Deploy the pin through device management: server-managed settings only reach accounts already inside the organization, and so cannot govern a first login.
 
-The attribution row is the weakest link in the plane. An organization that cannot separate agent-authored from human-authored change cannot scope a review policy or trace a defect to the tool that introduced it, and no first-party feature covers it across harness vendors.
+No first-party feature attributes a change to the agent or the human that produced it, across any harness vendor. An organization that cannot separate agent-authored from human-authored change cannot scope a review policy or trace a defect to the tool that introduced it.
 
 ### Control plane
 
@@ -152,7 +159,7 @@ One property of this plane is not a settings key at all, and so gets no row. **A
 
 Masking is the row most likely to be configured into a false sense of coverage. It is honored only from user, managed, and `--settings` sources — `mask` entries in a repository's `settings.json` are ignored — and every `injectHosts` entry must itself be covered by `allowedDomains`. Without `tlsTerminate` the sentinel reaches the server unchanged and authentication fails rather than leaking, which is the right failure direction but means the control is either working or visibly broken, never silently partial.
 
-The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: a broad allowlist entry such as `github.com` is reachable by domain fronting. **A hostname allowlist without TLS termination is a misconfiguration control, not an exfiltration control**, and it should be graded that way in [[agentic-ai-security-cmm-d5-egress-network|D5]].
+The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: a broad allowlist entry such as `github.com` is reachable by domain fronting. **A hostname allowlist without TLS termination is a misconfiguration control.** It is not an exfiltration control, and [[agentic-ai-security-cmm-d5-egress-network|D5]] should grade it that way.
 
 ### Data plane
 
@@ -182,8 +189,7 @@ There is **no built-in credential deny list**. Only the paths and variables expl
 
 The two analytics APIs are different products with different scopes, and neither substitutes for the telemetry stream. Contribution metrics are Teams and Enterprise only, in public beta, dependent on the GitHub app, unavailable to organizations running [Zero Data Retention](https://code.claude.com/docs/en/zero-data-retention), and documented as excluding Claude Console API usage and third-party integrations. The Console dashboard covers Console-billed API usage and shows spend rather than contribution. Sessions routed through Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a self-hosted gateway fall outside both.
 
-> [!check] Correcting an earlier reading of the gateway regression
-> OpenTelemetry export is **not** disabled under Bedrock, Vertex, or Foundry — only the `claude_code.internal_error` event is suppressed there. The [[agentic-ai-security-cmm-d7-observability|D7]] regression an inference gateway causes is therefore narrower than a total loss of visibility: it removes the first-party analytics dashboards, and OpenTelemetry remains available as the rebuild path. Step 8 of the deployment order below depends on this.
+OpenTelemetry export is not disabled under Bedrock, Vertex, or Foundry; only the `claude_code.internal_error` event is suppressed there. The [[agentic-ai-security-cmm-d7-observability|D7]] regression an inference gateway causes is narrower than a total loss of visibility: it removes the first-party analytics dashboards, and OpenTelemetry remains available as the rebuild path. Step 8 of the deployment order below depends on this.
 
 ### Controls with no RA capability
 
@@ -194,7 +200,7 @@ Nine rows anchor to a CMM domain but to no RA capability. They fall into three g
 > [!gap] The RA has no representation for fail-closed and lockdown properties
 > A capability row records that a control exists, not that it holds when its dependency is absent or that a lower scope cannot relax it. This affects the whole RA rather than this shape. Resolving it means either a per-capability property column or a cross-cutting section, and the choice needs to be made against the RA as a whole, not decided here.
 
-**Process-environment hygiene.** `sandbox.credentials` deny entries, `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`, and per-workflow token scoping cover the case where a credential is already inside the agent's process. The RA's Identity plane assumes the [[credential-proxy-pattern|credential-proxy]] pattern, where the credential never enters the process at all, and so has no row for containing one that has. For a local coding harness inheriting a developer's shell environment, the proxy assumption does not hold, and the hygiene controls are what remains.
+**Process-environment hygiene.** `sandbox.credentials` deny entries, `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`, and per-workflow token scoping cover the case where a credential is already inside the agent's process. The RA's Identity plane assumes the [[credential-proxy-pattern|credential-proxy]] pattern, where the credential never enters the process at all, and so has no row for containing one that has. For a local coding harness inheriting a developer's shell environment, the proxy assumption does not hold, so the hygiene controls carry the load.
 
 **Genuinely shape-specific.** Pinning a session to a known Anthropic organization, excluding untrusted input from CI triggers, and the first-party analytics APIs are artifacts of how this particular product is licensed, triggered, and instrumented. They belong in a catalog and not in a reference architecture.
 
@@ -207,19 +213,21 @@ A deployment order that follows the control ranking rather than the plane order:
 3. **Match the boundary to the shape.** Bash-only sandboxing is insufficient for unattended runs; wrap the whole process ([[anthropic-sandbox-runtime|sandbox runtime]], container, or VM) wherever prompts are suppressed.
 4. **Apply the [[agents-rule-of-two|Rule of Two]] to every non-interactive workflow.** For a CI-triggered agent, remove untrusted input, or remove secrets from the process environment, or remove push and egress. Choose one explicitly and record which.
 5. **Lock the network before widening it.** `strictAllowlist` plus managed-only domains; terminate TLS if the threat model includes exfiltration rather than misconfiguration.
-6. **Put the harness configuration under source control and scan it.** [[harness-config-as-supply-chain-artifact|The config tree is a supply-chain artifact]]; hooks, MCP manifests, and `CLAUDE.md` belong in review and in CI.
+6. **Put the harness configuration under source control and scan it.** [[harness-config-as-supply-chain-artifact|The config tree is a supply-chain artifact]]; hooks, MCP manifests, acquired third-party skill packs, and `CLAUDE.md` belong in review and in CI.
 7. **Gate on the pull request, not on the keystroke.** The authoring-time plugin warns; only the CI review action can hold a merge.
 8. **Export telemetry before the fleet grows.** Session-correlated OpenTelemetry to the SIEM, and an inventory mechanism that survives more than one harness vendor.
 
 ## Mechanism
 
-Each step in the ordering removes a dependency on a weaker layer. OS enforcement holds regardless of how a command was spelled, which is the closure the [[guard-canonicalization-gap|guard canonicalization gap]] demands. Removing a Rule-of-Two property removes the precondition for the attack chain rather than detecting its execution. Scanning the configuration tree catches the persistence mechanism — an injected hook survives the session that installed it, which is what made CVE-2026-25725 a sandbox escape rather than a session compromise.
+Each step in the ordering removes a dependency on a weaker layer. OS enforcement holds regardless of how a command was spelled, which is the closure the [[guard-canonicalization-gap|guard canonicalization gap]] demands. Removing a Rule-of-Two property removes the precondition for the attack chain rather than detecting its execution. Scanning the configuration tree catches the persistence mechanism: an injected hook survives the session that installed it, turning CVE-2026-25725 from a session compromise into a sandbox escape.
 
 ## Limits
 
 **The single-harness scope stated at the top has a sharper edge than convenience.** GuardFall's finding suggests the open-source equivalents are weaker rather than merely different, so an organization that maps this catalog onto another harness should treat a missing key as a missing control until it has evidence otherwise, not as a naming difference. The reverse direction is the newer risk: another harness may hold a control surface this catalog has no row for, and a defect there is invisible to a reader working from these rows. Workspace trust is that surface — Gemini CLI grants or withholds it through `GEMINI_TRUST_WORKSPACE`, Claude Code has no equivalent key, and the control's absence from the catalog is a property of the catalog rather than a finding about either product.
 
 **Cross-harness coverage now has one sourced instrument, and it covers only part of the catalog.** [[numbat|Numbat]] attaches to hooks, session artifacts, and OTLP across several harnesses behind one interface. It narrows the gap for observability and for blocking without closing it: the harness-native identity, sandboxing, and egress controls in the rows above have no cross-harness equivalent, so a second harness still inherits whatever isolation its own settings provide.
+
+**A security skill installed into the harness is an acquired instruction pack, and it runs under the boundary this catalog configures.** Semgrep's survey of open-source AI code-security harnesses records four such sets distributed for Claude Code and Codex: [[trail-of-bits-skills|Trail of Bits' plugin marketplace]], [[cloudflare|Cloudflare]]'s [[security-audit-skill|security-audit-skill]], Capital One's `vulnhunter`, and Google's `mantis` ([Semgrep, July 2026](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses)). Two of them drive execution against the repository under audit, per the LLM-generated per-tool summaries in that survey: the Cloudflare skill may build and run code to confirm a finding, and Trail of Bits' constant-time and zeroize skills compile and inspect assembly. The Runtime-plane and Egress-plane rows above bound every such run, and the skill supplies no boundary of its own, so step 6 covers the acquisition and the sandbox covers the execution. The installing population is the security team itself, so the function that scores the harness-audit row is also the function that acquires the packs it would score. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the per-project comparison.
 
 **Every control above is ordered against an adversary, and one relevant threat model has none.** The [[accidental-meltdown|accidental meltdown]] case — an agent crossing a boundary while pursuing the user's actual goal after an ordinary environmental error — passes through content filtering and injection classifiers untouched, because it never presents the malicious input they test for. The isolation and Rule-of-Two controls still hold, since they cap reach without reference to intent. The detection controls largely do not.
 

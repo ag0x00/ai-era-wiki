@@ -2,7 +2,7 @@
 type: entity
 title: "Project Glasswing"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-09-01
 tags:
   - entities
   - initiatives
@@ -38,10 +38,14 @@ related:
   - "[[cybergym]]"
   - "[[frontier-ai-for-vuln-discovery]]"
   - "[[sdlc-in-the-ai-attacker-era]]"
+  - "[[vvah|VVAH]]"
+  - "[[visa|Visa]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
 sources:
   - "https://www.anthropic.com/glasswing"
   - "[[anthropic-glasswing-announcement]]"
   - "[[anthropic-glasswing-initial-update]]"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # Project Glasswing
@@ -90,6 +94,8 @@ In parallel, Anthropic's open-source scanning program (1,000+ projects) estimate
 
 40+ further organizations have access to Mythos Preview to "scan and secure both first-party and open-source systems." The post does not enumerate them; the 90-day public report may.
 
+Glasswing's method has one documented instance of reaching outside the coalition's published membership. [[visa|Visa]]'s `visa-vulnerability-agentic-harness` is described in Semgrep's July 2026 survey as an agentic static-analysis pipeline built on learnings from Project Glasswing, released under Apache 2.0 and closed to external contributions.[^semgrep] The description is Semgrep's LLM-generated repository summary rather than a statement by Visa or Anthropic, and it places Visa nowhere in relation to the 40+ organizations holding Mythos Preview access. The instance documents the method's reach into third-party open source rather than Visa's standing in the coalition. See [[vvah|VVAH]] for the harness itself.
+
 ## Partner terms
 
 - **Access to Claude Mythos Preview** during the research preview period.
@@ -133,7 +139,7 @@ Anthropic frames Glasswing as a defensive imperative against state-sponsored thr
 
 ## Wiki Position
 
-Glasswing is the **organizing artifact** for the wiki's `ai-in-sec-defense` axis as of May 13, 2026, and for [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] within it. It supersedes the wiki's previous treatment of defender-AI as a vendor-by-vendor productized capability with a coalition-backed industrial-scale framing.
+Glasswing is the **organizing artifact** for the wiki's `ai-in-sec-defense` axis as of May 13, 2026, and for [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] within it. It supersedes the wiki's previous treatment of defender-AI as a vendor-by-vendor productized capability with a coalition-backed industrial-scale framing. Semgrep's July 2026 market-structure finding sits at a different layer and does not contradict this: no reference open-source harness will emerge today, and many organizations will build their own "shop jigs" for vulnerability finding, so where Glasswing consolidates model access, the harness layer built around that access is diffusing rather than consolidating.[^semgrep]
 
 Critical context:
 
@@ -161,3 +167,7 @@ Critical context:
 - [[cybergym|CyberGym]]: benchmark on which both Mythos (raw, 83.1%) and MDASH (88.45%) sit.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]: wiki thesis Glasswing anchors.
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: adjacent thesis directly supported by Glasswing's framing.
+
+## Notes
+
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The market-structure argument (no reference open-source harness, "shop jigs") is human-written; the VVAH description ("built on learnings from Project Glasswing," licence, closed-to-contributions) is from Semgrep's LLM-generated repository summary. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

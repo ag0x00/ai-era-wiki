@@ -4,7 +4,7 @@ entity_type: product
 title: "Big Sleep (Google Project Zero + DeepMind)"
 address: c-000035
 created: 2026-05-13
-updated: 2026-08-24
+updated: 2026-09-01
 tags:
   - products
   - google
@@ -35,12 +35,17 @@ related:
   - "[[autonomous-code-security-google-talk]]"
   - "[[heather-adkins]]"
   - "[[four-flynn]]"
+  - "[[trail-of-bits-skills|trailofbits/skills]]"
+  - "[[trail-of-bits|Trail of Bits]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
 sources:
   - "https://projectzero.google/2024/10/from-naptime-to-big-sleep.html"
   - "https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-our-big-sleep-agent-makes-big-leap"
   - "https://www.anthropic.com/glasswing"
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # Big Sleep (Google Project Zero + DeepMind)
@@ -60,6 +65,8 @@ sources:
 | **March 2026** | Five-phase architecture disclosed at [un]prompted; false-positive rate given as zero, end-to-end and without human involvement, on deep memory-safety bugs | [[autonomous-code-security-google-talk\|Adkins and Flynn, Mar 2026]] |
 | **May 2026** | Named in [[anthropic-glasswing-announcement\|Anthropic Glasswing announcement]] as Google's parallel AI-cyber tool alongside [[codemender\|CodeMender]] | Heather Adkins (VP Security Engineering) quote |
 | **July 2026** | Not named. CodeMender enters managed preview on Google Cloud; Big Sleep remains vendor-internal, and the two agents' availability diverges | [[google-cloud-codemender-preview\|Google Cloud, Jul 2026]] |
+
+By July 2026 Google has released a third artifact in this space. [[semgrep-oss-ai-security-harness-comparison|Semgrep's July 2026 survey]] separately records Google's own `mantis` — roughly fifteen security-focused skills under Apache 2.0, at ~400 stars, which the survey quotes as "intended to be a starting point rather than a rigid set of instructions", naming no speaker[^semgrep] It sharpens the divergence the row above records: CodeMender ships as a managed preview and Big Sleep stays vendor-internal, while the skill pack is open.
 
 ## Methodology
 
@@ -98,7 +105,7 @@ Big Sleep is Google's defender-side analogue to:
 - [[mdash|Microsoft MDASH]] (orchestrated multi-model harness)
 - [[xbow|XBOW]] (offensive-orientation harness)
 
-All four are anchors of [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]], converging on the architectural argument that orchestration outperforms raw model capability. Big Sleep's distinguishing feature is the **variant-analysis specialization** — a narrower task framing that makes the discovery problem more tractable than open-ended search.
+All four are anchors of [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]], converging on the architectural argument that orchestration outperforms raw model capability. Big Sleep's specialization is variant analysis, and by July 2026 that task framing also ships as an installable skill: Semgrep's survey records a `variant-analysis` plugin in [[trail-of-bits|Trail of Bits]]' CC-BY-SA set, alongside `fp-check`, as a triage-and-expansion methodology run by a host coding agent.[^semgrep] What remains specific to Big Sleep is the pipeline behind the framing rather than the framing itself — the debugger-driven verification stage that builds a working exploit, and the zero false-positive rate that rests on it, which no surveyed open-source instrument reproduces.
 
 ## CMM / RA Maps-to
 
@@ -108,7 +115,7 @@ All four are anchors of [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnera
 ## Open Questions
 
 - **Model attribution**: Adkins stated in March 2026 that Gemini writes the vulnerability report.[^google-talk] The model driving the agentic reasoning loop is still unnamed in any Google source.
-- **Productization timeline**: Big Sleep remains research-stage with select customer access via Google Cloud Security. Public GA timeline / pricing / customer base not disclosed.
+- **Productization timeline**: Big Sleep remains research-stage with select customer access via Google Cloud Security. Public GA timeline / pricing / customer base not disclosed. Google's third security artifact, `mantis`, is publicly released while Big Sleep and CodeMender's underlying research programme are not, which makes the skill pack the one path a team can adopt today without a Google Cloud relationship.[^semgrep]
 - **Operational integration**: Google states that CodeMender consumes a verified Big Sleep finding, so the research-side direction is documented; the artifact format, the queueing, and the failure path are not.[^google-talk] The product side is unchanged — the [[google-cloud-codemender-preview|July 2026 CodeMender preview]] does not mention Big Sleep, and the shipped product does its own scanning.
 - **Value over existing fuzzing, for a buyer**: Adkins stated in March 2026 that Google still runs fuzzing at scale and maintains OSS-Fuzz, and that "Big Sleep is finding things the fuzzers are missing".[^google-talk] That claim is about Big Sleep, which remains vendor-internal. CodeMender is the buyable agent and does its own scanning, and no published figure compares either against a codebase already under continuous fuzzing. An organization that already fuzzes cannot tell from anything Google has published what the purchasable product adds.
 - **Glasswing role**: Google is a [[glasswing|Project Glasswing]] partner with Mythos access via Vertex AI. Whether Big Sleep itself uses Mythos, Gemini, or both is unclear.
@@ -125,3 +132,4 @@ All four are anchors of [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnera
 - [[autonomous-code-security-google-talk|Autonomous Code Security at Google]] — March 2026 talk disclosing the five-phase architecture and false-positive figure.
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The `mantis` licence, star count and description are human-written; the `variant-analysis` and `fp-check` plugin descriptions are from Semgrep's LLM-generated repository summary. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

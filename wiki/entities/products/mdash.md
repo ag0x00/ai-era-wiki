@@ -4,7 +4,7 @@ entity_type: product
 title: "MDASH (Microsoft Agentic Scanning Harness)"
 address: c-000029
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-09-01
 tags:
   - products
   - microsoft
@@ -27,9 +27,12 @@ related:
   - "[[microsoft-security-copilot]]"
   - "[[microsoft-zt4ai]]"
   - "[[xbow]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
 sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"
   - "https://aka.ms/AI-drivenScanningHarness"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # MDASH — Microsoft Multi-Model Agentic Scanning Harness
@@ -53,6 +56,8 @@ Five-stage pipeline; targeting / validation / dedup / prove stages are model-agn
 ## Three Architectural Properties
 
 1. **Ensemble of diverse models.** SOTA as heavy reasoner; **distilled models** as cost-effective debater for high-volume passes; a **second separate SOTA model** as independent counterpoint. Disagreement between models is itself a signal. *Microsoft does not disclose which specific models occupy these roles.*
+
+   Cross-model disagreement as a validation signal is the field's convergent default rather than a Microsoft architectural bet. Semgrep's July 2026 survey records a second independent agent attempting to falsify each finding in four of nine open-source harnesses — Cloudflare's Phase 3, VVAH's stage S6, Trail of Bits' `fp-check`, and defending-code-harness's fresh-container grader — and states the accuracy gain is largest where a different model attempts the disproof.[^semgrep] What stays specific to MDASH is scale and specialization: 100+ role-bound agents, distilled models occupying the high-volume debater slot, and domain plugins such as the CLFS prover that inject context the foundation models cannot see.
 2. **Specialized agents.** 100+ agents, each with its own role, prompt regime, tools, and stop criteria. Auditors do not reason like debaters; debaters do not reason like provers. Constructed through deep research with past CVEs and their patches.
 3. **End-to-end pipeline with extensible plugins.** Domain plugins inject context the foundation models cannot see — kernel calling conventions, IRP rules, lock invariants, IPC trust boundaries, codec state machines, custom CodeQL databases. The **CLFS proving plugin** is a worked example, embedding on-disk container layout + block-validation sequence + in-memory state machine to construct triggering log files for candidate findings.
 
@@ -66,11 +71,11 @@ Five-stage pipeline; targeting / validation / dedup / prove stages are model-agn
 | [[cybergym\|CyberGym]] public leaderboard (1,507 real-world vuln-repro tasks, level 1) | **88.45%** | Top score, ~5 points above #2 (83.1%) |
 | May 2026 Patch Tuesday | **16 new CVEs** | 10 kernel-mode, 6 usermode; 4 Critical RCEs |
 
-The CyberGym number is the only independently verifiable data point; the others are Microsoft-internal but anchored to a defensible ground truth (MSRC case database).
+Of the five results above, only the CyberGym number is independently verifiable; the others are Microsoft-internal but anchored to a defensible ground truth (MSRC case database).
 
 ## Positioning
 
-MDASH sits at the intersection of three wiki scope axes:
+MDASH carries two wiki scope axes:
 
 - **`ai-in-sec-defense`** (primary): Microsoft's defender-AI capability at the AppSec / vulnerability-research layer, distinct from [[microsoft-security-copilot|Security Copilot]] at the SOC layer. Second sourced anchor for [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] after [[xbow|XBOW]]/[[mythos|Mythos]]; the convergence with XBOW — two vendors, opposite sides of the stack, arriving at "the harness does the work, the model is one input" — is itself the load-bearing observation.
 - **`sec-of-ai`** (tertiary): MDASH is itself an agentic system; the [[agentic-ai-security-cmm-2026|CMM]] questions about agent identity, action authority, and audit apply to MDASH's 100+ agents.
@@ -98,7 +103,7 @@ The two systems are architecturally distinct but converge on the same architectu
 
 ## Open Questions
 
-- **Which models?** "Generally available AI models" is the only public attribution. Anthropic's [[mythos|Mythos]] is a plausible SOTA-reasoner candidate; OpenAI GPT and Microsoft-internal models are alternatives. Microsoft's silence is conspicuous.
+- **Which models?** Microsoft attributes the ensemble only as "generally available AI models," with no further detail disclosed publicly. Anthropic's [[mythos|Mythos]] is a plausible SOTA-reasoner candidate; OpenAI GPT and Microsoft-internal models are alternatives. Microsoft's silence is conspicuous.
 - **GA productization**: standalone product, feature within Defender / Security Copilot, or service offering via consulting? The post does not commit.
 - **Customer co-pilot pattern**: the post says customers "test" MDASH — implies hosted-service model rather than on-prem deployment. To be confirmed.
 - **CyberGym configuration**: 88.45% is at `level 1` (vulnerable source + high-level description supplied). Performance on higher-difficulty levels (blind discovery) would be a stronger signal.
@@ -113,3 +118,7 @@ The two systems are architecturally distinct but converge on the same architectu
 - [[taesoo-kim|Taesoo Kim]] — paper author.
 - [[xbow|XBOW]] / [[mythos|Mythos]] — offensive-side architectural counterparts.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] — the wiki thesis MDASH co-anchors.
+
+## Notes
+
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The four adversarial-validation instance names and the different-model observation are human-written. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

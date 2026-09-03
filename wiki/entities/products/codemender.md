@@ -4,7 +4,7 @@ entity_type: product
 title: "CodeMender (Google DeepMind)"
 address: c-000036
 created: 2026-05-13
-updated: 2026-08-24
+updated: 2026-09-01
 tags:
   - products
   - google
@@ -41,12 +41,17 @@ related:
   - "[[claude-code-security]]"
   - "[[autonomous-code-security-google-talk]]"
   - "[[four-flynn]]"
+  - "[[vvah|VVAH]]"
+  - "[[defending-code-harness|defending-code-harness]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
 sources:
   - "https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/"
   - "https://cloud.google.com/blog/products/identity-security/find-and-fix-software-vulnerabilities-with-codemender/"
   - "https://www.anthropic.com/glasswing"
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # CodeMender (Google DeepMind)
@@ -136,6 +141,8 @@ CodeMender pairs with [[big-sleep|Big Sleep]] as Google's two-pronged DeepMind-a
 
 The architectural pattern (multi-agent specialization + LLM-judge validation + automated regression checks) converges with [[mdash|Microsoft MDASH]]'s Prepare-Scan-Validate-Dedup-Prove pipeline (CodeMender being patching-oriented; MDASH discovery-oriented). The pattern is now visible across all three Glasswing partner stacks (Google's Big Sleep + CodeMender, Microsoft's MDASH, Anthropic's Mythos + Glasswing partners).
 
+The pattern now runs outside the coalition as well as inside it. Semgrep's July 2026 survey records the same validation shape in open-source harnesses under permissive licences: [[vvah|VVAH]] scores a proposed fix with an agentic panel of a security architect, a pen-tester and a cross-repo analyzer, and [[defending-code-harness|defending-code-harness]] verifies a patch on a four-tier ladder running compiles, proof-of-concept stops, tests pass, survives re-attack.[^semgrep] The survey also measures how uncommon the patching capability remains — of the five harnesses it tables on execution, proof-of-concept and patch output, three generate a patch and two generate none, with only one of the three verifying its patch by execution.
+
 ## CMM / RA Maps-to
 
 - **[[agentic-ai-security-cmm-2026|CMM]] D6 (Data, Memory & RAG) L5+** — proactive rewriting of vulnerable data-handling code (libwebp, XML parsers) is a D6-adjacent primitive.
@@ -170,3 +177,4 @@ The architectural pattern (multi-agent specialization + LLM-judge validation + a
 - [[autonomous-code-security-google-talk|Autonomous Code Security at Google]]: March 2026 talk disclosing the verifier stack and the 178-fix output.
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The execution/PoC/patch table (three of five generate a patch) is human-written; the VVAH panel composition and the defending-code-harness tier ladder are from Semgrep's LLM-generated repository summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

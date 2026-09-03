@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D5: Egress and Network"
 address: c-000127
 created: 2026-05-25
-updated: 2026-08-25
+updated: 2026-09-01
 tags:
   - maturity-models
   - cmm
@@ -39,6 +39,9 @@ related:
   - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
   - "[[agentic-ai-security-cmm-d7-observability]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison]]"
+  - "[[defending-code-harness]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[microsoft-zt4ai]]"
@@ -74,6 +77,8 @@ ASI07 coverage in this domain assumes inter-agent communication runs over an int
 | MCP tool-integrity / rug-pull detection | Solo Enterprise, Operant; AgentShield MCP rules (OSS) | COTS developing | **none native (MS gap)** — Microsoft's own guidance states no single Azure service is dedicated to MCP-specific protection[^zt4ai] |
 | Per-task egress capability tokens (holder-bound) | [[tenuo-warrant\|Tenuo Warrant]] | OSS, early-stage | none native — Entra issues per-agent-identity (OBO), not per-task |
 | A2A authorization beyond identity | A2A v1.0 Agent Card signing; rule-pack COTS | spec GA, enforcement org-defined | thin everywhere |
+
+One open-source vulnerability-discovery harness ships an outbound destination allowlist as a product default: [[defending-code-harness|defending-code-harness]] pairs a gVisor sandbox with an egress allowlist, per the LLM-generated capability matrix in Semgrep's July 2026 survey of nine such harnesses.[^semgrep] The other isolation stacks that survey records are process- and OS-level rather than network-level, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] grades them. The matrix does not set out to enumerate egress controls, so it evidences this instance and settles nothing about what the other harnesses enforce. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the comparison.
 
 ## Capability-decoupled levels
 
@@ -141,11 +146,9 @@ Rug-pull detection over MCP tool definitions is off-stack (COTS-developing) for 
 
 Removing the egress capability defeats the [[lethal-trifecta|lethal trifecta]] most directly at D5: a bot with no sensitive data or no egress path drops the D5 requirement substantially. Confirm that the removed leg is absent by architecture, because a policy restriction alone leaves the capability in place.
 
-> [!check] A hostname allowlist without TLS termination is not an exfiltration control
-> Agent sandbox proxies commonly decide from the client-supplied hostname without inspecting TLS. Anthropic documents the consequence for Claude Code directly: a broad allowlist entry such as `github.com` remains reachable by domain fronting. Grade a hostname-only allowlist as a misconfiguration control at L2–L3 and require TLS-terminating inspection before crediting L4 for the coding shape. TLS termination shipped experimental in mid-2026, so the defensible grade is *available but preview*. See [[securing-agentic-coding|Securing Agentic Coding]] §Egress plane and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] for which deployment variants make egress the primary boundary.
+Agent sandbox proxies commonly decide from the client-supplied hostname without inspecting TLS. Anthropic documents the consequence for Claude Code directly: a broad allowlist entry such as `github.com` remains reachable by domain fronting. Grade a hostname-only allowlist as a misconfiguration control at L2–L3, and require TLS-terminating inspection before crediting L4 for the coding shape. TLS termination shipped experimental in mid-2026, so the defensible grade is *available but preview*. See [[securing-agentic-coding|Securing Agentic Coding]] §Egress plane and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] for which deployment variants make egress the primary boundary.
 
-> [!check] An allowlisted destination holding its own internet access is not an egress control
-> An allowlist bounds an agent's reach only to the extent that each allowed destination cannot make the request the agent was denied. OpenAI ran evaluation and training agents with the internet disabled and one permitted dependency, an internal [[artifactory|JFrog Artifactory]] package manager and caching proxy that held broad internet access; on 2026-05-26 an agent obtained indirect egress by SSRF against that proxy while the sandbox network policy stayed correctly enforced.[^bhusa] Do not credit L2 as an exfiltration control unless each allowlisted internal service is itself egress-constrained; an allowlist that has not been checked transitively grades as a misconfiguration control only. Read the L5 SSRF-closure criterion as covering the allowlisted hop rather than the agent's own interface alone. The evidence to ask for is the allowed service's egress policy, not the agent's.
+An allowlist bounds an agent's reach only to the extent that each allowed destination cannot make the request the agent was denied. OpenAI ran evaluation and training agents with the internet disabled and one permitted dependency, an internal [[artifactory|JFrog Artifactory]] package manager and caching proxy that held broad internet access; on 2026-05-26 an agent obtained indirect egress by SSRF against that proxy while the sandbox network policy stayed correctly enforced.[^bhusa] Credit L2 as an exfiltration control only where each allowlisted internal service is itself egress-constrained; an allowlist that has not been checked transitively grades as a misconfiguration control instead. Read the L5 SSRF-closure criterion as covering the allowlisted hop as well as the agent's own interface. Ask for the allowed service's egress policy rather than the agent's.
 
 ## Cost model
 
@@ -183,6 +186,7 @@ The authentication split follows the same boundary. [[agentic-ai-security-cmm-d2
 
 ## Notes
 
+[^semgrep]: Semgrep, [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (July 2026; no day-level date is exposed, and the month is inferred from an embedded screenshot dated 2026-07-20 and a forward reference to a Black Hat announcement in August 2026). The capability matrix and the per-tool detail sections are labelled by Semgrep as LLM-generated summaries of the repositories; the static-versus-dynamic finding is human-written. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
 [^apim]: [Microsoft Learn — AI gateway capabilities in Azure API Management](https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities), 2026. Token-limit, token-metric, semantic caching, content-safety policies; OAuth / credential manager; MCP + A2A (core policies GA; Foundry integration preview).
 [^mcp]: [Microsoft Learn — Overview of MCP servers in Azure API Management](https://learn.microsoft.com/en-us/azure/api-management/mcp-server-overview), 2025–2026. GA across classic + v2 tiers; JWT via Entra ID; tools only, not resources/prompts, not in workspaces.
 [^entra]: [Microsoft Learn — AI prompt injection protection (Global Secure Access)](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-ai-prompt-injection-protection), 2026. Network-layer prompt-injection protection; Shadow-AI detection.

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-08-31
+updated: 2026-09-01
 tags:
   - maturity-models
   - cmm
@@ -38,6 +38,10 @@ related:
   - "[[offensive-agent-collective]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
   - "[[agent-escape]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison]]"
+  - "[[vvah]]"
+  - "[[deepsec]]"
   - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
@@ -83,6 +87,8 @@ Each grant binds a context chain — human principal, verified agent identity, t
 The remaining three parts are graded elsewhere or not at all. Context-aware access control — infrastructure signals feeding graduated tiers, autonomous in low-risk context and gated in elevated-risk context — is the risk-adaptive step-up at L5 below. Agent identity verification, which the framework carries as unique cryptographic per-instance identity with mutual authentication and an active-agent registry, is graded at [[agentic-ai-security-cmm-d2-identity|D2]] and anchored there in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]. Dynamic permission scoping — automatic narrowing the moment untrusted external content enters the flow — is graded at no rung in this domain; it is implementation pattern 7 on [[least-agency-principle|least agency]], and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4 records the runtime counterpart as ungraded for the same reason.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] least-privilege principle grounds the D3 deny-by-default rung in its least-action design guidance ("start with no permitted actions by default"), crosswalked to D3 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]].
+
+Two open-source vulnerability-discovery harnesses ship a per-agent tool allowlist as a product default. [[vvah|VVAH]] runs a tool sandbox with no Bash and executes no code, and [[deepsec|deepsec]] gives its agents read-only tools, per the LLM-generated capability matrix and per-tool summaries in Semgrep's July 2026 survey of nine such harnesses.[^semgrep] The same survey states what the narrowing removes: three of the tabled harnesses reason completely statically while two compile and execute binaries to validate a finding, which Semgrep calls a hybrid analysis much closer to how human vulnerability research looks. A tool set without execution cannot produce the finding class that requires execution. The ladder below grades the narrowing and says nothing about the workload's output, which is where the consequence of the narrowing lands. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the comparison, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] grades the sandbox the executing harnesses run in.
 
 Cyera states its Protect phase blocks a risky tool call during execution; the release names no policy language, no deny-by-default configuration, and no risk tier behind that block, so the release adds no entry to the table above ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera states its Govern phase watches high autonomy as a risk signal, and the release names no permission-narrowing or capability-attenuation mechanism this domain's tooling map would carry.
 
@@ -161,10 +167,9 @@ AWS AgentCore Policy (GA), the Microsoft Agent Governance Toolkit (OSS), and Ver
 
 The [[lethal-trifecta|lethal-trifecta]] test is the primary instrument for lowering the required level: removing the sensitive-action or external-comms capability costs less than buying controls to govern it. Its design-constraint restatement, the [[agents-rule-of-two|Agents Rule of Two]], gives the assessor the same test in actionable form.
 
-> [!check] Scoring correction for the coding-copilot row
-> A text-matching command allowlist is not a policy decision point. The [[guard-canonicalization-gap|guard canonicalization gap]] describes why: the guard inspects a string the shell rewrites before executing, and the [[guardfall-shell-injection-audit|GuardFall audit]] found ten of eleven surveyed coding agents bypassable on exactly this construction. An organization scoring D3 on a Bash pattern allowlist has overstated by roughly a level. Ask whether the enforcement mechanism reads the same artifact the executor does; if not, grade it advisory. Control catalog: [[securing-agentic-coding|Securing Agentic Coding]].
->
-> Ask the cruder question first. An allowlist an autonomy flag suppresses is not a decision point at any level, and the assessment order is: confirm the guard is consulted under every autonomy mode the deployment permits, then ask what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — Gemini CLI's `--yolo` ignored the fine-grained tool allowlist in `settings.json` outright before 0.39.1, so a workflow's enumerated permissions were evidence of nothing. The L2 capability above assumes a per-agent allowlist that runs; a deployment whose autonomy mode removes it has not met L2. Both corrections apply to the CI-runner and unattended-local variants in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], where the autonomy modes that suppress these controls are the defaults rather than the exception.
+For the coding-copilot row, a text-matching command allowlist is not a policy decision point. The [[guard-canonicalization-gap|guard canonicalization gap]] describes why: the guard inspects a string the shell rewrites before executing, and the [[guardfall-shell-injection-audit|GuardFall audit]] found ten of eleven surveyed coding agents bypassable on exactly this construction. An organization scoring D3 on a Bash pattern allowlist has overstated by roughly a level. Ask whether the enforcement mechanism reads the same artifact the executor does; if not, grade it advisory. Control catalog: [[securing-agentic-coding|Securing Agentic Coding]].
+
+Ask the cruder question first. An allowlist an autonomy flag suppresses is not a decision point at any level, and the assessment order is: confirm the guard is consulted under every autonomy mode the deployment permits, then ask what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — Gemini CLI's `--yolo` ignored the fine-grained tool allowlist in `settings.json` outright before 0.39.1, so a workflow's enumerated permissions were evidence of nothing. The L2 capability above assumes a per-agent allowlist that runs; a deployment whose autonomy mode removes it has not met L2. Both checks apply to the CI-runner and unattended-local variants in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], where the autonomy modes that suppress these controls are the defaults rather than the exception.
 
 ## Cost model
 
@@ -201,6 +206,7 @@ The active rule set caps D4's effective score at D3's raw score (`effective(D4) 
 
 ## Notes
 
+[^semgrep]: Semgrep, [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (July 2026; no day-level date is exposed, and the month is inferred from an embedded screenshot dated 2026-07-20 and a forward reference to a Black Hat announcement in August 2026). The capability matrix and the per-tool detail sections are labelled by Semgrep as LLM-generated summaries of the repositories; the static-versus-dynamic finding is human-written. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
 [^avp]: [AWS — Amazon Verified Permissions now generally available](https://aws.amazon.com/blogs/aws/simplify-how-you-manage-authorization-in-your-applications-with-amazon-verified-permissions-now-generally-available/), 2023. Cedar policy-as-a-service.
 [^agentcore]: [AWS — Policy controls for Bedrock AgentCore generally available](https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/), 2026. Cedar-based agent-runtime PDP; GA March 2026.
 [^agt]: [Microsoft — Introducing the Agent Governance Toolkit](https://opensource.microsoft.com/blog/2026/04/02/introducing-the-agent-governance-toolkit-open-source-runtime-security-for-ai-agents/), 2026. Agent OS sub-millisecond PEP/PDP (OPA Rego / Cedar / YAML), MIT; v3.7.0 ToolPolicy guards.

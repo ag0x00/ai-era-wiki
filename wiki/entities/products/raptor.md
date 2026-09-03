@@ -3,7 +3,7 @@ type: entity
 title: "RAPTOR"
 address: c-000076
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-09-01
 tags:
   - entities
   - product
@@ -39,9 +39,12 @@ related:
   - "[[claude-code-security|Claude Code Security]]"
   - "[[adversarial-reflexion|Adversarial Reflexion]]"
   - "[[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[semgrep|Semgrep]]"
 sources:
   - https://github.com/gadievron/raptor
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 ---
 
 # RAPTOR
@@ -82,6 +85,8 @@ Beta commands: `/exploit` (PoC exploit generation), `/patch` (secure-patch gener
 
 The `--privileged` flag is required for the `rr` deterministic debugger inside the dev container; image is ~6 GB and starts from Microsoft's Python 3.12 devcontainer.
 
+Semgrep's July 2026 survey adds detail this page's command table does not carry. Per its LLM-generated repository summary and capability matrix, RAPTOR runs approximately 107,000 lines of Python orchestrating Semgrep, CodeQL, AFL++ fuzzing, Z3-based exploit feasibility, software composition analysis, and multi-model consensus across Claude and GPT-class backends, fronted by Claude Code with loadable "expert personas."[^semgrep] The matrix records 22 vulnerability classes spanning memory safety, web, auth and logic; JSON, SARIF and SBOM output; and a Landlock, seccomp and namespaces isolation stack. That isolation stack describes a different layer than the `--privileged` requirement above: the dev-container flag governs the `rr` debugger's own host access, and the Landlock/seccomp/namespaces set is the sandbox RAPTOR builds around the code it analyzes. Both stand.
+
 ## Relevance to This Wiki
 
 RAPTOR is the **author-tracing closure** for the wiki's coverage of the Mythos-era vuln-discovery cluster. The same [[gadi-evron|Gadi Evron]] who:
@@ -94,10 +99,17 @@ is also the lead author of RAPTOR — *the* open-source autonomous-security-rese
 
 Structurally, RAPTOR is **the offensive/defensive twin to OpenAnt**: where OpenAnt operates a six-stage vuln-discovery pipeline with [[adversarial-reflexion|constrained-attacker-persona]] FP control, RAPTOR is a Claude-Code-skill-driven multi-stage framework that goes further down the pipeline (exploit generation + patch writing in addition to discovery + validation). Both are auditable open-source instruments; both are recommended by the same briefing.
 
-The **multi-stage exploitability validation pipeline (Stages 0–F)** is structurally adjacent to OpenAnt's six-stage Parse → Reachability → Classification → Discovery → Verification → Dynamic pipeline and to [[mdash-defense-at-ai-speed|MDASH]]'s five-stage Prepare → Scan → Validate → Dedup → Prove pipeline — the architectural convergence on *multi-stage validation as the FP-control discipline* (see [[adversarial-reflexion|Adversarial Reflexion]]) extends from frontier-vendor harnesses through OSS instruments down to this Claude-Code-skill-level tool.
+The **multi-stage exploitability validation pipeline (Stages 0–F)** is structurally adjacent to OpenAnt's six-stage `Parse → Reachability → Classification → Discovery → Verification → Dynamic` pipeline and to [[mdash-defense-at-ai-speed|MDASH]]'s five-stage `Prepare → Scan → Validate → Dedup → Prove` pipeline — the architectural convergence on *multi-stage validation as the FP-control discipline* (see [[adversarial-reflexion|Adversarial Reflexion]]) extends from frontier-vendor harnesses through OSS instruments down to this Claude-Code-skill-level tool.
+
+> [!contradiction] Stage count of the validation pipeline is disputed
+> This page records a **Stages 0–F** exploitability-validation pipeline (`/validate`), sourced from a 2026-05-15 fetch of the RAPTOR README at v3.0.0. Semgrep's July 2026 survey, in an LLM-generated repository summary, describes "a six-stage exploitability-validation pipeline."[^semgrep] The two figures are not reconciled here; the README-sourced count above is not overwritten. The comparison to OpenAnt's six-stage and MDASH's five-stage pipelines above rests on whichever count is correct.
 
 ## Adjacent / Open
 
-- **No published benchmarks** (recall, FP rate) comparable to MDASH 88.45% / Aardvark 92% / OpenAnt filter-ratio metrics. The framework is positioned as practitioner-grade rather than benchmark-validated.
-- **Pluggable analysis layer** — the README is explicit that RAPTOR is "not tied to" Claude Code; the abstraction surface for plugging in alternative LLM-coding-agent platforms is not documented in the README excerpt and is a follow-up question.
+- **No benchmark result is published for RAPTOR.** Semgrep's July 2026 comparison of nine open-source harnesses supplies a placement instead of a measurement: RAPTOR is the maximalist entry, holding the broadest capability surface and the heaviest operational cost, recommended for a vulnerability hunter running one platform across scanning, dataflow, fuzzing, exploit feasibility and SCA.[^semgrep] Placement carries no recall or false-positive figure, so the page still records none — no published benchmark comparable to MDASH 88.45% / Aardvark 92% / OpenAnt filter-ratio metrics. The framework remains practitioner-grade rather than benchmark-validated.
+- **Pluggable analysis layer** — the README is explicit that RAPTOR is "not tied to" Claude Code; the abstraction surface for plugging in alternative LLM-coding-agent platforms is not documented in the README excerpt and is a follow-up question. Semgrep's July 2026 survey narrows the model half of this question: RAPTOR runs multi-model consensus across Claude and GPT-class backends, per its LLM-generated capability matrix.[^semgrep] The harness half stays open — Semgrep also describes RAPTOR as "fronted by Claude Code," and no source documents an alternative coding-agent integration.
 - **Smithery distribution** — the skills are also distributed via [Smithery](https://smithery.ai/skills?ns=gadievron); the relationship between the Smithery skill package and the GitHub repository (versioning, parity) is not captured here.
+
+## Notes
+
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The "vulnerability hunter" recommendation, the "maximalist" framing and the tool inventory (Semgrep, CodeQL, fuzzing, exploit feasibility, SCA, patching) are human-written; the six-stage figure, the LOC count, the Z3 and multi-model-consensus components, and every capability-matrix value (vulnerability classes, output formats, isolation, default models) are from Semgrep's LLM-generated repository summary and Reference 4 capability matrix. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].

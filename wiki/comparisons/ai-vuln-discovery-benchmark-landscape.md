@@ -3,7 +3,7 @@ type: comparison
 title: "AI Vuln-Discovery Benchmark Landscape"
 address: c-000099
 created: 2026-05-23
-updated: 2026-08-31
+updated: 2026-09-01
 tags:
   - comparisons
   - benchmarks
@@ -36,6 +36,8 @@ related:
   - "[[autonomous-code-security-google-talk|Autonomous Code Security at Google]]"
   - "[[big-sleep|Big Sleep]]"
   - "[[codemender|CodeMender]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
   - "[[cybergym-e2e]]"
   - "[[uc-berkeley-rdi]]"
   - "[[agentic-vulnerability-discovery]]"
@@ -46,6 +48,7 @@ sources:
   - "https://rdi.berkeley.edu/blog/exploitgym/"
   - "https://red.anthropic.com/2026/exploit-evals/"
   - "https://www.microsoft.com/en-us/security/blog/2026/03/20/cti-realm-a-new-benchmark-for-end-to-end-detection-rule-generation-with-ai-agents/"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://www.cybergym.io/"
   - "https://www.cybergym.io/cybergym/"
   - "https://www.cybergym.io/exploitgym/"
@@ -105,7 +108,7 @@ The [[mdash|MDASH]] harness tops raw Mythos on CyberGym (88.45% vs 83.1%), a ~5-
 - **Benchmark hosting as attack surface.** The corpora are themselves reachable infrastructure. Public benchmark material hosted on [[hugging-face|Hugging Face]] was fetched during the same incident, which puts the benchmark host inside the threat model rather than outside it. The evaluation family was [[exploit-benchmarks|ExploitGym]]; the corpus the agents attacked Hugging Face to reach was [[cybergym|CyberGym]]'s.
 - **CTI-REALM per-model table.** Only the top reward range (0.624–0.685) is sourced; see [[cti-realm|CTI-REALM]].
 - **Independent reproduction.** No neutral party has re-run the Mythos numbers on any of these benchmarks. The nearest attempt is not a reproduction: an ASU lab benchmarked its own Linux-kernel pipeline against a press-reported figure of 479 Mythos kernel vulnerabilities and reported over 1,000 of its own, while stating the comparison is apples-to-oranges because its counts cover only unprivileged-user-triggerable local privilege escalations.[^asu-keynote] Two independent labs counting different things on the same target is the state of cross-system comparison off-benchmark.
-- **Two frontier-lab programmes sit outside the stack entirely.** Google's [[big-sleep|Big Sleep]] and [[codemender|CodeMender]] appear on no benchmark in the table above and on no public leaderboard. Asked at [un]prompted in March 2026 to compare Big Sleep with OpenAI's Aardvark, the speakers reported no side-by-side comparison, because neither team has published full details.[^google-talk] This is a harder case than gap 2. The quantities those programmes do publish — a false-positive rate of zero and a 178-fix open-source count — carry no corpus, no oracle, and no denominator, so no benchmark in the stack could register them even if a neutral party wanted to try.
+- **Most published harnesses sit outside the stack entirely.** Google's [[big-sleep|Big Sleep]] and [[codemender|CodeMender]] appear on no benchmark in the table above and on no public leaderboard, and so does the whole open-source field. Semgrep's July 2026 survey sorts nine open-source harnesses into three categories, tables a capability comparison for seven of them, and reports no benchmark score, recall figure or finding count for any of the nine.[^semgrep] The field compares by capability matrix when no shared oracle exists; the source states the reason directly: the definition of a finding varies by harness, from a triaged static match to a reproducible AddressSanitizer crash, so the quantities the tools publish are not the same quantity. Asked at [un]prompted in March 2026 to compare Big Sleep with OpenAI's Aardvark, the speakers reported no side-by-side comparison, because neither team has published full details.[^google-talk] This is a harder case than gap 2. The quantities those programmes do publish — a false-positive rate of zero and a 178-fix open-source count — carry no corpus, no oracle, and no denominator, so no benchmark in the stack could register them even if a neutral party wanted to try.
 - **Raw counts are less comparable than scores.** The four gaps above concern benchmarks, where a fixed corpus and a shared oracle at least hold the target constant. CVE and finding counts published outside the benchmark stack hold nothing constant, and the [[analyzer-ordering-confound|ordering confound]] applies to them in full.[^asu-keynote] The stack's weakness is that it does not resemble operational discovery; the counts' weakness is that they cannot be compared at all.
 
 ## See also
@@ -122,6 +125,7 @@ The [[mdash|MDASH]] harness tops raw Mythos on CyberGym (88.45% vs 83.1%), a ~5-
 [^cybergym-e2e]: UC Berkeley RDI, [CyberGym-E2E](https://www.cybergym.io/cybergym-e2e/) (fetched 2026-08-31); [arXiv:2606.04460](https://arxiv.org/abs/2606.04460), ICML 2026. Local copy: `.raw/articles/cybergym-e2e-2026-08-31.md`.
 [^evals]: Exploit-development figures: Anthropic Frontier Red Team, [exploit evals](https://red.anthropic.com/2026/exploit-evals/); ExploitBench, [arXiv 2605.14153](https://arxiv.org/abs/2605.14153); ExploitGym, [RDI Berkeley](https://rdi.berkeley.edu/blog/exploitgym/). The CyberGym L1 leaderboard is self-reported; see [[cybergym|CyberGym]].
 [^mdash]: Microsoft Security Blog, [Defense at AI speed](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/) (2026-05-12). See [[mdash-defense-at-ai-speed|the page summary]].
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The finding-definition table and the absence of published benchmark scores are human-written; the seven-of-nine capability comparison is Semgrep's LLM-generated capability matrix. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
 [^bh-openai-hf]: Michael Dalton and Eric Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident — A Technical Reconstruction*, Black Hat USA 2026 (2026-08-06): four zero-days across JFrog Artifactory and Hugging Face; one dataset-worker pod to cluster admin across multiple Hugging Face clusters in under 13 hours. See [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06): analysis order rather than analyzer quality dominates cross-tool finding-count deltas, and training contamination blocks the rewind-and-re-run correction. See [[vulnerability-research-agentic-age-keynote|the talk summary]].

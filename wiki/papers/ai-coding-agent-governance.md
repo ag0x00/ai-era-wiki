@@ -2,7 +2,7 @@
 type: paper
 title: "AI Coding Agent Governance"
 created: 2026-04-30
-updated: 2026-07-30
+updated: 2026-09-01
 tags:
   - papers
   - agentic-ai
@@ -34,6 +34,7 @@ related:
   - "[[non-human-identity]]"
   - "[[least-agency-principle]]"
   - "[[credential-proxy-pattern]]"
+  - "[[sdlc-in-the-ai-attacker-era]]"
   - "[[supply-chain-security-for-agents]]"
   - "[[mcp-security]]"
   - "[[endor-labs-ai-code-governance]]"
@@ -164,3 +165,4 @@ A commercial peer has since appeared. [[endor-labs-ai-code-governance|Endor Labs
 - Supports: [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — coding-agent threat vectors fit cleanly into existing planes (D2 / D3 / D4 / D5 / D8); no new plane required.
 - Introduces: [[shadow-automation|Shadow Automation]], [[decision-rights|Decision Rights for AI Agents]] as named concepts.
 - Introduces: [[knostic|Knostic]] (org), [[kirin|Kirin (Knostic)]] (product) as entities.
+- Read bidirectionally by [[sdlc-in-the-ai-attacker-era|SDLC in the AI Attacker Era]], which places coding-agent governance as the one control category facing both ways: defensively it covers rules-file integrity, IDE-extension provenance and dependency-name attacks, and the same controls bound what an attacker-operated coding agent can reach.

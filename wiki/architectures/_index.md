@@ -20,7 +20,7 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — The Agentic AI Security Reference Architecture (AAI-S RA) secures agentic AI applications under a vendor-neutral trust model.
 - [[agentic-soc-ra-alert-triage|Agentic SOC Alert Triage Surface]] — Per-function deep-dive for the Alert triage surface of the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-detection-engineering|Agentic SOC Detection Engineering Surface]] — Per-function deep-dive for the Agentic SOC Reference Architecture.
-- [[agentic-soc-ra-exposure-vulnops|Agentic SOC Exposure and VulnOps Surface]] — Per-function deep-dive for the Exposure & VulnOps row of the Agentic SOC Reference Architecture.
+- [[agentic-soc-ra-exposure-vulnops|Agentic SOC Exposure and VulnOps Surface]] — The Exposure & VulnOps row of the Agentic SOC Reference Architecture runs continuous exposure and vulnerability discovery, plus remediati...
 - [[agentic-soc-ra-incident-response|Agentic SOC Incident Response Surface]] — Incident response and containment is where the SOC stops acting on the estate.
 - [[agentic-soc-ra-investigation-case-management|Agentic SOC Investigation Surface]] — Per-function deep dive for the Investigation & case management function of the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-threat-hunting|Agentic SOC Threat Hunting Surface]] — Per-function deep dive on the threat hunting surface of the Agentic SOC Reference Architecture.

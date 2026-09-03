@@ -2,7 +2,7 @@
 type: concept
 title: "LLM-as-a-Judge"
 created: 2026-04-30
-updated: 2026-08-31
+updated: 2026-09-01
 tags:
   - concepts
   - evaluation
@@ -30,11 +30,16 @@ related:
   - "[[google-cloud-codemender-preview]]"
   - "[[autonomous-code-security-google-talk]]"
   - "[[four-flynn]]"
+  - "[[defending-code-harness|defending-code-harness]]"
+  - "[[trail-of-bits-skills|trailofbits/skills]]"
+  - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
   - "[[exploit-benchmarks]]"
   - "[[autonomous-exploit-generation]]"
 sources:
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md"
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://www.cybergym.io/exploitgym/"
 ---
 
@@ -61,6 +66,8 @@ The standard resolution (as applied at [[stripe|Stripe]] in their threat modelin
 2. **The LLM is tasked only with semantic matching.** Given an expected output (gold standard) and an actual output, the judge is asked: *are these semantically equivalent in terms of the risks and mitigations conveyed?* This is a narrower, more tractable task than generating a correct answer.
 
 This isolates the judge's error mode to *semantic similarity assessment* rather than *domain correctness* — a task LLMs are demonstrably better at than humans for high-volume scoring.
+
+The resolution assumes a gold standard exists. One production role has none on either side: a deduplication judge decides whether two machine-produced findings describe the same defect, so both inputs come from the system under evaluation and no curated example of a correct answer is available to anchor the comparison. Semgrep records the role in two open-source harnesses — defending-code-harness deduplicates its crash findings with an LLM judge, and Trail of Bits' review plugins run sequential deduplication and false-positive judges after their parallel workers.[^semgrep] The Stripe division of labour narrows the judge's error mode to semantic similarity where a gold standard is available, and where it is not, the semantic-matching task is all there is and the circularity is unmitigated.
 
 ## Uses of the eval pipeline
 
@@ -109,6 +116,7 @@ The division of labour is the [[guardrails-beyond-vibes-talk|Stripe pattern]] ap
 - [[exploit-benchmarks|ExploitGym]] — the agent-as-a-judge validity oracle for exploit attribution.
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). Both dedup-judge facts are from Semgrep's LLM-generated repository summaries (Reference 1 and Reference 2). Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
 [^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
 
 <!-- sources:auto -->
