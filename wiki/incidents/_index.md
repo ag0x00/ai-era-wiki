@@ -99,6 +99,7 @@ No incident page is currently maintained as a rolling tally. [[mcp-cves-q1-2026|
 - [[meta-sev-1-agent-breach|Meta Sev 1 AI Agent Breach]]
 - [[mexican-government-ai-breach|Mexican Government Multi-Agency AI-Assisted Breach]] — A nation-scale data-exfiltration incident in which a single operator used two commercial AI platforms — Anthropic's Claude Code and OpenA...
 - [[month-of-ai-bugs|Month of AI Bugs Disclosures]]
+- [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]] — Between 2026-05-24 and 2026-06-22, an estimated 3,700-plus distinct AI agent identities, self-identifying as OpenAI agents, wrote roughly...
 - [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]] — No human directed any part of this attack chain.
 - [[prt-scan-supply-chain-campaign|prt-scan CI/CD Supply-Chain Campaign]]
 - [[sandworm-mode-npm-worm|SANDWORM_MODE npm Worm: AI Toolchain Poisoning]]
