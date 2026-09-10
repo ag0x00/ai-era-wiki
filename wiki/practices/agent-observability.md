@@ -3,7 +3,7 @@ type: practice
 title: "Agent Observability"
 address: c-000306
 created: 2026-04-30
-updated: 2026-08-25
+updated: 2026-09-10
 tags:
   - practices
   - observability
@@ -31,6 +31,10 @@ related:
   - "[[tiered-detection-cascade|Tiered Detection Cascade]]"
   - "[[llm-as-a-judge|LLM-as-a-Judge]]"
   - "[[agentic-ai-security-cmm-d7-observability|CMM D7 Observability]]"
+  - "[[agentic-ai-security-cmm-d2-identity|CMM D2 Identity]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 Control and Least Agency]]"
+  - "[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 Runtime and Guardrails]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 Supply Chain and AI-BOM]]"
 sources:
   - "[[.raw/talks/unprompted-conference-talks-mar-2026.md]]"
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
@@ -45,7 +49,9 @@ Improving agent observability requires moving from a "black-box" model, where on
 
 The barriers to doing this well are catalogued at the field level by [[nist-ai-800-4|NIST AI 800-4]], the first federal report mapping the gaps in post-deployment AI monitoring. The practices below — glass-box instrumentation, identity multiplexing, and behavioral baselining — are concrete responses to the barriers that report names: the lack of direct visibility into model properties, fragmented logging across distributed infrastructure, and the difficulty of detecting deceptive or monitor-evading agent behavior.
 
-### 1. Architectural Foundations: Hooks and Reference Monitors
+Most of the twelve numbered sections below are graded by the [[agentic-ai-security-cmm-d7-observability|CMM D7 Observability & Detection]] ladder and carry a D7 rung in the heading. A minority sit downstream of this domain — enforcement, supply chain — and carry the domain that grades them instead. [[#Mapping to the CMM]] sequences all twelve for an organization starting from zero.
+
+### 1. Architectural Foundations: Hooks and Reference Monitors — D7 L2 to L3
 
 Traditional EDR sees processes, but fails to distinguish if a shell command was typed by a human or spawned by an agent. [[genai-endpoint-observability-talk|Mika Ayenson (Elastic)]] names this the broken intent-attribution problem: a developer and an AI agent running the same command produce near-identical endpoint telemetry — same PID, same user, same command line — so EDR records what ran but not what drove it. **Lifecycle Hooks** and **Reference Monitors** close this gap.
 
@@ -58,20 +64,20 @@ Traditional EDR sees processes, but fails to distinguish if a shell command was 
 
 Numbat combines the artifact route with the two this page treats separately, running lifecycle hooks for real-time blocking and a local OTLP receiver for fleet telemetry in the same binary. Both artifact-parsing implementations offer what neither hooks nor a gateway can: reconstruction of sessions that ran before the tooling was installed, because the artifacts are static self-contained records rather than a live stream.
 
-### 2. Standardizing Telemetry with OpenTelemetry (OTel)
+### 2. Standardizing Telemetry with OpenTelemetry (OTel) — D7 L3
 
 **OpenTelemetry (OTel)** creates a standardized lexicon for AI behavior in place of siloed, per-tool logs.
 
 - **Application monitoring:** OTel connects process-level data with semantic intent.
 - **Semantic conventions:** the `gen_ai.*` conventions tag spans with prompt data, model reasoning, and provider information.
 
-### 3. Identity Multiplexing
+### 3. Identity Multiplexing — D7 L3
 
 Standard logs often separate a user action from agent logic, which makes lateral movement or abuse of legitimate agency undetectable. Identity multiplexing closes that gap: `botId`, `sessionContext`, and `traceId` injected into every execution log trace an autonomous action — an Apex call, a shell command — back to the **invoking human user**.
 
 ### 4. Enforcement Configuration Examples
 
-#### A. Cedar Policy for Action Mediation
+#### A. Cedar Policy for Action Mediation — D3 L3
 
 The **Cedar Policy Language** deterministically intercepts and forbids dangerous commands, based on the context hooks capture.
 
@@ -101,7 +107,7 @@ when {
 };
 ```
 
-#### B. Capability-Based Warrants
+#### B. Capability-Based Warrants — D2 L5+
 
 **Warrants** replace static permissions with cryptographic, task-scoped authorizations that narrow an agent's blast radius.
 
@@ -118,7 +124,7 @@ warrant:
   signature: 0x8f3a...
 ```
 
-#### C. Agent Card Configuration
+#### C. Agent Card Configuration — D2 identity registry
 
 **Agent Cards** define a system of record for every agent, logging personas, allowed capabilities, and PII masking rules. Salesforce's production Agentic SOC ([[beyond-the-chatbot-talk|Beyond the Chatbot]]) uses agent cards exactly this way — one card per agent workload, declaring model, max iterations, temperature, PII masking, and allowed tool capabilities — paired with a tool config that declares which agents may call each tool, so the permission check is enforced at both ends.
 
@@ -135,11 +141,11 @@ warrant:
 }
 ```
 
-### 5. Context-Aware Trimming
+### 5. Context-Aware Trimming — no dedicated rung
 
 A common observability failure occurs when a long-running agent fills its context window and drops older, critical security logs. Tagging messages by type (`SSRF_BLOCKED`, `PERMISSION_DENIED`) and pinning those tags against trimming keeps them in context as general log volume grows, so the agent and forensic investigators retain a full history of security events.
 
-### 6. Building "Internal EDR" (Glass-Box Pillars)
+### 6. Building "Internal EDR" (Glass-Box Pillars) — D7 L5+
 
 For advanced threat response, practitioners are moving toward **[[glass-box-security|Glass-Box Security]]** using **[[mechanistic-interpretability-for-defense|Mechanistic Interpretability]]** — introduced by [[carl-hurd|Carl Hurd]] ([[starseer|Starseer]]) at Unprompted March 2026. See [[glass-box-security-talk|Hurd — Glass-Box Security]] for the full technique description.
 
@@ -147,7 +153,7 @@ For advanced threat response, practitioners are moving toward **[[glass-box-secu
 - **Strength measurement:** Scalar projection (dot product normalized by total tensor magnitude) measures how dominant the dangerous concept is in the current activation — separating "touches on this topic" from "is overwhelmingly about this topic."
 - **Sovereign Infrastructure:** This level of observability often requires a return to **self-hosted infrastructure** to gain deep visibility into latent space geometry. For managed-API users, the *canary model* approach (instrument a smaller open-weight model in parallel) provides partial coverage subject to cross-model activation transfer assumptions.
 
-### 7. Agent Behavioral Monitoring — Insider-Threat Framing
+### 7. Agent Behavioral Monitoring — Insider-Threat Framing — D7 L4
 
 Full-stack agent monitoring maps onto the insider-threat problem: agents are inherently probabilistic, which limits enumeration of permissible action sequences to a partial list. A **behavioral / anomaly-detection approach** — borrowing from User and Entity Behavior Analytics (UEBA) for stable identities — is more effective than purely deterministic ruleset enforcement.
 
@@ -173,7 +179,7 @@ This is the detective half of [[owasp-agentic-ai-threats-mitigations|OWASP Agent
 
 See [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safety, and Reliability of Agentic AI]] and [[agent-identity-architecture|AI Agent Identity Architecture]] for the identity-attribution architecture that feeds this monitoring layer.
 
-### 8. AI-BOM Runtime Discovery and Behavioral Baselines
+### 8. AI-BOM Runtime Discovery and Behavioral Baselines — D7 L4 + D8 L4
 
 **Miggo Security**'s Runtime Defense Platform, described in [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]], introduces an AI-BOM-centric approach to observability:
 
@@ -184,13 +190,13 @@ See [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safe
 
 Agents generate **10–20x the log volume** of humans over the same time window, which makes this a behavioral-analysis problem rather than a metrics one: generic SIEM without agentic-aware normalization is overwhelmed by the volume alone.
 
-### 9. Nightly Audit Baselines and Memory Integrity
+### 9. Nightly Audit Baselines and Memory Integrity — D7 L3 to L4
 
 **SecureClaw** reports 13 core metrics every night, including **healthy-state outputs** alongside failure alerts. Memory integrity monitoring watches for unauthorized changes to persistent agent state, addressing the scenario where an agent's behavioral state has been silently modified between sessions.
 
 SecureClaw's design principle runs all detection logic as **external bash processes consuming zero LLM tokens**, which keeps the monitoring from expanding the attack surface it protects. The [[owasp-ai-exchange|OWASP AI Exchange]] states the general form of the principle: a defensive monitoring agent is itself part of the attack surface, and agentic containment must operate at the infrastructure layer without depending on the agent cooperating.[^aix-monitoruse] The exposure is wider than token consumption. Any detector that reads attacker-influenced text is in scope, including the reasoning-trace review §7 places on the roadmap and the [[llm-as-a-judge|LLM-as-a-judge]] stage of a [[tiered-detection-cascade|cost-ordered cascade]].
 
-### 10. Cognitive File Integrity Monitoring
+### 10. Cognitive File Integrity Monitoring — D8 L4
 
 Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized changes to critical files. For AI agents, this extends to **cognitive identity files**: SOUL.md, IDENTITY.md, and similar files that define the agent's behavioral rules, persona, and operational constraints.
 
@@ -200,13 +206,13 @@ Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized ch
 
 Every other category above extends an existing discipline — EDR, OpenTelemetry, UEBA, conventional FIM. Cognitive file integrity monitoring has no such precursor, because it protects the persona and behavioral-rule files that only an agent carries.
 
-### 11. Adversarial Prompt Injection Through Attack Data
+### 11. Adversarial Prompt Injection Through Attack Data — D4 L3 to L4
 
 A practitioner-flagged threat vector is [[prompt-injection|prompt injection]] delivered through the attack payload itself. When an AI agent ingests attack data — a SOC pulling in suspicious network traffic, log entries, or malware samples for analysis — and that data contains injected instructions, an autonomous agent acting on its analysis can become an unwitting accomplice to the attacker.
 
 Tight coupling between AI inference and automated action amplifies the blast radius of this manipulation, because a single compromised inference step can drive an automated response with no human check in the loop. Reversible actions, circuit breakers, and a rule against auto-close without explicit human approval bound that risk. See [[indirect-prompt-injection|Indirect Prompt Injection]] for the broader attack class and [[prompt-injection-containment|Prompt Injection Containment for Agentic Systems]] for runtime controls.
 
-### 12. Agentic Incident Lifecycle
+### 12. Agentic Incident Lifecycle — D7 L4
 
 The instrumentation sections above cover detection. The [[owasp-ai-exchange|OWASP AI Exchange]] specifies a separate agentic incident lifecycle over the same telemetry, in three phases: detection and triage, containment and eradication, and forensic analysis.[^aix-monitoruse] Two of its requirements constrain what the instrumentation above must produce.
 
@@ -215,6 +221,16 @@ Containment operates at the infrastructure layer and does not depend on the agen
 The same independence applies to the record. Document 5 of the [[owasp-ai-exchange|OWASP AI Exchange]] places log integrity at the infrastructure layer of an agentic penetration test, citing the same control, and states the check as verifying that the agent cannot suppress or alter logs under adversarial conditions.[^aix-testing] The forensic reconstruction below assumes a record the subject of the investigation could not edit, and a test can check that assumption directly. The limit is method: the Exchange names the property and publishes no procedure for it, its two step-by-step test procedures covering prompt injection and evasion instead, so building the test itself — attack an identity the agent holds, confirm the store rejects the write — is this team's own work. The [[agentic-ai-security-cmm-d7-observability|D7 log-integrity criterion]] and its evidence artifact are the entry point for building it.
 
 Forensic analysis reconstructs inputs, outputs, and actions, and the Exchange states plainly that it does not reconstruct hidden intent.[^aix-monitoruse] That sets the retention target for the logging in §2 and §3: the fields that support reconstruction are the invoking identity, the tool call and its arguments, the memory write and its partition, and the ordering across tools — tool chain monitoring, which the Exchange names in its AI-specific logging set and which no section above instruments as a sequence rather than as individual calls.
+
+## Mapping to the CMM
+
+The twelve sections above are grouped by rung below, sequenced for an organization building this capability from zero rather than in the page's own section order.
+
+- **Foundation — D7 L2 to L3.** §1 (hooks and reference monitors — the same policy-decision-point primitive §4A grades at D3 L3), §2 (OpenTelemetry instrumentation), §3 (identity multiplexing). §3 is itself capped by identity-domain maturity: D7's own dependency rule sets effective(D7) ≤ raw(D2), so per-agent multiplexing needs D2 at L3 underneath it — this is why the D2 items in the tier below are an advanced tail rather than this floor. §5 (context-aware trimming) operates on the agent's own context window, a different store from the L3 external telemetry backend, and carries no D7 rung of its own; it costs nothing extra once §1's hooks exist. §7's and §8's behavioral baselines score deviations from the telemetry this tier produces, so nothing past it is reachable before it is in place.
+- **Hardening — D7 L3 to L4.** §9 (nightly memory-write coverage and drift baselines) and §12 (log-integrity testing under adversarial conditions, plus the containment and forensic-retention requirements the incident lifecycle sets for §2 and §3).
+- **Production behavioral monitoring — D7 L4.** §7 (per-agent behavioral baselines and the insider-threat framing) and §8 (behavioral drift detection, at D7 L4; its AI-BOM runtime-reconciliation half belongs to [[agentic-ai-security-cmm-d8-supply-chain|D8]] L4, since D7's own cost model prices real-time AI-BOM at L5 rather than L4). §7's reasoning-trace subsection sits a step higher, an L4-to-L5 capability gated on fleet-scale reading; §7 already states the collection half is solved.
+- **Downstream of this domain, graded elsewhere.** §4's Cedar policy mediation is [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 (a policy-decision point outside the model context, deny-by-default, synchronous, fail-closed); its capability-based warrant is [[agentic-ai-security-cmm-d2-identity|D2]] L5+ (no hyperscaler ships task-scoped, holder-bound capability tokens yet), and its Agent Card configuration is a further instance of the same D2 identity-registry pattern — both sit above the D2 L3 floor §3 already assumes, not below it. §10's cognitive-file integrity baselining is [[agentic-ai-security-cmm-d8-supply-chain|D8]] L4. §11 splits across two rungs: its SOC-ingests-attack-data detection case is [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L3 (the indirect-injection criterion), and its mandatory-human-approval clause is D4 L4 — the reversible-action and circuit-breaker language in §11's own text names no graded criterion on this page. The D3 and D8 items, and D2's L5+ tail, belong to a different domain's own program rather than to this one's backlog.
+- **Frontier — D7 L5+.** §6 (mechanistic interpretability and forward-pass activation monitoring). The D7 ladder states plainly that no shipping product exists at this level, so it stays deprioritized until the L4 tier above is production-stable.
 
 [^bhoaihf]: Michael Dalton and Eric Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06). Summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]; chain-of-thought excerpts and investigation scale at [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]].
 
