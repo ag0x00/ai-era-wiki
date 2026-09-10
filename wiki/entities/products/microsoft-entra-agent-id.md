@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Microsoft Agent 365 (with Entra Agent ID)"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-09-10
 tags:
   - products
   - identity
@@ -33,6 +33,8 @@ related:
   - "[[standards-review-microsoft-rai-agent-365-2026-Q2]]"
   - "[[microsoft-rai|Microsoft Responsible AI Standard (RAI)]]"
   - "[[agentic-cmm-regulated-fi-stress-test|Agentic AI CMM: Regulated-FI Stress Test]]"
+  - "[[crowdstrike-agentic-identity-provider]]"
+  - "[[ping-enterprise-personal-agent-access]]"
 sources:
   - "https://techcommunity.microsoft.com/blog/identity/introducing-microsoft-entra-agent-id/4405875"
   - "[[.raw/articles/microsoft-secure-agentic-ai-end-to-end-2026-05-07.md]]"
@@ -54,6 +56,8 @@ Agent 365 includes capabilities across three Microsoft Security pillars:
 - **Microsoft Purview** — data oversharing prevention for agent flows (covered separately).
 
 **Entra Agent ID** is the identity-credential layer underneath Agent 365. The **Agent 365 Registry** is the catalog / governance layer. Together they are the Microsoft-native equivalent of what [[okta-for-ai-agents|Okta for AI Agents]] offers for Okta-anchored organizations.
+
+Two more vendors entered the same product category in September 2026 — [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]], from the endpoint-security market, and [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]], from an established IAM vendor. CrowdStrike states that it extends its AWS privileged-access support to tenants using Entra.
 
 ## Components
 

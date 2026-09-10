@@ -3,7 +3,7 @@ type: practice
 title: "Credential Proxy Pattern for AI Agents"
 address: c-000191
 created: 2026-04-30
-updated: 2026-08-15
+updated: 2026-09-10
 tags:
   - practices
   - credential-security
@@ -30,6 +30,9 @@ related:
   - "[[openai-hugging-face-agent-incident]]"
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
+  - "[[ping-enterprise-personal-agent-access]]"
+  - "[[crowdstrike-agentic-identity-provider]]"
+  - "[[agentdesktop]]"
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/articles/agentcordon-readme-2026-05-04.md]]"
@@ -55,7 +58,7 @@ The **credential proxy pattern** keeps real secrets out of an agent's reach: the
 
 The pattern interposes a proxy between the agent and any target API so that real credentials (API keys, OAuth tokens, cloud secrets) are **never placed in the agent's context window, environment variables, or configuration files**. The agent carries only a short-lived proxy token scoped to the allowed target APIs, TTL, and permission envelope; the proxy resolves it against the vault and injects the real credential at the network layer.
 
-The approach has converged independently across multiple OSS and commercial tools (six in the table below), indicating a broadly recognized gap in agentic deployments.
+The approach has converged independently across OSS projects, startups and, from September 2026, enterprise identity and endpoint-security platforms (the table below), indicating a broadly recognized gap in agentic deployments.
 
 ## Significance
 
@@ -89,22 +92,28 @@ The agent **never sees** the real credential at any step.
 | OneCLI | Docker-based gateway | Web dashboard |
 | AgentSecrets | OS keychain integration | Credentials never in files or env vars |
 | [[agentcordon\|AgentCordon]] | Three-tier (CLI / broker / server); Cedar PDP; AES-256-GCM + HKDF; Rust; GPL-3.0 | Ed25519 workspace identity; broker daemon holds OAuth tokens so the agent host never does; MCP gateway with response-leak scanning |
+| [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] | PingOne Privilege issues ephemeral scoped credentials; a policy point in front of each resource allows or denies the action | Secretless developer workflows — an agent commits code or reaches a database with no static credential handed to it; access revoked in real time |
+| [[crowdstrike-agentic-identity-provider\|CrowdStrike Agentic IdP]] | Broker issuing short-lived task-scoped tokens against a cryptographic agent identity | Every action bound to the delegating human or workload; announced Sept 2026, stated in development |
+| [[agentdesktop\|agentdesktop]] (Solo.io, Apache 2.0) | Desktop daemon binding user, device and tool identity; credentials injected at the gateway | Replaces API keys distributed to workstations with short-lived credentials [[agentgateway\|agentgateway]] injects at the traffic layer |
 
 ## Security properties
 
 - **Prompt-injection resistance.** A successful injection cannot extract credentials that never enter the context window.
-- **Hierarchical delegation.** Keychains.dev forks parent→child tokens so sub-agents get only the scopes they need.
+- **Hierarchical delegation.** Keychains.dev forks tokens from parent to child so sub-agents get only the scopes they need.
 - **Instant revocation.** Access ends without rotating the underlying secret.
 - **Audit trail.** Every credential resolution is logged with agent identity, timestamp, and target endpoint.
 - **Scoped least privilege.** Each agent or sub-agent receives only the credentials its task requires.
 
 ## Relationship to the identity stack
 
-This is secrets management (HashiCorp Vault, AWS Secrets Manager, [[cyberark-conjur|CyberArk Conjur]]) adapted for agents whose behavior can be influenced by adversarial inputs. The proxy is to agents what IAM instance roles are to EC2 instances: credentials injected by the infrastructure, not stored in the workload.
+This is secrets management (HashiCorp Vault, AWS Secrets Manager, [[cyberark-conjur|CyberArk Conjur]]) adapted for agents whose behavior can be influenced by adversarial inputs. The proxy is to agents what IAM instance roles are to EC2 instances: the infrastructure injects credentials that the workload never stores.
 
 Two adjacent controls bound the pattern's scope:
 
 - **Credential-less identity** (Azure Managed Identities, AWS Bedrock AgentCore token vault, GCP auth-manager) reaches the same end state by never issuing a long-lived secret to the agent. Where the platform offers it, it is the cheaper path to D2-L4 than operating a separate proxy.
+
+A third path opened in September 2026: an enterprise identity or endpoint-security platform brokering the credential as part of the agent's identity issuance, rather than as a separate proxy the deployment operates. [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]] issues ephemeral scoped credentials through PingOne Privilege, and [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]] brokers short-lived tokens against the identity it issued. For a buyer already running that platform this is the same trade the credential-less-identity bullet records — the broker arrives with the identity layer and no separate proxy is operated — with a security vendor rather than a cloud provider as the counterparty.
+
 - **Coupled credentials** ([[identity-credential-coupling|identity-credential coupling]] — SAS tokens, storage access keys, SaaS API keys where the credential *is* the identity) limit the proxy: it can intermediate access, but it cannot separate what is structurally inseparable, so rotation remains identity rotation for those classes.
 
 In the [[agentic-ai-security-reference-architecture|RA]] this is the Identity plane's load-bearing row; in the [[agentic-ai-security-cmm-d2-identity|CMM D2 ladder]] it is the L4 zero-credentials criterion, satisfied by either a credential broker/proxy or a credential-less identity model.
@@ -121,7 +130,7 @@ In the [[agentic-ai-security-reference-architecture|RA]] this is the Identity pl
 1. **Never put real credentials in environment variables or config files** for agent workloads. `OPENAI_API_KEY=sk-…` in a `.env` file is the threat model.
 2. Use short-lived proxy tokens with TTLs matching the task scope.
 3. Build revocation tests into the incident-response playbook — know the time from "agent compromised" to "all credentials revoked."
-4. Log at the proxy, not just the agent, so a compromised agent cannot overwrite the record.
+4. Log resolutions at the proxy, where a compromised agent cannot overwrite the record.
 5. For multi-agent systems, enforce scope-inheritance limits — a child token cannot exceed its parent's scope (the same [[monotonic-attenuation|monotonic-attenuation]] invariant the capability-token layer enforces cryptographically).
 
 The pattern's clearest 2026 test case is the CI-runner coding agent. The [[claude-code-github-action-credential-exposure|Claude Code GitHub Action exposure]] took a model API key straight from the workflow's process environment, which is exactly the delivery mechanism this pattern replaces: a credential the agent can read is a credential prompt injection can reach. Environment-variable delivery to an agent that also reads untrusted repository content should be treated as an anti-pattern rather than a default. See [[securing-agentic-coding|Securing Agentic Coding]] §Identity plane.

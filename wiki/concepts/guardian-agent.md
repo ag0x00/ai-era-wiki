@@ -2,7 +2,7 @@
 type: concept
 title: "Guardian Agent"
 created: 2026-05-01
-updated: 2026-08-31
+updated: 2026-09-10
 tags:
   - concepts
   - guardian-agent
@@ -28,6 +28,8 @@ related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[falcon-guardian]]"
+  - "[[agentdesktop]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
 coined_by:
@@ -40,11 +42,11 @@ A **guardian agent (GA)** is an AI agent that supervises other AI agents. Per Ga
 
 The category is **the dominant procurement-language term** for the AI security oversight surface in 2026. It will define how enterprise CISOs, AI platform leads, and architects discuss the space for the next 12–24 months.
 
-**Terminology choice in this wiki.** The wiki uses **[[oversight-layer|oversight layer]]** (PDP + PEP, the zero-trust / [[xacml|XACML]] roles) as the **architectural primary** term, and **Guardian Agent** as the **procurement-language synonym**.
+The wiki uses **[[oversight-layer|oversight layer]]** (PDP + PEP, the zero-trust / [[xacml|XACML]] roles) as the **architectural primary** term, and **Guardian Agent** as the **procurement-language synonym**.
 
 Both names describe the same role at different levels of abstraction:
-- When discussing architecture, control planes, components, and CMM domains → **[[oversight-layer|oversight layer]] / PDP+PEP**
-- When discussing vendor categories, RFP structure, board reports, and Gartner Market Guides → **Guardian Agent**
+- Discussion of architecture, control planes, components, and CMM domains uses **[[oversight-layer|oversight layer]] / PDP+PEP**
+- Discussion of vendor categories, RFP structure, board reports, and Gartner Market Guides uses **Guardian Agent**
 
 See [[oversight-layer|Oversight Layer (PDP + PEP for Agentic AI)]] for the full architectural framing and a cross-walk against other terms (Reference Monitor, Supervisory Agent, AI Firewall, Promotion Gate, etc.).
 
@@ -70,7 +72,7 @@ The compromise the wiki adopts: **lead architectural discussion with [[oversight
 **Is**: an AI agent (or coordinated set of agents) that monitors, evaluates, and intervenes on the behavior of other AI agents in a production deployment.
 
 **Isn't**:
-- A static policy engine. (GAs use AI-based evaluation, not just deterministic rules.)
+- A static policy engine. (GAs layer AI-based evaluation on top of deterministic rules.)
 - A logging-only observability stack. (GAs intervene; observability stacks watch.)
 - A passive review tool. (GAs are evolving toward semi- and fully autonomous enforcement.)
 - A human review process. (GAs operate at agent speed; humans are escalation paths.)
@@ -100,7 +102,7 @@ Wiki connection: maps to the [[agentic-ai-security-cmm-2026|CMM]] **D2 Identity 
 
 Common sub-features: **AI agent security testing** (red teaming, behavioral fuzzing), **risk and control validation**, **compliance reporting**.
 
-Wiki connection: this is essentially [[ai-spm|AI Security Posture Management (AI-SPM)]] but Gartner specifies the *agent-asset-level* discipline, not the *infrastructure-asset-level* one DSPM-derived AI-SPM covers. Both are required.
+Wiki connection: this is essentially [[ai-spm|AI Security Posture Management (AI-SPM)]], narrowed to the *agent-asset-level* discipline; DSPM-derived AI-SPM covers the *infrastructure-asset-level* one. Both are required.
 
 ### 3. Runtime inspection and enforcement
 
@@ -117,6 +119,10 @@ Wiki connection: maps to **D4 Runtime & Guardrails** + **D3 Control & Least-Agen
 ### Vendor grading against the three categories
 
 Cyera's Agent Guardian names capabilities in all three categories and covers category 1 only in part ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]): Discover supplies the catalog and the map, and the release names no ownership or lineage tracking and no agent-level audit trail, since Access Trail audits data stores. Govern and Validate carry continuous assurance with its security-testing sub-feature, and Protect carries runtime enforcement. The release never cites Gartner's categories, and a capability list is not evidence of meeting the bar.
+
+[[falcon-guardian|CrowdStrike Falcon Guardian]] carries the category's name and meets its definition only in part. CrowdStrike states endpoint-resident discovery of known and shadow agents with deployment source, user identity and security status, which is category 1's catalog without the ownership, lineage and agent-level audit-trail features beside it, and runtime detection with access controls that block unpermitted agent types, which is category 3. The announcement names nothing under category 2. Falcon Guardian is also an endpoint sensor rather than an agent supervising agents, so it sits outside the first line of the definition whatever its feature coverage.
+
+[[agentdesktop|agentdesktop]] does not claim any of the three categories on its own terms. By this page's own description (see Delivery and integration models below) it is a desktop daemon that discovers agent harnesses and their registered MCP servers, translates declared filesystem and network restrictions into each harness's own sandbox configuration, and feeds a cloud gateway. It evaluates no agent behavior at runtime, which leaves it an input to a guardian agent's catalog rather than a guardian agent.
 
 ## Sentinels and Operatives
 
@@ -141,7 +147,7 @@ Therefore, an **independent enterprise-owned guardian-agent layer** is required 
 
 This independent layer "acts as the missing universal enforcement mechanism."
 
-**The frame this gives the architecture.** The decision is not "build vs. buy" or "platform A vs. platform B." It's: **how much of your guardian-agent capability is hyperscaler-locked vs. independent.** The wiki's [[agentic-ai-security-reference-architecture|RA]] is opinionated toward the independent-layer end of this spectrum because cross-vendor neutrality is a load-bearing requirement for most enterprise deployments.
+This framing turns the architectural decision into a single axis: how much of an enterprise's guardian-agent capability is hyperscaler-locked versus independent, rather than a choice between build and buy or between platform A and platform B. The wiki's [[agentic-ai-security-reference-architecture|RA]] is opinionated toward the independent-layer end of this spectrum because cross-vendor neutrality is a load-bearing requirement for most enterprise deployments.
 
 ## Delivery and integration models
 
@@ -155,6 +161,8 @@ Gartner enumerates six (none mutually exclusive):
 6. **Coordination mechanisms** — standards, APIs, and hooks for unified oversight and policy enforcement
 
 The wiki's current RA already covers patterns 1, 2, 4, and 6. Patterns 3 and 5 are partially covered (logging is in Observability; edge is implicit).
+
+Two September 2026 products instantiate pattern 5 directly: [[falcon-guardian|Falcon Guardian]] places oversight in the endpoint sensor, and [[agentdesktop|agentdesktop]] places it in a desktop daemon that feeds a cloud gateway.
 
 ## Evaluation method hierarchy
 
@@ -181,7 +189,7 @@ Guardian agents themselves need governance. Gartner Note 4 articulates five cont
 
 Gartner's north-star phrase for what GAs deliver: **verified accountable autonomy** — agents that can act on their own, but where the action is verifiable, auditable, and bounded by enforced policy.
 
-The phrase compresses the wiki's existing argument ([[least-agency-principle|least agency]] + verifiable identity + action-to-identity tracing + tamper-evident audit) into a procurement-friendly term. Worth adopting as the description of what the architecture provides.
+The phrase compresses the wiki's existing argument ([[least-agency-principle|least agency]] + verifiable identity + action-to-identity tracing + tamper-evident audit) into a procurement-friendly term. The wiki adopts it as the description of what the architecture provides.
 
 ## Market predictions
 
@@ -230,7 +238,7 @@ Gartner segments the market into six categories — see [[guardian-agents-market
 - OWASP ASI ID-tagging at CMM L3+
 - [[mitre-atlas|MITRE ATLAS]] technique anchoring
 
-The wiki should now read as: **"Build a guardian-agent layer using the six-plane RA. Measure your maturity using the CMM. Anchor your evidence in OWASP ASI / [[owasp-aivss|AIVSS]] / MITRE ATLAS / Q1 2026 incidents."**
+The wiki should now read as: **"A guardian-agent layer built on the six-plane RA, its maturity measured by the CMM, its evidence anchored in OWASP ASI / [[owasp-aivss|AIVSS]] / MITRE ATLAS / Q1 2026 incidents."**
 
 ## See Also
 

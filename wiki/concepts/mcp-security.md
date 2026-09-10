@@ -2,7 +2,7 @@
 type: concept
 title: "MCP Security"
 created: 2026-04-30
-updated: 2026-08-22
+updated: 2026-09-10
 tags:
   - concepts
   - mcp
@@ -27,6 +27,10 @@ related:
   - "[[gartner-mq-enterprise-ai-coding-agents-2026]]"
   - "[[securing-agentic-coding]]"
   - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
+  - "[[jfrog]]"
+  - "[[artifactory]]"
+  - "[[agentdesktop]]"
+  - "[[falcon-guardian]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
 ---
@@ -61,7 +65,7 @@ MCP introduces several novel attack surfaces beyond traditional API security:
 
 ### 1. MCP Proxy Layer
 An **MCP proxy** sits between the agent and MCP servers, providing:
-- Traffic inspection for AI-generated and AI-bound payloads (semantic context, not just protocol)
+- Traffic inspection for AI-generated and AI-bound payloads, covering semantic context alongside protocol
 - Allow-listing of approved MCP servers and endpoints
 - Policy enforcement (block calls to unapproved servers)
 - Logging for forensics and compliance
@@ -84,7 +88,7 @@ The proxy, monitoring and threat-intelligence controls above all assume the serv
 - Replace the server's hardcoded data-source credential with per-request OAuth token delegation, so each call runs in the calling user's permission scope and stays attributable.
 - Grant read scopes in preference to write scopes, and audit configurations for embedded secrets.
 
-Token delegation is the control the primary research recommends first, and it is what the [[agentic-ai-security-reference-architecture|AAI-S reference architecture]] egress plane implements through per-tool token exchange.
+Token delegation is the control the primary research recommends first, and the [[agentic-ai-security-reference-architecture|AAI-S reference architecture]] egress plane implements it through per-tool token exchange.
 
 ### 5. MCP Governance at Scale
 Enterprise estates will accumulate many MCP server registrations. Required capabilities:
@@ -93,13 +97,15 @@ Enterprise estates will accumulate many MCP server registrations. Required capab
 - Periodic permission reviews (analogous to OAuth token auditing)
 - Incident response playbooks for rogue MCP server scenarios
 
+Three products shipped against these capabilities in the first week of September 2026, each at a different point in the path. [[jfrog|JFrog]] indexes MCP servers in an [[artifactory|Artifactory]] registry and applies semantic analysis to the Markdown files, skill scripts and instruction sets a server carries, blocking one it judges malicious at package-resolution time rather than at call time. [[agentdesktop|agentdesktop]] discovers every MCP server registered in an agent's local configuration and treats each as a policy object, separating authorized sources from unauthorized ones on the developer's own machine. [[falcon-guardian|Falcon Guardian]] records MCP server invocations inside the causal chain it reconstructs from a user prompt to the downstream system action. Inventory and per-server allow/deny now have named implementations at three layers; periodic permission review and rogue-server incident response are named by none of the three.
+
 ## Relationship to Existing Controls
 
-MCP security is an extension of — but not a replacement for — API security, network monitoring, and AI firewall capabilities. The key differentiation is understanding **agent intent**: whether a particular MCP call is within the normal operating envelope of the agent, or represents anomalous or malicious behavior.
+MCP security extends API security, network monitoring, and AI firewall capabilities into a distinct control domain. The key differentiation is understanding **agent intent**: whether a particular MCP call is within the normal operating envelope of the agent, or represents anomalous or malicious behavior.
 
 ## Production Detection: Sensor over Gateway
 
-The proxy-layer control above is the gateway pattern. A counter-position has now shipped at scale: the [[adr-agentic-detection-system|ADR system]] deployed at [[uber|Uber]] (ten months, 7,200+ hosts) explicitly evaluated and rejected an LLM/MCP gateway for observability, on the grounds that a gateway requires host changes, breaks on streaming responses, and omits environmental context. ADR instead reconstructs MCP activity from an endpoint sensor that parses the local caches of coding agents, capturing the full prompt → reasoning → tool-call → outcome chain.[^adr] Its two-tier detector then reasons over MCP context — querying tool source code, threat intelligence, and policy over dedicated MCP providers — to close the agent-intent gap this page names. The architectural fork is treated in depth in [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]]; the practical reading is that a gateway is one valid PEP but not the only path to MCP observability.
+The proxy-layer control above is the gateway pattern. A counter-position has now shipped at scale: the [[adr-agentic-detection-system|ADR system]] deployed at [[uber|Uber]] (ten months, 7,200+ hosts) explicitly evaluated and rejected an LLM/MCP gateway for observability, on the grounds that a gateway requires host changes, breaks on streaming responses, and omits environmental context. ADR instead reconstructs MCP activity from an endpoint sensor that parses the local caches of coding agents, capturing the full chain from prompt through reasoning, tool call, and outcome.[^adr] Its two-tier detector then reasons over MCP context — querying tool source code, threat intelligence, and policy over dedicated MCP providers — to close the agent-intent gap this page names. The architectural fork is treated in depth in [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]]; the practical reading is that a gateway is one valid PEP but not the only path to MCP observability.
 
 [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] names this surface as Insecure Inter-Agent Protocol Abuse (T16): flaws in MCP and A2A such as consent-flow manipulation, MCP response injection, and tool-description exploitation. It is the first OWASP document to treat protocol-level abuse of MCP and A2A as a distinct threat rather than a general prompt-injection variant, and its tool-execution and authentication playbooks call for message authentication on inter-agent channels and signed agent cards.
 

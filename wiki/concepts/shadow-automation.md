@@ -2,7 +2,7 @@
 type: concept
 title: "Shadow Automation"
 created: 2026-04-30
-updated: 2026-07-30
+updated: 2026-09-10
 tags:
   - concepts
   - governance
@@ -25,6 +25,9 @@ related:
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[microsoft-cli-coding-agent-adoption-study]]"
   - "[[endor-labs-ai-code-governance]]"
+  - "[[falcon-guardian]]"
+  - "[[agentdesktop]]"
+  - "[[ping-enterprise-personal-agent-access]]"
 sources:
   - "[[ai-coding-agent-governance]]"
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
@@ -57,16 +60,16 @@ Shadow automation is **operationally distinct from shadow IT**:
 | L1 | None — every agent is shadow |
 | L2 | Manual inventory in spreadsheet; reactive |
 | L3 | Agent registry; new-agent gate at deployment time |
-| L4 | Active discovery (Okta ISPM Agent Discovery, Microsoft Agent 365 Registry); orphan-agent reaper; CI/CD blocks unregistered agents |
+| L4 | Active discovery across identity (Okta, Microsoft), endpoint ([[falcon-guardian\|Falcon Guardian]]) and desktop ([[agentdesktop\|agentdesktop]]); orphan reaper; CI/CD blocks unregistered agents |
 | L5 | Closed-loop: every detected unsanctioned agent triggers a governance ticket within an SLA; zero-shadow-agent-quarter as a measurable program metric |
 
 ## Defensive primitives
 
 - **Agent inventory + registration** (D2 of the CMM)
-- **Shadow-agent discovery** via identity-provider telemetry (Okta ISPM, Microsoft Agent 365 Discovery)
+- **Shadow-agent discovery** from three vantage points, which see different populations: identity-provider telemetry (Okta ISPM, Microsoft Agent 365 Discovery, [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]] discovery); endpoint process telemetry ([[falcon-guardian|CrowdStrike Falcon Guardian]], which enumerates agents running on Windows, macOS and Linux and records each one's deployment source and user); and harness-configuration inventory on the desktop ([[agentdesktop|agentdesktop]], which reads the agent settings and MCP servers a developer's own tools declare). An agent that authenticates to no directory is invisible to the first and visible to the other two.
 - **Egress filtering** to known LLM endpoints + per-agent token validation (D5)
 - **CI/CD policy gate** that blocks unregistered agent identities from pushing code or deploying (D3)
-- **Decision-rights matrix** per agent type (see [[decision-rights|Decision Rights for AI Agents]]) so registration is not just "we know it exists" but "we know what it's allowed to do and who approves it"
+- **Decision-rights matrix** per agent type (see [[decision-rights|Decision Rights for AI Agents]]), so registration records what an agent may do and who approved it, beyond the bare fact of its existence
 
 ## Comply-or-explain (vs comply-or-die)
 
@@ -80,7 +83,7 @@ The procurement chokepoint (the catalog) becomes the carrot; the comply-or-expla
 ## Relations
 
 - Coined / popularized by: [[knostic|Knostic]] (see [[ai-coding-agent-governance|AI Coding Agent Governance (Knostic, 2025–2026)]])
-- Sibling concept: [[decision-rights|Decision Rights for AI Agents]] — the missing piece without which "we have an agent inventory" is still not governance
+- Sibling concept: [[decision-rights|Decision Rights for AI Agents]] — the piece that turns "we have an agent inventory" into governance, by adding who approves what
 - Defensive context: [[non-human-identity|Non-Human Identity (NHI)]], [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] D2 + D3 + D9
 - Measured diffusion rate: [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] reads [[microsoft-cli-coding-agent-adoption-study|Microsoft's adoption study]] as putting a coefficient on this concept — adoption spreads along reporting lines faster than an enumeration-first governance program can run, which makes shadow automation the default state rather than a failure mode.
 

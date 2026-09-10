@@ -2,7 +2,7 @@
 type: practice
 title: "Supply Chain Security for Agentic AI"
 created: 2026-04-30
-updated: 2026-08-17
+updated: 2026-09-10
 tags:
   - practices
   - supply-chain
@@ -29,6 +29,7 @@ related:
   - "[[openai-hugging-face-agent-incident]]"
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[artifactory]]"
+  - "[[jfrog]]"
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
@@ -85,6 +86,7 @@ The control is per-workload write scoping: default workload identities to read-o
 
 ```
 Registry publish time  →  Registry scan (Aguara Watch)
+Agent resolution time  →  Forced resolution through a controlled registry (JFrog Agent Package Resolution + Agent Guard)
 Install time           →  Pre-install scan (SecureClaw)
 Post-install           →  Checksum verification + baseline
 Continuous             →  File integrity monitoring (FIM for cognitive files)
@@ -94,6 +96,10 @@ Continuous             →  File integrity monitoring (FIM for cognitive files)
 - **Aguara Watch** (Oktsec): monitors 5 skill registries daily; flags malicious indicators before skills become installable.
 - **ClawHub Code Insight** (official registry): built-in scanner; tension exists between flagging legitimate security tools that modify system files and actual malicious skills.
 - Bidirectional intelligence flow: runtime security detections feed back into pre-install rules.
+
+### Layer 1b: resolution-time control on the agent's own fetch
+
+Every layer above assumes a human decides what to install. A coding agent resolves its own dependencies, and [[jfrog|JFrog]] states that AI coding agents bypass safety configuration to complete a task, so the control point moves to the resolution itself. JFrog's September 2026 platform extension routes an agent's package resolution through [[artifactory|Artifactory]] and blocks direct reads of public registries at the network layer through traffic-controller partnerships, while Agent Guard enforces project-scoped allow and deny policies inside the developer's IDE before an agent consumes an MCP server or a tool. It also applies semantic analysis to the Markdown files, skill scripts and instruction sets carried by MCP servers, models, skills and plugins, which is a scanning target the indicator- and typosquat-based checks above do not cover. JFrog states the capabilities were available on announcement and publishes no detection rate for the semantic analysis.
 
 ### Layer 2: Pre-Install Scanning
 Before installing any skill/plugin:
@@ -146,7 +152,7 @@ See [[ai-bom|AI-BOM: AI Bill of Materials]] for the dedicated page on this contr
 
 1. **Immediately**: do not install skills or plugins without pre-install scanning. Establish `checksums.json` verification.
 2. **Before scaling**: deploy cognitive file integrity monitoring; establish SHA-256 baselines at deployment.
-3. **At organizational scale**: implement [[ai-bom|AI-BOM]]; integrate with the existing SBOM workflow; feed to SIEM. Inventory which non-human workload identities hold write access to internal artifact repositories, and scope those writes per run or revoke them.
+3. **At organizational scale**: implement [[ai-bom|AI-BOM]]; integrate with the existing SBOM workflow; feed to SIEM. Inventory which non-human workload identities hold write access to internal artifact repositories, and route agent-initiated package resolution through the controlled registry rather than leaving agents able to reach public registries directly. Scope those writes per run or revoke them.
 4. **Continuous**: monitor registries with tools like Aguara Watch; receive IOC updates.
 
 ## Key references

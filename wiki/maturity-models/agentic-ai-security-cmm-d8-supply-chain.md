@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-09-01
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -37,6 +37,7 @@ related:
   - "[[endor-labs-ai-code-governance]]"
   - "[[openai-hugging-face-agent-incident]]"
   - "[[artifactory]]"
+  - "[[jfrog]]"
   - "[[owasp-ai-exchange]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[agentic-ai-security-cmm-measurement-protocol]]"
@@ -99,7 +100,7 @@ The development-environment half of that finding now has a normative source alon
 | Dependency / SCA scanning + AI-dep remediation | Snyk, Black Duck, Wiz | GA | **MS/GitHub:** GHAS + Dependabot GA; Dependabot alerts assignable to AI agents for auto-fix (Apr 2026)[^dependabot]. AWS Inspector; GCP Artifact Analysis |
 | Slopsquatting defense | hash-pinned lockfiles (`npm ci`-class); private-registry allowlisting | GA technique | all three CI systems enforce lockfiles; **no major registry flags LLM-hallucinated names at publish time — an ecosystem gap**[^slop] |
 | Malicious-model scanning | JFrog, ReversingLabs (Pickle / backdoor detection) | GA (COTS)[^jfrog] | not first-party-native; HF-side + COTS |
-| MCP server / skill provenance | Official MCP Registry — namespace auth; third-party security-skill packs distributed for coding agents[^semgrep] | **preview; no cryptographic name-to-binary signing in the spec**[^mcpreg]; the skill half of the row now has a populated acquisition channel and no signing over it | MS publish path; no single Azure service for MCP-specific protection |
+| MCP server / skill provenance | Official MCP Registry — namespace auth; third-party security-skill packs[^semgrep]; [[jfrog\|JFrog]] Agent Package Manager registry and AI Asset Scanning (MCP/skill semantic scan)[^jfrog-agentsecops] | **preview; no cryptographic name-to-binary signing in the spec**[^mcpreg]; skill acquisition now has a populated channel and, since Sept 2026, a named COTS pre-install scan — still no signing | MS publish path; no single Azure service for MCP-specific protection |
 | Runtime AI-BOM (reconciliation) | Miggo DeepTracing | newly GA (≈2 months past launch)[^miggo] | vendor platform, not hyperscaler-native |
 
 Three corrections apply to the D8 rungs as the CMM currently states them. First, CycloneDX ML-BOM has been stable since v1.5 and **v1.7 is current**, so a pinned version dates the criterion and the capability form ("a CycloneDX or SPDX-3.0 ML-BOM") is the durable one. Second, **SLSA Level 4 does not exist in SLSA v1.0** (the Build Track is L1–L3), so the current L5+ "SLSA Level 4" criterion references deprecated numbering and belongs at research-stage. Third, **GitHub Artifact Attestations (GA; SLSA L2 free, L3 via reusable workflows) is the platform-native build-integrity path the current D8 omits**.
@@ -111,6 +112,8 @@ The federal anchor for this domain, [[nist-sp-800-218a|NIST SP 800-218A]], requi
 Of the domains [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI standards review]] assessed, the [[google-saif|SAIF]] / [[cosai|CoSAI]] pair covers D8 most completely: CoSAI WS1 (Software Supply Chain Security for AI Systems) ships Establish Risks and Controls for the AI Supply Chain (2025-06-25) and Signing ML Artifacts (2025-09-29, SLSA-based, building "tamper-proof ML metadata records"), and SAIF supplies Model and Data Inventory Management, Model and Data Integrity Management, and Secure-by-Default ML Tooling. That review also confirmed neither instrument mandates a named AI-BOM artifact with required fields — Signing ML Artifacts builds provenance metadata, not a BOM schema — so the AI-BOM grading below remains this domain's net-new contribution.
 
 The skill half of the provenance row now has a populated acquisition channel. Semgrep's July 2026 survey records four third-party security-skill sets, three of them naming a host agent: [[trail-of-bits-skills|Trail of Bits' plugin marketplace]] under CC-BY-SA, for Claude Code and Codex; [[cloudflare|Cloudflare]]'s [[security-audit-skill|security-audit-skill]] under MIT, a Claude Code skill; Capital One's `vulnhunter` under Apache 2.0, optimized for Claude Code; and Google's `mantis` under Apache 2.0, with no host agent named.[^semgrep] The L3 pre-install scan below therefore runs against instruction packs a security team installs by choice, and no registry in that channel carries cryptographic name-to-binary signing, so that criterion is graded on registry provenance and the scan alone. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the per-project comparison.
+
+[[jfrog|JFrog]]'s September 2026 AgentSecOps extension supplies the first named vendor implementation of that scan: AI Asset Scanning applies semantic analysis to MCP server code, Markdown files, skill scripts and instruction sets and blocks an asset it judges malicious before install, and an Agent Package Manager registry — built against Microsoft's open-source APM standard — adds a second curated acquisition channel alongside the Official MCP Registry. Neither closes the cryptographic name-to-binary signing gap, and JFrog publishes no detection rate for the semantic analysis, so the L3 criterion still grades on registry provenance and the scan's existence rather than a measured false-negative rate. [[jfrog|JFrog]]'s page carries the remaining AgentSecOps capabilities — Agent Package Resolution and Agent Guard — which route and gate an agent's dependency fetches rather than scan acquired artifacts.
 
 ## Capability-decoupled levels
 
@@ -185,7 +188,7 @@ For an E5 + GitHub-Enterprise incumbent, licensing is near-zero through L3 and l
 ## Open questions
 
 - Runtime AI-BOM (Miggo) launched in March 2026 and carries no independent deployment evidence. Runtime reconciliation stays L4-aspirational until that evidence exists.
-- The MCP Registry gives namespace provenance only; no name-to-binary signing exists, so the MCP-provider L5+ rung references a capability that does not yet ship.
+- The MCP Registry gives namespace provenance only; no name-to-binary signing exists on it or on [[jfrog|JFrog]]'s September 2026 Agent Package Manager registry, so the MCP-provider L5+ rung references a capability that does not yet ship.
 - No GA hyperscaler-native ML-BOM generator exists; consumers rely on OSS or COTS.
 - SLSA v1.0 has no L4 and no model-specific track; reproducible builds for stochastic weights are unsolved.
 - No major registry flags LLM-hallucinated package names at publish time — an ecosystem gap; the buyer-side control is lockfile plus allowlist.
@@ -211,6 +214,7 @@ D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 
 [^dependabot]: [GitHub changelog — Dependabot alerts assignable to AI agents for remediation](https://github.blog/changelog/2026-04-07-dependabot-alerts-are-now-assignable-to-ai-agents-for-remediation/), 2026.
 [^slop]: [Spracklen et al. — package hallucination ("slopsquatting") research](https://arxiv.org/pdf/2501.19012), 2025. ~20% hallucinated-package rate; 43% recurring.
 [^jfrog]: [JFrog — Detect malicious AI models](https://docs.jfrog.com/security/docs/detect-malicious-ai-models), 2026. Pickle / backdoor detection.
+[^jfrog-agentsecops]: [[jfrog|JFrog]], AgentSecOps, announced at swampUP 2026 (2026-09-02). AI Asset Scanning (semantic analysis of MCP server code, Markdown files, skill scripts and instruction sets), Agent Package Resolution, Agent Guard, and an Agent Package Manager registry built against Microsoft's open-source APM standard. No pricing or semantic-analysis detection rate disclosed. See [[jfrog|JFrog]] §AgentSecOps and [[artifactory|JFrog Artifactory]] §Agent artifact scope.
 [^mcpreg]: [Model Context Protocol — official registry](https://modelcontextprotocol.io/registry/about), 2026. Namespace-level provenance; no cryptographic name-to-binary signing.
 [^miggo]: [Miggo Security — runtime AI-BOM, agentic detection, MCP monitoring](https://securityboulevard.com/2026/03/miggo-security-expands-runtime-defense-platform-with-ai-bom-agentic-detection-and-mcp-monitoring/), 2026. DeepTracing launch (Mar 2026).
 [^aix-testing]: [OWASP AI Exchange — AI security testing](https://owaspai.org/go/testing/), retrieved 2026-08-19. Document 5, agentic red-teaming exercise paths: the supply-chain scenario names substituted model variants and tampered tool implementations that bypass output filtering.

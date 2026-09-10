@@ -4,7 +4,7 @@ entity_type: product
 title: "Okta for AI Agents"
 homepage: "https://www.okta.com"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-09-10
 tags:
   - products
   - identity
@@ -24,6 +24,8 @@ related:
   - "[[spiffe]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[crowdstrike-agentic-identity-provider]]"
+  - "[[ping-enterprise-personal-agent-access]]"
 sources:
   - "https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/"
 ---
@@ -72,11 +74,12 @@ The enterprise recommended stack in the RA pairs Okta for AI Agents with **Cyber
 | Lifecycle automation | Okta Workflows | Microsoft Entra lifecycle workflows |
 | Shadow agent detection | Okta Agent Discovery | Agent 365 discovery scope |
 
-Both products converged on the same fundamental architecture (scoped OAuth 2.1 tokens + lifecycle governance) in the same product cycle, reflecting industry consensus on what agent identity management requires — though Entra Agent ID reached GA first while Okta for AI Agents remains in Early Access.
+Both products converged on the same fundamental architecture (scoped OAuth 2.1 tokens + lifecycle governance) in the same product cycle, suggesting convergence on what agent identity management requires — though Entra Agent ID reached GA first while Okta for AI Agents remains in Early Access.
+
+Two further entrants arrived in September 2026 on the same architecture: [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]], announced September 2 from the endpoint-security market and stated to be in development, and [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]], announced September 1 by an established IAM vendor and stated to be available. CrowdStrike positions its product to work alongside Okta, citing the modern privileged access for AWS it shipped through Okta earlier in 2026.
 
 ## CMM positioning
 
 In the [[agentic-ai-security-cmm-2026|CMM]], Okta for AI Agents is a D2 (Identity & Authorization) domain reference implementation. Organizations adopting it reach at minimum **L3 CMM** on the identity maturity track: per-agent identity (not shared service account), programmatic lifecycle management, and access reviews for agent credentials.
 
-> [!gap]
-> Okta for AI Agents' published integration patterns focus on Okta-as-IdP deployments. Guidance for federating Okta agent identities with SPIFFE/SPIRE (for workload-level identity at the infrastructure layer) or with third-party MCP servers via agent-scoped tokens is not yet publicly documented.
+Okta for AI Agents' published integration patterns focus on Okta-as-IdP deployments. Guidance for federating Okta agent identities with [[spiffe|SPIFFE]]/SPIRE for workload-level identity at the infrastructure layer, or with third-party MCP servers via agent-scoped tokens, is not yet publicly documented.

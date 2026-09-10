@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D5: Egress and Network"
 address: c-000127
 created: 2026-05-25
-updated: 2026-09-06
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -17,6 +17,7 @@ scope_axis:
   - sec-of-ai
 related:
   - "[[kimi-k3-sandbox-escape|Kimi K3 Sandbox Escape]]"
+  - "[[solo-io|Solo.io]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-recalibration-method-2026]]"
   - "[[agentic-ai-security-cmm-dependency-rules]]"

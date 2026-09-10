@@ -31,6 +31,9 @@ related:
   - "[[tiered-detection-cascade|Tiered Detection Cascade]]"
   - "[[llm-as-a-judge|LLM-as-a-Judge]]"
   - "[[agentic-ai-security-cmm-d7-observability|CMM D7 Observability]]"
+  - "[[falcon-guardian]]"
+  - "[[context-aware-trimming|Context-Aware Trimming for Security Continuity]]"
+  - "[[cognitive-file-integrity|Cognitive File Integrity (CFI)]]"
   - "[[agentic-ai-security-cmm-d2-identity|CMM D2 Identity]]"
   - "[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 Control and Least Agency]]"
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 Runtime and Guardrails]]"
@@ -63,6 +66,8 @@ Traditional EDR sees processes, but fails to distinguish if a shell command was 
 **Second implementation — Numbat.** [[numbat|Numbat]] ([[perplexity|Perplexity]], July 2026) takes the same route and open-sources it: session artifacts read from the harness dot-directory under `$HOME`, normalized to NDJSON timelines, across Claude Code, Codex, OpenCode, and Pi. Neither announcement cites the other, so the relationship between the two efforts is unknown. What the pair establishes is that filesystem artifact parsing is now a twice-implemented production technique — once at 7,200+ hosts over ten months,[^adr] once across Perplexity's own fleet, reported only as "thousands of endpoints" — rather than one organization's workaround.
 
 Numbat combines the artifact route with the two this page treats separately, running lifecycle hooks for real-time blocking and a local OTLP receiver for fleet telemetry in the same binary. Both artifact-parsing implementations offer what neither hooks nor a gateway can: reconstruction of sessions that ran before the tooling was installed, because the artifacts are static self-contained records rather than a live stream.
+
+**Third implementation, mechanism unpublished — Falcon Guardian.** [[falcon-guardian|CrowdStrike Falcon Guardian]] (September 2026) states that it links a user prompt to the agent's skill use, its tool calls, its MCP server invocations and the downstream system actions taken on the agent's behalf, and that the Falcon sensor discovers the agents it reports on. That is the intent-attribution gap this section opens with, claimed closed by an EDR vendor rather than around one. CrowdStrike publishes no mechanism, so which route it takes — lifecycle hooks, artifact parsing, or sensor-level process tracing — is not established, and the claim cannot be placed on the fork [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]] draws.
 
 ### 2. Standardizing Telemetry with OpenTelemetry (OTel) — D7 L3
 
@@ -143,7 +148,7 @@ warrant:
 
 ### 5. Context-Aware Trimming — no dedicated rung
 
-A common observability failure occurs when a long-running agent fills its context window and drops older, critical security logs. Tagging messages by type (`SSRF_BLOCKED`, `PERMISSION_DENIED`) and pinning those tags against trimming keeps them in context as general log volume grows, so the agent and forensic investigators retain a full history of security events.
+A common observability failure occurs when a long-running agent fills its context window and drops older, critical security logs. [[context-aware-trimming|Context-aware trimming]] tags messages by type (`SSRF_BLOCKED`, `PERMISSION_DENIED`) and pins those tags against trimming, keeping them in context as general log volume grows, so the agent and forensic investigators retain a full history of security events.
 
 ### 6. Building "Internal EDR" (Glass-Box Pillars) — D7 L5+
 
@@ -198,7 +203,7 @@ SecureClaw's design principle runs all detection logic as **external bash proces
 
 ### 10. Cognitive File Integrity Monitoring — D8 L4
 
-Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized changes to critical files. For AI agents, this extends to **cognitive identity files**: SOUL.md, IDENTITY.md, and similar files that define the agent's behavioral rules, persona, and operational constraints.
+Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized changes to critical files. For AI agents, this extends to **[[cognitive-file-integrity|cognitive identity files]]**: SOUL.md, IDENTITY.md, and similar files that define the agent's behavioral rules, persona, and operational constraints.
 
 - Deployment establishes SHA-256 baselines for all cognitive files.
 - Drift alerts fire on cognitive-file changes with no authorized update event behind them.

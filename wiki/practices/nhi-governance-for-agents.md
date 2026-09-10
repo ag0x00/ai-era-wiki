@@ -3,7 +3,7 @@ type: practice
 title: "NHI Governance for AI Agents"
 address: c-000189
 created: 2026-04-30
-updated: 2026-06-03
+updated: 2026-09-10
 tags:
   - practices
   - identity
@@ -29,6 +29,8 @@ related:
   - "[[tenuo-warrant]]"
   - "[[shadow-automation]]"
   - "[[owasp-state-of-agentic-ai-security-governance]]"
+  - "[[falcon-guardian]]"
+  - "[[agentdesktop]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[what-are-non-human-identities]]"
@@ -60,7 +62,7 @@ sources:
 Enumerate every service account, API key, JWT, OAuth token, and certificate assigned to agents, and tag each with owning agent, purpose, creation date, and expiry. Two refinements distinguish a mature inventory:
 
 - **Distinguish coupled from decoupled credentials** ([[identity-credential-coupling|identity-credential coupling]]). Coupled classes (SAS tokens, storage access keys, SaaS API keys) rotate as identity rotation and need a separate migration track.
-- **Find the agents you did not enroll.** Shadow-agent discovery is now a platform feature: the [[microsoft-entra-agent-id|Agent 365 Registry]] and [[okta-for-ai-agents|Okta Agent Discovery]] both surface agents not explicitly registered. Ungoverned agents at developer pace are the [[shadow-automation|shadow automation]] problem.
+- **Find the agents that were never enrolled.** Shadow-agent discovery is now a platform feature at three vantage points: the [[microsoft-entra-agent-id|Agent 365 Registry]] and [[okta-for-ai-agents|Okta Agent Discovery]] surface agents from identity telemetry, [[falcon-guardian|CrowdStrike Falcon Guardian]] enumerates them from endpoint process telemetry, and [[agentdesktop|agentdesktop]] reads the harness configuration on a developer's machine. The last two reach agents that authenticate to no directory. Ungoverned agents at developer pace are the [[shadow-automation|shadow automation]] problem.
 
 ### 2. Adopt workload identity for internal calls — D2 L3
 
@@ -78,13 +80,13 @@ For external service access (SaaS APIs, external MCP servers), retrieve short-li
 
 ### 5. Trace every action to a human — D2 L3 (audit at D8)
 
-Log every action alongside the agent identity and the triggering context (human instruction versus autonomous decision); this feeds [[agent-observability|Agent Observability]] and forensic attribution. The accountability primitive has matured into a named human owner: Entra Agent ID **sponsors** bind each agent to a person whose accountability transfers automatically to their manager on departure, [[microsoft-entra-agent-id|Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The standards gap — capturing the *delegation chain* at the protocol layer, not only in audit logs — is the subject of the NIST CAISI Concept Paper's OAuth 2.1 / OIDC extensions and is met cryptographically by a warrant's embedded chain.
+Log every action alongside the agent identity and the triggering context (human instruction versus autonomous decision); this feeds [[agent-observability|Agent Observability]] and forensic attribution. The accountability primitive has matured into a named human owner: Entra Agent ID **sponsors** bind each agent to a person whose accountability transfers automatically to their manager on departure, [[microsoft-entra-agent-id|Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The standards gap — extending *delegation chain* capture from audit logs to the protocol layer — is the subject of the NIST CAISI Concept Paper's OAuth 2.1 / OIDC extensions and is met cryptographically by a warrant's embedded chain.
 
 ### 6. Automate rotation and revocation — D2 L4
 
 Short-lived credentials (JWTs, short-TTL API keys) shrink the exposure window. Test revocation: know how long it takes from "agent compromised" to "all credentials revoked." **Map dependencies before rotating** — per [[what-are-non-human-identities|Oasis Security]], "where rotation is operationally risky, invest in dependency mapping to understand what will break before making changes." Without a per-credential consumer graph, automated rotation breaks production, acutely so for [[identity-credential-coupling|coupled credentials]] where rotation is identity rotation.
 
-### 7. Bind the lifecycle to code-pace, not HR-pace — D2 L3
+### 7. Bind the lifecycle to code-pace — D2 L3
 
 Legacy IAM is built around HR-driven joiner/mover/leaver events. NHIs have no HR events; they have code commits and deploys, and that mismatch is why legacy IAM and PAM fail for them at scale ([[what-are-non-human-identities|Oasis Security]]). Bind the NHI lifecycle to the deploy pipeline instead:
 
@@ -109,4 +111,4 @@ Most credential incidents involving AI agents trace to over-provisioning, stale 
 
 ## Mapping to the CMM
 
-The seven steps above are the practitioner view of the [[agentic-ai-security-cmm-d2-identity|D2 Identity & Authorization]] ladder. Mapped to levels: per-agent identity + owner + deploy-pipeline lifecycle + coupled/decoupled inventory at **L3**; zero-credentials-in-context + automated rotation against a dependency map + kill switch at **L4**; a unified governance program with shadow-agent discovery and conditional access at **L5**; per-task attenuating capability tokens at **L5+**. D2-L3 is the highest-leverage rung in the whole CMM: per-agent egress policy and per-agent behavioral baselining cannot be applied below it.
+The seven steps above are the practitioner view of the [[agentic-ai-security-cmm-d2-identity|D2 Identity & Authorization]] ladder. Mapped to levels: per-agent identity + owner + deploy-pipeline lifecycle + coupled/decoupled inventory at **L3**; zero-credentials-in-context + automated rotation against a dependency map + kill switch at **L4**; a unified governance program with shadow-agent discovery and conditional access at **L5**; per-task attenuating capability tokens at **L5+**. D2-L3 raises the D5 and D7 effective-score ceilings further than any other single rung in the model: per-agent egress policy and per-agent behavioral baselining bind to the principal D2-L3 verifies, so those domains' scores cannot exceed D2's level regardless of what egress or observability controls are separately in place.

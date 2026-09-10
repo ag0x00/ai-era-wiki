@@ -3,7 +3,7 @@ type: concept
 title: "Non-Human Identity (NHI)"
 address: c-000187
 created: 2026-04-30
-updated: 2026-08-31
+updated: 2026-09-10
 tags:
   - concepts
   - identity
@@ -41,6 +41,10 @@ related:
   - "[[cyera-agent-guardian-release]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
+  - "[[crowdstrike-agentic-identity-provider]]"
+  - "[[falcon-guardian]]"
+  - "[[ping-enterprise-personal-agent-access]]"
+  - "[[agentdesktop]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[what-are-non-human-identities]]"
@@ -54,14 +58,14 @@ sources:
 
 - [[#Aliases and variants]]
 - [[#NHI taxonomy]]
-- [[#Why NHI matters for agentic AI]]
-- [[#Why human-identity controls fail for NHIs]]
+- [[#Relevance to agentic AI]]
+- [[#Failure of human-identity controls]]
 - [[#Real-world incident anchors]]
 - [[#Relationship to DSPM]]
 - [[#Governance capabilities and the platform-native landscape]]
 - [[#The per-task authority frontier]]
 - [[#Credential Zero problem]]
-- [[#Where this sits in the RA and CMM]]
+- [[#Placement in the RA and CMM]]
 
 ## Aliases and variants
 
@@ -102,7 +106,7 @@ AI agent deployments amplify the NHI problem in four ways:
 
 The combined effect is a rapidly growing NHI estate that is poorly inventoried and a high-value attack surface.
 
-[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] separates two layers the industry conflates. NHI is an authentication primitive that answers "is this credential valid?" and gates identity at session start. Agent Identity is a governance layer above it that attests provenance, intent, and authority continuously, governing behavior at the moment of each action rather than only at login. NHI is the principal a per-agent credential names; Agent Identity is what makes that principal accountable across a multi-step task. The threat both layers answer is Identity Spoofing and Impersonation (T9) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] — impersonation of agents, users, or services, and theft of a persistent agent identity.
+[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] separates two layers the industry conflates. NHI is an authentication primitive that answers "is this credential valid?" and gates identity at session start. Agent Identity is a governance layer above it that attests provenance, intent, and authority continuously, governing behavior at the moment of each action rather than only at login. NHI is the principal a per-agent credential names; Agent Identity makes that principal accountable across a multi-step task. The threat both layers answer is Identity Spoofing and Impersonation (T9) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] — impersonation of agents, users, or services, and theft of a persistent agent identity.
 
 ### Scale evidence (triangulated)
 
@@ -156,9 +160,13 @@ Insight Partners draw an analogy: **NHI vendors are to agent credentials what [[
 
 NHI governance solutions cover: discovery (machine identity inventory across cloud, SaaS, and on-prem); lifecycle management (rotation, expiry, revocation); scoped permissions (least privilege per identity, extending into Identity Security Posture Management / ISPM); and OAuth / API scope governance.
 
-The market shifted during 2026. Per-agent identity is no longer the preserve of specialist vendors: it is **GA platform-native on all three hyperscalers** — [[microsoft-entra-agent-id|Microsoft Entra Agent ID]], AWS Bedrock AgentCore identities, and GCP Agent Identity — with [[okta-for-ai-agents|Okta for AI Agents]] in Early Access. What remains a developing COTS layer is the NHI *governance* posture above bare identity: discovery of unenrolled agents, lifecycle, and least-privilege review, where [[oasis-security|Oasis Security]], Aembit, Astrix, and [[cyberark-conjur|CyberArk Conjur]] compete. Conditional Access for Agent Identities (Entra) adds risk-based step-up where the platform supports it.
+The market shifted during 2026. Per-agent identity is no longer the preserve of specialist vendors: it is **GA platform-native on all three hyperscalers** — [[microsoft-entra-agent-id|Microsoft Entra Agent ID]], AWS Bedrock AgentCore identities, and GCP Agent Identity — with [[okta-for-ai-agents|Okta for AI Agents]] in Early Access.
 
-Shadow-agent discovery — the [[microsoft-entra-agent-id|Agent 365 Registry]], Okta Agent Discovery — surfaces agents created at developer pace outside the enrollment process, addressing the [[shadow-automation|shadow automation]] (Microsoft's "agent sprawl") problem.
+A third supplier shape appeared in September 2026: security-platform incumbents outside the IdP market issuing agent identity from their own control point. [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]] registers each agent at the moment [[falcon-guardian|Falcon Guardian]] discovers it on an endpoint, and brokers short-lived scoped tokens rather than standing credentials. [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]] issues secretless just-in-time privileged access through PingOne Privilege. CrowdStrike states its product is in development; Ping states its own is available.
+
+What remains a developing COTS layer is the NHI *governance* posture above bare identity: discovery of unenrolled agents, lifecycle, and least-privilege review, where [[oasis-security|Oasis Security]], Aembit, Astrix, and [[cyberark-conjur|CyberArk Conjur]] compete. Conditional Access for Agent Identities (Entra) adds risk-based step-up where the platform supports it.
+
+Shadow-agent discovery — the [[microsoft-entra-agent-id|Agent 365 Registry]], Okta Agent Discovery, [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]] discovery, [[falcon-guardian|Falcon Guardian]] endpoint discovery, and [[agentdesktop|agentdesktop]] desktop inventory — surfaces agents created at developer pace outside the enrollment process, addressing the [[shadow-automation|shadow automation]] (Microsoft's "agent sprawl") problem.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] framework extends the Zero Trust principles — verify explicitly, least privilege, assume breach — to these machine identities, with [[microsoft-entra-agent-id|Entra Agent ID]] as the per-agent identity anchor (see [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]).
 
