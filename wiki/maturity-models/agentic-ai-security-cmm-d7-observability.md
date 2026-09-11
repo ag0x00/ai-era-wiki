@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D7: Observability and Detection"
 address: c-000128
 created: 2026-05-25
-updated: 2026-08-31
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -60,7 +60,7 @@ sources:
 
 Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D7 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. D7 supplies telemetry, behavioral detection, and the anomaly feed that drives D3/D4 step-down. The detective half of [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] lands here: D7 is where threats that only become visible through monitoring are caught — Memory Poisoning (T1), Repudiation and Untraceability (T8, addressed by immutable per-agent logging), and the multi-agent threats Agent Communication Poisoning (T12), Rogue Agents (T13), Human Attacks on Multi-Agent Systems (T14), and Human Manipulation (T15), whose Playbook 6 (multi-agent communication and trust) specifies message authentication and cross-agent anomaly detection.
 
-Two facts shape the whole domain. The standard telemetry layer (OpenTelemetry GenAI) is not yet stable. And **agent logs run roughly 10–20× human volume into the SIEM**, so D7 cost scales with agent count and not with control coverage.
+Two facts shape the whole domain: the standard telemetry layer (OpenTelemetry GenAI) is not yet stable, and **agent logs run roughly 10–20× human volume into the SIEM**, so D7 cost scales with agent count rather than with control coverage.
 
 Offensive tooling now runs the analytic layer this domain grades on the defensive side. In the [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]], a two-layer Bayesian model scored individual findings and then chained attack paths across the mesh, and a self-correction loop discarded 7 false positives mid-operation.[^taiwan]
 
@@ -88,7 +88,7 @@ Memory poisoning reaches D7 through the write, and the write is only visible whe
 | Reasoning-trace (chain-of-thought) monitoring | fleet-scale review of agent reasoning against stated scope; Google SecOps pairs an [[llm-as-a-judge\|LLM-as-a-judge]] check with statistical models | **emerging** — evidence in an investigation, not a firing detection[^bhoaihf] | none named | none named | Agent Anomaly Detection (preview) |
 | Forward-pass / activation monitoring | mechanistic-interp activation monitoring | **research-grade, pre-launch** | none | none | none |
 
-The recalibration corrects two things in the current D7 tooling presentation. It adds the OTel-not-stable caveat at L3. And it re-grades the Microsoft-native behavioral detector (Defender XDR AI-agent detection) as preview and Agent 365-licensed, mirroring the D4 "L4 looks GA but isn't" correction. Google SecOps adds a second platform-native behavioral detector, Agent Anomaly Detection, which pairs statistical models with an [[llm-as-a-judge|LLM-as-a-judge]] check on agent reasoning (preview; see [[google-agentic-soc|Google Agentic SOC]]).
+The recalibration corrects two things in the current D7 tooling presentation. It adds the OTel-not-stable caveat at L3, and it re-grades the Microsoft-native behavioral detector (Defender XDR AI-agent detection) as preview and Agent 365-licensed, mirroring the D4 "L4 looks GA but isn't" correction. Google SecOps adds a second platform-native behavioral detector, Agent Anomaly Detection, which pairs statistical models with an [[llm-as-a-judge|LLM-as-a-judge]] check on agent reasoning (preview; see [[google-agentic-soc|Google Agentic SOC]]).
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Visibility / Orchestration pillar (assume breach) supplies the Microsoft-native detection and SOC controls behind these rungs — Defender XDR AI-agent detection and the Sentinel agentic-SOC tooling — crosswalked to D7 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which records the same preview status. Above those controls, [[microsoft-entra-agent-id|Agent 365]]'s `observe` layer — the [[agent-catalog|agent registry]], Registry sync (including cross-cloud agents), and the Agent Map — is its strongest native D7 contribution: an agent-inventory and telemetry surface that aggregates the underlying detections rather than replacing them. The inventory-versus-detection distinction, and the absence-claim that the `observe` layer inventories but does not verify supply-chain integrity (no AI-BOM), are set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]].
 
@@ -96,7 +96,7 @@ Cyera states that Agent Guardian counts behavioral baselines among its inputs, t
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No agent-specific telemetry; only the vendor console.
 - **L2 — Developing.** A tool-call audit log records action history with user attribution.
@@ -135,7 +135,7 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 - **Per-agent identity multiplexing of logs**, so every action traces to an agent identity and the invoking human.
 - **A minimum action-log schema over tool calls and memory writes.** Every tool call and every write to a persistent or shared agent memory meets a minimum action-log schema carrying writer identity, session, target partition, timestamp, and a recoverable rollback reference.
 - **Sandbox escape indicators forwarded.** Where an execution sandbox is deployed under [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]], its escape indicators — denied syscalls, forbidden filesystem paths, and non-permitted network connections — reach the same backend as the application spans ([[owasp-ai-exchange|OWASP AI Exchange]]).[^aix-sandbox] A deployment that runs no sandbox scores this criterion not applicable.
-- **Ingest poisoning-scan alerts forwarded.** Where a corpus ingest poisoning scan runs under [[agentic-ai-security-cmm-d6-data-rag|D6]] L3, the alerts its lower threshold raises — the samples flagged for investigation rather than filtered out of the corpus — reach the same backend as the application spans, carrying the corpus, the ingest run, and the sample reference that produced them.[^aix-dataqualitycontrol] A deployment that ingests no corpus scores this criterion not applicable. The ingest pipeline is a write path the tool-call and memory-write schema above does not cover, and an alert that stays inside the scan is a detection no analyst sees.
+- **Ingest poisoning-scan alerts forwarded.** Where a corpus ingest poisoning scan runs under [[agentic-ai-security-cmm-d6-data-rag|D6]] L3, the alerts its lower threshold raises — the samples flagged for investigation rather than filtered out of the corpus — reach the same backend as the application spans, carrying the corpus, the ingest run, and the sample reference that produced them.[^aix-dataqualitycontrol] A deployment that ingests no corpus scores this criterion not applicable, as does one that ingests a corpus and runs no such scan; the scan is graded at D6 L3, and its absence is a finding there rather than here. The ingest pipeline is a write path the tool-call and memory-write schema above does not cover, and an alert that stays inside the scan is a detection no analyst sees.
 - **The semantic-convention version pinned.** The `gen_ai.*` convention the spans are emitted under is pinned to a stated version in the collector or SDK configuration, so a convention bump cannot silently break the detection rules built on those field names.
 
 The convention underneath is experimental, which is why the pin is graded at all: the field names an L4 detection rule reads can change between releases of a specification that has not stabilized.

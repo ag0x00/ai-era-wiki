@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-08-31
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -56,7 +56,7 @@ Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D1 domain, wri
 
 ## Threat coverage
 
-D1 is the accountability wrapper, so its threats are cross-cutting rather than a single ASI category; it is the only domain that addresses **Class 5 (jurisdictional adversary)** — vendor abstraction, jurisdiction tagging, and contract resilience against a regulatory cutoff, the one threat no technical plane control mitigates. The full mapping is in the [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] matrix; the class detail is on the [[agentic-ai-threat-classes-2026|threat-classes page]].
+D1 wraps the other eight domains in accountability, so its threats cut across them rather than falling into a single ASI category. It is the primary domain for **Class 5 (jurisdictional adversary)** — vendor abstraction, jurisdiction tagging, and contract resilience against a regulatory cutoff, the one threat no technical plane control mitigates. The [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] matrix resolves that class to this domain and [[agentic-ai-security-cmm-d9-operations|D9]] alone, which carries the vendor-cutoff playbook; the class detail is on the [[agentic-ai-threat-classes-2026|threat-classes page]].
 
 ## Control landscape (dated)
 
@@ -84,7 +84,7 @@ Cyera's Discover phase is a vendor example of the inventory half of the decision
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No accountable owner; agents deploy without governance review.
 - **L2 — Developing.** A named accountable owner holds the role; an AI-use policy is published; an agent risk-tier scheme exists; a signed RACI assigns ownership, covering at least the responsibility types the Exchange gives as examples — model accountability, data accountability, and risk governance ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)).
@@ -140,7 +140,7 @@ Most enterprises land at **L4 with selective L5** in the domains tied to their e
 
 ## Cost model
 
-Governance is labor-heavy, and for an incumbent the licensing line is the smallest of the three cost lines below.
+Governance is labor-heavy, and for an incumbent the licensing line stays near zero until the L5 certification audit.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
@@ -150,11 +150,11 @@ Governance is labor-heavy, and for an incumbent the licensing line is the smalle
 | L5 (ISO 42001 path) | certification audit + optional consulting | the dominant cost: internal hours to build and sustain the management system, plus annual surveillance | — |
 | L5 (AIUC-1 path) | certification fee (not publicly listed) | heavier recurring labor than ISO's annual surveillance, because the certificate is re-tested on a quarterly cadence | — |
 
-**The spend is governance labor and the certification-evidence treadmill.** Tools are the small line. A buyer choosing the AIUC-1 path inherits a quarterly re-test cycle; the ISO 42001 path runs on annual surveillance. Both are recurring labor. Price the recurring rhythm as well as the first audit.
+**The spend is governance labor and the certification-evidence treadmill.** A buyer choosing the AIUC-1 path inherits a quarterly re-test cycle; the ISO 42001 path runs on annual surveillance. Both recur, so price the recurring rhythm as well as the first audit.
 
 ## Customer critiques folded in
 
-- *"L5 is unreachable because it names a just-GA'd certification we can't procure in time."* Addressed: L5 is scheme-neutral and the production-maturity qualifier applies. Assurance "via a scheme in your approved-vendor pipeline with a documented production date" satisfies it.
+- *"L5 is unreachable because it names a just-GA'd certification we can't procure in time."* Addressed: L5 is scheme-neutral, and the production-maturity qualifier in the ladder preamble applies — a scheme in the organization's approved-vendor pipeline with a documented production date satisfies the certification criterion.
 - *"A single-certifier mandate is a concentration risk and reads as a vendor play."* Addressed: AIUC-1 is demoted to one option among several, with ISO 42001 preferred. Full reasoning in [[aiuc-1-critical-evaluation|the evaluation]].
 - *"Cost is under-told."* Addressed: the cost model names labor and the evidence treadmill as the real spend, and marks licensing as near-zero for incumbents.
 - *"Authority to certify is itself contested."* Acknowledged but out of scope here. The wiki records the assurance-scheme landscape; an organization preparing for a regulator should map D1 to its examiner's expectations via the forthcoming FFIEC/GLBA crosswalk.

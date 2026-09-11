@@ -87,7 +87,7 @@ Two September 2026 announcements supply further vendor examples against rungs th
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** Agents share human credentials or service accounts; no inventory.
 - **L2 — Developing.** Agents hold distinct non-human identities in a manual inventory; delegation runs only through the human user.
@@ -104,11 +104,20 @@ Per-task holder-bound capability tokens leave L5 for L5+, the one structural mov
 
 ## Assessor detail per level
 
-L1, L2, L3, L5, and L5+ are graded from their statements above. L4 carries criteria an assessor checks item by item.
+L1, L2, L5, and L5+ are graded from their statements above. The two rungs below carry criteria an assessor checks item by item, each list stating what its own rung adds.
 
 Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
 
 Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists and no available evidence settles the question; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
+
+### L3 detail
+
+- **Verifiable, attested per-agent identity.** A platform-native agent identity (Entra Agent ID, AWS AgentCore workload identity, GCP Agent Identity) or a SPIFFE workload ID identifies the agent, and no agent runs under a shared human or service-account credential.
+- **OAuth 2.1 token exchange for delegation.** Every delegation hop is a token-exchange flow rather than a copied or shared credential.
+- **Pipeline-bound NHI lifecycle.** The identity's issue, rotation, and revocation bind to the deploy pipeline, not to HR joiner/mover/leaver events.
+- **Coupled/decoupled credential inventory.** The identity inventory distinguishes coupled from decoupled credentials ([[identity-credential-coupling|identity-credential coupling]]).
+- **A human owner per NHI.** Every non-human identity carries a named, current human owner.
+- **Human traceability.** Every action the identity takes traces back to the human accountable for it.
 
 ### L4 detail
 

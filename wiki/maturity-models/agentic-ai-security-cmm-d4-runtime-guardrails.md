@@ -87,7 +87,7 @@ The [[microsoft-zt4ai|Microsoft ZT4AI]] Apps & Workloads pillar (assume breach) 
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No runtime guardrails, or only system-prompt instructions. No enforcement boundary.
 - **L2 — Developing.** A default safety filter runs on input and a content-safety classifier on output. Single-layer, no agentic-reasoning coverage. Universally reachable GA.

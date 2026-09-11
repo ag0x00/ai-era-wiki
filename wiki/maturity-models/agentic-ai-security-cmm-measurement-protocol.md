@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Measurement Protocol (Assessor's Handbook)"
 address: c-000157
 created: 2026-04-30
-updated: 2026-08-25
+updated: 2026-09-10
 tags:
   - maturity-models
   - measurement
@@ -42,7 +42,7 @@ sources:
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)
 
-> Companion to [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]. Supplies the assessment instrument the model lacked.
+> Companion to [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]].
 
 This protocol is the assessment instrument the validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 rec #2) flagged as missing. It fixes the evidence bar, so two assessors auditing the same organization reach the same verdict.
 
@@ -193,7 +193,7 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 | Domain | L2 artifacts | L3 artifacts | L4 artifacts | L5 artifacts (achievable today) | L5+ artifacts (leading-edge) |
 |---|---|---|---|---|---|
 | D1 | Policy doc; RACI | Risk Committee minutes; deployment-gate evidence; decision-rights matrix per agent type; prohibited-action and oversight-tier list; reaper SLA report; provider responsibility matrix with residue | KPI dashboard; board pack; gap report; **standards crosswalk matrix**; readiness assessment against a recognized scheme | Current third-party assurance (ISO/IEC 42001 preferred, or AIUC-1, or reviewed internal-equivalent); board-attested risk metrics; ≥1-year committee minutes | Named-contributor evidence; published research; external observability dataset |
-| D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens | Cred-proxy logs; Cedar/OPA repo; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
+| D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens; coupled/decoupled credential classification; CI/CD-registered NHI list; owner-field coverage | Cred-proxy logs; Cedar/OPA repo; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
 | D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny; direct-gateway invocation test showing deny | Promotion-gate runbook (org-authored); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
 | D4 | Provider safety config | Hook code; firewall logs; sandbox config; indirect-injection test routed through the augmentation path | AlignmentCheck logs; CodeShield findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval | Platform-enforcement coverage report (zero opt-outs); multi-language eval log; classifier refresh receipts; response-leak alert log; latency/cost dashboard with fail-closed proof | TEE attestation chain; CaMeL split production evidence; bypass-class eval with remediation timeline |
 | D5 | Outbound proxy config | Gateway config; certs; A2A enforcement profile | Token-exchange logs; rule sets; CVE-tagged log; orchestrator network policy showing no outbound path | Mesh topology with zero-bypass proof; per-task token samples; SSRF closure verification; CVE-feed auto-quarantine log | Sigstore-for-MCP verifier; A2A drift rule library; cross-cloud reconciliation report |

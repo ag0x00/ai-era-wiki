@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-09-01
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -94,7 +94,7 @@ Cyera states its Protect phase blocks a risky tool call during execution; the re
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No tool-call policy; agents may call any tool.
 - **L2 — Developing.** Per-agent tool allowlist; HITL on destructive actions defined informally.

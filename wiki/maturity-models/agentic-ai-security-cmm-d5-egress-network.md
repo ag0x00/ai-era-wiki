@@ -84,7 +84,7 @@ One open-source vulnerability-discovery harness ships an outbound destination al
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. The current D5 levels are already capability-phrased; the recalibration strips named-product dependence and adds the maturity grade.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. The current D5 levels are already capability-phrased; the recalibration strips named-product dependence and adds the maturity grade. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** Agents have unrestricted network egress.
 - **L2 — Developing.** Each agent has an outbound destination allowlist (DNS- or proxy-level), with the egress reach of each allowlisted internal destination recorded.

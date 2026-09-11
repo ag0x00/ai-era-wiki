@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-08-31
+updated: 2026-09-10
 tags:
   - maturity-models
   - cmm
@@ -79,7 +79,7 @@ Cyera's Incident Materiality Assessment is a vendor example of the data-impact h
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No guardrail SLAs, no decommission procedure, no HITL-queue monitoring, no system-prompt-confidentiality control, no IR runbook.
 - **L2 — Developing.** A runbook documents guardrail fail behavior, decommission and credential rotation on owner departure, HITL-queue monitoring, and basic system-prompt protection. Decommission may be manual.
@@ -167,7 +167,7 @@ Licensing is near-zero for an E5/Azure or AWS incumbent; the spend is people and
 | L4 | ~0 incremental (MS) / small (AWS) | recurring: quarterly decommission drills; HITL-rotation staffing plus hand-built rubber-stamp / queue dashboards (no product); benign-vs-adversarial drift triage; disclosure-exercise participation | drift + HITL telemetry ingest |
 | L5 | ~0 | highest: a closed-loop SLA needs an on-call rotation owning AI-IR; quarterly attestation evidence; a standing continuity test | continuous attestation + incident-replay logging |
 
-Four costs dominate and none of them appears on a licence line. An **on-call rotation** is D9-L5's largest hidden cost. **IR-runbook authoring** runs multi-week per agent class even though CoSAI ships the shape. **Decommission drills** are quarterly facilitation labor. And **HITL-rotation staffing** covers both reviewers and the analyst time to hand-build the fatigue dashboards, because no product measures oversight quality.
+Four costs dominate and none of them appears on a license line. An **on-call rotation** carries the largest of the four at L5. **IR-runbook authoring** runs multi-week per agent class even though CoSAI ships the shape, and **decommission drills** cost quarterly facilitation labor. **HITL-rotation staffing** covers both the reviewers and the analyst time to hand-build the fatigue dashboards, because no product measures oversight quality.
 
 ## Customer critiques folded in
 

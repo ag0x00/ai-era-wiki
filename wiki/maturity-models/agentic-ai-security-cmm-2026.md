@@ -157,7 +157,7 @@ An untagged finding is L2-grade evidence at best. ID-tagging moves a CMM from *m
 
 ### Level 1: Initial
 
-Reactive and ad hoc: AI agents run in production with no inventory, no identity, and no platform-level controls. 
+Reactive and ad hoc: AI agents run in production with no inventory, no identity, and no platform-level controls.
 
 **Auditor evidence:** none / point-in-time interview.
 
@@ -169,7 +169,7 @@ A written AI security policy exists; the agent inventory is manual; some prompt-
 
 ### Level 3: Defined
 
-Practice is standardized org-wide: every agent has its own identity; platform-level hooks intercept tool calls; an AI-BOM exists for production agents; an AI-specific incident-response playbook is documented. 
+Practice is standardized org-wide: every agent has its own identity; platform-level hooks intercept tool calls; an AI-BOM exists for production agents; an AI-specific incident-response playbook is documented.
 
 **Auditor evidence:** identity graph for all agents + Cedar/OPA policy repo + AI-BOM artifact + IR runbook.
 
@@ -269,7 +269,7 @@ See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity
 |---|---|---|
 | L1 | Agents share human credentials or service accounts; no inventory | none |
 | L2 | Distinct service-account identities in a manual inventory; delegation runs only through the human user | inventory artifact |
-| L3 | Verifiable per-agent identity; OAuth 2.1 token exchange; NHI lifecycle bound to the deploy pipeline, not HR events; [[identity-credential-coupling\|coupling]] recorded; human owner mandatory | identity graph; audit-trail sample; CI/CD-registered NHI list; owner-field coverage |
+| L3 | Verifiable per-agent identity; OAuth 2.1 token exchange; NHI lifecycle bound to the pipeline, not HR; [[identity-credential-coupling\|coupling]] recorded; human owner and traceability mandatory | identity graph; audit-trail sample; CI/CD-registered NHI list; owner-field coverage |
 | L4 | Zero credentials in agent context (credential proxy); per-agent policy at a PDP; tested orphaned-agent kill switch; automated rotation per credential class; per-NHI behavioral baseline | cred-proxy logs; policy repo; kill-switch tabletop; rotation-cadence report; migration plan; delegation-token sample (delegator, delegatee, scope, expiry, parent link) |
 | L5 | Unified agent-governance program in production (registry, lifecycle API, identity graph, scoped RBAC, audit integration); cryptographic identity attestation; zero coupled credentials | registry export; ISPM dashboard; attestation chain; migration report; `ASI03`-tagged finding log |
 | L5+ | Per-task capability tokens with holder-binding ([[tenuo-warrant\|Warrant]]-class, OSS-only); multi-vendor identity federation with graph reconciliation; SPIFFE or OIDC working-group participation | reconciliation report; standards-WG contribution evidence |
@@ -316,7 +316,7 @@ See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L
 
 ### D5. Egress & Network
 
-The Egress & Network domain mediates agent egress at the network layer. An agent-aware gateway enforces the MCP, A2A, and LLM protocols; per-task egress capability tokens bind to upstream resources; SSRF is closed at the network layer so that all egress runs through the gateway.
+The Egress & Network domain mediates agent egress at the network layer. An agent-aware gateway enforces the MCP, A2A, and LLM protocols; per-task egress capability tokens bind to upstream resources; SSRF is closed at the network layer so all outbound traffic leaves through the gateway.
 
 Maps to: OWASP ASI02, ASI07; CoSAI Model Context Protocol (MCP) Security (2026-01-20; the "12 categories / 40 threats" figure was not re-verifiable in [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]] and is flagged for a deeper-source check); CSA MAESTRO Layer 4 (Deployment and Infrastructure) + Layer 7 (Agent Ecosystem) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]; Microsoft ZT4AI network — Entra Internet Access prompt-injection protection (GA), APIM AI Gateway with MCP brokering (GA), MCP tool-integrity guidance-only with no single Azure service (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
 
@@ -378,7 +378,7 @@ The Supply Chain & AI-BOM domain establishes provenance, integrity, and disclosu
 
 Maps to: OWASP ASI04, [[nist-sp-800-218a|NIST SP 800-218A]] (SSDF AI Profile) — model provenance, verification of acquired models, and weight protection; the Profile names SBOM and SLSA but specifies no AI-BOM artifact schema ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]] claim 3), EU AI Act Art. 11 / Annex IV — the closest binding instrument to an AI-BOM mandate, but a prose disclosure schema, not a machine-readable BOM format ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 5); CycloneDX ML-BOM (v1.7 current), SPDX 3.0; Microsoft ZT4AI supply chain — Defender for Cloud AI-SPM generative AI-BOM discovery across Azure/Bedrock/Vertex (GA), extended to MCP-server and AI-model-provider catalog coverage in Defender for Cloud Apps, and AI model scanning in CI/CD (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]].
 
-See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone. A model-consumer persona scores L1 against the old D8 criteria, which measured producer controls it never operates; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder now inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria sharpen with it. A malicious-serialization scan becomes a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. And the supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
+See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone. A model-consumer persona scores L1 against the old D8 criteria, which measured producer controls it never operates; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder now inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria sharpen with it. A malicious-serialization scan becomes a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. The supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
 
 | Level | Capability | Auditor evidence |
 |---|---|---|
@@ -414,7 +414,7 @@ L3 also grades what the program tells its users. A published disclosure informs 
 
 ## Mapping to deployment shapes
 
-A small organization with one chatbot will not pursue Level 5 across all 9 domains, and almost no organization pursues L5+ at all. L5+ sits at the research edge by design and requires category-creation work. Apply the CMM per agent application; an enterprise-wide score averages away the exposure it exists to surface. **The default expectation for a sufficiently resourced 2026 program is L4 across all domains, with selective L5 where deployment exposure justifies it.**
+A small organization with one chatbot will not pursue Level 5 across all 9 domains, and almost no organization pursues L5+ at all. L5+ is intentionally bleeding-edge and unachievable without category-creation work. Apply the CMM per agent application; an enterprise-wide score averages away the exposure it exists to surface. **The default expectation for a sufficiently resourced 2026 program is L4 across all domains, with selective L5 where deployment exposure justifies it.**
 
 L5+ ambitions are appropriate for frontier labs, hyperscalers' own platforms, and dedicated AI-security research shops.
 
