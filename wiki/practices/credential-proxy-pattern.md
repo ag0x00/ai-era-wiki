@@ -3,7 +3,7 @@ type: practice
 title: "Credential Proxy Pattern for AI Agents"
 address: c-000191
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-11
 tags:
   - practices
   - credential-security
@@ -95,6 +95,10 @@ The agent **never sees** the real credential at any step.
 | [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] | PingOne Privilege issues ephemeral scoped credentials; a policy point in front of each resource allows or denies the action | Secretless developer workflows — an agent commits code or reaches a database with no static credential handed to it; access revoked in real time |
 | [[crowdstrike-agentic-identity-provider\|CrowdStrike Agentic IdP]] | Broker issuing short-lived task-scoped tokens against a cryptographic agent identity | Every action bound to the delegating human or workload; announced Sept 2026, stated in development |
 | [[agentdesktop\|agentdesktop]] (Solo.io, Apache 2.0) | Desktop daemon binding user, device and tool identity; credentials injected at the gateway | Replaces API keys distributed to workstations with short-lived credentials [[agentgateway\|agentgateway]] injects at the traffic layer |
+
+Selection among these nine turns on deployment constraints already visible in the Approach column, since the source material reports no independent deployment count, license, or third-party audit for AgentKeys, Keychains.dev, OneCLI, or AgentSecrets. A local-first or self-hosted proxy (Aegis, [[agentcordon|AgentCordon]], [[agentdesktop|agentdesktop]]) keeps credential resolution inside the caller's own network boundary, which matters for an integration with no cloud-native credential-less path — many B2B and EDI integrations fall in this class — where routing resolution calls through a vendor's cloud would reintroduce the third-party dependency the pattern exists to remove. A cloud-hosted proxy (AgentKeys, [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]], [[crowdstrike-agentic-identity-provider|CrowdStrike Agentic IdP]]) or server-side curl-replacement proxy (Keychains.dev) centralizes revocation and audit across a large, distributed agent fleet at that cost. OneCLI's Docker-based gateway and AgentSecrets' OS keychain integration fit a single host or container rather than a fleet.
+
+Of the nine, two publish a license — AgentCordon (GPL-3.0) and agentdesktop (Apache 2.0) — which gives a security team a documented basis to audit the resolution path directly rather than take the other seven vendors' claims on trust. CrowdStrike's Agentic IdP carries no general-availability date and ships under CrowdStrike's own "still in development and subject to change" caveat as of September 2026; Ping's Enterprise Personal Agent Access is stated available now, with pilot deployments under way. A payer weighing a compliance-critical integration reads GA status alongside license and deployment model rather than the feature column alone.
 
 ## Security properties
 
