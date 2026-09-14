@@ -2,11 +2,11 @@
 type: domain
 title: "Frameworks"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-14
 tags: [domain, frameworks]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 36
 ---
 
 # Frameworks Index
@@ -36,7 +36,7 @@ Published, named guidance for AI/agentic-AI security. Each framework gets its ow
 - [[nist-ai-600-1|NIST AI 600-1: Generative AI Profile]] — NIST AI 600-1 (Generative AI Profile, July 2024) extends the NIST AI RMF to address GenAI-specific risks.
 - [[nist-ai-800-4|NIST AI 800-4: Monitoring Challenges]] — NIST AI 800-4 (March 2026) is a report from the NIST Center for AI Standards and Innovation (CAISI) in the Trustworthy and Responsible AI...
 - [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]] — The NIST AI RMF is the de facto voluntary U.S.
-- [[nist-ir-8596-cyber-ai-profile|NIST IR 8596 Cyber AI Profile]] — NIST IR 8596 is an Initial Public Draft (published 16 December 2025; comment period closed 30 January 2026) that frames the AI–cybersecur...
+- [[nist-ir-8596-cyber-ai-profile|NIST IR 8596 Cyber AI Profile]] — Source:...
 - [[nist-sp-800-162|NIST SP 800-162: Attribute-Based Access Control]] — Source: [NIST CSRC publication record](https://csrc.nist.gov/publications/detail/sp/800-162/final) ·...
 - [[nist-sp-800-218a|NIST SP 800-218A: SSDF GenAI Profile]] — NIST SP 800-218A (Secure Software Development Practices for Generative AI and Dual-Use Foundation Models: An SSDF Community Profile) is N...
 - [[nist-ssdf|NIST SSDF (SP 800-218)]] — NIST SP 800-218 v1.1 (Secure Software Development Framework: Recommendations for Mitigating the Risk of Software Vulnerabilities) is NIST...

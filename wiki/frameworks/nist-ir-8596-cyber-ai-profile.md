@@ -2,7 +2,7 @@
 type: framework
 title: "NIST IR 8596 Cyber AI Profile"
 created: 2026-06-02
-updated: 2026-06-02
+updated: 2026-09-14
 tags:
   - frameworks
   - nist
@@ -18,7 +18,7 @@ scope_axis:
 adoption_signal: draft
 last_substantive_update: 2025-12-16
 published_by: "[[nist|NIST]]"
-current_version: "Initial Public Draft (IPRD), December 2025"
+current_version: "Initial Preliminary Draft (iprd), December 2025"
 first_published: "2025-12-16"
 scope: "A NIST Cybersecurity Framework 2.0 profile covering the intersection of AI and cybersecurity across three focus areas"
 audience: "Enterprise security teams, AI operators, federal agencies"
@@ -28,13 +28,17 @@ aliases:
 related:
   - "[[agentic-soc-state-of-the-field]]"
   - "[[agentic-soc-autonomy-ladders]]"
+  - "[[nist-ai-rmf]]"
+  - "[[nist|NIST]]"
 sources:
   - "https://csrc.nist.gov/pubs/ir/8596/iprd"
 ---
 
 # NIST IR 8596 Cyber AI Profile
 
-NIST IR 8596 is an Initial Public Draft (published 16 December 2025; comment period closed 30 January 2026) that frames the AI–cybersecurity intersection as a profile of the NIST Cybersecurity Framework 2.0 (CSF 2.0). It organizes its guidance using the CSF 2.0 Core outcomes — Functions, Categories, and Subcategories — rather than defining a maturity model or a levels-of-autonomy ladder.
+**Source:** [NIST IR 8596 — Cybersecurity Framework Profile for Artificial Intelligence, Initial Preliminary Draft](https://csrc.nist.gov/pubs/ir/8596/iprd)
+
+NIST IR 8596 is an initial *preliminary* draft (published 16 December 2025; comment period closed 30 January 2026) that frames the AI–cybersecurity intersection as a profile of the NIST Cybersecurity Framework 2.0 (CSF 2.0). It organizes its guidance using the CSF 2.0 Core outcomes — Functions, Categories, and Subcategories — rather than defining a maturity model or a levels-of-autonomy ladder. NIST ran spring 2026 working sessions on the draft and published summary reports for the first two Cyber AI workshops as IR 8578 and IR 8607 in August 2026; the initial public draft has not appeared as of September 2026. Dates and statuses are cited on [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]].
 
 ## Three focus areas
 
@@ -55,7 +59,7 @@ IR 8596 is a crosswalk target, not a competing maturity model. Because it carrie
 ## Verification note
 
 > [!gap] Single-source extraction from the draft landing page
-> This page is built from one primary source: the IR 8596 Initial Public Draft landing page. The focus-area titles, the CSF 2.0 organization, the absence of maturity or autonomy tiers, and the publication dates were read from it. Subcategory-level detail, including any per-Subcategory prioritization scheme and the specific treatment of agentic, multi-agent defense, was not extracted and must be confirmed against the full draft before it is cited.
+> This page is built from one primary source: the IR 8596 Initial Preliminary Draft landing page. The focus-area titles, the CSF 2.0 organization, the absence of maturity or autonomy tiers, and the publication dates were read from it. Subcategory-level detail, including any per-Subcategory prioritization scheme and the specific treatment of agentic, multi-agent defense, was not extracted and must be confirmed against the full draft before it is cited.
 
 ## Relations
 
