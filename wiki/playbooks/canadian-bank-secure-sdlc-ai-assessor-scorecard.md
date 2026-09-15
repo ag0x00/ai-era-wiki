@@ -3,7 +3,7 @@ type: playbook
 title: "Assessor's Quick Scorecard: Secure-SDLC and AI"
 address: c-000050
 created: 2026-05-14
-updated: 2026-05-29
+updated: 2026-09-15
 tags:
   - playbook
   - assessor-guide
@@ -19,9 +19,9 @@ scope_axis:
   - sec-of-ai
   - sec-against-ai
 audience: "2nd-party advisor (consultant) conducting a secure-SDLC + AI assessment engagement at a large Ontario-based federally-regulated bank"
-length: "~10 pages, ~65 questions across six sections"
+length: "~10 pages, 62 questions across six sections (A 12, B 12, C 8, D 12, E 10, F 8)"
 regulatory_anchors:
-  - "OSFI Guideline B-13 — Technology and Cyber Risk Management (effective 2022-07-31)"
+  - "OSFI Guideline B-13 — Technology and Cyber Risk Management (published 2022-07-31)"
   - "OSFI Guideline E-23 — Model Risk Management (2027) (published 2025-09-11; effective 2027-05-01; explicit AI/ML scope)"
   - "OSFI Guideline B-10 — Third-Party Risk Management (effective 2024-05-01)"
   - "PIPEDA — Personal Information Protection and Electronic Documents Act + Breach of Security Safeguards Regulations (§10.1, real-risk-of-significant-harm test)"
@@ -43,6 +43,7 @@ related:
   - "[[capability-based-authorization]]"
   - "[[non-human-identity]]"
   - "[[least-agency-principle]]"
+  - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
 sources: []
 ---
 
@@ -54,7 +55,7 @@ A condensed two-party-advisor assessment instrument for evaluating a large Ontar
 
 **Audience.** A 2nd-party advisor engaging a federally-regulated Canadian bank. The bank is either already building AI applications or plans to do so. The scorecard is engagement-oriented: it produces a per-section score, a maturity tier, a prioritized findings backlog, and a 90-day quick-wins list — not a compliance certification.
 
-**Engagement flow.** Kickoff → Document Request → Interviews (Eng, Security, Risk, Model Risk) → Evidence Collection → Scoring → Findings Workshop → Report.
+**Engagement flow.** Kickoff, document request, interviews (Eng, Security, Risk, Model Risk), evidence collection, scoring, findings workshop, report, in that order.
 
 **Scoring rubric.** Each question takes one value:
 
@@ -72,12 +73,12 @@ A condensed two-party-advisor assessment instrument for evaluating a large Ontar
 | Tier | Threshold | Interpretation |
 |---|---|---|
 | **L1** | <30% | Ad hoc / undocumented |
-| **L2** | 30-50% | Defined but uneven |
-| **L3** | 50-75% | Implemented and auditable *(inflection — minimum expected for a federally-regulated bank)* |
-| **L4** | 75-90% | Measured and improving |
-| **L5** | >90% | Continuous improvement with evidence |
+| **L2** | ≥30% and <50% | Defined but uneven |
+| **L3** | ≥50% and <75% | Implemented and auditable *(inflection — minimum expected for a federally-regulated bank)* |
+| **L4** | ≥75% and <90% | Measured and improving |
+| **L5** | ≥90% | Continuous improvement with evidence |
 
-Per-section score is `sum(yes × 2 + partial × 1) ÷ (max_possible_excluding_NA)` expressed as a percentage. Section tier is derived directly from the threshold. Aligned with [[agentic-ai-security-cmm-measurement-protocol|the wiki's CMM measurement protocol]] for cross-engagement comparability.
+Per-section score is `sum(yes × 2 + partial × 1) ÷ (max_possible_excluding_NA) × 100`, a percentage. Section tier is derived directly from the threshold. Aligned with [[agentic-ai-security-cmm-measurement-protocol|the wiki's CMM measurement protocol]] for cross-engagement comparability.
 
 **Findings priority.**
 
@@ -117,9 +118,9 @@ Anchors: **[[osfi-e-23-2027|OSFI E-23]] (2027)** Sections B (Enterprise-wide MRM
 | B2 | Is each AI/ML system risk-rated against the bank's defined criteria (purpose, impact, data sensitivity, autonomy level) with corresponding control intensity? | D | E-23 C.2, C.3 |
 | B3 | Is there an AI governance body with documented charter, escalation paths, multi-disciplinary participation (legal, compliance, ethics), and at least quarterly review cadence? | D, I | E-23 B.1; Voluntary AI Code §1 (Accountability) |
 | B4 | Is independent model validation performed by reviewers separated from development, with review triggers covering new development, modifications, performance breaches, and significant data changes? | D, I | E-23 D Stage 2 (Review) |
-| B5 | Is an [[ai-bom\|AI-BOM]] maintained for each deployed AI/ML system, covering training-data sources, RAG corpus, frameworks, MCP servers, reward models, and adaptation layers? | D, T | SP 800-218A PS.3.2; E-23 Appendix A |
+| B5 | Is an [[ai-bom\|AI-BOM]] maintained for each deployed AI/ML system, covering training-data sources, RAG corpus, frameworks, MCP servers, reward models, and adaptation layers? | D, T | SP 800-218A PS.3.2; E-23 App. A — **`[P]` producer:** consuming a hosted model scores training-data/reward-model limbs *N/A* with reason, per [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]] |
 | B6 | Is training-data provenance tracked when known, integrity-verified before use, and documented when provenance is not knowable? | D, T | SP 800-218A PW.3.1, PW.3.2 |
-| B7 | Are model weights and configuration parameters protected with cryptographic hashes, digital signatures, least-privilege access, and risk-proportionate additional controls (encryption / multi-party authorization / air-gap)? | D, T, O | SP 800-218A PS.1.3, PS.1.3.R4 |
+| B7 | Are model weights and configuration parameters protected with cryptographic hashes, digital signatures, least-privilege access, and risk-proportionate additional controls (encryption / multi-party authorization / air-gap)? | D, T, O | SP 800-218A PS.1.3, PS.1.3.R4 — **`[P]` producer:** a bank not hosting or fine-tuning its own weights scores this *N/A* with reason, per [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]] |
 | B8 | Is there an Algorithmic Impact Assessment (or PIPEDA-aligned privacy impact assessment) for each high-risk AI system handling consumer financial data, with documented mitigations? | D | PIPEDA Principle 4 (Limiting Collection); Voluntary AI Code §2 (Safety) |
 | B9 | Is the AI system designed such that no critical-path security or financial decision is taken without a human in the loop where the decision is irreversible, material, or rights-affecting? | D, O | SP 800-218A PW.1.1.C2; Voluntary AI Code §5 (Human Oversight) |
 | B10 | Are documented model-shutdown / rollback criteria and procedures in place, tested at least quarterly, with named accountable owner per system? | D, T | SP 800-218A RV.2.2.R2, RV.2.2.C1; E-23 D Decommissioning |
@@ -128,7 +129,7 @@ Anchors: **[[osfi-e-23-2027|OSFI E-23]] (2027)** Sections B (Enterprise-wide MRM
 
 ## 3 — Section C: Frontier-AI in CI/CD (Optional Layer, 8 questions)
 
-Anchors: [[frontier-ai-for-vuln-discovery|wiki Frontier-AI thesis]] — harness-over-model architecture; XBOW Mythos eval (42-55% FN reduction vs. Opus 4.6); MDASH (+5 percentage points from harness alone on CyberGym); Big Sleep + CodeMender (Google) production track record. This section is **optional** — applicable only if the bank uses or is piloting frontier-AI for vulnerability discovery in the development pipeline. If wholly N/A, mark the section excluded.
+Anchors: [[frontier-ai-for-vuln-discovery|wiki Frontier-AI thesis]] — harness-over-model architecture; XBOW Mythos eval (42-55% FN reduction against Opus 4.6, the comparison model at the time of the eval and superseded since; re-read the figure against a current baseline before citing it); MDASH (+5 percentage points from harness alone on CyberGym); Big Sleep + CodeMender (Google) production track record. This section is **optional** — applicable only if the bank uses or is piloting frontier-AI for vulnerability discovery in the development pipeline. If wholly N/A, mark the section excluded.
 
 | # | Question | Evidence | Anchor |
 |---|---|---|---|
@@ -157,7 +158,7 @@ Anchors: [[red-teaming-capability-framework|RTCF]] Tier 4 (continuous operations
 | D8 | For agent-based systems, is the [[lethal-trifecta\|Lethal Trifecta]] (private data + untrusted content + external comms) explicitly assessed per system, with containment controls evidenced where exposure exists? | D, I | Wiki lethal-trifecta concept |
 | D9 | Are red-team findings tracked separately from pentest findings with AI-specific severity rubrics (data exfiltration via prompt injection, model decision compromise, agent action hijack)? | T | RTCF Tier 4 |
 | D10 | Are CI/CD gates configured to re-run red-team probes on material change to AI components or prompt assets? | D, T | RTCF Tier 4; SSDF PW.8 |
-| D11 | Is third-party AI red-teaming evaluated or used (Mindgard CART, HiddenLayer, Protect AI, General Analysis, or equivalent), with sourcing controls applied? | D | RTCF Tier 5 |
+| D11 | Is third-party AI red-teaming evaluated or used (a continuous adversarial red-team service over deployed models and agent loops), with sourcing controls applied? | D | RTCF Tier 5 |
 | D12 | Is a vulnerability disclosure program (or bug bounty) explicitly scoped to AI surfaces (model endpoints, prompt-handling, agent loops), with safe-harbor language? | D | SSDF RV.1.3 |
 
 ## 5 — Section E: Identity, Least-Agency, and Supply Chain for AI (10 questions)
@@ -201,7 +202,7 @@ section_score_pct  =  (sum(Yes × 2 + Partial × 1)  /  (max_possible_excluding_
 section_maturity   =  L1 / L2 / L3 / L4 / L5  per the threshold table in §0
 ```
 
-**Whole-engagement tier.** The engagement-level tier is the **minimum** of the per-section tiers — a single L1 section caps the whole engagement at L1, irrespective of strength elsewhere. This is deliberate: a federally-regulated bank cannot operate at L4 in SDLC fundamentals while at L1 in AI governance and claim L4 maturity.
+**Whole-engagement tier.** The engagement-level tier is the **minimum** of the per-section tiers — a single L1 section caps the whole engagement at L1, irrespective of strength elsewhere. This is deliberate: a federally-regulated bank cannot operate at L4 in SDLC fundamentals while at L1 in AI governance and claim L4 maturity. The CMM retired the single floor for dependency-resolved effective scores over a per-domain matrix, so the two instruments can report different headline tiers, and recommendation 22 of [[cmm-stress-test-canadian-fi-google-2026-09|the September stress test]] holds that choice open.
 
 **Findings priority — apply per question marked No or Partial.** Use the priority table in §0. A finding tied to an OSFI / PIPEDA citation is at minimum **Major**; safety-critical AI exposure (e.g., Lethal Trifecta in production-facing agent without containment) is **Critical** regardless of other context.
 
@@ -241,9 +242,13 @@ Single cross-reference table — section to anchors (wiki, regulatory, source-do
 - **SLSA v1.0** — supply-chain provenance specification; recommended at the SBOM / AI-BOM artifact layer; not directly scored.
 - **CMMC** — US Defense Industrial Base only; not Canadian-relevant.
 
+[[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] applies this scorecard's B-13 and E-23 anchors against a Claude Code and Gemini deployment on Google Cloud and Google Workspace.
+
 ## 9 — Notes for the Assessor
 
-**The scorecard's first job is to expose the regulatory floor.** A federally-regulated Canadian bank operating below L3 on Section A (Secure-SDLC Foundation) or Section B (AI Governance) is exposed under [[osfi-b-13|OSFI B-13]] (effective since 2022) and pre-positioned for non-compliance under [[osfi-e-23-2027|OSFI E-23]] (2027). Findings in these sections are at minimum **Major**, frequently **Critical**. L3 — implemented and auditable — is the regulatory floor, not the target.
+**The scorecard's first job is to expose the regulatory floor.** A federally-regulated Canadian bank operating below L3 on Section A (Secure-SDLC Foundation) or Section B (AI Governance) is exposed under [[osfi-b-13|OSFI B-13]] (published 2022) and pre-positioned for non-compliance under [[osfi-e-23-2027|OSFI E-23]] (2027). Findings in these sections are at minimum **Major**, frequently **Critical**. L3, implemented and auditable, is where the regulator's expectation starts; the bank's own target sits above it.
+
+**Score a bundled question on its weakest limb.** Where one question puts three or more independent controls behind a single answer (A3, A4, A6, A7, B1, B3, B7, E6, E7, F1, F2, F4), record each limb separately in the evidence column, because Partial cannot say which limb failed until the instrument is split into one control per question.
 
 > [!check] Section C is optional, but increasingly common
 > Several Glasswing-partner organizations (Microsoft, Google, AWS, JPMorgan, Anthropic itself) have publicly disclosed frontier-AI vulnerability-discovery in production CI/CD. For a large bank, the question is no longer *if* but *when* and *under what controls*. A bank without any Section C activity is not behind; a bank piloting it without harness-validation, FN/FP measurement, and human review is.

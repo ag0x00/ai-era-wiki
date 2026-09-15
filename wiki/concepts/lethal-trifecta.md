@@ -3,7 +3,7 @@ type: concept
 title: "Lethal Trifecta"
 address: c-000308
 created: 2026-04-30
-updated: 2026-08-20
+updated: 2026-09-15
 tags:
   - concepts
   - prompt-injection
@@ -16,6 +16,7 @@ aliases:
   - "Lethal Trifecta for AI Agents"
   - "Willison Trifecta"
 related:
+  - "[[agentic-ai-security-cmm-d4-runtime-guardrails]]"
   - "[[threat-modeling-for-ai]]"
   - "[[threat-taxonomy-reconciliation]]"
   - "[[owasp-ai-exchange]]"
@@ -122,6 +123,8 @@ The connected-set reading is now the published one. The [[owasp-ai-exchange|OWAS
 > A serious skeptic will push back on the *unconditional* framing. [[breaking-the-lethal-trifecta-talk|Stripe (Bullen, March 2026)]] runs trifecta agents in production with platform-level egress containment + sensitive-action HITL and reports 1.5–6.7% attack success rates across model generations. [[camel-pattern|CaMeL]] (Google DeepMind) and deterministic-gating research demonstrate further reductions without splitting the trifecta. The honest framing: the trifecta is **necessary** for natural-language exfil at scale and **sufficient given current defense maturity** to require platform-layer containment. In production, containment drives ASR very low but not zero. Bullen's *"even 0.1% is too high"* is the operative bar — the *threshold*, not the *unconditional* nature, is what makes the trifecta a design-time test. See [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 3.
 
 ## See Also
+
+[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime & Guardrails]] uses the trifecta test to lower the required level: an agent that reaches no private data, or holds no exfiltration path, is a poor high-impact injection target and is graded against a lighter runtime bar.
 
 - [[indirect-prompt-injection|Indirect Prompt Injection]] — the dominant attack vector against trifecta agents
 - [[tool-abuse-chains|Tool-Abuse Chains]] — what happens when external communication is via tool calls rather than text rendering

@@ -2,11 +2,11 @@
 type: domain
 title: "Reviews"
 created: 2026-05-29
-updated: 2026-05-29
+updated: 2026-09-15
 tags: [domain, reviews]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 18
 ---
 
 # Reviews Index
@@ -21,6 +21,7 @@ Point-in-time assessments: immutable dated snapshots. Per-standard reviews, vali
 - [[ai-attribution-audit-2026-08|AI Attribution Audit]] — Seven cyber incidents circulating as a June–July 2026 "AI-enabled" cluster were each checked twice: once to confirm the incident happened...
 - [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]] — Seven cyber incidents circulated as a June–July 2026 "AI-enabled" cluster were assessed on 2026-08-16 against vendor research posts, wire...
 - [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test: Cumulative-Floor Rule]] — Closes peer-review-readiness §3: *"L4 → L5 calibration suspect; cumulative-floor rule un-stress-tested.
+- [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] — This page re-runs the May 2026 recalibration stress test (CMM Calibration Stress Test: Cumulative-Floor Rule) with one variable changed.
 - [[source-triangulation-audit-2026-05-02|Source Triangulation Audit]] — Closes peer-review-readiness honorable-mention #1: *"Statistics drawn from a narrow source set (Gartner, Insight Partners, Knostic, OWASP...
 - [[standards-review-csa-maestro-atf-2026-Q2|CSA MAESTRO and ATF Standards Review]] — This review applies the Standards Validation Methodology to two Cloud Security Alliance agentic-security publications that share one wiki...
 - [[standards-review-eu-ai-act-2026-Q2|EU AI Act Standards Review]] — This review applies the Standards Validation Methodology to Regulation (EU) 2024/1689 (the EU AI Act), including Annex IV (technical docu...

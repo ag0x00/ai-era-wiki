@@ -30,6 +30,7 @@ related:
   - "[[agentic-ai-threat-classes-2026]]"
   - "[[anthropic-sandbox-runtime]]"
   - "[[securing-agentic-coding]]"
+  - "[[cmm-known-limitations]]"
   - "[[security-guidance-plugin]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
   - "[[owasp-ai-exchange]]"
@@ -190,6 +191,7 @@ The stress test rated D4 the persona's strongest domain (raw ~L2–L3, lifting t
 - GCP has no native groundedness guardrail; AWS Automated Reasoning is GA but US-East-only. Single-stack GCP buyers go off-platform for L4 groundedness.
 - Defender runtime protection is preview with GA targeted Q3 2026, which may or may not fall inside a regulated buyer's procurement window. Under the cadence qualifier, L5 does not depend on it until it is production-hardened.
 - Response-leak scanning at egress (L5) overlaps [[agentic-ai-security-cmm-d5-egress-network|D5]]; score it in one domain to avoid double-counting.
+- [[cmm-known-limitations|CMM Known Limitations]] item 20 states that the core page right-sizes a coding-tool deployment to L4 across all nine domains while this domain's L4 spine rests on preview, experimental or specification-only controls, so the L4 claimed for that shape rests on rule 2's approved-pipeline reading rather than on generally available controls; the target and the ladder name different bands for the same shape.
 - **One output-side minimization target falls outside every data class the rungs name.** `DISCRETE` is anchored at [[agentic-ai-security-cmm-d1-governance|D1]] as a classification and publication control, and the third of the three examples it gives is minimizing technical details in model output ([`/go/discrete/`](https://owaspai.org/go/discrete/)).[^aix-discrete] The L3 criterion above grades an output classifier and requires its data-class scope to be recorded, and the two classes it names are content safety and the exposure-restricted data `SENSITIVE OUTPUT HANDLING` covers — personal data, confidential identifiers, passwords, and tokens.[^aix-soh] Detail about the system itself is in neither. The enforcement point for it is this domain's output path, and no rung here claims the class, because the Exchange gives the example with no mechanism, artifact, or threshold and a criterion would grade an assertion. An assessor recording the L3 scope states whether the class is inside it; the control's anchor stays at D1, where its method sits.
 
 ## D3→D4 dependency cap

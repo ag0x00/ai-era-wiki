@@ -2,11 +2,11 @@
 type: domain
 title: "Gaps and Open Questions"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-15
 tags: [domain, gaps]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 10
 ---
 
 # Gaps Index
@@ -17,7 +17,7 @@ Open questions, unresolved contradictions, research that's been flagged but not 
 
 
 - [[agentic-ra-open-design-questions|Agentic AI Security RA: Open Implementation Questions]] — Six implementation questions that the Agentic AI Security Reference Architecture does not prescribe.
-- [[cmm-known-limitations|CMM Known Limitations (current state)]] — Current-state limitations of Agentic AI Security CMM 2026 — reviewed and restated 2026-05-06.
+- [[cmm-known-limitations|CMM Known Limitations (current state)]] — Current-state limitations of Agentic AI Security CMM 2026, restated 2026-05-06 and extended 2026-09-15.
 - [[comprehensive-agentic-ai-security-landscape-2026|Agentic AI Security Startup Landscape]]
 - [[d3fend-ai-defense-technique-gap|D3FEND AI-Defense Technique Gap]] — MITRE D3FEND is the defensive-technique knowledge graph that complements ATT&CK: where ATT&CK catalogues what attackers do, D3FEND catalo...
 - [[pdp-pep-for-non-tool-mediated-actions|PDP/PEP for Non-Tool-Mediated Agent Actions]]

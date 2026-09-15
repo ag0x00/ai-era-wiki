@@ -85,6 +85,8 @@ The severe case sharpens the placement without moving it. OpenAI's remediation a
 
 The meltdown model also reweights existing wiki positions. [[least-agency-principle|Least agency]] and [[agents-rule-of-two|the Rule of Two]] both constrain what an agent can reach, and both hold here without modification, because they cap the blast radius regardless of whether an adversary is present. Detection controls fare differently: approval delegation to classifiers, and the bypass flags `--dangerously-skip-permissions` and `--yolo`, remove the human from exactly the position where a meltdown would be visible. [[generative-coding-deployment-shape-2026|Deployment shapes]] that already place no human in the action path are the shapes where meltdown risk is unmitigated by design.
 
+[[securing-agentic-coding|Securing Agentic Coding]] draws the same conclusion from the control-catalog side: every control in that catalog is ordered against an adversary, and this case passes through content filtering and injection classifiers untouched because it never presents the malicious input they test for.
+
 > [!gap] Coining work still unlocated
 > [[perplexity-numbat-agent-security|Perplexity]] attributes the term "accidental meltdown" to researchers without citing them, so the coining work remains unlocated and the term's original scope is unknown.
 [^1]: [Securing Agents Across Perplexity's Client Endpoints with Numbat](https://research.perplexity.ai/articles/securing-agents-across-perplexity%E2%80%99s-client-endpoints-with-numbat), Perplexity Research, 2026-07. Summarized at [[perplexity-numbat-agent-security|Numbat Agent Security Suite]].

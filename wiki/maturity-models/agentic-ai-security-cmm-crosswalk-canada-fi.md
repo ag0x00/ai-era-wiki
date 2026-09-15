@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Canadian Regulated-Finance Crosswalk"
 address: c-000133
 created: 2026-05-26
-updated: 2026-06-23
+updated: 2026-09-15
 tags:
   - maturity-models
   - crosswalk
@@ -23,6 +23,8 @@ related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[osfi-b-13]]"
   - "[[osfi-e-23-2027]]"
+  - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
+  - "[[cmm-known-limitations]]"
 sources:
   - "[[osfi-b-13]]"
   - "[[osfi-e-23-2027]]"
@@ -30,7 +32,7 @@ sources:
 
 # Agentic AI Security CMM — Canadian Regulated-Finance Crosswalk
 
-This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]] and [[agentic-ai-security-reference-architecture|RA]] to the expectations a **Canadian federally regulated financial institution (FRFI)** is examined against. It is one jurisdictional lens, not a new requirement set.
+This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]] and [[agentic-ai-security-reference-architecture|RA]] to the expectations a **Canadian federally regulated financial institution (FRFI)** is examined against. It re-presents existing CMM evidence through one jurisdiction's lens and adds no requirement of its own.
 
 **The CMM is jurisdiction-neutral; this is a Canadian lens.** The CMM and RA prescribe no jurisdiction's standards. Regulatory anchors are *options for re-presenting evidence*, applicable when a given regulator examines the institution. A Canadian FRFI is examined by **OSFI** (prudential, technology/cyber, model risk), **FCAC** (market conduct), and **OPC and provincial privacy regulators**, **not** by US bodies. Nothing in the CMM, and nothing here, imports FFIEC, GLBA, or NIST as a Canadian mandate. Those belong to the separate [[agentic-ai-security-cmm-crosswalk-us-fi|US crosswalk]] and bind only US-regulated entities. A multinational maps to each home regulator on its own terms.
 
@@ -41,6 +43,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 | Instrument | Regulator | Status | What it expects |
 |---|---|---|---|
 | **[[osfi-b-13\|Guideline B-13]]** — Technology & Cyber Risk Management | OSFI | in force Jan 1 2024[^b13] | Board/senior accountability for tech & cyber risk; tech risk framework; asset/config management; secure SDLC; operational resilience and recovery; cyber defense; third-party/cloud technology risk |
+| **Guideline B-10** — Third-Party Risk Management | OSFI | effective May 1 2024[^b10] | Governance of third-party arrangements including cloud: due diligence, concentration risk, audit and data rights, exit planning. The instrument a cloud or AI-vendor relationship is examined against |
 | **[[osfi-e-23-2027\|Guideline E-23]]** — Model Risk Management | OSFI | final Sep 2025; **effective 1 May 2027**[^e23] | Enterprise model-risk management for **all models including AI/ML and generative AI, internal or third-party**; risk-proportional lifecycle (design → independent review → deployment → monitoring → decommission); explainability and alternative controls for black-box methods |
 | **Integrity and Security Guideline** | OSFI | in force Jan 31 2025[^intsec] | Protection against foreign interference, undue influence, and malicious activity; personnel background-check expectations; incident reporting to OSFI and law enforcement |
 | **FIFAI / EDGE / AGILE; OSFI–FCAC AI Risk Report** | OSFI + FCAC | reports / principles (non-binding)[^fifai] | Responsible-AI principles (Explainability, Data, Governance, Ethics); catalogue of AI risks at FRFIs incl. generative AI, third-party concentration, and AI-enabled fraud |
@@ -49,7 +52,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 | **Financial Consumer Protection Framework** | FCAC | in force[^fcac] | Fair treatment of consumers; prohibition of unfair/deceptive/abusive practices; complaint handling; appropriateness — the hook for consumer-facing AI |
 | **CPCSC** (ITSP.10.171) | Cyber Centre / PSPC | phasing into defence procurement from 2026[^cpcsc] | NIST SP 800-171-based organizational cyber controls — **a defence-procurement certification, not an FRFI requirement** (relevant only if the entity is also a DND supplier) |
 
-## Domain crosswalk (CMM domain → Canadian anchor)
+## Domain crosswalk, CMM domain to Canadian anchor
 
 | CMM Domain | Primary Canadian anchor(s) | Note |
 |---|---|---|
@@ -60,7 +63,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 | **D5 Egress & Network** | B-13 (network/cyber defense, generic) | Nothing addresses agent egress, tool-call traffic, or MCP |
 | **D6 Data, Memory & RAG** | PIPEDA + OPC generative-AI principles; Quebec Law 25 (ADM disclosure); E-23 (data standards at design) | Privacy law governs consent and ADM disclosure, not RAG oversharing or memory poisoning |
 | **D7 Observability & Detection** | E-23 (ongoing monitoring, drift detection, explainability); B-13 (incident detection) | E-23's monitoring + explainability expectations map cleanly here |
-| **D8 Supply Chain & AI-BOM** | E-23 (third-party/vendor model governance); B-13 (third-party technology risk); CPCSC (defence only) | E-23's third-party-model governance is the closest AI-BOM-adjacent hook; no AI-BOM mandate exists |
+| **D8 Supply Chain & AI-BOM** | E-23 (third-party/vendor model governance); **B-10 (third-party arrangements, cloud concentration, audit and exit rights)**; B-13 (third-party technology risk); CPCSC (defence only) | E-23's third-party-model governance is the closest AI-BOM-adjacent hook, no AI-BOM mandate exists. B-10 is the vendor instrument, where single-vendor AI control becomes a concentration finding |
 | **D9 Operations & Human Factors** | E-23 (change management, decommission, human oversight); FCAC (complaint handling, human recourse); Law 25 (right to human review) | The human-review and decommission expectations land here |
 
 ## Canadian regulatory omissions the CMM fills
@@ -70,7 +73,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 
 ## Practical guidance for a Canadian FRFI
 
-- **Treat E-23 as the spine, and start now.** It takes effect 1 May 2027 and covers AI/ML, generative AI, and third-party models. Its design → independent-review → deployment → monitoring → decommission lifecycle maps onto CMM D1/D6/D7/D9 and D8. Building the CMM evidence now produces the E-23 documentation later.
+- **Treat E-23 as the spine, and start now.** It takes effect 1 May 2027 and covers AI/ML, generative AI, and third-party models. Its lifecycle runs design, independent review, deployment, monitoring and decommission, and maps onto CMM D1/D6/D7/D9 and D8. Building the CMM evidence now produces the E-23 documentation later.
 - **Map B-13 to the technical planes.** B-13's tech-risk, resilience, and cyber-defense expectations re-present cleanly as CMM D1/D4/D5/D7/D8/D9 evidence.
 - **If any member is a Quebec resident, Law 25's ADM disclosure applies.** A member-facing bot that makes or materially drives a decision based exclusively on automated processing must inform the member and offer human review. This is a D6/D1/D9 obligation regardless of where the FRFI is headquartered.
 - **Consumer-facing AI is FCAC territory.** Fair treatment, non-deceptive behaviour, and accessible complaint handling are market-conduct expectations (D1/D9).
@@ -83,10 +86,13 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 - FIFAI II's AGILE framework and any successor OSFI guidance may add agentic-AI expectations. Watch for an OSFI AI-specific guideline or letter.
 - The OPC's PIPEDA-reform proposals (right to explanation, algorithmic impact assessments) lapsed with C-27. A future privacy reform could reintroduce them.
 - Provincial privacy regimes beyond Quebec (for example, forthcoming Alberta and BC updates) may add ADM obligations.
+- B-13's in-force date is unconfirmed against the sources this crosswalk cites; see [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] Part 3 and [[cmm-known-limitations|CMM Known Limitations]] item 11.
+- B-10's effective date carries the same gap: the cited guideline page states a publication date and no effective or in-force date, so 2024-05-01 above is unconfirmed against the source and held as a watch item.
 
 ## Notes
 
-[^b13]: [OSFI — Guideline B-13: Technology and Cyber Risk Management](https://www.osfi-bsif.gc.ca/en/risks/technology-cyber-risk-management), in force 2024-01-01.
+[^b13]: [OSFI — Guideline B-13: Technology and Cyber Risk Management](https://www.osfi-bsif.gc.ca/en/risks/technology-cyber-risk-management), in force 2024-01-01. OSFI's [guidance-library entry](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cyber-risk-management) and this technology-and-cyber-risk page, both fetched 2026-09-15, state the publication date of 2022-07-31 and no in-force date, so the in-force date above is held as a watch item rather than a settled fact.
+[^b10]: [OSFI — Guideline B-10: Third-Party Risk Management](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/third-party-risk-management-guideline), effective 2024-05-01 per [[osfi|the OSFI page]] and [[canadian-bank-secure-sdlc-ai-assessor-scorecard|the scorecard's]] regulatory anchors. Fetched 2026-09-15: the guideline URL itself states only "Date: April 30, 2023" and no effective or in-force date, so the 2024-05-01 figure is held as a watch item rather than a settled fact, the same status as B-13's in-force date below.
 [^e23]: [OSFI — Guideline E-23: Model Risk Management (2027)](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/guideline-e-23-model-risk-management-2027), final Sep 2025, effective 2027-05-01. Defines "model" to include AI/ML; covers third-party models and the full lifecycle.
 [^intsec]: [OSFI — Integrity and Security Guideline](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/integrity-security-guideline), in force 2025-01-31. Foreign-interference/insider protection; personnel background checks.
 [^fifai]: [OSFI–FCAC Risk Report — AI Uses and Risks at FRFIs](https://www.osfi-bsif.gc.ca/en/about-osfi/reports-publications/osfi-fcac-risk-report-ai-uses-risks-federally-regulated-financial-institutions), 2024-09-24; and [FIFAI — A Canadian Perspective on Responsible AI (EDGE principles)](https://www.osfi-bsif.gc.ca/en/about-osfi/reports-publications/financial-industry-forum-artificial-intelligence-canadian-perspective-responsible-ai). Reports and principles, not binding guidance.

@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-09-01
+updated: 2026-09-15
 tags:
   - practices
   - agentic-coding
@@ -21,6 +21,8 @@ related:
   - "[[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]"
   - "[[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]"
   - "[[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]"
+  - "[[agentic-ai-security-cmm-d1-governance|CMM D1 — Governance & Accountability]]"
+  - "[[agentic-ai-security-cmm-d9-operations|CMM D9 — Operations & Human Factors]]"
   - "[[agent-sandboxing|Agent Sandboxing]]"
   - "[[anthropic-sandbox-runtime|Anthropic Sandbox Runtime]]"
   - "[[security-guidance-plugin|Security Guidance Plugin]]"
@@ -44,11 +46,14 @@ related:
   - "[[security-audit-skill|security-audit-skill]]"
   - "[[trail-of-bits-skills|Trail of Bits skills]]"
   - "[[cloudflare|Cloudflare]]"
+  - "[[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]"
 sources:
   - https://code.claude.com/docs/en/security
   - https://code.claude.com/docs/en/sandboxing
   - https://code.claude.com/docs/en/settings
+  - https://code.claude.com/docs/en/managed-settings
   - https://code.claude.com/docs/en/iam
+  - https://code.claude.com/docs/en/google-vertex-ai
   - https://code.claude.com/docs/en/analytics
   - https://code.claude.com/docs/en/monitoring-usage
   - https://code.claude.com/docs/en/sandbox-environments
@@ -66,7 +71,7 @@ sources:
 
 The control set for the generative-coding deployment shape, mapped to the six planes of the [[agentic-ai-security-reference-architecture|AAI-S RA]] and the nine domains of the [[agentic-ai-security-cmm-2026|AAI-S CMM]].
 
-**Every configuration key and control name on this page belongs to [[claude-code-security|Claude Code]].** The catalog is single-harness-deep by choice: Anthropic documents Claude Code's security model in public at a level its competitors do not match, which lets this catalog name, grade, and check a control here instead of inferring it. The *structure* transfers to Cursor, Codex, and the open-source harnesses; the keys do not, and an organization running one of those must locate each equivalent and will sometimes find it absent. Read a key below as an instance of its control, local to this harness rather than a portable instruction.
+**Every configuration key and control name on this page belongs to Claude Code, the coding harness, documented at [code.claude.com](https://code.claude.com/docs/en/security).** The catalog is single-harness-deep by choice: Anthropic documents Claude Code's security model in public at a level its competitors do not match, which lets this catalog name, grade, and check a control here instead of inferring it. The *structure* transfers to Cursor, Codex, and the open-source harnesses; the keys do not, and an organization running one of those must locate each equivalent and will sometimes find it absent. Read a key below as an instance of its control, local to this harness rather than a portable instruction.
 
 The organizing claim is a ranking. **Controls that constrain the process outrank controls that inspect a string, and both outrank controls that instruct the model.** The [[guardfall-shell-injection-audit|GuardFall audit]] is the empirical basis: ten of eleven surveyed harnesses had string-inspecting guards that could be walked past with shell syntax older than the tools themselves.
 
@@ -105,9 +110,12 @@ The distinction that decides whether a managed key is authoritative: **boolean k
 | Federated identity behind that organization | SSO — Claude for Enterprise on the claude.ai side, or Claude Console SSO for API-billed organizations. Not available on Claude for Teams | COTS, GA, plan-gated | Agent identity & lifecycle → [[agentic-ai-security-cmm-d2-identity\|D2]] |
 | Per-workflow credential scoping | One token per environment and workflow, minimum permission | Practice; no product | NHI governance → [[agentic-ai-security-cmm-d2-identity\|D2]] |
 | Credential held outside the agent boundary | Vendor credential proxy in the delegated-cloud shape; [[credential-proxy-pattern\|credential proxy]] elsewhere | First-party for cloud; assembled elsewhere | Credential proxy → [[agentic-ai-security-cmm-d2-identity\|D2]] |
+| Inference routed to a cloud the organization already contracts | `CLAUDE_CODE_USE_VERTEX=1` on Google Cloud's Agent Platform (formerly Vertex AI) — the identifier set and the region caveat are in the paragraph below | First-party, GA | Agent identity & lifecycle → [[agentic-ai-security-cmm-d2-identity\|D2]] |
 | Attribution of an action to an agent and a human | [[endor-labs-ai-code-governance\|Endor Labs AI Code Governance]] | COTS; [[endor-labs\|Endor Labs]] is the only sourced vendor | Action-to-identity tracing → [[agentic-ai-security-cmm-d2-identity\|D2]] |
 
 **The organization pin covers fewer login paths than it appears to.** Terminal, IDE-extension, and SDK logins are held. The two token-minting commands check only the login *method*, not the organization, so both can produce a credential in a different tenant. Gateway sign-in never authenticates against an Anthropic organization at all, which makes the gateway's own identity provider the control. Bedrock, Vertex, and Foundry sessions authenticate against the cloud provider and are not blocked, so cloud IAM policy is the control there. Deploy the pin through device management: server-managed settings only reach accounts already inside the organization, and so cannot govern a first login.
+
+**Cloud routing moves the session's authorization to cloud IAM, and it pins the region to a list with no Canadian entry.** `CLOUD_ML_REGION` and `ANTHROPIC_VERTEX_PROJECT_ID` join `CLAUDE_CODE_USE_VERTEX=1` in authorizing the session, under the Google Cloud IAM role `roles/aiplatform.user`. `CLOUD_ML_REGION` accepts `global, eu, us, us-east5` as its documented examples — the first a global endpoint, the middle two multi-region locations, the last a specific region — with `us-east5` the unset default; the documentation names no Canadian region and states nothing about retention or residency. Pin the model version for a multi-user rollout.
 
 No first-party feature attributes a change to the agent or the human that produced it, across any harness vendor. An organization that cannot separate agent-authored from human-authored change cannot scope a review policy or trace a defect to the tool that introduced it.
 
@@ -119,12 +127,15 @@ No first-party feature attributes a change to the agent or the human that produc
 | Deny rules that survive autonomous modes | `permissions.deny`; explicit deny is honored even under sandbox auto-allow and `--dangerously-skip-permissions` | First-party, GA | Least-agency tier engine, block tier → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
 | Content-scoped prompts that autonomy cannot suppress | `permissions.ask` with an argument pattern — `Bash(git push *)`, `Bash(dangerouslyDisableSandbox:true)` | First-party, GA | Least-agency tier engine, confirm tier → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
 | Lock developers out of widening policy | `allowManagedReadPathsOnly`, `allowManagedDomainsOnly` | First-party, GA | — → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
+| Pin which MCP servers may run, and lock the customization sources | Eight managed-settings keys and one deployed managed-MCP configuration file, named in the paragraph below: server allow/deny lists, managed-only locks, sideload-flag lock, strict-customization lock | First-party, GA | Tool registry / allowlist → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
 | Deterministic per-action reference monitor | Cedar-routed lifecycle hooks — see [[hooking-coding-agents-with-cedar-talk\|Maisel]] | Practitioner prototype | Policy language / PDP engine → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
 | Audit or block in-session settings changes | `ConfigChange` hooks | First-party, GA | — → [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] |
 
 The `permissions.ask` row survives contact with an autonomous mode, and its behavior is specific enough to test. A bare `Bash` or `Bash(*)` ask rule is *skipped* for any command that runs sandboxed, so an organization that wrote one and then enabled the sandbox has no prompt left. An ask rule scoped to an argument pattern still fires. An ask rule on `Bash(dangerouslyDisableSandbox:true)` catches the escape hatch in flight.
 
 The distinction that matters for scoring is the merge semantics described above: `excludedCommands` merges across scopes and has no managed-only lockdown, so a developer can always append entries that run commands outside the sandbox. Keep the managed list narrow and treat it as a reviewed artifact.
+
+**Eight managed-settings keys and one deployed configuration file admit MCP servers and close the customization escapes.** Admission runs on four keys and one file, `allowedMcpServers, deniedMcpServers, allowManagedMcpServersOnly, managedMcpServers, managed-mcp.json`. The server allowlist is taken whole from the highest-ranked source that sets it, and while malformed it is enforced as an **empty** allowlist. The server denylist merges from every scope, and the managed-only key with its deployed configuration file pins the admitted set to what a managed configuration names. Lockdown runs on the remaining four, `allowManagedPermissionRulesOnly, disableBypassPermissionsMode, disableSideloadFlags, strictPluginOnlyCustomization`. The managed-only permission-rules key extends the same semantics to permission rules; the bypass-mode key disables the permissions-bypass mode; the sideload-flags key rejects the plugin-directory, plugin-URL, agents and MCP-config startup flags outright; and the strict-customization key blocks skills, agents, hooks and MCP servers loaded from user or project sources, leaving plugin-delivered customization as the only route.
 
 ### Runtime plane
 
@@ -183,7 +194,7 @@ There is **no built-in credential deny list**. Only the paths and variables expl
 | Per-user usage and contribution analytics | Claude Enterprise Analytics API (`read:analytics` key, Enterprise only) or Claude Code Analytics API (Admin API key, Console organizations) | GA, plan-split; not available on Claude for Teams | — → [[agentic-ai-security-cmm-d7-observability\|D7]] |
 | Fleet inventory of harnesses, MCP servers, skills, hooks | [[endor-labs-ai-code-governance\|Endor Labs AI Code Governance]] | COTS; [[endor-labs\|Endor Labs]] is the only sourced vendor | AI-SPM / runtime AI-BOM → [[agentic-ai-security-cmm-d7-observability\|D7]] |
 | Pull-request security review as a gate | [`claude-code-security-review`](https://github.com/anthropics/claude-code-security-review) GitHub Action | FOSS, first-party | Code-output static analysis → [[agentic-ai-security-cmm-d8-supply-chain\|D8]] |
-| Cross-harness session telemetry and retrospective forensics | [[numbat\|Numbat]] — filesystem session artifacts normalized to NDJSON plus a localhost OTLP receiver, spanning [[claude-code-security\|Claude Code]], [[codex-security\|Codex]], OpenCode, and Pi | FOSS; [[perplexity\|Perplexity]], vendor-announced; forensics half also implemented by [[adr-agentic-detection-system\|Uber ADR]] | SIEM / SOAR with agent playbooks → [[agentic-ai-security-cmm-d7-observability\|D7]] |
+| Cross-harness session telemetry and retrospective forensics | [[numbat\|Numbat]] — filesystem session artifacts normalized to NDJSON plus a localhost OTLP receiver, spanning Claude Code, [[codex-security\|Codex]], OpenCode, and Pi | FOSS; [[perplexity\|Perplexity]], vendor-announced; forensics half also implemented by [[adr-agentic-detection-system\|Uber ADR]] | SIEM / SOAR with agent playbooks → [[agentic-ai-security-cmm-d7-observability\|D7]] |
 
 **Content redaction is the default, and it is the finding that separates the appearance of agent audit from the fact of it.** An organization that enables telemetry and stops there receives token counts, costs, durations, permission-mode transitions, and MCP connection status — and no shell command strings, no prompt text, no tool arguments. That stream cannot answer what an agent ran, which makes it a usage feed rather than a security feed. Turning it into a security feed means deciding to export prompt and tool content, with the data-handling consequences that decision carries.
 
@@ -232,6 +243,10 @@ Each step in the ordering removes a dependency on a weaker layer. OS enforcement
 **Every control above is ordered against an adversary, and one relevant threat model has none.** The [[accidental-meltdown|accidental meltdown]] case — an agent crossing a boundary while pursuing the user's actual goal after an ordinary environmental error — passes through content filtering and injection classifiers untouched, because it never presents the malicious input they test for. The isolation and Rule-of-Two controls still hold, since they cap reach without reference to intent. The detection controls largely do not.
 
 **Several load-bearing instruments are single-sourced.** Sandbox runtime is a beta research preview. The COTS control plane in the attribution, harness-audit, and fleet-inventory rows is [[endor-labs-ai-code-governance|Endor Labs AI Code Governance]] in all three cases — one vendor's product material, with no dated GA announcement and no independent evaluation. AgentShield is one open-source scanner. No competing implementation of the fleet-inventory capability is sourced here, so that row records a market gap as much as a control.
+
+**The catalog carries CMM coordinates for D2 through D8 and none for D1 or D9**, so an assessor scores a coding deployment's governance and human-factors evidence from the [[agentic-ai-security-cmm-d1-governance|D1]] and [[agentic-ai-security-cmm-d9-operations|D9]] ladders and finds no row here to cite.
+
+[[cmm-stress-test-canadian-fi-google-2026-09|A Canadian-FI stress test against Google Cloud]] found this catalog single-stack against that persona before this pass: no MCP-allowlist row, no row for cloud-routed inference, and a wikilink that named this page's product as the vulnerability-discovery tool rather than the harness. The MCP-allowlist and cloud-routing rows above and the corrected link close those three findings; the D1/D9 coordinate gap and the D8 fleet-inventory dimension the stress test also found remain open, recorded in [[cmm-known-limitations|CMM Known Limitations]] items 10 and 27.
 
 **Nothing here addresses code quality.** Every control in the catalog governs what the agent may *do*. Whether the code it writes is correct is a separate problem, addressed by review capacity that the [[microsoft-cli-coding-agent-adoption-study|throughput data]] suggests is already the binding constraint. One practitioner pattern attacks that problem from the other end, by governing what the agent is told before it writes: [[injecting-security-context-vibe-coding-talk|Gupta's MCP server]] retrieves the ticket, the architecture document, the applicable OWASP cheat sheets and the organization's own standards into the prompt, then verifies the generated code against those same requirements. It belongs to no plane above because it constrains generation rather than execution, and it carries the enforcement weakness that placement implies — the agent calls the server because the tool description persuaded it to, which Gupta states does not happen every time.
 

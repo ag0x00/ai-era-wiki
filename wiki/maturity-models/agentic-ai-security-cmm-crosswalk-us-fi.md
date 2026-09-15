@@ -22,6 +22,7 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk-canada-fi]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-cmm-regulated-fi-stress-test]]"
+  - "[[cmm-known-limitations]]"
 sources:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-cmm-regulated-fi-stress-test]]"
@@ -81,6 +82,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 - **The interagency AI RFI** referenced in SR 26-02 had not issued as of this writing. It is the most important item to track, since it will populate the currently-empty agentic-AI frame. Verify its status before relying on this section.
 - Whether examiners will, in practice, expect agentic-AI controls under existing FFIEC InfoSec authority before the RFI issues is unsettled.
 - The exact per-agency CFR citations for the banking-side Interagency Guidelines (Fed Reg H App. F / Reg Y App. D) should be confirmed against eCFR before use in a filing.
+- [[cmm-known-limitations|CMM Known Limitations]] item 14 states that the mandatory evidence-tag set (`ASI##`, AIVSS, `AML.T####`, CVE) admits no jurisdictional anchor, so an FFIEC or NCUA anchor cannot be recorded against a tagged finding. The gap report reaches this crosswalk by a separate route: the crosswalk extract in [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] names it as an additional anchor for an FFIEC- or NCUA-examined entity.
 
 ## Notes
 

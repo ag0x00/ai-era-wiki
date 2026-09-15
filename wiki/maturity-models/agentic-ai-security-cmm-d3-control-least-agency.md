@@ -34,6 +34,7 @@ related:
   - "[[agentic-ai-threat-classes-2026]]"
   - "[[guard-canonicalization-gap]]"
   - "[[securing-agentic-coding]]"
+  - "[[cmm-known-limitations]]"
   - "[[openai-hugging-face-agent-incident]]"
   - "[[offensive-agent-collective]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
@@ -199,6 +200,7 @@ The L3 labor line assumes tool access already exists as configuration the PDP ca
 - GCP exposes Agent Identity and Model Armor but no Cedar/OPA-class declarative decision-rights PDP or first-class approval-gate primitive surfaced; treat its D3 platform-native column as thin.
 - No FFIEC/GLBA/NCUA mapping yet for SoD and approval-gate controls (model-risk-management expectations); deferred to the crosswalk.
 - Approval tiers are defined over action classes, and the attested agent–agent collusion case ran entirely inside authorized action classes. Whether D3 should grade *who else can observe an action's side effects* (a property of the medium rather than of the action) or leave that to D4, D5, or D8 — none of which grades it today — is an open calibration question raised by the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]].
+- [[cmm-known-limitations|CMM Known Limitations]] item 19 states that a coding harness enforcing its own managed permission policy is the enforcement point and the governed component at once, so it produces none of the three PDP artifacts this domain's L3 row asks for, and the assessor either records the circularity or scores L2.
 
 ## D3→D4 dependency cap
 

@@ -3,7 +3,7 @@ type: framework
 title: "OSFI Guideline B-13: Technology and Cyber Risk"
 address: c-000051
 created: 2026-05-14
-updated: 2026-05-14
+updated: 2026-09-15
 tags:
   - framework
   - osfi
@@ -22,6 +22,7 @@ homepage: https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cy
 current_version: "Final (July 2022)"
 first_published: 2022-07-31
 last_substantive_update: 2022-07-31
+effective_date: "not stated in the sources this page holds; see [[agentic-ai-security-cmm-crosswalk-canada-fi]] for an in-force claim of 2024-01-01 that its cited page does not state"
 authority: "Office of the Superintendent of Financial Institutions Act"
 applicable_sectors: "Federally-regulated financial institutions (FRFIs) — banks, foreign bank branches, life insurance and fraternal companies, property and casualty companies, trust and loan companies"
 aliases:
@@ -36,6 +37,7 @@ related:
   - "[[nist-sp-800-218a]]"
   - "[[secure-sdlc-framework-stack-2026]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-crosswalk-canada-fi]]"
   - "[[red-teaming-capability-framework]]"
 sources:
   - "https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cyber-risk-management"
@@ -43,7 +45,7 @@ sources:
 
 # OSFI Guideline B-13 — Technology and Cyber Risk Management
 
-**OSFI Guideline B-13** — *Technology and Cyber Risk Management* — is Canada's federal regulatory expectations document for technology and cyber risk at federally-regulated financial institutions (FRFIs), issued by the [[osfi|Office of the Superintendent of Financial Institutions]] and effective **July 31, 2022**. The guideline is the **single most load-bearing OSFI instrument for any wiki claim about Canadian-bank secure-development or cyber-security expectations**.
+**OSFI Guideline B-13** — *Technology and Cyber Risk Management* — is Canada's federal regulatory expectations document for technology and cyber risk at federally-regulated financial institutions (FRFIs), issued by the [[osfi|Office of the Superintendent of Financial Institutions]] and published **July 31, 2022**. The guideline is the **single most load-bearing OSFI instrument for any wiki claim about Canadian-bank secure-development or cyber-security expectations**.
 
 B-13 is structured as **three domains** containing **17 high-level expectations**, each operationalized by named outcome statements with numbered sub-section identifiers. It is principles-based rather than prescriptive — OSFI defines outcomes, not specific implementations — and is intended to be applied proportionate to institution size, strategy, risk profile, and operational complexity.
 
@@ -118,17 +120,21 @@ For an assessor working a Canadian-bank engagement, B-13 is the regulatory floor
 
 ## In the RA / CMM
 
-B-13 maps onto the wiki's [[agentic-ai-security-cmm-2026|CMM]] across multiple domains:
+B-13 maps onto the nine domains of the wiki's [[agentic-ai-security-cmm-2026|CMM]]. [[agentic-ai-security-cmm-crosswalk-canada-fi|The Canadian regulated-finance crosswalk]] sets the same nine domains against the full Canadian instrument set. It names B-13 for D1, D4, D5, D7 and D8, reaches D2, D6 and D9 through other instruments, and records no anchor for D3.
 
 | CMM domain | B-13 anchor |
 |---|---|
-| D1 — Governance & Accountability | Domain 1 (1.1 / 1.2 / 1.3) |
-| D2 — Risk Management | 1.3 |
-| D4 — Threat Modeling & Adversarial Defense | 3.1.6 (threat modelling); 3.1.2 (red teaming and pentest) |
-| D6 — Supply Chain & Component Governance | 2.4.4 (acquired system risk assessment); 2.4.5 (third-party / open-source code) |
-| D7 — Observability and Detection | 3.3.1, 3.3.2 (logging, SIEM); 2.8 |
-| D8 — Cyber Defense | 3.2.x (Defend) |
-| D9 — Incident Response & Recovery | 2.7, 3.4 |
+| D1 — Governance & Accountability | Domain 1: 1.1 (accountability and organizational structure), 1.2 (strategy), 1.3 (risk-management framework and risk appetite) |
+| D2 — Identity & Authorization | 3.2.7 (multi-factor authentication across external-facing channels and privileged accounts), a human-authentication expectation; B-13 carries no non-human identity anchor |
+| D3 — Control & Least-Agency | No anchor. 2.5.2 (segregation of duties over developing, authorizing, executing and moving code) is the nearest expectation and scopes humans, not agents |
+| D4 — Runtime & Guardrails | 3.2.1 (secure-by-design preventive controls); 3.2.3 (enhanced controls on critical and external-facing assets); 3.2.4 (layered controls across the attack life cycle) |
+| D5 — Egress & Network | 3.2.4 (intrusion prevention and detection at the network perimeter) |
+| D6 — Data, Memory & RAG | 3.2.2 (strong cryptography with encryption-key protection) |
+| D7 — Observability & Detection | 3.3.1, 3.3.2, 3.3.3 (security logging, SIEM, alert triage); 2.8 (service measurement and monitoring); 3.1.2 (penetration testing and red teaming); 3.1.6 (threat modelling and threat hunting) |
+| D8 — Supply Chain & AI-BOM | 2.4.4 (acquired system risk assessment); 2.4.5 (third-party and open-source code handling) |
+| D9 — Operations & Human Factors | 2.5 (change and release management); 2.6 (patch management); 2.7 (incident and problem management); 3.4 (respond, recover and learn) |
+
+B-13 names no agentic-AI control, so D3 has no anchor, the D2 anchor states a human-authentication expectation, and the D4, D5 and D6 anchors state infrastructure-level expectations. An assessor maps an agent control to them by argument.
 
 ## Placement in this wiki
 

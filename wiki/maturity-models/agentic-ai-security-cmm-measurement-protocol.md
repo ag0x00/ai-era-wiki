@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Measurement Protocol (Assessor's Handbook)"
 address: c-000157
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-15
 tags:
   - maturity-models
   - measurement
@@ -33,6 +33,8 @@ related:
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[standards-validation-methodology-2026-05]]"
   - "[[threat-modeling-for-ai]]"
+  - "[[agentic-ai-security-cmm-crosswalk-canada-fi]]"
+  - "[[agentic-ai-security-cmm-crosswalk-us-fi]]"
 sources:
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
@@ -79,14 +81,14 @@ flowchart LR
     P2 --> P3[Stage 3<br/>Scoring & report]
     P1 -.- D1[Scope letter<br/>Agent inventory<br/>Document request list]
     P2 -.- D2[Interview script<br/>Artifact checklist<br/>Live observation]
-    P3 -.- D3[Per-domain score<br/>Floor rating<br/>Gap report]
+    P3 -.- D3[Per-domain score<br/>Typical / weakest / strongest<br/>Gap report]
 ```
 
 ### Stage 1 — Pre-engagement (1–2 weeks)
 
 The org under assessment delivers:
 
-1. **Scope letter** identifying which agents are in-scope. Each agent gets an Agent Card (system manifest) with: name, owner (human), purpose, data classifications touched, tools/MCP servers used, deployment shape (chatbot / RAG / MCP server / mesh, and for coding agents the specific variant — interactive local, unattended local, delegated cloud, CI-runner, or fleet, per [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], since the variants differ in which plane carries enforcement), production status, downstream consumers.
+1. **Scope letter** identifying which agents are in-scope. Each agent gets an Agent Card (system manifest) with: name, owner (human), purpose, data classifications touched, tools/MCP servers used, deployment shape (chatbot / RAG / productivity assistant / MCP server / mesh, where a productivity assistant holds tools over a tenant's or a user's mail, files and calendar, either inside the suite (Gemini for Workspace, Microsoft 365 Copilot class) or as a desktop agent with local file access and connectors (Claude Cowork class); and for coding agents the specific variant — interactive local, unattended local, delegated cloud, CI-runner, or fleet, per [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], since the variants differ in which plane carries enforcement), production status, downstream consumers.
 2. **Agent inventory** export — the full registry, even if some agents are out-of-scope for this assessment. Required so the assessor can detect shadow agents.
 3. **Document request list response.** Standard requests: AI security policy, IR runbook, last red-team report, AI-BOM artifact, gateway config, identity graph export, latest decommission drill report, last quarterly board AI-risk pack, and the current [[threat-modeling-for-ai|threat model]]. The input surfaces, trust boundaries, and agents that threat model enumerates set the coverage baseline for Stage 2's evidence collection and Stage 3's coverage statement.
 4. **AI impact assessment** for each in-scope agent, with the signatory and the conclusion recorded. The Exchange makes impact analysis a first-class program element and lists what it must consider, including whether the required transparency can be provided, whether privacy rights can be achieved, whether unwanted bias can be sufficiently mitigated, whether the data may be used for the purpose, and whether AI is needed to solve the problem at all ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). ISO/IEC 42001 A.5 already anchors D1 in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]; this request makes that anchor assessable.
@@ -100,7 +102,7 @@ Three parallel tracks: interviews, artifacts, live observation. The interview tr
 
 #### Interview script (per domain)
 
-Each domain has a structured interview block. Sample questions are not exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier.
+Each domain has a structured interview block. Sample questions are not exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier. Each criterion the answers bear on takes one of four verdicts: **met**, **not met**, **not applicable** or **unanswerable**. The Stage 3 per-domain scoring rubric below defines the four, and the assessor records them from Stage 2 onward.
 
 **D1 Governance**
 - Who chairs the AI Risk Committee? When did it last meet? Show the minutes.
@@ -144,6 +146,7 @@ Each domain has a structured interview block. Sample questions are not exhaustiv
 
 **D6 Data, Memory & RAG**
 - For a closed-corpus bot (the common shape): when user `[A]` and user `[B]` ask the same question, does the agent trim answers to each one's entitlements? Show answer-time enforcement under the *querying* user's identity, not a service identity. Show the last oversharing assessment and the remediation record on the reachable corpus.
+- For a productivity assistant over a whole tenant (mail, files, calendar): name the corpora the assistant reaches for user `[A]`, then show that a document, message or calendar entry which `[A]` can open and `[B]` cannot is absent from `[B]`'s answer to the same question. Here the tenant ACL and the data-loss-prevention rule do the trimming a corpus scope does elsewhere, so record which of the two produced it. Show the last oversharing assessment over the reachable tenant and the remediation record. Where the assistant is vendor-operated and the enforcement runs inside it, the criterion is **unanswerable** and the assessor records the vendor's documented statement plus the customer-side configuration that bounds reach.
 - For RAG: show me document attestation at ingest. Show a poisoned-document detection.
 - For memory: how do you detect memory poisoning? Show a recent detection.
 - Show me the [[cognitive-file-integrity|cognitive file integrity]] baseline for agent `[X]`'s `IDENTITY.md` / system prompt.
@@ -193,12 +196,12 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 | Domain | L2 artifacts | L3 artifacts | L4 artifacts | L5 artifacts (achievable today) | L5+ artifacts (leading-edge) |
 |---|---|---|---|---|---|
 | D1 | Policy doc; RACI | Risk Committee minutes; deployment-gate evidence; decision-rights matrix per agent type; prohibited-action and oversight-tier list; reaper SLA report; provider responsibility matrix with residue | KPI dashboard; board pack; gap report; **standards crosswalk matrix**; readiness assessment against a recognized scheme | Current third-party assurance (ISO/IEC 42001 preferred, or AIUC-1, or reviewed internal-equivalent); board-attested risk metrics; ≥1-year committee minutes | Named-contributor evidence; published research; external observability dataset |
-| D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens; coupled/decoupled credential classification; CI/CD-registered NHI list; owner-field coverage | Cred-proxy logs; Cedar/OPA repo; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
-| D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny; direct-gateway invocation test showing deny | Promotion-gate runbook (org-authored); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
+| D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens; coupled/decoupled credential classification; CI/CD-registered NHI list; owner-field coverage | Cred-proxy logs; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
+| D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny; direct-gateway invocation test showing deny | Promotion-gate runbook (org-authored); policy repo (Cedar/OPA/equivalent); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample; delegation-chain log | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
 | D4 | Provider safety config | Hook code; firewall logs; sandbox config; indirect-injection test routed through the augmentation path | AlignmentCheck logs; CodeShield findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval | Platform-enforcement coverage report (zero opt-outs); multi-language eval log; classifier refresh receipts; response-leak alert log; latency/cost dashboard with fail-closed proof | TEE attestation chain; CaMeL split production evidence; bypass-class eval with remediation timeline |
 | D5 | Outbound proxy config | Gateway config; certs; A2A enforcement profile | Token-exchange logs; rule sets; CVE-tagged log; orchestrator network policy showing no outbound path | Mesh topology with zero-bypass proof; per-task token samples; SSRF closure verification; CVE-feed auto-quarantine log | Sigstore-for-MCP verifier; A2A drift rule library; cross-cloud reconciliation report |
-| D6 | Source labels | Scan results; CFI baseline; validation-corpus storage and access policy; corpus scope decision; retained-identifier exception list | Attestation logs; rollback drill report; removal justification measured against model performance; source-to-derived linkage record; recorded obfuscation residuals | Drift dashboard; threshold-justification memo; conflict-flagging logs; canary-token deployment log; rollback drill RTO report | Per-doc attestation chain; taint-lattice implementation; ZK-proof verifier logs |
-| D7 | Tool-call audit log | Trace samples; span schema validation | Behavioral-monitoring dashboards; multi-tool eval reports with ID tags; session-drift disposition log (routed or suspended); control-state-change alert samples; adversarial log-integrity test record | DeepTracing graph; agent-aware playbook samples; prompt-volume-to-alert dashboard ≥1 quarter; analyst-actionable rate report | Cascade rule registry with thresholds; multi-agent joint-baseline statistics; forward-pass activation monitor |
+| D6 | Source labels | Scan results; CFI baseline; validation-corpus storage and access policy; corpus scope decision; retained-identifier exception list | Governed-memory policy; provenance-weighted retrieval; poisoning alert to SIEM; label gate; rollback drill; removal justification vs performance; source-to-derived linkage; obfuscation residuals | Drift dashboard; threshold-justification memo; conflict-flagging logs; canary-token deployment log; rollback drill RTO report | Per-doc attestation chain; taint-lattice implementation; ZK-proof verifier logs |
+| D7 | Tool-call audit log | Trace samples; span schema validation | Behavioral-monitoring dashboards; multi-tool eval reports with ID tags; session-drift disposition log (routed or suspended); control-state-change alert samples; adversarial log-integrity test record | Runtime AI-BOM dependency graph from a shipping product; agent-aware playbook samples; prompt-volume-to-alert dashboard ≥1 quarter; analyst-actionable rate report | Cascade rule registry with thresholds; multi-agent joint-baseline statistics; forward-pass activation monitor |
 | D8 | Inventory (consumer + producer); model and development documentation register | AI-BOM artifact; sigstore log; lockfile/SCA evidence | Sig-verified registry; reconciliation report; ID-tagged ML-VEX `[P]` | Closed-loop diagram with SLA evidence; SLSA Build L3 attestation; runtime/build AI-BOM reconciliation; ML-VEX feed `[P]` | hermetic/reproducible-build evidence beyond SLSA L3 (research-stage — SLSA v1.0 has no L4); cross-vendor AI-BOM federation; MCP name-to-binary signing; standards-WG named contribution |
 | D9 | Runbook artifact | Latency/cost dashboard; reaper logs; canary proof; IR runbook naming notification instrument, owner, clock; high-risk category definition; tamper-evident audit extract; highest-risk delay + SoD config | HITL-fatigue KPIs; benign-drift dashboard; drill reports; AI-VEX feed; involvement-measure record (method stated); oversight red-team report; approval-rate-limit config with baseline-exceedance alerts | SLA-bounded controls-update log; clean-state attestations; quarterly continuity-test report; HITL-fatigue dashboard within thresholds | External observability dataset; named contributions to CoSAI IR / OWASP / ATLAS; coordinated-disclosure leadership artifacts |
 
@@ -233,6 +236,8 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 
 **Auditability begins at Level 3.** Below L3, the org is structurally vulnerable and the assessment is largely about whether evidence supports L2 over L1. At L3+, the assessor checks platform-level enforcement, ID tagging, and live behavior.
 
+**Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and no available evidence settles the question). A score in the rubric above counts only the **met** criteria. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is a finding against the vendor rather than against the organization, and it never counts as met.
+
 **Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
 
 1. **≥2 quarters of stable L4 operation** across all 9 domains — no regression in the per-domain matrix during the look-back window. Evidence: prior assessment reports OR continuous-monitoring artifacts (KPIs, drift telemetry, red-team results, AI-BOM reconciliation) covering the period.
@@ -264,19 +269,19 @@ Active rule set (v1, 2026-05-04): DR-001 D2 caps D5 (per-agent identity required
 Final report contains, at minimum:
 
 1. **Executive summary** — three-number headline (typical / weakest / strongest), three-sentence framing, active rule-set version cited.
-2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion`. The L5+ column may be left as "n/a" if the engagement does not target L5+.
+2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion` (met / not met / not applicable / unanswerable, per the four-verdict scheme in Stage 3). The L5+ column may be left as "n/a" if the engagement does not target L5+.
 3. **Weakest-domain explanation** — which domain holds the weakest effective score, whether a dependency cap fired, and the strategic rationale (if any) for an intentional trade-off (Stripe-style architectural-containment).
 4. **ID-tagged finding registry** — every finding with `ASI##` / AIVSS score / `AML.T####` / CVE.
 5. **Test-coverage statement** — for each of the four agentic test layers (LLM reasoning, tool execution, infrastructure, inter-agent communication), which was exercised, to what depth, and against what corpus size. A threat category the programme did not test is reported as a finding rather than omitted.
 6. **Reproduction rate per finding** — each finding carries reproduction steps and the rate at which the attack succeeded across runs. A single successful run and a run that succeeds nine times in ten are different findings, and a pass/fail verdict records neither.
-7. **Crosswalk extract** — for each L4+ finding, the corresponding Annex IV / AIUC-1 / ISO 42001 anchor (per [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]).
+7. **Crosswalk extract** — for each L4+ finding, the corresponding Annex IV / AIUC-1 / ISO 42001 anchor (per [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]), plus the anchor in the jurisdictional crosswalk that applies to the assessed entity where one exists: [[agentic-ai-security-cmm-crosswalk-canada-fi|the Canadian FRFI crosswalk]] for an OSFI-supervised institution, [[agentic-ai-security-cmm-crosswalk-us-fi|the US crosswalk]] for an FFIEC- or NCUA-examined one. A jurisdictional anchor is additional to the scheme anchors above and does not substitute for them.
 8. **Top 5 prioritized recommendations** — what would move the weakest effective score up by one level (and any candidate dependency-rule promotions to monitor).
 9. **Re-assessment cadence** — recommendation for next assessment date (tied to AIUC-1 quarterly cadence at L5).
 10. **Active rule-set version** — must be cited (e.g. "scored under dependency-rules v1, 2026-05-04"). When the rule set is revised, prior assessments retain their original version; re-scoring under a new version is a separate engagement.
 
 ## Sample assessment timeline
 
-For a mid-size enterprise with ~30 agents in scope:
+For a mid-size enterprise with ~30 agents in scope, the engagement runs nine calendar weeks end to end. Read the stage durations in the headings above as working effort and this table as elapsed time. Stage 1 starts two weeks before kickoff, Stage 2's three parallel tracks run across weeks 1 to 5 with interview scheduling between them, and Stage 3's one week of effort spreads over weeks 6 and 7, because the scoring synthesis and the gap-report draft precede the report review with the organization.
 
 | Week | Activity |
 |---|---|

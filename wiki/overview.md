@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-08-31
+updated: 2026-09-15
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -78,6 +78,7 @@ Agent inventory is forming as a product category ahead of the schedule the field
 
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: the six-plane structural model (Identity, Control, Runtime, Egress, Data, Observability).
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: the five-level by nine-domain capability maturity model with cross-domain dependency caps and ID-tagged evidence.
+- [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]: the September re-run of the May calibration stress test, for a Canadian federally regulated FI on GCP and Google Workspace. Two shapes are scored per domain, Claude Code for software development and Gemini for day-to-day tasks. The CMM's rungs survive the platform swap; its core tooling map and all nine cost models do not, naming no Google product, and the productivity-assistant shape has no row on the core table or in the Assessor's Handbook.
 - [[threat-modeling-for-ai|Threat Modeling for AI]]: the spine that reconciles the seven threat taxonomies and walks one worked example from threat to control.
 - [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]]: the agent-orchestration risk taxonomy.
 - [[non-human-identity|Non-Human Identity]]: the machine credential an AI agent carries, now a GA platform-native capability on the three hyperscalers. Its fourth amplifier is onset: an agent exercises its launcher's entitlement set from day one, where a human hire grows into one.

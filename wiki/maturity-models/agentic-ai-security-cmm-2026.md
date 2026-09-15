@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic AI Security Capability Maturity Model"
 address: c-000156
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-15
 tags:
   - maturity-models
   - agentic-ai
@@ -50,6 +50,7 @@ related:
   - "[[nist-sp-800-218a]]"
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[securing-agentic-coding]]"
+  - "[[cmm-known-limitations]]"
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
@@ -430,7 +431,7 @@ L5+ ambitions are appropriate for frontier labs, hyperscalers' own platforms, an
 
 Per [[ai-coding-agent-governance|AI Coding Agent Governance (Knostic)]], a coding-tool deployment adds four evidence items at Level 3 and above:
 
-- **Agent rules-file integrity** — Cursor `.cursorrules`, Copilot Workspace rules, and Claude `IDENTITY.md` carry a baseline and drift detection, extending [[supply-chain-security-for-agents|cognitive file integrity]] to rules files.
+- **Agent rules-file integrity** — the files the harness reads as system context carry a baseline and drift detection, extending [[supply-chain-security-for-agents|cognitive file integrity]] to rules files. The file set is harness-specific: Cursor `.cursorrules`, Copilot Workspace rules, and for Claude Code the CLAUDE.md file, the settings.json file at every scope, the managed-settings directory, hooks and MCP manifests. Baseline the set the harness actually reads, per the discovery rule in [[cmm-known-limitations|CMM Known Limitations]] item 5.
 - **IDE extension provenance** — an extension allowlist with sigstore-equivalent verification.
 - **Typosquat / dependency-hijack defense** at install time (Aguara Watch / Kirin / equivalent).
 - **Destructive-action classification** — force-push, branch deletion, mass refactor, and prod-config write auto-route to the `confirm` or `block` tier per the [[decision-rights|Decision Rights for AI Agents]] matrix.
