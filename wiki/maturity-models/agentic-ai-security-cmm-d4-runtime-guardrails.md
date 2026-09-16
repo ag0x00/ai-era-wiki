@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D4: Runtime and Guardrails"
 address: c-000126
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -43,6 +43,8 @@ related:
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[cyera-agent-guardian-release]]"
   - "[[falcon-guardian]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
+  - "[[chain-of-thought-monitorability]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[prompt-injection]]"
@@ -73,7 +75,7 @@ The Exchange cuts the same pair on a different axis. `LEAST MODEL PRIVILEGE` is 
 | Code-gen static safety | Meta CodeShield (OSS) | GA-equivalent (OSS)[^pg2] | none native | none native | none native |
 | Output content safety / filtering | NeMo Guardrails; Guardrails AI | GA | Content Safety, GA | Bedrock filters, GA | Model Armor, GA |
 | Groundedness / hallucination check | — | **preview / partial** | Groundedness Detection — **public preview, English-only**[^ground] | Bedrock Automated Reasoning checks, GA (US-East)[^ar] | none native |
-| Tool-call interception / gating | Microsoft Agent Governance Toolkit (OSS); AgentShield (OSS) | OSS GA-equivalent | Defender agent runtime protection — **preview, GA targeted Q3 2026**[^def] | — | — |
+| Tool-call interception / gating | Microsoft Agent Governance Toolkit (OSS); AgentShield (OSS) | OSS GA-equivalent | Defender real-time protection for Agent 365 tooling servers — **GA 2026-07-27**; agent threat detection — **public preview**[^def] | — | — |
 | Sandboxing of high-risk tasks | MiniClaw (OSS reference); [[gke-agent-sandbox\|Agent Sandbox]] (gVisor) | OSS primitive + managed GKE | Foundry hosted-agent microVM sandbox — preview[^foundry] | AgentCore code-interpreter sandbox | [[gke-agent-sandbox\|GKE Agent Sandbox]][^agentsandbox] + Vertex sandboxed execution |
 
 The input/output safety layer (L2/L3) is GA across all three clouds and sits largely inside Azure entitlements. The agentic-reasoning layer (L4) has not reached that status: chain-of-thought auditing and groundedness checking ship as preview or experimental components, so an L4 program assembles them rather than buying them.
@@ -83,6 +85,8 @@ The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]
 Cyera's Protect phase is a further vendor example of the tool-call interception row above: Cyera states it blocks a risky tool call during execution ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). Cyera names the block and gives no efficacy figure, no bypass rate, and no decision mechanism behind that block, so that row's graded status is unchanged.
 
 [[falcon-guardian|CrowdStrike Falcon Guardian]] is a second vendor example on that row and the first placed at the endpoint. CrowdStrike states that Falcon Guardian defines which AI agent types may run on a managed endpoint and blocks the rest, and that it correlates a user prompt to the agent's skill use, tool calls, MCP server invocations and downstream system actions. Analyst coverage of the announcement reports CrowdStrike as claiming 99% detection efficacy against prompt attacks at under 100 ms response latency,[^nand-fg] which is the first efficacy figure attached to this row from any source. The figure is a single aggregate with no published methodology, no bypass library, and no per-language breakdown, and the L5 criterion below requires a per-language miss rate measured against a current bypass library with classifier-refresh receipts, so the row's graded status is unchanged. CrowdStrike gives no general-availability date, so rule 2 is unmet regardless.
+
+The independent runtime-protection category was canvassed as a whole in September 2026, and it supplies no row of this table at the L4 tier. Twenty-one vendors were graded against the five L4 capabilities: chain-of-thought auditing drew no documented implementation, groundedness drew one product naming the concept with no method behind it, generated-code safety drew one (Operant AI CodeInjectionGuard, launched 2026-04-21), trusted/untrusted context boundaries drew one documented mechanism whose product is in early access, and semantic tool-call validation drew implementations that match schemas and patterns rather than comparing intent against a proposed action. Seven vendors market agentic runtime security over documentation that describes input and output filtering. No capability the canvass found clears rule 2's two-quarter window: the generally available implementations reached GA inside it, and the rest stands at preview, early access, or undocumented status. The assembled route this domain already describes therefore remains the route, and no row's graded status changes. [[agent-runtime-protection-canvass-2026-09|The canvass]] carries the per-vendor grades.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] Apps & Workloads pillar (assume breach) supplies the Microsoft-native runtime controls behind these rungs — Prompt Shields, Groundedness Detection, and Task Adherence — crosswalked to D4 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]], which records the same GA-versus-preview split.
 
@@ -154,10 +158,13 @@ The semantic-validation criterion sits a step behind those preview controls, and
 |---|---|---|
 | Web/desktop chatbot (no tools) | L3 (L4 only for high-stakes content) | No tool-call surface means no CoT-audit or code-safety need; input PI filter + output content safety suffice. [[agentic-ai-security-cmm-recalibration-method-2026\|The persona]]'s bot sits here |
 | Copilot / assistant (RAG + light tools) | L3 → L4 | Add groundedness (RAG) and tool-call gating; CoT auditing earns its cost once tools can write |
+| Generative coding harness (writes files, runs shell) | L3 → L4 | Code-safety analysis and sandbox scope carry the rung; chain-of-thought auditing and groundedness ship as preview or OSS, so the band tracks what the program assembles. Coverage note below |
 | MCP / skill provider (real tool reach) | L4 | CoT/alignment auditing, tool-call interception, and sandboxing become first-order |
 | Multi-agent mesh | L4 → L5 | Platform-level no-opt-out enforcement and response-leak scanning across every surface |
 
 The [[lethal-trifecta|lethal-trifecta]] test lowers the required level. An agent that reaches no private data, or that holds no exfiltration path, makes a poor high-impact injection target, so the CoT-audit and response-leak stack covers only risk the deployment shape has already removed. A lower D4 score is then recorded as an intentional trade-off.
+
+The core page assigns the generative coding shape the same L3-to-L4 band for this domain, and raises only [[agentic-ai-security-cmm-d8-supply-chain|D8]] to a flat L4, where the dependency channel stays external ([[cmm-known-limitations|CMM Known Limitations]] item 20).
 
 > [!check] State the coverage of "sandboxed" for the coding shape
 > For agentic coding harnesses the load-bearing D4 control is an OS boundary, and its scope must be recorded rather than assumed. A harness sandbox that covers shell subprocesses leaves in-process file tools, MCP servers, and hooks on the host — the asymmetry through which the [[claude-code-github-action-credential-exposure|June 2026 CI credential exfiltration]] ran while the shell boundary held. Whole-process wrappers such as [[anthropic-sandbox-runtime|`@anthropic-ai/sandbox-runtime`]] close it without requiring containers, at beta-research-preview grade. Authoring-time instruments such as the [[security-guidance-plugin|Security Guidance plugin]] warn without blocking and therefore carry no D4 level on their own. Full catalog with availability grades: [[securing-agentic-coding|Securing Agentic Coding]].
@@ -186,12 +193,11 @@ The stress test rated D4 the persona's strongest domain (raw ~L2–L3, lifting t
 
 ## Open questions
 
-- Will CoT / alignment auditing reach GA before the next CMM revision? Today the candidates are AlignmentCheck (experimental) and Task Adherence (preview); if it stays preview, L4 cannot require it as GA.
+- CoT / alignment auditing has not reached GA, and as of September 2026 the reliability of what it reads is reported as declining. OpenAI's GPT-6 Astra system card (2026-09-03) states that the model *"shows a substantial decrease in chain-of-thought monitorability compared to previous models"* ([OpenAI Deployment Safety Hub](https://deploymentsafety.openai.com/gpt-6-astra)), and a contemporaneous evasion paper reports 25-33% monitor evasion rates across monitorability benchmarks under deliberate plan injection ([arXiv:2609.15989](https://arxiv.org/abs/2609.15989), 2026-09-14). AlignmentCheck stays experimental and Task Adherence stays preview, so L4 continues to grade the capability rather than a GA product. See [[chain-of-thought-monitorability|Chain-of-Thought Monitorability]].
 - Groundedness is English-only — a hard limit for non-English member bases, with no verified multilingual GA date.
 - GCP has no native groundedness guardrail; AWS Automated Reasoning is GA but US-East-only. Single-stack GCP buyers go off-platform for L4 groundedness.
-- Defender runtime protection is preview with GA targeted Q3 2026, which may or may not fall inside a regulated buyer's procurement window. Under the cadence qualifier, L5 does not depend on it until it is production-hardened.
+- Defender real-time protection for Agent 365 tooling servers reached GA on 2026-07-27, which is inside rule 2's two-quarter window, and agent threat detection stays in public preview. Under the cadence qualifier, L5 does not depend on either until it is production-hardened.
 - Response-leak scanning at egress (L5) overlaps [[agentic-ai-security-cmm-d5-egress-network|D5]]; score it in one domain to avoid double-counting.
-- [[cmm-known-limitations|CMM Known Limitations]] item 20 states that the core page right-sizes a coding-tool deployment to L4 across all nine domains while this domain's L4 spine rests on preview, experimental or specification-only controls, so the L4 claimed for that shape rests on rule 2's approved-pipeline reading rather than on generally available controls; the target and the ladder name different bands for the same shape.
 - **One output-side minimization target falls outside every data class the rungs name.** `DISCRETE` is anchored at [[agentic-ai-security-cmm-d1-governance|D1]] as a classification and publication control, and the third of the three examples it gives is minimizing technical details in model output ([`/go/discrete/`](https://owaspai.org/go/discrete/)).[^aix-discrete] The L3 criterion above grades an output classifier and requires its data-class scope to be recorded, and the two classes it names are content safety and the exposure-restricted data `SENSITIVE OUTPUT HANDLING` covers — personal data, confidential identifiers, passwords, and tokens.[^aix-soh] Detail about the system itself is in neither. The enforcement point for it is this domain's output path, and no rung here claims the class, because the Exchange gives the example with no mechanism, artifact, or threshold and a criterion would grade an assertion. An assessor recording the L3 scope states whether the class is inside it; the control's anchor stays at D1, where its method sits.
 
 ## D3→D4 dependency cap
@@ -203,7 +209,7 @@ D4's effective score is capped at D3's raw score (`effective(D4) ≤ raw(D3)`), 
 [^ps]: [Microsoft Learn — Content Safety what's new](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/whats-new), 2024–2026. Prompt Shields GA (Aug 2024); Groundedness detection listed under public preview.
 [^ground]: [Microsoft Learn — Groundedness detection](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/groundedness), 2026. Preview status; correction mode; language coverage (English).
 [^ta]: [Microsoft Learn — Task Adherence](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/task-adherence), 2025. Public preview; detects misaligned tool invocations / off-task behavior.
-[^def]: [Microsoft Learn — Real-time agent protection during runtime (preview)](https://learn.microsoft.com/en-us/defender-cloud-apps/real-time-agent-protection-during-runtime), 2026. Webhook block-before-execute; preview, GA targeted Q3 2026.
+[^def]: [Microsoft TechCommunity — Securing AI Agents at Runtime: Real-Time Protection and Threat Detection for Microsoft Agent 365](https://techcommunity.microsoft.com/blog/microsoft-security-blog/securing-ai-agents-at-runtime-real-time-protection-and-threat-detection-for-micr/4541255), 2026-07-27. "Real-time protection for Microsoft Agent 365 tooling servers—now generally available"; "Threat detection for Microsoft Agent 365 agents—now in public preview."
 [^foundry]: [Microsoft Learn — Foundry hosted agents](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents), 2026. Per-session microVM sandbox for untrusted code / computer use (preview).
 [^agentsandbox]: [Google Cloud blog — Bringing you Agent Sandbox on GKE](https://cloud.google.com/blog/products/containers-kubernetes/bringing-you-agent-sandbox-on-gke-and-agent-substrate) and [kubernetes-sigs/agent-sandbox](https://github.com/kubernetes-sigs/agent-sandbox), May 2026. gVisor-default sandbox as Kubernetes SIG Apps CRDs (Apache 2.0); runs on any cluster; managed GKE adds warm pools (300 sandboxes/sec). The AWS and Azure managed sandboxes are platform-bound, while this one is an open primitive — see [[gke-agent-sandbox|GKE Agent Sandbox]]. GCP leads this row and no other row in the table.
 [^pg2]: [Meta — LlamaFirewall architecture](https://meta-llama.github.io/PurpleLlama/LlamaFirewall/docs/documentation/llamafirewall-architecture/workflow-and-detection-components), 2025. PromptGuard 2; AlignmentCheck (experimental); CodeShield.

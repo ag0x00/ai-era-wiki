@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-08-31
+updated: 2026-09-16
 tags:
   - architectures
   - reference-architecture
@@ -75,6 +75,7 @@ related:
   - "[[gemini-cli-workspace-trust-rce]]"
   - "[[harness-config-as-supply-chain-artifact]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
 sources:
   - "[[ai-security-standards-in-q1-2026]]"
   - "[[emerging-cybersecurity-practices-for-agentic-ai-applications]]"
@@ -205,7 +206,7 @@ The [[agentic-ai-security-cmm-recalibration-method-2026|domain recalibration]] c
 1. **Identity-first sequencing.** Per-agent identity is the prerequisite for per-agent egress and observability (the D2→D5 and D2→D7 caps), so build the Identity plane before investing in Egress or Observability.
 2. **Per-task capability tokens remain leading-edge.** As of 2026-Q2 no hyperscaler platform ships them natively; the only implementation is the early-stage [[tenuo-warrant|Tenuo]] OSS primitive (see [[agentic-ai-security-cmm-d2-identity|D2]], which places them at L5+).
 3. **The Control plane now has platform-native PDPs:** AWS AgentCore Policy (GA) and the Microsoft Agent Governance Toolkit (OSS).
-4. **Runtime's reasoning-layer controls sit at preview status.** Chain-of-thought auditing and groundedness checks have not reached GA.
+4. **Runtime's reasoning-layer controls sit at preview status, and the independent runtime-protection market documents no implementation of them.** A September 2026 canvass of twenty-one independent vendors graded chain-of-thought auditing and groundedness checking at zero documented implementations each ([[agent-runtime-protection-canvass-2026-09|the canvass]]). Platform-native coverage exists at preview grade, in Microsoft's Task Adherence and Groundedness Detection, and AWS Bedrock Automated Reasoning checks are generally available for the groundedness half ([[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]). This plane's reasoning-layer capability is reached by assembling OSS and preview components.
 5. **The Data plane's load-bearing control for a closed-corpus bot is answer-time entitlement enforcement** against oversharing / [[inference-exposure|inference exposure]], not corpus attestation; the [[azure-rag-chatbot-security-profile|Azure RAG chatbot security profile]] works this case end to end.
 6. **Licensing is near-zero for an E5 incumbent** across most planes; the real cost is labor and SIEM run-rate.
 
@@ -386,14 +387,14 @@ Suited for large organizations with existing vendor relationships, centralized I
 |---|---|---|
 | **Identity** | Microsoft Entra Agent ID + Microsoft Agent 365 Registry (GA), AWS Bedrock AgentCore, or GCP Agent Identity (all GA); Okta for AI Agents (Early Access, GA expected FY27); CyberArk Conjur or Aembit for NHI governance | Per-agent identity is GA platform-native on all three hyperscalers; **build this plane first** (it gates Egress and Observability); per-task capability tokens remain off-stack / leading-edge |
 | **Control** | AWS Cedar managed policy service (March 2026 AI governance release); Anthropic Compliance API or Microsoft Agent Governance Toolkit (Apr 2026); Permit.io for RBAC UI | Cedar is the enterprise-grade choice; COTS wrappers add audit + workflow tooling |
-| **Runtime** | LlamaFirewall (Meta OSS — no license cost) + NVIDIA NeMo NIMs (commercial inference); Microsoft Prompt Shields for content safety; per-task Firecracker VM or Hyper-V sandbox | Mix OSS guardrail (LlamaFirewall) with COTS NIM delivery for SLA coverage |
+| **Runtime** | LlamaFirewall (Meta OSS — no license cost) + NVIDIA NeMo NIMs (commercial inference); Microsoft Prompt Shields for content safety; per-task Firecracker VM or Hyper-V sandbox | OSS guardrail (LlamaFirewall) plus COTS NIM for SLA coverage; NIM excludes the reasoning layer, so the buyer owns AlignmentCheck, frozen since May 2025 ([[llamafirewall\|LlamaFirewall]]) |
 | **Egress** | **Azure API Management AI Gateway** (Microsoft stack: LLM token governance + inline Content Safety + MCP brokering with Entra/OAuth authorization, GA) or Entra Internet Access for network-layer PI / [[shadow-ai\|Shadow-AI]] filtering; Solo Enterprise for AgentGateway, Kong AI Gateway, or [[cloudflare\|Cloudflare]] AI Gateway; Operant MCP Gateway for MCP-specific authorization; mTLS via Istio / Linkerd | All-Microsoft shops have a native LLM gateway (APIM); MCP tool-integrity / rug-pull defense and per-task capability tokens still require an off-stack tool (Solo / Operant / Tenuo) |
 | **Data** | Microsoft Purview AI (M365 environments); Wiz AI-SPM or Palo Alto Prisma AIRS; JFrog ML Catalog for AI-BOM; ReversingLabs for supply-chain scanning | Stack assumes M365 + cloud environment; swap Purview for CASB equivalent if GCP/AWS-native |
 | **Observability** | [[datadog\|DataDog]] AI Monitoring or New Relic AI Monitoring (OTel-native); LangSmith for agent-specific tracing; Mindgard CART for continuous red-teaming; Vectra AI or Palo Alto Cortex XSIAM for behavioral monitoring | OTel gen_ai.* spans feed into existing SIEM; Mindgard replaces point-in-time red-team for CARTS programs |
 
 #### FOSS / small-team stack
 
-Suited for research teams, security teams running internal agent experiments, startups, or orgs with open-source mandates. Prioritizes zero licensing cost, community support, and composability. Requires more operational ownership.
+Suited for research teams, security teams running internal agent experiments, startups, or organizations with open-source mandates. Prioritizes zero licensing cost, community support, and composability. Requires more operational ownership.
 
 | Plane | Primary choices | Notes |
 |---|---|---|

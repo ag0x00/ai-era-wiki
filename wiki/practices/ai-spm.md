@@ -2,7 +2,7 @@
 type: practice
 title: "AI Security Posture Management (AI-SPM)"
 created: 2026-05-01
-updated: 2026-08-17
+updated: 2026-09-16
 tags:
   - practices
   - posture-management
@@ -19,6 +19,7 @@ related:
   - "[[ai-data-security]]"
   - "[[ai-bom]]"
   - "[[dspm]]"
+  - "[[guardian-agent]]"
   - "[[agent-observability]]"
   - "[[security-controls-for-ai-stacks]]"
   - "[[agentic-ai-security-cmm-2026]]"
@@ -89,6 +90,10 @@ DSPM  ── feeds ──>  AI-SPM  ── feeds ──>  AI guardrails
 
 DSPM signals (this repo holds Confidential PII) flow into AI-SPM (the RAG index that pulls from this repo must enforce that label) which flows into runtime guardrails (block answers that surface this label without proper authorization).
 
+## Relationship to Guardian Agents
+
+Gartner's continuous-assurance category for [[guardian-agent|guardian agents]] — AI agent posture management, security testing, risk and control validation, compliance reporting — restates the AI-SPM discipline at the agent-asset level: an agent's own configuration, permissions, and behavior over time. The asset list above sits underneath that layer as the infrastructure-asset inventory a guardian-agent deployment depends on and does not itself supply, so a program running a guardian-agent product for agent-level assurance still needs AI-SPM's model, prompt, tool, and dataset inventory in place under it.
+
 ## CMM Mapping
 
 AI-SPM is a [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] **D7 Observability** capability, with crossover to **D8 Supply Chain** (AI-BOM coupling) and **D6 Data, Memory & RAG** (DSPM coupling). Mature implementations integrate with CSPM and SIEM rather than running standalone.
@@ -115,6 +120,7 @@ The category is not yet stable. Treat product comparisons as tentative.
 - [[ai-data-security|AI Data Security (Knostic blog, 2026)]]: primary source
 - [[dspm|Data Security Posture Management (DSPM) for AI]]: data-side posture management
 - [[ai-bom|AI-BOM: AI Bill of Materials]]: paired static inventory
+- [[guardian-agent|Guardian Agent]]: agent-asset-level counterpart to this infrastructure-asset discipline
 - [[agent-observability|Agent Observability]]: runtime telemetry that feeds posture checks
 - [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] §Observability layer
 - [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]: D7 Observability capability

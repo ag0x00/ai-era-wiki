@@ -2,11 +2,11 @@
 type: domain
 title: "Reviews"
 created: 2026-05-29
-updated: 2026-09-15
+updated: 2026-09-16
 tags: [domain, reviews]
 status: seed
 subdomain_of: ""
-page_count: 18
+page_count: 19
 ---
 
 # Reviews Index
@@ -16,6 +16,7 @@ Point-in-time assessments: immutable dated snapshots. Per-standard reviews, vali
 ## Pages
 
 
+- [[agent-runtime-protection-canvass-2026-09|Agent Runtime Protection Market Canvass]] — Assessed 2026-09-16: twenty-one products in the independent AI agent runtime-protection and guardian-agent category, graded from vendor d...
 - [[agentic-cmm-regulated-fi-stress-test|Agentic AI CMM: Regulated-FI Stress Test]] — A worked adoption pass over the Agentic AI Security CMM and the Reference Architecture from the perspective of a regulated, single-vendor...
 - [[agentic-cmm-vs-standards-validation|Agentic AI CMM vs Adopted Standards Validation]] — Superseded — navigation: this is the 2026-04-30 first-pass snapshot.
 - [[ai-attribution-audit-2026-08|AI Attribution Audit]] — Seven cyber incidents circulating as a June–July 2026 "AI-enabled" cluster were each checked twice: once to confirm the incident happened...

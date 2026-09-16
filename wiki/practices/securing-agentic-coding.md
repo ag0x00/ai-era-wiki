@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-09-15
+updated: 2026-09-16
 tags:
   - practices
   - agentic-coding
@@ -47,6 +47,7 @@ related:
   - "[[trail-of-bits-skills|Trail of Bits skills]]"
   - "[[cloudflare|Cloudflare]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
 sources:
   - https://code.claude.com/docs/en/security
   - https://code.claude.com/docs/en/sandboxing
@@ -158,6 +159,8 @@ The fourth is newer than the rest of this catalog and inverts a control an asses
 
 One property of this plane is not a settings key at all, and so gets no row. **A sandbox is a control from the moment it exists, and the harness reads workspace configuration before that moment.** [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case on the public record: headless Gemini CLI trusted the workspace folder for configuration and environment loading and executed from an attacker-supplied `.gemini/` tree before its sandbox initialized ([Novee Security, 2026-04-30](https://novee.security/blog/google-gemini-cli-rce-vulnerability-cvss-10-critical-security-advisory/)). *Whether* workspace trust is granted can be a key — Gemini CLI's `GEMINI_TRUST_WORKSPACE` is one since 0.39.1. *When* the isolation boundary is established relative to that read is a property of the harness's startup sequence, which no vendor documentation states. Every row above is assessable by resolving a settings value; this one is an open question to put to a vendor rather than a control to score.
 
+A September 2026 canvass of twenty-one agent-runtime-protection vendors found one product inspecting a coding agent's generated commands before execution across these harnesses — Operant AI's CodeInjectionGuard, launched 2026-04-21 — and none covering reasoning-trace auditing or generated-code static analysis ([[agent-runtime-protection-canvass-2026-09|the canvass]]). The command inspector is a different mechanism from the authoring-time warning row above, and it is recent enough that an assessor grades it on its own production record rather than on its launch.
+
 ### Egress plane
 
 | Control | Instrument | Grade | RA capability → CMM |
@@ -168,9 +171,9 @@ One property of this plane is not a settings key at all, and so gets no row. **A
 | Credential masking on outbound requests | `sandbox.credentials.envVars` with `mode: mask` and `injectHosts` (v2.1.199+); the command sees a per-session sentinel and the proxy substitutes the real value | First-party, GA; fails closed without TLS termination | Credential proxy, inverted → [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
 | Corporate proxy for all traffic | `HTTPS_PROXY` / `HTTP_PROXY` | First-party, GA | MCP / A2A / LLM proxy → [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
 
-Masking is the row most likely to be configured into a false sense of coverage. It is honored only from user, managed, and `--settings` sources — `mask` entries in a repository's `settings.json` are ignored — and every `injectHosts` entry must itself be covered by `allowedDomains`. Without `tlsTerminate` the sentinel reaches the server unchanged and authentication fails rather than leaking, which is the right failure direction but means the control is either working or visibly broken, never silently partial.
+Masking carries preconditions a configuration can miss. It is honored only from user, managed, and `--settings` sources — `mask` entries in a repository's `settings.json` are ignored — and every `injectHosts` entry must itself be covered by `allowedDomains`. Without `tlsTerminate` the sentinel reaches the server unchanged and authentication fails rather than leaking, which is the right failure direction but means the control is either working or visibly broken, never silently partial.
 
-The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: a broad allowlist entry such as `github.com` is reachable by domain fronting. **A hostname allowlist without TLS termination is a misconfiguration control.** It is not an exfiltration control, and [[agentic-ai-security-cmm-d5-egress-network|D5]] should grade it that way.
+The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: a broad allowlist entry such as `github.com` is reachable by domain fronting. **A hostname allowlist without TLS termination grades as a misconfiguration control.** An exfiltration claim rests on the TLS-terminating row above it, and [[agentic-ai-security-cmm-d5-egress-network|D5]] scores it on that basis.
 
 ### Data plane
 
@@ -183,7 +186,7 @@ The default proxy makes its allow decision from the client-supplied hostname wit
 | Harness-configuration audit | [[agentshield\|AgentShield]]; [[endor-labs-ai-code-governance\|Endor Labs]] | FOSS single instrument; COTS single vendor | Supply-chain scanning → [[agentic-ai-security-cmm-d8-supply-chain\|D8]] |
 | Untrusted-input exclusion in CI | Disable fork-PR execution; exclude issue and comment bodies | Practice | — → [[agentic-ai-security-cmm-d6-data-rag\|D6]] |
 
-There is **no built-in credential deny list**. Only the paths and variables explicitly listed are restricted, which makes this the single most commonly skipped configuration step in the catalog. The two rows above it divide along a boundary worth stating: `sandbox.credentials` protects sandboxed Bash commands and nothing else, while `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` reaches every subprocess whether sandboxed or not. An organization that configured only the first has left MCP servers and hooks holding the credential.
+There is **no built-in credential deny list**. Only the paths and variables explicitly listed are restricted, and nothing fails when the list is absent, so the step gets skipped without anything reporting it. The two rows above it divide along a boundary worth stating: `sandbox.credentials` protects sandboxed Bash commands and nothing else, while `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` reaches every subprocess whether sandboxed or not. An organization that configured only the first has left MCP servers and hooks holding the credential.
 
 ### Observability plane
 
@@ -196,7 +199,7 @@ There is **no built-in credential deny list**. Only the paths and variables expl
 | Pull-request security review as a gate | [`claude-code-security-review`](https://github.com/anthropics/claude-code-security-review) GitHub Action | FOSS, first-party | Code-output static analysis → [[agentic-ai-security-cmm-d8-supply-chain\|D8]] |
 | Cross-harness session telemetry and retrospective forensics | [[numbat\|Numbat]] — filesystem session artifacts normalized to NDJSON plus a localhost OTLP receiver, spanning Claude Code, [[codex-security\|Codex]], OpenCode, and Pi | FOSS; [[perplexity\|Perplexity]], vendor-announced; forensics half also implemented by [[adr-agentic-detection-system\|Uber ADR]] | SIEM / SOAR with agent playbooks → [[agentic-ai-security-cmm-d7-observability\|D7]] |
 
-**Content redaction is the default, and it is the finding that separates the appearance of agent audit from the fact of it.** An organization that enables telemetry and stops there receives token counts, costs, durations, permission-mode transitions, and MCP connection status — and no shell command strings, no prompt text, no tool arguments. That stream cannot answer what an agent ran, which makes it a usage feed rather than a security feed. Turning it into a security feed means deciding to export prompt and tool content, with the data-handling consequences that decision carries.
+**Telemetry ships with content redaction on by default, so an organization that enables it and stops there holds the appearance of agent audit without its substance.** That organization receives token counts, costs, durations, permission-mode transitions, and MCP connection status — and no shell command strings, no prompt text, no tool arguments. That stream cannot answer what an agent ran, which makes it a usage feed rather than a security feed. Turning it into a security feed means deciding to export prompt and tool content, with the data-handling consequences that decision carries.
 
 The two analytics APIs are different products with different scopes, and neither substitutes for the telemetry stream. Contribution metrics are Teams and Enterprise only, in public beta, dependent on the GitHub app, unavailable to organizations running [Zero Data Retention](https://code.claude.com/docs/en/zero-data-retention), and documented as excluding Claude Console API usage and third-party integrations. The Console dashboard covers Console-billed API usage and shows spend rather than contribution. Sessions routed through Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a self-hosted gateway fall outside both.
 
@@ -234,7 +237,7 @@ Each step in the ordering removes a dependency on a weaker layer. OS enforcement
 
 ## Limits
 
-**The single-harness scope stated at the top has a sharper edge than convenience.** GuardFall's finding suggests the open-source equivalents are weaker rather than merely different, so an organization that maps this catalog onto another harness should treat a missing key as a missing control until it has evidence otherwise, not as a naming difference. The reverse direction is the newer risk: another harness may hold a control surface this catalog has no row for, and a defect there is invisible to a reader working from these rows. Workspace trust is that surface — Gemini CLI grants or withholds it through `GEMINI_TRUST_WORKSPACE`, Claude Code has no equivalent key, and the control's absence from the catalog is a property of the catalog rather than a finding about either product.
+**A key absent from another harness is a missing control until evidence says otherwise.** GuardFall's finding suggests the open-source equivalents are weaker rather than merely different, so an organization mapping this catalog across harnesses treats each absence as a gap and confirms it before recording a naming difference. The reverse direction is the newer risk: another harness may hold a control surface this catalog has no row for, and a defect there is invisible to a reader working from these rows. Workspace trust is that surface — Gemini CLI grants or withholds it through `GEMINI_TRUST_WORKSPACE`, Claude Code has no equivalent key, and the control's absence from the catalog is a property of the catalog rather than a finding about either product.
 
 **Cross-harness coverage now has one sourced instrument, and it covers only part of the catalog.** [[numbat|Numbat]] attaches to hooks, session artifacts, and OTLP across several harnesses behind one interface. It narrows the gap for observability and for blocking without closing it: the harness-native identity, sandboxing, and egress controls in the rows above have no cross-harness equivalent, so a second harness still inherits whatever isolation its own settings provide.
 

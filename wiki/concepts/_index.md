@@ -2,11 +2,11 @@
 type: domain
 title: "Concepts"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-16
 tags: [domain, concepts]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 91
 ---
 
 # Concepts Index
@@ -39,6 +39,7 @@ Domain concepts that don't fit neatly into a framework, architecture, or practic
 - [[canary-tokens-for-llms|Canary Tokens for LLMs]]
 - [[capability-based-authorization|Capability-Based Authorization]] — A family of authorization primitives in which the artifact being passed around is the policy itself, rather than a credential that names...
 - [[capability-floor-collapse|Capability Floor Collapse]]
+- [[chain-of-thought-monitorability|Chain-of-Thought Monitorability]]
 - [[citizen-coders|Citizen Coders]] — Citizen Coders — surfaced by the Mythos-ready briefing (April 2026) — names the proliferation of coding agents to non-developer users.
 - [[cognitive-file-integrity|Cognitive File Integrity (CFI)]]
 - [[collaboration-paradox|Collaboration Paradox (60% usage, 0-20% delegation)]] — The collaboration paradox names a quantitative observation from Anthropic's Societal Impacts research (cited in the 2026 Agentic Coding T...

@@ -2,7 +2,7 @@
 type: entity
 title: "LlamaFirewall"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-16
 tags:
   - entities
   - products
@@ -24,6 +24,7 @@ related:
   - "[[agent-observability]]"
   - "[[prompt-injection-containment]]"
   - "[[security-controls-for-ai-stacks]]"
+  - "[[chain-of-thought-monitorability]]"
 sources:
   - "https://arxiv.org/abs/2505.03574"
   - "[[.raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md]]"
@@ -35,7 +36,7 @@ sources:
 
 **Sources:** [LlamaFirewall paper, arXiv:2505.03574](https://arxiv.org/abs/2505.03574) (see [[llamafirewall-2025|the summary page]]) · [Purple Llama repo](https://github.com/meta-llama/PurpleLlama)
 
-Open-source AI guardrail framework published by **Meta AI** ([arXiv:2505.03574](https://arxiv.org/abs/2505.03574), submitted April 2025) and distributed in the [[purple-llama|Purple Llama]] project. Designed for building secure AI agents; provides three specialized guardrail components that operate at different points in the agent execution pipeline. The framework is a *final* runtime defense layer supporting system-level, use-case-specific safety policies rather than a single universal filter.
+**Meta AI** published LlamaFirewall as an open-source AI guardrail framework ([arXiv:2505.03574](https://arxiv.org/abs/2505.03574), submitted April 2025) and distributes it in the [[purple-llama|Purple Llama]] project. It carries three specialized guardrail components, each at a different point in the agent execution pipeline. The framework runs as a *final* runtime defense layer and supports system-level, use-case-specific safety policies, so a deployment writes one policy per use case in place of a single universal filter.
 
 ## Architecture: Three Components
 
@@ -50,15 +51,19 @@ Static analysis (Semgrep + regex, eight languages) for **LLM-generated code** be
 
 ## Positioning
 
-LlamaFirewall operates at the **input and reasoning layers** (model layer in the [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] taxonomy). For containment, it is combined with platform-level controls. The key architectural note: LlamaFirewall guardrails should be deployed at the framework/runtime layer, not as prompt instructions, to achieve their effectiveness guarantees.
+LlamaFirewall operates at the **input and reasoning layers** (model layer in the [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] taxonomy), so a deployment pairs it with platform-level controls to get containment. Its guardrails must run at the framework or runtime layer, because the effectiveness figures the paper reports apply to that placement. A guardrail written as a prompt instruction carries no such figure.
+
+AlignmentCheck has not been updated since May 2025: the LlamaFirewall repository is active, with its directory last touched in August 2026, and the last commit reaching AlignmentCheck specifically is 2025-05-13, which leaves it frozen inside a live project with no maturity label and no revised figures on the README or the docs. Its input is also moving, because chain-of-thought monitorability is reported as declining across model generations, so a reasoning-trace auditor carries a dependency on a property the model vendor controls ([[chain-of-thought-monitorability|Chain-of-Thought Monitorability]]).
 
 ## Relationship to Traditional Security
 
-LlamaFirewall maps to IPS/WAF at the model layer — pattern-matching and behavioral analysis on inputs and reasoning rather than network packets and HTTP requests. AlignmentCheck is novel: no traditional equivalent exists for prospective chain-of-thought auditing.
+LlamaFirewall maps to IPS/WAF at the model layer, applying pattern-matching and behavioral analysis to inputs and reasoning where an IPS applies them to network packets and HTTP requests. AlignmentCheck sits outside that mapping. It reads the agent's reasoning trace before the action, where an IPS or WAF reads traffic the system has already emitted.
 
-## As an external baseline
+## External baseline results
 
-Uber's [[adr-agentic-detection-system|ADR]] paper uses LlamaFirewall (Llama Guard 3-8B plus heuristic rules, official thresholds) as one of three detection baselines. The results split by benchmark and expose LlamaFirewall's operating point. On the enterprise [[adr-bench|ADR-Bench]] (260 benign / 42 malicious), it fires 40 false positives — precision 0.167, F1 0.178, the lowest of the four detectors and 19x ADR's cost per task — the failure mode that makes a high-false-positive guardrail unusable for production alerting under class imbalance.[^adr] On [[agentdojo|AgentDojo]] (prompt injection), the picture inverts: LlamaFirewall reaches recall 0.974, near-best at catching attacks, but 21 false alarms drag precision to 0.638.[^adr] The takeaway is not that one detector is better but that input/reasoning-layer guardrails optimize for recall on injection and pay for it in precision on benign enterprise traffic.
+Input and reasoning-layer guardrails optimize for recall on injection and pay for it in precision on benign enterprise traffic. Uber's [[adr-agentic-detection-system|ADR]] paper shows the trade in measurements, using LlamaFirewall (Llama Guard 3-8B plus heuristic rules, official thresholds) as one of three detection baselines.
+
+On the enterprise [[adr-bench|ADR-Bench]] (260 benign / 42 malicious), LlamaFirewall fires 40 false positives, scoring precision 0.167 and F1 0.178, the lowest of the four detectors and 19x ADR's cost per task.[^adr] Class imbalance turns that false-positive rate into an unusable production alerting stream. On [[agentdojo|AgentDojo]] (prompt injection), the picture inverts: LlamaFirewall reaches recall 0.974, near-best at catching attacks, while 21 false alarms drag precision to 0.638.[^adr]
 
 [^lf]: All component figures from the [[llamafirewall-2025|LlamaFirewall paper]], [arXiv:2505.03574](https://arxiv.org/abs/2505.03574) (Meta, 2025).
 

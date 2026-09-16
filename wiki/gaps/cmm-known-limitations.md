@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "CMM Known Limitations (current state)"
 created: 2026-05-06
-updated: 2026-09-15
+updated: 2026-09-16
 tags: [gaps, cmm, known-limitations, current-state]
 status: developing
 scope_axis:
@@ -28,6 +28,7 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk-us-fi]]"
   - "[[owasp-aivss]]"
   - "[[lethal-trifecta]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
 ---
 
 # CMM Known Limitations (current state)
@@ -50,7 +51,7 @@ The [[a2a-protocol|A2A v1.0.0 spec]] (LF-governed since June 2025) covers transp
 
 ### 2. `D4 L5+` — TEE-backed guardrail attestation has no auditor schema
 
-The L5+ clause requires "cryptographic attestation that guardrails executed in a TEE (AWS Nitro Enclaves-class)." This was originally `D4 L5` and was moved to L5+ in the 2026-05-04 L5/L5+ split (acknowledging it's research-stage). The remaining concern: even at L5+, auditors evaluating "TEE attestation chain" will find no standard chain-of-custody schema to evaluate against. The claim is auditable in principle (an attestation log either exists or doesn't) but the chain-of-custody schema is org-authored.
+The L5+ clause requires "cryptographic attestation that guardrails executed in a TEE (AWS Nitro Enclaves-class)." This was originally `D4 L5` and was moved to L5+ in the 2026-05-04 L5/L5+ split (acknowledging its research-stage status). The remaining concern: even at L5+, auditors evaluating "TEE attestation chain" will find no standard chain-of-custody schema to evaluate against. The claim is auditable in principle, because an attestation log either exists or does not, and the chain-of-custody schema is org-authored.
 
 **Status:** [verified-current], reduced impact (L5+ is explicitly aspirational).
 
@@ -62,7 +63,7 @@ The clause references "Microsoft Agent 365 Registry or equivalent unified govern
 
 ### 4. `D1 L5` — AIUC-1 quarterly cadence and single-auditor capacity
 
-The clause requires "AIUC-1 certified." AIUC-1 updates quarterly (Q2 2026 update focused on MCP / third-party / agent identity per AIUC's own statements); a `L5` claim is implicitly "currently certified against the most recent quarterly refresh," which the CMM language doesn't quite articulate (the L5 row says "AIUC-1 certified against the most recent quarterly refresh OR ISO/IEC 42001 certified" + "most-recent cert dated within last quarter" in the auditor-evidence column — better than the original 2026-04-30 framing but still a moving target). Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint for organizations attempting L5 certification.
+The clause requires "AIUC-1 certified." AIUC-1 updates quarterly (Q2 2026 update focused on MCP / third-party / agent identity per AIUC's own statements); a `L5` claim is implicitly "currently certified against the most recent quarterly refresh," which the CMM language does not quite articulate (the L5 row says "AIUC-1 certified against the most recent quarterly refresh OR ISO/IEC 42001 certified" + "most-recent cert dated within last quarter" in the auditor-evidence column — better than the original 2026-04-30 framing but still a moving target). Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint for organizations attempting L5 certification.
 
 **Status:** [verified-current], partly addressed by the "most-recent cert within last quarter" language. The capacity constraint is structural, and CMM language cannot fix it.
 
@@ -158,12 +159,6 @@ Two callouts sit on D1, D2, D4, D6 and D7, three on D9, one each on D3, D5 and D
 
 **Status:** [new-2026-09-15]. Recommendation 30 gives D3 an evidence path for a harness-held enforcement point, or a not-applicable path where no external decision point exists. Tracked in [#170](https://github.com/ag0x00/ai-era/issues/170) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
-### 20. The core page's coding-shape target outruns the `D4` ladder
-
-The core page right-sizes a coding-tool deployment to L4 across all nine domains, while [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] states that its L4 spine rests on preview, experimental or specification-only controls and that a defensible L4 today is assembled from preview and open-source components. Rule 2 admits such a control once it sits in the approved-vendor pipeline with a documented production date, so the L4 the target names and the L4 the ladder can evidence are different bands for the same shape.
-
-**Status:** [new-2026-09-15]. Recommendation 31 reconciles the two. Tracked in [#171](https://github.com/ag0x00/ai-era/issues/171) under [#168](https://github.com/ag0x00/ai-era/issues/168).
-
 ### 21. `D6 L3` presumes entitlements a source repository does not carry
 
 [[agentic-ai-security-cmm-d6-data-rag|D6]] L3 grades answer-time entitlement enforcement, which presumes a retrieval corpus carrying per-principal entitlements. A source repository a coding agent reads holds no such layer, so for that shape the rung is unanswerable rather than unmet, and neither the ladder nor the handbook offers the assessor a way to record it.
@@ -172,7 +167,7 @@ The core page right-sizes a coding-tool deployment to L4 across all nine domains
 
 ## Limitations addressed by CMM revisions (archived)
 
-The following items appeared in §5 of the older validation page and have been resolved by CMM revisions during May 2026. Kept as historical record so future readers don't reintroduce them.
+CMM revisions have resolved the items below: the first three appeared in §5 of the older validation page and closed during May 2026, and item 20 closed on 2026-09-16. Kept as a historical record so a future reader does not reintroduce them.
 
 > [!check] `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 > Original concern: "CSA ATF five-stage promotion gates not yet fully specified in published guidance." Refuted by 2026-05-06 verification: ATF v0.9.1 has **four** maturity levels (Intern / Junior / Senior / Principal) with concrete promotion criteria (minimum time, accuracy thresholds, availability targets, named security validations, sign-off matrix). The CMM's `D3 L4` clause was rewritten 2026-05-06 to match the actual ATF v0.9.1 spec; only the Principal-tier hardware-bound identity / policy-as-code primitives remain abstract enough to need org-authored rubric. See the 2026-05-06 follow-up log entry for details.
@@ -183,13 +178,17 @@ The following items appeared in §5 of the older validation page and have been r
 > [!check] `D7 L4` four red-team tools treated as interchangeable (resolved 2026-05-04)
 > Original concern: "Promptfoo / Mindgard CART / PyRIT / Garak have very different scopes; treating them as interchangeable understates the work." The 2026-05-04 revision added category-distinct framing: "**distinct attack categories** — orchestration / multi-turn (PyRIT), probe library (Garak), regression suite (Promptfoo), and continuous CART (Mindgard CART or equivalent). Single-tool coverage is not L4."
 
+### 20. The core page's coding-shape target outran the D4 ladder (resolved 2026-09-16)
+
+Original item: the core page right-sized a coding-tool deployment to L4 across all nine domains while [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] states that its L4 spine rests on preview, experimental or specification-only controls. Resolved by lowering the core page's shape row to `L3 → L4 (L4 in D8)`. Eight of the nine deep dives right-size that shape below flat L4: six read `L3 → L4`, and D5 and D6 read L3. D8 is the ninth and holds L4. The D4 ladder is unchanged, and the assembled L4 route the domain describes is unchanged. A canvass of twenty-one runtime-protection vendors established that no commercial product covers the L4 capabilities, which makes that route an integration project rather than a procurement ([[agent-runtime-protection-canvass-2026-09|the canvass]]).
+
 ## Contribution guide
 
 When a future review surfaces a new CMM limitation:
 1. Add a numbered subsection under **Still-current limitations** with the concrete CMM clause cited.
 2. Tag with `[verified-current]` (primary-source-checked), `[wiki-summary]` (only summary checked), or `[new-YYYY-MM-DD]` (newly identified).
-3. Recommend a fix or note why it's structural (not fixable in CMM language).
-4. When a CMM revision resolves it, move the item to **Limitations addressed by CMM revisions** with a `[!check]` callout summarizing the resolution.
+3. Recommend a fix, or record that the limitation is structural and therefore outside what CMM language can fix.
+4. When a CMM revision resolves it, move the item to **Limitations addressed by CMM revisions** and summarize the resolution there. The wiki allows one callout per page and this page carries three, so write the entry as an h3 heading with a plain paragraph, the form item 20 uses; a fourth `[!check]` callout fails the callout lint at pre-push.
 
 Per-standard reviews from the audit backlog ([[standards-validation-methodology-2026-05|Standards Validation Methodology]]) will likely surface additional CMM limitations as they execute. Those should be filed here as well.
 

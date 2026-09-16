@@ -2,7 +2,7 @@
 type: concept
 title: "Guardian Agent"
 created: 2026-05-01
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - concepts
   - guardian-agent
@@ -30,6 +30,7 @@ related:
   - "[[cyera-agent-guardian-release]]"
   - "[[falcon-guardian]]"
   - "[[agentdesktop]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
 coined_by:
@@ -40,7 +41,7 @@ coined_by:
 
 A **guardian agent (GA)** is an AI agent that supervises other AI agents. Per Gartner's February 2026 Market Guide, a GA is "a blend of AI governance and AI runtime controls in the [[ai-trism|AI TRiSM]] framework that supports automated, trustworthy and secure AI agent activities and outcomes." Guardian agents use AI-based and deterministic evaluations to oversee AI agents and their interactions with tools, data, APIs, and humans.
 
-The category is **the dominant procurement-language term** for the AI security oversight surface in 2026. It will define how enterprise CISOs, AI platform leads, and architects discuss the space for the next 12–24 months.
+The category supplies the procurement language for the AI security oversight surface in 2026, and it is expected to set how enterprise CISOs, AI platform leads, and architects discuss the space over the next 12–24 months.
 
 The wiki uses **[[oversight-layer|oversight layer]]** (PDP + PEP, the zero-trust / [[xacml|XACML]] roles) as the **architectural primary** term, and **Guardian Agent** as the **procurement-language synonym**.
 
@@ -52,36 +53,35 @@ See [[oversight-layer|Oversight Layer (PDP + PEP for Agentic AI)]] for the full 
 
 ## Basis for the term, and its limits as an architectural primary
 
-Strengths that make Gartner's term genuinely useful:
+Three strengths carry Gartner's term:
 
-- **Procurement gravity.** CISOs and boards understand it instantly; it will dominate enterprise vendor positioning in 2026–2027.
-- **Captures the AI-as-supervisor evolution vector.** Other terms don't.
-- **The Feb 2026 Market Guide bundle is a sharp specification** — three mandatory feature categories that vendors must meet.
+- **Procurement gravity.** CISOs and boards recognize it on first reading, and it is expected to dominate enterprise vendor positioning in 2026–2027.
+- **Coverage of the AI-as-supervisor evolution vector.** The term names the trajectory from human-directed oversight services to autonomous supervision, where the architectural vocabulary describes a static role split.
+- **A sharp specification behind it.** The February 2026 Market Guide bundles three mandatory feature categories a vendor must meet.
 
-Weaknesses that argue against using it as the *architectural* primary:
+Four properties argue against using it as the *architectural* primary:
 
-- **"Agent" is doing double duty** — the supervisor and the supervised are both "agents." Confusing in writing.
-- **Anthropomorphic** — implies a single autonomous actor doing supervision; reality is a layered stack of cooperating components (PDP + PEP + PIP + PAP across six planes).
-- **Conflates AI implementation with role.** A deterministic policy engine doing the same supervisory work is not a "guardian agent" in Gartner's framing, even if functionally equivalent.
-- **Gartner-coined** — vocabulary lock-in risk if Gartner pivots.
+- **"Agent" does double duty**, because the supervisor and the supervised are both "agents." The ambiguity costs a reader on every sentence.
+- **The term is anthropomorphic**, implying a single autonomous actor doing supervision where a layered stack of cooperating components sits (PDP + PEP + PIP + PAP across six planes).
+- **It conflates AI implementation with role.** In Gartner's framing a deterministic policy engine doing the same supervisory work falls outside the category, whatever its function.
+- **Gartner coined it**, so the vocabulary locks to one analyst firm's direction.
 
-The compromise the wiki adopts: **lead architectural discussion with [[oversight-layer|oversight layer]]; lead procurement and category discussion with Guardian Agent.** Both terms are first-class; the relationship between them is explicit.
+The wiki therefore leads architectural discussion with [[oversight-layer|oversight layer]] and procurement and category discussion with Guardian Agent. Both terms are first-class, and the relationship between them is stated on each page.
 
 ## Definition and boundaries
 
-**Is**: an AI agent (or coordinated set of agents) that monitors, evaluates, and intervenes on the behavior of other AI agents in a production deployment.
+A guardian agent is an AI agent, or a coordinated set of agents, that monitors, evaluates, and intervenes on the behavior of other AI agents in a production deployment. Four adjacent things fall outside the definition:
 
-**Isn't**:
-- A static policy engine. (GAs layer AI-based evaluation on top of deterministic rules.)
-- A logging-only observability stack. (GAs intervene; observability stacks watch.)
-- A passive review tool. (GAs are evolving toward semi- and fully autonomous enforcement.)
-- A human review process. (GAs operate at agent speed; humans are escalation paths.)
+- A static policy engine. Guardian agents layer AI-based evaluation on top of deterministic rules.
+- A logging-only observability stack. Guardian agents intervene; observability stacks watch.
+- A passive review tool. Guardian agents are moving toward semi- and fully autonomous enforcement.
+- A human review process. Guardian agents operate at agent speed, with humans on the escalation path.
 
 Per Gartner: GAs evolve from "a collection of human-directed automated oversight services into semiautonomous or fully autonomous agents capable of formulating and executing action plans, and redirecting or blocking actions to align with intended agent goals."
 
 ## The three mandatory feature categories
 
-A vendor must provide **all three** to qualify as a guardian agent in Gartner's framing. This is the bar; most current vendors meet only one or two.
+A vendor must provide **all three** to qualify as a guardian agent in Gartner's framing. Most current vendors meet one or two.
 
 ### 1. AI visibility and traceability
 
@@ -92,7 +92,7 @@ A vendor must provide **all three** to qualify as a guardian agent in Gartner's 
 | **Ownership mapping** | Tracks human + machine owner of each agent and its artifacts. Captures full lineage from creation to deployment for accountability and audit. |
 | **Audit trails** | Comprehensive, tamper-evident logs of every change, interaction, and decision involving AI agents and their artifacts. |
 
-Wiki connection: maps to the [[agentic-ai-security-cmm-2026|CMM]] **D2 Identity & Authorization** (catalog + ownership) and **D7 Observability & Detection** (maps + audit trails).
+In the [[agentic-ai-security-cmm-2026|CMM]] this category is scored under **D2 Identity & Authorization** (catalog and ownership) and **D7 Observability & Detection** (maps and audit trails).
 
 ### 2. Continuous assurances and evaluation
 
@@ -102,7 +102,7 @@ Wiki connection: maps to the [[agentic-ai-security-cmm-2026|CMM]] **D2 Identity 
 
 Common sub-features: **AI agent security testing** (red teaming, behavioral fuzzing), **risk and control validation**, **compliance reporting**.
 
-Wiki connection: this is essentially [[ai-spm|AI Security Posture Management (AI-SPM)]], narrowed to the *agent-asset-level* discipline; DSPM-derived AI-SPM covers the *infrastructure-asset-level* one. Both are required.
+This category restates [[ai-spm|AI Security Posture Management (AI-SPM)]] narrowed to the *agent-asset level*, where DSPM-derived AI-SPM covers the *infrastructure-asset level*. A program needs both.
 
 ### 3. Runtime inspection and enforcement
 
@@ -114,7 +114,7 @@ Wiki connection: this is essentially [[ai-spm|AI Security Posture Management (AI
 
 Common sub-features: **automatic blocking**, **autoremediation** (revoke privileges, quarantine agents), **continuous compliance monitoring**.
 
-Wiki connection: maps to **D4 Runtime & Guardrails** + **D3 Control & Least-Agency** in the CMM.
+In the CMM this category is scored under **D4 Runtime & Guardrails** and **D3 Control & Least-Agency**.
 
 ### Vendor grading against the three categories
 
@@ -124,6 +124,8 @@ Cyera's Agent Guardian names capabilities in all three categories and covers cat
 
 [[agentdesktop|agentdesktop]] does not claim any of the three categories on its own terms. By this page's own description (see Delivery and integration models below) it is a desktop daemon that discovers agent harnesses and their registered MCP servers, translates declared filesystem and network restrictions into each harness's own sandbox configuration, and feeds a cloud gateway. It evaluates no agent behavior at runtime, which leaves it an input to a guardian agent's catalog rather than a guardian agent.
 
+A September 2026 canvass graded twenty-one vendors in this category against the five runtime capabilities the CMM's [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4 rung names, and the result separates the category's language from its documented mechanism. No vendor documents inspection of an agent's reasoning trace; one names groundedness without a method; seven market agentic runtime security over documentation describing input and output filtering. Category 3 above is where the category concentrates, and the implementations found match schemas and patterns rather than comparing a stated intent against a proposed action. Human approval appears as one configurable response among several rather than as a gate that automated checks cannot discharge. [[agent-runtime-protection-canvass-2026-09|The canvass]] carries the per-vendor grades and the availability dates.
+
 ## Sentinels and Operatives
 
 Gartner's Figure 1 introduces a runtime architectural split that maps onto the assurance/enforcement boundary:
@@ -131,9 +133,9 @@ Gartner's Figure 1 introduces a runtime architectural split that maps onto the a
 - **Sentinels** — provide environmental context, posture assessment, and situational awareness. Feed signals to Operatives.
 - **Operatives** — act at runtime to identify risks/threats and prioritize responses. Consume Sentinel signals; intervene.
 
-See [[sentinels-and-operatives|Sentinels and Operatives]] for the full split + how it refines the wiki's existing observability-vs-runtime separation.
+[[sentinels-and-operatives|Sentinels and Operatives]] carries the full split and the refinement it makes to the observability and runtime separation.
 
-## First-party (platform-embedded) vs Independent guardian agents
+## First-party and independent guardian agents
 
 Most AI agent platforms (Microsoft Agent 365 + Entra + Defender + Purview, AWS Bedrock Guardrails, Google Vertex AI Agent Builder, Salesforce Agentforce, Databricks Mosaic AI) are embedding their own first-party guardian capabilities. Gartner's structural argument:
 
@@ -147,11 +149,11 @@ Therefore, an **independent enterprise-owned guardian-agent layer** is required 
 
 This independent layer "acts as the missing universal enforcement mechanism."
 
-This framing turns the architectural decision into a single axis: how much of an enterprise's guardian-agent capability is hyperscaler-locked versus independent, rather than a choice between build and buy or between platform A and platform B. The wiki's [[agentic-ai-security-reference-architecture|RA]] is opinionated toward the independent-layer end of this spectrum because cross-vendor neutrality is a load-bearing requirement for most enterprise deployments.
+The framing reduces the architectural decision to one axis: how much of an enterprise's guardian-agent capability is hyperscaler-locked and how much is independent. The [[agentic-ai-security-reference-architecture|RA]] sits toward the independent end of that axis, because cross-vendor neutrality is load-bearing for most enterprise deployments.
 
 ## Delivery and integration models
 
-Gartner enumerates six (none mutually exclusive):
+Gartner enumerates six models, and a deployment can run several at once:
 
 1. **AI/MCP gateways** — centralized systems to monitor and enforce policies on agent traffic ([[mcp-security|MCP Security]] surface)
 2. **Embedded / in-line runtime modules** — observability and policy modules within agent platforms or LLM proxies
@@ -160,7 +162,7 @@ Gartner enumerates six (none mutually exclusive):
 5. **Hybrid edge-cloud model** — distributed oversight across edge and cloud (becoming more important as agents become endpoint-centric)
 6. **Coordination mechanisms** — standards, APIs, and hooks for unified oversight and policy enforcement
 
-The wiki's current RA already covers patterns 1, 2, 4, and 6. Patterns 3 and 5 are partially covered (logging is in Observability; edge is implicit).
+The RA covers patterns 1, 2, 4 and 6 in full, and 3 and 5 in part: logging sits in the Observability plane, and the edge case is implicit.
 
 Two September 2026 products instantiate pattern 5 directly: [[falcon-guardian|Falcon Guardian]] places oversight in the endpoint sensor, and [[agentdesktop|agentdesktop]] places it in a desktop daemon that feeds a cloud gateway.
 
@@ -172,24 +174,24 @@ Per Gartner Note 8, GAs evaluate in order of cost-efficiency:
 2. **Behavior monitoring** — statistical analysis, contextual evaluation (agent behavioral monitoring; baselines + drift detection)
 3. **LLM/SLM judgment** — most expensive ([[llm-as-a-judge|LLM-as-a-judge]] for nuanced cases)
 
-Skip to LLM/SLM directly when:
+Five conditions send an evaluation straight to the LLM or SLM rung:
 - **Complex context** (nuance/ambiguity — "phishing email for training" vs. malicious activity)
 - **Risk indicators** (prior flagged user behavior, high-risk transaction)
 - **Urgency / impact** (high-stakes actions like "execute on production")
 - **Insufficient deterministic capabilities** (basic filters can't judge intent or scale)
 - **Efficiency trade-off** (deeper scrutiny is inevitable, skip the cheap checks)
 
-Wiki connection: this hierarchy should appear in [[agent-observability|Agent Observability]] §Cedar Policy and the RA's Control plane as a decision rule for the PDP.
+The hierarchy is a decision rule for the PDP: it orders the evaluation methods the Control plane of the [[agentic-ai-security-reference-architecture|RA]] selects among, and [[agent-observability|Agent Observability]] §Cedar Policy holds the deterministic first rung.
 
 ## "Guards for the Guardians" / metagovernance
 
-Guardian agents themselves need governance. Gartner Note 4 articulates five controls — see [[guardian-agent-metagovernance|Guardian Agent Metagovernance (Guards for the Guardians)]] for the operational detail. This is the single concept Gartner adds that the existing CMM does not have at all; it becomes a strong candidate for a new D10 or D9 sub-domain.
+Guardian agents themselves need governance. Gartner Note 4 articulates five controls, and [[guardian-agent-metagovernance|Guardian Agent Metagovernance (Guards for the Guardians)]] carries the operational detail. No domain of the [[agentic-ai-security-cmm-2026|CMM]] scores the oversight layer's own governance, so a program assessing itself against both instruments answers Note 4 outside the nine domains.
 
 ## Verified accountable autonomy
 
-Gartner's north-star phrase for what GAs deliver: **verified accountable autonomy** — agents that can act on their own, but where the action is verifiable, auditable, and bounded by enforced policy.
+Gartner names what a guardian agent delivers **verified accountable autonomy**: agents act on their own, and every action stays verifiable, auditable, and bounded by enforced policy.
 
-The phrase compresses the wiki's existing argument ([[least-agency-principle|least agency]] + verifiable identity + action-to-identity tracing + tamper-evident audit) into a procurement-friendly term. The wiki adopts it as the description of what the architecture provides.
+The phrase compresses four controls the wiki already carries separately — [[least-agency-principle|least agency]], verifiable identity, action-to-identity tracing, and tamper-evident audit — into one procurement-facing term, and the wiki uses it to describe what the architecture provides.
 
 ## Market predictions
 
@@ -200,45 +202,34 @@ The phrase compresses the wiki's existing argument ([[least-agency-principle|lea
 | 2029 | Independent GAs eliminate need for ~50% of incumbent AI-protection security systems in 70%+ of orgs |
 | 2030 | GA solutions ≥6% of agentic AI market = >\$3B annually |
 
-> [!note] Forecast credibility caveat
-> These are [[gartner|Gartner]] predictions, not settled facts. Gartner's historical track record on consolidation predictions is poor: XDR was forecast to eliminate SIEM (didn't); SOAR was forecast to eliminate ticketing (didn't); CSPM was forecast to eliminate cloud-config tools (didn't). The pattern is hyperscaler-embedded controls *complement* point solutions rather than replace them.
->
-> The wiki cites these forecasts as Gartner's market view, not as load-bearing assumptions. The structural argument the wiki actually relies on — that an independent oversight layer is needed for cross-cloud / cross-platform / cross-vendor coverage — does not depend on the 2029 elimination claim. See [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 2.
+**[[gartner|Gartner]]'s consolidation forecasts have a poor record, so read the 2029 row as a market view.** XDR was forecast to eliminate SIEM, SOAR to eliminate ticketing, and CSPM to eliminate cloud-config tools; in each case the hyperscaler-embedded control ended up complementing the point solution. The argument this wiki rests on is structural — an independent oversight layer covers cross-cloud, cross-platform and cross-vendor deployments — and it stands whatever becomes of the elimination claim ([[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 2).
 
 ## Vendor segmentation
 
-Gartner segments the market into six categories — see [[guardian-agents-market-guide|the paper page]] for the full vendor list per segment. Headline:
+Gartner segments the market into six categories, listed below with a sample of each; [[guardian-agents-market-guide|the paper page]] carries the full vendor list per segment.
 
-- **Agent security and risk specialists**: includes [[knostic|Knostic]] alongside Aiceberg, NeuralTrust, Pillar, Zenity, [[varonis|Varonis]], Noma Security, etc. — the largest segment
+- **Agent security and risk specialists**, the largest segment: [[knostic|Knostic]] alongside Aiceberg, NeuralTrust, Pillar, Zenity, [[varonis|Varonis]] and Noma Security, among others
 - **Business alignment and outcome optimizers**: Avon AI, ChatSee, Wayfound (smallest, most-emerging)
 - **Agent identity**: BeyondTrust, CyberArk, Microsoft Entra, Okta, Silverfort
 - **IT/security platform vendors**: CrowdStrike, IBM, SentinelOne, ServiceNow, Cato Networks
 - **AI agent development and governance platforms**: AWS Bedrock, Databricks, Google Cloud, Microsoft (Agent 365), Salesforce
 - **AI content governance**: Bynder, Fujitsu, Markup.AI
 
-## Consequences for the RA and CMM
+## Placement against the RA and CMM
 
-**Adopt** (terminology + concepts that improve the wiki):
+A guardian-agent layer sits on the six planes of the [[agentic-ai-security-reference-architecture|reference architecture]], takes its maturity score from the [[agentic-ai-security-cmm-2026|CMM]], and anchors its evidence in OWASP ASI, [[owasp-aivss|AIVSS]], [[mitre-atlas|MITRE ATLAS]] and the Q1 2026 incident set.
 
-- "Guardian agent" as the principal noun
-- Sentinels/Operatives split
-- AI agent catalog with agent cards as a mandatory capability
-- Maps as a mandatory capability
-- Metagovernance as a meta-domain
-- "Verified accountable autonomy" as a north-star phrase
-- Independent-guardian-agent-layer framing
+Seven elements of Gartner's framing carry into that placement: the guardian-agent noun itself, the Sentinels and Operatives split, the agent catalog with agent cards as a mandatory capability, maps as a mandatory capability, metagovernance as a meta-domain, verified accountable autonomy as the outcome description, and the independent-layer framing.
 
-**Keep** (sharper than Gartner):
+Seven controls the wiki carries reach further than the Market Guide does, and the placement keeps them:
 
-- [[lethal-trifecta|Lethal Trifecta]] structural test
-- [[credential-proxy-pattern|Credential Proxy Pattern]] — concrete pattern, 5-tool convergence
-- [[supply-chain-security-for-agents|Cognitive file integrity]]
-- Specific incident anchoring ([[clawhavoc|ClawHavoc — Agentic Skill Marketplace Supply Chain Attack]], [[sandworm-mode-npm-worm|SANDWORM_MODE npm worm — AI Toolchain Poisoning]], [[meta-sev-1-agent-breach|Meta Sev 1 AI Agent Breach]], [[mcp-cves-q1-2026|MCP CVEs Q1 2026]])
-- Platform-level vs prompt-level enforcement distinction
-- OWASP ASI ID-tagging at CMM L3+
-- [[mitre-atlas|MITRE ATLAS]] technique anchoring
-
-The wiki should now read as: **"A guardian-agent layer built on the six-plane RA, its maturity measured by the CMM, its evidence anchored in OWASP ASI / [[owasp-aivss|AIVSS]] / MITRE ATLAS / Q1 2026 incidents."**
+- The [[lethal-trifecta|Lethal Trifecta]] structural test.
+- The [[credential-proxy-pattern|Credential Proxy Pattern]], a concrete pattern with convergence across five tools.
+- [[supply-chain-security-for-agents|Cognitive file integrity]].
+- Incident anchoring against named cases: [[clawhavoc|ClawHavoc — Agentic Skill Marketplace Supply Chain Attack]], [[sandworm-mode-npm-worm|SANDWORM_MODE npm worm — AI Toolchain Poisoning]], [[meta-sev-1-agent-breach|Meta Sev 1 AI Agent Breach]], and [[mcp-cves-q1-2026|MCP CVEs Q1 2026]].
+- The platform-level and prompt-level enforcement distinction.
+- OWASP ASI ID-tagging at CMM L3+.
+- [[mitre-atlas|MITRE ATLAS]] technique anchoring.
 
 ## See Also
 

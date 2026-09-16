@@ -2,7 +2,7 @@
 type: concept
 title: "Oversight Layer (PDP + PEP for Agentic AI)"
 created: 2026-05-01
-updated: 2026-08-19
+updated: 2026-09-16
 tags:
   - concepts
   - oversight-layer
@@ -33,6 +33,7 @@ related:
   - "[[nist-ai-rmf]]"
   - "[[threat-modeling-for-ai]]"
   - "[[standards-review-eu-ai-act-2026-Q2]]"
+  - "[[agent-runtime-protection-canvass-2026-09]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
 ---
@@ -41,17 +42,17 @@ sources:
 
 The **oversight layer** is this wiki's architectural primary term for the system that monitors, evaluates, and intervenes on the behavior of AI agents in production. It is a layer (not a single component), built from **Policy Decision Points (PDPs)** and **Policy Enforcement Points (PEPs)**, fed by **Policy Information Points (PIPs)** and managed by **Policy Administration Points (PAPs)** — the four-role decomposition originating in the [[xacml|XACML]] policy-language lineage (now dormant) and currently codified in [[nist-sp-800-162|NIST SP 800-162]] §2.2 (NIST's Guide to Attribute Based Access Control), the wiki's preferred living-standard citation for the role vocabulary.
 
-Other terms describe the same role from different vantage points — see [§Cross-walk](#cross-walk) below. The wiki uses **oversight layer** in architectural and practitioner-facing pages, and [[guardian-agent|guardian agent]] in procurement-language and comparison pages.
+Other terms describe the same role from different vantage points; [§Cross-walk](#cross-walk) below sets them side by side. The wiki uses **oversight layer** in architectural and practitioner-facing pages, and [[guardian-agent|guardian agent]] in procurement-language and comparison pages.
 
 ## Basis for the term
 
-The oversight-layer framing has three properties the wiki cares about:
+The oversight-layer framing carries three properties the wiki uses:
 
-1. **Architecturally precise.** PDP / PEP / PIP / PAP are well-defined roles with stable semantics from XACML and zero-trust literature. They describe what each component *does*, not what it's branded.
-2. **Implementation-agnostic.** An oversight layer can be deterministic (Cedar policy, OPA rules), AI-based ([[llm-as-a-judge|LLM-as-a-judge]]), or hybrid. The terminology doesn't prescribe.
-3. **Layer-shaped.** The oversight role doesn't live in a single product; it's distributed across identity, control, runtime, egress, data, and observability planes. "Layer" captures that distribution; "agent" implies a single actor.
+1. **Architectural precision.** PDP / PEP / PIP / PAP are well-defined roles with stable semantics from XACML and zero-trust literature. Each names what a component *does*, so the vocabulary survives a rebrand.
+2. **Implementation independence.** An oversight layer can be deterministic (Cedar policy, OPA rules), AI-based ([[llm-as-a-judge|LLM-as-a-judge]]), or hybrid, and the terminology admits all three.
+3. **Layer shape.** The oversight role spreads across the identity, control, runtime, egress, data, and observability planes, so no single product holds it. "Layer" captures that distribution; "agent" implies a single actor.
 
-The trade-off: less procurement-language gravity than [[guardian-agent|Guardian Agent]]. The wiki keeps both terms, lead by audience.
+The framing costs procurement-language gravity, which [[guardian-agent|Guardian Agent]] holds instead. The wiki keeps both terms and leads with whichever fits the audience.
 
 ## The four roles ([[xacml|XACML]] / zero-trust lineage)
 
@@ -108,7 +109,7 @@ Sentinels feed Operatives. PIPs feed PDPs. Same shape, different vocabulary.
 
 ## Cross-walk
 
-The same role goes by many names. Use the term that fits your audience.
+The same role goes by many names, and the last column names the audience each one fits.
 
 | Term | Source | What it captures | When to use it |
 |---|---|---|---|
@@ -122,7 +123,7 @@ The same role goes by many names. Use the term that fits your audience.
 | **Promotion Gate** | [[csa-maestro\|CSA Agentic Trust Framework]] (Feb 2026) | Staged authorization checkpoints for autonomy promotion | Autonomy-tier governance |
 | **Compartmentalized LLM / [[camel-pattern\|CaMeL]]** | Google DeepMind research | Privileged-LLM-coordinates-Quarantined-LLM split — a containment *pattern* | Research-stage architectural discussions |
 | **AI Watchdog / AI Auditor / AI Steward / AI Custodian** | Informal industry usage | Various — usually narrower | Informal contexts; not standardized |
-| **AI Oversight / Human Oversight** | NIST AI RMF; [[eu-ai-act\|EU AI Act]] Art. 14 (effective oversight + interrupt to safe state — binding-law anchor, verified in [[standards-review-eu-ai-act-2026-Q2\|the 2026-Q2 EU AI Act review]]) | The umbrella concept; doesn't specify implementation | Regulatory / compliance writeups |
+| **AI Oversight / Human Oversight** | NIST AI RMF; [[eu-ai-act\|EU AI Act]] Art. 14 (effective oversight + interrupt to safe state — binding-law anchor, verified in [[standards-review-eu-ai-act-2026-Q2\|the 2026-Q2 EU AI Act review]]) | The umbrella concept; specifies no implementation | Regulatory / compliance writeups |
 | **`#OVERSIGHT`** | [[owasp-ai-exchange\|OWASP AI Exchange]] control catalogue | The detective and gate-based half of blast-radius control, spanning automated detection and human approval; one clause of the Exchange's `MONITOR USE` control[^aix-oversight] | Standards-alignment writeups; evidence packages for AI Act or ISO audits |
 | **`#LEAST MODEL PRIVILEGE`** | [[owasp-ai-exchange\|OWASP AI Exchange]] control catalogue | The preventative half: permissions and attack-surface reduction that bound what a manipulated model can reach, independent of whether the manipulation is detected[^aix-leastmodelpriv] | Standards-alignment writeups; procurement of policy-engine and capability-token components |
 
@@ -134,24 +135,24 @@ The Exchange also states a liaison contribution to ISO/IEC 27090 and prEN 18282,
 
 ## Distinction from the reference monitor
 
-Reference Monitor is the most architecturally pristine option — Lampson 1971, formal-methods literature, well-understood security semantics. Three reasons the wiki doesn't lead with it:
+Reference Monitor carries the longest formal lineage of the options in the cross-walk: Lampson 1971, the formal-methods literature, and well-understood security semantics. Three properties keep the wiki from leading with it:
 
-1. **Pace of innovation.** AI security is evolving faster than 50-year-old security vocabulary can keep up. The agentic-AI threat surface ([[prompt-injection|prompt injection]], [[lethal-trifecta|lethal trifecta]], MCP supply chain, [[tool-abuse-chains|tool-abuse chains]]) doesn't map cleanly onto the system-call mediation Reference Monitor was designed for.
-2. **Reference Monitor names a *property*, and the oversight layer is the structure that satisfies it.** "Always invoked, tamper-proof, verifiable" describes what the layer must achieve, not the layer's own architecture. Conflating the two loses the layered-implementation reality.
-3. **Practitioners don't use it.** AI security teams in 2026 talk about gateways, guardrails, posture management, agent identity — not about reference monitors. Aligning vocabulary with practice is more useful than aligning with formal lineage.
+1. **Vocabulary age against threat pace.** The agentic-AI threat surface ([[prompt-injection|prompt injection]], [[lethal-trifecta|lethal trifecta]], MCP supply chain, [[tool-abuse-chains|tool-abuse chains]]) resists a clean mapping onto the system-call mediation Reference Monitor was designed for, and the fifty-year-old vocabulary has taken no term for it.
+2. **Reference Monitor names a *property*, and the oversight layer is the structure that satisfies it.** "Always invoked, tamper-proof, verifiable" states what the layer must achieve and says nothing about the layer's own architecture. Conflating the two hides the layered implementation.
+3. **Practitioner usage.** AI security teams in 2026 talk about gateways, guardrails, posture management, and agent identity, and a reader searching for the control in those terms finds a reference-monitor page by accident. Vocabulary aligned with practice reaches that reader; vocabulary aligned with formal lineage reaches the specifier.
 
-The wiki keeps Reference Monitor as a property that the oversight layer should satisfy (see [[agent-observability|Agent Observability]] §1) and as one of the synonyms in the cross-walk above.
+The wiki keeps Reference Monitor as a property the oversight layer satisfies (see [[agent-observability|Agent Observability]] §1) and as one of the synonyms in the cross-walk above.
 
 ## Distinction from the guardian agent
 
-The full critique is in [[guardian-agent|Guardian Agent]] §Why "Guardian Agent". Headlines:
+[[guardian-agent|Guardian Agent]] §Why "Guardian Agent" carries the full critique. Four points summarize it:
 
-- "Agent" is doing double duty (the supervisor and the supervised are both agents)
-- Anthropomorphic — implies a single autonomous actor; reality is a layer of cooperating components
-- Conflates AI implementation with role — a deterministic policy engine doing the same job isn't a "guardian agent" in Gartner's framing, even if functionally equivalent
-- Gartner-coined; vocabulary lock-in risk if Gartner pivots
+- "Agent" does double duty, because the supervisor and the supervised are both agents.
+- The term is anthropomorphic, implying a single autonomous actor where a layer of cooperating components sits.
+- It conflates AI implementation with role: in Gartner's framing a deterministic policy engine doing the same job falls outside the category, whatever its function.
+- Gartner coined it, so the vocabulary locks to one analyst firm's direction.
 
-These concerns don't make Guardian Agent wrong — they make it the wrong term to lead architectural discussion with. It remains the right term for procurement, RFPs, and board reports.
+Each of these bears on architectural discussion, where the wiki therefore leads with oversight layer. Guardian Agent stays the term for procurement, RFPs, and board reports.
 
 ## Implications for the CMM
 
@@ -169,7 +170,9 @@ The [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] domains map cl
 | D8 Supply Chain & AI-BOM | PAP (policy provenance) + PIP (BOM as context) |
 | D9 Operations & Human Factors | Cross-cutting |
 
-This mapping is useful for CMM evidence: an L3+ claim on D4 should specify which PEPs are deployed and how they consume PDP decisions. An L3+ claim on D7 should specify which PIPs are emitting signals and what PDPs consume them.
+The mapping carries CMM evidence. An L3+ claim on [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] names which PEPs are deployed and how they consume PDP decisions, and an L3+ claim on [[agentic-ai-security-cmm-d7-observability|D7]] names which PIPs emit signals and which PDPs consume them.
+
+The human half of that split has a specification and no product enforcing it. A September 2026 canvass of twenty-one runtime-protection vendors found human approval offered as one selectable enforcement action configured per rule — Onyx's five are alert, block, mask, steer and ask — and found no product in the set implementing an approval that a clean automated check cannot skip on a defined class of high-blast-radius operations ([[agent-runtime-protection-canvass-2026-09|the canvass]]). An organization holding the non-bypassable reading builds that PEP itself, and an L3+ D4 claim resting on a vendor's approval feature records which of the two readings the product implements.
 
 [[threat-modeling-for-ai|Threat modeling for AI]] works a multi-agent example where a PDP outside the model context is the control that downgrades the trifecta on an email-send path before any per-threat control is weighed, and the same PDP authorizes the executor agent's actions once per-agent identity (D2) is in place.
 

@@ -2,7 +2,7 @@
 type: practice
 title: "Multi-Agent Runtime Security: Cascade Detection and IR"
 created: 2026-05-02
-updated: 2026-09-06
+updated: 2026-09-16
 origin: aggregated
 tags:
   - practices
@@ -126,6 +126,8 @@ The 2025–2026 academic literature has converged on three approaches:
 | **LangSmith / Langtrace / Traceloop** | Cross-agent OTel `gen_ai.*` tracing | Observability layer that cascade rules can be written against; rules themselves not provided |
 
 L1 (per-agent rate limits + immutable logs) is shippable today; L2 (pairwise/triadic traffic baselines + ACL default-deny) is shippable; L3+ requires research-prototype-level work or DIY.
+
+The absence runs deeper than this table's gaps. [[agentic-ai-security-reference-architecture|The reference architecture]] records cascading failures (ASI08) and rogue agents (ASI10) as the two threats with no traditional cybersecurity equivalent, and names this page as where the containment doctrine for them lives. That places the detection rules above at the frontier of what ships rather than at a baseline a buyer can assume, which is why the ladder above reserves L3+ for work an organization builds itself.
 
 ## Multi-agent behavioral baselines
 
