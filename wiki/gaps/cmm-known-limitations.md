@@ -35,7 +35,7 @@ related:
 
 Current-state limitations of [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]], restated 2026-05-06 and extended 2026-09-15.
 
-This page replaces §5 ("Risks and overclaims") of the older [[agentic-cmm-vs-standards-validation|Validation page]]. Three of the original seven items were addressed by CMM revisions during 2026-05; one was wrong (CSA ATF five-stage); the rest are restated below against the *current* CMM. As future revisions close items, archive them here with a `[!check]` note rather than silently deleting.
+This page replaces §5 ("Risks and overclaims") of the older [[agentic-cmm-vs-standards-validation|Validation page]]. Three of the original seven items were addressed by CMM revisions during 2026-05; one was wrong (CSA ATF five-stage); the rest are restated below against the *current* CMM. As future revisions close items, archive them here rather than silently deleting.
 
 ## Still-current limitations
 
@@ -111,12 +111,6 @@ D2 moves per-task holder-bound capability tokens to L5+; D3 and D5 keep the same
 
 **Status:** [new-2026-09-15]. Recommendation 25: cite a source that states the in-force date, or drop the in-force claim. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
-### 12. `D6` alone omits the production-maturity preamble
-
-Eight of the nine ladders open with the rule that a control counts when it operates in production. [[agentic-ai-security-cmm-d6-data-rag|D6]] opens with the rule-1 sentence alone, so an assessor grading a piloted retrieval control against D6 has no instruction that the pilot does not count.
-
-**Status:** [new-2026-09-15]. Recommendation 19 adds the preamble to D6, the core page and the measurement protocol. Tracked in [#172](https://github.com/ag0x00/ai-era/issues/172) under [#168](https://github.com/ag0x00/ai-era/issues/168).
-
 ### 13. The scorecard takes its engagement tier as the minimum of its section tiers
 
 [[canadian-bank-secure-sdlc-ai-assessor-scorecard|The Canadian-bank scorecard]] takes the whole-engagement tier as the minimum of the per-section tiers and states that choice as deliberate, while the CMM replaced the single floor with dependency-resolved effective scores over a per-domain matrix. The same program carries two headline ratings depending on which instrument produced it, on a scorecard that claims alignment with the measurement protocol for cross-engagement comparability.
@@ -159,15 +153,9 @@ Two callouts sit on D1, D2, D4, D6 and D7, three on D9, one each on D3, D5 and D
 
 **Status:** [new-2026-09-15]. Recommendation 30 gives D3 an evidence path for a harness-held enforcement point, or a not-applicable path where no external decision point exists. Tracked in [#170](https://github.com/ag0x00/ai-era/issues/170) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
-### 21. `D6 L3` presumes entitlements a source repository does not carry
-
-[[agentic-ai-security-cmm-d6-data-rag|D6]] L3 grades answer-time entitlement enforcement, which presumes a retrieval corpus carrying per-principal entitlements. A source repository a coding agent reads holds no such layer, so for that shape the rung is unanswerable rather than unmet, and neither the ladder nor the handbook offers the assessor a way to record it.
-
-**Status:** [new-2026-09-15]. Recommendation 32 restates the spine in terms a repository can satisfy, or scopes D6 out for the coding shape. Tracked in [#172](https://github.com/ag0x00/ai-era/issues/172) under [#168](https://github.com/ag0x00/ai-era/issues/168).
-
 ## Limitations addressed by CMM revisions (archived)
 
-CMM revisions have resolved the items below: the first three appeared in §5 of the older validation page and closed during May 2026, and item 20 closed on 2026-09-16. Kept as a historical record so a future reader does not reintroduce them.
+CMM revisions have resolved the items below: the first three appeared in §5 of the older validation page and closed during May 2026, and items 12, 20 and 21 closed on 2026-09-16. Kept as a historical record so a future reader does not reintroduce them.
 
 > [!check] `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 > Original concern: "CSA ATF five-stage promotion gates not yet fully specified in published guidance." Refuted by 2026-05-06 verification: ATF v0.9.1 has **four** maturity levels (Intern / Junior / Senior / Principal) with concrete promotion criteria (minimum time, accuracy thresholds, availability targets, named security validations, sign-off matrix). The CMM's `D3 L4` clause was rewritten 2026-05-06 to match the actual ATF v0.9.1 spec; only the Principal-tier hardware-bound identity / policy-as-code primitives remain abstract enough to need org-authored rubric. See the 2026-05-06 follow-up log entry for details.
@@ -178,9 +166,17 @@ CMM revisions have resolved the items below: the first three appeared in §5 of 
 > [!check] `D7 L4` four red-team tools treated as interchangeable (resolved 2026-05-04)
 > Original concern: "Promptfoo / Mindgard CART / PyRIT / Garak have very different scopes; treating them as interchangeable understates the work." The 2026-05-04 revision added category-distinct framing: "**distinct attack categories** — orchestration / multi-turn (PyRIT), probe library (Garak), regression suite (Promptfoo), and continuous CART (Mindgard CART or equivalent). Single-tool coverage is not L4."
 
+### 12. `D6` alone omitted the production-maturity preamble (resolved 2026-09-16)
+
+Original item: eight of the nine ladders opened with the rule that a control counts when it operates in production, and [[agentic-ai-security-cmm-d6-data-rag|D6]] opened with the rule-1 sentence alone, so an assessor grading a piloted retrieval control against D6 read no instruction that the pilot did not count. Resolved by putting both shared preamble sentences on D6, verbatim as the other eight carry them, so the approved-vendor-pipeline and production-date qualifier reads the same on all nine. Recommendation 19, shipped under [#172](https://github.com/ag0x00/ai-era/issues/172).
+
 ### 20. The core page's coding-shape target outran the D4 ladder (resolved 2026-09-16)
 
 Original item: the core page right-sized a coding-tool deployment to L4 across all nine domains while [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] states that its L4 spine rests on preview, experimental or specification-only controls. Resolved by lowering the core page's shape row to `L3 → L4 (L4 in D8)`. Eight of the nine deep dives right-size that shape below flat L4: six read `L3 → L4`, and D5 and D6 read L3. D8 is the ninth and holds L4. The D4 ladder is unchanged, and the assembled L4 route the domain describes is unchanged. A canvass of twenty-one runtime-protection vendors established that no commercial product covers the L4 capabilities, which makes that route an integration project rather than a procurement ([[agent-runtime-protection-canvass-2026-09|the canvass]]).
+
+### 21. `D6 L3` presumed entitlements a source repository does not carry (resolved 2026-09-16)
+
+Original item: `D6` L3 graded answer-time entitlement enforcement against a corpus carrying per-principal entitlements, which a source repository does not hold, so the September stress test scored that shape at L2 to L3 against an L3 target and recorded the spine as describing no repository. Resolved by restating the criterion rather than scoping `D6` out of the coding shape: L3 now asks which **authorization layer** resolves the asking principal's read authorization — per-document entitlements, repository and branch grants with a path-scoped retrieval, or a tenant access-control list with label-aware policy — and a run carrying no asking principal is graded on the scope binding the retrieval to the task. The measurement protocol's `D6` interview block carries the matching repository questions. Recommendation 32, shipped under [#172](https://github.com/ag0x00/ai-era/issues/172).
 
 ## Contribution guide
 
