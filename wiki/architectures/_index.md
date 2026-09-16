@@ -2,7 +2,7 @@
 type: domain
 title: "Reference Architectures"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-16
 tags: [domain, architectures]
 status: seed
 subdomain_of: ""
@@ -26,6 +26,7 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 - [[agentic-soc-ra-threat-hunting|Agentic SOC Threat Hunting Surface]] — Per-function deep dive on the threat hunting surface of the Agentic SOC Reference Architecture.
 - [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]] — This reference architecture is the structural counterpart to the Agentic SOC Capability Maturity Model.
 - [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] — This page projects the recalibrated six-plane RA and nine-domain CMM onto one common deployment: a closed-corpus, member- or customer-fac...
+- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] — This page reads the six-plane reference architecture and the nine-domain CMM against Google Cloud alone, plane by plane and domain by dom...
 - [[system-prompt-architecture|System Prompt Architecture (Boundary Markers + Trust Labels)]]
 
 > [!gap] More needed

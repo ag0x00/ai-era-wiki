@@ -172,6 +172,8 @@ The [[lethal-trifecta|lethal-trifecta]] test lowers the target level directly he
 
 ## Cost model
 
+Every instrument this model treats as entitled is Microsoft's — DSPM for AI, label-aware DLP, Restricted SharePoint Search — so the `~0` at L2 describes an E5 tenant with Copilot and nobody else. The control landscape above names no Google counterpart for answer-time entitlement enforcement or the oversharing assessment, so a Google Cloud or Google Workspace buyer funds both as off-stack components. The remediation labor this model calls the dominant cost is unaffected by which stack funds the rest.
+
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
 | L2 | ~0 for an E5 + Copilot tenant (DSPM for AI, DLP, Content Safety are in entitlements) | the first assessment + a labeling scheme | — |

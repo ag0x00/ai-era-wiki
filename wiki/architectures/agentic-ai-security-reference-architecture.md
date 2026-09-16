@@ -26,6 +26,7 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[azure-rag-chatbot-security-profile]]"
+  - "[[google-cloud-agentic-security-profile]]"
   - "[[cybersecurity-cmms-exemplars]]"
   - "[[security-controls-for-ai-stacks]]"
   - "[[agent-identity-architecture]]"
@@ -210,7 +211,7 @@ The [[agentic-ai-security-cmm-recalibration-method-2026|domain recalibration]] c
 5. **The Data plane's load-bearing control for a closed-corpus bot is answer-time entitlement enforcement** against oversharing / [[inference-exposure|inference exposure]], not corpus attestation; the [[azure-rag-chatbot-security-profile|Azure RAG chatbot security profile]] works this case end to end.
 6. **Licensing is near-zero for an E5 incumbent** across most planes; the real cost is labor and SIEM run-rate.
 
-For an all-Microsoft deployment, [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]] maps named, deep-linked controls to each plane: Entra Agent ID and Conditional Access (Identity), least-action design plus the Agent Governance Toolkit PDP (Control), Prompt Shields with preview Groundedness / Task Adherence (Runtime), Entra Internet Access and the APIM AI Gateway (Egress), Purview answer-time entitlement and DSPM (Data), Defender XDR and Sentinel agentic-SOC tooling (Observability). The recalibration's grading reflects the preview status of the adaptive Runtime and Observability controls.
+For an all-Microsoft deployment, [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]] maps named, deep-linked controls to each plane: Entra Agent ID and Conditional Access (Identity), least-action design plus the Agent Governance Toolkit PDP (Control), Prompt Shields with preview Groundedness / Task Adherence (Runtime), Entra Internet Access and the APIM AI Gateway (Egress), Purview answer-time entitlement and DSPM (Data), Defender XDR and Sentinel agentic-SOC tooling (Observability). The recalibration's grading reflects the preview status of the adaptive Runtime and Observability controls. For an all-Google-Cloud deployment, [[google-cloud-agentic-security-profile|the Google Cloud agentic security profile]] reads the same six planes against Google's own instruments — Agent Identity (Identity), IAM Unified Access Policies at Agent Gateway (Control), Model Armor and the check grounding API (Runtime), VPC Service Controls (Egress), Sensitive Data Protection and CMEK (Data), the OpenTelemetry GenAI path into Cloud Trace (Observability) — and names the planes where Google ships no native control.
 
 ### 1. Identity plane
 
@@ -389,7 +390,7 @@ Suited for large organizations with existing vendor relationships, centralized I
 | **Control** | AWS Cedar managed policy service (March 2026 AI governance release); Anthropic Compliance API or Microsoft Agent Governance Toolkit (Apr 2026); Permit.io for RBAC UI | Cedar is the enterprise-grade choice; COTS wrappers add audit + workflow tooling |
 | **Runtime** | LlamaFirewall (Meta OSS — no license cost) + NVIDIA NeMo NIMs (commercial inference); Microsoft Prompt Shields for content safety; per-task Firecracker VM or Hyper-V sandbox | OSS guardrail (LlamaFirewall) plus COTS NIM for SLA coverage; NIM excludes the reasoning layer, so the buyer owns AlignmentCheck, frozen since May 2025 ([[llamafirewall\|LlamaFirewall]]) |
 | **Egress** | **Azure API Management AI Gateway** (Microsoft stack: LLM token governance + inline Content Safety + MCP brokering with Entra/OAuth authorization, GA) or Entra Internet Access for network-layer PI / [[shadow-ai\|Shadow-AI]] filtering; Solo Enterprise for AgentGateway, Kong AI Gateway, or [[cloudflare\|Cloudflare]] AI Gateway; Operant MCP Gateway for MCP-specific authorization; mTLS via Istio / Linkerd | All-Microsoft shops have a native LLM gateway (APIM); MCP tool-integrity / rug-pull defense and per-task capability tokens still require an off-stack tool (Solo / Operant / Tenuo) |
-| **Data** | Microsoft Purview AI (M365 environments); Wiz AI-SPM or Palo Alto Prisma AIRS; JFrog ML Catalog for AI-BOM; ReversingLabs for supply-chain scanning | Stack assumes M365 + cloud environment; swap Purview for CASB equivalent if GCP/AWS-native |
+| **Data** | Microsoft Purview AI (M365 environments); Wiz AI-SPM or Palo Alto Prisma AIRS; JFrog ML Catalog for AI-BOM; ReversingLabs for supply-chain scanning | Stack assumes M365 + cloud environment; swap Purview for CASB equivalent if GCP/AWS-native — [[google-cloud-agentic-security-profile\|the Google Cloud profile]] answers the GCP case |
 | **Observability** | [[datadog\|DataDog]] AI Monitoring or New Relic AI Monitoring (OTel-native); LangSmith for agent-specific tracing; Mindgard CART for continuous red-teaming; Vectra AI or Palo Alto Cortex XSIAM for behavioral monitoring | OTel gen_ai.* spans feed into existing SIEM; Mindgard replaces point-in-time red-team for CARTS programs |
 
 #### FOSS / small-team stack
@@ -484,6 +485,8 @@ Architectural trade-offs that vary with deployment scale, latency tolerance, and
 - **Fail-closed vs fail-open.** Default to fail-closed for high-risk-tier actions, fail-open for read-only / informational tier. CSA ATF Promotion Gates encode this directly.
 
 ## Gaps in the architecture
+
+The items below are gaps in the architecture itself, across every platform. For the coverage of one platform, [[google-cloud-agentic-security-profile|the Google Cloud agentic security profile]] names the planes Google Cloud leaves to an off-stack component.
 
 > [!gap] Known unfilled spots
 > 1. **Compartmentalized LLM (CaMeL) reference pattern.** Privileged-LLM-coordinates-quarantined-LLM is theoretically sound but lacks a vendor-neutral reference implementation. (Google DeepMind research-stage.)

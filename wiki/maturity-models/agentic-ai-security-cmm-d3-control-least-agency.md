@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -21,6 +21,7 @@ related:
   - "[[agentic-ai-security-cmm-dependency-rules]]"
   - "[[agentic-ai-security-cmm-d2-identity]]"
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[decision-rights]]"
   - "[[least-agency-principle]]"
@@ -71,7 +72,7 @@ The Class 3 coverage claim needs a bound the [[openai-hugging-face-agent-inciden
 |---|---|---|---|
 | Policy language / PDP engine | Cedar (OSS, Apache-2.0); OPA / Rego (OSS, CNCF) | Stable; both sub-millisecond | — |
 | Managed PDP service | AWS Amazon Verified Permissions (Cedar) | GA since 2023[^avp] | **AWS** |
-| Agent-runtime PDP intercepting tool calls | AWS Bedrock AgentCore Policy (Cedar; permissive/audit mode; conditional auth) | **GA Mar 2026**[^agentcore] | **AWS** |
+| Agent-runtime PDP intercepting tool calls | AWS Bedrock AgentCore Policy (Cedar; permissive/audit mode; conditional auth); Google IAM Unified Access Policies (CEL; allow + deny per rule; DRY_RUN then ENFORCE) | AgentCore **GA Mar 2026**[^agentcore]; Google states no launch stage[^uap] | **AWS** + **GCP** |
 | Agent-runtime PDP (OSS) | Microsoft Agent Governance Toolkit — Agent OS policy engine, YAML + OPA Rego + Cedar, sub-0.1 ms, ToolPolicy approval/justification/rate-limit guards | OSS, MIT, v3.7.0[^agt] | **MS** (bridges to Entra Agent ID) |
 | Human-approval gates (HITL) | MS Copilot Studio multistage / AI approvals; AWS Bedrock Return-of-Control; LangGraph `interrupt()` | Copilot Studio approvals GA; computer-use supervision preview[^copilot] | **MS** + **AWS**; GCP thinner |
 | Per-task capability tokens (cryptographic binding) | [[tenuo-warrant\|Tenuo Warrant]] (OSS; holder-bound, ephemeral, delegation-aware) | OSS primitive, no platform-native equivalent | None native |
@@ -174,6 +175,8 @@ Ask the cruder question first. An allowlist an autonomy flag suppresses is not a
 
 ## Cost model
 
+Two paths reach the L3 policy decision point at `~0`: a Microsoft E5 incumbent's entitlements, and AWS's consumption-priced route, both platform-native. Google's path runs through IAM Unified Access Policies enforced at Agent Gateway — a feature for which Google states no launch stage and no support for VPC Service Controls[^uap] — so the licensing line stays near zero there too, but the cost surfaces in design instead: a deployment needing both an agent PDP and a service perimeter has to stand up each as its own mechanism. Every stack pays the same for policy-authoring and promotion-rubric labor regardless.
+
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
 | L2 | ~0 | ~0.1–0.25 FTE: allowlists, informal HITL | — |
@@ -197,7 +200,7 @@ The L3 labor line assumes tool access already exists as configuration the PDP ca
 
 - Per-task holder-bound tokens have no platform-native product; whether L5 is reachable for a regulated buyer without an OSS-integration project, or should be treated as L5+, is the open calibration question (shared with D5).
 - The Microsoft step-down control (Defender Predictive Shielding) is preview; the L5 step-down capability leans on it.
-- GCP exposes Agent Identity and Model Armor but no Cedar/OPA-class declarative decision-rights PDP or first-class approval-gate primitive surfaced; treat its D3 platform-native column as thin.
+- Google ships a declarative decision-rights engine, IAM Unified Access Policies, evaluated at Agent Gateway by Identity-Aware Proxy, with CEL conditions, an allow effect and a deny effect on each rule, Principal Access Boundary on the agent identity, and a DRY_RUN mode ahead of ENFORCE. Google states no launch stage for it and states that it does not support VPC Service Controls,[^uap] so a deployment needing both an agent PDP and an egress perimeter covers each path separately. Whether this domain grades that composition failure or leaves it to [[agentic-ai-security-cmm-d5-egress-network|D5]] is an open calibration question. No Google approval-gate primitive is documented, so the HITL row above keeps its thin grade.
 - No FFIEC/GLBA/NCUA mapping yet for SoD and approval-gate controls (model-risk-management expectations); deferred to the crosswalk.
 - Approval tiers are defined over action classes, and the attested agent–agent collusion case ran entirely inside authorized action classes. Whether D3 should grade *who else can observe an action's side effects* (a property of the medium rather than of the action) or leave that to D4, D5, or D8 — none of which grades it today — is an open calibration question raised by the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]].
 - [[cmm-known-limitations|CMM Known Limitations]] item 19 states that a coding harness enforcing its own managed permission policy is the enforcement point and the governed component at once, so it produces none of the three PDP artifacts this domain's L3 row asks for, and the assessor either records the circularity or scores L2.
@@ -213,6 +216,7 @@ The active rule set caps D4's effective score at D3's raw score (`effective(D4) 
 [^agentcore]: [AWS — Policy controls for Bedrock AgentCore generally available](https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/), 2026. Cedar-based agent-runtime PDP; GA March 2026.
 [^agt]: [Microsoft — Introducing the Agent Governance Toolkit](https://opensource.microsoft.com/blog/2026/04/02/introducing-the-agent-governance-toolkit-open-source-runtime-security-for-ai-agents/), 2026. Agent OS sub-millisecond PEP/PDP (OPA Rego / Cedar / YAML), MIT; v3.7.0 ToolPolicy guards.
 [^copilot]: [Microsoft Learn — Advanced approvals in Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/flows-advanced-approvals), 2026. Multistage / AI approvals; human-supervision for computer use in preview.
+[^uap]: [Google Cloud — IAM Access policies overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/iam-overview-uap), fetched 2026-09-16. Unified Access Policies govern communication between agent principals and destination resources; Agent Gateway uses Identity-Aware Proxy to evaluate and enforce them. Each rule carries both an allow effect and a deny effect, conditions are written in Common Expression Language, Principal Access Boundary applies on the agent identity, and Google recommends configuring the gateway in `DRY_RUN` before `ENFORCE`. The page states no launch stage, and its opening note reads "This feature does not support VPC Service Controls"; `Agent Gateway` does not appear on the [VPC Service Controls supported-products list](https://docs.cloud.google.com/vpc-service-controls/docs/supported-products), fetched the same day.
 [^cedaranalysis]: [AWS — Introducing Cedar Analysis open-source tools](https://aws.amazon.com/blogs/opensource/introducing-cedar-analysis-open-source-tools-for-verifying-authorization-policies/), 2026. SMT/Lean verification of authorization policies.
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 [^aix-escape]: [OWASP AI Exchange — Agent escape](https://owaspai.org/go/agentescape/), retrieved 2026-08-18.

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -145,6 +145,8 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 The [[lethal-trifecta|lethal-trifecta]] test lowers the target level. An agent with no private-data reach or no external-comms path does not need the per-task-token and federation tail. A sound L3 with the trifecta broken is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
 
 ## Cost model
+
+Entra Agent ID riding the directory, plus the Entra ID P1 entitlement E5 already includes, sets the near-zero licensing this table reports. Agent Identity and the auth-manager credential vault cover the same ground for a Google Cloud buyer — per-agent identity, credential lifecycle, zero-credential context — but stop there: the control landscape above marks conditional and risk-based access Microsoft-only, so no agent-specific version of it exists on Google Cloud at all. Coupled-credential migration labor and audit-log run-rate do not change between the two.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|

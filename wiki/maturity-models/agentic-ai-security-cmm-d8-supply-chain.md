@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -168,6 +168,8 @@ A consumer pulling only first-party hosted models over a closed corpus has a nar
 The coding-copilot row's scope has widened since it was written. Beyond the dependency channel, the **harness configuration tree** is in scope — hooks, MCP manifests, subagents, skills, and instruction files compose a runtime from third-party parts, per [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]]. Two sourced instruments now operate on it from opposite directions: [[agentshield|AgentShield]] as an open-source scanner and [[endor-labs-ai-code-governance|Endor Labs AI Code Governance]] as a commercial fleet inventory with per-action attribution. Fleet inventory — which harnesses, which versions, which MCP servers, attributable to which human — is an evidence dimension the L3/L4 criteria omit, and a candidate for the next revision. See [[securing-agentic-coding|Securing Agentic Coding]] and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] §Fleet and parallel.
 
 ## Cost model
+
+This model prices a Microsoft E5 tenant that also holds GitHub Enterprise, where Advanced Security, Dependabot and Artifact Attestations carry the build-integrity rows inside entitlements. The Google path in the control landscape above (Cloud Build provenance, Artifact Registry signature verification, Artifact Analysis) carries no stated SLSA build level, so the L4 cell crediting Artifact Attestations with SLSA L2 or L3 at no cost becomes evidence work for a Google Cloud buyer rather than an inherited level. Pipeline engineering labor is one constant across stacks; the absence of any first-party hyperscaler ML-BOM generator is another.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|

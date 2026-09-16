@@ -3,7 +3,7 @@ type: concept
 title: "Prompt Injection"
 address: c-000114
 created: 2026-05-24
-updated: 2026-08-25
+updated: 2026-09-16
 origin: aggregated
 tags:
   - concepts
@@ -35,6 +35,7 @@ related:
   - "[[camel-pattern|CaMeL Pattern]]"
   - "[[sentinel-tokens|Sentinel Tokens]]"
   - "[[agent-message-structure-manipulation|Agent Message Structure Manipulation]]"
+  - "[[google-cloud-agentic-security-profile]]"
 sources:
   - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"

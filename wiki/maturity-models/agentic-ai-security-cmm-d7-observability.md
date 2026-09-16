@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D7: Observability and Detection"
 address: c-000128
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -166,6 +166,8 @@ The [[lethal-trifecta|lethal-trifecta]] test is D7's strongest right-sizing leve
 > A common D7 regression in the coding shape: an organization introduces an LLM gateway or a cloud-provider endpoint (Bedrock, Vertex, Foundry) for governance reasons, and the harness vendor's analytics API — which sees only sessions running against the vendor's own API — stops seeing them. OpenTelemetry export is the replacement and it is not automatic. Verify the SIEM actually receives session-correlated prompt, tool-result, and permission-decision events before crediting the level. See [[securing-agentic-coding|Securing Agentic Coding]] §Observability plane and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]].
 
 ## Cost model
+
+L2 and L3 price an E5 incumbent whose Sentinel, Azure Monitor and Application Insights ingestion is already entitled, and the L4 cliff for that buyer is an Agent 365 licence. Cloud Trace and the OpenTelemetry the Agent Development Kit emits meet the L3 telemetry rows for a Google Cloud buyer, but the L4 behavioral-drift row sits off-platform there: the control landscape above records no native Google detector and places the nearest Google product, Agent Anomaly Detection, in preview. Ingestion run-rate scales with agent count on every stack; the off-platform COTS detector a Google buyer adds carries no figure in this model.
 
 | Level | Licensing | Operational labor | Run-rate (dominant) |
 |---|---|---|---|

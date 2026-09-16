@@ -47,6 +47,8 @@ related:
   - "[[trail-of-bits-skills|Trail of Bits skills]]"
   - "[[cloudflare|Cloudflare]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]"
+  - "[[agentic-ai-security-cmm-crosswalk-canada-fi|CMM: Canadian Regulated-Finance Crosswalk]]"
+  - "[[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
 sources:
   - https://code.claude.com/docs/en/security
@@ -55,10 +57,13 @@ sources:
   - https://code.claude.com/docs/en/managed-settings
   - https://code.claude.com/docs/en/iam
   - https://code.claude.com/docs/en/google-vertex-ai
+  - https://code.claude.com/docs/en/zero-data-retention
   - https://code.claude.com/docs/en/analytics
   - https://code.claude.com/docs/en/monitoring-usage
   - https://code.claude.com/docs/en/sandbox-environments
   - https://code.claude.com/docs/en/third-party-integrations
+  - https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency
+  - https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations
   - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
   - https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
@@ -117,6 +122,8 @@ The distinction that decides whether a managed key is authoritative: **boolean k
 **The organization pin covers fewer login paths than it appears to.** Terminal, IDE-extension, and SDK logins are held. The two token-minting commands check only the login *method*, not the organization, so both can produce a credential in a different tenant. Gateway sign-in never authenticates against an Anthropic organization at all, which makes the gateway's own identity provider the control. Bedrock, Vertex, and Foundry sessions authenticate against the cloud provider and are not blocked, so cloud IAM policy is the control there. Deploy the pin through device management: server-managed settings only reach accounts already inside the organization, and so cannot govern a first login.
 
 **Cloud routing moves the session's authorization to cloud IAM, and it pins the region to a list with no Canadian entry.** `CLOUD_ML_REGION` and `ANTHROPIC_VERTEX_PROJECT_ID` join `CLAUDE_CODE_USE_VERTEX=1` in authorizing the session, under the Google Cloud IAM role `roles/aiplatform.user`. `CLOUD_ML_REGION` accepts `global, eu, us, us-east5` as its documented examples — the first a global endpoint, the middle two multi-region locations, the last a specific region — with `us-east5` the unset default; the documentation names no Canadian region and states nothing about retention or residency. Pin the model version for a multi-user rollout.
+
+**No Canadian region exists for this shape to select.** Google publishes its ML-processing residency commitments per model, and partner models sit on their own table, whose columns are the US and EU multi-regions, Belgium, Netherlands, Singapore, Taiwan and Global; the Google-model table on the same page carries a `Canada (northamerica-northeast1)` column and the partner table has none, so no Claude model on Google Cloud carries a Canadian commitment ([Google Cloud, fetched 2026-09-16](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency)). The documented default is `us-east5`, a United States region, and the documented setup example sets `CLOUD_ML_REGION=global`, which Google states leaves the caller unable to control or know which region receives a request ([Google Cloud, fetched 2026-09-16](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations)). Neither pins processing to Canada. [[agentic-ai-security-cmm-crosswalk-canada-fi|The Canadian FRFI crosswalk]] reads that position as OSFI B-10 third-party-risk evidence, alongside the two other deployment shapes it covers. The whole-tenant Gemini assistant has no Canadian option either, for a different reason: it runs on Google Workspace, whose data regions offer the United States or Europe. An agent built on the Agent Platform does have one, split by construction between model serving in Montréal and Model Armor in Toronto, and [[google-cloud-agentic-security-profile|the Google Cloud agentic security profile]] reads that split region by region.
 
 No first-party feature attributes a change to the agent or the human that produced it, across any harness vendor. An organization that cannot separate agent-authored from human-authored change cannot scope a review policy or trace a defect to the tool that introduced it.
 
@@ -250,6 +257,8 @@ Each step in the ordering removes a dependency on a weaker layer. OS enforcement
 **The catalog carries CMM coordinates for D2 through D8 and none for D1 or D9**, so an assessor scores a coding deployment's governance and human-factors evidence from the [[agentic-ai-security-cmm-d1-governance|D1]] and [[agentic-ai-security-cmm-d9-operations|D9]] ladders and finds no row here to cite.
 
 [[cmm-stress-test-canadian-fi-google-2026-09|A Canadian-FI stress test against Google Cloud]] found this catalog single-stack against that persona before this pass: no MCP-allowlist row, no row for cloud-routed inference, and a wikilink that named this page's product as the vulnerability-discovery tool rather than the harness. The MCP-allowlist and cloud-routing rows above and the corrected link close those three findings; the D1/D9 coordinate gap and the D8 fleet-inventory dimension the stress test also found remain open, recorded in [[cmm-known-limitations|CMM Known Limitations]] items 10 and 27.
+
+**This catalog states no retention or training position for the cloud-routed shape, because the vendor documentation for that route states none.** Anthropic's page for Google Cloud's Agent Platform carries no retention, logging or training statement, and its zero-data-retention page scopes ZDR to Anthropic's own platform and refers Bedrock, Google Cloud and Foundry deployments to the provider's retention policy ([Anthropic, fetched 2026-09-16](https://code.claude.com/docs/en/zero-data-retention)). The position an organization needs is Google's, in the Agent Platform's own zero-data-retention terms, and no row above grades it. The region half of the same question is documented, and the [Identity plane](#identity-plane) paragraphs above record it.
 
 **Nothing here addresses code quality.** Every control in the catalog governs what the agent may *do*. Whether the code it writes is correct is a separate problem, addressed by review capacity that the [[microsoft-cli-coding-agent-adoption-study|throughput data]] suggests is already the binding constraint. One practitioner pattern attacks that problem from the other end, by governing what the agent is told before it writes: [[injecting-security-context-vibe-coding-talk|Gupta's MCP server]] retrieves the ticket, the architecture document, the applicable OWASP cheat sheets and the organization's own standards into the prompt, then verifies the generated code against those same requirements. It belongs to no plane above because it constrains generation rather than execution, and it carries the enforcement weakness that placement implies — the agent calls the server because the tool description persuaded it to, which Gupta states does not happen every time.
 

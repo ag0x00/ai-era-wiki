@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -141,6 +141,8 @@ Most enterprises land at **L4 with selective L5** in the domains tied to their e
 ## Cost model
 
 Governance is labor-heavy, and for an incumbent the licensing line stays near zero until the L5 certification audit.
+
+Governance licensing separates cleanly by stack. A Microsoft E5 tenant holds the L4 evidence layer — Purview and Compliance Manager — inside entitlements it already owns, and the control landscape above names no Google counterpart on that layer, so a Google Cloud or Google Workspace buyer funds a GRC platform where the E5 buyer reads `~0`. Labor and certification fees are a constant on either stack.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|

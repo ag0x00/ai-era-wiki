@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D5: Egress and Network"
 address: c-000127
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -156,6 +156,8 @@ An allowlist bounds an agent's reach only to the extent that each allowed destin
 
 ## Cost model
 
+Here too, L2 and L3 read near-zero: an E5 or Azure incumbent already owns the AI gateway, MCP authorization and network-layer filtering outright. Apigee and inline Model Armor — metered on prompt and response tokens at \$0.10 per additional million past a no-cost allocation of 3 billion a month on a Security Command Center Premium or Enterprise subscription and 2 million a month standalone[^maprice] — cover the gateway row for a Google Cloud buyer, and VPC Service Controls perimeters cover the network row. Two gaps sit inside L3 itself: the MCP-brokering row carries no Google entry, and per-agent micro-segmentation is still in preview, so entitlements alone do not complete the Google L3 line.
+
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
 | L2 | ~0 for an E5/Azure incumbent | maintain the allowlist | — |
@@ -195,7 +197,8 @@ The authentication split follows the same boundary. [[agentic-ai-security-cmm-d2
 [^mcp]: [Microsoft Learn — Overview of MCP servers in Azure API Management](https://learn.microsoft.com/en-us/azure/api-management/mcp-server-overview), 2025–2026. GA across classic + v2 tiers; JWT via Entra ID; tools only, not resources/prompts, not in workspaces.
 [^entra]: [Microsoft Learn — AI prompt injection protection (Global Secure Access)](https://learn.microsoft.com/en-us/entra/global-secure-access/how-to-ai-prompt-injection-protection), 2026. Network-layer prompt-injection protection; Shadow-AI detection.
 [^agentcore]: [AWS — AgentCore Gateway and Identity support VPC egress](https://aws.amazon.com/about-aws/whats-new/2024/04/agentcore-gateway-identity-vpc/), 2026. Managed egress; OAuth client-credentials for MCP.
-[^ma]: [Google Cloud — Model Armor + Agent Gateway integration](https://docs.cloud.google.com/model-armor/model-armor-agent-gateway-integration), 2026. Inline prompt/response screening at the agent gateway.
+[^ma]: [Google Cloud — Model Armor + Agent Gateway integration](https://docs.cloud.google.com/model-armor/model-armor-agent-gateway-integration), 2026. Inline prompt/response screening at the agent gateway; Google announced this integration generally available and states no launch stage for Model Armor's core screening service ([Model Armor overview](https://docs.cloud.google.com/model-armor/overview) and [release notes](https://docs.cloud.google.com/model-armor/release-notes), both fetched 2026-09-16). The filter set a template runs is region-gated: a Toronto template (`northamerica-northeast2`) with data-residency compliance enabled keeps responsible-AI filters, Sensitive Data Protection, and prompt-injection and jailbreak detection, and loses malicious URL detection, multi-language detection, CSAM support, image support and antivirus scanning ([feature availability for templates by region](https://docs.cloud.google.com/model-armor/feature-availability-by-region), fetched 2026-09-16). Floor settings restore every feature.
+[^maprice]: [Google Cloud — Security Command Center pricing](https://docs.cloud.google.com/security-command-center/pricing), fetched 2026-09-16. Model Armor meters on the total tokens in prompts and responses, four characters per token excluding white space. A Security Command Center Premium or Enterprise subscription carries 3 billion tokens a month at no cost; a project-level or organization-level Premium activation and the standalone purchase each carry 2 million a month; every tier bills \$0.10 per additional million. The same page states that "the minimum annual cost of a Security Command Center Enterprise subscription is \$15,000" and repeats the figure for Premium.
 [^vpcsc]: [Google Cloud — VPC Service Controls release notes](https://docs.cloud.google.com/vpc-service-controls/docs/release-notes), 2026. Agent Identity as first-class principal in ingress/egress rules (preview).
 [^agentgw]: [Linux Foundation — agentgateway project](https://www.linuxfoundation.org/press/linux-foundation-welcomes-agentgateway-project-to-accelerate-ai-agent-adoption-while-maintaining-security-observability-and-governance), 2026. A2A + MCP + LLM data plane (Apache 2.0); pre-1.0.
 [^zt4ai]: [[microsoft-zt4ai|Microsoft ZT4AI]] — residual MCP-protection gap, per Microsoft's OWASP-MCP-for-Azure guidance.

@@ -18,6 +18,7 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk-canada-fi]]"
   - "[[securing-agentic-coding]]"
   - "[[azure-rag-chatbot-security-profile]]"
+  - "[[google-cloud-agentic-security-profile]]"
   - "[[canadian-bank-secure-sdlc-ai-assessor-scorecard]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
@@ -75,9 +76,9 @@ The CMM mandates SHA-256 of `SOUL.md` / `IDENTITY.md` / system prompts as cognit
 
 ### 6. Product and cost layer assumes a Microsoft, Azure, AWS or GitHub incumbency
 
-All nine cost models price their licensing column against that incumbency and none prices Google Cloud or Workspace. The core page's tooling map carries no platform-native column, names Google in no row, and holds no occurrence of Model Armor. Seven of the nine deep dives do carry a GCP platform-native column, holding Agent Identity, Model Armor, Apigee and Google SecOps, so what the family lacks for this persona is the pricing and the two September shapes rather than Google itself; Claude Code and Gemini appear in no tooling-map row. A buyer on Google Cloud reconstructs the control mapping instead of reading it.
+All nine cost models now state the incumbency they price and what a Google Cloud or Workspace buyer reads differently on that line. The core page's tooling map carries a fifth **Platform-native (Google)** column, naming a Google instrument in every domain row or stating that none exists; D1 and D6 carry no Google entry, because Assured Workloads sets no governance-evidence layer and Google's page on what controls Gemini's access to Workspace data documents permission inheritance, two content-owner narrowings, and no control that narrows an answer at the time it is composed. The cost models add two published figures, Model Armor's token rate and the Security Command Center subscription minimum, and state every other domain as a difference in kind rather than a price, because Google publishes no other figure. The productivity-assistant shape rows the family still lacks are item 7's, tracked under [#174](https://github.com/ag0x00/ai-era/issues/174).
 
-**Status:** [new-2026-09-15], from [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] Part 4. Recommendation 20 prices a non-Microsoft column or states each cost model's stack assumption; recommendation 21 adds the Google instruments that exist and states the absences. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [substantially-closed-2026-09-16]. Recommendation 20 priced Model Armor and the Security Command Center subscription from source and stated each remaining cost model's stack assumption as a difference in kind; recommendation 21 added the Platform-native (Google) tooling-map column. Open: the shape rows item 7 tracks, and pricing for every Google domain the vendor does not publish a figure for. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 7. No shape row for an enterprise productivity assistant
 
@@ -131,15 +132,17 @@ Across the scorecard's 62 questions there is no occurrence of oversharing, entit
 
 ### 16. No single-stack reading exists for Google Cloud
 
-The May regulated-FI stress test set a per-platform single-stack reading, a Google-Cloud-only reading included, as a closure condition on the reference architecture. That line is the condition's only occurrence in the vault, and it applies most directly to an institution whose whole estate is Google Cloud and Google Workspace.
+[[google-cloud-agentic-security-profile|The Google Cloud Agentic Security Profile]] is the reading, plane by plane against the reference architecture and domain by domain against the CMM, with the productivity-assistant shape as its worked example. The May regulated-FI stress test set a single-stack reading per major platform — Microsoft-only, AWS-only, GCP-only — as a closure condition on the reference architecture; only the Google Cloud third of that condition is now written, and the Microsoft-only and AWS-only readings stay open.
 
-**Status:** [new-2026-09-15]. Recommendation 26 writes the reading; the closure condition stays open until it exists. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [closed-2026-09-16]. Recommendation 26 wrote the Google Cloud reading, discharging the Google Cloud third of the May closure condition; the Microsoft-only and AWS-only readings the same condition asked for remain open. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 17. Data residency and Canadian region are unrecorded for both deployment shapes
 
-No page records a data-residency or Canadian-region position for any AI service. The documentation for [[securing-agentic-coding|the coding harness]] on Google Cloud's Agent Platform names global, multi-region and regional endpoints, defaults to `us-east5`, names no Canadian region and states nothing about retention, and the whole-tenant assistant's position is equally unrecorded, so a third-party-risk function applying OSFI B-10 has no recorded answer to where the data sits.
+Both shapes now carry a recorded position, and this item's original claim was already wrong when filed: [[securing-agentic-coding|the coding-shape control catalog]] recorded, before this item existed, that Google Cloud's documented region list for the harness names no Canadian entry. That is a fact about this page's own bookkeeping rather than about the vault's coverage. The coding shape's absence now carries its reasoning: no Anthropic model carries a Canadian ML-processing commitment on the Agent Platform's partner residency table, so the shape has no Canadian region to configure. The whole-tenant assistant's position is recorded on [[agentic-ai-security-cmm-crosswalk-canada-fi|the Canadian crosswalk]]: Workspace data regions cover Gemini prompts and responses and offer the United States or Europe only, so that shape cannot meet a Canadian residency requirement, where a Gemini deployment on Google Cloud itself can, spanning both Canadian regions, with model serving in Montréal on seven of the twenty-seven Google-model rows.
 
-**Status:** [new-2026-09-15]. Recommendation 28 records a position for both shapes on the Canadian crosswalk and in the coding-shape control catalog. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+Two source facts stay unresolved and sit as watch items on the Canadian crosswalk rather than as a guess: which Workspace editions carry the processing half of data-regions coverage, and whether a Canada Protected B workload runs an agent with no guardrail plane or places that plane outside the boundary.
+
+**Status:** [closed-2026-09-16]. Recommendation 28 recorded both shapes' positions, on [[agentic-ai-security-cmm-crosswalk-canada-fi|the Canadian crosswalk]] and in [[securing-agentic-coding|the coding-shape control catalog]]; the two watch items above stay open at source. Tracked in [#175](https://github.com/ag0x00/ai-era/issues/175) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 18. Callout counts across the CMM family run over the one-per-page rule
 

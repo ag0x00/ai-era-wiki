@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - maturity-models
   - cmm
@@ -159,6 +159,8 @@ The [[lethal-trifecta|lethal-trifecta]] test lowers D9 the same way it lowers D3
 ## Cost model
 
 Licensing is near-zero for an E5/Azure or AWS incumbent; the spend is people and run-rate.
+
+The L3 row prices Entra, Sentinel and OpenTelemetry as entitlements, so the incumbent it describes runs on Microsoft or AWS. Of the two rows in the control landscape above that name a platform-native product, Google is thin on incident-response orchestration and carries no entry at all for agent decommission and orphan reaping, so a Google Cloud buyer builds the playbook and the decommission automation that the other two stacks configure. The four dominant costs sit on no licence line and are identical everywhere.
 
 | Level | Licensing | Operational labor (the bottleneck) | Run-rate |
 |---|---|---|---|

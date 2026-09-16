@@ -2,7 +2,7 @@
 type: concept
 title: "SPIFFE / SPIRE"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-16
 tags:
   - concepts
   - identity
@@ -20,6 +20,7 @@ related:
   - "[[agent-identity-architecture]]"
   - "[[non-human-identity]]"
   - "[[nhi-governance-for-agents]]"
+  - "[[google-cloud-agentic-security-profile]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
 ---
