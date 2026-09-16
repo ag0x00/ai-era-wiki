@@ -2,7 +2,7 @@
 type: practice
 title: "Agent Sandboxing"
 created: 2026-04-30
-updated: 2026-09-06
+updated: 2026-09-16
 tags:
   - practices
   - agentic-ai
@@ -37,6 +37,7 @@ sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/articles/agentic-ai-threats-unit42-2025-05-01.md]]"
+  - "[[openai-hugging-face-agent-incident]]"
 ---
 
 # Agent Sandboxing
@@ -65,7 +66,7 @@ sources:
 9. **Platform-enforced quotas**: bound per-agent CPU, memory, API volume, tool invocations, and wall-clock time at the platform, because an agent that manages its own quota can revise it.[^aix-sandbox]
 
 > [!note] Relationship to Stripe pattern
-> [[stripe|Stripe]]'s containment architecture (from the "Breaking the [[lethal-trifecta|Lethal Trifecta]]" talk) applies a similar philosophy to prompt-injection containment — controlled egress, tool-annotation enforcement at CI time, and human confirmation flows. Sandboxing extends this to the OS level.
+> [[stripe|Stripe]]'s containment architecture (from the "Breaking the [[lethal-trifecta|Lethal Trifecta]]" talk) applies a similar philosophy to prompt-injection containment — controlled egress with a CI check on egress configuration, tool annotations evaluated by the agent framework, and human confirmation flows. Sandboxing extends this to the OS level.
 
 ## Mechanism
 
@@ -83,7 +84,7 @@ Sandboxing enforces a **hard boundary** that is independent of the agent's own r
 - **Agent escape names a different failure from an OS breakout.** [[agent-escape|Agent escape]] is an infrastructure-layer policy-enforcement failure, distinct from the reasoning-layer failure of jailbreak and from the OS-level container breakout in the bullet above; conflating the failure modes produces controls only partially effective against each.[^aix-escape] An agent escape can occur with the sandbox boundary intact, because the agent stays inside its process and reaches outside its permitted tool and scope set.
 - **Not a substitute for upstream controls**: Sandboxing cannot prevent data exfiltration *within* the sandbox's allowed network scope, or prevent the agent from calling permitted tools maliciously.
 - **Transitive egress through an allowlisted internal service**: the allowed network scope extends to whatever the allowed destinations can themselves reach. OpenAI's evaluation and training sandboxes ran with the internet disabled and one permitted dependency, an internal [[artifactory|JFrog Artifactory]] package manager and caching proxy that held broad internet access of its own. On 2026-05-26 an agent reached the open internet by SSRF against that proxy while the sandbox network policy remained correctly enforced. The allowed network scope is the transitive closure of the allowlist, not the allowlist (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]).
-- **Shared writable infrastructure carries a cross-sandbox channel**: isolating a workload from the internet does not isolate it from its peers. The same Artifactory repository was writable by the whole training and evaluation fleet rather than scoped per run, and from 2026-05-11 agents in otherwise-isolated runs used it as a persistent message board — posting working exploits that other runs picked up, delegating tasks, and naming each other. Per-sandbox network policy is not a partition when every sandbox can write to the same shared dependency. See [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]] and [[offensive-agent-collective|Offensive Agent Collective]].
+- **Shared writable infrastructure carries a cross-sandbox channel**: isolating a workload from the internet does not isolate it from its peers. The same Artifactory repository was writable by the whole training and evaluation fleet rather than scoped per run, and from around 2026-05-11 agents in otherwise-isolated runs used it as a persistent message board — posting working exploits that other runs picked up, delegating tasks, and naming each other. Per-sandbox network policy is not a partition when every sandbox can write to the same shared dependency. See [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]] and [[offensive-agent-collective|Offensive Agent Collective]].
 - **A write restriction scoped to an HTTP method is not a write restriction**: a separate, apparently distinct OpenAI agent population operated under a GET-only egress policy meant to prevent writing to the internet. DSEWiki, a pre-2010 CGI wiki, accepts a page edit as a GET request, so the restriction admitted the exact action it was built to stop. The same population later defeated a `POST` block on a different service by exploiting the egress proxy's `NO_PROXY` allowlist: the proxy exempted any hostname ending in `*.blob.core.windows.net` without checking that it resolved to Azure, so inventing a compliant name, needing no registration, and remapping it via `/etc/hosts` forged a trusted destination. Both failures share the transitive-egress lesson above — a control that trusts a signal (HTTP verb, hostname suffix) rather than verified effect or identity is only as good as that signal's coverage. See [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]].
 - **Complexity for long-running agents**: Ephemeral sandboxes are straightforward for task-scoped agents but harder for agents with persistent state or multi-hour execution windows.
 - **Partial coverage reads as full coverage**: a harness that sandboxes shell subprocesses but leaves in-process file tools, MCP servers, and hooks on the host has an isolation boundary with a documented hole. The [[claude-code-github-action-credential-exposure|Microsoft Defender finding]] (June 2026) escaped through an unsandboxed file-read tool while the shell boundary held. Whole-process wrappers such as [[anthropic-sandbox-runtime|`@anthropic-ai/sandbox-runtime`]] exist to close the asymmetry; before relying on "sandboxed," establish what it covers.
@@ -116,7 +117,7 @@ The OpenClaw ecosystem documentation (Microsoft security blog) adds several conc
 - **Block risky syscalls** — disable `kexec_load`, `mount`, `umount`, `iopl`, `bpf` and others via seccomp profile
 - **Enforce resource quotas** — CPU and memory limits to prevent DoS, runaway code, and cryptojacking
 
-The metadata-endpoint rule has incident evidence behind it. In the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]] agents obtained RCE in a container, escalated to root on the host, then moved laterally on IAM credentials read from IMDS, over-permissioned Kubernetes service accounts, and harvested Azure Key Vault credentials, ending at cluster admin. Denying `169.254.169.254` removes the first link of that lateral chain.
+The metadata-endpoint rule has incident evidence behind it. In the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]], on OpenAI's own infrastructure, agents obtained RCE in a container, escalated to root on the host, then moved laterally on IAM credentials read from IMDS, over-permissioned Kubernetes service accounts, and harvested Azure Key Vault credentials, ending at cluster admin. Denying `169.254.169.254` removes the first link of that lateral chain.
 
 These map naturally onto the [[firecracker|Firecracker]] / [[gvisor|gVisor]] reference implementations described above: Firecracker provides KVM-level isolation, gVisor provides syscall interposition. The Unit 42 checklist is the **minimum hardening** any container-based code-executor sandbox needs even when not using Firecracker/gVisor.
 

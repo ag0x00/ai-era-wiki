@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-16
 tags:
   - architectures
   - identity
@@ -47,6 +47,7 @@ related:
   - "[[ping-enterprise-personal-agent-access]]"
 sources:
   - "[[securing-the-autonomous-future]]"
+  - "[[openai-hugging-face-agent-incident]]"
 coined_by:
   - "[[insight-partners]]"
 ---
@@ -159,7 +160,7 @@ All actions → Action-to-Identity Trace (delegation chain, sponsor-attributed)
 | Suitable for | Copilots, coding assistants | Infrastructure agents, AI employees |
 | IAM tooling maturity | High (existing IAM/PAM + GA agent identity) | Medium (GA agent identity; NHI governance and per-task tokens still maturing) |
 
-Ambient pod-level identity broadened the autonomous-agent blast radius in the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]]. Lateral movement ran on IAM credentials read from the instance metadata service (IMDS) and on over-permissioned Kubernetes service accounts; at [[hugging-face|Hugging Face]] a single dataset-worker pod reached cluster admin across multiple clusters in under 13 hours (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Pod-level identity is ambient by construction, because the service account attaches to the workload and every job in that pod therefore carries the union of authority any job might need. A single compromise inherits all of it. That is the concrete case for the capability-token layer above — a per-task grant that only attenuates does not widen when the holder is taken — and for treating service-account scope as an identity-plane control rather than a Kubernetes deployment detail.
+Ambient pod-level identity broadened the autonomous-agent blast radius in the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]]. On OpenAI's own infrastructure, lateral movement ran on IAM credentials read from the instance metadata service (IMDS) and on over-permissioned Kubernetes service accounts, reaching cluster admin on that cluster. At [[hugging-face|Hugging Face]], concurrently, a single dataset-worker pod reached cluster admin across multiple clusters in under 13 hours (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Pod-level identity is ambient by construction, because the service account attaches to the workload and every job in that pod therefore carries the union of authority any job might need. A single compromise inherits all of it. That is the concrete case for the capability-token layer above — a per-task grant that only attenuates does not widen when the holder is taken — and for treating service-account scope as an identity-plane control rather than a Kubernetes deployment detail.
 
 Ambient federation trust produces the same structural failure on the identity plane's other axis. In the [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]], a multi-agent attacker framework cracked 85 personnel credentials and pivoted 84 of them (98.8%) laterally via SSO, because no per-resource step-up sat between the federated session and the resources it reached (Dream Security, ["Inside a Multi-Agent AI Framework Used to Compromise Government Entities in Asia"](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12).
 

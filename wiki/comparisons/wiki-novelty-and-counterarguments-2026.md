@@ -2,7 +2,7 @@
 type: comparison
 title: "Wiki Novelty and Counter-Arguments"
 created: 2026-05-02
-updated: 2026-06-22
+updated: 2026-09-16
 tags:
   - comparisons
   - peer-review
@@ -13,6 +13,8 @@ status: developing
 scope_axis:
   - sec-of-ai
 question: "What does the wiki contribute that wasn't already in OWASP / NIST / Gartner / CSA — and where would a serious peer reviewer push back hardest on the wiki's load-bearing theses?"
+sources:
+  - "[[breaking-the-lethal-trifecta-talk]]"
 related:
   - "[[peer-review-readiness-2026-05-02]]"
   - "[[agentic-cmm-vs-standards-validation]]"
@@ -78,7 +80,7 @@ These the wiki documents but did not originate:
 |---|---|
 | Strongest counter-argument | **Defense-in-depth requires both.** Prompt-layer guardrails reduce attack success rate materially even when bypassable. Meta's [[llamafirewall\|LlamaFirewall]] eval on [[agentdojo\|AgentDojo]]: PromptGuard 2 takes ASR from 17.6% to 7.5%; combined with AlignmentCheck to 1.75%. Anthropic Constitutional Classifiers: jailbreak success 86%→4.4%. These are non-trivial reductions. A *strict* "platform over prompt" doctrine implies you don't need them. |
 | Where the skeptic's right | Prompt-layer is not pointless. Cost-benefit analysis sometimes favors prompt-layer-only for low-risk-tier interactions where platform-layer overhead (Constitutional Classifiers report 23.7% inference cost) doesn't justify itself. |
-| The wiki's honest response | The framing is **hierarchy, not exclusivity.** Platform-layer is primary because it's not bypassable by injection; prompt-layer is residual-risk reduction. [[breaking-the-lethal-trifecta-talk\|Bullen's]] *"untrusted content can't be removed"* is the clean statement. The wiki's [[rag-hardening\|RAG hardening]] and [[system-prompt-architecture\|system prompt architecture]] pages explicitly carry residual-risk callouts. The thesis should read *"platform-layer is primary, prompt-layer is residual"*, not *"prompt-layer is useless."* |
+| The wiki's honest response | The framing is **hierarchy, not exclusivity.** Platform-layer is primary because it's not bypassable by injection; prompt-layer is residual-risk reduction. [[breaking-the-lethal-trifecta-talk\|Bullen]] holds that preventing untrusted content "is not really that feasible for most agents." The wiki's [[rag-hardening\|RAG hardening]] and [[system-prompt-architecture\|system prompt architecture]] pages explicitly carry residual-risk callouts. The thesis should read *"platform-layer is primary, prompt-layer is residual"*, not *"prompt-layer is useless."* |
 
 ### Thesis 2 — *"Independent guardian agents eliminate much of the incumbent AI-protection market by 2029"*
 
@@ -92,9 +94,13 @@ These the wiki documents but did not originate:
 
 | The wiki's position | "Any deployment combining private-data + untrusted-content + external-comms is **unconditionally vulnerable**." (RA design principle 5; [[lethal-trifecta\|Lethal Trifecta]]) |
 |---|---|
-| Strongest counter-argument | **"Unconditional" is too strong.** [[breaking-the-lethal-trifecta-talk\|Stripe (Bullen, March 2026)]] runs trifecta agents in production with platform-level egress containment + sensitive-action HITL, and reports attack success rates of 1.5–6.7% across model generations. That's not "unconditional" — it's *probabilistically exploitable*, with the success rate depending on defense maturity. Bullen explicitly: *"Even 0.1% is too high"* — so the threshold not the unconditional nature is the issue. CaMeL (Google DeepMind), deterministic gating, and multi-LLM separation reduce trifecta exposure further without splitting the trifecta. |
-| Where the skeptic's right | The wiki's "unconditional" framing is design-time pedagogy, not empirical fact. The [[breaking-the-lethal-trifecta-talk\|Bullen architecture]] and CaMeL research explicitly demonstrate that containment can drive trifecta-agent ASR to single-digit percentages and below. |
-| The wiki's honest response | The Lethal Trifecta is a **necessary condition for natural-language exfil at scale**, and **sufficient given current defense maturity** to require platform-layer containment. The "unconditionally vulnerable" framing is the design-time test (do you split the trifecta or contain it?); in production, containment can drive ASR very low but not zero — and very-low-but-not-zero is unacceptable for high-risk-tier actions. The wiki should reframe from *"unconditional"* to *"sufficient at the design stage; ASR-bounded in production."* |
+| Strongest counter-argument | **Dataflow mediation keeps all three capabilities in one system and still blocks exfiltration**, so the structural condition does not settle exploitability. The pattern is graded research-stage. |
+| Where the skeptic's right | "Unconditional" is design-time pedagogy, and no published measurement covers a trifecta agent running under production containment. |
+| The wiki's honest response | The trifecta is **necessary** for natural-language exfil at scale and **sufficient given current defense maturity** to require platform-layer containment. |
+
+[[camel-pattern|CaMeL]] (Google DeepMind), deterministic gating, and multi-LLM separation carry this counter-argument. Each keeps the full agentic capability in one logical system and blocks exfiltration by mediating the values that cross between components, so untrusted content never reaches the component holding private data and egress. The [[agentic-ai-security-reference-architecture|reference architecture]] grades CaMeL research-stage, so the strongest form of the counter-argument rests on an unshipped pattern.
+
+Attack-success rates from the public competition on slide 3 of [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]] do not strengthen that counter-argument. That competition scored 18 undefended frontier models, so its range grades model-layer resistance with no architectural control in the loop, and Bullen shows it to argue that containment is necessary. Nothing published measures a trifecta agent running behind egress containment and sensitive-action HITL, and Bullen states that prevalence in the wild is unknown. The design-time test therefore stands as written, and the wiki's reframe reads *sufficient at the design stage, unmeasured in production*.
 
 ### Thesis 4 — *"Cumulative floor across all 9 domains"* (revised 2026-05-04 — position changed)
 
@@ -132,7 +138,7 @@ These are positions a peer reviewer is right to push on, and the wiki does not y
 > 4. **Behavioral baseline definition for ephemeral agents.** Aggregate-level invariants are partial; the full definition is open.
 > 5. **MCP CVE percentages** ([[source-triangulation-audit-2026-05-02|Source Triangulation Audit]] §Claim 4 contested). Wiki should re-derive from peer-reviewed denominators.
 > 6. **Lab-self-reported scheming rates** awaiting peer-reviewed independent replication ([[source-triangulation-audit-2026-05-02|Audit]] §Claim 8).
-> 7. **Bullen-talk-specific ASR figures** (1.5–6.7%) lack independent benchmark replication ([[source-triangulation-audit-2026-05-02|Audit]] §Claim 5).
+> 7. **Exploitation rate of a contained trifecta agent.** [[source-triangulation-audit-2026-05-02|Audit]] §Claim 5 recorded the 1.5–6.7% figures as talk-specific and awaiting replication; slide 3 of [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]] cites them to a published public competition over 18 undefended frontier models, which settles their provenance. What stays open is the rate under containment: no published measurement covers a trifecta agent behind egress containment and sensitive-action HITL, and Bullen states that prevalence in the wild is unknown.
 > 8. **Two-actor AIUC-1 audit model** — issuer (AIUC) ≠ auditor (Schellman). Whether this strengthens or weakens independence is contested ([[aiuc-1|AIUC-1]] caveats §5).
 > 9. **A2A v1.0 spec lacks message integrity, replay protection, multi-hop trust chain.** Wiki documents this; the resolution lives in vendor implementations and Issue #1575 — not yet merged.
 > 10. **CSA ATF promotion gates not fully specified** by CSA itself; CMM D3 L4 still depends on org-authored rubric ([[agentic-cmm-vs-standards-validation|validation]] §5).

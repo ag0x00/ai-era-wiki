@@ -2,7 +2,7 @@
 type: framework
 title: "A2A Protocol (Agent-to-Agent)"
 created: 2026-04-30
-updated: 2026-06-22
+updated: 2026-09-16
 tags:
   - frameworks
   - protocols
@@ -31,6 +31,7 @@ related:
   - "[[multi-agent-runtime-security]]"
   - "[[csa-maestro]]"
   - "[[cosai]]"
+  - "[[owasp-agentic-ai-top-10]]"
   - "[[standards-review-saif-cosai-2026-Q2]]"
 sources:
   - "https://a2a-protocol.org/latest/specification/"
@@ -82,6 +83,7 @@ A peer reviewer should know exactly what is missing:
 - **No multi-hop trust chain or cross-agent delegation primitive.** Delegation is the open work.
 - **No formal-methods review** of v1.0 has been published as of mid-2026.
 - **No CVEs** assigned to A2A in NVD as of 2026-05.
+- **No coverage of a channel that is not a channel.** The protocol secures an explicit link between two agents. Two agent runs that reach the same writable medium — a shared bucket, a wiki, a message board — pass data to each other without opening one, so signed Agent Cards and message authentication do not apply. [[owasp-agentic-ai-top-10|OWASP's ASI07]] classes that medium as inter-agent communication and reaches the same limit.
 
 This means an L3+ CMM claim depending on A2A security must specify the *org's own enforcement profile* — the wiki's [[agentic-ai-security-cmm-2026|CMM]] D5 L3 already requires this.
 

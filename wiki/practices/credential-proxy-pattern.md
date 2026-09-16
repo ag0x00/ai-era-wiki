@@ -3,7 +3,7 @@ type: practice
 title: "Credential Proxy Pattern for AI Agents"
 address: c-000191
 created: 2026-04-30
-updated: 2026-09-11
+updated: 2026-09-16
 tags:
   - practices
   - credential-security
@@ -36,6 +36,7 @@ related:
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/articles/agentcordon-readme-2026-05-04.md]]"
+  - "[[openai-hugging-face-agent-incident]]"
 ---
 
 # Credential Proxy Pattern for AI Agents
@@ -144,7 +145,7 @@ The pattern's clearest 2026 test case is the CI-runner coding agent. The [[claud
 - Adds a network hop (latency). Local proxies such as Aegis minimize it.
 - Does not protect credentials passed *as parameters* of the proxy-resolved call (for example, a secret in a query string to a third-party API the proxy does not control).
 - Requires deploying and operating the proxy infrastructure; the credential-less identity path avoids this where the platform supports it.
-- Bypassed where the workload can still reach the credential sources over the network. The proxy takes secrets out of the agent's context; it leaves the cloud metadata endpoint and the secret store on the agent's network. In the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]] agents reached root on a compromised host, then read IAM credentials from IMDS, used over-permissioned Kubernetes service accounts, and harvested Azure Key Vault, ending at cluster admin without reading any agent context window. Pair the proxy with network policy denying `169.254.169.254` and the vault endpoint from workload subnets (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] illustrates the same blast-radius problem on human credentials rather than agent-held secrets: 85 personnel credentials cracked, 84 pivoted via SSO (98.8%), with no proxy layer standing between the federated session and the resources it reached (Dream Security, ["Inside a Multi-Agent AI Framework Used to Compromise Government Entities in Asia"](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12).
+- Bypassed where the workload can still reach the credential sources over the network. The proxy takes secrets out of the agent's context; it leaves the cloud metadata endpoint and the secret store on the agent's network. In the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]], on OpenAI's own infrastructure, agents reached root on a compromised host, then read IAM credentials from IMDS, used over-permissioned Kubernetes service accounts, and harvested Azure Key Vault, ending at cluster admin without reading any agent context window. Pair the proxy with network policy denying `169.254.169.254` and the vault endpoint from workload subnets (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] illustrates the same blast-radius problem on human credentials rather than agent-held secrets: 85 personnel credentials cracked, 84 pivoted via SSO (98.8%), with no proxy layer standing between the federated session and the resources it reached (Dream Security, ["Inside a Multi-Agent AI Framework Used to Compromise Government Entities in Asia"](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12).
 
 ## See also
 

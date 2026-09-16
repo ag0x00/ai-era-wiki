@@ -2,7 +2,7 @@
 type: architecture
 title: "System Prompt Architecture (Boundary Markers + Trust Labels)"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-16
 tags:
   - architectures
   - prompt-engineering
@@ -22,12 +22,14 @@ related:
   - "[[securing-your-agents-talk]]"
 sources:
   - "[[securing-your-agents-talk]]"
+  - "[[breaking-the-lethal-trifecta-talk]]"
 ---
 
 # System Prompt Architecture (Boundary Markers + Trust Labels)
 
-> [!stale] Residual-risk control, not a primary control
-> The boundary markers + trust labels described below **reduce** the success rate of [[indirect-prompt-injection|indirect prompt injection]] but do not break the [[lethal-trifecta|Lethal Trifecta]] on their own. Per [[andrew-bullen|Andrew Bullen]] (Stripe) at [[breaking-the-lethal-trifecta-talk|Unprompted, March 2026]]: even competition-grade attack-success rates against frontier models still range 1.5–6.7%, and Stripe's stance is "even 0.1% is too high." **Do not treat this architecture as the security ceiling.** Pair it with at least one architectural lever from the trifecta: egress containment ([[smokescreen|Smokescreen]]-style network proxy + agent-tag CI), sensitive-action HITL ([[lethal-bifecta|Lethal Bifecta]] gating via `ToolAnnotations`), or capability-bounded agent splitting. The "Where this architecture helps and where it does not" section below already states this; the callout is here so no reader leaves with the impression that prompt structure is sufficient.
+**Boundary markers and trust labels reduce the success rate of [[indirect-prompt-injection|indirect prompt injection]] and leave the [[lethal-trifecta|Lethal Trifecta]] intact.** This architecture acts on the model layer alone. The competition [[andrew-bullen|Andrew Bullen]] cites on slide 3 of [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]] measured attack success from 6.7% down to 1.5% across 18 undefended frontier models, a residual rate Bullen treats as unacceptable from the model layer on its own.[^asr-competition]
+
+Pair this architecture with at least one architectural lever from the trifecta: egress containment ([[smokescreen|Smokescreen]]-style network proxy plus agent-tag CI), sensitive-action HITL ([[lethal-bifecta|Lethal Bifecta]] gating via `ToolAnnotations`), or capability-bounded agent splitting.
 
 ## Premise
 
@@ -155,3 +157,7 @@ System prompt architecture is necessary; it is not sufficient. The deployable po
 - [[canary-tokens-for-llms|Canary Tokens for LLMs]] — leak-detection trip-wires that live inside the architecture
 - [[prompt-injection-containment|Prompt Injection Containment for Agentic Systems]] — the platform-level containment that complements it
 - [[lethal-trifecta|Lethal Trifecta]] — structural test for which agents most need this architecture
+
+## Notes
+
+[^asr-competition]: *Security Challenges in AI Agent Deployment: Insights from a Large Scale Public Competition* (arXiv), cited on slide 3 of Andrew Bullen, "Breaking the Lethal Trifecta (Without Ruining Your Agents)", Unprompted Conference, March 4, 2026. The competition scored attack success against undefended frontier models, with no architectural control in the measured system; the per-model table is reproduced at [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]].

@@ -3,7 +3,7 @@ type: concept
 title: "Lethal Trifecta"
 address: c-000308
 created: 2026-04-30
-updated: 2026-09-15
+updated: 2026-09-16
 tags:
   - concepts
   - prompt-injection
@@ -119,8 +119,9 @@ The connected-set reading is now the published one. The [[owasp-ai-exchange|OWAS
 - **The untrusted-content leg has a non-injection substitute.** The second leg is normally attacker-supplied content. The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]] ran without one: models reward-hack, because looking an answer up beats solving the task, and agents blocked on impossible evaluation tasks pursued egress on their own objective. The structural condition held with the second leg supplied by optimization pressure rather than by an attacker, which is the case for testing whether a leg is *present* rather than whether an adversary controls it.
 - The trifecta does not assume the model is misaligned or compromised. A perfectly aligned model with all three capabilities is still exposed because the **attacker** is the source of misalignment, via injected content.
 
-> [!note] On "unconditionally vulnerable"
-> A serious skeptic will push back on the *unconditional* framing. [[breaking-the-lethal-trifecta-talk|Stripe (Bullen, March 2026)]] runs trifecta agents in production with platform-level egress containment + sensitive-action HITL and reports 1.5–6.7% attack success rates across model generations. [[camel-pattern|CaMeL]] (Google DeepMind) and deterministic-gating research demonstrate further reductions without splitting the trifecta. The honest framing: the trifecta is **necessary** for natural-language exfil at scale and **sufficient given current defense maturity** to require platform-layer containment. In production, containment drives ASR very low but not zero. Bullen's *"even 0.1% is too high"* is the operative bar — the *threshold*, not the *unconditional* nature, is what makes the trifecta a design-time test. See [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 3.
+**"Unconditionally vulnerable" states a design-time test rather than a measured exploitation rate.** The trifecta is a necessary condition for natural-language exfiltration at scale, and current defense maturity makes it sufficient to require platform-layer containment. The model layer does not relieve that requirement.
+
+Slide 3 of Andrew Bullen's [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]] cites a published public competition that puts attack success against 18 undefended frontier models between 6.7% (Llama 3.3 70B) and 1.5% (Claude 3.7 Sonnet:Thinking), and Bullen reads even a tenth of a percent as too high a failure rate to accept from a model alone.[^asr-competition] Those runs carried no architectural control, so the figures give the reason to contain a trifecta agent and measure nothing about a contained one. [[camel-pattern|CaMeL]] (Google DeepMind) and deterministic-gating research cut exposure without removing a capability from the deployment, which bears on how much containment a design needs; the structural condition decides whether containment is required at all. See [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 3.
 
 ## See Also
 
@@ -138,6 +139,8 @@ The trifecta is the stated rationale for the [[agentic-ai-security-cmm-dependenc
 ## Notes
 
 [^aix-liaison]: OWASP AI Exchange, ["About the AI Exchange"](https://owaspai.org/go/about/), retrieved 2026-08-17. The Exchange states 70 pages contributed to prEN 18282 and 70 pages to ISO/IEC 27090 through official liaison partnership, plus contribution to ISO/IEC 27091. These are the source's own claims and are not independently verified here.
+
+[^asr-competition]: *Security Challenges in AI Agent Deployment: Insights from a Large Scale Public Competition* (arXiv), cited on slide 3 of Andrew Bullen, "Breaking the Lethal Trifecta (Without Ruining Your Agents)", Unprompted Conference, March 4, 2026. The competition scored attack success against undefended frontier models, with no architectural control in the measured system; the per-model table is reproduced at [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]].
 
 <!-- sources:auto -->
 ## Sources

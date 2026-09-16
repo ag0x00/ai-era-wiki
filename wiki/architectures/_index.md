@@ -6,7 +6,7 @@ updated: 2026-09-16
 tags: [domain, architectures]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 12
 ---
 
 # Reference Architectures Index
@@ -27,7 +27,7 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 - [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]] — This reference architecture is the structural counterpart to the Agentic SOC Capability Maturity Model.
 - [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] — This page projects the recalibrated six-plane RA and nine-domain CMM onto one common deployment: a closed-corpus, member- or customer-fac...
 - [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] — This page reads the six-plane reference architecture and the nine-domain CMM against Google Cloud alone, plane by plane and domain by dom...
-- [[system-prompt-architecture|System Prompt Architecture (Boundary Markers + Trust Labels)]]
+- [[system-prompt-architecture|System Prompt Architecture (Boundary Markers + Trust Labels)]] — Boundary markers and trust labels reduce the success rate of indirect prompt injection and leave the Lethal Trifecta intact. This archite...
 
 > [!gap] More needed
 > Candidates: Stripe's [[lethal-trifecta|Lethal Trifecta]] containment architecture (elevate from [[stripe|Stripe]] stub), Agentic SOC reference architectures, generic broker / control-plane patterns.

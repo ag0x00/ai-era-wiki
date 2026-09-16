@@ -2,7 +2,7 @@
 type: framework
 title: "OWASP Top 10 for Agentic Applications (ASI Top 10)"
 created: 2026-04-30
-updated: 2026-08-20
+updated: 2026-09-16
 tags:
   - frameworks
   - owasp
@@ -58,7 +58,7 @@ sources:
 
 The **OWASP Top 10 for Agentic Applications** (ASI Top 10) is the definitive agentic risk taxonomy as of Q1 2026, published December 9, 2025 at the Agentic AI Security Summit in London. Developed by 100+ industry experts, it covers ten risk categories specific to AI agents that act autonomously, use tools, maintain memory, and communicate with other agents.
 
-This is the single most important new taxonomy introduced in the agentic AI security space in 2025-2026, and has been rapidly adopted across the industry.
+This is the single most important new taxonomy introduced in the agentic AI security space in 2025-2026, and four named vendors adopted it within Q1 2026.
 
 ## The Ten ASI Categories
 
@@ -94,7 +94,7 @@ The ASI Top 10 introduces the **"Least Agency" principle** — agents should be 
 
 ## Adoption (Q1 2026)
 
-The ASI Top 10 has achieved the fastest industry adoption of any OWASP list:
+Multiple vendors adopted the ASI Top 10 in Q1 2026:
 - **Microsoft** published a detailed ASI Top 10 mapping (March 30) with practical mitigations in Copilot Studio; Microsoft AI Red Team members served on the Expert Review Board
 - **[[palo-alto-networks|Palo Alto Networks]]** adopted the taxonomy
 - **Auth0** integrated it into guidance
@@ -107,10 +107,10 @@ A separate May 2026 OWASP publication maps the ten ASI categories bidirectionall
 ## Strengths
 
 - The only framework achieving full coverage across all ten agentic risk categories
-- Directly addresses risk classes (ASI07–ASI10) completely absent from all prior frameworks
+- Directly addresses three risk classes (ASI07, ASI08, ASI10) not covered by the LLM Top 10
 - 100+ expert development process lends credibility
 - Per-category mappings to the T-code threat taxonomy, LLM Top 10, NHI Top 10, and AIVSS support threat-intelligence integration
-- Fastest industry adoption trajectory of any OWASP list
+- Named-vendor adoption in Q1 2026
 
 ## Gaps and Shortcomings
 

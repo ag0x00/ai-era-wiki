@@ -2,7 +2,7 @@
 type: concept
 title: "Human-in-the-Loop (HITL) for Agentic AI"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-09-16
 tags:
   - concepts
   - hitl
@@ -13,6 +13,9 @@ status: developing
 scope_axis:
   - sec-of-ai
 source_url: "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+sources:
+  - "[[breaking-the-lethal-trifecta-talk]]"
+  - "[[securing-workspace-genai-at-google-talk]]"
 related:
   - "[[least-agency-principle]]"
   - "[[agency-gap]]"
@@ -95,14 +98,13 @@ The [[csa-maestro|CSA Agentic Trust Framework (ATF)]] formalizes HITL into five 
 
 ## Production HITL implementations
 
-### Stripe — three-ring containment
+### Stripe — human review of sensitive actions
 
-[[breaking-the-lethal-trifecta-talk|Andrew Bullen's talk]] describes Stripe's three-ring containment model, where HITL is the outer ring. Key implementation details:
+[[breaking-the-lethal-trifecta-talk|Andrew Bullen's talk]] describes two architectural guardrails at Stripe, and HITL is the second: egress removal closes the exfiltration path, and human review governs the write path. Stripe gates sensitive actions because model-layer resistance leaves a failure rate Bullen judges too high to accept: the public competition cited on slide 3 of Bullen's deck measured attack success between 6.7% and 1.5% across 18 undefended frontier models, with no architectural control in the measured system.[^asr-competition] Key implementation details:
 
-- HITL gates are enforced by a **policy engine** (not the model) — the agent never decides its own HITL requirement
-- Gates are scoped to the action class rather than to the session: re-confirmation is required on each high-risk call even within a single task
-- ASR (Attack Success Rate) with HITL enforced: 1.5–6.7% depending on model — *not zero*, but an order-of-magnitude reduction from ungated baselines
-- The residual ASR reflects HITL bypass via social engineering of the human approver, not bypass of the gate mechanism itself
+- The framework decides, not the model: the agent never declares its own HITL requirement
+- Tool annotations carry the decision inputs: every tool authored inline in an agent framework or exposed through [[toolshed|Toolshed (Stripe)]] declares human-readable properties such as `production_impacting_write` and `broadcasts_data_internally`, and the framework routes the call on those properties
+- Bullen scopes the sensitive class by rule of thumb — a production write, a broad communication, or sending a message — and treats the review experience as the adoption constraint: confirmations are queued and batched so the agent keeps working, reversible writes execute with an offered revert, and an LLM second reviewer is proposed against rubber-stamping
 
 ### Google Workspace — Plan-Validate-Execute
 
@@ -111,6 +113,8 @@ The [[csa-maestro|CSA Agentic Trust Framework (ATF)]] formalizes HITL into five 
 The oversight interface is itself a threat surface. [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] names Overwhelming Human-in-the-Loop (T10): inducing decision fatigue or compromising the approval interface so a human rubber-stamps a malicious action. Its Playbook 5 (protecting HITL and preventing decision-fatigue exploits) treats approval-volume throttling, structured high-signal proposals, and tamper-evident approval channels as controls, not UX polish.
 
 The two implementations cover complementary surfaces: Stripe emphasizes egress + tool-policy enforcement (the *data leaving* side); Google Workspace emphasizes the planning + validation interlock (the *deciding to act* side). Real production agentic systems will need both.
+
+**Neither publishes a measurement of the gate's own effect.** Bullen states that prevalence in the wild is unknown, and Lidzborski names review fatigue and rubber-stamping as unsolved without naming a rate. What a deployed confirm-tier gate achieves against real attack volume has no published source here; the model-layer figures above describe the risk the gate exists to address, not evidence of how well it addresses it.
 
 ## HITL in the CMM
 
@@ -135,6 +139,8 @@ Together they implement defense in depth: an agent that cannot request unauthori
 ## Notes
 
 [^aix-oversight]: [OWASP AI Exchange — OVERSIGHT](https://owaspai.org/go/oversight/), retrieved 2026-08-19. The oversight-requirement axis, the approval-token specification, the user-facing disclosure requirements, and the review-interface constraints.
+
+[^asr-competition]: *Security Challenges in AI Agent Deployment: Insights from a Large Scale Public Competition* (arXiv), cited on slide 3 of Andrew Bullen, "Breaking the Lethal Trifecta (Without Ruining Your Agents)", Unprompted Conference, March 4, 2026. The competition scored attack success against undefended frontier models, with no architectural control in the measured system; the per-model table is reproduced at [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]].
 
 <!-- sources:auto -->
 ## Sources

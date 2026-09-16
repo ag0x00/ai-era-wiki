@@ -2,7 +2,7 @@
 type: practice
 title: "Plan-Validate-Execute Pattern"
 created: 2026-05-03
-updated: 2026-08-19
+updated: 2026-09-16
 tags:
   - practices
   - hitl
@@ -13,6 +13,8 @@ status: developing
 scope_axis:
   - sec-of-ai
 attributed_to: "Google Workspace, presented by Nicolas Lidzborski at Unprompted March 2026"
+sources:
+  - "[[securing-workspace-genai-at-google-talk]]"
 related:
   - "[[hitl]]"
   - "[[least-agency-principle]]"
@@ -132,7 +134,7 @@ In the [[agentic-ai-security-cmm-2026|CMM]]:
 ## Cross-references
 
 - [[hitl|HITL]]: plan-validate-execute is the HITL implementation for the confirm tier
-- [[breaking-the-lethal-trifecta-talk|Bullen's Stripe talk]]: Stripe's three-ring containment uses analogous gate-before-action mechanics on egress and tool policy
+- [[breaking-the-lethal-trifecta-talk|Bullen's Stripe talk]]: Stripe's two guardrails use analogous gate-before-action mechanics on egress and tool policy
 - [[agency-gap|Agency gap]]: the validation step catches non-adversarial agency-gap failures such as "wrong John" errors
 - [[orchestration-hijacking|Orchestration hijacking]]: the deterministic policy engine in the validation step resists the prompt-injection attacks that compromise LLM-based reviewers
 

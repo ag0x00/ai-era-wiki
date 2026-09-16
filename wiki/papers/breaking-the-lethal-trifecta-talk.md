@@ -2,7 +2,7 @@
 type: talk
 title: "Breaking the Lethal Trifecta (Without Ruining Your Agents)"
 created: 2026-05-02
-updated: 2026-08-21
+updated: 2026-09-16
 tags:
   - papers
   - talks
@@ -21,7 +21,7 @@ year: 2026
 authors: ["Andrew Bullen"]
 venue: "Unprompted Conference, San Francisco — Stage 1 Lecture 04, Wednesday March 4, 2026, 11:20"
 license: "Conference talk; slides via Stripe; transcript via attendee Google Drive share"
-key_claim: "Prompt injection is unsolved at the model layer (1.5–6.7% attack-success rate even on top models), so containment must be architectural. Stripe breaks the Lethal Trifecta by removing the one leg that's actually feasible to control — egress — and treats sensitive writes as a separate axis (\"Lethal Bifecta\") gated by human-in-the-loop. The hard part is not the architecture; it's making it adoptable: safe-search proxies, SaaS-MCP proxying via Toolshed, queued/batched/optimistic confirmations, and CI-time tool-annotation enforcement so the policy survives across many agent frameworks."
+key_claim: "Prompt injection is unsolved at the model layer (1.5–6.7% attack-success rate even on top models), so containment must be architectural. Stripe breaks the Lethal Trifecta by removing the one leg that's actually feasible to control — egress — and treats sensitive writes as a separate axis (\"Lethal Bifecta\") gated by human-in-the-loop. The hard part is not the architecture; it's making it adoptable: safe-search proxies, SaaS-MCP proxying via Toolshed, queued/batched/optimistic confirmations, CI-time egress checks on tagged agent services, and framework-evaluated tool annotations so the policy survives across many agent frameworks."
 methodology: "Practitioner talk by Stripe's Head of AI Security, framed as a 'security leadership talk' rather than a research disclosure. Argues containment > prevention because 'we have to assume prompt injection will happen.' Case-grounded in four 2025 incidents (CVE-2025-62453, Claude→Stripe-coupon jailbreak, Cursor npm credential-stealing backdoor, Slack AI exfil) and an arXiv attack-rate study."
 contradicts: []
 supports:
@@ -62,7 +62,7 @@ This page combines two source artifacts: the **slides** (13 frames; data + diagr
 
 ## TL;DR
 
-- The model layer will not save you — even Claude 3.7 Sonnet:Thinking sees a 1.5% attack-success rate on the published competition (slide 3). For security, "1% is too high."
+- The model layer will not save you — even Claude 3.7 Sonnet:Thinking sees a 1.5% attack-success rate on the published competition (slide 3). Bullen treats even a fraction-of-a-percent attack-success rate as unacceptable for security.
 - Treat prompt injection as **inevitable**. Containment is two architectural rules:
   - **Guardrail 1 (egress):** break the [[lethal-trifecta|Lethal Trifecta]] by removing the External-Communication leg in any agent that touches private data + untrusted content.
   - **Guardrail 2 (sensitive writes):** for the *write*-side analogue (untrusted-content + sensitive-action — Bullen's [[lethal-bifecta|"Lethal Bifecta"]]), require human review of sensitive actions.
@@ -101,7 +101,7 @@ Slide 4 grounds the abstract numbers in four incidents (headlines verbatim from 
 - **"Malicious npm Packages Infect 3,200+ Cursor Users with a Credential-Stealing Backdoor"** (Socket disclosure 2025-05-07; the May 11 date comes from a downstream Medium repost). See [[cursor-npm-credential-stealer|Cursor npm credential stealer — sw-cur, sw-cur1, aiide-cur]].
 - **"Data Exfiltration from Slack AI via Indirect Prompt Injection"** (PromptArmor 2024-08-20 — predates Bullen's other three by a year and is the canonical Lethal Trifecta demonstration). See [[slack-ai-private-channel-exfiltration|Slack AI private-channel exfiltration]].
 
-Bullen's framing (transcript): "even a 0.1% failure chance on attack is not enough ... we need something better than just relying on the models." He believes prevalence in consumer settings will get worse before better.
+Bullen's framing (transcript): "even a 1%, even a 0.1% failure chance to attack is not enough ... we need something better than just relying on the models." He believes prevalence in consumer settings will get worse before better.
 
 ## The two guardrails
 
@@ -134,7 +134,7 @@ Bullen's framing (transcript, repeated in his concluding remark): *"Step one thr
 
 | Pain point | Stripe's solution |
 |---|---|
-| "We need public Internet data" | **Safe Search** — built on OpenAI Web Search with `external_web_access: false`, so the agent can request a search and receive cached results without itself triggering egress. Bullen's honest caveat (transcript only): *"That's not really making anything any safer. … you prevent the data from being egressed by your agent, and instead it just gets egressed by OpenAI."* The trust is shifted, not eliminated. |
+| "We need public Internet data" | **Safe Search** — built on OpenAI Web Search with `external_web_access: false`, so the agent can request a search and receive cached results without itself triggering egress. Bullen's honest caveat (transcript only): *"you prevent the data from being egressed by your agent, and instead it just gets egressed by OpenAI. That's not really making anything any safer."* The trust is shifted, not eliminated. |
 | "I want to use this SaaS MCP" | **Proxy third-party MCPs through [[toolshed\|Toolshed]]** — Stripe's central MCP proxy. Rules can be written at the proxy: e.g. don't allow connections to non-Stripe tenants when writing to Google Docs / Figma / etc. Side benefit: users connect once to one MCP server, not N. |
 
 ### Sensitive-write-side UX
@@ -191,11 +191,11 @@ This is the unsolved piece on the slide too — slide 12 ends with the question 
 
 ## Q&A (transcript only)
 
-**Two questions worth quoting verbatim.**
+**Two answers bear on how this talk is used downstream.**
 
-**Q1** (group/team aggregation of human-in-the-loop reviews): *"We're early in the UX experimentation process … in general, trying to find ways to make it so that people need to stop less, fewer checks, fewer reviews need to be made, while ensuring that human judgment is applied at the right time is going to be sort of the North Star."*
+**Q1** (group/team aggregation of human-in-the-loop reviews): Stripe is early in the UX experimentation and has no aggregation answer yet. The direction Bullen states is *"fewer checks, fewer reviews need to be made, while ensuring that human judgment is applied at the right time"*, which he calls the North Star.
 
-**Q2** (still doing threat modeling for prompt injection?): *"100% there's a place for detective and other types of controls that aren't guarantees. Especially for customer-facing products. But ultimately, because we're not at the point where we can fully trust those, we really want to lean on these more deterministic, architectural controls."*
+**Q2** (still doing threat modeling for prompt injection?): detective and other non-guarantee controls have a place, especially for customer-facing products, but *"because we're not at the point where we can fully trust that, we really want to lean on these more deterministic, architectural controls."*
 
 The Q&A confirms a **methodological hierarchy** Stripe applies: deterministic architectural controls dominate; behavioral / detective controls are supplementary, especially for surfaces (consumer-facing) where the architectural lever is weaker.
 
