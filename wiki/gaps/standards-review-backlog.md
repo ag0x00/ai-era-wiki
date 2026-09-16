@@ -3,7 +3,7 @@ type: gap-analysis
 title: "Standards Review Backlog"
 created: 2026-05-27
 address: c-000311
-updated: 2026-08-26
+updated: 2026-09-16
 tags:
   - gaps
   - standards-review
@@ -17,6 +17,7 @@ tracker_migrated_to: "GitHub milestone: Standards Reviews (#2)"
 methodology: "[[standards-validation-methodology-2026-05]]"
 related:
   - "[[standards-validation-methodology-2026-05]]"
+  - "[[owasp-agentic-skills-top-10]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
@@ -41,6 +42,8 @@ The wiki anchors gap claims against 11 priority standards. **All 11 are now revi
 - [[standards-review-microsoft-rai-agent-365-2026-Q2|Microsoft RAI + Agent 365]]: a responsible-AI goals standard (17 goals) plus the Agent 365 management plane, separated from the ZT4AI control catalogue.
 
 Each review replaces wiki-summary-level gap claims against its standard with bounded, clause-cited absence claims. Before a standard was reviewed, its gap claims rested on the [[agentic-cmm-vs-standards-validation|2026-04-30 first-pass validation]], a wiki-summary-level snapshot rather than a clause-level audit.
+
+One framework page sits outside the eleven by design. The [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]] carries no review, because the wiki anchors no gap claim on it. A review becomes due at the first absence claim written against it.
 
 ## Open: question-scoped reviews
 

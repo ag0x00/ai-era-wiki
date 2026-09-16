@@ -3,7 +3,7 @@ type: concept
 title: "Agentic AI Threat Classes"
 address: c-000260
 created: 2026-05-02
-updated: 2026-09-06
+updated: 2026-09-16
 tags:
   - concepts
   - threat-modeling
@@ -49,6 +49,7 @@ related:
   - "[[capability-floor-collapse]]"
   - "[[ai-attribution-primaries-2026-08-17]]"
   - "[[precize-agentic-ai-top10]]"
+  - "[[owasp-agentic-skills-top-10]]"
 sources:
   - "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf"
   - "https://www.rand.org/pubs/research_reports/RRA2849-1.html"
@@ -66,6 +67,7 @@ sources:
   - "https://red.anthropic.com/2026/attack-navigator/"
   - "https://www.crowdstrike.com/en-us/blog/crowdstrike-2026-technology-threat-landscape-report/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
+  - "[[owasp-agentic-skills-top-10]]"
 ---
 
 # Agentic AI Threat Classes — 2026 Expansion
@@ -95,7 +97,7 @@ The privileged insider with model-platform access. Not every insider is a develo
 
 **The recruitment assumption behind the class.** Every scenario above starts from a trusted employee in a technical role, and the controls follow from that: vetting, least-privilege role design, dual control. Anthropic's August 2025 threat intelligence report documents the assumption being attacked at the hiring step. DPRK operatives held engineering positions at technology companies while, per the report, being unable to write code, debug, or communicate professionally without model assistance; roughly 80% of the observed Claude usage was consistent with active employment, split 61% frontend, 26% scripting, 10% interview preparation.[^tir-dprk] Anthropic's framing is the removal of a training bottleneck — the regime could previously deploy only as many workers as it could put through years of specialized instruction. This is not model poisoning and does not disturb the absence claim above. What it disturbs is the inference from demonstrated technical competence to actual technical competence, which underwrites interview screening, probationary review, and the judgment that a person in an MLOps role can be trusted with it. See [[capability-floor-collapse|Capability Floor Collapse]] for the general form.
 
-**Defensive controls named in the literature.** Insider-threat programs (RAND playbook); least-privilege MLOps roles; signed prompt artifacts; dual control on fine-tune jobs; eval-harness integrity attestation; dataset provenance and hash logging; monitoring of training-data deltas.
+**Defensive controls named in the literature.** Insider-threat programs (RAND playbook); least-privilege MLOps roles; signed prompt artifacts; dual control on fine-tune jobs; eval-harness integrity attestation; dataset provenance and hash logging; monitoring of training-data deltas. The agent skill is a further artifact an insider in these roles can edit, and it carries a published taxonomy of its own: the [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]] ranks ten risks on the instruction-and-script package an agent loads, malicious skills and over-privileged skills among them. It names artifacts rather than adversaries, so it re-describes this class's ingress rather than extending the class set.
 
 Every control in that list answers corruption. The class has a confidentiality half the list does not reach: the [[owasp-ai-exchange|OWASP AI Exchange]] names insider access as a route to direct development-time model leak, and files `SEGREGATE DATA` and `CONF COMPUTE` against it — the first partitioning the environment so the training area can carry controls against the areas around it, the second hiding training data and model parameters from the model engineers themselves while in use ([`/go/devmodelleak/`](https://owaspai.org/go/devmodelleak/), [`/go/devdataleak/`](https://owaspai.org/go/devdataleak/)).[^aix-devmodelleak-tc] No rung of the [[agentic-ai-security-cmm-2026|CMM]] grades either control: [[agentic-ai-security-cmm-crosswalk|the crosswalk]] anchors `SEGREGATE DATA` at D6 and records that the domain measures no environment boundary, and it names `CONF COMPUTE` the sharper case of that development-time absence, as the one §3.0 control aimed at the engineer with legitimate access to the training environment.
 

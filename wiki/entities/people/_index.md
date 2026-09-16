@@ -2,11 +2,11 @@
 type: domain
 title: "People"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-16
 tags: [domain, entities, people]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 0
+page_count: 55
 ---
 
 # People Index
@@ -44,6 +44,7 @@ Researchers, practitioners, authors, speakers.
 - [[john-sotiropoulos|John Sotiropoulos]] — Co-lead of the OWASP Agentic Security Initiative (ASI), the stream within the OWASP GenAI Security Project that produces the project's ag...
 - [[jonathan-cran|Jonathan Cran]] — Sources:...
 - [[joshua-saxe|Joshua Saxe]] — Machine-learning-for-security researcher.
+- [[ken-huang|Ken Huang]] — Ken Huang is named on the OWASP AIVSS leadership team and is the project lead of the OWASP Agentic Skills Top 10 (AST10), where Fabio Cer...
 - [[kyle-polley|Kyle Polley]] — Author and maintainer of RedAI, the open-source AI vulnerability-discovery workbench whose distinguishing architectural commitment is liv...
 - [[madhur-prashant|Madhur Prashant]]
 - [[matt-maisel|Matt Maisel]] — CTO and Co-Founder of Sondera.

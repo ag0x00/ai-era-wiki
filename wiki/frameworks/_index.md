@@ -2,11 +2,11 @@
 type: domain
 title: "Frameworks"
 created: 2026-04-30
-updated: 2026-09-14
+updated: 2026-09-16
 tags: [domain, frameworks]
 status: seed
 subdomain_of: ""
-page_count: 36
+page_count: 37
 ---
 
 # Frameworks Index
@@ -43,7 +43,8 @@ Published, named guidance for AI/agentic-AI security. Each framework gets its ow
 - [[opentelemetry-gen-ai|OpenTelemetry gen_ai.* Semantic Conventions]] — OpenTelemetry (OTel) is the CNCF-graduated observability standard: a vendor-neutral API, SDK, and protocol (OTLP) for distributed tracing...
 - [[osfi-b-13|OSFI Guideline B-13: Technology and Cyber Risk]] — OSFI Guideline B-13 — Technology and Cyber Risk Management — is Canada's federal regulatory expectations document for technology and cybe...
 - [[osfi-e-23-2027|OSFI Guideline E-23: Model Risk Management]] — OSFI Guideline E-23 (2027) — Model Risk Management — is Canada's federal regulatory expectations document for enterprise-wide model risk...
-- [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — The OWASP Top 10 for Agentic Applications (ASI Top 10) is the definitive agentic risk taxonomy as of Q1 2026, published December 9, 2025...
+- [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — The OWASP Top 10 for Agentic Applications (ASI Top 10), published December 9, 2025 at the Agentic AI Security Summit in London, ranks ten...
+- [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]]
 - [[owasp-ai-exchange|OWASP AI Exchange]] — The OWASP AI Exchange is an OWASP Flagship project and open-source living publication on AI security and privacy, edited through a public...
 - [[owasp-aivss|OWASP AI Vulnerability Scoring System (AIVSS)]] — OWASP AIVSS v0.8 (March 19, 2026) is the first AI-specific vulnerability scoring system.
 - [[owasp-llm-top-10|OWASP Top 10 for LLM Applications]] — The OWASP Top 10 for LLM Applications is the primary vulnerability awareness list for large language model deployments.

@@ -4,7 +4,7 @@ entity_type: organization
 org_type: government
 title: "UK AI Security Institute (AISI)"
 created: 2026-05-02
-updated: 2026-08-16
+updated: 2026-09-16
 tags:
   - entities
   - organizations
@@ -20,6 +20,7 @@ aliases:
   - "UK AI Safety Institute"
   - "UK AI Security Institute"
 related:
+  - "[[aiuc-1]]"
   - "[[anthropic-cybersecurity-eval-incidents|Anthropic Cybersecurity Evaluation Incidents]]"
   - "[[agentic-ai-threat-classes-2026]]"
   - "[[anthropic]]"

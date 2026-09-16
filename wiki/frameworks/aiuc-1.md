@@ -2,7 +2,8 @@
 type: framework
 title: "AIUC-1 AI Agent Certification Standard"
 created: 2026-05-02
-updated: 2026-06-22
+updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - certification
@@ -32,6 +33,8 @@ related:
   - "[[owasp-aivss]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-asi-aiuc1-crosswalk]]"
+  - "[[owasp-genai-crosswalk]]"
+  - "[[aisi-uk]]"
   - "[[aiuc]]"
 sources:
   - "https://aiuc-1.com"
@@ -64,13 +67,15 @@ The Society pillar is **the one the wiki's CMM does not have an analogue for**, 
 
 AIUC-1 is updated formally each quarter. The Q1-2026 update modified 26 requirements and added evidence-category labels (legal / technical / operational / third-party) plus a capability-specific scoping questionnaire. The **Q2-2026 update** is themed *"Strengthening MCP security, agent permissions & third-party risk,"* directly relevant to the wiki's [[mcp-security|MCP Security]] and [[non-human-identity|NHI]] coverage.
 
-Implication for the CMM: a D1 L5 "AIUC-1 certified" claim is implicitly *current at the most recent quarterly refresh*, not "ever certified." The CMM's L5 evidence requirement reflects this: *"AIUC-1 certified against the most recent quarterly refresh."*
+Implication for the CMM: a D1 L5 "AIUC-1 certified" claim holds only for the most recent quarterly refresh and lapses at the next one. The CMM's L5 evidence requirement reflects this: *"AIUC-1 certified against the most recent quarterly refresh."*
 
 ## Standards crosswalks
 
-AIUC publishes crosswalks against: [[iso-iec-42001|ISO 42001]], [[nist-ai-rmf|NIST AI RMF]], [[eu-ai-act|EU AI Act]], [[mitre-atlas|MITRE ATLAS]], [[owasp-llm-top-10|OWASP LLM Top 10]], [[owasp-aivss|OWASP AIVSS]], IBM AI Risk Atlas, Cisco AI Security & Safety, [[csa-maestro|CSA AICM]]. AIUC-1 is the only certification standard that maintains a current map across all of these, making it the **anchoring artifact** for the wiki's [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] at L4+.
+AIUC publishes crosswalks against: [[iso-iec-42001|ISO 42001]], [[nist-ai-rmf|NIST AI RMF]], [[eu-ai-act|EU AI Act]], [[mitre-atlas|MITRE ATLAS]], [[owasp-llm-top-10|OWASP LLM Top 10]], [[owasp-aivss|OWASP AIVSS]], IBM AI Risk Atlas, Cisco AI Security & Safety, [[csa-maestro|CSA AICM]]. AIUC-1 maintains a current map across all of these; the wiki's [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] uses AIUC-1 as its **anchoring artifact** at L4+.
 
 A dedicated bidirectional crosswalk against the [[owasp-agentic-ai-top-10|OWASP ASI Top 10]] was co-published with OWASP in May 2026; the wiki summary, including the eight observed AIUC-1 gaps and five newly validated mappings, is at [[owasp-asi-aiuc1-crosswalk|the OWASP ASI to AIUC-1 crosswalk]].
+
+AIUC-1's entry in one third-party registry attributes it to the wrong publisher. The [[owasp-genai-crosswalk|GenAI Crosswalk]] framework registry records AIUC-1 as published by the [[aisi-uk|UK AI Safety Institute]] under Open Government Licence v3.0. The standard is instead written by the Artificial Intelligence Underwriting Company, a private firm that also issues the certification, with an ANAB-accredited auditor collecting the evidence; the wiki's attribution above is correct. That registry record carries 147 mappings and, like every other row in the dataset, was never reviewed by a named person.
 
 ## Accreditation status (May 2026)
 

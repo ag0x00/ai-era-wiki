@@ -2,7 +2,8 @@
 type: framework
 title: "OWASP AI Vulnerability Scoring System (AIVSS)"
 created: 2026-04-30
-updated: 2026-06-22
+updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - owasp
@@ -34,6 +35,8 @@ related:
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-llm-top-10]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[owasp-genai-crosswalk]]"
+  - "[[ken-huang]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
 ---
@@ -75,6 +78,10 @@ AIVSS = (CVSS_Base + AARS) × Mitigation_Factor          (bounded 0–10)
 
 The v0.5 spec used a different simple-average form (`((CVSS_Base + AARS) / 2) × ThM`, with `ThM = 0.91` for Unreported); cite the v0.8 Risk-Gap form above. AIVSS scores severity and delegates the control catalog to [[aiuc-1|AIUC-1]] via the published AIUC-1 ↔ AIVSS crosswalk. See [[standards-review-owasp-agentic-aivss-2026-Q2|the 2026-Q2 standards review]].
 
+## Leadership
+
+The v0.8 specification names a leadership team of five — [[ken-huang|Ken Huang]], Michael Bargury, Vineeth Sai Narajala, Bhavya Gupta and Tim Marple — under **Leader Authors**, and designates no single project lead among them. The OWASP Agentic Skills Top 10 project page, retrieved 2026-09-16, separately describes Huang as the AIVSS lead.
+
 ## Status and Roadmap
 
 - v0.8 published March 19, 2026 — community review phase
@@ -103,7 +110,7 @@ AIVSS provides the scoring methodology needed to make the [[owasp-agentic-ai-top
 - Still v0.8 — in community review; has not achieved the adoption level of CVSS
 - Formal validation of amplification factor weights is ongoing
 - No CVSS integration specification yet (how AIVSS scores relate to NVD/CVE records)
-- Implementation tooling limited to community review documentation
+- **Scoring is applied to one list and shipped as data.** The [[owasp-genai-crosswalk|GenAI Crosswalk]] publishes an AIVSS score against each of the ten [[owasp-agentic-ai-top-10|ASI]] entries and against none of the forty-one entries on its three other source lists. The scores travel in that dataset's per-entry JSON and in the npm package wrapping it; its OSCAL 1.1.2 and STIX 2.1 exports carry compliance mappings and incident records rather than scores. The method's reach is narrow on the specification side too: v0.8 works its ten scoring examples against the AIVSS project's own Agentic AI Core risk categories, not against the ASI list, and the ASI Top 10 cross-maps to those categories by name in its Appendix A without carrying a score.
 
 ## See Also
 

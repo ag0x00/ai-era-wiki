@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "Standards Validation Methodology"
 created: 2026-05-04
-updated: 2026-08-21
+updated: 2026-09-16
 tags:
   - gaps
   - validation
@@ -19,6 +19,7 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[agentic-ai-security-cmm-measurement-protocol]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[secure-sdlc-framework-stack-2026]]"
@@ -39,7 +40,7 @@ Three issues compound:
 
 As of 2026-05-04, the framework pages under `wiki/frameworks/` document standards (NIST AI RMF, ISO 42001, EU AI Act, OWASP Agentic AI Top 10, AIUC-1, CSA MAESTRO, Microsoft RAI/ZT4AI, MITRE ATLAS, Google SAIF / CoSAI, NIST AI 600-1 + 800-218A) but **none currently carry a `sources:` list with a primary-source URL or an `archived_copy:` pointing at the actual standard PDF**. Versions are cited; specific clauses are usually not.
 
-This means any downstream comparison — including the existing [[agentic-cmm-vs-standards-validation|2026-04-30 validation]] — is effectively *CMM vs wiki-summary-of-standards*, not *CMM vs primary-source-of-standards*. Confidence in the claims is bounded by the fidelity of the wiki summaries.
+This means any downstream comparison — including the existing [[agentic-cmm-vs-standards-validation|2026-04-30 validation]] — is effectively *CMM vs wiki-summary-of-standards*. Step 1 below moves it to *CMM vs primary-source-of-standards*. Confidence in the claims is bounded by the fidelity of the wiki summaries.
 
 ### 1.2 The validation methodology states this explicitly
 
@@ -117,7 +118,7 @@ For prose, the inline form:
 
 > *Not addressed in [[nist-ai-rmf|NIST AI RMF v1.0]] §3–§5 or [[nist-ai-600-1|AI 600-1]] §2–§4 (search terms: 'system prompt', 'identity file', 'cognitive integrity'). Refuting evidence: any passage in scope naming integrity controls for agent rules / identity / system-prompt files. Reviewed 2026-MM-DD.*
 
-The structured form lives in the per-standard review page; the inline form is what appears in the CMM / RA / concept pages. Where the claim spans two standards, the inline form carries the same pair as a trailing clause: *Anchored on NIST SP 800-162; OASIS XACML 3.0 cited for lineage.*
+The structured form lives in the per-standard review page; the inline form appears in the CMM / RA / concept pages. Where the claim spans two standards, the inline form carries the same pair as a trailing clause: *Anchored on NIST SP 800-162; OASIS XACML 3.0 cited for lineage.*
 
 Where two standards define the same vocabulary, the claim anchors on the living one. A verdict of "not addressed" is bounded by the searched document, so anchoring it on a specification that has taken no revision in years states an absence about a frozen text rather than about current practice, and refuting evidence can never arrive. [[nist-sp-800-162|NIST SP 800-162]] is the worked case: it carries the same PEP / PDP / PIP / PAP role split as OASIS XACML 3.0, is reaffirmed and policy-language-agnostic, and is the wiki's anchor for any role-vocabulary claim, with XACML cited for historical lineage. `anchored_on` and `lineage_cited` record that choice on the claim itself, so a later reader can tell an anchoring decision from an oversight:
 
@@ -160,7 +161,7 @@ Live per-standard status is tracked on the **Standards Reviews** GitHub mileston
 
 Total floor estimate: ~47 hours. Plus ~10 hours for adversarial second-pass coverage of P1+P2.
 
-## §4 What changes for absence claims already in the wiki
+## §4 Effect on absence claims already in the wiki
 
 Existing absence claims are **not** retroactively required to meet the falsifiability bar — that's the audit backlog's job. But:
 
@@ -223,12 +224,12 @@ adversarial_pass: "pending | scheduled | completed YYYY-MM-DD"
 
 ## §5.1 Definition of Done
 
-A per-standard review is a propagation task, not just a page. The review page is the *evidence*; the deliverable is a wiki that is internally consistent with the reviewed primary source. A review is complete only when **every** item below is *executed* — not merely recommended in the "Effect" section. Items 3–6 are the ones the [[standards-review-owasp-agentic-aivss-2026-Q2|OWASP review]] initially skipped, which is why this section exists.
+A per-standard review is a propagation task. The review page is the *evidence*; the deliverable is a wiki that is internally consistent with the reviewed primary source. A review is complete only when **every** item below is *executed*; a recommendation in the "Effect" section leaves the item open. Items 3–6 are the ones the [[standards-review-owasp-agentic-aivss-2026-Q2|OWASP review]] initially skipped, which is why this section exists.
 
 1. **Review page filed** at `wiki/reviews/standards-review-<standard>-YYYY-Qn.md` with the coverage matrix, falsifiable absence claims, and adversarial-pass log.
 2. **Primary sources archived** under `.raw/` and manifested with `hash`; `primary_documents` frontmatter (with `archived_copy` and `scope_in_wiki`) added to the standard's framework page(s) per Step 1.
-3. **Taxonomy reconciliation.** Grep the whole wiki for the standard's own identifiers and labels — category IDs (`ASIxx`, `LLMxx:2025`, `AML.Txxxx`), control IDs, factor names, version strings. Every occurrence is reconciled to the reviewed primary-source version, or annotated inline as a dated snapshot of a superseded version. No silent drift: a wrong label anywhere is a finding, not a cosmetic. For the OWASP ASI codes this is **enforced deterministically** by `scripts/lint-taxonomy-drift.py` (in the pre-push guard): it enumerates every title-shaped `ASIxx` reference and fails on any whose label does not name the canonical category. Grep finds the labels you know are wrong; the lint finds the ones you don't. Extend its canonical map when a new taxonomy is reviewed.
-4. **Authoritative-structure pass.** The CMM ([[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] + the nine deep dives), the [[agentic-ai-security-reference-architecture|RA]], and the [[agentic-ai-security-cmm-crosswalk|crosswalk]] are reviewed for any mapping the review changes **semantically** — a re-anchored domain, a moved control, a re-scored coverage cell — not just label text, and corrected.
+3. **Taxonomy reconciliation.** Grep the whole wiki for the standard's own identifiers and labels — category IDs (`ASIxx`, `LLMxx:2025`, `AML.Txxxx`), control IDs, factor names, version strings. Every occurrence is reconciled to the reviewed primary-source version, or annotated inline as a dated snapshot of a superseded version. No silent drift: a wrong label anywhere counts as a finding. For the OWASP ASI codes this is **enforced deterministically** by `scripts/lint-taxonomy-drift.py` (in the pre-push guard): it enumerates every title-shaped `ASIxx` reference and fails on any whose label does not name the canonical category. Grep finds the labels you know are wrong; the lint finds the ones you don't. Extend its canonical map when a new taxonomy is reviewed.
+4. **Authoritative-structure pass.** The CMM ([[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] + the nine deep dives), the [[agentic-ai-security-reference-architecture|RA]], and the [[agentic-ai-security-cmm-crosswalk|crosswalk]] are reviewed for any mapping the review changes **semantically** — a re-anchored domain, a moved control, a re-scored coverage cell — and corrected. Label text alone does not discharge this item.
 5. **Substantive propagation.** Where the review changes what the standard *provides* (e.g. awareness-not-conformance, scoring-not-control, a category that re-anchors to a different CMM domain), every page that cites the standard as evidence is reframed to match. A relabel that leaves the surrounding claim wrong is not done.
 6. **Hygiene.** `updated:` bumped on every edited page; caches (`hot.md` / `log.md`) refreshed; `index.md` / relevant `_index.md` / the [[standards-review-backlog|backlog]] count updated.
 7. **Hedge-free Effect section.** The review's "Effect on existing wiki pages" section is written in the past tense and lists what was *done*. No "may cite" / "should be reframed" language — anything genuinely deferred is filed as an explicit `> [!gap]` callout or a tracked GitHub issue, with the reason.
@@ -239,20 +240,20 @@ The test for "done": a reader who greps the wiki for the standard's identifiers 
 
 The wiki's `wiki/meta/conventions.md` is updated alongside this page (separate edit) to add §Standards Provenance — the framework-page-specific extension of the existing §Source Provenance pattern. Lint enforcement to follow once the methodology has been exercised on the first P1 standard.
 
-## §7 What this addresses
+## §7 Concerns addressed
 
 | User-stated concern | This methodology's answer |
 |---|---|
 | "We make bold claims that this or that standard doesn't cover certain aspects, especially when it comes to controls." | Bold absence claims become structurally falsifiable (§2 Step 3). The standardized form makes them verifiable in finite time. |
 | "Our methodology for determining this is a wiki summary which doesn't feel thorough enough." | Step 1 requires primary-source citations on every framework page; Step 2 produces clause-level matrices, not anchor-level. The one-hop-removed problem is resolved per standard as the audit progresses. |
 | "Should we do a thorough review of each standard we're tracking?" | Yes — see §3 audit backlog. ~47 hours of focused work for P1–P3 + ~10 hours for adversarial passes. Suggest one standard per session. |
-| "How can we increase our confidence when we say something doesn't exist? You can't prove a negative." | You can't prove a *universal* negative ("no standard anywhere covers Y"). You *can* prove a *bounded* negative ("Standard X v1.0 §1–§N does not cover Y given search terms A/B/C"). This methodology only allows bounded negatives. |
+| "How can we increase our confidence when we say something doesn't exist? You can't prove a negative." | A *universal* negative ("no standard anywhere covers Y") admits no proof. A *bounded* negative ("Standard X v1.0 §1–§N does not cover Y, search terms A/B/C") does, and only that form is allowed here. |
 
 ## §8 Limits
 
-This methodology does NOT:
+This methodology does not:
 
-- **Audit production deployments** of any standard. The reviews are document-vs-document, not control-effectiveness assessments. Empirical validation is a separate exercise (per [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]).
+- **Audit production deployments** of any standard. The reviews compare document with document. Control-effectiveness assessment is a separate exercise (per [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]).
 - **Prevent standards drift**. ISO 42001 amendments, AIUC-1 quarterly refreshes, and EU AI Act enforcement-phase changes will obsolete absence claims. Reviews carry `reviewed:` dates and `version:` fields; absence claims older than 2 quarters automatically gain a `> [!stale]` callout.
 - **Solve paywalled-standard verification**. ISO and parts of CSA/AIUC are paywalled. For those, the methodology degrades gracefully to citation-only with documented constraint.
 - **Replace the existing crosswalk**. The crosswalk is anchor-level navigation; this methodology produces clause-level audits. Both have value.
@@ -277,13 +278,25 @@ After P1 is complete, the [[agentic-cmm-vs-standards-validation|existing validat
 > [!gap] What this scaffolding doesn't yet handle
 > 1. **Cross-jurisdiction standards** (e.g. UK AI regulation, China's interim measures, India's DPDP) are not in the audit backlog. Adding them is straightforward — they just need wiki framework pages first.
 > 2. **Frameworks that are themselves CMMs** (PwC, Microsoft RAI Maturity, Anthropic RSP) are excluded from this methodology's scope — they are *peers*, not authorities. A separate page should compare them per the user's earlier interest in maturity-model spread (parked).
-> 3. **Citation-fetching automation.** Long-term, retrieving primary sources, hashing, and archiving could be scripted (`scripts/fetch-standard.py`). Manual for now.
+> 3. **Citation-fetching automation.** Long-term, retrieving primary sources, hashing, and archiving could be scripted (`scripts/fetch-standard.py`). Manual for now. The contrast case below records an automated Step 2 running with no automated Step 1.
 > 4. **Reviewer disagreement protocol.** When two reviewers reach different verdicts on the same absence claim, the page surfaces both and flags as `[!contradiction]`. No mediation rule beyond that yet.
 > 5. **Empirical bridge.** This methodology validates documents against documents. Bridging to "do organizations actually implement these clauses?" requires the audit backlog from the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] — out of scope here.
 
 ## Applications of this methodology
 
-Step 3's falsifiable-absence-claim discipline also runs outside a `wiki/reviews/` snapshot. [[secure-sdlc-framework-stack-2026|Secure-SDLC Framework Stack for 2026]] is the worked case. That thesis had asserted, from each instrument's stated scope rather than from a clause-level pass, that no framework in its stack governs the coding agent as an SDLC actor. Reading the OWASP AI Exchange's `SEC DEV PROGRAM` and `DEV PROGRAM` clause by clause converted one instrument's entry from scope inference to a bounded absence: the controls name AI-assisted development nowhere and treat new engineering roles as human ones. The bound is what makes it usable — the same control does address agent-reachable capabilities, as the supply chain of the system being built rather than of the agent building it, so the absence is specific rather than a general lack of agentic awareness.
+Step 3's falsifiable-absence-claim discipline also runs outside a `wiki/reviews/` snapshot. [[secure-sdlc-framework-stack-2026|Secure-SDLC Framework Stack for 2026]] is the worked case. That thesis had asserted, from each instrument's stated scope rather than from a clause-level pass, that no framework in its stack governs the coding agent as an SDLC actor. Reading the OWASP AI Exchange's `SEC DEV PROGRAM` and `DEV PROGRAM` clause by clause converted one instrument's entry from scope inference to a bounded absence: the controls name AI-assisted development nowhere and treat new engineering roles as human ones. The bound makes it usable: the same control does address agent-reachable capabilities, as the supply chain of the system being built rather than of the agent building it, so the absence is specific rather than a general lack of agentic awareness.
+
+## Contrast case — mapping at scale with no reviewer
+
+The [[owasp-genai-crosswalk|GenAI Crosswalk]] runs the automated form of Step 2 at public scale and carries none of the other three steps. The project describes its own flow: a classifier proposes candidate control pairings, a pull request carries them to a reviewer who accepts, rejects or edits each one, and the v3.0 changelog names the pipeline "BGE + cross-encoder". The prediction export holds 615 pairings over 41 of the 51 entries and 14 of the 26 frameworks from a single run on 2026-04-09, against a dataset of 3,781 mappings from 51 OWASP risk entries to 26 frameworks, so the record leaves the origin of most rows unstated.[^crosswalk]
+
+Step 1 is absent from the provenance fields. No framework record in the registry carries a hash of the document it describes, and 24 of the 26 record no authoritative control total, so the registry asserts no verified correspondence to any published document. The `archived_copy` and `scope_in_wiki` discipline above has no counterpart in it.
+
+Step 3 is absent from the coverage arithmetic. The AIUC-1 record states the reason for that missing total on its own face: that registry was derived from the mappings rather than from the framework, so it cannot hold a control the crosswalk has not already mapped. A per-framework coverage percentage computed over a registry built that way measures the dataset's own internal consistency. That repeats the §1.3 failure in a different notation: a percentage computed over an unknown denominator states an unfalsifiable claim in numeric form.
+
+Step 4 is absent outright. Every mapping is marked unreviewed and names no reviewer, and the project says so plainly: *"Every mapping in this project is unreviewed until a named reviewer signs it."* No second reviewer has hunted a counter-example, because no first reviewer has signed a row.
+
+A classifier proposes clause pairings at a rate no reviewer matches, so its output accumulates as a queue of candidates. Where the wiki adopts a published mapping as evidence, it re-reads the clause under Steps 1, 3 and 4, beginning from the proposed row.
 
 ## Relations
 
@@ -292,3 +305,5 @@ Step 3's falsifiable-absence-claim discipline also runs outside a `wiki/reviews/
 - Companion to: [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] (anchor-level) and [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] (deployment-level)
 - Updates: `wiki/meta/conventions.md` §Standards Provenance (separate edit)
 - Adopts the falsifiability discipline from: [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] (which already documents 10 unresolved contests with bounded scope)
+
+[^crosswalk]: OWASP GenAI Security Project, [GenAI Crosswalk](https://genai-security-project.github.io/crosswalk/) v4.0.0, data layer captured 2026-09-16: 3,781 control mappings from 51 risk entries to 26 frameworks, no source hash on any of the 26 framework records, an authoritative control total on 2 of those 26, and an unreviewed confidence marker with an empty reviewer list on every mapping. The classifier prediction export holds 615 predictions over 41 entries and 14 frameworks, generated 2026-04-09 in reranker mode at top-k 15; the "BGE + cross-encoder" description is the project's own v3.0 changelog line, and the derived-registry note is the completeness note on the AIUC-1 registry record. Archived at .raw/articles/owasp-genai-crosswalk-2026-09-16.md, Part A.

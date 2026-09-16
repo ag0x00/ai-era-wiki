@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Standards Crosswalk Matrix"
 address: c-000159
 created: 2026-04-30
-updated: 2026-08-25
+updated: 2026-09-16
 tags:
   - maturity-models
   - crosswalk
@@ -38,6 +38,7 @@ related:
   - "[[mitre-atlas]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-aivss]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[owasp-ai-exchange]]"
   - "[[threat-taxonomy-reconciliation]]"
   - "[[agentic-ai-threat-classes-2026]]"
@@ -65,6 +66,8 @@ sources:
 This is the crosswalk matrix the validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 rec #1) called out as the single highest-leverage addition to the CMM. It makes `D1 L4`/`L5` and `D8 L5` falsifiable: a CMM that names standards and maps no controls produces no evidence an organization can present for AIUC-1 / ISO 42001 / EU AI Act compliance.
 
 The matrix is intentionally lossy: it surfaces the **anchor controls** in each standard for each CMM domain. Full Annex-by-Annex maps remain future work.
+
+One external dataset now covers part of that ground. The [[owasp-genai-crosswalk|GenAI Crosswalk]] publishes control-level rows against most of the standards in the columns below, including 164 against [[iso-iec-42001|ISO/IEC 42001]] and 164 against NIST CSF 2.0, the two standards this page's open gaps name. Three properties keep that dataset an input to this matrix. Its rows are keyed on OWASP risk identifiers, so importing one needs this wiki's own ASI-to-domain anchor as the join. Its framework registry records no authoritative control total for 24 of the 26 frameworks, ISO/IEC 42001 and NIST CSF 2.0 among them, and the AIUC-1 record explains the omission: that registry was derived from the mappings, so it cannot hold a control the crosswalk has not already mapped, and a registry entry therefore measures the dataset's own coverage. Every row is also marked unreviewed. Treat the dataset as a candidate list for the control-by-control iteration, where an imported row names a clause for somebody here to read.
 
 The CSA MAESTRO / ATF column was corrected by [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 standards review]]: MAESTRO cells now cite verified layer names (Layer 1 is Foundation Models, Layer 2 is Data Operations), and the ATF cells cite the five **elements** (Identity, Behavior, Data Governance, Segmentation, Incident Response) that anchor domains rather than the numbered promotion gates, which govern level advancement and do not map one-to-one onto a domain.
 
@@ -312,10 +315,10 @@ Step 1 is where the workflow breaks. Anti-pattern E2 in [[anti-patterns-and-fail
 ## Open gaps in the crosswalk
 
 > [!gap] Known unfilled spots in this crosswalk
-> 1. **Full 38-control ISO 42001 Annex A map.** Current map shows control families and high-leverage anchors; a control-by-control mapping is next iteration.
+> 1. **Full 38-control ISO 42001 Annex A map.** Current map shows control families and high-leverage anchors; a control-by-control mapping is next iteration, and the unreviewed [[owasp-genai-crosswalk|GenAI Crosswalk]] rows against ISO/IEC 42001 are a candidate list for it.
 > 2. **AIUC-1 Society pillar.** The CMM has no analogue for catastrophic-misuse / national-security externalities. This is a real gap, not a mapping bug.
 > 3. **EU AI Act high-risk classification trigger.** The crosswalk assumes high-risk classification; for limited-risk and minimal-risk systems Annex IV does not apply and the crosswalk simplifies.
-> 4. **CSF 2.0 subcategory map.** A finer-grained NIST CSF 2.0 subcategory mapping (106 subcategories) would help organizations using CSF as their primary control catalogue.
+> 4. **CSF 2.0 subcategory map.** A finer-grained NIST CSF 2.0 subcategory mapping (106 subcategories) would help organizations using CSF as their primary control catalogue; the [[owasp-genai-crosswalk|GenAI Crosswalk]]'s NIST CSF 2.0 rows are a candidate list on the same terms.
 > 5. **AIUC-1 quarterly drift.** AIUC-1 updates quarterly. The crosswalk shows the Q2 2026 state; refresh required after each quarterly drop.
 > 6. **L5+ Leading Edge tier (added 2026-05-04).** This crosswalk maps to the CMM's **L5 (Optimizing — achievable today)** tier only. L5+ research-stage capabilities (TEE-backed guardrail attestation, [[camel-pattern|CaMeL]] split, multi-agent cascade-detection rule libraries, cross-vendor AI-BOM federation, sigstore-for-MCP) do not yet have standards anchors because they predate the relevant specs. As CoSAI / OWASP / NIST CAISI publish leading-edge guidance through 2026–2027, this crosswalk will gain an L5+ column; until then, L5+ is anchored to the underlying research literature, not to formal standards.
 > 7. **Series-level detection has no settled domain (added 2026-08-18).** The D4 cell anchors `UNWANTED INPUT SERIES HANDLING`, whose implementation is clustering, pairwise similarity, and frequency analysis across a time window that is not limited to consecutive requests ([`/go/unwantedinputserieshandling/`](https://owaspai.org/go/unwantedinputserieshandling/)). [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]'s ladder grades no series-level detector, and [[agentic-ai-security-cmm-d7-observability|D7]] L4 grades a session-scoped drift signal over the same trajectory, so a D4 rung would collide with it at the boundary. The anchor stands and the grading domain is unresolved.

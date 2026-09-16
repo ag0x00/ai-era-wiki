@@ -3,7 +3,8 @@ type: comparison
 title: "AIUC-1 Critical Evaluation"
 address: c-000121
 created: 2026-05-23
-updated: 2026-08-21
+updated: 2026-09-16
+origin: aggregated
 tags:
   - comparisons
   - aiuc-1
@@ -18,6 +19,7 @@ related:
   - "[[aiuc-1]]"
   - "[[aiuc]]"
   - "[[owasp-asi-aiuc1-crosswalk]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[iso-iec-42001]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-recalibration-method-2026]]"
@@ -41,8 +43,8 @@ AIUC-1 is a certification standard for AI agents: six pillars, 50-plus safeguard
 
 AIUC-1 has real strengths that the recommendation below preserves:
 
-- **Agent-specific coverage.** It was built for AI agents, not retrofitted from a general management-system standard. Its safeguard set addresses agentic concerns that ISO/IEC 42001 covers only at the management-system level.
-- **A live standards crosswalk.** AIUC-1 maintains a current mapping across NIST AI RMF, ISO 42001, the EU AI Act, MITRE ATLAS, and OWASP/AIVSS. That map is genuinely useful as an evidence and crosswalk anchor.
+- **Agent-specific coverage.** It was purpose-built for AI agents rather than retrofitted from a general management-system standard. Its safeguard set addresses agentic concerns that ISO/IEC 42001 covers only at the management-system level.
+- **A live standards crosswalk.** AIUC-1 maintains a current mapping across NIST AI RMF, ISO 42001, the EU AI Act, MITRE ATLAS, and OWASP/AIVSS. That map is genuinely useful as an evidence and crosswalk anchor. The [[owasp-genai-crosswalk|GenAI Crosswalk]] published a wider free mapping in 2026 — 26 frameworks against 51 OWASP risk entries under CC BY-SA 4.0 — but this strength holds, because none of its rows has a named reviewer and it maps risks to controls rather than maintaining a scheme's own cross-standard map.
 - **Quarterly freshness.** The quarterly refresh keeps the control set closer to a fast-moving threat surface than an annually-revised standard.
 - **Broad, cross-sector advisory input.** The AIUC-1 Consortium launched in November 2025 with 50-plus founding members and grew to 120-plus contributors spanning private vendors, financial institutions, public-sector figures (CISA, NSC, NASA), and academia (Stanford, MIT). It was developed with Orrick, Stanford, CSA, MIT, and MITRE.
 
@@ -50,7 +52,7 @@ AIUC-1 has real strengths that the recommendation below preserves:
 
 Three structural facts argue against making AIUC-1 a hard requirement inside a vendor-neutral maturity standard.
 
-**Broad advisory input is not broad adoption.** The people shaping AIUC-1 are many; the organizations that hold the certification are few. As of May 2026, verifiable certified organizations number roughly five — UiPath, Intercom, ElevenLabs, Fieldguide, and (unconfirmed) Ada — and every one is an AI-*product* vendor certifying its own agents, not an enterprise operating a governance program. AIUC publishes no official running total; the count is reconstructed from individual press releases, which is itself a transparency gap. A certification held by a handful of vendors is too thin a base to mandate across an enterprise maturity ladder.
+**Advisory input outpaces adoption.** The people shaping AIUC-1 are many; the organizations that hold the certification are few. As of May 2026, verifiable certified organizations number roughly five — UiPath, Intercom, ElevenLabs, Fieldguide, and (unconfirmed) Ada — and every one is an AI-*product* vendor certifying its own agents rather than an enterprise operating a governance program. AIUC publishes no official running total; the count is reconstructed from individual press releases, which is itself a transparency gap. A certification held by a handful of vendors is too thin a base to mandate across an enterprise maturity ladder.
 
 **A single commercial owner sets, audits, and insures against its own standard.** AIUC writes the standard, the certificate flows through a single accredited auditor, and AIUC sells insurance priced against the same standard. That is a three-way concentration with a direct profit motive attached to the certificate. The arrangement is not disqualifying (new standards begin somewhere), but it is exactly the structure a maturity standard should not lock itself to as a sole gate.
 
@@ -68,7 +70,7 @@ Three structural facts argue against making AIUC-1 a hard requirement inside a v
 | Refresh cadence | Quarterly (heavier evidence treadmill) | Annual surveillance |
 | Commercial entanglement | Standard + audit + insurance under one owner | None |
 
-The two are complementary, not equivalent: ISO 42001 is the neutral, recognized management-system baseline; AIUC-1 is the agent-specific overlay with a useful crosswalk. Neither alone is the right *mandate*.
+The two are complementary: ISO 42001 supplies the neutral, recognized management-system baseline; AIUC-1 supplies the agent-specific overlay with a useful crosswalk. Neither alone is the right *mandate*.
 
 ## Recommendation for the CMM
 

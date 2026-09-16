@@ -2,11 +2,11 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-08-31
+updated: 2026-09-16
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 92
 ---
 
 # Papers Index
@@ -81,6 +81,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[openant-announcement|OpenAnt: LLM-Based Vulnerability Discovery]] — Source: [Knostic blog — Introducing OpenAnt](https://www.knostic.ai/blog/openant) (fetched 2026-05-15).
 - [[osint-to-knowledge-graph-talk|OSINT to Knowledge Graph for Threat Intel]] — A practitioner talk by Dongdong Sun, a machine-learning engineer on threat intelligence at Palo Alto Networks, at the March 2026 Unprompt...
 - [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] — Source:...
+- [[owasp-genai-crosswalk|GenAI Crosswalk]] — Source: [OWASP GenAI Security Project — GenAI Crosswalk](https://genai-security-project.github.io/crosswalk/) (fetched 2026-09-16).
 - [[owasp-state-of-agentic-ai-security-governance|State of Agentic AI Security and Governance]] — Source:...
 - [[perplexity-numbat-agent-security|Numbat Agent Security Suite]] — Source:...
 - [[pwc-agentic-sdlc-in-practice|Agentic SDLC in Practice]] — Source:...

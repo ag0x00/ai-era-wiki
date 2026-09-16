@@ -3,7 +3,8 @@ type: framework
 title: "OWASP Top 10 for LLM Applications"
 address: c-000309
 created: 2026-04-30
-updated: 2026-08-19
+updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - owasp
@@ -34,6 +35,7 @@ related:
   - "[[owasp-ai-exchange]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-aivss]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[owasp|OWASP]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[standards-review-owasp-llm-top-10-2026-Q2]]"
@@ -70,11 +72,23 @@ Codes and titles verified against [genai.owasp.org/llm-top-10](https://genai.owa
 | `LLM09:2025` | Misinformation |
 | `LLM10:2025` | Unbounded Consumption |
 
-The [[owasp-ai-exchange|OWASP AI Exchange]] covers the same threat as `LLM10:2025` Unbounded Consumption under the name AI resource exhaustion, and gives it two threat-specific controls, `DOS INPUT VALIDATION` and `LIMIT RESOURCES` ([`/go/airesourceexhaustion/`](https://owaspai.org/go/airesourceexhaustion/)). The correspondence stated here is this wiki's mapping. The Exchange cites this list by identifier elsewhere in the same document, and the wiki records three of those identifiers as unreconciled: `LLM10:2026` for Improper Output Handling, `LLM08` for a category that is live as Vector and Embedding Weaknesses, and a 2026 edition year for Sensitive Information Disclosure. Each is attributed to the Exchange on the page that carries the mapping.
+The [[owasp-ai-exchange|OWASP AI Exchange]] covers the same threat as `LLM10:2025` Unbounded Consumption under the name AI resource exhaustion, and gives it two threat-specific controls, `DOS INPUT VALIDATION` and `LIMIT RESOURCES` ([`/go/airesourceexhaustion/`](https://owaspai.org/go/airesourceexhaustion/)). The correspondence stated here is this wiki's mapping. The Exchange cites this list by identifier elsewhere in the same document, and the wiki recorded three of those identifiers as unreconciled. The [[owasp-genai-crosswalk|GenAI Crosswalk]] settles one of them: under its 2026 numbering `LLM10` is Improper Output Handling, so the Exchange and the crosswalk cite the same unpublished renumbering rather than two separate errors. The 2026 edition year for Sensitive Information Disclosure is only partly explained: the crosswalk shows a 2026 numbering in circulation, while no 2026 edition is published. The code itself is `LLM02` under both numberings, so nothing about that identifier was ever in dispute. `LLM08` for Vector and Embedding Weaknesses stays unreconciled: it matches the 2025 numbering and not the crosswalk's, where that category is `LLM09`. Each is attributed to the Exchange on the page that carries the mapping.
 
-## Current Status (Q1 2026)
+## Current Status
 
-As of April 2026, the LLM Top 10 2025 is **unchanged**. A 2026 community questionnaire suggests a future update is under development, but no timeline has been announced.
+As of September 2026 the published LLM Top 10 remains the 2025 edition, and a 2026 renumbering circulates inside OWASP artifacts without a published list behind it. The [[owasp-genai-crosswalk|GenAI Crosswalk]] labels its LLM source list `LLM-Top10-2026` and reassigns seven of the ten codes:
+
+| Category | 2025 code | 2026 crosswalk code |
+|---|---|---|
+| Supply Chain | `LLM03` | `LLM04` |
+| Data and Model Poisoning | `LLM04` | `LLM05` |
+| Improper Output Handling | `LLM05` | `LLM10` |
+| Excessive Agency | `LLM06` | `LLM03` |
+| Vector and Embedding Weaknesses | `LLM08` | `LLM09` |
+| Misinformation | `LLM09` | `LLM07` |
+| Unbounded Consumption | `LLM10` | `LLM06` |
+
+It also carries Hidden Context Exposure at `LLM08` in place of System Prompt Leakage, which this wiki reads as a rename of the same category rather than a new one; no OWASP artifact captured here states which it is. The crosswalk's own site prose disagrees with its data layer, listing the ten titles in 2025 order while substituting the renamed title. The table above stays the wiki's citable set, because `genai.owasp.org/llm-top-10/` published no 2026 edition as of 2026-09-16. A 2026 community questionnaire suggests a future update is under development, but no timeline has been announced.
 
 The LLM Top 10 has been complemented rather than superseded by the [[owasp-agentic-ai-top-10|Agentic Applications Top 10]] (December 2025), which handles the agentic risk classes that the LLM Top 10 was not designed to address (multi-agent orchestration, cascading failures, rogue agents).
 
@@ -105,7 +119,7 @@ Translated into 10+ languages. Vendor integrations by Kong, Lakera (acquired by 
 - [[owasp|OWASP]] (publisher)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — the agentic complement; covers ASI01–ASI10
 - [[owasp-aivss|OWASP AI Vulnerability Scoring System (AIVSS)]] — OWASP's AI vulnerability scoring system
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — LLM Top 10 IDs anchor: `LLM01:2025` Prompt Injection → **D4 Runtime**; `LLM04:2025` Data and Model Poisoning → **D6 Data**; `LLM06:2025` Excessive Agency → **D3**; `LLM07:2025` System Prompt Leakage → **D6 + D9**; `LLM08:2025` Vector and Embedding Weaknesses → **D6**; `LLM10:2025` Unbounded Consumption → **D4 + D5**
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — LLM Top 10 IDs anchor: `LLM01:2025` Prompt Injection maps to **D4 Runtime**; `LLM04:2025` Data and Model Poisoning to **D6 Data**; `LLM06:2025` Excessive Agency to **D3**; `LLM07:2025` System Prompt Leakage to **D6 + D9**; `LLM08:2025` Vector and Embedding Weaknesses to **D6**; `LLM10:2025` Unbounded Consumption to **D4 + D5**
 - [[standards-review-owasp-llm-top-10-2026-Q2|Standards Review — OWASP LLM Top 10]] — primary-source verification of all ten codes and the CMM coverage matrix
 - [[stride-ai-2026|STRIDE-AI Threat Modeling Framework]] — academic threat-modeling method that proposes the LLM Top 10 as the technical taxonomy bridged to NIST AI RMF governance
 

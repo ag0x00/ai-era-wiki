@@ -3,6 +3,7 @@ type: framework
 title: "OWASP Top 10 for Agentic Applications (ASI Top 10)"
 created: 2026-04-30
 updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - owasp
@@ -36,6 +37,7 @@ related:
   - "[[owasp-agentic-ai-threats-mitigations]]"
   - "[[owasp-state-of-agentic-ai-security-governance]]"
   - "[[owasp-asi-aiuc1-crosswalk]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[aiuc-1]]"
   - "[[owasp-llm-top-10]]"
   - "[[owasp-ai-exchange]]"
@@ -56,9 +58,9 @@ sources:
 
 # OWASP Top 10 for Agentic Applications (ASI Top 10)
 
-The **OWASP Top 10 for Agentic Applications** (ASI Top 10) is the definitive agentic risk taxonomy as of Q1 2026, published December 9, 2025 at the Agentic AI Security Summit in London. Developed by 100+ industry experts, it covers ten risk categories specific to AI agents that act autonomously, use tools, maintain memory, and communicate with other agents.
+The **OWASP Top 10 for Agentic Applications** (ASI Top 10), published December 9, 2025 at the Agentic AI Security Summit in London, ranks ten risk categories specific to AI agents that act autonomously, use tools, maintain memory, and communicate with other agents. A group of 100+ industry experts developed it.
 
-This is the single most important new taxonomy introduced in the agentic AI security space in 2025-2026, and four named vendors adopted it within Q1 2026.
+It addresses risk classes the LLM Top 10 does not cover, and four vendors adopted it within Q1 2026: Microsoft, Palo Alto Networks, Auth0, and Gravitee (see Adoption below).
 
 ## The Ten ASI Categories
 
@@ -100,7 +102,7 @@ Multiple vendors adopted the ASI Top 10 in Q1 2026:
 - **Auth0** integrated it into guidance
 - **Gravitee** adopted it
 
-The 2026 document itself cross-maps each category to the OWASP [[owasp-agentic-ai-threats-mitigations|Agentic AI Threats and Mitigations]] guide (T1–T17), the [[owasp-llm-top-10|LLM Top 10 2025]] (Appendix A), and the NHI Top 10 2025 (Appendix C). It does **not** contain a [[mitre-atlas|MITRE ATLAS]] mapping — any ASI↔ATLAS crosswalk is ATLAS-side or community work, not part of the OWASP publication (verified in [[standards-review-owasp-agentic-aivss-2026-Q2|the 2026-Q2 review]]).
+The 2026 document itself cross-maps each category to the OWASP [[owasp-agentic-ai-threats-mitigations|Agentic AI Threats and Mitigations]] guide (T1–T17), the [[owasp-llm-top-10|LLM Top 10 2025]] (Appendix A), and the NHI Top 10 2025 (Appendix C). It does **not** contain a [[mitre-atlas|MITRE ATLAS]] mapping — any ASI↔ATLAS crosswalk originates from ATLAS-side or community work outside the OWASP publication (verified in [[standards-review-owasp-agentic-aivss-2026-Q2|the 2026-Q2 review]]). A sibling OWASP project supplies that mapping outside the publication: the [[owasp-genai-crosswalk|GenAI Crosswalk]] maps the ASI entries to [[mitre-atlas|MITRE ATLAS]] techniques among twenty-six frameworks. ATLAS is also that dataset's largest classifier target — 173 of its 615 machine-generated predictions point at ATLAS controls — and no mapping in it carries a reviewer signature, so those rows are a pointer to check rather than an OWASP assertion about ASI↔ATLAS correspondence.
 
 A separate May 2026 OWASP publication maps the ten ASI categories bidirectionally to the [[aiuc-1|AIUC-1]] certification requirements. The wiki summary is at [[owasp-asi-aiuc1-crosswalk|the OWASP ASI to AIUC-1 crosswalk]], which records eight AIUC-1 coverage gaps against the ASI prevention guidelines (inter-agent auth, agent identity attestation, cascading-failure containment, tool-call observability, runtime monitoring, and others).
 
@@ -110,7 +112,7 @@ A separate May 2026 OWASP publication maps the ten ASI categories bidirectionall
 - Directly addresses three risk classes (ASI07, ASI08, ASI10) not covered by the LLM Top 10
 - 100+ expert development process lends credibility
 - Per-category mappings to the T-code threat taxonomy, LLM Top 10, NHI Top 10, and AIVSS support threat-intelligence integration
-- Named-vendor adoption in Q1 2026
+- Named-vendor adoption in Q1 2026 (Microsoft, Palo Alto Networks, Auth0, Gravitee)
 
 ## Gaps and Shortcomings
 
@@ -119,7 +121,7 @@ A separate May 2026 OWASP publication maps the ten ASI categories bidirectionall
 - Platform-level vs. prompt-level enforcement distinction not explicitly articulated (the MCP guide implicitly addresses it)
 - "Least Agency" principle introduced without implementation guidance
 - No AI incident response playbooks or IoCs
-- AIVSS v0.8 needed to score ASI vulnerabilities quantitatively — integration still maturing
+- **AIVSS scoring of the ASI categories is published as data and not inside this list.** The [[owasp-genai-crosswalk|GenAI Crosswalk]] carries an [[owasp-aivss|AIVSS]] score against each of ASI01–ASI10 — ASI05 highest at 9.9, ASI09 lowest at 7.3 — and against none of the forty-one entries on its other three source lists. A reader wanting per-category severity takes it from that dataset, and takes the caveat with it: every row in that dataset is unreviewed.
 - **ASI07 presumes an explicit agent-to-agent link** — its failure modes (interception, spoofing, replay, downgrade) are protocol failures, and the controls that follow (mutual TLS, signed [[a2a-protocol|A2A]] Agent Cards, message authentication on an agent bus) reach no channel made of shared write access. The category needs an extension covering any writable medium two agent runs can both reach
 
 > [!contradiction] Inter-agent communication without an inter-agent channel
@@ -141,7 +143,7 @@ One reading artifact of that method needs stating. The [[owasp-ai-exchange|OWASP
 - [[owasp-asi-aiuc1-crosswalk|OWASP ASI to AIUC-1 Crosswalk]] — bidirectional map to AIUC-1 certification requirements
 - [[aiuc-1|AIUC-1 AI Agent Certification Standard]] — the certification side of that crosswalk
 - [[mitre-atlas|MITRE ATLAS]] — adversary technique cross-reference
-- [[microsoft-rai|Microsoft Responsible AI Standard (RAI)]] — most comprehensive ASI Top 10 implementer (700+ controls, Copilot Studio mapping)
+- [[microsoft-rai|Microsoft Responsible AI Standard (RAI)]] — documents 700+ controls mapped to the ASI Top 10, including a Copilot Studio mapping
 - [[threat-modeling-for-ai|Threat Modeling for AI]] — the spine that uses ASI as its naming taxonomy; [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] cross-walks ASI01–ASI10 to the T-codes, ATLAS, MAESTRO, the five threat classes, and the RA/CMM controls
 
 <!-- sources:auto -->

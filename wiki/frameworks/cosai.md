@@ -2,7 +2,8 @@
 type: framework
 title: "CoSAI: Coalition for Secure AI"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - cosai
@@ -28,6 +29,7 @@ related:
   - "[[google|Google]]"
   - "[[meta|Meta]]"
   - "[[cosai-org]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[standards-review-saif-cosai-2026-Q2]]"
@@ -61,7 +63,7 @@ The CoSAI resources listing carries eight dated deliverables, verified 2026-06-2
 | Preparing Defenders of AI Systems | 2025-07-16 | WS2 |
 | Establish Risks and Controls for the AI Supply Chain | 2025-06-25 | WS1 |
 
-**MCP Security** (2026-01-20) remains the most comprehensive MCP threat taxonomy of any framework, co-led by IBM and Sarah Novotny. The "nearly 40 threats across 12 categories" figure was not re-verifiable from the homepage/resources listing in the 2026-06-22 review pass and is flagged for a deeper-source check.
+**MCP Security** (2026-01-20), co-led by IBM and Sarah Novotny, catalogs MCP-specific threats across twelve stated categories. The "nearly 40 threats across 12 categories" figure was not re-verifiable from the homepage/resources listing in the 2026-06-22 review pass and is flagged for a deeper-source check.
 
 **Principles for Secure-by-Design Agentic Systems** (February 9, 2026):
 - Defense-in-depth principles with practical implementation strategies
@@ -84,11 +86,11 @@ The **[[a2a-protocol|Agent-to-Agent (A2A) protocol]]** is a key CoSAI/Google-ori
 
 ## AI Incident Response Framework
 
-The **AI Incident Response Framework** (2025-10-30, continuously updated) is the first industry-wide AI incident response framework following the NIST lifecycle. It is the closest thing to an authoritative AI IR playbook, but lacks AI-specific IoCs and forensic procedures.
+The **AI Incident Response Framework** (2025-10-30, continuously updated) is the first industry-wide AI incident response framework following the NIST lifecycle, though it lacks AI-specific IoCs and forensic procedures.
 
 ## Strengths
 
-- MCP Security White Paper is the most comprehensive MCP threat taxonomy of any framework
+- MCP Security White Paper catalogs MCP-specific threats across twelve stated categories
 - Secure-by-Design principles bridge conceptual guidance and operational practice
 - AI Incident Response Framework v1.0 provides the only multi-stakeholder AI IR structure
 - Collaborative model (40+ partners including all major hyperscalers) gives unique convening power
@@ -98,7 +100,7 @@ The **AI Incident Response Framework** (2025-10-30, continuously updated) is the
 ## Gaps and Shortcomings
 
 - Publications remain **principled guidance rather than enforceable specifications**
-- MCP Security White Paper catalogs threats but does not provide specific, testable control implementations
+- MCP Security White Paper catalogs threats but does not provide specific, testable control implementations. The [[owasp-genai-crosswalk|GenAI Crosswalk]] maps CoSAI without asserting the pairings: all 127 of its CoSAI mappings carry a draft flag, the largest such block in the dataset, and the project records CoSAI as one of two frameworks carrying candidate rows only — control ids accurate to the published framework, the pairing to a risk awaiting subject-matter review.
 - Secure-by-Design principles lack maturity assessment criteria
 - [[a2a-protocol|A2A v1.0]] has no standalone security specification — message integrity, replay protection, and cross-agent delegation remain vendor- or proposal-side
 - AI Incident Response Framework lacks AI-specific IoCs or forensic procedures
@@ -132,7 +134,7 @@ The **AI Incident Response Framework** (2025-10-30, continuously updated) is the
 - [[cosai-org|CoSAI]] (the organization)
 - [[google-saif|Google SAIF — Secure AI Framework]] — original SAIF framework; CoSAI is the institutional successor
 - [[meta|Meta]] — Premier Sponsor as of February 2026; LlamaFirewall contributor
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — CoSAI Principles → **D1**; Model Context Protocol (MCP) Security (2026-01-20) → **D4/D5**; Agentic Identity and Access Management (2026-04-17) → **D2**; AI Incident Response Framework (2025-10-30) → **D9 Operations & Human Factors**; CoSAI contribution is **D1 L5** evidence
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — CoSAI Principles map to **D1**; Model Context Protocol (MCP) Security (2026-01-20) maps to **D4/D5**; Agentic Identity and Access Management (2026-04-17) maps to **D2**; AI Incident Response Framework (2025-10-30) maps to **D9 Operations & Human Factors**; the CoSAI contribution is **D1 L5** evidence
 - [[standards-review-saif-cosai-2026-Q2|Google SAIF and CoSAI standards review]] — verified the four verbatim workstream names and eight dated deliverables; reconciled the MCP date (2026-01-20) and the Agentic IAM title/date (2026-04-17)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — ASI Top 10 complements CoSAI's MCP/agentic guidance
 

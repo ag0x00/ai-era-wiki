@@ -62,6 +62,7 @@ related:
 sources:
   - "[[ai-security-standards-in-q1-2026]]"
   - "[[emerging-cybersecurity-practices-for-agentic-ai-applications]]"
+  - "[[owasp-agentic-skills-top-10]]"
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
@@ -489,7 +490,7 @@ These individuals and organizations have shipped substantive work on the control
 | **Bill McIntyre**                         | *Securing Your Agents* (2026, AIE / RMAIIG); 40-slide layered playbook                                                            | [[bill-mcintyre\|Bill McIntyre]]                                |
 | **Jason Clinton** (Anthropic Deputy CISO) | AIVSS Distinguished Review Board; CISO's Guide to Agentic AI webinar                                                              | (entity stub candidate)                                         |
 | **Apostol Vassilev** (NIST)               | [[nist-ai-600-1\|NIST AI 600-1]] lead; CAISI early contributor                                                                                       | [[apostol-vassilev\|Apostol Vassilev]]                          |
-| **Ken Huang**                             | OWASP AIVSS lead                                                                                                                  | (entity stub candidate)                                         |
+| **Ken Huang**                             | OWASP AIVSS leadership team and Leader Authors (v0.8); Agentic Skills Top 10 project lead                                             | [[ken-huang\|Ken Huang]]                                        |
 | **Meta Purple Llama team**                | LlamaFirewall (PromptGuard 2 / AlignmentCheck / CodeShield)                                                                       | [[llamafirewall\|LlamaFirewall]]                                |
 | **Solo.io / Linux Foundation AAIF**       | AgentGateway → LF (July 2025); Solo Enterprise distribution; [[agentdesktop\|agentdesktop]] endpoint governance (Apache 2.0, Sept 2026) | [[solo-io\|Solo.io]]                                  |
 | **Microsoft Security Research**           | FIDES (zero successful PI on AgentDojo); ZT4AI; Agent 365; M365 memory-injection detector                                         | [[microsoft-rai\|Microsoft Responsible AI Standard (RAI)]]      |

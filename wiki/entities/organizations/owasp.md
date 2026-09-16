@@ -2,7 +2,8 @@
 type: entity
 title: "OWASP"
 created: 2026-04-30
-updated: 2026-08-18
+updated: 2026-09-16
+origin: aggregated
 tags:
   - entities
   - organizations
@@ -19,26 +20,29 @@ related:
   - "[[owasp-agentic-ai-top-10]]"
   - "[[owasp-aivss]]"
   - "[[owasp-asi-aiuc1-crosswalk]]"
+  - "[[owasp-genai-crosswalk]]"
+  - "[[owasp-agentic-skills-top-10]]"
   - "[[standards-review-owasp-llm-top-10-2026-Q2]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+  - "[[owasp-agentic-skills-top-10]]"
 ---
 
 # OWASP — Open Worldwide Application Security Project
 
 **Sources:** [OWASP (homepage)](https://owasp.org) · [OWASP GenAI Security Project](https://genai.owasp.org) · [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/)
 
-**OWASP** (Open Worldwide Application Security Project) is the leading open-source, community-driven security organization. In AI security, OWASP has become the de facto reference taxonomy producer — having published more substantive AI security content in Q1 2026 than any other framework organization.
+**OWASP** (Open Worldwide Application Security Project) is an open-source, community-driven security organization producing AI security guidance. By Q3 2026 it had published the LLM Top 10, the ASI Top 10, AIVSS, the GenAI Crosswalk, and the Agentic Skills Top 10, alongside the AI Exchange and AISVS.
 
 ## AI Security Role
 
 OWASP publishes awareness frameworks and risk taxonomies rather than certifiable compliance standards, with one qualification that has grown material. The [[owasp-ai-exchange|OWASP AI Exchange]] states that it feeds normative standards directly through official liaison partnership, contributing 70 pages to prEN 18282 (cybersecurity for the EU AI Act), 70 pages to ISO/IEC 27090 (AI security), and further material to ISO/IEC 27091 (AI privacy).[^aix-liaison] The output remains non-certifiable in OWASP's own hands; the route to enforceability runs through the standards bodies OWASP contributes to. OWASP's strength beyond that liaison route is community development (100+ experts for the ASI Top 10), vendor adoption, and the speed with which it can codify emerging threat patterns.
 
-OWASP runs **two flagship AI projects**. The [[owasp-ai-exchange|AI Exchange]] is the comprehensive threat-and-control framework covering all AI — agentic, analytical, discriminative, generative, and heuristic — and privacy alongside security; it was awarded flagship status in March 2025. The GenAI Security Project is the umbrella for generative-AI deliverables including the LLM Top 10, the ASI Top 10, and AIVSS. A third project, the OWASP AISVS (AI Security Verification Standard), supplies a three-level verification checklist aligned to ASVS and is the artifact the Exchange directs auditors to ([`/go/aiatowasp/`](https://owaspai.org/go/aiatowasp/)).
+OWASP runs **two flagship AI projects**. The [[owasp-ai-exchange|AI Exchange]] is the comprehensive threat-and-control framework covering all AI — agentic, analytical, discriminative, generative, and heuristic — and privacy alongside security; it was awarded flagship status in March 2025. The GenAI Security Project is the umbrella for generative-AI deliverables including the LLM Top 10, the ASI Top 10, AIVSS, the DSGAI 2026 data-security risk list, and the [[owasp-genai-crosswalk|GenAI Crosswalk]], which the project publishes as its flagship dataset. The crosswalk draws on four OWASP risk lists: those three plus the [[owasp-agentic-skills-top-10|Agentic Skills Top 10]], which OWASP carries as a separate incubator project. A third project, the OWASP AISVS (AI Security Verification Standard), supplies a three-level verification checklist aligned to ASVS and is the artifact the Exchange directs auditors to ([`/go/aiatowasp/`](https://owaspai.org/go/aiatowasp/)).
 
 ## Q1 2026 Activity
 
-OWASP had the most productive AI security quarter of any framework organization:
+OWASP's Q1 2026 AI security activity:
 
 - **OWASP Top 10 for Agentic Applications** (ASI Top 10) — published December 9, 2025 at the Agentic AI Security Summit, London; adopted by Microsoft, Palo Alto Networks, Auth0, Gravitee in Q1 2026
 - **AIVSS v0.8** (March 19, 2026) — first AI-specific vulnerability scoring system extending CVSS 4.0
@@ -51,11 +55,11 @@ OWASP had the most productive AI security quarter of any framework organization:
 ## Notable Sponsor M&A Activity (Q1 2026)
 
 Five OWASP sponsor alumni were acquired by major security vendors:
-- Pangea → CrowdStrike
-- Lakera → Check Point
-- Prompt Security → SentinelOne
-- Calypso AI → F5
-- SPLX → Zscaler
+- Pangea, acquired by CrowdStrike
+- Lakera, acquired by Check Point
+- Prompt Security, acquired by SentinelOne
+- Calypso AI, acquired by F5
+- SPLX, acquired by Zscaler
 
 ## AI Security Frameworks Published
 
@@ -70,6 +74,9 @@ Five OWASP sponsor alumni were acquired by major security vendors:
 | MCP Security Guide | Active (Feb 2026) |
 | [[owasp-ai-exchange\|AI Exchange]] | Active; OWASP Flagship since March 2025; 170+ authors; feeds prEN 18282 and ISO/IEC 27090 per the Exchange's own liaison claim, unverified[^aix-liaison] |
 | OWASP AISVS | Active; three verification levels aligned to ASVS |
+| [[owasp-genai-crosswalk\|GenAI Crosswalk v4.0.0]] | Active; 51 risk entries mapped to 26 frameworks; every mapping unreviewed |
+| [[owasp-agentic-skills-top-10\|Agentic Skills Top 10 (AST10)]] | Active; OWASP incubator project, latest version 1.0-2026; AST01–AST10; the skill layer between the model and its tools |
+| GenAI Data Security Risks (DSGAI 2026) | Active; DSGAI01–DSGAI21 |
 
 ## Cross-Org Strategic Briefings
 

@@ -2,7 +2,8 @@
 type: practice
 title: "Supply Chain Security for Agentic AI"
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-16
+origin: aggregated
 tags:
   - practices
   - supply-chain
@@ -13,7 +14,7 @@ status: developing
 scope_axis:
   - sec-of-ai
 maturity: emerging
-addresses_threat: "Malicious skill/plugin installation (ASI04), typosquatting, dependency confusion, cognitive file tampering (ASI06, ASI10)"
+addresses_threat: "Malicious skill/plugin installation (ASI04, AST01, AST02), typosquatting, dependency confusion, cognitive file tampering (ASI06, ASI10), skill over-privilege and update drift (AST03, AST07)"
 related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[ai-bom]]"
@@ -30,9 +31,14 @@ related:
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[artifactory]]"
   - "[[jfrog]]"
+  - "[[owasp-agentic-skills-top-10]]"
+  - "[[owasp-genai-crosswalk]]"
+  - "[[csa-maestro]]"
+  - "[[mcp-security]]"
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+  - "[[owasp-agentic-skills-top-10]]"
 ---
 
 # Supply chain security for agentic AI
@@ -136,6 +142,8 @@ Traditional SBOM tracks software dependencies. Agentic deployments require an [[
 - Framework dependencies (LangChain, CrewAI, AutoGEN, etc.)
 
 See [[ai-bom|AI-BOM: AI Bill of Materials]] for the dedicated page on this control.
+
+The [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]] (`AST01`–`AST10`) ranks ten risks on the skill itself — the packaged instruction-and-script artifact an agent loads — and places it as a behavior layer between the model and the tools it reaches over the [[mcp-security|Model Context Protocol]]. Six of its ten entries land on the layers above rather than adding one: AST01 Malicious Skills on registry-level scanning, AST02 Supply Chain Compromise and AST08 Poor Scanning on pre-install scanning, AST04 Insecure Metadata on checksum verification, AST07 Update Drift on behavioral drift detection, and AST09 No Governance on the AI-BOM just described. AST03 Over-Privileged Skills reaches only the resolution-time allow and deny policy in Layer 1b, and AST05 Untrusted External Instructions, AST06 Weak Isolation and AST10 Cross-Platform Reuse name injection handling, sandbox strength and cross-platform coverage, which no layer here specifies. This page's control set stays as it is: [[owasp-agentic-ai-top-10|ASI04]] remains the agent-level anchor a finding is escalated under, while an AST code names which property of the skill failed. Adoption evidence for the list is confined to its own stated MAESTRO mapping and to 36 draft mappings against [[csa-maestro|CSA MAESTRO]] recorded in the [[owasp-genai-crosswalk|GenAI Crosswalk]].
 
 ## Mapping to traditional security
 

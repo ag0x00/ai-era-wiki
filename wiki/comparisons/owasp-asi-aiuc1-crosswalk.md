@@ -3,7 +3,7 @@ type: comparison
 title: "OWASP ASI to AIUC-1 Crosswalk"
 address: c-000222
 created: 2026-06-22
-updated: 2026-06-22
+updated: 2026-09-16
 tags:
   - comparisons
   - crosswalk
@@ -22,6 +22,7 @@ related:
   - "[[aiuc-1]]"
   - "[[owasp-aivss]]"
   - "[[aiuc-1-critical-evaluation]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[owasp-agentic-ai-threats-mitigations]]"
   - "[[owasp-state-of-agentic-ai-security-governance]]"
@@ -37,11 +38,13 @@ A bidirectional mapping between the [[owasp-agentic-ai-top-10|OWASP Top 10 for A
 
 **Source.** *AIUC-1: Crosswalks OWASP Top 10 For Agentic Applications*, v1.0, May 2026, OWASP GenAI Security Project (Agentic Security Initiative), CC BY-SA 4.0.[^src] Archived: `.raw/papers/owasp-agentic-top10-aiuc1-crosswalk-2026-05.pdf`.
 
+The same publisher ships a second AIUC-1 mapping with different provenance. The [[owasp-genai-crosswalk|GenAI Crosswalk]] carries 147 AIUC-1 mappings across its LLM, Agentic and DSGAI source lists, and marks every one unreviewed with no named reviewer. This document instead carries an eight-code rationale taxonomy, Primary and Secondary relevance grades, and a recorded contributor-review round. Where the two disagree, this document states who checked it.
+
 **The crosswalk uses the published ASI labels.** ASI05 is "Unexpected Code Execution" (RCE) and ASI09 is "Human-Agent Trust Exploitation," matching the published 2026 edition recorded in [[standards-review-owasp-agentic-aivss-2026-Q2|the 2026-Q2 standards review]]. The pre-release draft labels (`ASI05` "Sensitive Data Disclosure", `ASI09` "Missing Guardrails") do not appear in this document.
 
 ## Mapping method
 
-Each mapping is **Primary** (directly mitigates the core risk) or **Secondary** (addresses a related consequence or supplies a supporting control).[^src] Primary versus Secondary is set by threat context, not by control type: preventive and scope-constraining controls tend to be Primary; detective and governance controls tend to be Secondary, except where detection is the only way a persistent, cross-session, or multi-agent threat becomes visible (logging is Primary for ASI06 memory poisoning, Secondary for ASI01).
+Each mapping is **Primary** (directly mitigates the core risk) or **Secondary** (addresses a related consequence or supplies a supporting control).[^src] Threat context sets whether a mapping is Primary or Secondary: preventive and scope-constraining controls tend to be Primary; detective and governance controls tend to be Secondary, except where a persistent, cross-session, or multi-agent threat becomes visible only through detection (logging is Primary for ASI06 memory poisoning, Secondary for ASI01).
 
 Each mapping also carries a **rationale code** from a controlled taxonomy of eight control functions.[^src]
 
@@ -56,7 +59,7 @@ Each mapping also carries a **rationale code** from a controlled taxonomy of eig
 | ISOLATE | Isolate and contain | Architectural separation that stops cross-agent or cross-tenant propagation |
 | DISCLOSE | Disclose and calibrate | Transparency or provenance that lets humans calibrate trust |
 
-The document states the crosswalk identifies relevance, not sufficiency: a Primary mapping means the requirement addresses the core risk, not that it fully mitigates it.[^src]
+The document states that the crosswalk identifies relevance rather than sufficiency: a Primary mapping means the requirement addresses the core risk, without fully mitigating it.[^src]
 
 ## ASI threat to AIUC-1 requirement (Part B)
 

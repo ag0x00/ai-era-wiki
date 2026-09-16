@@ -3,7 +3,7 @@ type: comparison
 title: "Threat Taxonomy Reconciliation"
 address: c-000235
 created: 2026-06-23
-updated: 2026-08-25
+updated: 2026-09-16
 tags:
   - comparisons
   - threat-modeling
@@ -36,6 +36,8 @@ related:
   - "[[capability-floor-collapse]]"
   - "[[agent-escape]]"
   - "[[precize-agentic-ai-top10]]"
+  - "[[owasp-agentic-skills-top-10]]"
+  - "[[owasp-genai-crosswalk]]"
 sources:
   - "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
   - "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/"
@@ -61,6 +63,8 @@ Seven threat taxonomies are in active use across agentic and generative AI secur
 | [[owasp-ai-exchange\|OWASP AI Exchange]] AI Security Matrix | Asset-and-lifecycle matrix | Eighteen threat categories keyed on asset + impact × attack surface with lifecycle; spans development-time and runtime, covers non-generative AI, and pairs each category with named controls |
 
 One pre-standardization source sits upstream of the [[owasp-agentic-ai-top-10|ASI Top 10]], and the table above omits it for that reason. The [[precize-agentic-ai-top10|Precize Top 10 for Agentic AI Vulnerability]] (`AAI001`–`AAI016`, [first published February 2025](https://github.com/precize/Agentic-AI-Top10-Vulnerability)) states its own purpose as "the core for OWASP and CSA Red teaming work," a claim restated by its own three-person author group on a second site and unverified from the OWASP and CSA side. The Precize list carries no versioned release and no formal review process, and its own README marks a third of its categories deprecated or provisional. Independent stewardship and current use are the table's inclusion criteria, so this page records Precize as a precursor to the ASI Top 10 rather than as an eighth taxonomy. Six of its categories map onto ASI rows; five — AAI011 Untraceability, AAI012 Checker-out-of-the-Loop, AAI014 Alignment Faking, AAI015 Inversion and Extraction, AAI016 Covert Channel — have no single ASI counterpart, and for untraceability and checker-out-of-the-loop the closest ASI treatment is distributed across ASI03 and ASI09. [[precize-agentic-ai-top10|The framework page]] carries the code-by-code mapping.
+
+A second list sits outside the table for the other half of the same criterion. The [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]] (`AST01`–`AST10`) ranks ten risks on the agent skill, the packaged instruction-and-script artifact an agent loads; the project places that artifact as a behavior layer between the model and the tools an agent reaches over MCP. OWASP stewards the list as an incubator project under two named leads, which meets the stewardship half of the criterion. The list falls short on current use: the project states that each of its risks maps to CSA MAESTRO's seven layers, and the only mapping rows published outside its own materials are 36 against [[csa-maestro|CSA MAESTRO]] in the [[owasp-genai-crosswalk|GenAI Crosswalk]], each marked draft and awaiting subject-matter review. Two wiki pages cite an AST code, and both mark the anchor provisional: [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]] tags controls that stay anchored to ASI04, and [[red-teaming-capability-framework|Red Teaming Capability Framework]] holds the list's coverage open while ratification is pending. This page records the Agentic Skills Top 10 as a taxonomy in registration and holds the table at seven.
 
 Three structural tests sit alongside the catalogs: the [[lethal-trifecta|Lethal Trifecta]], where private data, untrusted content, and external communication together yield exfiltration; the [[lethal-bifecta|Lethal Bifecta]], where untrusted content plus a sensitive write yields a damaging action; and egress-allowlist transitivity, which fires on an allowlisted destination that itself reaches the internet or that several agent runs can write to. Each is a design-time go/no-go check evaluated across a design rather than an entry counted within one. The [[agentic-ai-threat-classes-2026|five threat classes]] are the wiki's expansion beyond the published lists, covering gaps a peer reviewer surfaces (insider, APT, collusion, model-version regression, jurisdictional).
 

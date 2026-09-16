@@ -2,11 +2,11 @@
 type: domain
 title: "Comparisons"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-09-16
 tags: [domain, comparisons]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 11
 ---
 
 # Comparisons Index
@@ -26,7 +26,7 @@ Side-by-side analyses. Useful when two or more frameworks, architectures, vendor
 - [[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]] — Every commercial AI vulnerability-discovery programme compared below reaches an operator through a vendor gate.
 - [[owasp-asi-aiuc1-crosswalk|OWASP ASI to AIUC-1 Crosswalk]] — A bidirectional mapping between the OWASP Top 10 for Agentic Applications (ASI Top 10) threat taxonomy and the AIUC-1 certification requi...
 - [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] — Seven threat taxonomies are in active use across agentic and generative AI security as of August 2026, each built for a different job.
-- [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] — This page has two parts: what the wiki contributes beyond the standards literature, and the strongest counter-arguments a serious peer re...
+- [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] — This page has two parts: what the wiki contributes beyond the standards literature, and the counter-arguments a peer reviewer would raise...
 
 > [!gap] More candidates
 > Candidate comparisons: "NIST AI RMF vs ISO/IEC 42001 — overlap and divergence", "OWASP LLM Top 10 vs MITRE ATLAS — defender vs attacker framing", "Maturity model spread (PwC, Microsoft, Anthropic, OWASP) — same axes?" — *scoping analysis filed at [[maturity-model-spread-axis-mismatch|Maturity Model Spread — Why PwC, Microsoft RAI, Anthropic RSP/ASL, and OWASP Don't Share Axes]]; candidate stays parked here pending a reason to revive*

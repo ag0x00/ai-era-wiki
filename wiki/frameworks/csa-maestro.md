@@ -2,7 +2,8 @@
 type: framework
 title: "CSA MAESTRO / CSA Agentic Trust Framework"
 created: 2026-04-30
-updated: 2026-08-20
+updated: 2026-09-16
+origin: aggregated
 tags:
   - frameworks
   - csa
@@ -27,6 +28,7 @@ aliases:
 related:
   - "[[csa|CSA]]"
   - "[[owasp-agentic-ai-top-10]]"
+  - "[[owasp-genai-crosswalk]]"
   - "[[nist-ai-rmf]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[standards-review-csa-maestro-atf-2026-Q2]]"
@@ -54,9 +56,9 @@ sources:
 
 # CSA MAESTRO / CSA Agentic Trust Framework
 
-This page covers two Cloud Security Alliance agentic-security publications. **MAESTRO** (Multi-Agent Environment, Security, Threat, Risk, and Outcome)[^maestro] is a seven-layer threat-modeling framework published February 6, 2025; it partitions an agentic system into layers and enumerates threats per layer and across layers. The **CSA Agentic Trust Framework** (ATF v1.0, February 2, 2026)[^atf] applies Zero Trust governance to autonomous AI agents: five core elements answer five trust questions, four maturity levels grade earned autonomy, and five promotion gates govern advancement between levels. MAESTRO is a threat-modeling methodology, not a control catalogue; ATF is a governance model, not a maturity model with graded controls. The structure, layer names, and gate names below are verified against the primary sources by [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 standards review]].
+This page covers two Cloud Security Alliance agentic-security publications. **MAESTRO** (Multi-Agent Environment, Security, Threat, Risk, and Outcome)[^maestro] is a seven-layer threat-modeling framework published February 6, 2025; it partitions an agentic system into layers and enumerates threats per layer and across layers. The **CSA Agentic Trust Framework** (ATF v1.0, February 2, 2026)[^atf] applies Zero Trust governance to autonomous AI agents: five core elements answer five trust questions, four maturity levels grade earned autonomy, and five promotion gates govern advancement between levels. MAESTRO models threats; it defines no controls. ATF governs agent autonomy through levels and gates; it does not grade controls the way a maturity model does. The structure, layer names, and gate names below are verified against the primary sources by [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 standards review]].
 
-**CSAI Foundation** (March 23, 2026): a 501(c)(3) spun from CSA with six strategic programs including an AI Risk Observatory and "Valid-AI-ted" AI-driven audit engine. These are organizational initiatives, not part of MAESTRO or ATF.
+**CSAI Foundation** (March 23, 2026): a 501(c)(3) spun from CSA with six strategic programs including an AI Risk Observatory and "Valid-AI-ted" AI-driven audit engine. These are organizational initiatives outside MAESTRO and ATF.
 
 The [[precize-agentic-ai-top10|Precize Top 10 for Agentic AI Vulnerability]] ([first published February 2025](https://github.com/precize/Agentic-AI-Top10-Vulnerability), the same month as MAESTRO) states its own purpose as "the core for OWASP and CSA Red teaming work" — a claim recorded, with its single-author-group limits, on that page. No citation from CSA acknowledging the repository as an input has been located in this pass; the temporal proximity to MAESTRO's own February 2025 publication is consistent with the claim but does not establish it.
 
@@ -75,6 +77,8 @@ MAESTRO[^maestro] expands to **Multi-Agent Environment, Security, Threat, Risk, 
 | Layer 7 | Agent Ecosystem | Marketplace where agents meet applications and users |
 
 MAESTRO models threats that span layers: supply-chain compromise of one layer affecting others, lateral movement, cross-boundary privilege escalation, inter-layer data leakage, and goal-misalignment cascades.
+
+The seven layers also serve as an incident-classification scheme in a third party's dataset. The [[owasp-genai-crosswalk|GenAI Crosswalk]] attributes each of its 131 documented incidents to a MAESTRO layer and adds a role from a four-term vocabulary — Origin, Propagation, Impact, Blind-spot — so one incident can name where it started, where it spread, where the harm landed, and where detection failed. That reads the layers backwards from a realized incident, against MAESTRO's own use as a decomposition applied to a design. The crosswalk performs the attribution; MAESTRO supplies the layer names it attributes to.
 
 ## CSA Agentic Trust Framework (ATF)
 
@@ -102,7 +106,7 @@ The ATF v1.0[^atf] applies Zero Trust governance to autonomous agents. Its Zero 
 
 ## Coverage Against OWASP ASI Top 10
 
-This table scores ATF against its five **elements**, not the promotion gates. It is a re-scoring driven by the gate→element correction in [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]: the elements are the constructs that map to risk categories; the gates govern level advancement.
+This table scores ATF against its five **elements** rather than the promotion gates: the elements are the constructs that map to risk categories, and the gates govern level advancement. It is a re-scoring driven by the gate-to-element correction in [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]].
 
 | ASI Category | Coverage |
 |---|---|
@@ -121,14 +125,14 @@ This table scores ATF against its five **elements**, not the promotion gates. It
 
 1. **AI Risk Observatory**: centralized risk tracking
 2. **Valid-AI-ted**: AI-driven audit engine
-3. **AI Controls Matrix expansion**: adding ISO 42001, ISO 27001, and SOC 2 mappings to AI-specific controls; could provide the first unified compliance mapping across multiple standards
+3. **AI Controls Matrix expansion**: adding ISO 42001, ISO 27001, and SOC 2 mappings to AI-specific controls. It would no longer be the first unified compliance mapping across multiple standards — the [[owasp-genai-crosswalk|GenAI Crosswalk]] published one in 2026 covering all three of those standards and 23 others — so the expansion's value rests on review quality rather than on precedence.
 4. Three additional programs (details pending)
 
 ## Strengths
 
-- The four-level maturity model (Intern → Junior → Senior → Principal), gated by five promotion gates, addresses the "Least Agency" principle with a structured earned-autonomy progression
+- The four-level maturity model, ordered Intern, Junior, Senior, and Principal, gated by five promotion gates, addresses the "Least Agency" principle with a structured earned-autonomy progression
 - Identity and rogue-agent categories (ASI03, ASI10) receive strong coverage via the Identity and Incident Response elements
-- CSAI Foundation's AI Controls Matrix expansion could resolve the multi-standard compliance mapping gap
+- CSAI Foundation's AI Controls Matrix expansion would address the multi-standard compliance mapping gap if its rows carry a named reviewer's signature, which the published alternatives lack
 - AI Risk Observatory could become a valuable threat intelligence resource
 
 ## Gaps and Shortcomings
@@ -137,15 +141,15 @@ This table scores ATF against its five **elements**, not the promotion gates. It
 - Supply chain (ASI04) has no coverage in either MAESTRO (named as a cross-layer threat only) or ATF
 - Promotion gates name criteria categories without measurable thresholds
 - No certifiable standard, guidance only
-- The AI Controls Matrix expansion is a roadmap item, not yet delivered
+- The AI Controls Matrix expansion is a roadmap item awaiting delivery
 
 ## See Also
 
 - [[csa|Cloud Security Alliance]] (publisher)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — risk taxonomy that ATF is designed to govern
 - [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]] — governance complement; NIST RMF provides the federal baseline, ATF addresses agentic specifics
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — MAESTRO Layer 2 (Data Operations) → **D6**; Layer 1 (Foundation Models) + Layer 3 (Agent Frameworks) → **D4**; Layer 4 (Deployment and Infrastructure) + Layer 7 (Agent Ecosystem) → **D5**; Layer 5 (Evaluation and Observability) → **D7**; Layer 3 supply-chain threat → **D8**. ATF maps via its five **elements** (Identity → D2, Behavior → D4/D7, Data Governance → D6, Segmentation → D3/D5, Incident Response → D9); the four maturity levels and five promotion gates inform **D3** (gates name criteria categories without thresholds, see CMM)
-- [[standards-review-csa-maestro-atf-2026-Q2|CSA MAESTRO and ATF Standards Review]] — primary-source verification of layer/element/gate names and the gate→element correction
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — MAESTRO Layer 2 (Data Operations) maps to **D6**; Layer 1 (Foundation Models) and Layer 3 (Agent Frameworks) map to **D4**; Layer 4 (Deployment and Infrastructure) and Layer 7 (Agent Ecosystem) map to **D5**; Layer 5 (Evaluation and Observability) maps to **D7**; the Layer 3 supply-chain threat maps to **D8**. ATF maps through its five **elements**: Identity to D2, Behavior to D4/D7, Data Governance to D6, Segmentation to D3/D5, and Incident Response to D9. The four maturity levels and five promotion gates inform **D3** (gates name criteria categories without thresholds, see CMM)
+- [[standards-review-csa-maestro-atf-2026-Q2|CSA MAESTRO and ATF Standards Review]] — primary-source verification of layer/element/gate names and the gate-to-element correction
 - [[threat-modeling-for-ai|Threat Modeling for AI]] — uses MAESTRO as the layered-decomposition lens; [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] maps the seven layers alongside the ASI, T-code, and ATLAS taxonomies
 
 ## Notes
