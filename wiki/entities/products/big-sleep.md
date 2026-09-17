@@ -46,6 +46,13 @@ sources:
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/google-big-sleep-projectzero-2024-10-31.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 3
+verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (2): Talk facts verified; footnote 'human decision at submission' not in transcript; zero-FP located in phase 4 vs slide's phase 5 || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. mantis licence/stars human-written, variant-analysis description labelled LLM-generated. 1 finding found here and FIXED: line 69 attributed the mantis quotation to Google (\"described by Google as\") where source line 33 quotes the string and names no speaker. This finding was originally filed against codemender.md, which carries no mantis text; re-filed onto the page it indexes."
 ---
 
 # Big Sleep (Google Project Zero + DeepMind)

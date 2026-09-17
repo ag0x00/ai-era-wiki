@@ -46,6 +46,12 @@ sources:
   - "https://red.anthropic.com/2026/zero-days/"
   - "[[.raw/papers/anthropic-2026-agentic-coding-trends-report.pdf]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/anthropic-2026-agentic-coding-trends-report.pdf"
+verified_findings: 0
 ---
 
 # Anthropic

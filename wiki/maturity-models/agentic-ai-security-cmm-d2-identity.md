@@ -45,6 +45,10 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[identity-credential-coupling]]"
+verified: 2026-09-10
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — D2 Identity & Authorization (Deep Dive)

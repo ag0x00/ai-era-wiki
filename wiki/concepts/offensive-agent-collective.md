@@ -36,6 +36,11 @@ sources:
   - "https://www.youtube.com/watch?v=87DyyMV0kCY"
   - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
+verified: 2026-09-06
+verified_against:
+  - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
+verified_findings: 1
+verified_note: "verify pass: six->four weeks fixed"
 ---
 
 # Offensive Agent Collective

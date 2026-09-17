@@ -33,6 +33,12 @@ sources:
   - "[[autonomous-code-security-google-talk|Autonomous Code Security at Google (Unprompted March 2026)]]"
   - "[[.raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md]]"
   - "https://unpromptedcon.org/abstract-march2026/"
+verified: 2026-08-24
+verified_against:
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_slides.pdf"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 2
+verified_note: "2 findings: 'the strongest objection' upgrades 'probably one criticism you could levy'; the em-dash gloss on vulnpocalypse is the wiki's definition, not Flynn's. CodeMender attributions, verifier stack, 178/48/130 split and the redeployment quote all check out."
 ---
 
 # Four Flynn

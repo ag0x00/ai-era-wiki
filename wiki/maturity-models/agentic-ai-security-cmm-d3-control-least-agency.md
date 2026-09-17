@@ -49,6 +49,14 @@ sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[least-agency-principle]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/aws-agentic-ai-security-scoping-matrix-2026-05-07.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/talks/scaling-agentic-ai-cios-2026-05-01.md"
+  - ".raw/talks/securing-your-agents-2026-04-30.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — D3 Control & Least-Agency (Deep Dive)

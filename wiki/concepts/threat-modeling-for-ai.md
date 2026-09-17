@@ -46,6 +46,10 @@ sources:
   - "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
   - "https://arxiv.org/abs/2605.17163"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Threat Modeling for AI

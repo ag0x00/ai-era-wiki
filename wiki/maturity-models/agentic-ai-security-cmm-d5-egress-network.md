@@ -48,6 +48,12 @@ sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[microsoft-zt4ai]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/microsoft-secure-agentic-ai-end-to-end-2026-05-07.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 1
+verified_note: "verify pass: registered->invented fixed"
 ---
 
 # Agentic AI Security CMM — D5 Egress & Network (Deep Dive)

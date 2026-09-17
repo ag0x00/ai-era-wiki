@@ -29,6 +29,11 @@ related:
 sources:
   - "https://www.reuters.com/world/china/taiwan-says-it-was-targeted-last-month-ai-driven-hacking-campaign-2026-08-13/"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 1
+verified_note: "Semgrep-sourced claims only. Market-consolidation answer keeps the today bound; the five-findings enumeration dropped the source's sixth bullet (patch generation) — 1 finding, reported at read time and FIXED in commit 2571731 after the PR reviewer surfaced it."
 ---
 
 # Semgrep

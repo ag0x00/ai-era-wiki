@@ -43,6 +43,11 @@ related:
 sources:
   - "https://collusion.wiki/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified_findings: 11
+verified_note: "verify pass fixes applied: two timeline date swaps fixed (May26/June2/June18), registered->invented, 18k->17k scoping, six->four weeks for DSEWiki, OECD hedge, both-swarms-surprise fixed, XSS-endpoint separation, reading-not-writing fix"
 ---
 
 # OpenAI DSEWiki Agent Collusion

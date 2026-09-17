@@ -54,6 +54,12 @@ sources:
   - "[[.raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_slides.pdf]]"
   - "https://unpromptedcon.org/abstract-march2026/"
   - "https://www.youtube.com/watch?v=B_7RpP90rUk"
+verified: 2026-08-24
+verified_against:
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_slides.pdf"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 6
+verified_note: "6 findings vs transcript+8-slide deck: unsourced discard step, 'declined' misreads the Aardvark answer, 'harder half' upgrades 'one of the hardest problems' (x2), 'two figures checked that morning' (only NVD was), 'vendors' for 'other folks', methodology 'two executives who run the programmes'. All numbers 178/48/130, 30k, 35%, B, RAND 2017, five phases, four verifier groups verified verbatim."
 ---
 
 # Autonomous Code Security at Google

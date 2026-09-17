@@ -24,6 +24,11 @@ related:
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[secure-sdlc-framework-stack-2026]]"
   - "[[nist-sp-800-162|NIST SP 800-162: Attribute-Based Access Control]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 1
+verified_note: "Contrast case: 3 OVERSTATED fixed — classifier framed as producing the dataset, the derived-registry note pluralised to 'the records themselves' when the extract carries it on the AIUC-1 record alone, and the derivation generalised past the 24 of 26 records with a null total. Step 1 quantifiers (source_sha null on all 26; 24 of 26 with no authoritative total) and the Step 4 quotation CONFIRMED. OPEN: §3 counts AIUC-1 among the eleven anchoring standards, which standards-review-backlog's 'all 11 reviewed' list omits and no wiki/reviews/ page covers. || 2026-09-16: Re-recorded after the same pass's own fix (fingerprint refresh, not a second read; open count unchanged at 1). Contrast case: 3 OVERSTATED fixed — classifier framed as producing the dataset, the derived-registry note pluralised to 'the records themselves' when the extract carries it on the AIUC-1 record alone, and the derivation generalised past the 24 of 26 records with a null total. Step 1 quantifiers and the Step 4 quotation CONFIRMED. OPEN: §3 counts AIUC-1 among the eleven anchoring standards, which standards-review-backlog's 'all 11 reviewed' list omits and no wiki/reviews/ page covers."
 ---
 
 # Standards Validation Methodology

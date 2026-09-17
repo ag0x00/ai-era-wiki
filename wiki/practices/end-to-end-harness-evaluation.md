@@ -34,6 +34,14 @@ sources:
   - "[[.raw/articles/cybergym-benchmark-2026-08-31.md]]"
   - "[[.raw/articles/exploitgym-2026-08-31.md]]"
   - "[[.raw/articles/cybergym-observatory-2026-08-31.md]]"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-e2e-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+verified_findings: 3
+verified_note: "Read against all 4 raw docs: exploitation-gap range restated per model, stochasticity caveat re-attributed to CyberGym's leaderboard, network isolation added as a fourth held-fixed condition (Ruling 3). 86/63 correctly scoped to Opus 4.6 uncapped."
 ---
 
 # End-to-End Harness Evaluation

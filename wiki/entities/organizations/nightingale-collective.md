@@ -30,6 +30,11 @@ related:
 sources:
   - "https://collusion.wiki/"
   - "https://nightingalecollective.org/"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified_findings: 2
+verified_note: "verify pass fixes applied: exclusivity claim fixed, six->four weeks"
 ---
 
 # Nightingale Collective

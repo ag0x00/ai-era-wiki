@@ -52,6 +52,11 @@ primary_documents:
     scope_in_wiki: "Element definitions; maturity-level autonomy/oversight table; demotion rule"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 2
+verified_note: "Incident-layer paragraph and the retired first-unified-mapping claim; removed an unsubstantiated absence claim about CSA material and an unsourced CSA review-process assertion."
 ---
 
 # CSA MAESTRO / CSA Agentic Trust Framework

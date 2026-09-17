@@ -33,6 +33,14 @@ sources:
   - "[[.raw/reports/red-teaming-project/00-readme.md]]"
   - "[[.raw/reports/red-teaming-project/01-gap-analysis.md]]"
   - "[[.raw/reports/red-teaming-project/03-summary-opinion.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/reports/red-teaming-project/00-readme.md"
+  - ".raw/reports/red-teaming-project/01-gap-analysis.md"
+  - ".raw/reports/red-teaming-project/03-summary-opinion.md"
+verified_findings: 1
+verified_note: "Doc 5 claims accurate (CSA collaboration, primary methodology, reproduction rates, four severity dimensions without thresholds); fixed self-contradiction: lead-in said three rules over four bullets"
 ---
 
 # Red Teaming Capability Framework

@@ -33,6 +33,12 @@ related:
 sources:
   - "[[.raw/papers/maais-arora-hastings-2025-12-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
+verified: 2026-08-25
+verified_against:
+  - ".raw/papers/maais-arora-hastings-2025-12-19.md"
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+verified_findings: 1
+verified_note: "Phase 4b: dev-time model leak paragraph checked against OWASP AI Exchange doc-3 §3.2.2; footnote 'same replica' paraphrase corrected to the source's 'alternative ways of model theft'"
 ---
 
 # Model-Layer Attacks

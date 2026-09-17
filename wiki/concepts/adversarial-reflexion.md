@@ -35,6 +35,12 @@ sources:
   - "[[openant-announcement|Introducing OpenAnt (Knostic blog, 2026-05-15)]]"
   - ".raw/articles/openant-2026-05-15.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/openant-2026-05-15.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 1
+verified_note: "PARTIAL — this pass read the Semgrep source only; 1 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). Semgrep-sourced claims only. Four named instruments and the different-model observation match; restored 'almost every' and 'tend to' on the category split."
 ---
 
 # Adversarial Reflexion (Constrained-Persona Vulnerability Verification)

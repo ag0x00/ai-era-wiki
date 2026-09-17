@@ -45,6 +45,11 @@ sources:
   - https://github.com/gadievron/raptor
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/papers/mythos-ready-csa-sans-unprompted-v1.0-2026-04-12.pdf"
+verified_findings: 0
 ---
 
 # RAPTOR

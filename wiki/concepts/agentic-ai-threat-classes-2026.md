@@ -68,6 +68,12 @@ sources:
   - "https://www.crowdstrike.com/en-us/blog/crowdstrike-2026-technology-threat-landscape-report/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
   - "[[owasp-agentic-skills-top-10]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 3
+verified_note: "UNRESOLVED from the prior read (2): verify pass: exclusivity claim on third-party disclosure fixed (Dream Security precedent); six-weeks->four-weeks fixed || 2026-09-16: AST10 sentence in Class 1, read against the AST10 project-page capture (not two-hop reachable here): fixed a scope overreach putting system-prompt repositories and eval harnesses inside AST10's remit."
 ---
 
 # Agentic AI Threat Classes — 2026 Expansion

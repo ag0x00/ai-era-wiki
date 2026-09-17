@@ -42,6 +42,11 @@ related:
   - "[[stride-ai-2026]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 3
+verified_note: "The three-way numbering section checks out against Part A and Part B and gives a separate verdict per Exchange identifier; corrected 'a 2026 edition existing' against the page's own no-2026-edition line, dropped 2026-Q3 as absent from the capture, hedged the rename inference. ai-security-standards-in-q1-2026 not opened."
 ---
 
 # OWASP Top 10 for LLM Applications

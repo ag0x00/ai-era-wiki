@@ -29,6 +29,10 @@ related:
 sources:
   - "https://arxiv.org/abs/2505.03574"
   - "[[.raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md"
+verified_findings: 0
 ---
 
 # LlamaFirewall Guardrail Paper

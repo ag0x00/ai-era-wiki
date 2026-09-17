@@ -85,6 +85,15 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
+verified_findings: 1
+verified_note: "Four-layer partition and gap-8 log-integrity test verified against doc 5 lines 91-100; narrowed Data-plane-absence clause, key management and credential exposure are named data-at-rest targets"
 ---
 
 # Agentic AI Security Reference Architecture (AAI-S RA)

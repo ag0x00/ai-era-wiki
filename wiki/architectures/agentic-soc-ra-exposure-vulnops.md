@@ -45,6 +45,12 @@ sources:
   - "[[vulnops]]"
   - "[[zero-day-clock]]"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/articles/zero-day-clock-call-to-action-2026-05-25.md"
+  - ".raw/articles/zero-day-clock-the-collapse-2026-05-25.md"
+verified_findings: 0
 ---
 
 # Agentic SOC Exposure and VulnOps Surface

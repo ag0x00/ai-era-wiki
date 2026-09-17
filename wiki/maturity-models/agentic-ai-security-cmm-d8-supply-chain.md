@@ -55,6 +55,14 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/nist-sp-800-218A.pdf"
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — D8 Supply Chain & AI-BOM (Deep Dive)

@@ -43,6 +43,10 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — D9 Operations & Human Factors (Deep Dive)

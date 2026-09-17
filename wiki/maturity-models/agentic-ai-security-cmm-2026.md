@@ -66,6 +66,12 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+verified_findings: 1
+verified_note: "UNRESOLVED from the prior read (1): Phase 4c new content: D3/D4/D7/D9 L3-L4 evidence-cell additions verified against doc 5 and against each deep dive || 2026-09-16: Issue #172 rec 32 D6 narrative. Two Exchange claims in the restated D6 paragraph verified: the two-threshold scan split, higher filtering and lower alerting, and the poisoned-dataset-benchmark fitness test (dev-time 529-598, section 3.1.1); the train-OR-test scope of development-time data leak (dev-time 772-781, section 3.2.1). 1 LOW open: 'a retrieval no principal's grants narrow satisfies the criterion under none of them' states no exception for a run carrying no asking principal, which the D6 ladder does grade as met on the task-scoped identity; left as written because the same paragraph defers to the deep dive for the criteria. Ten other sources unread. || 2026-09-16: Scoped read of the Ken Huang credits cell only: the AST10 capture names him Project Lead and Cerullo Project Co-Leader, so 'co-lead' was wrong; AIVSS half re-checked against owasp-aivss-v0.8.pdf, not read in full."
 ---
 
 # Agentic AI Security Capability Maturity Model

@@ -39,6 +39,11 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "[[owasp-agentic-skills-top-10]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 2
+verified_note: "AST-to-layer paragraph, read against the crosswalk and AST10 captures: the mapping covered six of ten entries, not all, and the project states its own MAESTRO mapping, so the 36 draft rows are not the only published ones."
 ---
 
 # Supply chain security for agentic AI

@@ -39,6 +39,10 @@ sources:
   - "https://github.com/kubernetes-sigs/agent-sandbox"
   - "https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 0
 ---
 
 # Agent Sandbox Isolation Landscape

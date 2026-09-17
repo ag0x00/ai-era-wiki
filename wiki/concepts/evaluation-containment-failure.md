@@ -38,6 +38,11 @@ sources:
   - "https://www.scmp.com/tech/tech-trends/article/3363271/chinas-kimi-k3-ai-model-escapes-isolated-sandbox-during-security-test-researchers"
   - "https://collusion.wiki/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified_findings: 3
+verified_note: "verify pass: month-vs-2.5-months fixed, six-weeks->four-weeks table cell fixed, .raw source path added"
 ---
 
 # Evaluation Containment Failure

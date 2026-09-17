@@ -36,6 +36,10 @@ related:
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://www.anthropic.com/glasswing"
+verified: 2026-08-24
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+verified_findings: 0
 ---
 
 # Google

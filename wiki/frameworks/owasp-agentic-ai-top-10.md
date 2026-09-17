@@ -54,6 +54,13 @@ related:
   - "[[precize-agentic-ai-top10]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/owasp-asi-top-10-2026-12-09.pdf"
+verified_findings: 1
+verified_note: "Per-ASI AIVSS scores and the 41-entry absence check out against Part A; 'AIVSS published as data and not inside this list' confirmed against Appendix A, which maps ASI to AIVSS Core Risk names with no score. Corrected the ATLAS 'largest block' claim to the 173 predictions it means, not the 117 mappings it read as. | read the ASI sections only (L11, L63, L67, L93-112): three-new-risk-class count and LLM-Top-10 comparator now match L63, four named Q1 adopters match, full-coverage claim matches the L112 key finding; removed the residual unhedged adoption claim"
 ---
 
 # OWASP Top 10 for Agentic Applications (ASI Top 10)

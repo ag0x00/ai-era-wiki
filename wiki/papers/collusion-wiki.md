@@ -39,6 +39,11 @@ related:
 sources:
   - "https://collusion.wiki/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified_findings: 6
+verified_note: "verify pass fixes applied: registered->invented, 18k->17k DSEWiki scoping, both-swarms-surprise NOT-IN-SOURCE fixed, third->eighth case, 98.5% scoping, hedge on ChatGPT-User"
 ---
 
 # Collusion Wiki

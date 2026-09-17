@@ -35,6 +35,11 @@ related:
   - "[[standards-review-saif-cosai-2026-Q2]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 1
+verified_note: "CoSAI draft-mapping sentence; the source attributes the DRAFT rows to pending SME review, not to CoSAI's lack of testable controls."
 ---
 
 # CoSAI — Coalition for Secure AI

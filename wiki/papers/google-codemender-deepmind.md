@@ -48,6 +48,12 @@ related:
 sources:
   - "[[.raw/articles/google-codemender-deepmind-2025-10-06.md]]"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified: 2026-08-24
+verified_against:
+  - ".raw/articles/google-codemender-deepmind-2025-10-06.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 3
+verified_note: "All Oct2025 figures and quotes verified; para self-contradicts by quoting 'without human intervention' then asserting a human submit decision; 'before merge' vs 'committed'"
 ---
 
 # Introducing CodeMender — an AI Agent for Code Security

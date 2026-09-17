@@ -44,6 +44,15 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/adr-agentic-detection-system-2026-05-17.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/adr-agentic-detection-system-2026-05-17.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
+  - ".raw/talks/unprompted-conference-talks-mar-2026.md"
+verified_findings: 1
+verified_note: "Log-integrity claim verified against doc 5 line 97; fixed the limit-is-method reason, doc 5 does carry two step-by-step procedures, just none for log integrity"
 ---
 
 # Agent Observability

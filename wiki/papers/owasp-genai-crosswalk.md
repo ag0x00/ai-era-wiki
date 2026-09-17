@@ -37,6 +37,11 @@ related:
   - "[[standards-validation-methodology-2026-05]]"
 sources:
   - "[[.raw/articles/owasp-genai-crosswalk-2026-09-16.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 10
+verified_note: "Read in full against Parts A/B/C; 10 findings, all fixed: classifier scope overstated, classifier-depth causal claim reversed against the predictions distribution, AISI URL and 2026-Q3 absent from the capture, rename inference footnoted to Part B, evidence-id miscount, layer-attribution slips."
 ---
 
 # GenAI Crosswalk

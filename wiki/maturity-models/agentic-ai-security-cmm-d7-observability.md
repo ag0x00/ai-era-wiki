@@ -54,6 +54,14 @@ sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[agent-observability]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/adr-agentic-detection-system-2026-05-17.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
+  - ".raw/talks/unprompted-conference-talks-mar-2026.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — D7 Observability & Detection (Deep Dive)

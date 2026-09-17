@@ -94,6 +94,16 @@ sources:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "https://owaspai.org/docs/ai_security_overview"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md"
+  - ".raw/papers/owasp-ai-exchange-security-overview-2026-08-17.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-threats-through-use-2026-08-18.md"
+verified_findings: 1
+verified_note: "Full doc 5 testing-strategies section verified clause by clause; Limits document-0 scoping is accurate; fixed stale control-catalogue line still calling document 5 out of scope"
 ---
 
 # OWASP AI Exchange

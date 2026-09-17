@@ -59,6 +59,10 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
 sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #1"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — Standards Crosswalk Matrix

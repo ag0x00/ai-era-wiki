@@ -69,6 +69,10 @@ sources:
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
   - https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 0
 ---
 
 # Securing Agentic Coding

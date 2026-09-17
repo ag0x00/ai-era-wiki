@@ -35,6 +35,12 @@ related:
 sources:
   - "[[.raw/articles/google-big-sleep-projectzero-2024-10-31.md]]"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified: 2026-08-24
+verified_against:
+  - ".raw/articles/google-big-sleep-projectzero-2024-10-31.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 1
+verified_note: "Oct2024 quotes and SQLite detail verified verbatim; footnote 'human decision at submission' not in transcript"
 ---
 
 # From Naptime to Big Sleep

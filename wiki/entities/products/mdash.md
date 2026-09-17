@@ -33,6 +33,11 @@ sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"
   - "https://aka.ms/AI-drivenScanningHarness"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/microsoft-defense-at-ai-speed-2026-05-13.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 0
 ---
 
 # MDASH — Microsoft Multi-Model Agentic Scanning Harness

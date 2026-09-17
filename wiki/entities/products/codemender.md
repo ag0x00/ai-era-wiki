@@ -52,6 +52,13 @@ sources:
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/google-codemender-deepmind-2025-10-06.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 3
+verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (3): 72/4.5M/Deep Think/libwebp verified vs Oct2025; 178/48/130 verified vs slide; human-decision-at-submission and 'moved later not away' unsupported by talk; 'before merge' vs source 'committed' || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Patch-table arithmetic correct.."
 ---
 
 # CodeMender (Google DeepMind)

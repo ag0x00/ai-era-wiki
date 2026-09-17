@@ -26,6 +26,11 @@ related:
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "[[owasp-agentic-skills-top-10]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 2
+verified_note: "Umbrella sentence and three new project rows, read against the crosswalk capture and the AST10 project-page capture (the latter not two-hop reachable from this page): AST10 is a separate OWASP incubator project, not a GenAI Security Project deliverable."
 ---
 
 # OWASP — Open Worldwide Application Security Project

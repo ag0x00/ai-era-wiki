@@ -30,6 +30,11 @@ related:
   - "[[aiuc]]"
 sources:
   - "[[.raw/papers/owasp-agentic-top10-aiuc1-crosswalk-2026-05.pdf]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 1
+verified_note: "GenAI Crosswalk contrast paragraph; AIUC-1's 147 mappings span three source lists, not four. Named-reviewer claim spot-checked against the archived ASI/AIUC-1 PDF acknowledgements, which is not read in full here."
 ---
 
 # OWASP ASI to AIUC-1 Crosswalk

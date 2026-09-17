@@ -47,6 +47,11 @@ sources:
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
   - "[[.raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_slides.pdf]]"
   - "[[.raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_transcript.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_slides.pdf"
+  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_transcript.md"
+verified_findings: 0
 ---
 
 # Lethal Trifecta

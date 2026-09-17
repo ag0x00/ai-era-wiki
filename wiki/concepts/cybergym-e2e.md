@@ -53,6 +53,13 @@ sources:
   - "https://www.cybergym.io/cybergym-e2e/"
   - "https://arxiv.org/abs/2606.04460"
   - ".raw/articles/cybergym-e2e-2026-08-31.md"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-e2e-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+verified_findings: 0
 ---
 
 # CyberGym-E2E

@@ -26,6 +26,12 @@ sources:
   - "https://owasp.org/www-project-agentic-skills-top-10/"
   - "[[.raw/papers/owasp-aivss-v0.8.pdf]]"
   - "[[.raw/articles/owasp-agentic-skills-top-10-project-2026-09-16.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+  - ".raw/papers/owasp-aivss-v0.8.pdf"
+verified_findings: 2
+verified_note: "UNRESOLVED from the prior read (2): The claim that OWASP's own AIVSS material does not name Huang is contradicted by AIVSS v0.8 p.78, which names him on the AIVSS leadership team and under Leader Authors; sole-lead framing corrected to a team of five. AST10 project page not checkable in-repo. || 2026-09-16: The claim that OWASP's own AIVSS material does not name Huang is contradicted by AIVSS v0.8 p.78, which names him on the AIVSS leadership team and under Leader Authors; sole-lead framing corrected to a team of five. The crosswalk capture names no person; the AST10 project page is not checkable in-repo."
 ---
 
 # Ken Huang

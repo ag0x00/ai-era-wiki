@@ -45,6 +45,12 @@ related:
 sources:
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/talks/securing-your-agents-2026-04-30.md"
+verified_findings: 2
+verified_note: "New paragraph verified against doc 5 step 4; fixed rather-than-user-channel (source says as well) and the unhedged, unsourced rationale for indirect-injection tactics"
 ---
 
 # Indirect Prompt Injection

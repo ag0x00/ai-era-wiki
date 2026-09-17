@@ -92,6 +92,17 @@ sources:
   - "[[.raw/papers/nist-sp-800-218.pdf]]"
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
+  - ".raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/papers/anthropic-2026-agentic-coding-trends-report.pdf"
+  - ".raw/papers/nist-sp-800-218.pdf"
+  - ".raw/papers/nist-sp-800-218A.pdf"
+  - ".raw/papers/pwc-future-of-solutions-dev-gen-ai-2026.pdf"
+verified_findings: 1
+verified_note: "PARTIAL — this pass read the Semgrep source only; 6 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). Semgrep-sourced claims only; other sources not read this pass. Patch and guardrail claims match; 'most generated fixes' counts tools rather than fixes, reported."
 ---
 
 # SDLC in the AI-Attacker Era

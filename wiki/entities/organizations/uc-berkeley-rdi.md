@@ -43,6 +43,14 @@ sources:
   - ".raw/articles/cybergym-benchmark-2026-08-31.md"
   - ".raw/articles/exploitgym-2026-08-31.md"
   - ".raw/articles/cybergym-e2e-2026-08-31.md"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-e2e-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+verified_findings: 2
+verified_note: "Read against all 4 raw docs: a client-side-render claim about an rdi.berkeley.edu leaderboard this pass never fetched, and an [^observatory] footnote pointing at /cybergym/ for text that is on the front page. Both fixed."
 ---
 
 # UC Berkeley RDI

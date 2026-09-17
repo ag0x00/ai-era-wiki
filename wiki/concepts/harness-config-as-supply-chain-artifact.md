@@ -34,6 +34,11 @@ related:
 sources:
   - "[[agentshield-announcement|AgentShield README]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/agentshield-2026-05-15.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 0
 ---
 
 # Harness Config as Supply-Chain Artifact

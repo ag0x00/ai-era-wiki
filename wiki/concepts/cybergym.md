@@ -61,6 +61,14 @@ sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"
   - ".raw/articles/cybergym-benchmark-2026-08-31.md"
   - ".raw/articles/cybergym-observatory-2026-08-31.md"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+  - ".raw/articles/microsoft-defense-at-ai-speed-2026-05-13.md"
+verified_findings: 2
+verified_note: "Read against the 4 cybergym.io raw docs (microsoft raw not read): fixed an open-ended-discovery mislabel over the evaluation-run findings; added the 18-vs-17 incomplete-patch headline gap beside the 34-vs-35 one. 35->10 dedup and 34/35 non-reconciliation correct."
 ---
 
 # CyberGym Benchmark

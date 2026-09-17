@@ -30,6 +30,10 @@ sources:
   - "[[.raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md"
+verified_findings: 0
 ---
 
 # LlamaFirewall

@@ -38,6 +38,11 @@ sources:
   - "https://www.youtube.com/watch?v=VNYe3Cnk5Pw"
   - ".raw/talks/2026-08-06_Yan-Shoshitaishvili_Vulnerability-Research-in-the-Agentic-Age_transcript.md"
   - "https://www.cybergym.io/exploitgym/"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/exploitgym-2026-08-31.md"
+  - ".raw/talks/2026-08-06_Yan-Shoshitaishvili_Vulnerability-Research-in-the-Agentic-Age_transcript.md"
+verified_findings: 0
 ---
 
 # Arizona State University

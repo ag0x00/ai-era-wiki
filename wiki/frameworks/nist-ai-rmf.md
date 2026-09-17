@@ -50,6 +50,12 @@ sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
 coined_by:
   - "[[nist]]"
+verified: 2026-09-14
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/nist-ai-800-4-monitoring-deployed-ai-2026-03.pdf"
+verified_findings: 6
+verified_note: "6 findings: 1 CONTRADICTED (AI RMF force in US law claimed to rest on a single statute; Montana MCA 2-10-205 also names it), 1 OVERSTATED (AI 800-4 'largest blind spot'; report says human-factors monitoring 'could signal ... relatively underexplored'), 1 NOT-IN-SOURCE (bare 'NIST IR 8605' on three overlays; no NIST page carries the number), 1 low NOT-IN-SOURCE ('first federal-level report' superlative), 2 open lows (listening sessions as 'next activity'; Colorado footnote supports half its sentence). 4 fixed by re-attribution, 2 left open. AI 100-1 and AI 600-1 PDFs not read this pass."
 ---
 
 # NIST AI Risk Management Framework (AI RMF)

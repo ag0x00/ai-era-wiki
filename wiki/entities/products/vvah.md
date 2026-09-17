@@ -30,6 +30,11 @@ related:
 sources:
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 1
+verified_note: "Read in full against the Semgrep article; closed-to-contributions carried the star footnote instead of the LLM-generated one, now fixed."
 ---
 
 # VVAH

@@ -42,6 +42,11 @@ sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
   - "BSIMM observation/assertion model"
   - "CMMC 2.0 three-level assessment guides"
+verified: 2026-09-16
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)

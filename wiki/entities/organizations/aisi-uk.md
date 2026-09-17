@@ -34,6 +34,10 @@ related:
 sources:
   - "https://www.aisi.gov.uk/frontier-ai-trends-report"
   - "https://www.aisi.gov.uk/blog/pre-deployment-evaluation-of-anthropics-upgraded-claude-3-5-sonnet"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # UK AI Security Institute (AISI)

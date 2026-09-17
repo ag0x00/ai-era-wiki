@@ -48,6 +48,10 @@ related:
 sources:
   - "https://www.youtube.com/watch?v=87DyyMV0kCY"
   - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
+verified: 2026-09-16
+verified_against:
+  - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
+verified_findings: 0
 ---
 
 # OpenAI–Hugging Face Agent Incident

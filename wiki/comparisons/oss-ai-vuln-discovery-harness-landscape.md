@@ -73,6 +73,11 @@ sources:
   - "[[semgrep-oss-ai-security-harness-comparison|Comparing Open Source AI Code Security Harnesses]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 3
+verified_note: "Read in full against the Semgrep article; fixed 'compares the nine' on a seven-row matrix and restored the 'today' bound on the market prediction; absence framing of two cells reported."
 ---
 
 # OSS AI Vuln-Discovery Harness Landscape

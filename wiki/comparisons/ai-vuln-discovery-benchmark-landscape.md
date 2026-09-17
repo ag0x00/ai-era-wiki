@@ -59,6 +59,15 @@ sources:
   - "[[.raw/articles/cybergym-benchmark-2026-08-31.md]]"
   - "[[.raw/articles/exploitgym-2026-08-31.md]]"
   - "[[.raw/articles/cybergym-e2e-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-e2e-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 1
+verified_note: "PARTIAL — this pass read the Semgrep source only; 4 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (1): description not recorded — the superseded entry carried a findings count with no note, so the finding cannot be identified or closed from this record || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Seven-of-nine matrix handled correctly and the absence-of-scores claim is attributed to the survey."
 ---
 
 # AI Vuln-Discovery Benchmark Landscape

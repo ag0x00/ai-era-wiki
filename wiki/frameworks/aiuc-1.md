@@ -42,6 +42,11 @@ sources:
   - "https://www.aiuc-1.com/research/quarterly-update-of-aiuc-1-q1-2026"
   - "https://www.uipath.com/newsroom/uipath-achieves-aiuc-1-certification"
   - "https://www.lrqa.com/en/latest-news/lrqa-partners-with-aiuc-1/"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 1
+verified_note: "Registry misattribution paragraph checked against the framework registry row; fixed the certification-issuance clause, which reversed the page's own two-actor model."
 ---
 
 # AIUC-1 — AI Agent Certification Standard

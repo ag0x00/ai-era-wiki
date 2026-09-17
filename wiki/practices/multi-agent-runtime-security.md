@@ -51,6 +51,11 @@ sources:
   - "https://arxiv.org/html/2508.20643v1"
   - "https://aguarascan.com/blog/owasp-agentic-top-10-mapped-to-detection-rules/"
   - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/collusion-wiki-2026-09-06.md"
+verified_findings: 1
+verified_note: "verify pass: six-weeks->four-weeks fixed"
 ---
 
 # Multi-Agent Runtime Security — Cascade Detection, Behavioral Baselines, Inter-Agent IR

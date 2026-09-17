@@ -49,6 +49,15 @@ sources:
 homepage: "https://zerodayclock.com"
 coined_by:
   - "[[sysdig]]"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/zero-day-clock-call-to-action-2026-05-25.md"
+  - ".raw/articles/zero-day-clock-the-collapse-2026-05-25.md"
+  - ".raw/papers/mythos-ready-csa-sans-unprompted-v1.0-2026-04-12.pdf"
+verified_findings: 1
+verified_note: "CyberGym block read against the cybergym-benchmark raw doc: 969-day and 431-project figures exact; 'four of them the same bug' restated as four of GPT-5's overlapping with GPT-4.1's. Other sources not read."
 ---
 
 # Zero Day Clock

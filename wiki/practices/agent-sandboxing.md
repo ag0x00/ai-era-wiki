@@ -38,6 +38,13 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/articles/agentic-ai-threats-unit42-2025-05-01.md]]"
   - "[[openai-hugging-face-agent-incident]]"
+verified: 2026-09-06
+verified_against:
+  - ".raw/articles/agentic-ai-threats-unit42-2025-05-01.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
+verified_findings: 1
+verified_note: "verify pass: registered->invented fixed"
 ---
 
 # Agent Sandboxing

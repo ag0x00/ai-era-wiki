@@ -22,6 +22,10 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[secure-sdlc-framework-stack-2026]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # Standards Review Backlog

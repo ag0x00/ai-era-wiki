@@ -58,6 +58,13 @@ sources:
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - "[[vulnops-l1-soc-extinction|CYBR.SEC.Media VulnOps article]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/cybrsecmedia-vulnops-l1-soc-extinction-2026-05-15.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/papers/mythos-ready-csa-sans-unprompted-v1.0-2026-04-12.pdf"
+verified_findings: 1
+verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (1): Adkins VP-Sec-Eng correction verified vs slide byline; Flynn conundrum quote + 178/48/130 check out; 1 unsourced 'hundreds per month' rate introduced by prose edit || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Patch counts, 'shop jigs' with the today bound, and the nine-project inventory all match."
 ---
 
 # VulnOps — Vulnerability Operations

@@ -45,6 +45,10 @@ related:
 sources:
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 0
 ---
 
 # Red Teaming for AI: Synthesis

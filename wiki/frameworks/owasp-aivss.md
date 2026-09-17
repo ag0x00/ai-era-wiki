@@ -39,6 +39,12 @@ related:
   - "[[ken-huang]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+  - ".raw/papers/owasp-aivss-v0.8.pdf"
+verified_findings: 4
+verified_note: "Four findings, all fixed: no-second-source and worked-examples-from-the-ASI-list both contradicted by v0.8 (leadership team p.78; SS3.6 scores the AIVSS Agentic AI Core categories), OSCAL/STIX named as score carriers, and an unsourced 'first machine-readable distribution' superlative."
 ---
 
 # OWASP AI Vulnerability Scoring System (AIVSS)

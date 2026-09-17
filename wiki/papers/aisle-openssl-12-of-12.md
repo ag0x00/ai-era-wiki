@@ -50,6 +50,11 @@ aliases:
   - papers/aisle-openssl-12-of-12-2026
   - aisle-openssl-12-of-12-2026
 
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/aisle-12-of-12-openssl-vulnerabilities-2026-01.md"
+verified_findings: 1
+verified_note: "Only the CyberGym-adjacent line read against the cybergym-benchmark raw doc; it credited the 10 zero-days to Open-Ended Discovery mode when the site attributes them to re-validated benchmark-evaluation PoCs. The AISLE primary source was not read."
 ---
 
 # AISLE Discovered 12 out of 12 OpenSSL Vulnerabilities

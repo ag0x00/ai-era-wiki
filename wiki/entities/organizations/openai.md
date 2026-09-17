@@ -35,6 +35,11 @@ sources:
   - https://openai.com/index/introducing-aardvark/
   - https://openai.com/index/codex-security-now-in-research-preview/
   - https://openai.com/policies/outbound-coordinated-disclosure-policy/
+verified: 2026-09-06
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+verified_findings: 1
+verified_note: "verify pass: six->four weeks fixed"
 ---
 
 # OpenAI

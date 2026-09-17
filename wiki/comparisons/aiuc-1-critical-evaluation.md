@@ -29,6 +29,10 @@ sources:
   - "https://fortune.com/2025/07/23/ai-agent-insurance-startup-aiuc-stealth-15-million-seed-nat-friedman/"
   - "https://www.schellman.com/blog/news/schellman-becomes-the-first-accredited-auditor-for-aiuc-1"
   - "https://www.iso.org/standard/42001"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # AIUC-1 Critical Evaluation

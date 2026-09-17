@@ -47,6 +47,11 @@ related:
 sources:
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 3
+verified_note: "Read in full against the Semgrep article; fixed nine-vs-seven on Reference 3, an unsourced 'years', and a Relations bullet that denied raptor's recorded contradiction."
 ---
 
 # OSS AI Security Harness Comparison

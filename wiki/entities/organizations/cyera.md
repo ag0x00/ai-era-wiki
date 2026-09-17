@@ -34,6 +34,12 @@ sources:
   - "https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store"
   - ".raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md"
   - ".raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md"
+  - ".raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md"
+verified_findings: 3
+verified_note: "Read against the Cyera release and .raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md:380; replaced the wiki/log.md inline pointer with the Market Guide's own Note 9 text, attributed two vendor capability claims, removed the unsupported August 2026 announcement date."
 ---
 
 # Cyera

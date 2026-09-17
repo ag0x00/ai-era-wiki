@@ -31,6 +31,11 @@ sources:
   - "https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier"
   - "https://www.cybergym.io/exploitgym/"
   - ".raw/articles/exploitgym-2026-08-31.md"
+verified: 2026-08-31
+verified_against:
+  - ".raw/articles/ai-cybersecurity-after-mythos-the-jagged-frontier-2026-05-26.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+verified_findings: 1
 ---
 
 # Jagged Frontier (AI Cybersecurity Capability)

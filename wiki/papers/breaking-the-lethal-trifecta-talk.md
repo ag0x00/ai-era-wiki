@@ -51,6 +51,12 @@ aliases:
   - papers/breaking-the-lethal-trifecta-bullen-talk
   - breaking-the-lethal-trifecta-bullen-talk
 
+verified: 2026-09-16
+verified_against:
+  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_slides.pdf"
+  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_transcript.md"
+verified_findings: 1
+verified_note: "table, TL;DR and key_claim check out; fixed CI-time tool-annotation attribution and the two Q&A quotations the page called verbatim; open: seven other transcript quotations are lightly cleaned of disfluency without ellipsis"
 ---
 
 # Breaking the Lethal Trifecta (Without Ruining Your Agents)

@@ -30,6 +30,11 @@ sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "[[.raw/papers/nist-sp-800-218.pdf]]"
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
+verified: 2026-09-14
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+verified_findings: 1
+verified_note: "1 finding: the AI Security Role paragraph framed the AI RMF's statutory footing as affirmative defenses only, so Montana's Right to Compute Act (MCA 2-10-205) was absent; corrected to name both statutes. Publications table, CAISI pillars, and all 2026 dates check out against nist.gov and csrc.nist.gov. SP 800-218 / 218A PDFs not read this pass."
 ---
 
 # NIST — National Institute of Standards and Technology

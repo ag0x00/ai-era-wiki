@@ -46,6 +46,12 @@ sources:
   - "[[anthropic-glasswing-announcement]]"
   - "[[anthropic-glasswing-initial-update]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
+  - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 0
 ---
 
 # Project Glasswing

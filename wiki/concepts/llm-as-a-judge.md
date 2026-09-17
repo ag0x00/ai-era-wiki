@@ -41,6 +41,14 @@ sources:
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://www.cybergym.io/exploitgym/"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/exploitgym-2026-08-31.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
+  - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md"
+verified_findings: 1
+verified_note: "PARTIAL — this pass read the Semgrep source only; 3 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (1): Four verifier groups + pluggable verified vs slide/transcript; 'ranking rather than a pass-or-fail gate' overstates the source, which states a pass gate || 2026-08-31 partial re-read (cybergym.io material only): New agent-as-a-judge section read against the exploitgym raw doc: role, the intended-vs-total split, and the absence of any judge-accuracy measurement all correct. Stripe-talk material not re-read. || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Both dedup-judge instances match Reference 1 and Reference 2 and are labelled LLM-generated."
 ---
 
 # LLM-as-a-Judge

@@ -87,6 +87,22 @@ sources:
   - "[[.raw/articles/cybergym-benchmark-2026-08-31.md]]"
   - "[[.raw/articles/exploitgym-2026-08-31.md]]"
   - "[[.raw/articles/cybergym-e2e-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
+  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
+  - ".raw/articles/cybergym-e2e-2026-08-31.md"
+  - ".raw/articles/cybergym-observatory-2026-08-31.md"
+  - ".raw/articles/exploitgym-2026-08-31.md"
+  - ".raw/articles/google-big-sleep-projectzero-2024-10-31.md"
+  - ".raw/articles/google-cloud-codemender-preview-2026-07-21.md"
+  - ".raw/articles/google-codemender-deepmind-2025-10-06.md"
+  - ".raw/articles/microsoft-defense-at-ai-speed-2026-05-13.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/articles/xbow-mythos-evaluation-2026-05-13.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 8
+verified_note: "PARTIAL — this pass read the Semgrep source only; 11 other sources unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). 8 findings total: 3 UNRESOLVED from the prior read (talk-derived claims checked; the Aardvark answer attributed to Adkins though the transcript names no speaker; 2 further prior items), and 5 found and FIXED by this pass — the market prediction had lost Semgrep's 'today' bound at lines 23, 240 and 262, and 'permissively-licensed' was applied at lines 23 and 182 to a set including a CC-BY-SA project carrying a ShareAlike obligation."
 ---
 
 # Frontier AI for Vulnerability Discovery

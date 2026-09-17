@@ -29,6 +29,11 @@ sources:
   - https://en.wikipedia.org/wiki/Heather_Adkins
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified: 2026-08-24
+verified_against:
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 1
+verified_note: "1 finding: 'five-phase architecture whose last stage builds a working exploit' — the exploit is built at the verification/feedback stage (phase 4); phase 5 is the output list. Zero-FP scope, Project Zero design target, CVSS quote, 30k/35%/$1B all verified."
 ---
 
 # Heather Adkins

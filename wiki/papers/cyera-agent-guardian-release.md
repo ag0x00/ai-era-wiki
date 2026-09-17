@@ -33,6 +33,11 @@ related:
 sources:
   - "https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store"
   - "[[.raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md]]"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md"
+verified_findings: 10
+verified_note: "Read whole against .raw/articles/cyera-...-2026-08-31.md (128 lines) plus RA and D1-D9 rung text, which was read but is NOT covered by the fingerprint (--record hashes only the resolved .raw set, so editing a quoted rung leaves this entry verified); fixed 2 misattributed quotes (Exchange ranking read as the RA's; Agent 365 review quote taken from D7), 1 not-in-source (classification under Access Trail), 3 overstated, 1 unattributed capability claim, plus date and quote-fidelity fixes."
 ---
 
 # Cyera Agent Guardian Release

@@ -51,6 +51,11 @@ sources:
   - .raw/articles/unprompted-conference-march-2026-agenda-2026-05-02.md
   - .raw/talks/unprompted-conference-talks-mar-2026.md
 source_url: https://unpromptedcon.org/#
+verified: 2026-08-24
+verified_against:
+  - ".raw/articles/unprompted-conference-march-2026-agenda-2026-05-02.md"
+  - ".raw/talks/unprompted-conference-talks-mar-2026.md"
+verified_findings: 0
 ---
 
 # Unprompted Conference

@@ -50,6 +50,11 @@ sources:
   - "[[openai-hugging-face-agent-incident]]"
 coined_by:
   - "[[insight-partners]]"
+verified: 2026-08-22
+verified_against:
+  - ".raw/papers/securing-the-autonomous-future.md"
+verified_findings: 3
+verified_note: "1 NOT-IN-SOURCE (per-task authority clause), 2 OVERSTATED (incumbent IAM verdict, Credential Zero as primary role); all fixed by re-attribution"
 ---
 
 # AI Agent Identity Architecture

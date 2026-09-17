@@ -39,6 +39,11 @@ related:
 sources:
   - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
+verified: 2026-08-26
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_findings: 1
+verified_note: "New Testing resistance section verified against doc 5 steps 3, 5, 6 and 8; fixed the variation-algorithm target, source names the model itself as one of the detectors"
 ---
 
 # Prompt Injection

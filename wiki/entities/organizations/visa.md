@@ -25,6 +25,11 @@ related:
 sources:
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
+verified: 2026-09-01
+verified_against:
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified_findings: 2
+verified_note: "Read in full against the Semgrep article; two LLM-generated facts (closed-to-contributions, model defaults) lacked the provenance footnote, now fixed."
 ---
 
 # Visa

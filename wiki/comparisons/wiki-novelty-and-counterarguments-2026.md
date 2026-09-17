@@ -25,6 +25,10 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[owasp-genai-crosswalk]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # Wiki Novelty and Counter-Arguments

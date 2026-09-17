@@ -45,6 +45,11 @@ sources:
   - "[[aiuc-1-critical-evaluation]]"
   - "[[iso-iec-42001]]"
   - "[[nist-ai-rmf]]"
+verified: 2026-09-10
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified_findings: 1
+verified_note: "Full read. 1 CONTRADICTED found and fixed (Class 5 exclusivity vs threat-taxonomy-reconciliation, which resolves the class to D1 and D9). Verified against general-controls: 12 Gap verdicts across the six 1.1 governance controls, AI PROGRAM 8-step quickstart and 3-step bare minimum, 42001 lifecycle exclusions, RACI responsibility examples. Risk-analysis and organize claims were checked against owasp-ai-exchange-security-overview, which this page's sources chain does not reach."
 ---
 
 # Agentic AI Security CMM — D1 Governance & Accountability (Deep Dive)

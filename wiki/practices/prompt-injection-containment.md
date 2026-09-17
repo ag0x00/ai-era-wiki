@@ -45,6 +45,10 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md"
+verified_findings: 0
 ---
 
 # Prompt injection containment for agentic systems

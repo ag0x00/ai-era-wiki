@@ -44,6 +44,12 @@ sources:
   - "https://cloud.google.com/blog/products/identity-security/find-and-fix-software-vulnerabilities-with-codemender/"
   - "https://docs.cloud.google.com/gemini-enterprise-agent-platform/codemender"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified: 2026-08-24
+verified_against:
+  - ".raw/articles/google-cloud-codemender-preview-2026-07-21.md"
+  - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
+verified_findings: 1
+verified_note: "Jul2026 preview extract verified incl. commit-boundary approval and no-efficacy-data; footnote 'human decision at submission' not in transcript"
 ---
 
 # CodeMender Preview on Google Cloud

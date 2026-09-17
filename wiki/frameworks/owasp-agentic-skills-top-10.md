@@ -43,6 +43,11 @@ sources:
   - "https://owasp.org/www-project-agentic-skills-top-10/"
   - "[[.raw/articles/owasp-genai-crosswalk-2026-09-16.md]]"
   - "[[.raw/articles/owasp-agentic-skills-top-10-project-2026-09-16.md]]"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 1
+verified_note: "Entry names, severities, 36 MAESTRO draft mappings and the absent classifier predictions all check out against Part A; the 'one of seven layers' narrowing was unsupported and is now stated as the project's own claim with the crosswalk's 3-5 ids per entry noted."
 ---
 
 # OWASP Agentic Skills Top 10

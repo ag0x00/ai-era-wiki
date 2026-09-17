@@ -44,6 +44,10 @@ sources:
   - "https://owaspai.org/docs/ai_security_overview"
   - "https://atlas.mitre.org"
   - "https://red.anthropic.com/2026/attack-navigator/"
+verified: 2026-09-16
+verified_against:
+  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified_findings: 0
 ---
 
 # Threat Taxonomy Reconciliation
