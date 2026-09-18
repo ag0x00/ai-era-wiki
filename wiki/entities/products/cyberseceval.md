@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "CyberSecEval"
 created: 2026-06-23
-updated: 2026-06-23
+updated: 2026-09-17
 tags:
   - entities
   - products
@@ -14,6 +14,7 @@ tags:
 status: developing
 scope_axis:
   - ai-in-sec-offense
+  - sec-against-ai
   - sec-of-ai
 publisher: "Meta (Purple Llama)"
 license: "MIT"
@@ -23,10 +24,17 @@ related:
   - "[[llamafirewall]]"
   - "[[agentdojo]]"
   - "[[google-big-sleep-projectzero]]"
+  - "[[big-sleep]]"
   - "[[meta]]"
 sources:
   - "[[.raw/articles/purple-llama-github-2026-06-23.md]]"
   - "https://github.com/meta-llama/PurpleLlama"
+verified: 2026-09-17
+verified_against:
+  - ".raw/articles/purple-llama-github-2026-06-23.md"
+  - ".raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md"
+verified_findings: 0
+verified_note: "Three-generation table, licence and purpose read against the Purple Llama capture; the 50-per-language CodeShield figure read against the LlamaFirewall arXiv capture."
 ---
 
 # CyberSecEval
@@ -45,7 +53,7 @@ Meta's open benchmark suite (MIT-licensed, shipped in [[purple-llama|Purple Llam
 
 ## Use in this wiki
 
-CyberSecEval is the recurring external yardstick behind two existing pages. Google Project Zero's [[google-big-sleep-projectzero|Naptime]] agent reached state-of-the-art on **CyberSecEval2** before evolving into Big Sleep; the benchmark is how that line of frontier vulnerability-discovery work measured its offensive uplift. **CyberSecEval3** supplied the manually labeled insecure-code completions (50 per language) used to validate CodeShield in the [[llamafirewall-2025|LlamaFirewall paper]].
+CyberSecEval is the recurring external yardstick behind two existing pages. Google Project Zero's [[google-big-sleep-projectzero|Naptime]] agent reached state-of-the-art on **CyberSecEval2** before evolving into [[big-sleep|Big Sleep]]; the benchmark is how that line of frontier vulnerability-discovery work measured its offensive uplift. **CyberSecEval3** supplied the manually labeled insecure-code completions (50 per language) used to validate CodeShield in the [[llamafirewall-2025|LlamaFirewall paper]].
 
 The suite sits on the offense side of the same purple-team split that produces [[llamafirewall|LlamaFirewall]]: CyberSecEval measures the capability, the guardrails contain it. For the [[agentic-ai-security-cmm-2026|CMM]], it is a candidate evidence source wherever a domain calls for quantified model-capability risk rather than control presence.
 

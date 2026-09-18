@@ -3,7 +3,7 @@ type: playbook
 title: "Assessor's Quick Scorecard: Secure-SDLC and AI"
 address: c-000050
 created: 2026-05-14
-updated: 2026-09-15
+updated: 2026-09-17
 tags:
   - playbook
   - assessor-guide
@@ -44,6 +44,8 @@ related:
   - "[[non-human-identity]]"
   - "[[least-agency-principle]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
+  - "[[big-sleep]]"
+  - "[[codemender]]"
 sources: []
 ---
 
@@ -129,7 +131,7 @@ Anchors: **[[osfi-e-23-2027|OSFI E-23]] (2027)** Sections B (Enterprise-wide MRM
 
 ## 3 — Section C: Frontier-AI in CI/CD (Optional Layer, 8 questions)
 
-Anchors: [[frontier-ai-for-vuln-discovery|wiki Frontier-AI thesis]] — harness-over-model architecture; XBOW Mythos eval (42-55% FN reduction against Opus 4.6, the comparison model at the time of the eval and superseded since; re-read the figure against a current baseline before citing it); MDASH (+5 percentage points from harness alone on CyberGym); Big Sleep + CodeMender (Google) production track record. This section is **optional** — applicable only if the bank uses or is piloting frontier-AI for vulnerability discovery in the development pipeline. If wholly N/A, mark the section excluded.
+Anchors: [[frontier-ai-for-vuln-discovery|wiki Frontier-AI thesis]] — harness-over-model architecture; XBOW Mythos eval ([42-55% FN reduction against Opus 4.6](https://xbow.com/blog/mythos-offensive-security-xbow-evaluation) — 42% without source access, 55% with it; Opus 4.6 was the comparison model at the time of the eval and has been superseded, so re-read the figure against a current baseline before citing it); MDASH (+5 percentage points from harness alone on CyberGym); [[big-sleep|Big Sleep]] + [[codemender|CodeMender]] (Google) production track record. This section is **optional** — applicable only if the bank uses or is piloting frontier-AI for vulnerability discovery in the development pipeline. If wholly N/A, mark the section excluded.
 
 | # | Question | Evidence | Anchor |
 |---|---|---|---|
@@ -250,11 +252,9 @@ Single cross-reference table — section to anchors (wiki, regulatory, source-do
 
 **Score a bundled question on its weakest limb.** Where one question puts three or more independent controls behind a single answer (A3, A4, A6, A7, B1, B3, B7, E6, E7, F1, F2, F4), record each limb separately in the evidence column, because Partial cannot say which limb failed until the instrument is split into one control per question.
 
-> [!check] Section C is optional, but increasingly common
-> Several Glasswing-partner organizations (Microsoft, Google, AWS, JPMorgan, Anthropic itself) have publicly disclosed frontier-AI vulnerability-discovery in production CI/CD. For a large bank, the question is no longer *if* but *when* and *under what controls*. A bank without any Section C activity is not behind; a bank piloting it without harness-validation, FN/FP measurement, and human review is.
+**Section C is optional, and the practice it scores is spreading.** The [Glasswing partner statements](https://www.anthropic.com/glasswing) put frontier-AI vulnerability discovery at every stage of adoption: Google names [[big-sleep|Big Sleep]] and [[codemender|CodeMender]] as tools already finding and fixing critical flaws, Cisco reports a pace and scale it calls previously impossible, AWS is testing Claude Mythos Preview inside its own security operations, and JPMorganChase commits only to an early-stage evaluation on its own terms. A bank with no Section C activity is not behind. A bank piloting it without harness validation, FN/FP measurement and human review is.
 
-> [!check] Sections D, E, and F sharply differentiate at L4 and L5
-> Many banks reach L3 on continuous pentesting, identity, and observability through standard enterprise security investments. The L4-L5 differentiation appears specifically in the **AI overlay**: AI-scoped pentest scope (D5), agent-specific NHI lifecycle (E1), [[lethal-trifecta\|Lethal Trifecta]] assessment (D8), and OTel `gen_ai.*` agent traces (F1). These are the questions that separate banks investing in agentic-AI security as a first-class concern from banks merely complying with general SDLC expectations.
+**Sections D, E and F separate banks at L4 and L5.** Many banks reach L3 on continuous pentesting, identity and observability through ordinary enterprise security investment. The differentiation above L3 sits in the **AI overlay**: AI-scoped pentest scope (D5), agent-specific NHI lifecycle (E1), [[lethal-trifecta|Lethal Trifecta]] assessment (D8) and OTel `gen_ai.*` agent traces (F1). Those four questions separate a bank treating agentic-AI security as a first-class concern from one meeting general SDLC expectations.
 
 > [!gap] [[osfi-e-23-2027|OSFI E-23]] (2027) effective date is 2027-05-01
 > Although the guideline was published 2025-09-11, it is not formally effective until 2027-05-01. Findings tied to E-23 are positioned as **pre-emptive readiness** rather than current non-compliance. Banks operating well below E-23 expectations today have a runway, but the runway is finite and shrinking.

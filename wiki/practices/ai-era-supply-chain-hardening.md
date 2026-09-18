@@ -3,7 +3,7 @@ type: practice
 title: "AI-Era Software Supply Chain Hardening"
 address: c-000105
 created: 2026-05-24
-updated: 2026-08-25
+updated: 2026-08-28
 tags:
   - practices
   - supply-chain
@@ -36,6 +36,7 @@ related:
   - "[[securing-agentic-coding]]"
   - "[[owasp-ai-exchange]]"
   - "[[agentic-ai-threat-classes-2026]]"
+  - "[[codemender]]"
 sources:
   - https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/03/CSA_research_note_nsa_allied_ai_supply_chain_security_guidance_20260317-csa-styled.pdf
   - https://labs.cloudsecurityalliance.org/research/csa-whitepaper-collapsing-exploit-window-ai-speed-vulnerabil/
@@ -176,7 +177,7 @@ The [[vulnops-implementation-roadmap|VulnOps Implementation Roadmap]] maps the P
 
 [[continuous-threat-exposure-management|Continuous Threat Exposure Management (CTEM)]] applies Gartner's five-stage exposure program (Scoping, Discovery, Prioritization, Validation, Mobilization, run in that order) to software supply chain assets in addition to network-facing infrastructure.
 
-The supply chain extension of CTEM adds: third-party software components to the Scoping stage; AI-assisted dependency scanning to the Discovery stage; KEV exploitability data to the Prioritization stage; and AI-native patching tools (CodeMender-class) to the Validation and Mobilization stages.
+The supply chain extension of CTEM adds: third-party software components to the Scoping stage; AI-assisted dependency scanning to the Discovery stage; KEV exploitability data to the Prioritization stage; and AI-native patching tools ([[codemender|CodeMender]]-class) to the Validation and Mobilization stages.
 
 Organizations that implement CTEM across their full software estate, including supply chain dependencies, close the scan-to-remediation gap that AI-speed adversaries exploit between periodic assessments.
 

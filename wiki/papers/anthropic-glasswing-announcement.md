@@ -3,7 +3,7 @@ type: paper
 title: "Project Glasswing: Securing Critical Software"
 address: c-000032
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-09-17
 tags:
   - papers
   - anthropic
@@ -34,16 +34,25 @@ related:
   - "[[cybergym]]"
   - "[[frontier-ai-for-vuln-discovery]]"
   - "[[sdlc-in-the-ai-attacker-era]]"
+  - "[[big-sleep]]"
+  - "[[codemender]]"
+  - "[[cti-realm]]"
+  - "[[anthropic-frontier-red-team-vuln-research]]"
 sources:
   - "[[.raw/articles/anthropic-glasswing-2026-05-13.md]]"
+verified: 2026-09-17
+verified_against:
+  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
+  - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
+verified_findings: 0
+verified_note: "Launch post read whole; the one-month update opened for the figures in the opening pointer. Three stale vault-state claims cleared and the partner postures re-attributed to the quotes."
 ---
 
 # Project Glasswing: Securing Critical Software for the AI Era
 
 **Source:** [Anthropic, Project Glasswing](https://www.anthropic.com/glasswing) (May 12, 2026). Local copy: `.raw/articles/anthropic-glasswing-2026-05-13.md`.
 
-> [!note] One-month update available
-> Anthropic published a [[anthropic-glasswing-initial-update|first progress report (2026-05-22)]] one month after this launch: 10,000+ high/critical vulnerabilities found across ~50 partners, the discovery-vs-remediation bottleneck inversion, the open-source scanning funnel, and generally available defender tooling. See that page for the current state.
+Anthropic published a [[anthropic-glasswing-initial-update|first progress report]] on 2026-05-22, one month after this launch: more than 10,000 high and critical vulnerabilities found across roughly 50 partners, the bottleneck moved from discovery to remediation, the open-source scanning funnel, and defender tooling built on publicly available models. That page carries the current state.
 
 ## Source Summary
 
@@ -86,19 +95,17 @@ The strategic frame: **"AI models have reached a level of coding capability wher
 | Humanity's Last Exam (no tools) | 56.8% | 40.0% | Possible memorization caveat |
 | Humanity's Last Exam (with tools) | 64.7% | 53.1% | |
 
-CTI-REALM (Microsoft's open-source security benchmark, mentioned in Microsoft's Glasswing quote) is a candidate next-ingest concept page, not yet documented on the wiki.
-
 ### Partner deployment posture
 
 Eight named executives provided quotes, each describing how their organization is using Mythos:
 
 - **Cisco** (Anthony Grieco, SVP & CSTO): "We can identify and fix security vulnerabilities across hardware and software at a pace and scale previously impossible."
 - **AWS** (Amy Herzog, VP and CISO): testing Mythos in AWS security operations; applying to critical codebases; helping harden Mythos for broader use.
-- **Microsoft** (Igor Tsyganskiy, EVP Cybersecurity and Microsoft Research): tested Mythos against CTI-REALM (Microsoft's open-source security benchmark) with substantial improvements; uses include "augment our security and development solutions."
+- **Microsoft** (Igor Tsyganskiy, EVP Cybersecurity and Microsoft Research): tested Mythos against [[cti-realm|CTI-REALM]] (Microsoft's open-source security benchmark) with substantial improvements; uses include "augment our security and development solutions."
 - **CrowdStrike** (Elia Zaitsev, CTO): *"The window between a vulnerability being discovered and being exploited by an adversary has collapsed; what once took months now happens in minutes with AI."*
 - **The Linux Foundation** (Jim Zemlin, CEO): focuses on OSS maintainers without large security teams; "trusted sidekick for every maintainer."
 - **JPMorganChase** (Pat Opet, CISO): financial-system framing; "rigorous, independent approach to determining how to proceed."
-- **Google** (Heather Adkins, VP Security Engineering): Mythos available to Glasswing participants via Vertex AI; alongside Google's own Big Sleep and CodeMender.
+- **Google** (Heather Adkins, VP Security Engineering): Mythos available to Glasswing participants via Vertex AI; alongside Google's own [[big-sleep|Big Sleep]] and [[codemender|CodeMender]].
 - **Palo Alto Networks** (Lee Klarich, CPTO): *"There will be more attacks, faster attacks, and more sophisticated attacks. Now is the time to modernize cybersecurity stacks everywhere."*
 
 ### Anthropic commitments
@@ -115,13 +122,13 @@ Eight named executives provided quotes, each describing how their organization i
 > [!contradiction] Mythos pricing — XBOW vs Anthropic
 > [[xbow-mythos-evaluation|XBOW's blog]] cited Anthropic as saying Mythos would be "5× as expensive as an Opus model" at GA. **Anthropic's direct framing**: Mythos is **not planned for general availability**; preview pricing for Glasswing participants is **\$25 / \$125 per million input/output tokens** — approximately 1.67× Opus 4.6 (\$15 / \$75), not 5×. XBOW's source may have been a verbal description, a different model variant, or based on a prior pricing model. The Glasswing landing page is authoritative.
 
-**MDASH's unnamed #2 on CyberGym = raw Claude Mythos Preview.** [[mdash-defense-at-ai-speed|MDASH's announcement]] reported MDASH at 88.45% on CyberGym, ~5 points above an unnamed #2 entry at 83.1%. Anthropic's Glasswing page now confirms Mythos Preview scored **83.1% on CyberGym** — the same number. The MDASH #2 is raw Mythos Preview, which means **MDASH's multi-model agentic harness adds ~5 percentage points over the raw model**. This is the clearest quantitative measurement we have on the "harness over model" architectural argument from both [[xbow|XBOW]] and Microsoft.
+**MDASH's unnamed #2 on CyberGym = raw Claude Mythos Preview.** [[mdash-defense-at-ai-speed|MDASH's announcement]] reported MDASH at 88.45% on CyberGym, ~5 points above an unnamed #2 entry at 83.1%. Anthropic's Glasswing page now confirms Mythos Preview scored **83.1% on CyberGym** — the same number. The MDASH #2 is raw Mythos Preview, which means **MDASH's multi-model agentic harness adds ~5 percentage points over the raw model**. This is the clearest quantitative measurement of the "harness over model" architectural argument that [[xbow|XBOW]] and Microsoft both make.
 
 **MDASH's model-stack silence is explained.** [[mdash-defense-at-ai-speed|MDASH's announcement]] said only "generally available AI models" without naming SOTA-reasoner candidates. The Glasswing announcement confirms Microsoft is a Glasswing participant with Mythos access. Mythos is almost certainly one of MDASH's orchestrated models; Microsoft's silence reflects coordinated-announcement constraint, not model-stack mystery.
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D7 (Observability & Detection) L5+**: Glasswing is the canonical industrial-scale example of frontier-AI-driven defensive vulnerability research. Should be cited as the load-bearing reference for L5+ "research-stage primitives" once the 90-day public report lands.
+- **[[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d7-observability|D7]] (Observability & Detection) L5+**: Glasswing is the canonical industrial-scale example of frontier-AI-driven defensive vulnerability research. Should be cited as the load-bearing reference for L5+ "research-stage primitives" once the 90-day public report lands.
 - **[[agentic-ai-security-cmm-2026|CMM]] D8 (Supply Chain & AI-BOM)**: Glasswing's focus on OSS infrastructure (the \$4M direct donations, Linux Foundation participation) is a supply-chain-security primitive at L5+. The Apache + OpenSSF + Alpha-Omega donations are programmatic.
 - **[[agentic-ai-security-reference-architecture|RA]] Observability Plane**: defender-side vulnerability discovery agents (Mythos orchestrated via partner systems) is a candidate L5+ reference primitive.
 
@@ -135,16 +142,14 @@ Eight named executives provided quotes, each describing how their organization i
 - **Vendor-published numbers.** All benchmark scores are Anthropic-self-reported. CyberGym is independently verifiable (public leaderboard); other benchmarks involve memorization caveats and harness-configuration choices.
 - **Coalition diversity caveat.** 12 named partners is broad, but the named coalition is heavily US-based and US-aligned. National-security framing ("US and its allies must maintain a decisive lead") is explicit.
 - **Capability disclosures.** Many vulnerabilities are noted as cryptographically hashed pending patch; the published examples (OpenBSD, FFmpeg, Linux kernel) are selected for impact.
-- **No technical methodology detail.** The post is announcement-grade; technical details for cited vulnerabilities live in the [Frontier Red Team blog](https://red.anthropic.com/2026/mythos-preview) which has not yet been ingested.
+- **No technical methodology detail.** The post is announcement-grade; technical details for the cited vulnerabilities live in Anthropic's [Frontier Red Team blog](https://red.anthropic.com/2026/mythos-preview), whose other posts are summarized on [[anthropic-frontier-red-team-vuln-research|Frontier Red Team Vulnerability Research]].
 - **No model-architecture detail.** Mythos's training, scale, or technical positioning is not disclosed beyond "general-purpose frontier model trained by Anthropic."
 
 ## Open Questions Surfaced
 
-- **Frontier Red Team blog ingest**: [red.anthropic.com/2026/mythos-preview](https://red.anthropic.com/2026/mythos-preview), [red.anthropic.com/2026/firefox/](https://red.anthropic.com/2026/firefox/), [red.anthropic.com/2026/exploit/](https://red.anthropic.com/2026/exploit/): three primary technical sources adjacent to Glasswing that should be ingested next.
-- **CTI-REALM benchmark**: Microsoft's open-source security benchmark, mentioned in passing by Igor Tsyganskiy. Not currently on the wiki; concept-page candidate.
+- **Frontier Red Team technical detail**: the [Mythos Preview vulnerability write-up](https://red.anthropic.com/2026/mythos-preview) and the [exploit-development post](https://red.anthropic.com/2026/exploit/) are the primary technical sources adjacent to Glasswing still unread here. The [Firefox post](https://red.anthropic.com/2026/firefox/) is read on [[anthropic-frontier-red-team-vuln-research|Frontier Red Team Vulnerability Research]].
 - **The 40+ additional organizations**: the Glasswing post mentions "over 40 additional organizations that build or maintain critical software infrastructure" but does not list them. The 90-day public report may reveal them.
 - **Claude Mythos Preview system card** ([anthropic.com/claude-mythos-preview-system-card](https://anthropic.com/claude-mythos-preview-system-card)): the canonical technical reference; ingest candidate.
-- **Big Sleep and CodeMender** (Google): mentioned in Heather Adkins's quote as Google's parallel AI-powered cybersecurity tools. Not on the wiki; concept/product pages plausible.
 - **Independent third-party body**: Anthropic floats this as a long-term structure. Worth tracking governance evolution.
 
 ## See Also
@@ -154,6 +159,8 @@ Eight named executives provided quotes, each describing how their organization i
 - [[anthropic|Anthropic]]: vendor.
 - [[xbow-mythos-evaluation|XBOW's Mythos Evaluation]]: offensive-side companion source.
 - [[mdash-defense-at-ai-speed|Microsoft MDASH announcement]]: defender-side companion source from a Glasswing partner.
+- [[big-sleep|Big Sleep]] and [[codemender|CodeMender]]: Google's parallel vulnerability-discovery and patching agents, named alongside Mythos in Adkins's quote.
+- [[cti-realm|CTI-REALM Benchmark]]: the Microsoft benchmark Mythos was tested against in Tsyganskiy's quote.
 - [[cybergym|CyberGym]]: public benchmark.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]: the wiki thesis Glasswing reframes.
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: adjacent thesis directly supported by the coalition's framing.

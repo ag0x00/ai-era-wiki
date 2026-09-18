@@ -3,7 +3,7 @@ type: concept
 title: "CTI-REALM Benchmark"
 address: c-000098
 created: 2026-05-23
-updated: 2026-05-23
+updated: 2026-09-17
 tags:
   - concepts
   - benchmarks
@@ -24,6 +24,7 @@ related:
   - "[[mdash]]"
   - "[[microsoft]]"
   - "[[osint-to-knowledge-graph-talk]]"
+  - "[[anthropic-glasswing-announcement]]"
 sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/03/20/cti-realm-a-new-benchmark-for-end-to-end-detection-rule-generation-with-ai-agents/"
   - "https://arxiv.org/pdf/2603.13517"

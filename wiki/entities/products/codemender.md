@@ -4,7 +4,7 @@ entity_type: product
 title: "CodeMender (Google DeepMind)"
 address: c-000036
 created: 2026-05-13
-updated: 2026-09-01
+updated: 2026-09-17
 tags:
   - products
   - google
@@ -35,6 +35,7 @@ related:
   - "[[frontier-ai-for-vuln-discovery]]"
   - "[[wiz]]"
   - "[[vulnops]]"
+  - "[[ai-era-supply-chain-hardening]]"
   - "[[llm-as-a-judge]]"
   - "[[autonomous-exploit-generation]]"
   - "[[codex-security]]"
