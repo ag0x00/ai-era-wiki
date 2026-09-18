@@ -148,7 +148,7 @@ Two source facts stay unresolved and sit as watch items on the Canadian crosswal
 
 Six pages in the family carry more than the one callout the convention allows, measured 2026-09-18: three on the base crosswalk and on D9, two on D1, D2, D4 and D7. The count is debt across the family and bears on no rung.
 
-**Status:** [new-2026-09-15], recount [new-2026-09-18]. Four pages have since come down to one. The scorecard and D8 were reduced by the September pass; the core page and [[agentic-ai-security-cmm-d6-data-rag|D6]] were reduced by the D6 L2 restatement below, which had to touch both and inherited their callout debt with them, since this vault holds no lint baselines and a page is exempt only until it is touched. Recommendation 29 reduces the rest. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [new-2026-09-15], recount [new-2026-09-18]. Four pages have come down since the first census: the assessor scorecard, from three, in the 2026-09-17 propagation pass; the core page from four, [[agentic-ai-security-cmm-d6-data-rag|D6]] from two, and this page from three, in the D6 L2 restatement below, which had to touch all three and inherited their callout debt with them, since this vault holds no lint baselines and a page is exempt only until it is touched. [[agentic-ai-security-cmm-d8-supply-chain|D8]] has carried one throughout and never needed reducing. The first census also omitted the base crosswalk, which carries three. Recommendation 29 reduces the six that remain. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 19. `D3 L3` grades a decision point the coding harness holds itself
 
