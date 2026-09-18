@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - architectures
   - identity
@@ -90,8 +90,7 @@ The agent acts **on behalf of a human user** using that user's scoped access tok
 
 The agent holds a **unique identity** and authenticates independently to carry out tasks. Infrastructure agents, RPA-style workflows, and AI-employee scenarios require this model. Governance is harder here, because identity sprawl runs fast and credentials may be ephemeral. Entra Agent ID calls this the **autonomous** pattern (own identity, client-credentials flow) and defines a third, hybrid shape as well — an agent paired 1:1 with its own user account (mailbox, Teams), for cases where the agent must appear as a directory user.
 
-> [!note] Trend
-> Enterprises today lean toward delegated access for productivity use cases. The balance is expected to shift toward autonomous agents as AI-native workflows mature. The platform-native identity products that shipped in 2026 support both models from a single directory object.
+Enterprises today lean toward delegated access for productivity use cases. The balance is expected to shift toward autonomous agents as AI-native workflows mature. The platform-native identity products that shipped in 2026 support both models from a single directory object.
 
 ## Layers
 
@@ -99,8 +98,7 @@ The agent holds a **unique identity** and authenticates independently to carry o
 
 [[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. Enterprises already run SPIFFE/SPIRE for machine-to-machine workload identity, and the platform-native agent identities build on it: GCP Agent Identity issues SPIFFE-based IDs directly. SPIFFE also closes the **Credential Zero** problem. An agent must authenticate *to* a vault or IdP before it can retrieve any further credential, and a SPIFFE Verifiable Identity Document (SVID) provisioned at deploy time carries that first authentication without a pre-stored secret.
 
-> [!note] Authentication only
-> SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) must be added to define *what* an authenticated agent may do, and a [[#Capability-token layer]] to bound *which task* a given grant covers.
+SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) must be added to define *what* an authenticated agent may do, and a [[#Capability-token layer]] to bound *which task* a given grant covers.
 
 ### Secrets vault and PAM layer
 
@@ -124,7 +122,7 @@ Per-agent identity moved from emerging to **GA platform-native on all three hype
 
 | Capability | Status (mid-2026) | Reference implementations |
 |---|---|---|
-| Per-agent identity | GA platform-native; also the security-platform row below | [[microsoft-entra-agent-id\|Entra Agent ID]] (GA Apr 2026); AWS Bedrock AgentCore identities; GCP Agent Identity (SPIFFE-based); [[spiffe\|SPIFFE/SPIRE]] (OSS); [[okta-for-ai-agents\|Okta for AI Agents]] (Early Access, GA expected FY27) |
+| Per-agent identity | GA platform-native; also the security-platform row below | [[microsoft-entra-agent-id\|Entra Agent ID]] (GA Apr 2026); AWS Bedrock AgentCore identities; GCP Agent Identity (SPIFFE-based); [[spiffe\|SPIFFE/SPIRE]] (OSS); [[okta-for-ai-agents\|Okta for AI Agents]] (GA 2026-04-29) |
 | Credential-less / vault | GA platform-native | Azure Managed Identities; AgentCore token vault; GCP auth-manager; [[credential-proxy-pattern\|credential proxy]] (OSS/COTS) |
 | NHI governance (discovery, lifecycle, posture) | Developing COTS | [[oasis-security\|Oasis Security]], Aembit, Astrix, [[cyberark-conjur\|CyberArk Conjur]], Okta NHI |
 | Conditional / risk-based access for agents | MS GA; no AWS/GCP equivalent | Conditional Access for Agent Identities (Entra ID P1); ID Protection for agents |

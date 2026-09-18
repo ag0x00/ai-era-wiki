@@ -2,7 +2,7 @@
 type: practice
 title: "AI-BOM: AI Bill of Materials"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-18
 tags:
   - practices
   - supply-chain
@@ -27,6 +27,10 @@ related:
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the CISA and G7 minimum elements, the cdxgen and Anchore capability pages and the Hugging Face completeness study cited in the new footnotes; no archived document opened. 'Normative reference' reduced to what the guidance states about itself, and the completeness measurement scoped to Hugging Face publishers"
 ---
 
 # AI-BOM: AI Bill of Materials
@@ -65,6 +69,7 @@ An AI-BOM for an agentic deployment should cover:
 ## Format and Standards
 
 - **CycloneDX ML extension**: the most AI-specific format; supports model metadata, dataset references, algorithm documentation. Recommended for static AI-BOMs.
+- **CISA and G7 minimum elements**: *Software Bill of Materials for AI — Minimum Elements*, published 2026-05-12, enumerates what an AI-BOM contains in seven clusters: metadata, system-level properties, models, dataset properties, infrastructure, security properties and key performance indicators. It prescribes no format, states that its elements are not mandatory, and puts requirements, standards, legislation and implementation detail outside its scope, so it sets the content list and creates no obligation to produce one.[^g7-aisbom]
 - **SPDX**: more mature tooling ecosystem; less AI-specific but acceptable for framework-level dependencies.
 - **SLSA (Supply chain Levels for Software Artifacts)**: the provenance framework; aim for SLSA Level 2+ for models deployed in production.
 
@@ -103,7 +108,7 @@ Level 4 corresponds to "ML-BOM for all production models" in the CMM's Domain 5 
 1. **Start with model inventory**: know what model version is running in each agent.
 2. **Add skills/plugins**: every installed skill should be tracked with source, hash, install date.
 3. **Layer in MCP servers**: as MCP adoption grows, MCP server provenance becomes critical.
-4. **Automate generation**: build AI-BOM generation into the CI/CD pipeline, not as a manual step.
+4. **Automate generation**: build AI-BOM generation into the CI/CD pipeline. cdxgen's `aibom` command takes Hugging Face package URLs and direct Modelfile or GGUF inputs, emits CycloneDX 1.7 and submits the result to a Dependency-Track server; Anchore Syft catalogues GGUF and SafeTensors components in the same pipeline.[^aibom-tooling]
 5. **Feed to SIEM**: AI-BOM data enables correlation — when an incident occurs, the BOM tells you what was running.
 
 ## Known Gaps
@@ -111,10 +116,17 @@ Level 4 corresponds to "ML-BOM for all production models" in the CMM's Domain 5 
 - No universal standard for agentic-specific AI-BOM fields (cognitive files, MCP scope, skill permissions).
 - Runtime AI-BOM tooling is nascent — Miggo is the most specific implementation evidence available as of Q1 2026.
 - No enforcement mechanism equivalent to SBOM mandates (e.g., Executive Order 14028 for software) specifically for AI components.
+- Consumption has no gate. Anchore lists vulnerability scanning of AI artifacts as unsupported, so a pipeline emits a model inventory and matches it against nothing.[^aibom-tooling]
+- Hugging Face model publishers ship no AI-BOM of their own. A 2026 measurement generated roughly 97,500 artifacts itself from 2,942,466 public Hugging Face model records and scored mean completeness at 54.31 out of 100, with model-card documentation at 19.51% mean coverage.[^aibom-completeness]
+- No AI-specific exploitability profile exists in the documents read. The OWASP CycloneDX authoritative guide to AI/ML-BOM of June 2026 does not mention VEX, and the CISA and G7 guidance's nearest element links to external vulnerability databases instead of asserting exploitability.[^aibom-vex] [[agentic-ai-security-reference-architecture|The reference architecture]] records the same residue as gap 4 of its Data plane, where AI-BOM generation is graded and consumption is not.
 
 ## Notes
 
 [^jfrog-ssc]: [JFrog — 2026 Software Supply Chain Security State of the Union (announcement)](https://www.businesswire.com/news/home/20260520126325/en/New-JFrog-Report-Warns-AI-Governance-Fails-as-Software-Supply-Chain-Attacks-Hit-Record-Highs), 2026, report p.5–6. 495 malicious Hugging Face models carrying live payloads; 53% of organizations self-host AI models; 97% claim certified model governance. See [[jfrog-ssc-state-of-union-2026|JFrog 2026 SSC State of the Union]].
+[^g7-aisbom]: [CISA — Software Bill of Materials for AI: Minimum Elements](https://www.cisa.gov/resources-tools/resources/software-bill-materials-ai-minimum-elements), published 2026-05-12, with the guidance served at [BSI — SBOM for AI: minimum elements (PDF)](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/KI/SBOM-for-AI_minimum-elements.pdf); retrieved 2026-09-18. The output of the G7 Cybersecurity Working Group between August 2025 and February 2026.
+[^aibom-tooling]: [cdxgen — README](https://github.com/cdxgen/cdxgen/blob/master/README.md) and [Anchore OSS — AI capabilities](https://oss.anchore.com/docs/capabilities/ai/), both retrieved 2026-09-18. cdxgen targets CycloneDX 1.6, 1.7 and 2.0 with 1.7 as the default and submits to Dependency-Track; the Anchore capability table lists a GGUF cataloguer and SafeTensors support and lists vulnerability scanning of AI artifacts as unsupported at this time.
+[^aibom-completeness]: ["A Large-Scale Measurement of AI Bill of Materials Completeness in Hugging Face Models"](https://arxiv.org/html/2607.17242) (arXiv, 2026-07-19), retrieved 2026-09-18. The study generated the artifacts itself because the publishers ship none; dataset information appears in 39.35% of artifacts, licences in 73.14%, and the ethical-considerations, intended-use and model-explainability fields in 0.00%.
+[^aibom-vex]: [OWASP CycloneDX — Authoritative Guide to AI/ML-BOM (PDF)](https://cyclonedx.org/guides/OWASP_CycloneDX-Authoritative-Guide-to-AI-ML-BOM-en.pdf), First Edition Revision 1, dated 2026-06-10, retrieved 2026-09-18: a case-insensitive search of the extracted full text returns no occurrence of VEX.
 
 ## See Also
 

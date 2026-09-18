@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Microsoft Agent 365 (with Entra Agent ID)"
 created: 2026-05-03
-updated: 2026-09-10
+updated: 2026-09-18
 tags:
   - products
   - identity
@@ -40,6 +40,10 @@ sources:
   - "[[.raw/articles/microsoft-secure-agentic-ai-end-to-end-2026-05-07.md]]"
   - "[[.raw/articles/microsoft-entra-agent-id-security-for-ai-2026-05-25.md]]"
   - "[[.raw/articles/microsoft-entra-agent-id-governance-2026-05-25.md]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the page and the Okta GA announcement behind the comparison row; no archived document opened. The GA-date row and its footnote match the Okta product page"
 ---
 
 # Microsoft Agent 365 (with Entra Agent ID)
@@ -114,7 +118,7 @@ The enterprise recommended stack pairs Entra Agent ID with **Microsoft Agent Gov
 
 | Dimension | [[okta-for-ai-agents\|Okta for AI Agents]] | Microsoft Entra Agent ID |
 |---|---|---|
-| GA date | Early Access; GA expected FY27 | May 1, 2026 (Agent ID available to all Entra customers) |
+| GA date | 2026-04-29[^okta-ga-cmp] | May 1, 2026 (Agent ID available to all Entra customers) |
 | Best fit | Okta-as-IdP organizations | M365 / Azure-native organizations |
 | Registry | Okta Universal Directory + Agent Discovery | Agent 365 Registry (Graph API) |
 | Audit integration | Okta System Log | Microsoft Purview |
@@ -127,3 +131,7 @@ Equivalent to [[okta-for-ai-agents|Okta for AI Agents]] in CMM positioning: orga
 
 > [!note] Vendor-stack constraint
 > Action-to-identity tracing via Purview is deeply integrated with the Microsoft stack. Organizations using non-Microsoft models or agent frameworks may find the tracing coverage incomplete; the Anthropic Compliance API integration covers Claude-on-Azure deployments specifically.
+
+## Notes
+
+[^okta-ga-cmp]: Okta, [*Okta for AI Agents is now generally available*](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/) (2026-04-29), retrieved 2026-09-18. See [[okta-for-ai-agents|Okta for AI Agents]].

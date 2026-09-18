@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -53,10 +53,10 @@ verified_findings: 0
 
 # Agentic AI Security CMM — D2 Identity & Authorization (Deep Dive)
 
-Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D2 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. D2 assigns every agent a per-agent non-human identity and governs its credential lifecycle. The threats this domain answers are Privilege Compromise (T3) and Identity Spoofing and Impersonation (T9) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]], whose Playbook 4 (authentication, identity, and privilege controls) calls for per-agent mutual authentication and short-lived credentials — the operational form of the L3–L5 ladder below. Three things change in the recalibration: a stale GA assertion is corrected (Okta for AI Agents is not yet GA), per-agent identity is now GA platform-native on all three hyperscalers, and per-task capability tokens move to L5+ because no platform ships them.
+Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D2 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. D2 assigns every agent a per-agent non-human identity and governs its credential lifecycle. The threats this domain answers are Privilege Compromise (T3) and Identity Spoofing and Impersonation (T9) in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]], whose Playbook 4 (authentication, identity, and privilege controls) calls for per-agent mutual authentication and short-lived credentials — the operational form of the L3–L5 ladder below. Two things change in the recalibration: per-agent identity is now GA platform-native on all three hyperscalers, and per-task capability tokens move to L5+ because no platform ships them.
 
 > [!gap] Single-source grounding
-> Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is a May 2026 snapshot.
+> Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is dated at each claim, most recently September 2026.
 
 **D2-L3 raises the ceiling on three domains at once.** The active dependency caps are **D2→D5** and **D2→D7**, so one rollout of verifiable per-agent identity lifts D2, D5, and D7 together, and no other rung in the model reaches that far for the same spend. Egress and observability cannot exceed D2's level, because both per-agent egress policy and per-agent behavioral baselining bind to a principal that D2-L3 verifies. [[agent-identity-architecture|Agent Identity Architecture]] builds the layers in that order for the same reason. For a Microsoft incumbent, D2-L3 costs near-zero licensing: Entra Agent ID rides the directory. Fund this rung ahead of any other identity work.
 
@@ -83,7 +83,7 @@ The prerequisite is necessary and not sufficient, and the [[owasp-ai-exchange|OW
 
 Entra Agent ID mints a credential-less service principal from an agent blueprint, so a Microsoft deployment reaches the zero-credentials row natively and buys no credential proxy.
 
-**Correction.** The current CMM dates "Okta for AI Agents GA Apr 30 2026." That is wrong. Okta's own materials place it at Early Access in FY27 Q1 and GA later in FY27[^okta]; the GA'd product is Auth0 for AI Agents (Oct 2025). The date is removed from D2 and the tooling map. Per-agent identity is well covered platform-native regardless, so nothing in the ladder depends on Okta.
+Okta for AI Agents reached general availability on 2026-04-29.[^okta-ga] The schedule Okta published in September 2025 placed Early Access in the first quarter of FY27 and named no quarter for the general-availability phase, which the product then reached inside that same first quarter.[^okta-plan] Nothing in this ladder depends on the product, because per-agent identity and credential lifecycle are platform-native on all three hyperscalers.
 
 Cyera states that an agent inherits the access of the person who launched it and exercises that access from day one. That is the entitlement model the L2 rung below already grades, where delegation runs only through the human user. Cyera also states its Discover phase inventories agents across cloud, SaaS, endpoint, and [[shadow-ai|Shadow AI]], which is a vendor example of the shadow-agent discovery tooling L5 requires ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]).
 
@@ -143,8 +143,7 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 | MCP / skill provider serving others | L4 → selective L5 | Third-party blast radius raises the bar; scoped tokens per caller, attestation, shadow discovery |
 | High-autonomy multi-agent mesh | L5 (selective L5+) | Delegation chains make per-task attenuating tokens (L5+) load-bearing — the one shape where Warrant-class authority is worth its immaturity cost |
 
-> [!check] Attribution back to a human is the coding-shape D2 test
-> Per-agent identity is necessary and not sufficient here. The assessable question is whether a given commit, tool call, or MCP invocation is traceable to both an agent identity *and* the human accountable for it. Most organizations cannot separate agent-authored from human-authored change once it lands in the repository, which removes the ability to scope a review policy, trace a defect to the tool that produced it, or measure which harness introduced what. No first-party harness feature supplies this across vendors; it currently requires a [[endor-labs-ai-code-governance|third-party control plane]] or in-house instrumentation. Because D2 caps effective D5 and D7, an unattributable coding fleet also caps those domains. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] §Fleet and parallel.
+**Attribution back to a human is the coding-shape D2 test.** Per-agent identity is necessary and not sufficient here. The assessable question is whether a given commit, tool call, or MCP invocation is traceable to both an agent identity *and* the human accountable for it. Most organizations cannot separate agent-authored from human-authored change once it lands in the repository, which removes the ability to scope a review policy, trace a defect to the tool that produced it, or measure which harness introduced what. No first-party harness feature supplies this across vendors; it currently requires a [[endor-labs-ai-code-governance|third-party control plane]] or in-house instrumentation. Because D2 caps effective D5 and D7, an unattributable coding fleet also caps those domains. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] §Fleet and parallel.
 
 The [[lethal-trifecta|lethal-trifecta]] test lowers the target level. An agent with no private-data reach or no external-comms path does not need the per-task-token and federation tail. A sound L3 with the trifecta broken is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
 
@@ -173,7 +172,6 @@ Licensing is near-zero for the E5 incumbent through L5; the spend is the coupled
 
 - Tenuo production-readiness (early-stage OSS, no independent enterprise-deployment evidence) is the variable that would move per-task tokens from L5+ to L5. Re-check quarterly.
 - AWS AgentCore Identity and GCP Agent Identity are GA, but precise GA dates and the scope of GCP coverage outside its own agent runtime are not cleanly published.
-- Okta for AI Agents GA timing (FY27) is directional; the CMM date is removed regardless.
 - D2 maps cleanly to FFIEC/GLBA authentication-and-access expectations and NCUA third-party-NHI scrutiny; the mapping is deferred to the forthcoming FFIEC/GLBA crosswalk.
 - Behavioral trust and reputation scoring for agent identities has no standardised method. The [[owasp-ai-exchange|OWASP AI Exchange]] names it as an agentic authentication element with decay and circuit breakers, states that industry scoring methods are not yet standardised, and admits it only as supplementary to identity, policy, and monitoring.[^aix-mac] The L4 per-NHI behavioral baseline is graded on existence for the same reason, and a scoring-quality criterion is unavailable until a method is published.
 
@@ -189,6 +187,7 @@ Licensing is near-zero for the E5 incumbent through L5; the spend is the coupled
 [^gcpid]: [Google Cloud — Agent Identity overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview), 2026. SPIFFE-ID agent identity + auth-manager credential vault.
 [^iamra]: [AWS — IAM Roles Anywhere](https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html), 2026. X.509 to short-lived STS, replacing long-term keys.
 [^wif]: [Google Cloud — Workload Identity Federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation), 2026. Federated identities replacing service-account keys.
-[^okta]: [Okta — Newsroom: securing the AI-driven enterprise](https://www.okta.com/newsroom/press-releases/), 2026. Okta for AI Agents phasing (EA FY27 Q1 / GA FY27); Auth0 for AI Agents GA Oct 2025.
+[^okta-ga]: [Okta — Okta for AI Agents is Now Generally Available](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/), 2026-04-29, retrieved 2026-09-18. "Okta for AI Agents is now generally available, giving AI agents a first-class identity." Okta's [Identity Engine 2026 release notes](https://help.okta.com/oie/en-us/content/topics/releasenotes/archive/oie-relnotes-2026.htm) carry the product as Early Access from January 2026 and generally available in the May 2026 production batch. Agent-to-agent delegation, an Agent Gateway, threat detection and human-in-the-loop controls are stated as roadmap.
+[^okta-plan]: [Okta — New Okta innovations secure the AI-driven enterprise and combat fraud with an identity security fabric](https://www.okta.com/newsroom/press-releases/new-okta-innovations-secure-the-ai-driven-enterprise-and-combat-/), 2025-09-25, retrieved 2026-09-18. The phasing as published at Oktane 2025: "Phase 1 in EA, FY27 Q1 and Phase 2 in GA, FY27." Okta reported second-quarter FY27 results on 2026-08-26, which places FY27 Q1 at February to April 2026. Auth0 for AI Agents is a separate product in the same line.
 [^aix-mac]: [OWASP AI Exchange — MODEL ACCESS CONTROL](https://owaspai.org/go/modelaccesscontrol/), retrieved 2026-08-18.
 [^aix-leastmodelpriv]: [OWASP AI Exchange — LEAST MODEL PRIVILEGE](https://owaspai.org/go/leastmodelprivilege/), retrieved 2026-08-19. Signed delegation tokens and their bound fields, the parent-linkage requirement against chain splicing, and the Limitations block's statement that a structurally valid token can be contextually unauthorised.

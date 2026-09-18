@@ -3,7 +3,7 @@ type: concept
 title: "Non-Human Identity (NHI)"
 address: c-000187
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-18
 tags:
   - concepts
   - identity
@@ -121,7 +121,7 @@ The combined effect is a rapidly growing NHI estate that is poorly inventoried a
 | [IBM 2025 Cost of a Data Breach](https://www.ibm.com/reports/data-breach) | \$4.44M global / \$10.22M US average; explicit recommendation for NHI controls | 2025      | Industry survey (Ponemon methodology) |
 | [[enisa\|ENISA]] Threat Landscape 2025 | Confirms identity- and credential-themed risk acceleration | 2025 | EU government |
 
-Sources differ on the exact ratio (45:1 vs 82:1; SailPoint reports 69% of orgs have more machine than human, ~half 10×) but agree on the structural point: NHIs outnumber humans by an order of magnitude or more, and growth is fast. The exact 82:1 figure is **single-vendor** (CyberArk-specific); the directional claim is well-corroborated. The per-figure provenance, vendor-conflict labels, and independent corroboration live in [[source-triangulation-audit-2026-05-02|the Source Triangulation Audit]] §Claim 1, which is the citation home for the vendor rows that carry no public deep link (CyberArk, Rubrik, SailPoint, GitGuardian).
+Sources differ on the exact ratio (45:1 vs 82:1) but agree on the structural point: NHIs outnumber humans by an order of magnitude or more, and growth is fast. The exact 82:1 figure is **single-vendor** (CyberArk-specific); the directional claim is well-corroborated. The per-figure provenance, vendor-conflict labels, and independent corroboration live in [[source-triangulation-audit-2026-05-02|the Source Triangulation Audit]] §Claim 1, which is the citation home for the vendor rows that carry no public deep link (CyberArk, Rubrik, SailPoint, GitGuardian).
 
 ## Failure of human-identity controls
 
@@ -160,7 +160,7 @@ Insight Partners draw an analogy: **NHI vendors are to agent credentials what [[
 
 NHI governance solutions cover: discovery (machine identity inventory across cloud, SaaS, and on-prem); lifecycle management (rotation, expiry, revocation); scoped permissions (least privilege per identity, extending into Identity Security Posture Management / ISPM); and OAuth / API scope governance.
 
-The market shifted during 2026. Per-agent identity is no longer the preserve of specialist vendors: it is **GA platform-native on all three hyperscalers** — [[microsoft-entra-agent-id|Microsoft Entra Agent ID]], AWS Bedrock AgentCore identities, and GCP Agent Identity — with [[okta-for-ai-agents|Okta for AI Agents]] in Early Access.
+The market shifted during 2026. Per-agent identity is no longer the preserve of specialist vendors: it is **GA platform-native on all three hyperscalers** — [[microsoft-entra-agent-id|Microsoft Entra Agent ID]], AWS Bedrock AgentCore identities, and GCP Agent Identity — and [[okta-for-ai-agents|Okta for AI Agents]] reached [general availability on 2026-04-29](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/).
 
 A third supplier shape appeared in September 2026: security-platform incumbents outside the IdP market issuing agent identity from their own control point. [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]] registers each agent at the moment [[falcon-guardian|Falcon Guardian]] discovers it on an endpoint, and brokers short-lived scoped tokens rather than standing credentials. [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]] issues secretless just-in-time privileged access through PingOne Privilege. CrowdStrike states its product is in development; Ping states its own is available.
 

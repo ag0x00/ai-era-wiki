@@ -3,7 +3,7 @@ type: concept
 title: "CaMeL Pattern (Compartmentalized Machine Learning)"
 address: c-000300
 created: 2026-05-03
-updated: 2026-08-18
+updated: 2026-09-18
 origin: aggregated
 scope_axis:
   - sec-of-ai
@@ -29,6 +29,10 @@ related:
   - "[[prompt-injection-containment]]"
 sources:
   - "https://arxiv.org/abs/2503.12599"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 1
+verified_note: "Read against the page, the RA gap-1 text and the Microsoft Learn and camel-prompt-injection footnotes, no archived document opened. FIDES re-attributed to Costa et al.; as-of date moved to September 2026; the comparison-table cell no longer credits FIDES to this pattern. Open: CMM D3 and D4 L5+ still read 'research, no shipping vendor', quoted verbatim here and out of scope this pass"
 ---
 
 # CaMeL Pattern (Compartmentalized Machine Learning)
@@ -67,12 +71,12 @@ Compared to trifecta-splitting strategies (e.g., separate agents per trifecta le
 
 ## Research status
 
-CaMeL was published in March 2025 (arXiv 2503.12599) by Google DeepMind. As of May 2026:
-- **No shipped production implementation** exists outside Google's internal research environment
+CaMeL was published in March 2025 (arXiv 2503.12599) by Google DeepMind. As of September 2026:
+- **The mechanism ships in one vendor's framework and in no vendor-neutral form.** FIDES implements the design of Costa et al. rather than this pattern's interpreter, and ships in Microsoft Agent Framework's `agent-framework-core` from Python 1.3.0 under `agent_framework.security`, marked experimental and Python-only, carrying integrity and confidentiality labels on values, most-restrictive-wins propagation, a policy check before each sink, and a tool-free quarantined model behind variable indirection[^fides]
 - **CMM D4 L5+ and D3 L5+** reference it as a research-stage primitive that qualifies for leading-edge credit only when run as a documented pilot with exit criteria
 - The pattern requires significant prompt engineering and data-flow enforcement work; "just use two LLMs" is not sufficient. The structured output channel is the load-bearing control
 
-The Exchange lists the pattern among five structural mitigations it recommends against agentic prompt injection, alongside capping the concurrent risk factors an agent holds and separating instructions from data.[^aix-pi] Recommended in a standards-liaison publication and unshipped in production are both current: the recommendation states the shape of the control, and no vendor supplies it.
+The Exchange lists the pattern among five structural mitigations it recommends against agentic prompt injection, alongside capping the concurrent risk factors an agent holds and separating instructions from data.[^aix-pi] One vendor now supplies the mechanism and none supplies it vendor-neutrally. FIDES enforces the labels in tool-call middleware, and this pattern's own enforcement point is an interpreter over a generated program, which the framework does not provide; the paper's code is published as a research artifact its authors disclaim as unmaintained and possibly insecure.[^fides][^camel-code]
 
 ## Comparison to alternative containment approaches
 
@@ -81,7 +85,7 @@ The Exchange lists the pattern among five structural mitigations it recommends a
 | Trifecta splitting (per-agent role) | Removes legs from individual agents | Yes (architectural guidance) |
 | Egress filtering (Stripe approach) | Removes leg 3 (external comms) at network | Yes (Smokescreen) |
 | Capability warrants (Tenuo approach) | Constrains what legs 1+3 can do per task | Yes (Tenuo OSS) |
-| CaMeL (DeepMind) | Prevents injected content from reaching legs 1+3 | Research-stage only |
+| CaMeL (DeepMind) | Prevents injected content from reaching legs 1+3 | No; the adjacent FIDES design ships experimental (Python-only) |
 | HITL on sensitive actions | Inserts human into leg 3 path | Yes (architectural primitive) |
 
 ## In the RA / CMM
@@ -102,6 +106,8 @@ The Exchange lists the pattern among five structural mitigations it recommends a
 ## Notes
 
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Privilege-based data flow control identified with CaMeL — capability metadata attached to values, user intent converted to sandboxed code steps; the five structural mitigations for agentic prompt injection; the statement that prompt injection is not solvable at the model layer alone.
+[^fides]: [Microsoft Learn — Agent Framework security and information-flow control](https://learn.microsoft.com/en-us/agent-framework/agents/security), page dated 2026-09-16; announced at [Microsoft — FIDES in Agent Framework](https://devblogs.microsoft.com/agent-framework/fides/) (2026-05-20). FIDES implements the design of Costa et al. ([arXiv:2505.23643](https://arxiv.org/abs/2505.23643)). The same page states the limitations: labels are opt-in per data source, the quarantined model is single-turn and tool-free, and an MCP server's labels are authoritative only where the operator opts into trusting them.
+[^camel-code]: [google-research/camel-prompt-injection](https://github.com/google-research/camel-prompt-injection), retrieved 2026-09-18. The repository states that it is a research artifact released to reproduce the paper's results, that the interpreter implementation likely contains bugs and might not be fully secure, and that it is not a Google product and will not be maintained.
 
 <!-- sources:auto -->
 ## Sources

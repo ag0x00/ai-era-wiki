@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-09-17
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -58,16 +58,10 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-17
-verified_against:
-  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/papers/ai-security-standards-in-q1-2026.md"
-  - ".raw/papers/nist-sp-800-218A.pdf"
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
-verified_note: "PARTIAL — the 2026-09-17 pass read the GitSpawn source only and verified the files-delivery scope paragraph; earlier reads carried forward."
+verified_note: "Read against the page's own Docker MCP catalog and gateway-signature footnote and the matching RA gap-2 text; no archived document opened. The distributor-versus-author distinction matches the RA and the L5+ rung statement was left untouched per its open issue"
 ---
 
 # Agentic AI Security CMM — D8 Supply Chain & AI-BOM (Deep Dive)
@@ -205,7 +199,7 @@ For an E5 + GitHub-Enterprise incumbent, licensing is near-zero through L3 and l
 ## Open questions
 
 - Runtime AI-BOM (Miggo) launched in March 2026 and carries no independent deployment evidence. Runtime reconciliation stays L4-aspirational until that evidence exists.
-- The MCP Registry gives namespace provenance only; no name-to-binary signing exists on it or on [[jfrog|JFrog]]'s September 2026 Agent Package Manager registry, so the MCP-provider L5+ rung references a capability that does not yet ship.
+- The MCP Registry gives namespace provenance only; no name-to-binary signing exists on it or on [[jfrog|JFrog]]'s September 2026 Agent Package Manager registry. One distributor-held path now ships beside them: Docker builds and signs the local servers in its MCP catalog with build attestation, source provenance and signed SBOMs, and `docker mcp gateway run --verify-signatures` verifies an image against one Docker-held key compiled into the gateway binary and one Docker-controlled signature repository, failing closed where it finds no signature there.[^docker-mcp-sign] A tenant verifying a server Docker did not build obtains no cryptographic artifact, so the MCP-provider L5+ rung's capability — an attestation the server's own author holds — still does not ship.
 - No GA hyperscaler-native ML-BOM generator exists; consumers rely on OSS or COTS.
 - SLSA v1.0 has no L4 and no model-specific track; reproducible builds for stochastic weights are unsolved.
 - No major registry flags LLM-hallucinated package names at publish time — an ecosystem gap; the buyer-side control is lockfile plus allowlist.
@@ -243,3 +237,4 @@ D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 
 [^aix-poisonrobustmodel]: [OWASP AI Exchange — POISON ROBUST MODEL](https://owaspai.org/go/poisonrobustmodel/), retrieved 2026-08-20. The Applicability statement that the control can be applied to an already-trained model including one obtained from an external source; pruning and clean-data fine-tuning as the two strategies and fine-pruning as their combination; and Selective Amnesia's two steps, its ~0.1%-of-training-data requirement, its ~30× speed-up over training from scratch on MNIST, and its independence from prior knowledge of the trigger pattern.
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 [^gitspawn-d8]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the delivery constraint that clone, fetch and pull do not carry the payload. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].
+[^docker-mcp-sign]: [Docker Docs — MCP Catalog](https://docs.docker.com/ai/mcp-catalog-and-toolkit/catalog/) and [MCP Catalog and Toolkit FAQs](https://docs.docker.com/ai/mcp-catalog-and-toolkit/faqs/), retrieved 2026-09-18; neither page carries a publication date, and third-party catalog entries from GitHub and HashiCorp pass an ephemeral build, initialization and tool-listing check instead of carrying an attestation. The verification path is [the gateway's signature-verification source](https://github.com/docker/mcp-gateway/blob/main/pkg/signatures/signatures.go), which embeds one Docker ECDSA public key as the sole verifier, reads signatures from one hardcoded Docker repository, and returns an error for an image that carries none there.

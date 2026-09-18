@@ -3,7 +3,7 @@ type: gap
 title: "D3FEND AI-Defense Technique Gap"
 address: c-000186
 created: 2026-06-03
-updated: 2026-06-03
+updated: 2026-09-18
 tags:
   - gaps
   - agentic-soc
@@ -28,20 +28,27 @@ related:
   - "[[mythos-ready-security-program]]"
 sources:
   - "[[agentic-soc-cmm]]"
+  - "https://d3fend.mitre.org/about/"
+  - "https://d3fend.mitre.org/dao/"
+  - "https://d3fend.mitre.org/tactic/d3f:Deceive/"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against d3fend.mitre.org — the About page, the digital artifact ontology and the Deceive group — and against the Agentic SOC CMM D6 text; no archived document opened. Six previously unsourced claims now carry a D3FEND deep link or the CMM page; the tactic list corrected to seven and the unbounded 'not catalogued anywhere' claim scoped to D3FEND"
 ---
 
 # D3FEND AI-Defense Technique Gap
 
-MITRE **D3FEND** is the defensive-technique knowledge graph that complements **ATT&CK**: where ATT&CK catalogues what attackers do, D3FEND catalogues the countermeasures defenders run against it, organized as defensive tactics (harden, detect, isolate, deceive, evict, restore) over a digital-artifact ontology. The [[agentic-soc-cmm|Agentic SOC CMM]]'s **D6 (Detection & Response Tradecraft)** scores a SOC's coverage against three catalogues — ATT&CK for offence, D3FEND for defence, and [[mitre-atlas|MITRE ATLAS]] for threats to AI systems. The D3FEND axis is the one that under-reports, because the AI-era defensive techniques that distinguish an agentic SOC are not yet catalogued anywhere with D3FEND's rigour. This page names that gap and sketches the layer that would close it.
+MITRE **D3FEND** encodes a countermeasure knowledge base as a knowledge graph whose types and relations define the cybersecurity countermeasure domain and whose queries map countermeasures onto offensive tactics and techniques.[^d3fend] Where **ATT&CK** catalogues what attackers do, D3FEND catalogues the countermeasures defenders run against it, organized as defensive tactics over a digital-artifact ontology. The [[agentic-soc-cmm|Agentic SOC CMM]]'s **D6 (Detection & Response Tradecraft)** scores a SOC's coverage against three catalogues: ATT&CK for offence, D3FEND for defence, and [[mitre-atlas|MITRE ATLAS]] for threats to AI systems. The D3FEND axis is the one that under-reports, because the AI-era defensive techniques that distinguish an agentic SOC have no entry in it.
 
 ## The gap
 
-D3FEND's artifact ontology is built around conventional digital artifacts — processes, files, network traffic, accounts, certificates. Its techniques map countermeasures onto those artifacts. Two AI-era surfaces fall outside that frame:
+D3FEND's artifact ontology is built around conventional digital artifacts: its top-level classes are software, digital information, network traffic, process, file, credential, sensor, system and physical artifact, and it defines no class for a prompt, a model, model weights, an agent, an agent plan, a tool call or retrieved context.[^d3fend-dao] Its techniques map countermeasures onto those artifacts, so two AI-era surfaces fall outside the frame:
 
 - **The defender's own agents are not modelled as defensive instruments.** D3FEND has no techniques for supervising an autonomous agent, gating its authority by earned evaluation, attributing an action to a human or an agent, or bounding its blast radius. These are the controls the agentic SOC runs as its core discipline, and they have no D3FEND counterpart.
-- **The AI-powered attacker is not modelled as a distinct adversary.** D3FEND's deception and detection tactics assume tool- and vulnerability-signature behaviour. An attacker operating at machine speed through an agentic pipeline (the [[zero-day-clock|time-to-exploit collapse]]) presents behaviour D3FEND's catalogue does not describe, so its deceive and detect tactics do not yet name the techniques that catch it.
+- **The AI-powered attacker is not modelled as a distinct adversary.** Every one of the eleven techniques under D3FEND's deceive tactic is a decoy environment, honeynet, object, file, session token, persona, credential or network resource — bait keyed to a conventional artifact.[^d3fend-deceive] An attacker operating at machine speed through an agentic pipeline (the [[zero-day-clock|time-to-exploit collapse]]) presents behaviour none of those techniques describes.
 
-ATLAS partly covers the first surface from the threat side — it enumerates attacks *on* AI systems and lists mitigations — but ATLAS is an offence catalogue with mitigation notes, not a defensive-technique taxonomy of the operational kind D3FEND provides. Neither ATT&CK, D3FEND, nor ATLAS treats the AI defender's own agents as defensive instruments with their own countermeasure catalogue. That is the open space.
+[[mitre-atlas|MITRE ATLAS]] reaches the first surface from the threat side: it enumerates attacks on AI systems and attaches mitigations to its techniques, so its defensive content is a mitigation note per offensive technique. The operational technique taxonomy D3FEND supplies for conventional defence has no counterpart there. Across the three catalogues D6 scores against, the AI defender's own agents appear as neither an artifact nor a countermeasure. That is the open space.
 
 ## A candidate agentic-SOC defensive-technique layer
 
@@ -55,11 +62,11 @@ A D3FEND-shaped layer for the agentic SOC would extend the artifact ontology wit
 | Deception against AI attackers | Canaries, honeytokens, and behavioural monitoring keyed to agentic-attacker TTPs rather than tool or vulnerability signatures (the [[detection-deception-engineering-orbie-talk\|deception-detection]] direction) | D6 |
 | Machine-speed response | Pre-authorized containment that executes at machine speed under deterministic policy gates | D4, D6 |
 
-The last two clusters answer the AI-powered attacker; the first three are the techniques for operating AI defenders accountably, which is also the [[agentic-soc-cmm|CMM]]'s shared securing-the-agents layer. The deception and machine-speed-response clusters correspond directly to the [[mythos-ready-security-program|Mythos-ready]] Priority Actions for a deception capability and an automated response capability.
+The last two clusters answer the AI-powered attacker. The first three are the techniques for operating AI defenders accountably, which the [[agentic-soc-cmm|Agentic SOC CMM]] carries as its shared securing-the-agents layer. The deception and machine-speed-response clusters correspond directly to the [[mythos-ready-security-program|Mythos-ready]] Priority Actions for a deception capability and an automated response capability.
 
 ## Relationship to D3FEND, ATLAS, and CMM D6
 
-The proposed layer would stand to ATLAS **as D3FEND stands to ATT&CK: the defensive counterpart to an offence catalogue**. ATLAS extended ATT&CK's offence model to AI-system threats; no equivalent extension yet covers the defence half. The layer would sit alongside D3FEND — extending its ontology and tactics rather than replacing it — and would be the catalogue CMM D6 scores its AI-era coverage against, in place of the under-counting D3FEND axis it uses today. Until the layer exists, D6's D3FEND score should be read as a coverage floor for AI-era defences, not a measure of them.
+The proposed layer would stand to ATLAS **as D3FEND stands to ATT&CK: the defensive counterpart to an offence catalogue**. ATLAS extended ATT&CK's offence model to AI-system threats; no equivalent extension yet covers the defence half. The layer would sit alongside D3FEND, extending its ontology and tactics, and would be the catalogue [[agentic-soc-cmm|CMM]] D6 scores its AI-era coverage against in place of the under-counting D3FEND axis it uses today. Until the layer exists, D6's D3FEND score reads as a coverage floor for AI-era defences and measures none of them.
 
 ## Closure conditions
 
@@ -74,6 +81,12 @@ The proposed layer would stand to ATLAS **as D3FEND stands to ATT&CK: the defens
 - [[mitre-atlas|MITRE ATLAS]] — the offence-side precedent for extending a MITRE catalogue to the AI era.
 - [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]] — the autonomy ladder the supervision and evaluation-gating techniques bound.
 
+## Notes
+
+[^d3fend]: [MITRE — D3FEND: About](https://d3fend.mitre.org/about/), retrieved 2026-09-18. D3FEND is described there as a framework encoding a countermeasure knowledge base, and more specifically a knowledge graph carrying semantically rigorous types and relations that define the key concepts of the cybersecurity countermeasure domain, whose queries inferentially map countermeasures to offensive tactics, techniques and procedures.
+[^d3fend-dao]: [MITRE — D3FEND Digital Artifact Ontology](https://d3fend.mitre.org/dao/), retrieved 2026-09-18. The ontology's top-level classes are digital artifact, physical artifact, software, digital information, network traffic, process, file, credential, sensor and system; a read of the class list for a prompt, a model, model weights, an agent, an agent plan, a tool call or retrieved context returned none.
+[^d3fend-deceive]: [MITRE — D3FEND Deceive group details](https://d3fend.mitre.org/tactic/d3f:Deceive/), retrieved 2026-09-18. The tactic carries eleven techniques: decoy environment, integrated honeynet, standalone honeynet, connected honeynet, decoy object, decoy public release, decoy file, decoy session token, decoy persona, decoy user credential and decoy network resource.
+
 ## Status notes
 
-Opened 2026-06-03 from the Agentic SOC RA+CMM build. Referenced by the `[!gap]` callouts in the CMM (Open questions) and RA (Gaps in the architecture). No catalogue work has started; the candidate-layer path above is the recommended first step if the gap is taken up.
+Opened 2026-06-03 from the Agentic SOC RA+CMM build. Two pages reference it from a `[!gap]` callout: [[agentic-soc-cmm|Agentic SOC CMM]] §Open questions and gaps, and [[agentic-soc-reference-architecture|Agentic SOC RA]] §Gaps in the architecture. The AAI-S [[agentic-ai-security-reference-architecture|reference architecture]] carries a section under the same name and does not reach D3FEND. No catalogue work has started; the candidate-layer path above is the recommended first step if the gap is taken up.

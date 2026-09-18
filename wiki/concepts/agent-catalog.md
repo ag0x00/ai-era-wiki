@@ -2,7 +2,7 @@
 type: concept
 title: "AI Agent Catalog"
 created: 2026-05-01
-updated: 2026-09-10
+updated: 2026-09-18
 tags:
   - concepts
   - agent-catalog
@@ -103,7 +103,7 @@ Risk scores feed back into runtime decisions: high-risk agents get tighter Opera
 | Vendor / Tool | Coverage |
 |---|---|
 | Microsoft Agent 365 | First-party + third-party agents registered with Entra Agent ID |
-| Okta for AI Agents | Cross-platform agent identity registry (Early Access; GA expected FY27) |
+| Okta for AI Agents | Cross-platform agent identity registry (GA 2026-04-29) |
 | Astrix Security, Aembit | Non-human identity discovery + governance |
 | [[falcon-guardian\|CrowdStrike Falcon Guardian]] | Endpoint-resident discovery of known and shadow agents on Windows, macOS and Linux, recording deployment source, user identity and security status |
 | [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] | Personal-agent discovery including shadow AI, each session linked to the user and the device that started it |
@@ -136,7 +136,7 @@ For an organization to claim Level 3 on D2 Identity & Authorization in the [[age
 2. **Agent cards** for every cataloged agent with the field set above
 3. **Risk-score methodology** documented and applied uniformly
 4. **Catalog refresh cadence** (continuous discovery, not point-in-time)
-5. **Owner attribution** for ≥95% of cataloged agents (orphan detection for the rest)
+5. **Owner attribution** per cataloged agent, with orphan detection for the agents that carry none
 
 L4 adds: integration with runtime decisions (catalog signals feed Operative behavior); behavioral baselines per agent.
 
