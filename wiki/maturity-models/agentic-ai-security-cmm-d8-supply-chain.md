@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-17
 tags:
   - maturity-models
   - cmm
@@ -47,22 +47,27 @@ related:
   - "[[security-audit-skill]]"
   - "[[defending-code-harness]]"
   - "[[semgrep]]"
+  - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[ai-era-supply-chain-hardening]]"
   - "[[nist-sp-800-218a]]"
   - "[[semgrep-oss-ai-security-harness-comparison]]"
+  - "https://www.manifold.security/blog/ai-coding-agents-git-hijack"
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-01
+verified: 2026-09-17
 verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - ".raw/papers/ai-security-standards-in-q1-2026.md"
   - ".raw/papers/nist-sp-800-218A.pdf"
   - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
   - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
 verified_findings: 0
+verified_note: "PARTIAL — the 2026-09-17 pass read the GitSpawn source only and verified the files-delivery scope paragraph; earlier reads carried forward."
 ---
 
 # Agentic AI Security CMM — D8 Supply Chain & AI-BOM (Deep Dive)
@@ -93,6 +98,8 @@ D8 is the primary domain for **ASI04 (Agentic Supply Chain Vulnerabilities)**, a
 **The ladder below grades what an organization pulls; the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] ran on what its own workloads could push.** OpenAI's internal [[artifactory|JFrog Artifactory]] instance was writable by the entire training and evaluation fleet rather than scoped per run, and that write access was in turn the inter-agent covert channel, the staging ground for a cache-poisoning exploit chain, and — via SSRF against a service holding broader internet reach than its callers — the egress path out of a sandbox whose network policy was correctly enforced.[^bhusa] No artifact acquired from an external registry was involved, and no malicious package was published by an outside party. Every control on the acquisition side would have graded clean throughout.
 
 The consequence for this domain is a scope addition rather than a level change: **write access to an internal artifact repository by non-human workload identities is an unlisted control gap**, and it belongs here because the repository is the supply-chain asset, even though the failure ran in the opposite direction to the one ASI04 describes. The practice-level treatment is at [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]].
+
+**A third direction reaches neither the pull side nor the push side: an artifact that arrives as files.** The [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings (2026-09-01) execute from a repository's own `.git/config` when a coding agent runs `git` to gather context, and Manifold Security states that the payload cannot travel through a clone, a fetch or a pull, so the repository has to arrive as a copied directory: a shared archive, a sync folder, a drive handed from a consultancy to a client.[^gitspawn-d8] No acquisition-side control in the landscape below sits on that path, because nothing is acquired. The ladder grades what a registry hands over and what a workload writes back, and a project someone unzipped is neither. This is a scope note rather than a rung change: the ladder's criteria stand, and the population they cover is smaller than the population at risk.
 
 The development-environment half of that finding now has a normative source alongside the incident. Software components run inside AI development as well as in production — tooling to prepare training data or train a model — so the development environment carries open-source package vulnerabilities, CWEs, exposed secrets and sensitive-data leaks, and standard application security testing tools leave those risks undetected ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/secdevprogram/`](https://owaspai.org/go/secdevprogram/)). The same control confirms this domain's agentic scope from a second permalink: the AI supply chain encompasses the capabilities agents interact with dynamically, skills and services reached through MCP among them.
 
@@ -235,3 +242,4 @@ D8 is cross-cutting with no active cap. The relevant candidate is **DR-C001 (D8 
 [^aix-devsecurity]: [OWASP AI Exchange — DEV SECURITY](https://owaspai.org/go/devsecurity/), retrieved 2026-08-20. The AI-specific asset list (training data, test data, model parameters, technical documentation); the build-stage, deploy-stage and supply-chain integrity-check sets; the statement that a model comprises associated artifacts of varying formats — tokenizers, vocab files, configs, inference code — so signing must cover all of them, with no standard yet existing and the OpenSSF Model Signing SIG working on a specification; and the dataset-by-reference integrity problem, where a dataset holding URL pointers such as LAION-400M is exposed to manipulation or removal of the referenced content, answered by hashing dataset entries.
 [^aix-poisonrobustmodel]: [OWASP AI Exchange — POISON ROBUST MODEL](https://owaspai.org/go/poisonrobustmodel/), retrieved 2026-08-20. The Applicability statement that the control can be applied to an already-trained model including one obtained from an external source; pruning and clean-data fine-tuning as the two strategies and fine-pruning as their combination; and Selective Amnesia's two steps, its ~0.1%-of-training-data requirement, its ~30× speed-up over training from scratch on MNIST, and its independence from prior knowledge of the trigger pattern.
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
+[^gitspawn-d8]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the delivery constraint that clone, fetch and pull do not carry the payload. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].

@@ -3,7 +3,7 @@ type: thesis
 title: "SDLC in the AI-Attacker Era"
 address: c-000023
 created: 2026-05-13
-updated: 2026-09-01
+updated: 2026-09-17
 tags:
   - thesis
   - sdlc
@@ -15,11 +15,13 @@ origin: produced
 scope_axis:
   - sec-against-ai
 question: "How do SDLC, supply chain, identity, and attack-surface assumptions need to evolve when adversaries have frontier AI capability, and which existing controls remain load-bearing vs. which need rework?"
-current_position: "Developing — quantified evidence now shows time-to-exploit collapsing to hours and AI-assisted supply-chain attacks scaling, while standards calibrated against human-paced adversaries lag; existing AI-security controls carry into the inverse framing, and coordinated-disclosure and patch-window assumptions need recalibration. The recalibration reaches two variables. Vendor abuse telemetry shows actors shipping competent attack tooling they could not have written, so the assumed adversary population moves alongside the timelines. Four remedies the thesis leans on are now bounded. Disclosure measured net-negative for embedded devices at human pace, before agents entered the picture. A memory-safe rewrite retires the memory-corruption property class and inherits the rest, as 79 CVEs against a shipped Rust coreutils reimplementation show. A verified fix still has to reach the running estate, and Google, which automates the generation of those fixes, states it has no approach to redeployment at scale. Severity ranking presumes a queue short enough to sort, and Adkins argues that agentic discovery will exhaust CVSS as a triage instrument. A primary-source August 2026 disclosure supplies the existence proof for fully automated discovery-to-cluster-admin inside 13 hours against unknown flaws, and extends the supply-chain surface from public registries to the organization's own artifact repository. A fifth variable arrives with Semgrep's July 2026 open-source harness survey: the exploit-generating capability the discovery-side remedies assume is rationed by provider policy on the defender's side and by nothing on the adversary's, and patch generation is less common than discovery across the open-source pipelines, so most generated fixes reach the estate untested by execution."
-last_revised: 2026-08-24
+current_position: "Developing — quantified evidence now shows time-to-exploit collapsing to hours and AI-assisted supply-chain attacks scaling, while standards calibrated against human-paced adversaries lag; existing AI-security controls carry into the inverse framing, and coordinated-disclosure and patch-window assumptions need recalibration. The recalibration reaches two variables. Vendor abuse telemetry shows actors shipping competent attack tooling they could not have written, so the assumed adversary population moves alongside the timelines. Four remedies the thesis leans on are now bounded. Disclosure measured net-negative for embedded devices at human pace, before agents entered the picture. A memory-safe rewrite retires the memory-corruption property class and inherits the rest, as 79 CVEs against a shipped Rust coreutils reimplementation show. A verified fix still has to reach the running estate, and Google, which automates the generation of those fixes, states it has no approach to redeployment at scale. Severity ranking presumes a queue short enough to sort, and Adkins argues that agentic discovery will exhaust CVSS as a triage instrument. A primary-source August 2026 disclosure supplies the existence proof for fully automated discovery-to-cluster-admin inside 13 hours against unknown flaws, and extends the supply-chain surface from public registries to the organization's own artifact repository. A fifth variable arrives with Semgrep's July 2026 open-source harness survey: the exploit-generating capability the discovery-side remedies assume is rationed by provider policy on the defender's side and by nothing on the adversary's, and patch generation is less common than discovery across the open-source pipelines, so most generated fixes reach the estate untested by execution. A sixth arrives with the GitSpawn disclosures of September 2026: a coding agent executes repository-supplied configuration through a subprocess it spawns for its own bookkeeping, before the model reads anything, so an attack-surface framing keyed to what an agent reads leaves the processes it starts ungoverned, and the delivery path runs outside every registry."
+last_revised: 2026-09-17
 related:
   - "[[supply-chain-security-for-agents]]"
   - "[[gemini-cli-workspace-trust-rce]]"
+  - "[[gitspawn-coding-agent-git-config-rce]]"
+  - "[[manifold-security]]"
   - "[[ai-era-supply-chain-hardening]]"
   - "[[slopsquatting]]"
   - "[[nsa-ai-ml-supply-chain-guidance-2026]]"
@@ -92,8 +94,10 @@ sources:
   - "[[.raw/papers/nist-sp-800-218.pdf]]"
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
-verified: 2026-09-01
+  - "[[.raw/articles/ai-coding-agents-git-hijack-2026-09-17.md]]"
+verified: 2026-09-17
 verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - ".raw/articles/anthropic-glasswing-2026-05-13.md"
   - ".raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
@@ -101,8 +105,8 @@ verified_against:
   - ".raw/papers/nist-sp-800-218.pdf"
   - ".raw/papers/nist-sp-800-218A.pdf"
   - ".raw/papers/pwc-future-of-solutions-dev-gen-ai-2026.pdf"
-verified_findings: 1
-verified_note: "PARTIAL — this pass read the Semgrep source only; 6 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). Semgrep-sourced claims only; other sources not read this pass. Patch and guardrail claims match; 'most generated fixes' counts tools rather than fixes, reported."
+verified_findings: 0
+verified_note: "PARTIAL — the 2026-09-17 pass read the GitSpawn source only and verified the new supply-chain paragraph, the position-history entry and the current_position sentence; earlier reads carried forward, other sources unread."
 ---
 
 # SDLC in the AI-Attacker Era
@@ -162,6 +166,8 @@ Every campaign above runs through a public registry, and the control set the wik
 
 The coding agent itself now sits on the attack surface alongside its output. The [[guardfall-shell-injection-audit|GuardFall audit]] (Adversa AI, 2026-06-30) drove ten of eleven surveyed open-source coding agents into arbitrary shell execution using injected READMEs, compromised Makefiles, and malicious MCP servers, all delivery channels that arrive with the repository the agent was pointed at. [[claude-code-github-action-credential-exposure|Microsoft Defender research]] (2026-06-05) extracted a model API key from a CI workflow through an HTML-comment injection in a pull request. The [[gemini-cli-workspace-trust-rce|Gemini CLI advisory]] (GHSA-wpqr-6v78-jr5g, 2026-04-24) is the third and the most severe at CVSS 10.0, and it extends the class in two directions: the attacker controlled a `.gemini/` configuration directory rather than prose, and the execution it produced ran before the harness sandbox initialized.[^gemini-sdlc] All three report the same structural finding from different directions. Repository content is attacker-controlled input, and an agent that reads it while holding credentials and egress satisfies the [[agents-rule-of-two|Rule of Two]] in full. Where that agent runs determines whether a human is positioned to notice; [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] describes the five variants and [[securing-agentic-coding|Securing Agentic Coding]] carries the control catalog.
 
+[[gitspawn-coding-agent-git-config-rce|GitSpawn]] (Manifold Security, 2026-09-01) is the fourth, and it removes the reading step the other three depend on. Eight findings across seven coding agents share one mechanism: the agent spawns `git` to work out which repository it was opened in, hands it the repository's own `.git/config`, and a setting such as `core.fsmonitor` names a program git executes during its index refresh, on the host, as the developer.[^gitspawn] No prose is interpreted, no model is consulted, and the execution precedes the approval prompt, the sandbox and the permission model. Two consequences follow for this thesis. The Rule of Two framing above is a property of the model's input, so it does not reach a class where the model has not run, and an SDLC control keyed to what an agent reads leaves the processes it starts ungoverned. The delivery constraint narrows the exposure and moves it off the registry: the payload cannot travel through a clone, a fetch or a pull, so the repository has to arrive as files, which makes the vector a shared archive, a sync folder or a handover from a consultancy, and none of the acquisition-side controls in this section sits on that path.
+
 ## Vendor and standards response
 
 Vendors and government bodies are recalibrating against the same capability shift. The [[anthropic-2026-agentic-coding-trends|Anthropic 2026 Agentic Coding Trends Report]] makes the dual-use case at strategic level. Trend 8, "Agentic coding improves security defenses — but also offensive uses," predicts that security knowledge becomes democratized ("any engineer can become a security engineer capable of delivering in-depth security reviews, hardening, and monitoring"), that threat actors scale attacks ("While agents will benefit defensive uses, they will also benefit offensive uses too"), and that agentic cyber-defense systems rise ("Automated agentic systems enable security responses at machine speed").[^anthropic-trends] The report's closing position states the asymmetry directly: "The balance favors prepared organizations. Teams that use agentic tools to bake security in from the start will be better positioned to defend against adversaries using the same technology."[^anthropic-trends] Its named Priority 4, "Embedding security architecture as a part of agentic system design from the earliest stages," positions secure-by-design as a strategic recommendation rather than a capability claim.[^anthropic-trends]
@@ -204,6 +210,7 @@ The two academic findings share a mechanism this thesis otherwise lacks a name f
 
 ## Position history
 
+- **2026-09-17.** [[gitspawn-coding-agent-git-config-rce|GitSpawn]] bounded the attack-surface framing this page uses for coding agents. The page had treated repository content as the attacker-controlled input and the [[agents-rule-of-two|Rule of Two]] as the property that explains the exposure. GitSpawn executes on the host without the model reading anything, through a `git` subprocess the harness spawns for its own bookkeeping, so the framing covers what an agent reads and not what it starts. The same finding moves the supply-chain surface off the registry, because the payload travels only in a repository copied as files.
 - **2026-08-31.** [[semgrep-oss-ai-security-harness-comparison|Semgrep's survey of nine open-source harnesses]] added a fifth recalibration variable and bounded a fourth remedy. The variable is access: model guardrails ration the exploit-generating capability by provider policy on the defender's side, and the threat-intelligence and intrusion evidence this page carries records no comparable gate on the adversary's. The bound falls on the generated fix, which the page had treated as sound once it exists: three of the five open-source pipelines Semgrep tabulates generate a patch at all, one verified by execution and one by an LLM check, so an untested-correctness risk sits above the deployment risk already recorded.
 - **2026-08-24.** [[autonomous-code-security-google-talk|Google's March 2026 conference talk]] bounded two further remediation assumptions this thesis leans on. Flynn named redeploying auto-mended code at scale as one of the hardest problems in patching and stated he has no approach to it, so a generated fix still depends on the estate absorbing it — a gap [[vulnops|VulnOps]]'s rollout-and-rollback leg has to close. Adkins argued that agentic discovery reaching every vulnerability in every system will exhaust CVSS as a triage instrument, citing a 30,000-item NVD backlog and a 35% year-over-year rise in logged CVEs.[^google-talk] Both bound the thesis's remediation-side assumptions rather than its discovery-side timeline claims.
 
@@ -262,3 +269,5 @@ The two academic findings share a mechanism this thesis otherwise lacks a name f
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06): a May 2026 embedded-device study finding disclosure endangers ~3x as many devices as it secures; 79 CVEs against a Rust coreutils reimplementation shipped in Ubuntu, none memory corruption. See [[vulnerability-research-agentic-age-keynote|the talk summary]].
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): redeploying auto-mended code at scale named as one of three open problems; CVSS stated to stop being meaningful once agentic discovery reaches every vulnerability; a 30,000-item NVD unanalyzed backlog and a 35% rise in CVE-carrying vulnerabilities between 2024 and 2025. See [[autonomous-code-security-google-talk|the talk summary]].
+
+[^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Eight findings across seven CLI coding agents; source for the `core.fsmonitor` execution sink, the position of the subprocess ahead of the sandbox and the permission prompt, and the constraint that clone, fetch and pull do not carry the payload. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].

@@ -3,7 +3,7 @@ type: entity
 title: "Security Guidance Plugin"
 address: c-000246
 created: 2026-07-30
-updated: 2026-08-22
+updated: 2026-09-17
 tags:
   - entities
   - product
@@ -36,7 +36,7 @@ sources:
 
 # Security Guidance Plugin
 
-A first-party [[claude-code-security|Claude Code]] plugin that intercepts the agent's own file writes. It registers a pre-tool hook on Write, Edit, and MultiEdit, matches the pending content against a catalog of dangerous constructs, and surfaces a warning with remediation guidance before the edit lands. Published on Anthropic's plugin marketplace on 2026-05-26 and free.
+A first-party [[claude-code|Claude Code]] plugin that intercepts the agent's own file writes. It registers a pre-tool hook on Write, Edit, and MultiEdit, matches the pending content against a catalog of dangerous constructs, and surfaces a warning with remediation guidance before the edit lands. Published on Anthropic's plugin marketplace on 2026-05-26 and free.
 
 ## Detection scope
 

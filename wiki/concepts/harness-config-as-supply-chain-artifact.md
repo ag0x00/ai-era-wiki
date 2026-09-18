@@ -3,7 +3,7 @@ type: concept
 title: "Harness Config as Supply-Chain Artifact"
 address: c-000058
 created: 2026-05-15
-updated: 2026-09-01
+updated: 2026-09-17
 tags:
   - concepts
   - supply-chain
@@ -26,6 +26,8 @@ related:
   - "[[guardfall-shell-injection-audit|GuardFall Shell-Injection Audit]]"
   - "[[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]]"
   - "[[gemini-cli|Gemini CLI]]"
+  - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
+  - "[[manifold-security|Manifold Security]]"
   - "[[security-audit-skill|security-audit-skill]]"
   - "[[trail-of-bits-skills|trailofbits/skills]]"
   - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
@@ -34,11 +36,14 @@ related:
 sources:
   - "[[agentshield-announcement|AgentShield README]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified: 2026-09-01
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified: 2026-09-17
 verified_against:
   - ".raw/articles/agentshield-2026-05-15.md"
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
 verified_findings: 0
+verified_note: "2026-09-17 pass read the GitSpawn source only and verified the new paragraph; the AgentShield and Semgrep reads are carried from 2026-09-01."
 ---
 
 # Harness Config as Supply-Chain Artifact
@@ -67,6 +72,8 @@ That precondition is still open, and the evidence base under it has changed shap
 
 Distribution has crossed harnesses even though tooling has not. Trail of Bits publishes its plugin set for Claude Code and for Codex under a single licence, and the four skill packs Semgrep surveys carry differing terms among themselves — MIT, CC-BY-SA, and Apache 2.0.[^semgrep] A licence is provenance metadata on an executable artifact, and no AI-BOM or SBOM primitive records it for a config-tree artifact today. The precondition at the head of this section stays open, because a distributed skill pack is another instance of the artifact class rather than the peer instrument that would audit it.
 
+The artifact class is wider than the trees the harness reads. In the [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings (2026-09-01), the executing configuration is the repository's own `.git/config`, which no agent parses: the agent spawns `git` to gather repository context, git reads its own configuration, and a setting such as `core.fsmonitor` names a helper program that git then runs on the host.[^gitspawn] Manifold Security reports the pattern in eight findings across seven coding agents, two of which carry CVEs. The artifact still arrives with the project and still executes before the permission model sees it, so the position holds; what changes is the inventory a scanner needs. A rule corpus that enumerates `.claude/`, `.gemini/` and their siblings covers the files the harness authored and reads, and misses every configuration file the harness hands to a third-party tool it shells out to. The scanner boundary is the set of programs the agent can start, not the set of directories it parses.
+
 AgentShield's rule corpus assumes the config tree is a *persistent* artifact on a developer's machine, where a finding describes what an installed hook or MCP manifest can do. In the CI-runner shape the tree arrives with the repository under review, so provenance-aware confidence weighting inverts: a `.gemini/` directory appearing in a fork's pull request is the highest-confidence finding the scanner can produce, because it arrived with the code under review rather than from a trusted template catalog.
 
 ## Relationship to Existing Wiki Coverage
@@ -89,3 +96,4 @@ AgentShield's rule corpus assumes the config tree is a *persistent* artifact on 
 ## Notes
 
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The ~40-plugin figure and the category-list licences are human-written; the `npx skills add` install command, the deployment-shape inheritance table, and the per-tool descriptions are from Semgrep's LLM-generated repository summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
+[^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the `core.fsmonitor` execution sink, the files-not-clone delivery constraint, and the eight findings across seven agents. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].

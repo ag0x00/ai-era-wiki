@@ -45,13 +45,13 @@ The **credential proxy pattern** keeps real secrets out of an agent's reach: the
 
 ## On this page
 
-- [[#What it is]]
-- [[#Why it matters]]
-- [[#How it works]]
+- [[#Definition]]
+- [[#Significance]]
+- [[#Mechanism]]
 - [[#Known implementations]]
 - [[#Security properties]]
 - [[#Relationship to the identity stack]]
-- [[#When to apply]]
+- [[#Applicability]]
 - [[#Implementation notes]]
 - [[#Limits]]
 

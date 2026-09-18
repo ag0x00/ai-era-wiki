@@ -42,11 +42,11 @@ sources:
 
 ## On this page
 
-- [[#When to apply]]
-- [[#How]]
-- [[#Why it works]]
+- [[#Applicability]]
+- [[#Method]]
+- [[#Mechanism]]
 - [[#Limits]]
-- [[#How this maps to the CMM]]
+- [[#Mapping to the CMM]]
 
 ## Applicability
 

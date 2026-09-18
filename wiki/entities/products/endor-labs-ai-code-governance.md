@@ -3,7 +3,7 @@ type: entity
 title: "Endor Labs AI Code Governance"
 address: c-000247
 created: 2026-07-30
-updated: 2026-07-30
+updated: 2026-09-17
 tags:
   - entities
   - product
@@ -43,7 +43,7 @@ A commercial governance layer for organizations that have deployed agentic codin
 
 ## Control Surface
 
-**Inventory.** Which agentic IDEs are in use — [[cursor-ide|Cursor]] and [[claude-code-security|Claude Code]] are named — with version and session counts; connected MCP servers with usage; skills and hooks with risk scores.
+**Inventory.** Which agentic IDEs are in use — [[cursor-ide|Cursor]] and [[claude-code|Claude Code]] are named — with version and session counts; connected MCP servers with usage; skills and hooks with risk scores.
 
 **Attribution.** MCP calls, prompts, and skill executions traced back to the agent and the human operator behind each action. This is the control that closes the attribution gap: an organization that cannot distinguish agent-authored from human-authored change cannot scope a scanning policy, trace a vulnerability to its origin, or measure which tool introduced what.
 

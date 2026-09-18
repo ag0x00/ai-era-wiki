@@ -3,7 +3,7 @@ type: entity
 title: "RedAI"
 address: c-000206
 created: 2026-06-04
-updated: 2026-06-04
+updated: 2026-09-17
 tags:
   - entities
   - product
@@ -16,6 +16,7 @@ status: developing
 scope_axis:
   - ai-in-sec-defense
   - ai-in-sec-offense
+  - sec-against-ai
 entity_type: product
 role: "Open-source terminal-UI workbench for AI-driven vulnerability discovery with live-environment validation. Three-phase pipeline (discover, validate, report) in which scanner agents (Claude Code or Codex) produce candidate findings and validator agents prove or disprove them inside a running instance of the target. Validation environments are plugins, with Chrome (via agent-browser) and iOS Simulator shipped in the box."
 homepage: https://github.com/kpolley/redai
@@ -82,6 +83,6 @@ RedAI is the **open-source, live-validation** entry in the production-path lands
 ## Relations
 
 - The open-source counterpart in the [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] thesis's "Open-source maintainer-side tooling" production path, alongside [[openant|OpenAnt]].
-- Uses [[claude-code-security|Claude Code]] or [[codex-security|Codex]] as the scanner-agent input.
+- Uses [[claude-code|Claude Code]] or [[codex-security|Codex]] as the scanner-agent input.
 - Embodies the [[plan-validate-execute|plan-validate-execute]] discipline at the pipeline level: the validator is the verifier of the scanner's plan, not a separate output channel.
 - Source: [[redai-readme-2026-06-04|RedAI GitHub README (snapshot 2026-06-04)]].

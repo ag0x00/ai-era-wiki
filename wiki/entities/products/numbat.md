@@ -4,7 +4,7 @@ entity_type: product
 title: "Numbat"
 address: c-000250
 created: 2026-07-31
-updated: 2026-07-31
+updated: 2026-09-17
 tags:
   - products
   - open-source
@@ -51,7 +51,7 @@ Detection content ships as 52 built-in rules across 11 behavior categories, writ
 
 ## Deployment posture
 
-Telemetry is local-first: the `numbat collect` receiver binds to localhost by default, and nothing leaves the endpoint until an operator configures it to. Remote shipping runs through `numbat ship`, with ClickHouse named as an analysis destination. Perplexity distributes Numbat across its own fleet by MDM and reports using it against [[claude-code-security|Claude Code]], [[codex-security|Codex]], OpenCode, and Pi.
+Telemetry is local-first: the `numbat collect` receiver binds to localhost by default, and nothing leaves the endpoint until an operator configures it to. Remote shipping runs through `numbat ship`, with ClickHouse named as an analysis destination. Perplexity distributes Numbat across its own fleet by MDM and reports using it against [[claude-code|Claude Code]], [[codex-security|Codex]], OpenCode, and Pi.
 
 ## Position
 

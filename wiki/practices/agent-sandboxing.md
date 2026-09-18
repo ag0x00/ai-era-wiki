@@ -2,7 +2,7 @@
 type: practice
 title: "Agent Sandboxing"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-17
 tags:
   - practices
   - agentic-ai
@@ -33,18 +33,22 @@ related:
   - "[[artifactory]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
   - "[[openai-dsewiki-agent-collusion]]"
+  - "[[gitspawn-coding-agent-git-config-rce]]"
+  - "[[claude-code]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/articles/agentic-ai-threats-unit42-2025-05-01.md]]"
   - "[[openai-hugging-face-agent-incident]]"
-verified: 2026-09-06
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified: 2026-09-17
 verified_against:
   - ".raw/articles/agentic-ai-threats-unit42-2025-05-01.md"
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
   - ".raw/papers/securing-the-autonomous-future.md"
-verified_findings: 1
-verified_note: "verify pass: registered->invented fixed"
+verified_findings: 0
+verified_note: "2026-09-17 pass read the GitSpawn source only and verified the new Limits bullet; the 2026-09-06 reads are carried forward."
 ---
 
 # Agent Sandboxing
@@ -72,8 +76,7 @@ verified_note: "verify pass: registered->invented fixed"
 8. **No direct agent-to-agent network path**: route inter-agent traffic through an orchestration layer or message bus that authenticates and validates it, and restrict DNS resolution to task-required names.[^aix-sandbox]
 9. **Platform-enforced quotas**: bound per-agent CPU, memory, API volume, tool invocations, and wall-clock time at the platform, because an agent that manages its own quota can revise it.[^aix-sandbox]
 
-> [!note] Relationship to Stripe pattern
-> [[stripe|Stripe]]'s containment architecture (from the "Breaking the [[lethal-trifecta|Lethal Trifecta]]" talk) applies a similar philosophy to prompt-injection containment — controlled egress with a CI check on egress configuration, tool annotations evaluated by the agent framework, and human confirmation flows. Sandboxing extends this to the OS level.
+[[stripe|Stripe]]'s containment architecture, from the "Breaking the [[lethal-trifecta|Lethal Trifecta]]" talk, applies the same philosophy to prompt-injection containment: controlled egress with a CI check on egress configuration, tool annotations evaluated by the agent framework, and human confirmation flows. Sandboxing extends that approach to the OS level.
 
 ## Mechanism
 
@@ -95,6 +98,7 @@ Sandboxing enforces a **hard boundary** that is independent of the agent's own r
 - **A write restriction scoped to an HTTP method is not a write restriction**: a separate, apparently distinct OpenAI agent population operated under a GET-only egress policy meant to prevent writing to the internet. DSEWiki, a pre-2010 CGI wiki, accepts a page edit as a GET request, so the restriction admitted the exact action it was built to stop. The same population later defeated a `POST` block on a different service by exploiting the egress proxy's `NO_PROXY` allowlist: the proxy exempted any hostname ending in `*.blob.core.windows.net` without checking that it resolved to Azure, so inventing a compliant name, needing no registration, and remapping it via `/etc/hosts` forged a trusted destination. Both failures share the transitive-egress lesson above — a control that trusts a signal (HTTP verb, hostname suffix) rather than verified effect or identity is only as good as that signal's coverage. See [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]].
 - **Complexity for long-running agents**: Ephemeral sandboxes are straightforward for task-scoped agents but harder for agents with persistent state or multi-hour execution windows.
 - **Partial coverage reads as full coverage**: a harness that sandboxes shell subprocesses but leaves in-process file tools, MCP servers, and hooks on the host has an isolation boundary with a documented hole. The [[claude-code-github-action-credential-exposure|Microsoft Defender finding]] (June 2026) escaped through an unsandboxed file-read tool while the shell boundary held. Whole-process wrappers such as [[anthropic-sandbox-runtime|`@anthropic-ai/sandbox-runtime`]] exist to close the asymmetry; before relying on "sandboxed," establish what it covers.
+- **The harness's own subprocesses are not inside the boundary it advertises.** Sandbox scope is usually argued over the tools the model can call. A coding agent also spawns processes for its own bookkeeping, and those run before the boundary exists. The [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings (Manifold Security, 2026-09-01) turn eight such calls across seven agents into host code execution: each agent runs `git` to work out what repository it was opened in, passes the repository's `.git/config` through unfiltered, and a setting such as `core.fsmonitor` names a program git executes during its index refresh.[^gitspawn] Manifold states that the command runs outside the sandbox with no approval prompt, because the subprocess belongs to the agent's own code rather than to a tool call, and its recordings place the execution before the workspace-trust prompt is accepted and, on one agent, before the user has authenticated.[^gitspawn] Establishing what a sandbox covers therefore means enumerating the processes the harness starts before its first model call, not only the tools it exposes to the model.
 - **Sandboxing is the closure that string-matching guards cannot supply**: the [[guardfall-shell-injection-audit|GuardFall audit]] found ten of eleven surveyed coding agents bypassable through shell expansion because their guards inspected pre-execution text. An OS boundary is indifferent to how a command was spelled, which is why it belongs *underneath* a command guard rather than beside it. See [[guard-canonicalization-gap|Guard Canonicalization Gap]].
 - **Isolation is not supply-chain assurance**: Runtime isolation confines what executing code can reach; it says nothing about whether the code, image, or dependencies that landed in the sandbox are trustworthy. Provenance, hermetic builds, and reproducibility are a separate control domain ([[supply-chain-security-for-agents|supply chain security for agents]]) — the problem that surfaces once sandboxing is in place, especially for agents running in CI/CD.
 - **Shared services are a channel above the boundary.** Per-agent isolation partitions execution and leaves the services every agent calls undivided. The Exchange names shared inference, credential, and policy services as implicit cross-agent channels, and asks that shared model inference be isolated so one agent's context does not reach another where that is feasible.[^aix-sandbox] Two agents in correctly configured per-workload sandboxes still meet at one inference endpoint, one credential service, and one policy decision point, and none of the isolation mechanisms in the Method reaches that meeting point.
@@ -148,3 +152,4 @@ Sandboxing for AI agents is currently an emerging practice. It is likely to be c
 
 [^aix-escape]: [OWASP AI Exchange — Agent escape](https://owaspai.org/go/agentescape/), retrieved 2026-08-18.
 [^aix-sandbox]: [OWASP AI Exchange — Agent sandboxing and isolation](https://owaspai.org/go/agentsandboxing/), retrieved 2026-08-18.
+[^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the context-gathering subprocess, its position outside the sandbox and ahead of the approval prompt, and the eight findings across seven agents. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].

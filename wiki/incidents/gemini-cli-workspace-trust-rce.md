@@ -3,7 +3,7 @@ type: incident
 title: "Gemini CLI Workspace-Trust RCE"
 address: c-000290
 created: 2026-08-16
-updated: 2026-08-16
+updated: 2026-09-17
 tags:
   - incidents
   - agentic-coding
@@ -31,6 +31,8 @@ related:
   - "[[securing-agentic-coding|Securing Agentic Coding]]"
   - "[[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]"
   - "[[harness-config-as-supply-chain-artifact|Harness Config as Supply-Chain Artifact]]"
+  - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
+  - "[[manifold-security|Manifold Security]]"
   - "[[guard-canonicalization-gap|Guard Canonicalization Gap]]"
   - "[[guardfall-shell-injection-audit|GuardFall Shell-Injection Audit]]"
   - "[[agents-rule-of-two|Agents Rule of Two]]"
@@ -48,6 +50,13 @@ sources:
   - https://novee.security/blog/google-gemini-cli-rce-vulnerability-cvss-10-critical-security-advisory/
   - https://www.pillar.security/blog/my-agentic-trust-issues-from-prompt-injection-to-supply-chain-compromise-on-gemini-cli
   - https://www.theregister.com/2026/04/30/googles_fix_for_critical_gemini/
+  - https://www.manifold.security/blog/ai-coding-agents-git-hijack
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified: 2026-09-17
+verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified_findings: 0
+verified_note: "The 2026-09-17 pass read the GitSpawn source and verified the two added GitSpawn statements; the Gemini CLI advisory, Pillar and Novee sources are live URLs, not archived."
 ---
 
 # Gemini CLI Workspace-Trust RCE
@@ -105,9 +114,11 @@ The change is breaking by design, and Google says so: pipelines relying on the p
 
 **A control that initializes after untrusted configuration is read is not in the path.** The sandbox in this incident was correctly implemented and irrelevant. Sandbox coverage is normally assessed as a question of scope — which tools are inside the boundary, per the Bash-only limit that the [[claude-code-github-action-credential-exposure|Claude Code case]] exploited. This adds a second question with the same weight: at what point in startup does the boundary exist. Both belong in a [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] assessment, and only the first is commonly asked.
 
+The ordering property is not particular to this harness. [[gitspawn-coding-agent-git-config-rce|GitSpawn]] (2026-09-01) reports eight findings across seven other coding agents in which the executing step is a `git` subprocess the agent spawns to gather repository context, and states that the execution happens outside the sandbox and ahead of any approval prompt. Its case studies place the payload ahead of the workspace-trust prompt on Claude Code and ahead of authentication on Qwen Code.[^gitspawn] A startup ordering question asked of one product now has published answers at six.
+
 **An allowlist a flag can suppress is not a policy decision point.** The `--yolo` bypass is adjacent to the [[guard-canonicalization-gap|guard canonicalization gap]] and is not an instance of it. In the canonicalization gap the guard runs and evaluates the wrong representation; here the guard did not run. The failure is cruder and the [[agentic-ai-security-cmm-d3-control-least-agency|D3]] consequence is the same: an organization that scored its control maturity on the contents of an allowlist scored an artifact that an autonomy flag removed from the path. Verify that the guard is consulted before grading what it contains.
 
-**Repository-shipped harness configuration is executable content.** `.gemini/` in a pull request is the attack, which is [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]] demonstrated rather than argued, and the clearest instance so far outside the `.claude/` tree. Fork-PR exclusion policies written against *instructions* — issue bodies, comment text, commit messages — do not cover it, because the loader does not classify `.gemini/` as instructions.
+**Repository-shipped harness configuration is executable content.** `.gemini/` in a pull request is the attack, which is [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]] demonstrated rather than argued, and the clearest instance so far outside the `.claude/` tree. Fork-PR exclusion policies written against *instructions* — issue bodies, comment text, commit messages — do not cover it, because the loader does not classify `.gemini/` as instructions. The [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings widen the artifact class again: there the executing file is the repository's `.git/config`, which the agent never reads and git honours on the agent's behalf, so a policy written against configuration the *harness* loads does not cover it either.[^gitspawn]
 
 **Untrusted-input exclusion has to cover the trigger, not only the payload.** The Pillar chain started at `issues: opened` with no author check. Restricting fork-PR execution, the usual recommendation, leaves that trigger open to any account.
 
@@ -126,3 +137,4 @@ Three limits. The CVSS 10.0 rating carries `S:C` (scope change) and full confide
 [^novee]: [Novee Security — Google Gemini CLI CVSS 10.0 RCE Vulnerability](https://novee.security/blog/google-gemini-cli-rce-vulnerability-cvss-10-critical-security-advisory/), 2026-04-30, Elad Meged. Source for the pre-sandbox execution ordering on the folder-trust half.
 [^pillar]: [Pillar Security — My Agentic Trust Issues: From Prompt Injection to Supply-Chain Compromise on gemini-cli](https://www.pillar.security/blog/my-agentic-trust-issues-from-prompt-injection-to-supply-chain-compromise-on-gemini-cli), Dan Lisichkin. Source for the `--yolo` allowlist bypass, the four-step chain, and the disclosure dates.
 [^register]: [The Register — Google fixes CVSS 10.0 vulnerability in Gemini CLI](https://www.theregister.com/2026/04/30/googles_fix_for_critical_gemini/), 2026-04-30. Independent reporting; source for the breaking-change criticism and the researchers' sandbox-ordering statement.
+[^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Eight findings across seven CLI coding agents in which the repository's own `.git/config` names a program that a context-gathering `git` subprocess executes on the host, before the workspace-trust prompt. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].

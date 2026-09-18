@@ -2,11 +2,11 @@
 type: domain
 title: "Organizations"
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-17
 tags: [domain, entities, organizations]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 105
+page_count: 106
 ---
 
 # Organizations Index
@@ -65,6 +65,7 @@ Companies, standards bodies, consortia, vendors.
 - [[keycard|Keycard]] — Sources: [Keycard (homepage)](https://www.keycard.com) ·...
 - [[knostic|Knostic]] — Sources: [Knostic (homepage)](https://www.knostic.ai) ·...
 - [[lumia-security|Lumia Security]] — Sources: [Homepage](https://www.lumia.security) ·...
+- [[manifold-security|Manifold Security]] — Sources: [Manifold Security (homepage)](https://www.manifold.security) ·...
 - [[mate-security|Mate Security]] — Sources: [Mate Security (homepage)](https://mate.security) ·...
 - [[meta|Meta]] — Sources: [Meta (homepage)](https://about.meta.com) · [Meta AI](https://ai.meta.com)
 - [[metr|METR (Model Evaluation and Threat Research)]] — Independent AI evaluation organization.

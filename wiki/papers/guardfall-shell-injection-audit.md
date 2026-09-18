@@ -3,7 +3,7 @@ type: paper
 title: "GuardFall Shell-Injection Audit"
 address: c-000239
 created: 2026-07-30
-updated: 2026-08-16
+updated: 2026-09-17
 tags:
   - papers
   - agentic-coding
@@ -77,7 +77,7 @@ Two passes. Static review of each agent's guard implementation identified where 
 
 The static-plus-live design is the strength: a static finding that also lands end-to-end through a realistic delivery channel is not a theoretical bypass. Publishing the one architecture that held, with its five steps enumerated, converts the result from a scare into a design specification.
 
-The audit carries three limits. The vendor is a commercial AI-security firm publishing on its own blog, so the result carries no independent replication. No CVEs and no disclosure timeline means the reader cannot tell which findings were fixed before publication. The survey covers open-source agents only — [[claude-code-security|Claude Code]], Cursor, and Codex are absent, so the result says nothing directly about the harnesses with the largest enterprise install base, and the absence should not be read as a clean bill for them. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is one disclosure from that excluded group, and it fails a step earlier than anything in this audit: [[gemini-cli|Gemini CLI]]'s `--yolo` mode suppressed the tool allowlist entirely rather than evaluating it against the wrong representation. A guard defeated by shell syntax and a guard removed by an autonomy flag are separated in [[guard-canonicalization-gap|Guard Canonicalization Gap]].
+The audit carries three limits. The vendor is a commercial AI-security firm publishing on its own blog, so the result carries no independent replication. No CVEs and no disclosure timeline means the reader cannot tell which findings were fixed before publication. The survey covers open-source agents only — [[claude-code|Claude Code]], Cursor, and Codex are absent, so the result says nothing directly about the harnesses with the largest enterprise install base, and the absence should not be read as a clean bill for them. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is one disclosure from that excluded group, and it fails a step earlier than anything in this audit: [[gemini-cli|Gemini CLI]]'s `--yolo` mode suppressed the tool allowlist entirely rather than evaluating it against the wrong representation. A guard defeated by shell syntax and a guard removed by an autonomy flag are separated in [[guard-canonicalization-gap|Guard Canonicalization Gap]].
 
 ## Relations
 

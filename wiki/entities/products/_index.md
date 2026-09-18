@@ -2,11 +2,11 @@
 type: domain
 title: "Products"
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-17
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 65
+page_count: 66
 ---
 
 # Products Index
@@ -31,6 +31,7 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[big-sleep|Big Sleep (Google Project Zero + DeepMind)]] — Sources: [Project Zero — From Naptime to Big Sleep (Oct 2024)](https://projectzero.google/2024/10/from-naptime-to-big-sleep.html) ·...
 - [[cedar|Cedar]] — Cedar is an open-source policy language and evaluation engine designed for fine-grained, application-level authorization.
 - [[claude-code-security|Claude Code Security]] — Sources: [Announcement (Feb 20, 2026)](https://www.anthropic.com/news/claude-code-security) ·...
+- [[claude-code|Claude Code]] — Sources: [claude-code (GitHub)](https://github.com/anthropics/claude-code) ·...
 - [[codemender|CodeMender (Google DeepMind)]] — Sources:...
 - [[codex-security|Codex Security]] — Sources: [Original Aardvark announcement](https://openai.com/index/introducing-aardvark/) ·...
 - [[crewai|CrewAI]]

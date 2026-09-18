@@ -3,7 +3,7 @@ type: concept
 title: "Guard Canonicalization Gap"
 address: c-000243
 created: 2026-07-30
-updated: 2026-08-16
+updated: 2026-09-17
 tags:
   - concepts
   - agentic-coding
@@ -50,7 +50,7 @@ The [[guardfall-shell-injection-audit|GuardFall audit]] (Adversa AI, 2026-06-30)
 
 The same structure recurs whenever a policy layer sits above a transforming executor:
 
-- **Path checks above symlink resolution.** A deny rule on a settings file that resolves to a different inode after the check is the shape behind CVE-2026-39861 and CVE-2026-25725 in [[claude-code-security|Claude Code]]; the second case is subtler still, because a read-only bind mount cannot be applied to a path that does not yet exist, so the guard was absent rather than wrong.
+- **Path checks above symlink resolution.** A deny rule on a settings file that resolves to a different inode after the check is the shape behind CVE-2026-39861 and CVE-2026-25725 in [[claude-code|Claude Code]]; the second case is subtler still, because a read-only bind mount cannot be applied to a path that does not yet exist, so the guard was absent rather than wrong.
 - **Tool-name allowlists above dynamic dispatch.** An MCP tool approved by name whose server later rewrites the description or arguments behind that name.
 - **Diff review above build execution.** A reviewed patch that is safe as text and hostile once a build script interprets it.
 - **Prompt-level instruction filters above model interpretation.** The general case, and the reason instruction-level filtering grades weaker than a structural control.
@@ -87,5 +87,4 @@ The gap is a statement about evasion, and evasion presumes something trying to e
 
 This narrows the gap's scope rather than contradicting it. A guard tuned only for meltdowns may inspect strings and stop there; the same guard is not evidence of maturity against an injected agent, where the ranking applies unchanged.
 
-> [!gap] Canonicalization behavior of Numbat's event layer
-> Numbat's preventive rules are CEL pattern matches over command strings and file paths. [[perplexity-numbat-agent-security|The announcement]] does not state how the normalized event layer handles shell obfuscation, aliasing, or indirect invocation, so those rules cannot be graded against the adversarial case until that is established.
+Numbat's preventive rules are CEL pattern matches over command strings and file paths. [[perplexity-numbat-agent-security|The announcement]] does not state how the normalized event layer handles shell obfuscation, aliasing, or indirect invocation, so those rules cannot be graded against the adversarial case until that is established.

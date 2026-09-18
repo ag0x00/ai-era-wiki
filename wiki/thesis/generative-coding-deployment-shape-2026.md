@@ -3,7 +3,7 @@ type: thesis
 title: "Generative Coding Deployment Shapes"
 address: c-000237
 created: 2026-07-30
-updated: 2026-08-16
+updated: 2026-09-17
 tags:
   - thesis
   - agentic-coding
@@ -62,7 +62,7 @@ The [[agentic-ai-security-reference-architecture|AAI-S RA]] carries one row for 
 
 ## Current Position
 
-It does not hold, and treating generative coding as a single deployment shape now hides the distinction that determines the control set. Take [[claude-code-security|Claude Code]] as the worked example: its controls are documented in public and its incidents are on the record. The same harness produces five materially different security postures, depending on where the process runs and who is positioned to see an action before it executes.
+It does not hold, and treating generative coding as a single deployment shape now hides the distinction that determines the control set. Take [[claude-code|Claude Code]] as the worked example: its controls are documented in public and its incidents are on the record. The same harness produces five materially different security postures, depending on where the process runs and who is positioned to see an action before it executes.
 
 The variants divide on one question. **Is a human positioned to see the specific action before it happens?** In the interactive variant the answer is yes and the permission prompt is a real control. In the delegated and CI variants the answer is no, and every control that assumes a reviewing human degrades to a log entry. Gartner projects that more than 65% of engineering teams using agentic coding will treat the IDE as optional by 2027 ([Gartner, 2026-05-20](https://www.gartner.com/en/newsroom/press-releases/2026-05-20-gartner-says-the-market-for-enterprise-ai-coding-agents-is-entering-a-new-phase-of-expansion-and-competitive-realignment)). Read as a security statement, that projection says the second group becomes the majority.
 
@@ -82,7 +82,7 @@ A threat model with no adversary in it sharpens that split rather than blurring 
 
 ### Interactive local
 
-The historical shape and the one the RA row describes. [[claude-code-security|Claude Code]] defaults here to read-only permissions with explicit approval for anything that modifies the system, a built-in read-only Bash command set that runs without prompting, a working-directory write boundary, and trust verification on first run in a codebase and on each new MCP server. Prompt fatigue is the documented failure mode and allowlisting is the documented answer, which is where the shape starts converting into the next one.
+The historical shape and the one the RA row describes. [[claude-code|Claude Code]] defaults here to read-only permissions with explicit approval for anything that modifies the system, a built-in read-only Bash command set that runs without prompting, a working-directory write boundary, and trust verification on first run in a codebase and on each new MCP server. Prompt fatigue is the documented failure mode and allowlisting is the documented answer, which is where the shape starts converting into the next one.
 
 ### Sandboxed autonomous local
 

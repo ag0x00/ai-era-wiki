@@ -3,7 +3,7 @@ type: paper
 title: "Numbat Agent Security Suite"
 address: c-000249
 created: 2026-07-31
-updated: 2026-08-14
+updated: 2026-09-17
 tags:
   - papers
   - tool
@@ -94,7 +94,7 @@ Two built-ins are reproduced in simplified form. `privilege.sudoers_tamper` fire
 
 ## Fleet deployment
 
-Perplexity runs Numbat across thousands of its own endpoints to secure engineers' use of [[claude-code-security|Claude Code]], [[codex-security|Codex]], OpenCode, and Pi, distributed through MDM as with Bumblebee, the company's open-source supply-chain exposure scanner. Each installation records locally and sends structured telemetry to central security systems.
+Perplexity runs Numbat across thousands of its own endpoints to secure engineers' use of [[claude-code|Claude Code]], [[codex-security|Codex]], OpenCode, and Pi, distributed through MDM as with Bumblebee, the company's open-source supply-chain exposure scanner. Each installation records locally and sends structured telemetry to central security systems.
 
 Perplexity Computer, the company's agentic system, then reviews findings and audit logs on a schedule: it investigates detections, reconstructs sessions, and applies extra scrutiny to actions Numbat blocked. It also looks for coverage gaps, analyzing new behavior, proposing detection improvements, testing them, and opening pull requests for human review. The article describes the result as a self-improving loop in which agent activity becomes normalized telemetry, an agentic reviewer proposes rule changes, and human-approved updates harden the next session. This layers a defending-with-AI pattern on top of a securing-AI control: the same deployment supplies both the monitored surface and the reviewing agent.
 
@@ -106,5 +106,4 @@ The session-artifact technique is not new, and the article does not claim it is.
 
 The limits are those of a vendor announcement. No false-positive rate, detection-efficacy measurement, or comparison against alternatives is reported, and "thousands of endpoints" is the only deployment figure given. The rule examples are pattern matches over commands and file paths, which places them squarely in the string-inspection tier that [[guard-canonicalization-gap|the guard canonicalization gap]] identifies as evadable: `privilege.sudoers_tamper` matches `visudo` and `NOPASSWD` as literals, and the article does not state how the normalized event layer handles shell obfuscation, aliasing, or indirect invocation. Against a meltdown — where the agent is not adversarial and not trying to evade — that weakness matters far less than it would against an attacker, and the threat model is arguably self-consistent on this point. It does mean the same rules should not be assumed to hold against an injected agent under adversarial control.
 
-> [!contradiction] Prevention tier versus [[guard-canonicalization-gap|guard canonicalization]]
-> The wiki's standing ranking puts process constraints above string inspection above model instruction. Numbat's preventive rules are string inspection over commands and paths, yet the article positions them as blocking controls. The positions reconcile only under Numbat's own threat model, in which the agent is non-adversarial. For an agent under injection control, the ranking still holds and Numbat's pre-action rules sit in the evadable tier.
+The wiki's standing ranking in [[guard-canonicalization-gap|guard canonicalization]] puts process constraints above string inspection above model instruction. Numbat's preventive rules are string inspection over commands and paths, yet the article positions them as blocking controls. The positions reconcile only under Numbat's own threat model, in which the agent is non-adversarial; for an agent under injection control, the ranking still holds and Numbat's pre-action rules sit in the evadable tier.

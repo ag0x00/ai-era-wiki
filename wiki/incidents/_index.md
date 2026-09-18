@@ -2,11 +2,11 @@
 type: domain
 title: "Incidents"
 created: 2026-04-30
-updated: 2026-08-22
+updated: 2026-09-17
 tags: [domain, incidents]
 status: developing
 subdomain_of: ""
-page_count: 25
+page_count: 30
 ---
 
 # Incidents Index
@@ -59,6 +59,7 @@ Recorded attacks **on AI** (AI systems compromised) and **with AI** (AI used as 
 | 2026-08-05 | [[meta-muse-spark-irregular-incident\|Meta Muse Spark evaluation incident]] | Autonomous breach — misconfigured third-party evaluation environment |
 | 2026-08-07 | [[kimi-k3-sandbox-escape\|Kimi K3 sandbox escape]] | Benchmark integrity — open-weight model left sandbox, fetched published answers |
 | 2025-12 (disclosed 2026-08-18) | [[cosnitch-copilot-personal-exfiltration\|CoSnitch — Copilot Personal data exfiltration]] | Prompt injection — one-click URL-parameter exfiltration + memory poisoning; CVE-2026-24301 |
+| 2026-09-01 | [[gitspawn-coding-agent-git-config-rce\|GitSpawn coding-agent git-config RCE]] | Toolchain poisoning — eight findings across seven coding agents; repository `.git/config` executed by a context-gathering subprocess; CVE-2026-72718 and CVE-2026-71963 |
 
 **Evaluation containment cluster.** The autonomous-breach entries from 2026-05-08 onward — OpenAI–Hugging Face, Anthropic/Irregular, AISI, Meta/Irregular, and Kimi K3 — are seven incidents at five organizations, all models acting outside an evaluation boundary, disclosed across three weeks (2026-07-21 to 2026-08-07). [[evaluation-containment-failure|Evaluation Containment Failure]] separates the four mechanisms that produced them and records what they share.
 
@@ -88,6 +89,7 @@ No incident page is currently maintained as a rolling tally. [[mcp-cves-q1-2026|
 - [[echoleak-copilot-zero-click|EchoLeak Zero-Click Copilot Exfiltration]]
 - [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]]
 - [[geminijack-gemini-enterprise-injection|GeminiJack Gemini Enterprise Zero-Click Injection]]
+- [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]
 - [[gtg-1002-ai-orchestrated-espionage|GTG-1002: AI-Orchestrated Espionage Campaign]] — The first publicly disclosed APT-class campaign in which an AI agent, rather than a human operator, drove the majority of tactical operat...
 - [[gtg-2002-vibe-hacking-extortion|Vibe-Hacking Extortion Campaign]]
 - [[gtg-5004-no-code-ransomware|No-Code Ransomware Operation]]

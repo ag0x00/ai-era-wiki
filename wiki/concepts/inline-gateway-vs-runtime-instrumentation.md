@@ -2,7 +2,7 @@
 type: concept
 title: "Inline Gateway vs Runtime Instrumentation"
 created: 2026-05-03
-updated: 2026-05-03
+updated: 2026-09-17
 tags:
   - concepts
   - architecture
@@ -10,6 +10,8 @@ tags:
   - runtime
   - mcp-security
 status: developing
+scope_axis:
+  - sec-of-ai
 related:
   - "[[runlayer]]"
   - "[[helmet-security]]"
@@ -19,9 +21,18 @@ related:
   - "[[miggo-security]]"
   - "[[mcp-security]]"
   - "[[adr-agentic-detection-system]]"
+  - "[[gitspawn-coding-agent-git-config-rce]]"
+  - "[[manifold-security]]"
+  - "[[claude-code]]"
 sources:
   - "[[comprehensive-agentic-ai-security-landscape-2026]]"
   - "https://arxiv.org/abs/2605.17380"
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified: 2026-09-17
+verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified_findings: 0
+verified_note: "New subprocess section verified against the Manifold post; the ADR claims rest on arXiv:2605.17380, not re-read here."
 ---
 
 # Inline Gateway vs Runtime Instrumentation
@@ -50,8 +61,15 @@ The first large-scale, production-proven data point for the instrumentation camp
 
 The nuance worth recording is that ADR is **hybrid for enforcement**: the sensor does deep forensics (detective, after-the-fact), while inline **Hooks** in Cursor and Claude Code do real-time blocking of high-severity credential leakage (preventative, in-path).[^adr] That matches this page's "defense-in-depth across the fork" recommendation rather than a pure-instrumentation stance — the cheap, certain control (regex+entropy secret-blocking) sits inline at the chokepoint, while the expensive, semantic control (reasoning over the reconstructed session) runs off the hot path.
 
-> [!check] Partial resolution of the enforceability gap
-> The gap below asked whether runtime instrumentation is viable as primary detection at scale for real agents. For **local-process coding agents** (Cursor / Cline / Claude Code), ADR answers yes in production: cache-parsing reconstruction sustains detection across 7,200+ hosts. It does **not** resolve the hosted-LLM-agent case, and the sensor is detective, not tamper-proof enforcement — a prompt-injected agent calling a path the sensor does not reconstruct remains the open risk.
+**ADR partly settles the enforceability question below.** For local-process coding agents (Cursor, Cline, Claude Code), cache-parsing reconstruction sustains detection across 7,200+ hosts in production, so runtime instrumentation is viable as primary detection at that scale.[^adr] It leaves the hosted-LLM-agent case open, and the sensor is detective rather than tamper-proof enforcement: a prompt-injected agent calling a path the sensor does not reconstruct remains the open risk.
+
+## Subprocesses neither primitive observes
+
+Both camps in the table above take the agent's *decisions* as the unit of observation: a request the agent issues to a tool, an MCP server or the network, or an action it attempts inside its runtime. A coding agent also starts processes for its own bookkeeping, and those are decisions of the harness rather than of the agent, so neither the request stream a gateway sees nor the action stream an instrumented tool-call surface sees contains them.
+
+The [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings (Manifold Security, 2026-09-01) make that gap concrete. Seven coding agents run `git` in the background to identify the repository they were opened in and pass the repository's own `.git/config` through untouched, so a repository copied onto the machine as files can name a helper program that git executes on the host, as the user, outside the sandbox and ahead of any approval prompt.[^gitspawn] The execution produces no network request for a gateway to inspect and no tool call for a hook to gate. The ADR sensor's reconstruction is drawn from the prompt, reasoning, tool-call and outcome chain the agent records, which is a later stage than the one this class executes in.
+
+Manifold sells runtime observation of agent behaviour, so its reading of the finding as a gap that endpoint detection and gateways cannot see is also its product pitch. The structural point survives the interest: instrumentation placed at the tool-call boundary inherits that boundary's coverage, and a third placement, the process tree of the harness itself, is neither camp's.
 
 ## Historical analogues
 
@@ -71,16 +89,14 @@ Same fork played out a decade ago between **API Gateways** (Apigee, Kong, Tyk �
 - Latency budget is tight
 - The interesting events happen *inside* the agent (planning steps, memory writes, code generation), not at the network boundary
 
-## Tradeoffs that don't have a clean answer yet
+## Unresolved tradeoffs
 
-> [!gap]
-> **Gateway bypass via the [[lethal-trifecta\|Lethal Trifecta]]'s third leg.** Agents that exfiltrate via image rendering, markdown URLs, DNS, or direct browser fetch can route around an MCP-only gateway. Runlayer/Helmet/AgentGateway handle the MCP surface; the rest needs [[smokescreen\|Smokescreen]]-shaped SSRF/egress control. A gateway-only architecture is necessary-but-not-sufficient.
+**Gateway bypass through the [[lethal-trifecta|Lethal Trifecta]]'s third leg.** Agents that exfiltrate through image rendering, markdown URLs, DNS or a direct browser fetch route around an MCP-only gateway. Runlayer, Helmet and AgentGateway cover the MCP surface, and the rest needs [[smokescreen|Smokescreen]]-shaped SSRF and egress control, so a gateway-only architecture is necessary and insufficient.
 
-> [!gap]
-> **Runtime-instrumentation enforceability under hostile model behavior.** A misaligned or [[indirect-prompt-injection\|prompt-injected]] agent can in principle call APIs directly without going through the instrumented hook. The instrumentation camp's claim — that the runtime hooks are tight enough to be unbypassable — is unproven in the public literature for hosted-LLM agents (vs. local-process agents). [[miggo-security\|Miggo]]'s AWS Nitro Enclaves attestation is the closest production approach to making the hook tamper-resistant; this is not yet a category norm.
+> [!gap] Instrumentation enforceability under hostile model behavior
+> A misaligned or [[indirect-prompt-injection\|prompt-injected]] agent can in principle call APIs directly without going through the instrumented hook. The instrumentation camp's claim, that the runtime hooks are tight enough to be unbypassable, is unproven in the public literature for hosted-LLM agents as distinct from local-process agents. [[miggo-security\|Miggo]]'s AWS Nitro Enclaves attestation is the closest production approach to making the hook tamper-resistant, and it is not yet a category norm.
 
-> [!gap]
-> **Where does identity coupling live?** Both camps integrate with [[okta-for-ai-agents\|Okta]] / [[microsoft-entra-agent-id\|Entra]] / [[keycard\|Keycard]] for the principal-and-permissions side. The PDP-vs-PEP split (per [[oversight-layer\|Oversight Layer]]) lands differently: gateways naturally are PEPs; runtime instrumentation can be either.
+**The placement of identity coupling.** Both camps integrate with [[okta-for-ai-agents|Okta]], [[microsoft-entra-agent-id|Entra]] and [[keycard|Keycard]] for the principal-and-permissions side. The PDP and PEP split, per [[oversight-layer|Oversight Layer]], lands differently on each: a gateway is a PEP by construction, and runtime instrumentation can be either.
 
 ## Implication for the [[agentic-ai-security-cmm-2026|CMM]]
 
@@ -112,6 +128,8 @@ Each deeper layer provides higher-fidelity intent signals but requires more infr
 - [[glass-box-security|Glass-Box Security]] — deepest instrumentation layer (model forward-pass)
 - [[mechanistic-interpretability-for-defense|Mechanistic Interpretability for Defense]] — underlying technique
 - [[adr-agentic-detection-system|ADR — Agentic Detection for Enterprise AI]] — production-proven instrumentation (sensor) case, with an explicit gateway rejection
+
+[^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the context-gathering `git` subprocess, its position outside the sandbox and ahead of the approval prompt, and the vendor's framing of endpoint and gateway coverage. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].
 
 [^adr]: §3.1 *Observability: The ADR Sensor*, [arXiv:2605.17380](https://arxiv.org/abs/2605.17380): cache-parsing reconstruction at 0.182 s/run, the rejected LLM/MCP gateway alternative, and the hybrid sensor-plus-inline-Hooks prevention model.
 

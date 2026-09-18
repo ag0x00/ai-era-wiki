@@ -3,7 +3,7 @@ type: entity
 title: "Anthropic Sandbox Runtime"
 address: c-000245
 created: 2026-07-30
-updated: 2026-08-21
+updated: 2026-09-17
 tags:
   - entities
   - product
@@ -38,7 +38,7 @@ sources:
 
 **Repository:** [anthropic-experimental/sandbox-runtime](https://github.com/anthropic-experimental/sandbox-runtime)
 
-`@anthropic-ai/sandbox-runtime` wraps an arbitrary process in the operating-system isolation primitives that [[claude-code-security|Claude Code]]'s built-in Bash sandbox uses — Seatbelt on macOS, bubblewrap on Linux and WSL2. Launched as `npx @anthropic-ai/sandbox-runtime claude`, it puts the whole agent session inside one boundary rather than only its shell subprocesses.
+`@anthropic-ai/sandbox-runtime` wraps an arbitrary process in the operating-system isolation primitives that [[claude-code|Claude Code]]'s built-in Bash sandbox uses — Seatbelt on macOS, bubblewrap on Linux and WSL2. Launched as `npx @anthropic-ai/sandbox-runtime claude`, it puts the whole agent session inside one boundary rather than only its shell subprocesses.
 
 ## Rationale
 
