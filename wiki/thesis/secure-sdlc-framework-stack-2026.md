@@ -3,7 +3,7 @@ type: thesis
 title: "Secure-SDLC Framework Stack"
 address: c-000043
 created: 2026-05-13
-updated: 2026-08-19
+updated: 2026-09-18
 tags:
   - thesis
   - secure-sdlc
@@ -45,6 +45,7 @@ related:
   - "[[claude-code-github-action-credential-exposure]]"
   - "[[owasp-ai-exchange]]"
   - "[[owasp-samm]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - "[[.raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md]]"
 ---
@@ -106,10 +107,9 @@ NIST has extended SSDF for AI via [[nist-sp-800-218a|NIST SP 800-218A — SSDF C
 
 That scope makes SP 800-218A a partial AI overlay, not a complete one. As [[standards-review-nist-sp-800-218a-2026-Q2|the standards review]] confirms, it contributes development-time process tasks, not deployment-time controls: it covers model-artifact protection, training-data integrity, AI threat modeling, and AI shutdown, but leaves the runtime, agent-orchestration, and multi-agent surface to other instruments ([[nist-ai-rmf|NIST AI RMF]], [[iso-iec-42001|ISO 42001]], [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]]). The [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] (Dimension D8) cites SP 800-218A alongside CycloneDX 1.6 ML-BOM, SPDX 3.0 AI extension, and EU AI Act Annex IV as supply-chain references.
 
-> [!gap] No AI-specific SAMM extension in the surveyed set
-> Across the frameworks surveyed for this thesis, OWASP SAMM has no published AI-specific extension as of mid-2026, and no public roadmap for one has been announced.
+The other half of the row is empty. Across the frameworks surveyed for this thesis, [[owasp-samm|OWASP SAMM]] has no published AI-specific extension as of mid-2026, and none of the surveyed material announces a roadmap for one.
 
-One measurable form of this gap carries a published figure. The Exchange records industry-average automated test coverage at 43% against an often-cited recommendation of 80%, and reports that automated testing in AI engineering is often neglected because the performance of the AI model is mistakenly regarded as the ground truth of correctness (SIG benchmark report 2023, via [[owasp-ai-exchange|OWASP AI Exchange]], [`/go/secdevprogram/`](https://owaspai.org/go/secdevprogram/)). A model scoring well on its eval set establishes nothing about the correctness of the data-preparation, orchestration, tool-integration and policy-enforcement code around it, and that code is where the security-relevant defects sit. Neither SSDF nor SAMM asks the question in AI-specific terms.
+One measurable form of that gap carries a published figure. The Exchange records industry-average automated test coverage at 43% against an often-cited recommendation of 80%, and reports that automated testing in AI engineering is often neglected because the performance of the AI model is mistakenly regarded as the ground truth of correctness (SIG benchmark report 2023, via [[owasp-ai-exchange|OWASP AI Exchange]], [`/go/secdevprogram/`](https://owaspai.org/go/secdevprogram/)). A model scoring well on its eval set establishes nothing about the correctness of the data-preparation, orchestration, tool-integration and policy-enforcement code around it, and that code is where the security-relevant defects sit. Neither SSDF nor SAMM asks the question in AI-specific terms.
 
 Per [[pwc-agentic-sdlc-in-practice|PwC Middle East 2026]] data, 38% of surveyed regional teams are Pioneer-tier (≥6 of 7 SDLC stages augmented).[^pwc] For these organizations, SSDF plus SAMM does not address AI-BOM and model-artifact integrity, agent identity and [[nhi-governance-for-agents|non-human identity governance]], runtime guardrails for AI components, [[ai-coding-agent-governance|coding-agent governance]], or the [[collaboration-paradox|collaboration paradox]] — where HITL functions as the default mode, not an edge-case guardrail.
 
@@ -128,6 +128,8 @@ Every layer of the stack below governs either the software being produced or the
 The instruments in rows 1 through 3 miss this by scope, not by oversight. [[nist-sp-800-218a|SP 800-218A]]'s subject is the generative AI system under development — training data, model weights, model artifacts — which leaves the case of a conventional application built *by* an agent outside its frame, as [[standards-review-nist-sp-800-218a-2026-Q2|the standards review]] records when it characterizes the profile as development-time process tasks for AI systems rather than deployment-time controls. [[microsoft-sdl|Microsoft SDL]]'s 2026 AI extension names threat modeling for AI, AI observability, memory protections, agent identity and RBAC, model publishing, and shutdown — a control set for agents an organization *ships*, not for the agent on its developers' workstations.
 
 The controls that do exist are vendor-side and unstandardized: OS sandboxing, managed permission policy, egress allowlists, harness-configuration audit, and per-agent attribution, catalogued in [[securing-agentic-coding|Securing Agentic Coding]] and graded there by availability. They are real, several are GA, and none is required or even named by a secure-SDLC framework. That is a governance gap, not a tooling gap.
+
+One operator has now published what the vendor side looks like across a whole lifecycle. Google Cloud's account of its own agentic SDLC places specialized agents at design review, code scanning, fuzz-harness authoring, patching and production posture, and governs them with a control catalog, a filter chain, a reproduction sandbox and a human reviewer before a fix lands ([[google-cloud-autonomous-sdlc-security|source summary]]). It is the fullest description this wiki holds of an agentic SDLC in production, and it is an internal programme rather than a framework layer: nothing in it is a requirement any other organization can be held to, and none of the instruments in rows 1 through 3 names a counterpart to it. The gap therefore stays open and now has a concrete instance to be measured against.
 
 > [!gap] Gap 4 now has one clause-level datapoint; the rest is still scope inference
 > The claim that no framework in the stack governs the coding agent as an SDLC actor was drawn from each instrument's stated scope and from the existing reviews of SSDF and SP 800-218A, not from a dedicated clause-level pass. One instrument has since been read clause by clause. The Exchange's `SEC DEV PROGRAM` and `DEV PROGRAM`, the natural home for such a clause, name AI-assisted development nowhere and treat "new types of engineering, together with new types of engineers" as human roles — data scientists, data engineers, AI engineers ([`/go/secdevprogram/`](https://owaspai.org/go/secdevprogram/)). The absence is specific rather than a lack of agentic awareness: the same control treats the capabilities agents interact with dynamically, skills and services reached through MCP, as supply chain — the supply chain of the system being built, not of the agent building it. Issue #171 on the [[standards-review-backlog|standards-review backlog]] stays open for the remaining frameworks, scoped to the coverage matrix and falsifiable absence claims [[standards-validation-methodology-2026-05|the methodology]] requires, and the scope-boundary notes on [[nist-ssdf|SSDF]], [[nist-sp-800-218a|SP 800-218A]], and [[microsoft-sdl|Microsoft SDL]] keep their earlier status.

@@ -3,7 +3,7 @@ type: concept
 title: "VulnOps: Vulnerability Operations"
 address: c-000069
 created: 2026-05-15
-updated: 2026-09-01
+updated: 2026-09-18
 tags:
   - concepts
   - vulnops
@@ -54,17 +54,17 @@ related:
   - "[[semgrep|Semgrep]]"
   - "[[vvah|VVAH]]"
   - "[[defending-code-harness|defending-code-harness]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - "[[vulnops-l1-soc-extinction|CYBR.SEC.Media VulnOps article]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified: 2026-09-01
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
-  - ".raw/articles/cybrsecmedia-vulnops-l1-soc-extinction-2026-05-15.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/papers/mythos-ready-csa-sans-unprompted-v1.0-2026-04-12.pdf"
-verified_findings: 1
-verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (1): Adkins VP-Sec-Eng correction verified vs slide byline; Flynn conundrum quote + 178/48/130 check out; 1 unsourced 'hundreds per month' rate introduced by prose edit || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Patch counts, 'shop jigs' with the today bound, and the nine-project inventory all match."
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
+verified_findings: 0
+verified_note: "Read scoped to the rollout-and-rollback property this pass extended. Posture-stage automation and the code-patch human gate confirmed; no rollback statement exists in the article, and the page says so."
 ---
 
 # VulnOps — Vulnerability Operations
@@ -105,7 +105,7 @@ The vendor whose autonomous-patching output this wiki has sourced in most detail
 2. **Owns the full software estate.** Coverage spans own code, AI-generated code, third-party libraries, container images, MCP servers, IDE extensions, agent skills, and rules-files. The function does not stop at *"app the security team owns"*; it follows the dependency chain. (Mythos-ready framing.)
 3. **Designed around triage discipline from the start.** With AI-discovery rates exceeding human-paced response, triage is the load-bearing operational discipline. *"Existing CVE/NVD infrastructure and patch-prioritization workflows were built for dozens of critical CVEs per month, not hundreds."* VulnOps treats triage as the primary scarce resource and designs for it explicitly: severity scoring, confidence scoring, deduplication, and prioritization queues are first-class. (Mythos-ready framing.)
 4. **Un-silos threat-intel against organization-specific context.** Continuous ingestion of external intelligence (CTI feeds, ISAC data, vendor advisories, GitHub disclosures, government feeds) is **automatically mapped** to the organization's own assets, cloud environments, code repositories, and infrastructure-as-code configurations. Action-on-finding is policy-driven via configurable skill files. *"Threads"* replace conventional case-management *"cases"*; every investigation is a collaborative analyst-agent thread. (Mallory framing per [[vulnops-l1-soc-extinction|CYBR.SEC.Media May 2026]].)
-5. **Closes the loop through rollout and rollback.** The automated path runs identify, propose patch, roll out, and **roll back** on an availability regression, and the reversal is engineered as part of the pipeline rather than left as a manual escape hatch. Rollback capability lets remediation autonomy rise: it bounds the cost of a wrong fix, the term [[agentic-soc-ra-exposure-vulnops|the exposure and VulnOps function]] gates remediation autonomy on. (OpenAI–Hugging Face framing.[^bh]) The open-source field reaches this property unevenly: of the five open-source pipelines Semgrep tabulates, three generate a patch — one verified by execution, one by an LLM check — and Semgrep records patch generation as still less common than discovery; none of the five is described as rolling a fix out or back.[^semgrep] VVAH names the interval the function exists to compress, optimizing "Mean Time to Adapt" from discovery to validated fix, per Semgrep's LLM-generated summary.
+5. **Closes the loop through rollout and rollback.** The automated path runs identify, propose patch, roll out, and **roll back** on an availability regression, and the reversal is engineered as part of the pipeline rather than left as a manual escape hatch. Rollback capability lets remediation autonomy rise: it bounds the cost of a wrong fix, the term [[agentic-soc-ra-exposure-vulnops|the exposure and VulnOps function]] gates remediation autonomy on. (OpenAI–Hugging Face framing.[^bh]) The open-source field reaches this property unevenly: of the five open-source pipelines Semgrep tabulates, three generate a patch — one verified by execution, one by an LLM check — and Semgrep records patch generation as still less common than discovery; none of the five is described as rolling a fix out or back.[^semgrep] VVAH names the interval the function exists to compress, optimizing "Mean Time to Adapt" from discovery to validated fix, per Semgrep's LLM-generated summary. Google Cloud's internal programme reaches the rollout half on one class and names no reversal: its posture-management stage triggers agentic remediation automatically on production configuration drift, while its code-patching pipeline submits only fully validated fixes to a human reviewer.[^gcp-sdlc] Rollout without a stated rollback is the shape this property exists to flag, and the class that received automation is the one where reverting to a known-good configuration costs least.
 
 ## Relationship to Existing Wiki Concepts
 
@@ -148,3 +148,4 @@ This bounds what VulnOps can claim, and [[sdlc-in-the-ai-attacker-era|SDLC in th
 
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].

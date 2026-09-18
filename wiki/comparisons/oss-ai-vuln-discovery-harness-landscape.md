@@ -3,7 +3,7 @@ type: comparison
 title: "OSS AI Vuln-Discovery Harness Landscape"
 address: c-000341
 created: 2026-08-31
-updated: 2026-09-01
+updated: 2026-09-18
 tags:
   - comparisons
   - ai-vuln-discovery
@@ -33,6 +33,7 @@ subjects:
   - "[[claude-code-security]]"
   - "[[codex-security]]"
   - "[[openant]]"
+  - "[[mantis]]"
 dimensions:
   - "acquisition"
   - "deployment-shape"
@@ -69,15 +70,21 @@ related:
   - "[[harness-config-as-supply-chain-artifact]]"
   - "[[autonomous-exploit-generation]]"
   - "[[adversarial-reflexion]]"
+  - "[[mantis]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - "[[semgrep-oss-ai-security-harness-comparison|Comparing Open Source AI Code Security Harnesses]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
-verified: 2026-09-01
+  - "[[.raw/reports/google-mantis-repository-2026-09-18.md]]"
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified_findings: 3
-verified_note: "Read in full against the Semgrep article; fixed 'compares the nine' on a seven-row matrix and restored the 'today' bound on the market prediction; absence framing of two cells reported."
+  - ".raw/reports/google-mantis-repository-2026-09-18.md"
+verified_findings: 0
+verified_note: "Read scoped to the Mantis row and the paragraph correcting it. Star count, licence and the ~15-skill survey figure confirmed against Semgrep; 21 skills and three host targets confirmed at the repository. Backlinks added on big-sleep and mythos."
 ---
 
 # OSS AI Vuln-Discovery Harness Landscape
@@ -94,7 +101,7 @@ Semgrep sorts the field into three categories. **LLM-led exploitgen** drives a t
 | [[security-audit-skill\|security-audit-skill]] | [[cloudflare\|Cloudflare]] | Skill-boosting | Agent-native skill | MIT | 2K |
 | [[trail-of-bits-skills\|trailofbits/skills]] | [[trail-of-bits\|Trail of Bits]] | Skill-boosting | Agent-native skills | CC-BY-SA | 6K |
 | `capitalone/vulnhunter` | Capital One | Skill-boosting | Agent-native skills | Apache | 500 |
-| `google/mantis` | [[google\|Google]] | Skill-boosting | Agent-native skills | Apache | 400 |
+| [[mantis\|Mantis]] | [[google\|Google]] | Skill-boosting | Agent-native skills plus an ADK reference harness | Apache | 400 |
 | [[raptor\|RAPTOR]] | Community (gadievron) | SAST+LLM, overlapping exploitgen | Standalone pipeline | MIT | 3K |
 | [[deepsec\|deepsec]] | [[vercel\|Vercel Labs]] | SAST+LLM | Standalone pipeline | Apache in the category list; the capability matrix says confirm in-repo | 5K |
 | [[ai-deep-sast\|ai-deep-sast]] | [[cisco\|Cisco]] | SAST+LLM | Standalone pipeline | Apache | 50 |
@@ -103,6 +110,8 @@ Semgrep sorts the field into three categories. **LLM-led exploitgen** drives a t
 Star counts are as Semgrep stated them at publication and move afterwards. Eight of the nine carry a company owner rather than an individual maintainer, and only RAPTOR comes from a community project. Corporate engineering released under an open-source licence now fills a category that previously held maintainer-side tooling such as [[openant|OpenAnt]], which Semgrep does not survey.
 
 Two artifacts inside the survey carry different weight, and the distinction governs most of the cells below. Semgrep wrote the categorisation, the star counts, the finding-definition and execution tables and the market-structure argument. A separate capability matrix, covering seven of the nine and leaving `vulnhunter` and `mantis` without a row, is labelled by Semgrep as an LLM-generated reading of the repositories, as are the per-tool detail sections.[^semgrep] Isolation postures, stage counts, model defaults and per-tool behaviour all come from that machine reading.
+
+Mantis has since been read at the repository rather than through the survey, and three of its cells change. At commit `21ef4b4c` (2026-09-17) it carries 21 skills against the roughly fifteen Semgrep counted; it names Gemini CLI, Antigravity CLI and Google ADK as host targets where the survey recorded none; and it ships a reference harness with four selectable sandbox mechanisms of its own.[^mantis-repo] The skill-versus-pipeline split therefore does not sort it: a team can install the skills into an agent it already runs, or run the harness directly and inherit nothing from a host. Google Cloud separately names Mantis as the core of the code-scanning stage in its internal lifecycle and states that a fuller version stays unreleased, so the row above measures the demonstration rather than the system Google runs.[^gcp-sdlc] [[mantis|The Mantis page]] carries the skill roster, the sandbox options and the responsible-use constraints the repository attaches.
 
 ### Deployment shape
 
@@ -183,3 +192,5 @@ An open-source licence removes the procurement gate on the harness and leaves th
 ## Notes
 
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026. No day-level publication date is exposed; July is inferred from an embedded screenshot dated 2026-07-20 and the article's forward reference to a Black Hat announcement in August 2026, and no author is named. The human-written body carries the categorisation, the star counts, the six cross-cutting findings, the finding-definition and execution tables, and the market-structure argument; the per-tool detail sections and two of the four tables are labelled by Semgrep as LLM-generated summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
+[^mantis-repo]: [google/mantis](https://github.com/google/mantis), read at commit `21ef4b4c45ccd1d2a33b9079b2e37ec37d934571` (2026-09-17): 21 skills and an ADK reference harness under Apache 2.0, with the sandbox roster and the responsible-use constraints quoted from README.md and README_AGENTS.md. Local extract at `.raw/reports/google-mantis-repository-2026-09-18.md`. Summarized at [[mantis|Mantis (Google)]].
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].

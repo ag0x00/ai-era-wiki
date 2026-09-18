@@ -2,11 +2,11 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 92
+page_count: 93
 ---
 
 # Papers Index
@@ -55,6 +55,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[genai-endpoint-observability-talk|GenAI Endpoint Observability for Detection Engineers]] — A practitioner talk by Mika Ayenson, who leads Threat Research and Detection Engineering at Elastic, delivered at the March 2026 Unprompt...
 - [[glass-box-security-talk|Glass-Box Security: Interpretability for AI Defense]] — Source: Unprompted Conference 2026, Stage 2 Lecture 10 (Carl Hurd, Starseer).
 - [[google-big-sleep-projectzero|Google Project Zero]] — Source: [Project Zero — From Naptime to Big Sleep (October 31, 2024)](https://projectzero.google/2024/10/from-naptime-to-big-sleep.html).
+- [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]] — Source:...
 - [[google-cloud-codemender-preview|CodeMender Preview on Google Cloud]] — Source:...
 - [[google-codemender-deepmind|CodeMender: AI Agent for Code Security]] — Source:...
 - [[guardfall-shell-injection-audit|GuardFall Shell-Injection Audit]] — Source:...

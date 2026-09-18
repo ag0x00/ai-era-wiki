@@ -5,7 +5,7 @@ org_type: vendor
 parent_org: "[[google]]"
 title: "Wiz"
 created: 2026-04-30
-updated: 2026-07-26
+updated: 2026-09-18
 tags:
   - entities
   - organizations
@@ -16,6 +16,7 @@ status: developing
 scope_axis:
   - sec-of-ai
   - ai-in-sec-offense
+  - sec-against-ai
 role: "Cloud-native application protection platform (CNAPP) vendor; first-CNAPP-to-ship-AI-SPM (2024); now part of Google Cloud Security; Red Agent Opus-powered continuous pentester (2026)"
 related:
   - "[[wiz-ai-spm]]"
@@ -31,6 +32,12 @@ sources:
   - "https://www.wiz.io/"
   - "https://www.wiz.io/blog/red-agent-claude-opus"
   - "[[.raw/articles/claude-partners-opus-cybersecurity-2026-05-23.md]]"
+  - "[[.raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md]]"
+verified: 2026-09-18
+verified_against:
+  - ".raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md"
+verified_findings: 0
+verified_note: "Read whole against the CodeMender clip; Green Agent, command-center and coming-soon claims confirmed. sec-against-ai added as the mandatory counterpart to ai-in-sec-offense, with the AI-threat premise stated in the body."
 ---
 
 # Wiz
@@ -53,9 +60,11 @@ Wiz CNAPP combines: CSPM (cloud security posture), CWPP (cloud workload protecti
 
 ## Green Agent and AI Threat Defense (2026)
 
-Google Cloud's [[codemender|CodeMender]] preview (2026-07-21) is the first published account of how Wiz composes with Google Cloud security products after the acquisition ([[google-cloud-codemender-preview|source summary]]). Within **AI Threat Defense**, Wiz "orchestrates agentic application security": it calls CodeMender to scan code, enriches the findings in the Wiz Security Graph with deployment context, and triggers Red Agent for AI pentesting. A **Wiz Green Agent** then directs CodeMender to generate and test patches carrying that application context.
+Google Cloud's [[codemender|CodeMender]] preview (2026-07-21) is the first published account of how Wiz composes with Google Cloud security products after the acquisition ([[google-cloud-codemender-preview|source summary]]). Within **AI Threat Defense**, Wiz "orchestrates agentic application security": it calls CodeMender to scan code, enriches the findings in the Wiz Security Graph with deployment context, and triggers Red Agent for AI pentesting. The [Wiz Green Agent](https://www.wiz.io/blog/introducing-wiz-green-agent) then directs CodeMender to generate and test patches carrying that application context, and Google describes Wiz as the command center for governing and scaling remediation across the offering.
 
 Red Agent and Green Agent form a paired attack-and-repair loop over one asset graph. The graph is what distinguishes this from repository-only scanning: production reachability, not just source reachability, feeds prioritization. Google states CodeMender scanning under Wiz orchestration is "coming soon," so the integration is announced rather than shipped.
+
+The premise Google states for the offering is the adversary's own use of AI: adversarial AI threats accelerate attacks on code, and security teams need machine-speed defenses that automate code remediation. Red Agent and Green Agent therefore run offensive and defensive AI against the same estate for one purpose, which is to close a finding before an AI-driven attacker reaches it.
 
 ## Notable 2025–2026 events
 

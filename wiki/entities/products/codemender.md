@@ -4,7 +4,7 @@ entity_type: product
 title: "CodeMender (Google DeepMind)"
 address: c-000036
 created: 2026-05-13
-updated: 2026-09-17
+updated: 2026-09-18
 tags:
   - products
   - google
@@ -46,6 +46,8 @@ related:
   - "[[defending-code-harness|defending-code-harness]]"
   - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[mantis]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - "https://deepmind.google/blog/introducing-codemender-an-ai-agent-for-code-security/"
   - "https://cloud.google.com/blog/products/identity-security/find-and-fix-software-vulnerabilities-with-codemender/"
@@ -53,13 +55,17 @@ sources:
   - "https://unpromptedcon.org/abstract-march2026/"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified: 2026-09-01
+  - "[[.raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md]]"
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
+  - ".raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md"
   - ".raw/articles/google-codemender-deepmind-2025-10-06.md"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - ".raw/talks/2026-03-03_Heather-Adkins-and-Four-Flynn_Evaluating-Threats-Automating-Defense_transcript.md"
-verified_findings: 3
-verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (3): 72/4.5M/Deep Think/libwebp verified vs Oct2025; 178/48/130 verified vs slide; human-decision-at-submission and 'moved later not away' unsupported by talk; 'before merge' vs source 'committed' || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Patch-table arithmetic correct.."
+verified_findings: 0
+verified_note: "Preview clip, CISO article and 2025 DeepMind post read against the product sections; Deep Think, 72-patch and 178/48/130 figures confirmed verbatim. Narrator sentence on the two counts rewritten; D6 and D8 rung coordinates now body-link their domain pages."
 ---
 
 # CodeMender (Google DeepMind)
@@ -116,7 +122,7 @@ This is the highest-value mode: patching one vulnerability stops one exploit; re
 
 Flynn reported **178 autonomously generated fixes** landed in open source, which the deck splits **48 patched and 130 hardening**.[^google-talk] Most of the shipped volume is proactive rewriting that removes a vulnerability class rather than reactive repair of a reported bug. libwebp is the named worked example of hardening a critical library, and the internal Chrome work is described as automatically generated patches that harden pointers in the codebase.
 
-The two counts do not form a series. 48 is fewer than the 72 upstreamed by October 2025, so they rest on different bases and this page reports them separately rather than as a trajectory.
+The two counts do not form a series. 48 is fewer than the 72 upstreamed by October 2025, so the two rest on different bases and neither reading supports a trajectory from one to the other.
 
 ## Google Cloud preview (July 2026)
 
@@ -124,17 +130,21 @@ Google Cloud moved CodeMender from vendor-internal research to a managed, custom
 
 | Stage | Function |
 |---|---|
-| **Scan** | Reasons over repository context rather than matching patterns; targets memory corruption, injection, web security issues, cryptographic flaws, insecure data handling. Languages: C/C++, Go, Java, Python, Ruby, Rust, TypeScript |
+| **Scan** | Reads the repository's context, goals and functionality; example target classes are memory corruption, injection, web security issues, cryptographic flaws and insecure data handling. Languages: C/C++, Go, Java, Python, Ruby, Rust, TypeScript |
 | **Verify** | Builds and runs proof-of-concept exploits in a customer-managed sandbox to establish that a finding is reachable before it is patched |
 | **Remediate** | Generates a patch, checks it with an [[llm-as-a-judge\|LLM-as-a-judge]] for functional disruption, and delivers a code diff for developer approval |
+
+Google credits the harness rather than the reasoner for the depth claim: CodeMender's harness with security context "helps you discover sophisticated vulnerabilities that static and model-only scanning miss." The named comparison classes are static analysis and a model called without that harness, which puts the vendor's own differentiator in the orchestration.
 
 The verify stage is new relative to the research description. It repurposes [[autonomous-exploit-generation|proof-of-concept exploit construction]] as a triage control: exploitability decides whether a finding warrants a patch and where it ranks.
 
 The product's stated scan scope is wider than the scope the research programme reports results for. Asked at [un]prompted in March 2026 about business-logic vulnerabilities, Adkins placed the research on infrastructure components that handle untrusted input — she named V8 and FFmpeg — and not on business applications.[^google-talk] Nothing published reconciles the two, so a buyer evaluating the product against a business application has no figure that covers their case: the zero-false-positive rate and the 178-fix count are both drawn from the narrower population. See [[autonomous-code-security-google-talk|the talk summary]] for the exchange.
 
-Three access paths exist. The **Gemini Enterprise Agent Platform** path runs on generally available Gemini models. In the **AI Threat Defense** path, [[wiz|Wiz]] orchestrates: it calls CodeMender to scan, enriches findings with deployment context from the Wiz Security Graph, and triggers Wiz Red Agent for pentesting; a **Wiz Green Agent** then directs CodeMender to generate and test context-enriched patches. A third path pairs CodeMender with **Gemini 3.5 Flash Cyber**, restricted to a small set of governments and trusted partners with access planned to widen.
+Three access paths exist. The **Gemini Enterprise Agent Platform** path runs on generally available Gemini models. In the **AI Threat Defense** path, [[wiz|Wiz]] orchestrates: it calls CodeMender to scan, a leg Google marks coming soon, enriches findings with deployment context from the Wiz Security Graph, and triggers Wiz Red Agent for AI pentesting to prove exploitability; a **Wiz Green Agent** then directs CodeMender to generate and test context-enriched patches. A third path pairs CodeMender with **Gemini 3.5 Flash Cyber**, restricted to a small set of governments and trusted partners with access planned to widen.
 
-Customers select the model, trading cost, speed, and scanning depth against each other, and Google states support for third-party frontier models is planned for later in 2026. The research agent ran on Gemini Deep Think; the product does not fix a single reasoner. Enterprise terms named are VPC traffic routing, data isolation and encryption, zero retention of source code, and customer-operated sandboxes. Integration points are CI/CD, VS Code, and Antigravity.
+Customers select the model, trading cost, speed, and scanning depth against each other, and Google states support for third-party frontier models is planned for later in 2026. The research agent ran on Gemini Deep Think; the product does not fix a single reasoner. Enterprise terms named are VPC traffic routing, data isolation and encryption, zero retention of source code, and customer-operated sandboxes. Integration points are CI/CD workflows, VS Code and Antigravity, and the agent also runs in a local developer environment through a lightweight command-line client; the article's screenshot of that client shows it driving a remote service rather than holding the agent loop on the developer's machine.
+
+Google Cloud's security organization published an account of an internal five-stage agentic SDLC three weeks before this preview, built around [[mantis|Mantis]], a multi-agent code-review framework it attributes to its own engineering rather than to DeepMind.[^gcp-sdlc] The two stacks run the same stages and neither announcement names the other's system, so the relationship is unstated. [[mantis|The Mantis page]] carries the two readings that stay open.
 
 Salesforce, Robinhood, and Palo Alto Networks are quoted as customers. No efficacy figures, pricing, or GA date accompany the preview.
 
@@ -153,8 +163,8 @@ The pattern now runs outside the coalition as well as inside it. Semgrep's July 
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D6 (Data, Memory & RAG) L5+** — proactive rewriting of vulnerable data-handling code (libwebp, XML parsers) is a D6-adjacent primitive.
-- **[[agentic-ai-security-cmm-2026|CMM]] D8 (Supply Chain & AI-BOM) L5+** — upstreaming patches to OSS at the 4.5M-LOC scale is a supply-chain hardening primitive.
+- **[[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d6-data-rag|D6]] (Data, Memory & RAG) L5+** — proactive rewriting of vulnerable data-handling code (libwebp, XML parsers) is a D6-adjacent primitive.
+- **[[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d8-supply-chain|D8]] (Supply Chain & AI-BOM) L5+** — upstreaming patches to OSS at the 4.5M-LOC scale is a supply-chain hardening primitive.
 - **[[agentic-ai-security-cmm-2026|CMM]] D9 (Operations & Human Factors)** — the human-review control is described differently at each stage of the programme's public account. October 2025 placed it at patch approval, which is [[plan-validate-execute|Plan-Validate-Execute]] applied to autonomous patch generation. March 2026 presented verification as the gate and stated full autonomy as the design intent, naming no reviewer at submission.[^google-talk] The July 2026 product keeps developer approval before anything is committed. The mapping holds at each stage; the wiki has no source describing one control moving between them.
 - **[[agentic-ai-security-reference-architecture|RA]] Observability Plane** — patch validation extends agent-output auditing.
 
@@ -186,3 +196,4 @@ The pattern now runs outside the coalition as well as inside it. Semgrep's July 
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The execution/PoC/patch table (three of five generate a patch) is human-written; the VVAH panel composition and the defending-code-harness tier ladder are from Semgrep's LLM-generated repository summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].

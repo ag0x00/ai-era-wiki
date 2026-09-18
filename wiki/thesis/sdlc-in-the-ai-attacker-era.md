@@ -3,7 +3,7 @@ type: thesis
 title: "SDLC in the AI-Attacker Era"
 address: c-000023
 created: 2026-05-13
-updated: 2026-09-17
+updated: 2026-09-18
 tags:
   - thesis
   - sdlc
@@ -86,6 +86,8 @@ related:
   - "[[semgrep-oss-ai-security-harness-comparison]]"
   - "[[semgrep]]"
   - "[[taiwan-ai-agent-government-intrusion]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
+  - "[[secure-sdlc-framework-stack-2026]]"
 sources:
   - "[[.raw/articles/anthropic-glasswing-2026-05-13.md]]"
   - "[[.raw/papers/anthropic-2026-agentic-coding-trends-report.pdf]]"
@@ -95,18 +97,12 @@ sources:
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
   - "[[.raw/articles/ai-coding-agents-git-hijack-2026-09-17.md]]"
-verified: 2026-09-17
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
-  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
-  - ".raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/papers/anthropic-2026-agentic-coding-trends-report.pdf"
-  - ".raw/papers/nist-sp-800-218.pdf"
-  - ".raw/papers/nist-sp-800-218A.pdf"
-  - ".raw/papers/pwc-future-of-solutions-dev-gen-ai-2026.pdf"
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
 verified_findings: 0
-verified_note: "PARTIAL — the 2026-09-17 pass read the GitSpawn source only and verified the new supply-chain paragraph, the position-history entry and the current_position sentence; earlier reads carried forward, other sources unread."
+verified_note: "Read scoped to the remediation-assumptions paragraph this pass extended and the vendor-and-standards section. Posture-drift automation and the human-reviewer stop confirmed against the article; Flynn's redeployment quotation checked in the talk transcript, which the page's sources: do not reach. Backlink to the framework stack added."
 ---
 
 # SDLC in the AI-Attacker Era
@@ -174,6 +170,8 @@ Vendors and government bodies are recalibrating against the same capability shif
 
 [[microsoft-sdl-evolving-security-practices|Microsoft's SDL-for-AI announcement]] is the first major-vendor classical secure-SDLC framework to publish an explicit AI extension scope, and it prescribes "iterative security controls, faster feedback loops, telemetry-driven detection, and continuous learning."[^msft-sdl] Microsoft SDL is a vendor framework rather than a NIST or SLSA standard, so the standards-side gap stays open.
 
+[[secure-sdlc-framework-stack-2026|The secure-SDLC framework stack]] assembles that standards-side picture instrument by instrument and holds the recommended 2026 stack this thesis's recalibration argument sits on top of. Its fourth structural gap is the one this page's remediation argument runs into from the other direction: no layer of the stack governs the coding agent as an actor in the lifecycle, so the controls that exist for it are vendor-side and unstandardized.
+
 On the government side, the [[nsa-ai-ml-supply-chain-guidance-2026|NSA 8-nation joint guidance]] (March 2026), co-signed by NSA, CISA, FBI, and allied agencies, supplies a government-endorsed supply-chain threat taxonomy across six AI/ML components: Training Data, Model Weights, Software Dependencies, Infrastructure, Third-Party APIs, and Deployment. It names slopsquatting-class software-dependency risks alongside training-data poisoning and model-weight backdooring. CISA's operational response is measurable: the average KEV patch deadline tightened from 19.7 days in 2025 to 14.4 days in 2026, and CISA is reportedly considering a 3-day deadline for KEV-listed flaws.[^kev]
 
 OpenAI's own recommendation, published with the disclosure, claims a scope for what has to be automated. Automating discovery alone relocates the bottleneck rather than removing it: agents that reliably find zero-days in production infrastructure produce findings faster than engineers can act on them, and the organization ends up with a longer queue rather than a shorter exposure window. The loop the speakers name runs identify, propose a patch, roll it out, and roll it back on an availability regression, and it treats the rollback leg as part of the loop rather than as a manual escape hatch. An automated patch pipeline without automated rollback converts a bad fix into an outage.[^bh] Continuous agentic red teaming is the paired recommendation, on the reasoning that model intelligence will examine the estate either way, and the question is whether the organization spends enough of it on its own infrastructure before a threat actor does. [[vulnops|VulnOps]] makes the same closing argument as an operating model, sharpened here by a case where an autonomous fleet set the finding rate rather than a scanning schedule. [[agentic-soc-ra-exposure-vulnops|The exposure and VulnOps function]] carries the autonomy gating for the remediation side.
@@ -186,7 +184,7 @@ The sections above measure how fast an adversary reaches a vulnerability. Five a
 
 **A memory-safe rewrite retires one property class and inherits the rest.** [[autonomous-code-security-google-talk|Google's March 2026 talk]] leaves the allocation question open: patch the C++ at all, or rewrite it in Rust. [[vulnerability-properties|Vulnerability properties]] survive reimplementation either way. Seventy-nine CVEs landed against a Rust reimplementation of coreutils after it shipped in the current Ubuntu release, and they carried time-of-check/time-of-use flaws rather than memory corruption. In the same lab's agentic rewrites of libssl, libpng, and libxml, the crypto library reproduced the classic non-memory-safety cryptographic attacks of the original, even under explicit instruction naming and forbidding them. Agentic tooling makes large rewrites affordable, which moves the rewrite from a proposal to a decision an organization will actually face, and the new code arrives with no analysis history and a threat model inherited from the original's non-memory-safety flaws. The same evidence bounds [[zero-day-clock|the Zero Day Clock's]] fourth demand.
 
-**A generated fix still has to reach the running estate.** Google names deployment as the step it cannot automate. Flynn listed redeploying auto-mended code at scale as one of three open problems in [[autonomous-code-security-google-talk|Autonomous Code Security at Google]], and put the hardest part of patching in the estates that cannot apply one promptly: "I don't know how to solve that with AI."[^google-talk] Where a pipeline generates verified fixes faster than estates absorb them, the exposure window relocates to deployment. [[vulnops|VulnOps]] closes that leg with rollout and rollback. The assumption that the fix is sound holds for less of the field than the assumption that it exists. Of the five open-source pipelines Semgrep tabulates, three generate a patch, of which one is verified by execution and one by an LLM check; Semgrep records patch generation as less common than discovery.[^semgrep] Where no stage has tested the fix, it reaches the estate carrying the deployment risk this paragraph describes and an untested-correctness risk above it.
+**A generated fix still has to reach the running estate.** Google names deployment as the step it cannot automate. Flynn listed redeploying auto-mended code at scale as one of three open problems in [[autonomous-code-security-google-talk|Autonomous Code Security at Google]], and put the hardest part of patching in the estates that cannot apply one promptly: "I don't know how to solve that with AI."[^google-talk] Where a pipeline generates verified fixes faster than estates absorb them, the exposure window relocates to deployment. [[vulnops|VulnOps]] closes that leg with rollout and rollback. The assumption that the fix is sound holds for less of the field than the assumption that it exists. Of the five open-source pipelines Semgrep tabulates, three generate a patch, of which one is verified by execution and one by an LLM check; Semgrep records patch generation as less common than discovery.[^semgrep] Where no stage has tested the fix, it reaches the estate carrying the deployment risk this paragraph describes and an untested-correctness risk above it. Google has since published one class where an agent does change a running system. Its autonomous posture-management stage converts the security standard catalog into programmable skills files, continuously checks production systems for configuration drift, and triggers agentic remediation automatically when a violation occurs.[^gcp-sdlc] The same account routes a validated code fix to a human reviewer and stops there. The deployment leg is therefore closed for configuration and open for code, and the class that got automation is the one where reverting to a known-good state is cheapest.
 
 **Severity ranking assumes findings are scarce.** Adkins drew a prioritization consequence from agentic discovery reaching every vulnerability in every system: "We'll have to change the CVSS scoring system because it won't be meaningful anymore."[^google-talk] A severity score sorts a queue, and sorting presumes a queue short enough to work through. She cited a 30,000-item unanalyzed backlog at the National Vulnerability Database and a 35% rise between 2024 and 2025 in logged vulnerabilities receiving a CVE, against a population where not every discovered bug receives one at all.[^google-talk] Timelines and adversary population are recalibrated above; severity-based prioritization is the third assumption, and the instrument stops discriminating once discovery stops being the constraint.
 
@@ -271,3 +269,5 @@ The two academic findings share a mechanism this thesis otherwise lacks a name f
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): redeploying auto-mended code at scale named as one of three open problems; CVSS stated to stop being meaningful once agentic discovery reaches every vulnerability; a 30,000-item NVD unanalyzed backlog and a 35% rise in CVE-carrying vulnerabilities between 2024 and 2025. See [[autonomous-code-security-google-talk|the talk summary]].
 
 [^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Eight findings across seven CLI coding agents; source for the `core.fsmonitor` execution sink, the position of the subprocess ahead of the sandbox and the permission prompt, and the constraint that clone, fetch and pull do not carry the payload. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].
+
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].

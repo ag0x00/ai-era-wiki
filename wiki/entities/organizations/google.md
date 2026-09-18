@@ -2,7 +2,7 @@
 type: entity
 title: "Google"
 created: 2026-04-30
-updated: 2026-08-24
+updated: 2026-09-18
 tags:
   - entities
   - organizations
@@ -33,25 +33,28 @@ related:
   - "[[heather-adkins]]"
   - "[[four-flynn]]"
   - "[[google-cloud-codemender-preview]]"
+  - "[[mantis]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://www.anthropic.com/glasswing"
-verified: 2026-08-24
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+  - "[[.raw/reports/google-mantis-repository-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
-  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
+  - ".raw/reports/google-mantis-repository-2026-09-18.md"
 verified_findings: 0
+verified_note: "Read scoped to the agentic-SDLC and Mantis section this pass added plus the CodeMender paragraphs above it; Apache 2.0 and the five-stage description confirmed at the repository and the article. Stub [!gap] callout dropped, its July 2024 CoSAI date folded into the SAIF bullet. The [^google-talk] footnote's transcript is not in sources:, so the page does not reach it."
 ---
 
 # Google
 
 **Sources:** [Google (homepage)](https://about.google) · [Google SAIF](https://saif.google) · [Google Cloud Security](https://cloud.google.com/security)
 
-> [!gap] Stub — pending full migration
-> Google publishes [[google-saif|SAIF]] and donated SAIF data to [[cosai|CoSAI]] in July 2024.
-
 ## AI Security Contributions (from ai-security-standards-in-q1-2026)
 
-- **[[google-saif|SAIF]]** — AI security framework; SAIF Risk Map and Risk Assessment donated to CoSAI in 2024
+- **[[google-saif|SAIF]]** — AI security framework; SAIF Risk Map and Risk Assessment donated to [[cosai|CoSAI]] in July 2024
 - **[[a2a-protocol|A2A Protocol]]** (v1.0.0, released 2026-03-12) — Agent-to-Agent protocol with signed Agent Cards (§8.4) and opacity principle; donated to Linux Foundation 2025-06-23; hosted under LF's Agentic AI Foundation
 - **Google ADK Go 1.0** (March 31, 2026) — ships with `before_model_callback` hooks, OpenTelemetry integration, and Model Armor integration — reference implementation of platform-level enforcement
 - **CoSAI Premier Sponsor** — key contributor to MCP Security White Paper
@@ -87,6 +90,12 @@ Both programmes carried operating figures at [[unprompted-conference-march-2026|
 
 Their availability has since diverged. Big Sleep remains vendor-internal. CodeMender entered preview as a managed Google Cloud product on 2026-07-21 ([[google-cloud-codemender-preview|source summary]]), sold through the Gemini Enterprise Agent Platform; through AI Threat Defense, with [[wiz|Wiz]] orchestrating; and paired with a cyber-specialized Gemini 3.5 Flash Cyber model restricted to a small set of governments and trusted partners. The preview post does not mention Big Sleep, so the discovery-to-patching handoff remains undocumented on the product side.
 
+### Agentic SDLC and Mantis
+
+A third programme sits outside the DeepMind pair. On 2026-06-29 Google Cloud's security organization described specialized agents at five stages of its own software lifecycle: launch review against a control catalog of more than 200 security requirements, centralized code scanning, fuzz-harness authoring, a unified patching pipeline, and autonomous posture drift checking, with a reflection agent writing each run's lessons into a store that later runs read ([[google-cloud-autonomous-sdlc-security|source summary]]).[^gcp-sdlc] [[mantis|Mantis]], the multi-agent framework at the scanning stage, has its core skills published under Apache 2.0 at [github.com/google/mantis](https://github.com/google/mantis), with a fuller version stated to run internally and secure customers.
+
+The attributions are separate and the announcements do not cross-reference. Google credits Google Cloud security engineering with building Mantis and Google DeepMind research with CodeMender, and names neither system in the other's post, so the three artifacts are counted here as Google presents them rather than as one lineage.
+
 ### Predecessor framework
 
 - **Project Naptime** (June 2024) — LLM-assisted vuln research framework that achieved state-of-the-art on Meta's [[cyberseceval|CyberSecEval2]] benchmark; the direct precursor to Big Sleep.
@@ -107,3 +116,4 @@ Google DeepMind published the [[camel-pattern|CaMeL pattern]] (March 2025, arXiv
 Google supplies two open-source isolation primitives the wiki tracks: [[gvisor|gVisor]] (the user-space-kernel container sandbox, Apache 2.0) and, building on it, [[gke-agent-sandbox|Agent Sandbox]] — a Kubernetes SIG Apps subproject announced at Cloud Next '26 that turns the per-task agent sandbox into a first-class Kubernetes resource (Sandbox / SandboxTemplate / SandboxClaim CRDs, gVisor default, managed GKE delivery at 300 sandboxes/sec). Its design bet is that Kubernetes itself should be the agent runtime, with isolation delivered as an open primitive that runs on any cluster rather than a proprietary feature. In this one runtime-security row, GCP leads with a portable open primitive, rather than trailing AWS and Azure as it does elsewhere in the comparison. See [[agent-sandbox-isolation-landscape|the isolation landscape comparison]].
 
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].

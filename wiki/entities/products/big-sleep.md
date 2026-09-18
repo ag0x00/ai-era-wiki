@@ -4,7 +4,7 @@ entity_type: product
 title: "Big Sleep (Google Project Zero + DeepMind)"
 address: c-000035
 created: 2026-05-13
-updated: 2026-09-01
+updated: 2026-09-18
 tags:
   - products
   - google
@@ -39,6 +39,7 @@ related:
   - "[[trail-of-bits|Trail of Bits]]"
   - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[mantis|Mantis (Google)]]"
 sources:
   - "https://projectzero.google/2024/10/from-naptime-to-big-sleep.html"
   - "https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-our-big-sleep-agent-makes-big-leap"
@@ -73,7 +74,7 @@ verified_note: "PARTIAL — this pass read the Semgrep source only; 2 other sour
 | **May 2026** | Named in [[anthropic-glasswing-announcement\|Anthropic Glasswing announcement]] as Google's parallel AI-cyber tool alongside [[codemender\|CodeMender]] | Heather Adkins (VP Security Engineering) quote |
 | **July 2026** | Not named. CodeMender enters managed preview on Google Cloud; Big Sleep remains vendor-internal, and the two agents' availability diverges | [[google-cloud-codemender-preview\|Google Cloud, Jul 2026]] |
 
-By July 2026 Google has released a third artifact in this space. [[semgrep-oss-ai-security-harness-comparison|Semgrep's July 2026 survey]] separately records Google's own `mantis` — roughly fifteen security-focused skills under Apache 2.0, at ~400 stars, which the survey quotes as "intended to be a starting point rather than a rigid set of instructions", naming no speaker[^semgrep] It sharpens the divergence the row above records: CodeMender ships as a managed preview and Big Sleep stays vendor-internal, while the skill pack is open.
+By July 2026 Google has released a third artifact in this space. [[semgrep-oss-ai-security-harness-comparison|Semgrep's July 2026 survey]] separately records Google's own `mantis` — roughly fifteen security-focused skills under Apache 2.0, at ~400 stars, which the survey quotes as "intended to be a starting point rather than a rigid set of instructions", attributing the line to the repository rather than to a named author.[^semgrep] That artifact has since been read at its own repository and carries [[mantis|21 skills and a reference harness]]. It sharpens the divergence the row above records: CodeMender ships as a managed preview and Big Sleep stays vendor-internal, while the skill pack is open. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] states that divergence as the page-level claim, placing Big Sleep among the commercial and vendor-internal programmes that reach an operator only through a vendor gate.
 
 ## Methodology
 
@@ -116,8 +117,8 @@ All four are anchors of [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnera
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-2026|CMM]] D7 (Observability & Detection) L5+** — Big Sleep is a defender-side discovery primitive; CVE-2025-6965 is the canonical example of AI-foiled in-the-wild exploitation.
-- **[[agentic-ai-security-cmm-2026|CMM]] D8 (Supply Chain & AI-BOM)** — pre-release OSS vulnerability discovery (SQLite as primary example) hardens upstream supply-chain.
+- **[[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d7-observability|D7]] (Observability & Detection) L5+** — Big Sleep is a defender-side discovery primitive; CVE-2025-6965 is the canonical example of AI-foiled in-the-wild exploitation.
+- **[[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d8-supply-chain|D8]] (Supply Chain & AI-BOM)** — pre-release OSS vulnerability discovery (SQLite as primary example) hardens upstream supply-chain.
 
 ## Open Questions
 

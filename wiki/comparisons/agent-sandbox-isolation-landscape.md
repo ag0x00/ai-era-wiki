@@ -3,7 +3,7 @@ type: comparison
 title: "Agent Sandbox Isolation Landscape"
 address: c-000209
 created: 2026-06-11
-updated: 2026-09-01
+updated: 2026-09-18
 tags:
   - comparisons
   - sandboxing
@@ -34,22 +34,26 @@ related:
   - "[[deepsec]]"
   - "[[ai-deep-sast]]"
   - "[[raptor]]"
+  - "[[mantis]]"
 sources:
   - "https://cloud.google.com/blog/products/containers-kubernetes/bringing-you-agent-sandbox-on-gke-and-agent-substrate"
   - "https://github.com/kubernetes-sigs/agent-sandbox"
   - "https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
-verified: 2026-09-01
+  - "[[.raw/reports/google-mantis-repository-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/reports/google-mantis-repository-2026-09-18.md"
 verified_findings: 0
+verified_note: "Read scoped to the delivery-model paragraph and the Mantis sandbox subsection. Four sandbox mechanisms, the gVisor networkless prerequisite and the layering instruction confirmed verbatim in the repo extract."
 ---
 
 # Agent Sandbox Isolation Landscape
 
 The market for running untrusted, model-generated agent code splits along two questions. The first asks **what supplies the isolation boundary** — a microVM, a user-space kernel, or a namespace. The second asks **how the sandbox reaches the buyer** — as an open primitive the buyer installs, or as a proprietary managed service bound to a vendor's agent platform. [[gke-agent-sandbox|GKE Agent Sandbox]]'s May 2026 launch reshaped the second axis by putting an open, Kubernetes-native sandbox primitive against a set of independent vendors and two proprietary hyperscaler services.
 
-A third delivery model sits alongside those two. Semgrep's July 2026 survey of open-source vulnerability-discovery harnesses separates standalone pipelines, which bring their own model calls and their own sandbox, from agent-native skills, which deploy as a prompt pack inside a coding agent and inherit whatever isolation the host already enforces.[^semgrep] Evaluating a skill's isolation therefore means evaluating the host agent's, and the buyer's question becomes what that host enforces on the buyer's behalf.
+A third delivery model sits alongside those two. Semgrep's July 2026 survey of open-source vulnerability-discovery harnesses separates standalone pipelines, which bring their own model calls and their own sandbox, from agent-native skills, which deploy as a prompt pack inside a coding agent and inherit whatever isolation the host already enforces.[^semgrep] Evaluating a skill's isolation therefore means evaluating the host agent's, and the buyer's question becomes what that host enforces on the buyer's behalf. One of the four skill-shaped projects breaks that inheritance by shipping a harness and sandboxes of its own, which the subsection below records.
 
 ## Delivery model — the axis that moved
 
@@ -79,6 +83,8 @@ The runtimes are orthogonal to delivery. Agent Sandbox defaults to gVisor and tr
 The tables above list procurable offerings. Semgrep's July 2026 survey of nine open-source vulnerability-discovery harnesses records what builders of that workload assembled instead, and none of the seven its capability matrix covers uses a managed sandbox from the delivery table.[^semgrep] Per that matrix, [[defending-code-harness|defending-code-harness]] runs under [[gvisor|gVisor]] with an egress allowlist, [[raptor|RAPTOR]] under Landlock with seccomp and namespaces, and [[deepsec|deepsec]] under bubblewrap or Seatbelt locally with Vercel microVMs for distributed runs. Semgrep labels that matrix an LLM-generated reading of the repositories rather than the projects' own documentation, so every isolation value in this subsection rests on weaker provenance than the vendor-published rows above.
 
 Two of the harnesses sit outside the boundary taxonomy. [[vvah|VVAH]] restricts the tool surface and grants no Bash, and [[ai-deep-sast|ai-deep-sast]] is recorded as n/a because it executes nothing.[^semgrep] Both hold a stronger position than the weakest row in the table above, and both reach it by design rather than by runtime class: VVAH removes the capability the boundary would have contained, and ai-deep-sast removes the execution. A buyer comparing runtime classes has no column for either, because the decision is made in the workload's tool set rather than in a sandbox purchase. [[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] grades the tool-allowlist half. [[oss-ai-vuln-discovery-harness-landscape|The open-source harness landscape]] carries the per-project comparison.
+
+One skill-shaped project supplies its own boundary and publishes the assumption behind it. [[mantis|Mantis]]'s reference harness exposes four selectable sandbox mechanisms — static-only, [[gvisor|gVisor]], microsandbox, and a Compute Engine remote sandbox — and names gVisor registered for networkless execution as the prerequisite for running untrusted AI-generated crash-reproducer code.[^mantis-repo] Its README then declines to treat those defaults as sufficient, instructing an operator on the most advanced frontier models to add a further sandboxing layer carrying strong monitoring for escape attempts.[^mantis-repo] That instruction states what the tables above leave implicit: a runtime class bounds the damage from a successful escape and detects no attempt at one, so monitoring is a separate purchase from isolation.
 
 ## Buyer guidance
 
@@ -120,3 +126,4 @@ Both tables sort on the boundary and its delivery, and score every offering on w
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 [^semgrep]: Semgrep, [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (July 2026; no day-level date is exposed, and the month is inferred from an embedded screenshot dated 2026-07-20 and a forward reference to a Black Hat announcement in August 2026). The pipelines-versus-skills comparison and every value in the isolation column are labelled by Semgrep as LLM-generated summaries of the repositories. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
 [^infoq]: [InfoQ — Google Announces GKE Agent Sandbox and Hypercluster at Next '26](https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/), May 2026. "Only native agent sandbox offering among the three major hyperscalers"; Cloudflare Sandboxes (container + V8 isolates) and E2B (Firecracker microVMs) as the independent comparison set.
+[^mantis-repo]: [google/mantis](https://github.com/google/mantis), read at commit `21ef4b4c45ccd1d2a33b9079b2e37ec37d934571` (2026-09-17): 21 skills and an ADK reference harness under Apache 2.0, with the sandbox roster and the responsible-use constraints quoted from README.md and README_AGENTS.md. Local extract at `.raw/reports/google-mantis-repository-2026-09-18.md`. Summarized at [[mantis|Mantis (Google)]].

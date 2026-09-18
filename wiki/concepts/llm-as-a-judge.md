@@ -2,7 +2,7 @@
 type: concept
 title: "LLM-as-a-Judge"
 created: 2026-04-30
-updated: 2026-09-01
+updated: 2026-09-18
 tags:
   - concepts
   - evaluation
@@ -36,19 +36,19 @@ related:
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
   - "[[exploit-benchmarks]]"
   - "[[autonomous-exploit-generation]]"
+  - "[[google-cloud-autonomous-sdlc-security]]"
 sources:
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md"
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://www.cybergym.io/exploitgym/"
-verified: 2026-09-01
+  - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
+verified: 2026-09-18
 verified_against:
-  - ".raw/articles/exploitgym-2026-08-31.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_slides.pdf"
+  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
   - ".raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md"
-verified_findings: 1
-verified_note: "PARTIAL — this pass read the Semgrep source only; 3 other source(s) unread. Fingerprinted over the read subset so the queue keeps the page instead of counting it fully verified (see issue #146). UNRESOLVED from the prior read (1): Four verifier groups + pluggable verified vs slide/transcript; 'ranking rather than a pass-or-fail gate' overstates the source, which states a pass gate || 2026-08-31 partial re-read (cybergym.io material only): New agent-as-a-judge section read against the exploitgym raw doc: role, the intended-vs-total split, and the absence of any judge-accuracy measurement all correct. Stripe-talk material not re-read. || 2026-09-01 Semgrep pass: Semgrep-sourced claims only. Both dedup-judge instances match Reference 1 and Reference 2 and are labelled LLM-generated."
+verified_findings: 0
+verified_note: "Read scoped to this pass's release-gate paragraph and the eval-pipeline uses section. Evaluation-agent regression loop confirmed against the article; both Stripe 10% accuracy figures confirmed in the transcript and now carry a footnote. Rendered Sources block regenerated."
 ---
 
 # LLM-as-a-Judge
@@ -82,8 +82,8 @@ The resolution assumes a gold standard exists. One production role has none on e
 The [[guardrails-beyond-vibes-talk|Stripe threat modeling case]] illustrates three distinct operational uses beyond basic accuracy measurement:
 
 1. **Prompt engineering guidance** — low-scoring test cases highlight where the prompt fails; improvements follow the failure distribution across the test set, which avoids overfitting to individual edge cases.
-2. **Model selection** — when choosing between base LLM models, duplicating the golden test set (to average out non-determinism) and running all candidates through the same scorer gives an empirical comparison. At Stripe, this process yielded +10% accuracy improvement.
-3. **Regression detection** — the most important use. A prompt change can *look fine on individual runs* (correctly formatted JSON output) while it *reduces overall accuracy by 10%*, because the agent attends to formatting at the expense of security content. The eval pipeline surfaces this; individual inspection does not.
+2. **Model selection** — when choosing between base LLM models, duplicating the golden test set (to average out non-determinism) and running all candidates through the same scorer gives an empirical comparison. At Stripe, swapping in the highest-scoring model yielded about a 10% increase in accuracy, on top of about a 10% increase from prompt iteration guided by the same pipeline.[^stripe]
+3. **Regression detection** — the most important use. A prompt change can *look fine on individual runs* (correctly formatted JSON output) while it *reduces overall accuracy by 10%*, because the agent attends to formatting at the expense of security content.[^stripe] The eval pipeline surfaces this; individual inspection does not.
 
 **Regression detection is the primary value.** The [[guardrails-beyond-vibes-talk|Stripe talk]] is explicit: "This eval pipeline really gives us confidence in the changes we make to our prompt in the sense that they're applying generally speaking, rather than just in minute cases." The pipeline serves as a standing ground-truth check against which every prompt modification is tested.
 
@@ -98,7 +98,7 @@ LLM-as-a-Judge addresses evaluation confidence; it does not replace human review
 
 ## As a regression gate in patch generation
 
-A second production pattern uses the judge as a release gate on generated code rather than as an evaluation harness. Google's [[codemender|CodeMender]] applies an LLM judge to check that a security patch preserves the functional behavior of the code it modifies. The judge is one member of a four-group validation stack Google presented in March 2026 — dynamic analysis (fuzzing, sanitizers), static analysis (AST-based checks, formal verification), differential testing, and LLM judges and critics — and Google states the set is pluggable.[^google-talk] The judge runs under what Flynn described as a carefully crafted pre-prompt. A patch must pass the full verifier stack to become a candidate, and the patches that pass are then ranked for submission: the agent produces several candidate patches, and when none clears the stack the validation failures return to the model's context to generate a fresh set, validated and ranked in turn. The [[google-cloud-codemender-preview|Google Cloud preview]] carries a judge check into the shipped remediate stage, where it screens a patch for functional disruption before the diff reaches a developer.
+A second production pattern uses the judge as a release gate on generated code rather than as an evaluation harness. Google's [[codemender|CodeMender]] applies an LLM judge to check that a security patch preserves the functional behavior of the code it modifies. The judge is one member of a four-group validation stack Google presented in March 2026 — dynamic analysis (fuzzing, sanitizers), static analysis (AST-based checks, formal verification), differential testing, and LLM judges and critics — and Google states the set is pluggable.[^google-talk] The judge runs under what Flynn described as a carefully crafted pre-prompt. A patch must pass the full verifier stack to become a candidate, and the patches that pass are then ranked for submission: the agent produces several candidate patches, and when none clears the stack the validation failures return to the model's context to generate a fresh set, validated and ranked in turn. The [[google-cloud-codemender-preview|Google Cloud preview]] carries a judge check into the shipped remediate stage, where it screens a patch for functional disruption before the diff reaches a developer. The same vendor runs the same gate without a judge elsewhere: in the patching pipeline Google Cloud describes inside its own lifecycle, an evaluation agent runs a regression loop that recompiles the code and executes tests, and only fully validated fixes are submitted to a human reviewer.[^gcp-sdlc] Compilation and a test suite return a harder verdict than a judge on the identical question, so the choice between the two instruments is where a programme decides how much of its regression confidence rests on a model.
 
 The circularity problem applies here in a weaker form. The judge is not asked whether the patch is *secure* (the scan and verify stages establish that) but whether two versions of a function are semantically equivalent outside the fixed defect. That is the same narrowed semantic-matching task the [[guardrails-beyond-vibes-talk|Stripe pattern]] isolates, and it has a stronger ground truth than most: the original code is the gold standard, and the test suite is an independent check on the judge's verdict. Google publishes no data on how often the judge is right.
 
@@ -126,9 +126,13 @@ The division of labour is the [[guardrails-beyond-vibes-talk|Stripe pattern]] ap
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). Both dedup-judge facts are from Semgrep's LLM-generated repository summaries (Reference 1 and Reference 2). Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
 [^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
+[^stripe]: Jeffrey Zhang and Sid, *Guardrails beyond Vibes: Shipping Security Agents in Production*, Unprompted Conference I, March 2026. Abstract: [unpromptedcon.org/abstract-march2026](https://unpromptedcon.org/abstract-march2026/); transcript archived at `.raw/talks/2026-03-03_Jeffrey-Zhang-and-Sid_Guardrails-beyond-Vibes_transcript.md`. Wiki summary: [[guardrails-beyond-vibes-talk|Guardrails Beyond Vibes]]. Both accuracy figures are practitioner-reported from one team's internal golden set, not an industry benchmark.
+[^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].
 
 <!-- sources:auto -->
 ## Sources
 
 - [LLM-as-a-Judge](https://arxiv.org/abs/2306.05685)
+- [cybergym.io](https://www.cybergym.io/exploitgym/)
+- [Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally)
 <!-- /sources -->
