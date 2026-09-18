@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - practices
   - agentic-coding
@@ -184,7 +184,7 @@ A September 2026 canvass of twenty-one agent-runtime-protection vendors found on
 
 Masking carries preconditions a configuration can miss. It is honored only from user, managed, and `--settings` sources — `mask` entries in a repository's `settings.json` are ignored — and every `injectHosts` entry must itself be covered by `allowedDomains`. Without `tlsTerminate` the sentinel reaches the server unchanged and authentication fails rather than leaking, which is the right failure direction but means the control is either working or visibly broken, never silently partial.
 
-The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: a broad allowlist entry such as `github.com` is reachable by domain fronting. **A hostname allowlist without TLS termination grades as a misconfiguration control.** An exfiltration claim rests on the TLS-terminating row above it, and [[agentic-ai-security-cmm-d5-egress-network|D5]] scores it on that basis.
+The default proxy makes its allow decision from the client-supplied hostname without inspecting TLS. The vendor documentation states the consequence directly: code running inside the sandbox can use domain fronting or a similar technique to reach hosts outside the allowlist, even where the allowlist includes a broad entry such as `github.com`.[^ccsandbox] **A hostname allowlist without TLS termination grades as a misconfiguration control.** An exfiltration claim rests on the TLS-terminating row above it, and [[agentic-ai-security-cmm-d5-egress-network|D5]] scores it on that basis.
 
 ### Data plane
 
@@ -271,3 +271,7 @@ That pattern also answers the cross-harness limit above from a second direction.
 ## Promotion Path
 
 If a standards body publishes a control set for agentic software development — the natural candidates being an SSDF extension or an OWASP agentic-coding guide — this page becomes a crosswalk to it rather than a standalone catalog.
+
+## Notes
+
+[^ccsandbox]: [Anthropic — Claude Code sandboxing](https://code.claude.com/docs/en/sandboxing), fetched 2026-09-18. Security limitations: the built-in proxy makes its allow decision from the client-supplied hostname and by default does not terminate or inspect TLS, so code running inside the sandbox can use domain fronting or similar techniques to reach hosts outside the allowlist, and stronger TLS-aware network isolation is named as an active area of development. The experimental `network.tlsTerminate` setting, available in Claude Code v2.1.199 and later, terminates TLS at the proxy for masked-credential substitution and adds no content filtering; a threat model requiring stronger guarantees is directed to a custom proxy that terminates TLS, inspects traffic, and carries its CA certificate inside the sandbox.

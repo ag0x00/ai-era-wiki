@@ -3,7 +3,7 @@ type: review
 title: "CMM Stress Test: Canadian FI on Google Cloud"
 address: c-676733
 created: 2026-09-15
-updated: 2026-09-15
+updated: 2026-09-18
 tags:
   - reviews
   - cmm
@@ -416,6 +416,8 @@ This review scores two deployment shapes for one persona. It does not re-score t
 ## Disposition
 
 This page is an immutable dated snapshot. Its scores describe the vault's state on 2026-09-15 and are not revised as the pages move; a later re-run supersedes it by a forward link from this section rather than by an edit. The fifteen APPLY-NOW changes were applied in the same pass and are enumerated in Part 7. The seventeen RECOMMEND changes are recorded as items 6 to 21 in [[cmm-known-limitations|CMM Known Limitations]] and remain calibration decisions for the operator.
+
+One statement in Part 4 is superseded on direction rather than by a re-run. Its D5 paragraph reads that a broad allowlist entry stays reachable by domain fronting. The vendor reference states the reverse: the proxy decides from the client-supplied hostname without inspecting TLS, so code running inside the sandbox can use domain fronting to reach hosts outside the allowlist. The risk is escape from the allowlist rather than exposure of an entry within it, and [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]] carries the corrected statement with its source.
 
 [^managed]: [Claude Code managed settings](https://code.claude.com/docs/en/managed-settings), fetched 2026-09-15.
 [^iam]: [Claude Code identity and access management](https://code.claude.com/docs/en/iam), fetched 2026-09-15.
