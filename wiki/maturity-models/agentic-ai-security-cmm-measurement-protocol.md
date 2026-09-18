@@ -43,11 +43,10 @@ sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
   - "BSIMM observation/assertion model"
   - "CMMC 2.0 three-level assessment guides"
-verified: 2026-09-16
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
-verified_findings: 0
+verified: 2026-09-18
+verified_against: []
+verified_findings: 1
+verified_note: "Assurance-class table fixed so a compliance report falls in one class only; open: the five-field rule the section states demands a period covered that no exemplar record on any deep dive carries."
 ---
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)
@@ -64,7 +63,7 @@ This protocol measures deployments; [[standards-validation-methodology-2026-05|t
 
 - [Three-stage assessment](#three-stage-assessment) — pre-engagement, evidence collection, scoring
 - [Stage 1 — pre-engagement](#stage-1--pre-engagement-12-weeks)
-- [Stage 2 — evidence collection](#stage-2--evidence-collection-24-weeks) — interview script, cross-domain questions, artifact checklist, live observation
+- [Stage 2 — evidence collection](#stage-2--evidence-collection-24-weeks) — assurance classes, interview script, cross-domain questions, artifact checklist, live observation
 - [Stage 3 — scoring & report](#stage-3--scoring--report-1-week) — rubric, aggregation rule, gap report
 - [Sample assessment timeline](#sample-assessment-timeline)
 - [Assessor competence requirements](#assessor-competence-requirements)
@@ -106,11 +105,27 @@ A document missing from item 3 scores automatic L1 in the relevant domain. Items
 
 ### Stage 2 — Evidence collection (2–4 weeks)
 
-Three parallel tracks: interviews, artifacts, live observation. The interview track runs a per-domain block and a cross-domain block.
+Three parallel tracks: interviews, artifacts, live observation. The interview track runs a per-domain block and a cross-domain block. The assurance class below records the kind of evidence behind a verdict and the track it came from.
+
+#### Assurance classes
+
+The class of evidence settles a criterion, and the party operating the control does not. A control the customer tests, a control the vendor attests to in a document the customer holds, and a control whose operating state the customer reads out of vendor tooling each carry a **met** or **not met** verdict. A vendor-operated control is graded on the evidence the vendor produces, and vendor operation alone puts no criterion out of reach.
+
+| Assurance class | Evidence | Track |
+|---|---|---|
+| **Tested** | The assessor or the customer exercised the control and recorded what it did | Live observation |
+| **Inspected** | Vendor tooling the customer can reach reports the control's operating state in this tenant: an audit-log entry, an administrative console view, a configuration or policy export | Artifacts |
+| **Attested** | The vendor states the control in a document the customer holds: an assurance or compliance report under a recognized scheme, a contractual commitment, or product documentation | Artifacts |
+
+Inspected and attested separate on whether the artifact's content depends on this tenant's runtime. An audit record, a console view and a configuration export each read differently in a tenant where the control ran and in one where it did not; an assurance report, a contract clause and a documentation page read the same either way.
+
+**A verdict on inspected or attested evidence names the artifact.** Five fields make the record re-checkable by a second assessor: the issuer, the artifact's title with its report or version identifier, the date it was issued or extracted, the service and tenant it covers, and the period it covers. A record naming only the document class, such as the vendor's compliance report or the administrative console, leaves a re-assessment nothing to refresh, so the assessor collects the five fields before recording the verdict.
+
+Verbal assurance from a vendor carries no class, because a verdict on inspected or attested evidence names an artifact and a conversation produces none. **Unanswerable** is the verdict where the customer can run no test and the vendor supplies neither an attestation nor inspectable output.
 
 #### Interview script (per domain)
 
-Each domain has a structured interview block. Sample questions are not exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier. Each criterion the answers bear on takes one of four verdicts: **met**, **not met**, **not applicable** or **unanswerable**. The Stage 3 per-domain scoring rubric below defines the four, and the assessor records them from Stage 2 onward.
+Each domain has a structured interview block. Sample questions are not exhaustive; the assessor follows up on every "yes we do that" with "show me." Pure verbal evidence is L2 at best; L3+ requires artifact corroboration. The cross-domain questions that follow these blocks are asked on top of them, in every domain scored on a guard, a sandbox, a detector, or a classifier. Each criterion the answers bear on takes one of four verdicts: **met**, **not met**, **not applicable** or **unanswerable**. The Stage 3 per-domain scoring rubric below defines the four, and the assessor records them from Stage 2 onward, each **met** or **not met** verdict carrying the assurance class above.
 
 **D1 Governance**
 - Who chairs the AI Risk Committee? When did it last meet? Show the minutes.
@@ -155,7 +170,7 @@ Each domain has a structured interview block. Sample questions are not exhaustiv
 **D6 Data, Memory & RAG**
 - Before the entitlement questions below: show the classification scheme over the corpus this agent reaches, at the grain its authorization layer grants on, and the first assessment of what the agent reaches and for whom. Over a document corpus or a tenant these are the sensitivity-labeling scheme and the oversharing assessment. Over a source repository they are a register of the repositories the agent reaches, each carrying a data classification and the paths excluded from retrieval, and a review of which repositories and branches that reach spans against the developers who can read them. Grading is cumulative, so a shape producing neither does not reach L3 whatever its enforcement does; record the missing artifact rather than reading the clause as document-corpus-only and passing over it.
 - For a closed-corpus bot (the common shape): when user `[A]` and user `[B]` ask the same question, does the agent trim answers to each one's entitlements? Show answer-time enforcement under the *querying* user's identity, not a service identity. Show the last oversharing assessment and the remediation record on the reachable corpus.
-- For a productivity assistant over a whole tenant (mail, files, calendar): name the corpora the assistant reaches for user `[A]`, then show that a document, message or calendar entry which `[A]` can open and `[B]` cannot is absent from `[B]`'s answer to the same question. The tenant ACL and the data-loss-prevention rule are the authorization layer here, as a corpus scope is elsewhere, so record which of the two produced the trim. Show the last oversharing assessment over the reachable tenant and the remediation record. Where the assistant is vendor-operated and the enforcement runs inside it, the criterion is **unanswerable** and the assessor records the vendor's documented statement plus the customer-side configuration that bounds reach.
+- For a productivity assistant over a whole tenant (mail, files, calendar): name the corpora the assistant reaches for user `[A]`, then show that a document, message or calendar entry which `[A]` can open and `[B]` cannot is absent from `[B]`'s answer to the same question. The tenant ACL and the data-loss-prevention rule are the authorization layer here, as a corpus scope is elsewhere, so record which of the two produced the trim. Show the last oversharing assessment over the reachable tenant and the remediation record. The enforcement runs inside the vendor and this comparison runs from the customer's own tenant, so record the verdict from what it shows. Where the comparison cannot be run, grade on the vendor's documented statement of answer-time entitlement enforcement and record the assurance class.
 - For a desktop agent of the [[claude-cowork|Claude Cowork]] class, run the same two-principal comparison twice, because the corpus carries two authorization layers. Over a connector, the assistant inherits each member's permissions in the source system, so the trim is the source system's and the record names the connector and the permission categories an owner set on it. Over a connected folder, the reach is whatever the member's operating-system account can open inside it, so the folder selection is the whole of the local scope and the record names the selected paths, from the telemetry's `workspace.host_paths` or from the allowed-workspace-folders key in a managed device profile. The oversharing assessment covers the connected folders alongside the tenant.
 - For a coding agent over a repository: name the repositories and branches the agent reaches for developer `[A]`, then run the same retrieval for developer `[B]`, who cannot read a branch or path `[A]` can, and show that branch or path absent from `[B]`'s result and present in `[A]`'s. One transcript proves nothing, because a branch that was never cloned into the working copy is absent for everyone. The developer's repository and branch grants and the path scope of the working copy are the authorization layer here, as per-document entitlements are elsewhere, so record which of the two produced the trim. Where a developer asks and the agent retrieves under a service or bot identity, the criterion is **not met** unless that developer's grants narrow the identity's reach. Where the run carries no asking principal, as in an event-triggered build or a scheduled job, the assessor records the scope that non-human identity holds and what binds it to the task. A scope covering the repositories the task reads satisfies the criterion; the reach of the whole estate does not.
 - For RAG: show me document attestation at ingest. Show a poisoned-document detection.
@@ -247,7 +262,7 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 
 **Auditability begins at Level 3.** Below L3 the organization is structurally vulnerable, and the assessment turns largely on whether the evidence supports L2 over L1. At L3 and above the assessor checks platform-level enforcement, ID tagging, and live behavior.
 
-**Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and no available evidence settles the question). A score in the rubric above counts only the **met** criteria. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is a finding against the vendor rather than against the organization, and it never counts as met.
+**Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and the vendor supplies nothing that settles the question). A score in the rubric above counts only the **met** criteria. A **met** or **not met** verdict carries its assurance class — tested, inspected or attested, per Stage 2 — recorded beside the verdict and kept out of the score, so the matrix shows which controls the organization exercised and which its providers attest to. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is recorded where the customer can run no test and the vendor supplies neither an attestation nor inspectable output; it is a finding against the vendor rather than against the organization, and it never counts as met.
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
 
@@ -280,7 +295,7 @@ Active rule set (v1, 2026-05-04): DR-001 D2 caps D5 (per-agent identity required
 Final report contains, at minimum:
 
 1. **Executive summary** — three-number headline (typical / weakest / strongest), three-sentence framing, active rule-set version cited.
-2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion` (met / not met / not applicable / unanswerable, per the four-verdict scheme in Stage 3). The L5+ column may be left as "n/a" if the engagement does not target L5+.
+2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion` (met / not met / not applicable / unanswerable, per the four-verdict scheme in Stage 3), `assurance class per met and not-met verdict` (tested / inspected / attested, with the artifact named). The L5+ column may be left as "n/a" if the engagement does not target L5+.
 3. **Weakest-domain explanation** — which domain holds the weakest effective score, whether a dependency cap fired, and the strategic rationale (if any) for an intentional trade-off (Stripe-style architectural-containment).
 4. **ID-tagged finding registry** — every finding with `ASI##` / AIVSS score / `AML.T####` / CVE.
 5. **Test-coverage statement** — for each of the four agentic test layers (LLM reasoning, tool execution, infrastructure, inter-agent communication), which was exercised, to what depth, and against what corpus size. A threat category the programme did not test is reported as a finding rather than omitted.

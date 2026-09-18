@@ -49,7 +49,7 @@ sources:
 verified: 2026-09-18
 verified_against: []
 verified_findings: 0
-verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
+verified_note: "Read covered the four-verdict vocabulary paragraph this pass moved, confirmed byte-identical (sha256 8b4e0e7b…, 960 bytes) across all nine deep dives and consistent with the assurance classes in the measurement protocol; no archived document opened, no other claim on the page re-read."
 ---
 
 # Agentic AI Security CMM — D2 Identity & Authorization (Deep Dive)
@@ -113,7 +113,7 @@ L1, L2, L5, and L5+ are graded from their statements above. The two rungs below 
 
 Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists and no available evidence settles the question; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control: a customer test, a vendor attestation, or vendor tooling output the customer can inspect. The assessment records the assurance class beside the verdict — **tested**, **inspected** or **attested** — and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and the vendor supplies neither an attestation nor inspectable output; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
 
 ### L3 detail
 

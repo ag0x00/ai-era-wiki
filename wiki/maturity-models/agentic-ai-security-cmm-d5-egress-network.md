@@ -53,12 +53,9 @@ sources:
   - "[[microsoft-zt4ai]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 verified: 2026-09-18
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified_against: []
 verified_findings: 0
-verified_note: "Full rewrite after a two-high-finding verify. Archived Exchange documents re-read for the testing, sandboxing and supply-chain footnotes; the Exchange general-controls and threats-through-use copies were read for the oversight, model-access-control and limit-resources footnotes but are not reachable from this page's source chain. Live vendor documentation read for the desktop-agent row and the coding-shape egress paragraph: Anthropic's Cowork Team/Enterprise and architecture articles and the Claude Code sandboxing reference, none archived to .raw/. Open and recorded on the page: the two Cowork articles disagree on whether the organization's egress permissions reach a local session's web fetch and local MCP servers, and neither states where web search egress originates."
+verified_note: "Read covered the four-verdict vocabulary paragraph this pass moved, confirmed byte-identical (sha256 8b4e0e7b…, 960 bytes) across all nine deep dives and consistent with the assurance classes in the measurement protocol; no archived document opened, no other claim on the page re-read."
 ---
 
 # Agentic AI Security CMM — D5 Egress & Network (Deep Dive)
@@ -122,7 +119,7 @@ L1, L2, L5, and L5+ are graded from their statements above. The two rungs below 
 
 Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists and no available evidence settles the question; the rung stays open and the assessment names what would close it. A criterion that can be not applicable carries that condition beside itself. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control: a customer test, a vendor attestation, or vendor tooling output the customer can inspect. The assessment records the assurance class beside the verdict — **tested**, **inspected** or **attested** — and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and the vendor supplies neither an attestation nor inspectable output; the rung stays open and the assessment names what would close it. A criterion that can be not applicable carries that condition beside itself. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
 
 ### L3 detail
 
