@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D5: Egress and Network"
 address: c-000127
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -44,6 +44,7 @@ related:
   - "[[oss-ai-vuln-discovery-harness-landscape]]"
   - "[[semgrep-oss-ai-security-harness-comparison]]"
   - "[[defending-code-harness]]"
+  - "[[cmm-known-limitations]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[microsoft-zt4ai]]"
@@ -95,6 +96,8 @@ Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|r
 - **L1 — Initial.** Agents have unrestricted network egress.
 - **L2 — Developing.** Each agent has an outbound destination allowlist (DNS- or proxy-level), with the egress reach of each allowlisted internal destination recorded.
 - **L3 — Defined.** An agent-aware gateway sits in-path between agent and external tools, LLMs, and MCP servers, carrying per-tool authorization with token governance and inline content safety, MCP brokered on OAuth/JWT, and inter-agent traffic under a documented enforcement profile. The resolver is closed as an independent channel and per-agent call ceilings are enforced at the gateway, so DNS and call volume are not routes around it. Every L3 capability has a GA production path on every major platform — no cadence risk.
+The L3 gateway clause names four products and an "or equivalent", and [[cmm-known-limitations|the CMM's known limitations]] records the consequence: the four differ in what they broker, so an assessor reading the clause as one settled standard grades four different capabilities alike. The rung states a capability and the products are examples of it.
+
 - **L4 — Managed.** Topology carries the control rather than policy alone: no direct agent-to-agent path exists, so every inter-agent message transits a broker that authenticates and validates it; agents handling untrusted content are segmented from sensitive internal services; and the orchestrator holds no outbound path of its own. On top of that topology the gateway exchanges a token per tool call and screens for tool poisoning, A2A content, and MCP CVEs.
 - **L5 — Optimizing.** A mesh-deployed agent-aware proxy runs per agent with zero bypass; per-task egress capability tokens bind to the specific upstream resource; SSRF and direct-egress paths are closed at the network layer so all traffic leaves through the gateway, including calls to the allowlisted internal services an agent may still reach — each of those is itself egress-constrained, or it serves as a relay; the A2A signing profile is published and audited per release; the MCP CVE feed is wired to auto-quarantine without HITL.
 - **L5+ — Leading Edge.** sigstore-for-MCP cross-tenant signing (proposal stage, no shipping verifier); behavioral A2A drift detection (research-stage); cross-cloud egress federation with reconciliation across two or more agent-aware proxies.

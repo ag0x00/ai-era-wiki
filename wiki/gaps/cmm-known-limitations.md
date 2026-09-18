@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "CMM Known Limitations (current state)"
 created: 2026-05-06
-updated: 2026-09-16
+updated: 2026-09-18
 tags: [gaps, cmm, known-limitations, current-state]
 status: developing
 scope_axis:
@@ -44,7 +44,7 @@ Items 6 to 21 come from [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress 
 
 ### 1. `D5 L3` — combined MCP+A2A+LLM gateway treated as a settled standard
 
-The clause requires "an agent-aware proxy / gateway between agent and external tools enforcing per-tool RBAC (AgentGateway in Linux Foundation, Solo Enterprise, Cloudflare AI Gateway, Kong AI Gateway, or equivalent); HTTPS / TLS 1.3 + OAuth/mTLS for inter-agent [[a2a-protocol|A2A v1.0]] communication per spec §7."
+[[agentic-ai-security-cmm-d5-egress-network|D5]]'s clause requires "an agent-aware proxy / gateway between agent and external tools enforcing per-tool RBAC (AgentGateway in Linux Foundation, Solo Enterprise, Cloudflare AI Gateway, Kong AI Gateway, or equivalent); HTTPS / TLS 1.3 + OAuth/mTLS for inter-agent [[a2a-protocol|A2A v1.0]] communication per spec §7."
 
 The [[a2a-protocol|A2A v1.0.0 spec]] (LF-governed since June 2025) covers transport (§7) and Agent Card signing (§8.4) but **not** message-level integrity, replay protection, or cryptographic agent identity. These remain vendor-side ([[multi-agent-runtime-security|Oktsec-class enforcement]]) or proposal-side. Treating the combined MCP+A2A+LLM proxy as a settled `L3` (org-wide standard) requirement is aggressive without an org-authored A2A enforcement profile — which the CMM does call for ("orgs MUST document their own A2A enforcement profile, including signing algorithm and replay-protection layering"), but the org-authored-profile burden is the limitation.
 
@@ -58,7 +58,7 @@ The L5+ clause requires "cryptographic attestation that guardrails executed in a
 
 ### 3. `D2 L5` — Microsoft Agent 365 Registry "or equivalent" remains underspecified
 
-The clause references "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01; deployment evidence is now possible but not yet published at scale. "Or equivalent" softens the dependency on a single vendor, but the criterion does not state which capabilities an equivalent must match, so an assessor has no basis for grading a non-Microsoft deployment against it. A CISO at L5 needs to either pick Agent 365 or build the equivalent capability set themselves.
+[[agentic-ai-security-cmm-d2-identity|D2]]'s clause references "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01; deployment evidence is now possible but not yet published at scale. "Or equivalent" softens the dependency on a single vendor, but the criterion does not state which capabilities an equivalent must match, so an assessor has no basis for grading a non-Microsoft deployment against it. A CISO at L5 needs to either pick Agent 365 or build the equivalent capability set themselves.
 
 **Status:** [verified-current]. Re-check by 2026-Q3 once Agent 365 deployment evidence and competing-product feature parity are observable.
 
@@ -146,9 +146,9 @@ Two source facts stay unresolved and sit as watch items on the Canadian crosswal
 
 ### 18. Callout counts across the CMM family run over the one-per-page rule
 
-Two callouts sit on D1, D2, D4, D6 and D7, three on D9, one each on D3, D5 and D8, three on the scorecard and four on the core page, against a convention of at most one per page. The count is debt across the family and bears on no rung, and no page the September pass edited added one.
+Six pages in the family carry more than the one callout the convention allows, measured 2026-09-18: three on the base crosswalk and on D9, two on D1, D2, D4 and D7. The count is debt across the family and bears on no rung.
 
-**Status:** [new-2026-09-15]. Recommendation 29 reduces the counts across the nine deep dives, the core page and the scorecard. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [new-2026-09-15], recount [new-2026-09-18]. Four pages have since come down to one. The scorecard and D8 were reduced by the September pass; the core page and [[agentic-ai-security-cmm-d6-data-rag|D6]] were reduced by the D6 L2 restatement below, which had to touch both and inherited their callout debt with them, since this vault holds no lint baselines and a page is exempt only until it is touched. Recommendation 29 reduces the rest. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 19. `D3 L3` grades a decision point the coding harness holds itself
 
@@ -158,16 +158,19 @@ Two callouts sit on D1, D2, D4, D6 and D7, three on D9, one each on D3, D5 and D
 
 ## Limitations addressed by CMM revisions (archived)
 
-CMM revisions have resolved the items below: the first three appeared in §5 of the older validation page and closed during May 2026, and items 12, 20 and 21 closed on 2026-09-16. Kept as a historical record so a future reader does not reintroduce them.
+CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16 and item 22 on 2026-09-18. Kept as a historical record so a future reader does not reintroduce them.
 
-> [!check] `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
-> Original concern: "CSA ATF five-stage promotion gates not yet fully specified in published guidance." Refuted by 2026-05-06 verification: ATF v0.9.1 has **four** maturity levels (Intern / Junior / Senior / Principal) with concrete promotion criteria (minimum time, accuracy thresholds, availability targets, named security validations, sign-off matrix). The CMM's `D3 L4` clause was rewritten 2026-05-06 to match the actual ATF v0.9.1 spec; only the Principal-tier hardware-bound identity / policy-as-code primitives remain abstract enough to need org-authored rubric. See the 2026-05-06 follow-up log entry for details.
+### A. `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 
-> [!check] `D6 L5` provably bounded poisoning rate citing Nature Medicine 2024 0.001% (resolved 2026-05-04)
-> Original concern: "A medical-imaging study's empirical threshold is not a transferable assurance bound for arbitrary RAG corpora." The 2026-05-04 CMM revision softened the language: "**documented poisoning-rate bound based on domain-appropriate empirical evidence** (the corpus owner sets the threshold and cites the supporting study; the Nature Medicine 2024 0.001% medical-imaging finding is one example, not a general bound)."
+Original concern: "CSA ATF five-stage promotion gates not yet fully specified in published guidance." Refuted by 2026-05-06 verification: ATF v0.9.1 has **four** maturity levels (Intern / Junior / Senior / Principal) with concrete promotion criteria — minimum time, accuracy thresholds, availability targets, named security validations, and a sign-off matrix. The CMM's `D3 L4` clause was rewritten on 2026-05-06 to match the ATF v0.9.1 spec, and only the Principal-tier hardware-bound identity and policy-as-code primitives stay abstract enough to need an org-authored rubric.
 
-> [!check] `D7 L4` four red-team tools treated as interchangeable (resolved 2026-05-04)
-> Original concern: "Promptfoo / Mindgard CART / PyRIT / Garak have very different scopes; treating them as interchangeable understates the work." The 2026-05-04 revision added category-distinct framing: "**distinct attack categories** — orchestration / multi-turn (PyRIT), probe library (Garak), regression suite (Promptfoo), and continuous CART (Mindgard CART or equivalent). Single-tool coverage is not L4."
+### B. `D6 L5` took a medical-imaging poisoning threshold as a general bound (resolved 2026-05-04)
+
+Original concern: "A medical-imaging study's empirical threshold is not a transferable assurance bound for arbitrary RAG corpora." The clause named a percentage threshold attributed to a 2024 *Nature Medicine* study, and no page in this vault carries a resolvable citation for that figure, which is the second reason it could not stand as an evidence target. The 2026-05-04 revision replaced it with a **documented poisoning-rate bound based on domain-appropriate empirical evidence**, under which the corpus owner sets the threshold and cites the study supporting it. [[agentic-ai-security-cmm-d6-data-rag|D6]] L5 carries the current wording.
+
+### C. `D7 L4` four red-team tools treated as interchangeable (resolved 2026-05-04)
+
+Original concern: "[[promptfoo|Promptfoo]] / [[mindgard-cart|Mindgard CART]] / [[pyrit|PyRIT]] / [[garak|Garak]] have very different scopes; treating them as interchangeable understates the work." The 2026-05-04 revision added category-distinct framing: the four cover **distinct attack categories** — orchestration and multi-turn for PyRIT, a probe library for Garak, a regression suite for Promptfoo, and continuous CART for Mindgard CART or an equivalent — and single-tool coverage is not L4.
 
 ### 12. `D6` alone omitted the production-maturity preamble (resolved 2026-09-16)
 
@@ -181,13 +184,17 @@ Original item: the core page right-sized a coding-tool deployment to L4 across a
 
 Original item: `D6` L3 graded answer-time entitlement enforcement against a corpus carrying per-principal entitlements, which a source repository does not hold, so the September stress test scored that shape at L2 to L3 against an L3 target and recorded the spine as describing no repository. Resolved by restating the criterion rather than scoping `D6` out of the coding shape: L3 now asks which **authorization layer** resolves the asking principal's read authorization — per-document entitlements, repository and branch grants with a path-scoped retrieval, or a tenant access-control list with label-aware policy — and a run carrying no asking principal is graded on the scope binding the retrieval to the task. The measurement protocol's `D6` interview block carries the matching repository questions. Recommendation 32, shipped under [#172](https://github.com/ag0x00/ai-era/issues/172).
 
+### 22. `D6 L2` stated document-corpus capabilities after `L3` became shape-general (resolved 2026-09-18)
+
+Original item: item 21 restated `D6` L3 so the criterion resolves the asking principal's read authorization in whichever layer the corpus carries, and L2 was not restated with it. Its four clauses — source labels on retrievals, manual skill and plugin review, a sensitivity-labeling scheme on paper, and a first oversharing assessment — all described a document corpus. Grading is cumulative, so an assessor grading a coding agent or a productivity assistant had to decide unaided whether a repository-permission review counts as a data-risk assessment and whether source files carry a labeling scheme, and that decision governed whether the L3 verdict item 21 enabled was reachable at all. Resolved by giving L2 its grain from the same authorization layer L3 resolves in, with a per-shape reading on the deep dive: sensitivity labels over a document corpus or a tenant, and over a source repository a register of the repositories the agent reaches, each carrying a data classification and the paths excluded from retrieval. The repository is the unit because source control grants read access per repository and per branch, which is the grain L3 resolves against. No product in the D6 control landscape applies a data classification to a repository, so that register is an artifact a program builds rather than one it exports, and the deep dive states it. The core page's `D6` L2 row and the protocol's D6 artifact row and interview block moved in the same diff. Shipped under [#178](https://github.com/ag0x00/ai-era/issues/178).
+
 ## Contribution guide
 
 When a future review surfaces a new CMM limitation:
 1. Add a numbered subsection under **Still-current limitations** with the concrete CMM clause cited.
 2. Tag with `[verified-current]` (primary-source-checked), `[wiki-summary]` (only summary checked), or `[new-YYYY-MM-DD]` (newly identified).
 3. Recommend a fix, or record that the limitation is structural and therefore outside what CMM language can fix.
-4. When a CMM revision resolves it, move the item to **Limitations addressed by CMM revisions** and summarize the resolution there. The wiki allows one callout per page and this page carries three, so write the entry as an h3 heading with a plain paragraph, the form item 20 uses; a fourth `[!check]` callout fails the callout lint at pre-push.
+4. When a CMM revision resolves it, move the item to **Limitations addressed by CMM revisions** and summarize the resolution there, as an h3 heading with a plain paragraph. The wiki allows one callout per page and this page now carries none, so a `[!check]` on a resolved item fails the callout lint at pre-push twice over, once on the ceiling and once because the resolution belongs in the prose.
 
 Per-standard reviews from the audit backlog ([[standards-validation-methodology-2026-05|Standards Validation Methodology]]) will likely surface additional CMM limitations as they execute. Those should be filed here as well.
 
