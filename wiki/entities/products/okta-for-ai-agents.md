@@ -26,6 +26,7 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
+  - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/"
 verified: 2026-09-18
@@ -63,6 +64,8 @@ In the [[agentic-ai-security-reference-architecture|Agentic AI Security RA]], Ok
 - **Non-Human Identity governance** — the NHI posture layer (orphan detection, access review, credential rotation)
 
 The enterprise recommended stack in the RA pairs Okta for AI Agents with **CyberArk Conjur or Aembit** for NHI governance at organizations with existing PAM infrastructure.
+
+Gap 7 of [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] names three controls over a departing owner's agents — ownership attestation, orphaned-identity detection, and automatic revocation — and records that this product answers the first two and not the third: discovery and access review name a departing employee's agents, and the deactivation switch stays operator-invoked.
 
 ## Comparison with Microsoft Entra Agent ID
 

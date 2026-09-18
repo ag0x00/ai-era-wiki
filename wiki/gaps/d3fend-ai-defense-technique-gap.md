@@ -26,6 +26,7 @@ related:
   - "[[genai-endpoint-observability-talk]]"
   - "[[detection-deception-engineering-orbie-talk]]"
   - "[[mythos-ready-security-program]]"
+  - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "[[agentic-soc-cmm]]"
   - "https://d3fend.mitre.org/about/"
@@ -89,4 +90,4 @@ The proposed layer would stand to ATLAS **as D3FEND stands to ATT&CK: the defens
 
 ## Status notes
 
-Opened 2026-06-03 from the Agentic SOC RA+CMM build. Two pages reference it from a `[!gap]` callout: [[agentic-soc-cmm|Agentic SOC CMM]] §Open questions and gaps, and [[agentic-soc-reference-architecture|Agentic SOC RA]] §Gaps in the architecture. The AAI-S [[agentic-ai-security-reference-architecture|reference architecture]] carries a section under the same name and does not reach D3FEND. No catalogue work has started; the candidate-layer path above is the recommended first step if the gap is taken up.
+Opened 2026-06-03 from the Agentic SOC RA+CMM build. Two pages reference it from a `[!gap]` callout: [[agentic-soc-cmm|Agentic SOC CMM]] §Open questions and gaps, and [[agentic-soc-reference-architecture|Agentic SOC RA]] §Gaps in the architecture. The AAI-S [[agentic-ai-security-reference-architecture|reference architecture]] keeps its own gap list on [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]], and neither page reaches D3FEND. No catalogue work has started; the candidate-layer path above is the recommended first step if the gap is taken up.

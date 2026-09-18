@@ -224,7 +224,7 @@ Seven elements of Gartner's framing carry into that placement: the guardian-agen
 Seven controls the wiki carries reach further than the Market Guide does, and the placement keeps them:
 
 - The [[lethal-trifecta|Lethal Trifecta]] structural test.
-- The [[credential-proxy-pattern|Credential Proxy Pattern]], a concrete pattern with convergence across five tools.
+- The [[credential-proxy-pattern|Credential Proxy Pattern]], a concrete pattern with convergence across nine tools.
 - [[supply-chain-security-for-agents|Cognitive file integrity]].
 - Incident anchoring against named cases: [[clawhavoc|ClawHavoc — Agentic Skill Marketplace Supply Chain Attack]], [[sandworm-mode-npm-worm|SANDWORM_MODE npm worm — AI Toolchain Poisoning]], [[meta-sev-1-agent-breach|Meta Sev 1 AI Agent Breach]], and [[mcp-cves-q1-2026|MCP CVEs Q1 2026]].
 - The platform-level and prompt-level enforcement distinction.

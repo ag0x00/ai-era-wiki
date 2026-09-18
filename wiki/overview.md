@@ -19,24 +19,54 @@ verified_against: []
 verified_findings: 0
 verified_note: "Read against the measurement protocol enum and the live shape tables; the handbook half of the gap is closed for both variants and the line now says so."
 ---
-
-# Enterprise Security in the Agentic AI Era
+## About
 
 This research wiki tracks how agentic AI reshapes enterprise cybersecurity on two fronts: how organizations secure the AI systems they deploy, and how they defend the rest of the estate when attackers operate AI at machine speed.
 
 It synthesizes primary sources (frameworks, standards, peer-reviewed papers, vendor research, practitioner conference talks, and incident disclosures) into a cross-linked, independently maintained knowledge base. The wiki serves security executives, architects, detection engineers, and AI builders who need a view of the field broader than a vendor blog or a single framework.
 
-Two design choices distinguish it. First, the wiki separates **aggregated** pages (summaries of external work) from **produced** deliverables it authored. The reference architectures, capability maturity models, playbooks, gap pages, and thesis syntheses are the artifacts a reader can carry into a board meeting or an architecture review. Second, every numeric and absence claim cites a primary source, lint-enforced, so the conclusions are auditable.
-
 ## On this page
 
+- [Anchor deliverables](#anchor-deliverables): the reference architectures, maturity models, playbooks, and theses the rest cross-references.
 - [State of the field, mid-2026](#state-of-the-field-mid-2026): the shifts that set the operational ground, grouped by mechanism.
 - [Securing AI](#i-securing-ai): deploying and red-teaming AI systems safely.
 - [AI for defense](#ii-ai-for-defense): defenders using AI for detection, response, and vulnerability discovery.
 - [AI for offense](#iii-ai-for-offense): attackers using AI to exploit at machine speed.
 - [Defending against AI-driven attacks](#iv-defending-against-ai-driven-attacks): SDLC, supply chain, and operational programs under AI-augmented adversaries.
-- [Anchor deliverables](#anchor-deliverables): the reference architectures, maturity models, playbooks, and theses the rest cross-references.
 - [Continue reading](#continue-reading): full catalog and per-folder indexes.
+
+## Anchor Deliverables
+
+**Structural anchors, application security.** Six planes for the agentic-AI estate, scored by a nine-domain maturity model.
+
+- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: six planes (Identity, Control, Runtime, Egress, Data, Observability) with deployment-shape mappings and a threat-control matrix spanning the OWASP Agentic Top 10 and the five threat classes, cross-walked in the [[threat-taxonomy-reconciliation|reconciliation matrix]]. Satellites: [[agent-identity-architecture|Agent Identity Architecture]], and [[system-prompt-architecture|System Prompt Architecture]] for the residual-risk prompt layer — neither is itself a produced deliverable.
+- [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: five levels by nine domains with cross-domain dependency caps and ID-tagged evidence — the same maturity-gates-autonomy logic named for the SOC CMM below, applied to application security. Companions: the [[agentic-ai-security-cmm-crosswalk|standards crosswalk]], the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]], the [[agentic-ai-security-cmm-dependency-rules|dependency rules]], the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]], and the sector crosswalks for [[agentic-ai-security-cmm-crosswalk-us-fi|US]] and [[agentic-ai-security-cmm-crosswalk-canada-fi|Canadian]] regulated financial institutions.
+
+**Structural anchors, security operations.** A parallel pair for the agentic SOC, distinct from the application-security pair and overlapping only where the SOC's own agents need to be secured.
+
+- [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]]: six planes and per-function agent surfaces, cloud-native and SIEM-less by default.
+- [[agentic-soc-cmm|Agentic SOC CMM]]: a per-function autonomy ladder gated by eight maturity domains, under one rule: maturity gates autonomy.
+
+**Thesis anchors.** Each axis carries an evolving synthesis the wiki updates as evidence lands.
+
+- [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]: defense, and — per the convergence claim above — offense and securing AI besides.
+- [[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]]: defense and operations.
+- [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]]: offense.
+- [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: defending against AI-driven attacks.
+- [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: securing AI.
+- [[security-controls-for-ai-stacks|Security Controls for AI Stacks]]: securing AI — the six-layer control inventory (identity, observability, containment, network, model, data) against what has shipping tooling and what has published guidance alone.
+
+**Playbooks.** Operational deliverables a named audience executes directly.
+
+- [[mythos-ready-security-program|Mythos-ready Security Program]]: the general CISO playbook (ten-question triage, thirteen-row risk register, eleven-row priority actions, ninety-day plan).
+- [[canadian-bank-secure-sdlc-ai-assessor-scorecard|Assessor's Quick Scorecard: Secure-SDLC and AI]]: a sector-scoped scorecard for assessing secure-SDLC AI programs at Canadian financial institutions.
+
+**Comparisons and applied profiles.** Where published numbers conflict, or a reference model needs projecting onto one concrete deployment.
+
+- [[agent-sandbox-isolation-landscape|Agent Sandbox Isolation Landscape]]: the technology-selection counterpart to the RA's Runtime plane, scored by isolation-boundary mechanism and delivery model.
+- [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]]: the prior art behind "maturity gates autonomy" above, and where it stopped short of a full gating rule.
+- [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile]]: projects the six-plane RA and nine-domain CMM onto one concrete deployment, a closed-corpus RAG chatbot on Microsoft Copilot Studio.
+- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]: the Google-Cloud-only single-stack reading, projected onto the whole-tenant Gemini-for-Workspace productivity assistant.
 
 ## State of the field, mid-2026
 
@@ -64,7 +94,7 @@ The field's own accounting of that progress is contested on two fronts. Each ana
 
 The harness argument extends past discovery itself. Application security and security operations both adopt a supervisor-worker agent topology, an explicit human-authority boundary, and continuous evaluation built into the loop — captured as two produced pairs, a [[agentic-ai-security-reference-architecture|six-plane reference architecture]] and [[agentic-ai-security-cmm-2026|five-by-nine CMM]] for securing AI applications, and a parallel pair for the agentic SOC. Frontier-AI vulnerability discovery appears on three of the four axes at once: the same harness-plus-model shape underwrites red-teaming under Securing AI below, the vendor pipelines under AI for Defense, and the autonomous exploitation under AI for Offense. The argument in [[frontier-ai-for-vuln-discovery|the defense thesis]] turns on the harness because that is the part reused across all three.
 
-The four sections below treat each axis the wiki tracks.
+The four sections below take one axis each.
 
 ## I. Securing AI
 
@@ -82,9 +112,7 @@ Agent inventory is forming as a product category ahead of the schedule the field
 
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: the six-plane structural model (Identity, Control, Runtime, Egress, Data, Observability).
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: the five-level by nine-domain capability maturity model with cross-domain dependency caps and ID-tagged evidence.
-- [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]: the September re-run of the May calibration stress test, for a Canadian federally regulated FI on GCP and Google Workspace. Two shapes are scored per domain, Claude Code for software development and Gemini for day-to-day tasks. The CMM's rungs survive the platform swap; its core tooling map now carries a Platform-native (Google) column and all nine cost models now state the Google difference; the productivity-assistant shape had no row on the core table or in the Assessor's Handbook, and both its variants now carry one.
 - [[threat-modeling-for-ai|Threat Modeling for AI]]: the spine that reconciles the seven threat taxonomies and walks one worked example from threat to control.
-- [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]]: the agent-orchestration risk taxonomy.
 - [[non-human-identity|Non-Human Identity]]: the machine credential an AI agent carries, now a GA platform-native capability on the three hyperscalers. Its fourth amplifier is onset: an agent exercises its launcher's entitlement set from day one, where a human hire grows into one.
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: the testing thesis covering probe libraries, orchestration, and continuous adversarial evaluation.
 - [[microsoft-sdl-evolving-security-practices|Microsoft SDL for AI]]: the first major-vendor secure-SDLC framework with an explicit AI extension.
@@ -153,47 +181,6 @@ The threat side is no longer hypothetical. [[gtg-1002-ai-orchestrated-espionage|
 - [[vulnops|VulnOps]]: Gadi Evron's permanent-function framing for AI-era vulnerability response.
 - [[cyber-poverty-line|Cyber Poverty Line]]: Wendy Nather's anchor for the capability gap between attackers and small-team defenders.
 
-## Anchor Deliverables
-
-Most pages on the wiki are **aggregated**. A reader carries the **produced** set below into an architecture review, a CMM scoring session, or a board briefing. Point-in-time assessments of those deliverables (standards reviews, validation passes, stress tests) collect under [[wiki/reviews/_index|Reviews]] as dated, frozen snapshots.
-
-**Structural anchors, application security.** Six planes for the agentic-AI estate, scored by a nine-domain maturity model.
-
-- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: six planes (Identity, Control, Runtime, Egress, Data, Observability) with deployment-shape mappings and a threat-control matrix spanning the OWASP Agentic Top 10 and the five threat classes, cross-walked in the [[threat-taxonomy-reconciliation|reconciliation matrix]]. Satellites: [[agent-identity-architecture|Agent Identity Architecture]], and [[system-prompt-architecture|System Prompt Architecture]] for the residual-risk prompt layer — neither is itself a produced deliverable.
-- [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: five levels by nine domains with cross-domain dependency caps and ID-tagged evidence — the same maturity-gates-autonomy logic named for the SOC CMM below, applied to application security. Companions: the [[agentic-ai-security-cmm-crosswalk|standards crosswalk]], the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]], the [[agentic-ai-security-cmm-dependency-rules|dependency rules]], the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]], and the sector crosswalks for [[agentic-ai-security-cmm-crosswalk-us-fi|US]] and [[agentic-ai-security-cmm-crosswalk-canada-fi|Canadian]] regulated financial institutions.
-
-**Structural anchors, security operations.** A parallel pair for the agentic SOC, distinct from the application-security pair and overlapping only where the SOC's own agents need to be secured.
-
-- [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]]: six planes and per-function agent surfaces, cloud-native and SIEM-less by default.
-- [[agentic-soc-cmm|Agentic SOC CMM]]: a per-function autonomy ladder gated by eight maturity domains, under one rule: maturity gates autonomy.
-
-**Thesis anchors.** Each axis carries an evolving synthesis the wiki updates as evidence lands.
-
-- [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]: defense, and — per the convergence claim above — offense and securing AI besides.
-- [[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]]: defense and operations.
-- [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]]: offense.
-- [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: defending against AI-driven attacks.
-- [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: securing AI.
-- [[security-controls-for-ai-stacks|Security Controls for AI Stacks]]: securing AI — the six-layer control inventory (identity, observability, containment, network, model, data) against what has shipping tooling and what has published guidance alone.
-
-**Playbooks.** Operational deliverables a named audience executes directly.
-
-- [[mythos-ready-security-program|Mythos-ready Security Program]]: the general CISO playbook (ten-question triage, thirteen-row risk register, eleven-row priority actions, ninety-day plan).
-- [[canadian-bank-secure-sdlc-ai-assessor-scorecard|Assessor's Quick Scorecard: Secure-SDLC and AI]]: a sector-scoped scorecard for assessing secure-SDLC AI programs at Canadian financial institutions.
-
-**Comparisons and applied profiles.** Where published numbers conflict, or a reference model needs projecting onto one concrete deployment.
-
-- [[mcp-exposure-measurements|MCP Exposure Measurements]]: the correction record for a path-traversal overstatement this wiki itself carried until 2026-08-22.
-- [[agent-sandbox-isolation-landscape|Agent Sandbox Isolation Landscape]]: the technology-selection counterpart to the RA's Runtime plane, scored by isolation-boundary mechanism and delivery model.
-- [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]]: the prior art behind "maturity gates autonomy" above, and where it stopped short of a full gating rule.
-- [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile]]: projects the six-plane RA and nine-domain CMM onto one concrete deployment, a closed-corpus RAG chatbot on Microsoft Copilot Studio.
-- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]: the Google-Cloud-only single-stack reading, projected onto the whole-tenant Gemini-for-Workspace productivity assistant; finds that Google's agent policy decision point and its egress perimeter do not compose, and that a Canadian Agent Platform deployment spans two regions by construction because model serving and Model Armor sit in different ones, while the Workspace assistant has no Canadian option at all.
-
-**Frameworks and practices.**
-
-- [[red-teaming-capability-framework|Red Teaming Capability Framework]]: a layered red-teaming capability model for first-party agentic AI, scoped to red-team leads and security architects.
-- [[guardian-agent-metagovernance|Guardian Agent Metagovernance]]: governs the guardian or oversight agent itself, so the oversight layer does not become its own single point of failure.
-
 ## Continue reading
 
 - Per-folder indexes:
@@ -203,6 +190,7 @@ Most pages on the wiki are **aggregated**. A reader carries the **produced** set
   - [[wiki/entities/_index|Entities]]: organizations, products, and people.
 
 For wiki conventions and the writing register, see [[conventions|Wiki Conventions]].
+
 
 ## Notes
 

@@ -45,6 +45,8 @@ related:
   - "[[vvah]]"
   - "[[deepsec]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[csa-maestro]]"
+  - "[[wiki-novelty-and-counterarguments-2026]]"
   - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
@@ -146,6 +148,8 @@ AWS AgentCore Policy (GA), the Microsoft Agent Governance Toolkit (OSS), and Ver
 - **Task-scope authorization at invocation.** Every tool invocation is authorized against the invoking agent's current task scope and role as well as against the tool's own annotation, so a call to an individually authorized tool made while the agent performs an out-of-scope task is denied and recorded as an [[agent-escape|agent escape]] event.[^aix-escape]
 - **A session action ledger alongside the per-call decision**, so the policy engine takes cumulative session activity as a decision input and blocks a sequence of individually permitted steps that aggregates past a threshold — the salami-sliced pattern that passes every per-call check.[^aix-leastmodelpriv]
 - **Full delegation-chain validation.** The policy engine validates the whole delegation chain, where the agents in the chain would otherwise each validate their own link, and enforces a configured maximum depth. Delegation is subset-only: a downstream agent holds at most the grants its delegator held, and cumulative privilege above the session's inception authorisation is blocked.[^aix-leastmodelpriv]
+
+CSA's Agentic Trust Framework names five promotion-gate categories — Performance, Security Validation, Business Value, Incident Record, Governance Sign-off — but publishes no threshold or scored rubric behind any of them ([[csa-maestro|CSA MAESTRO / CSA Agentic Trust Framework]]), so the first bullet's "documented criteria" is a rubric the assessed organization writes, not one CSA ships. [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] tracks this org-authored-rubric dependency as an open contest against the standard this rung cites.
 
 ### L5 detail
 

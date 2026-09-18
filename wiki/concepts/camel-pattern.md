@@ -27,6 +27,7 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[owasp-ai-exchange]]"
   - "[[prompt-injection-containment]]"
+  - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "https://arxiv.org/abs/2503.12599"
 verified: 2026-09-18
@@ -101,6 +102,7 @@ The Exchange lists the pattern among five structural mitigations it recommends a
 - [[agent-sandboxing|Agent Sandboxing]]: OS-level complement; Firecracker can isolate the quarantined LLM process
 - [[firecracker|Firecracker]]: the recommended OSS sandbox for isolating the quarantined LLM
 - [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] §Runtime plane
+- [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] gap 1: the architecture records that no vendor-neutral implementation of this pattern ships, and that Microsoft's FIDES enforces in tool-call middleware rather than over a generated program
 - [[prompt-injection-containment|Prompt Injection Containment]]: the containment stack CaMeL sits inside, and the Exchange's seven layers of protection
 
 ## Notes

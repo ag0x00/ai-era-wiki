@@ -4,7 +4,7 @@ title: "Agentic AI CMM vs Adopted Standards Validation"
 address: c-000163
 origin: produced
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-09-18
 tags: [reviews, validation, agentic-ai, cmm, standards-comparison]
 scope_axis:
   - sec-of-ai
@@ -26,6 +26,8 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
   - "[[standards-review-microsoft-rai-agent-365-2026-Q2]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[wiki-novelty-and-counterarguments-2026]]"
 ---
 
 > [!stale] Historical snapshot — do not cite for current claims (demoted 2026-05-06)
@@ -44,15 +46,14 @@ related:
 >
 > Per-standard reviews will land one at a time over the coming quarters. After enough of the backlog has executed, this page can be archived entirely; for now it stays as the forensic record of how the validation work was conducted.
 
-> [!check] All 5 recommendations addressed (2026-04-30)
-> §6 recommendations have been actioned in the same session:
-> 1. **Crosswalk matrix built** → [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]
-> 2. **Measurement protocol built** → [[agentic-ai-security-cmm-measurement-protocol|Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)]]
-> 3. **L5 claims softened** — D2 L5, D4 L5, D6 L5, D3 L4, D5 L3, D1 L5 reframed (see CMM revision history)
-> 4. **D9 Operations & Human Factors added** to the CMM as a 9th cross-cutting domain
-> 5. **ID-tagged evidence** elevated to a global rule at L3+ in the CMM
->
-> The CMM has moved from "well-argued proposal" toward "auditable model" per the validation §7 verdict criteria. Per-§6 status notes are inline below.
+**All 5 recommendations addressed (2026-04-30).** §6 recommendations have been actioned in the same session:
+1. **Crosswalk matrix built** → [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]
+2. **Measurement protocol built** → [[agentic-ai-security-cmm-measurement-protocol|Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)]]
+3. **L5 claims softened** — D2 L5, D4 L5, D6 L5, D3 L4, D5 L3, D1 L5 reframed (see CMM revision history)
+4. **D9 Operations & Human Factors added** to the CMM as a 9th cross-cutting domain
+5. **ID-tagged evidence** elevated to a global rule at L3+ in the CMM
+
+The CMM has moved from "well-argued proposal" toward "auditable model" per the validation §7 verdict criteria. Per-§6 status notes are inline below.
 
 # Validation: Agentic AI Security CMM vs Widely Adopted Standards
 
@@ -71,8 +72,7 @@ An adversarial review of [[agentic-ai-security-cmm-2026|Agentic AI Security Capa
 
 ### NIST AI RMF 1.0 + AI 600-1 GenAI Profile
 
-> [!check] Superseded by the clause-level review (2026-06-21)
-> This wiki-summary-level verdict is superseded by [[standards-review-nist-ai-rmf-2026-Q2|the NIST AI RMF Standards Review (2026-Q2)]], which works from the primary PDFs (AI 100-1, 600-1, 800-4 — now archived under `.raw/papers/`) and supplies a subcategory- and action-level coverage matrix plus seven falsifiable absence claims. The review also corrects the systematic AI 600-1 risk-category-numbering errors that had propagated into the crosswalk.
+**Superseded by the clause-level review (2026-06-21).** This wiki-summary-level verdict is superseded by [[standards-review-nist-ai-rmf-2026-Q2|the NIST AI RMF Standards Review (2026-Q2)]], which works from the primary PDFs (AI 100-1, 600-1, 800-4 — now archived under `.raw/papers/`) and supplies a subcategory- and action-level coverage matrix plus seven falsifiable absence claims. The review also corrects the systematic AI 600-1 risk-category-numbering errors that had propagated into the crosswalk.
 
 |                                        | Detail                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -82,8 +82,7 @@ An adversarial review of [[agentic-ai-security-cmm-2026|Agentic AI Security Capa
 
 ### ISO/IEC 42001 + 42006:2025 + 27090 FDIS
 
-> [!check] Superseded by the dedicated review (2026-06-22)
-> The crosswalk gap this section flags is now addressed by [[standards-review-iso-42001-27090-2026-Q2|the 2026-Q2 ISO/IEC 42001 + 27090 review]], which maps the CMM against the public Annex A objective scheme (A.2-A.10) and corrects the crosswalk's earlier non-public numbering. That review is citation-only and paywall-bounded; its absence claims (no agentic/NHI control, no testable technical criterion, no AI-BOM, no decommission control, 27090 unpublished and guidance-only) confirm this section's findings within those bounds.
+**Superseded by the dedicated review (2026-06-22).** The crosswalk gap this section flags is now addressed by [[standards-review-iso-42001-27090-2026-Q2|the 2026-Q2 ISO/IEC 42001 + 27090 review]], which maps the CMM against the public Annex A objective scheme (A.2-A.10) and corrects the crosswalk's earlier non-public numbering. That review is citation-only and paywall-bounded; its absence claims (no agentic/NHI control, no testable technical criterion, no AI-BOM, no decommission control, 27090 unpublished and guidance-only) confirm this section's findings within those bounds.
 
 | | Detail |
 |---|---|
@@ -101,8 +100,7 @@ An adversarial review of [[agentic-ai-security-cmm-2026|Agentic AI Security Capa
 
 ### OWASP Agentic AI Top 10 (ASI) + AIVSS v0.8
 
-> [!check] Superseded by the clause-level review (2026-Q2)
-> This wiki-summary-level verdict is superseded by [[standards-review-owasp-agentic-aivss-2026-Q2|the OWASP Agentic AI Standards Review (2026-Q2)]], which reads the ASI Top 10 and the AIVSS v0.8 specification as one unit from the primary PDFs and supplies a category- and clause-level coverage matrix across the nine CMM domains.
+**Superseded by the clause-level review (2026-Q2).** This wiki-summary-level verdict is superseded by [[standards-review-owasp-agentic-aivss-2026-Q2|the OWASP Agentic AI Standards Review (2026-Q2)]], which reads the ASI Top 10 and the AIVSS v0.8 specification as one unit from the primary PDFs and supplies a category- and clause-level coverage matrix across the nine CMM domains.
 
 | | Detail |
 |---|---|
@@ -122,8 +120,7 @@ Superseded by [[standards-review-owasp-llm-top-10-2026-Q2|the OWASP LLM Top 10 S
 
 ### Google SAIF / CoSAI
 
-> [!check] Superseded by the 2026-Q2 deep review
-> The SAIF/CoSAI rows below were the 2026-04-30 keyword-level pass. [[standards-review-saif-cosai-2026-Q2|The Google SAIF and CoSAI standards review (2026-06-22)]] supersedes them with a clause-level matrix: it verified the SAIF taxonomy (15 risks / 24 controls / 14 components), corrected the CoSAI workstream names and deliverable dates (MCP Security 2026-01-20; Agentic Identity and Access Management 2026-04-17; AI Incident Response Framework 2025-10-30), and flagged the "40 threats / 12 categories" MCP figure as not re-verifiable. Treat that review as authoritative where the dates or figures differ from this table.
+**Superseded by the 2026-Q2 deep review.** The SAIF/CoSAI rows below were the 2026-04-30 keyword-level pass. [[standards-review-saif-cosai-2026-Q2|The Google SAIF and CoSAI standards review (2026-06-22)]] supersedes them with a clause-level matrix: it verified the SAIF taxonomy (15 risks / 24 controls / 14 components), corrected the CoSAI workstream names and deliverable dates (MCP Security 2026-01-20; Agentic Identity and Access Management 2026-04-17; AI Incident Response Framework 2025-10-30), and flagged the "40 threats / 12 categories" MCP figure as not re-verifiable. Treat that review as authoritative where the dates or figures differ from this table.
 
 | | Detail |
 |---|---|
@@ -133,8 +130,7 @@ Superseded by [[standards-review-owasp-llm-top-10-2026-Q2|the OWASP LLM Top 10 S
 
 ### Microsoft ZT4AI / RAI / Agent 365
 
-> [!check] Superseded by two dedicated reviews (2026-Q2)
-> The control catalogue is reviewed in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]; the goals standard and the management plane are reviewed in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]]. The key correction this row carried — that RAI is "the most control-rich AI security framework available" — is wrong on two counts: the 700+-control figure is the whole Zero-Trust Workshop (not even the AI pillar), and the [[microsoft-rai|RAI Standard]] is a responsible-AI **goals** standard (seventeen goals), not a control catalogue at all. RAI grounds D1 at the goal level; the controls are ZT4AI's; [[microsoft-entra-agent-id|Agent 365]] is the management plane over them.
+**Superseded by two dedicated reviews (2026-Q2).** The control catalogue is reviewed in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]; the goals standard and the management plane are reviewed in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]]. The key correction this row carried — that RAI is "the most control-rich AI security framework available" — is wrong on two counts: the 700+-control figure is the whole Zero-Trust Workshop (not even the AI pillar), and the [[microsoft-rai|RAI Standard]] is a responsible-AI **goals** standard (seventeen goals), not a control catalogue at all. RAI grounds D1 at the goal level; the controls are ZT4AI's; [[microsoft-entra-agent-id|Agent 365]] is the management plane over them.
 
 |                                        | Detail                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -152,8 +148,7 @@ Superseded by [[standards-review-owasp-llm-top-10-2026-Q2|the OWASP LLM Top 10 S
 
 ### EU AI Act
 
-> [!check] Superseded by the 2026-Q2 EU AI Act standards review
-> The full clause-level review — [[standards-review-eu-ai-act-2026-Q2|EU AI Act Standards Review (2026-Q2)]] — supersedes this first-pass row. It verifies every article and Annex IV point against the primary source, corrects the crosswalk's Annex IV item map (cybersecurity is point 2(h), risk management is point 5 / Art. 9, lifecycle changes is point 6), and confirms the Act is outcome-stated risk-management and conformity-assessment law, not an agentic technical-control standard.
+**Superseded by the 2026-Q2 EU AI Act standards review.** The full clause-level review — [[standards-review-eu-ai-act-2026-Q2|EU AI Act Standards Review (2026-Q2)]] — supersedes this first-pass row. It verifies every article and Annex IV point against the primary source, corrects the crosswalk's Annex IV item map (cybersecurity is point 2(h), risk management is point 5 / Art. 9, lifecycle changes is point 6), and confirms the Act is outcome-stated risk-management and conformity-assessment law, not an agentic technical-control standard.
 
 | | Detail |
 |---|---|
@@ -190,8 +185,7 @@ flowchart TB
 5. **[verified-with-nuance] Federated incident sharing / disclosure.** CoSAI AI Incident Response Framework v1.0 §3.5.2 ("Information Sharing with Community") explicitly endorses sector-based ISAC reporting, FIRST coordinated vulnerability disclosure, OASIS STIX 2.1, and OpenCTI for cross-org sharing — and frames information sharing as "one of defenders' greatest advantages." Language is descriptive/recommended, not mandatory. **The agentic-specific gap is intact**: no AI standard *requires* participation in any cross-org sharing community at any maturity level (no CoSAI-run sharing program exists). The CMM has the same shape — `D8 L4` mentions ML-VEX equivalent for disclosure but does not require participation.
 6. **[verified] Model deprecation and version-pin policy.** Confirmed against NIST AI RMF / 600-1 / 800-4, CSA Agentic Profile, ISO 42001 Annex A, and MITRE ATLAS v5.6.0 (full `techniques.yaml` + `mitigations.yaml` searched for "deprecat / version pin / end-of-support / end-of-life / stale model / outdated model" — zero hits). ATLAS supply-chain coverage is upstream (T0010 sub-techniques, T0109 Rug Pull, T0111 Reputation Inflation; M0005/M0013/M0014/M0023/M0025) — all about acquisition/provenance, none about post-deployment lifecycle of an in-use model version. `D8` covers AI-BOM but not the lifecycle of a model becoming end-of-support, or pinning vs floating in production. This is a real-world [[clawhavoc|ClawHavoc — Agentic Skill Marketplace Supply Chain Attack]]-style attack vector.
 
-> [!info] Removed: G7 system-prompt confidentiality
-> Previously listed here as a gap "no standard surfaces." This was incorrect — `OWASP LLM07:2025` (System Prompt Leakage) explicitly covers it, as already noted in §2's OWASP LLM Top 10 row. Reclassified as a CMM gap that OWASP *does* surface; tracked in §2, not §3.
+**Removed: G7 system-prompt confidentiality.** Previously listed here as a gap "no standard surfaces." This was incorrect — `OWASP LLM07:2025` (System Prompt Leakage) explicitly covers it, as already noted in §2's OWASP LLM Top 10 row. Reclassified as a CMM gap that OWASP *does* surface; tracked in §2, not §3.
 
 ## §4 Areas where the CMM exceeds standards
 
@@ -210,9 +204,9 @@ Where the CMM is in front of where the major standards are today. Tags as in §3
 Where the CMM may be promising more than the named tools/products actually deliver.
 
 1. **`D5 L3`: "AgentGateway / Solo Enterprise / equivalent MCP+A2A+LLM gateway between agent and tools."** AgentGateway moved to LF in July 2025 and is "Mature (OSS)" per the architecture, but the *combined* MCP+A2A+LLM proxy with all three protocols enforced uniformly is not yet a settled spec. The [[a2a-protocol|A2A v1.0.0 spec]] (LF-governed since June 2025) covers transport (§7) and Agent Card signing (§8.4) but not message-level integrity, replay protection, or cryptographic agent identity — these remain vendor-side ([[multi-agent-runtime-security|Oktsec-class enforcement]]) or proposal-side ([Issue #1575](https://github.com/a2aproject/A2A/issues/1575)). Treating this as `L3` (org-wide standard) is aggressive without an org-authored A2A enforcement profile.
-2. **`D3 L4`: "CSA ATF five-stage promotion gates implemented (autonomy levels 0–4 with documented promotion criteria)."** Per [[csa-maestro|CSA MAESTRO / CSA Agentic Trust Framework]], "Specific implementation criteria for each gate are not yet fully specified in published guidance." The CMM is making organizations build the rubric CSA didn't publish, then auditing them against it. That's a `L4` evidence item with no standard to anchor against.
+2. **`D3 L4`: "CSA ATF five-stage promotion gates implemented (autonomy levels 0–4 with documented promotion criteria)."** Per [[csa-maestro|CSA MAESTRO / CSA Agentic Trust Framework]], "Specific implementation criteria for each gate are not yet fully specified in published guidance." The CMM is making organizations build the rubric CSA didn't publish, then auditing them against it. That's a `L4` evidence item with no standard to anchor against. *[2026-09-18: the current [[agentic-ai-security-cmm-d3-control-least-agency|D3 deep-dive]] no longer names ATF by level count, but the gap stands — the 2026-Q2 CSA MAESTRO/ATF review found no published threshold or scored rubric behind any of the five promotion gates, so D3 L4's "documented criteria" is still an organization-authored rubric. [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] carries this forward as an open contest.]*
 3. **`D4 L5`: "Proof-of-Guardrail TEE attestation (AWS Nitro Enclaves) for high-risk tiers."** [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] lists this as "Research-stage." Calling it `L5` is consistent with "leading-edge" but auditors evaluating "TEE attestation chain" will find no standard chain-of-custody schema to evaluate against.
-4. **`D6 L5`: "provably bounded poisoning rate (e.g., <0.001% threshold per Nature Medicine 2024)."** A medical-imaging study's empirical threshold is not a transferable assurance bound for arbitrary RAG corpora. Citing it as a CMM evidence target risks codifying a number that doesn't generalize.
+4. **`D6 L5`: "provably bounded poisoning rate (e.g., a percentage threshold attributed to a 2024 medical-imaging study)."** No page in this vault carries a resolvable citation for that figure, and a medical-imaging study's empirical threshold is not a transferable assurance bound for arbitrary RAG corpora regardless. Citing it as a CMM evidence target risks codifying a number that doesn't generalize. [[cmm-known-limitations|CMM Known Limitations]] records the same unsourced figure and the 2026-05-04 rewrite that dropped it from `D6 L5`.
 5. **`D2 L5`: "Microsoft Agent 365 Registry or equivalent unified governance."** Agent 365 GA is May 1, 2026; the CMM was authored April 30, 2026. There is no shipping deployment evidence yet. "Or equivalent" softens this, but no other product offers the documented Agent 365 capability set, so "equivalent" is currently undefined.
 6. **`D1 L5`: "AIUC-1 certified."** AIUC-1 updates quarterly. A `L5` claim is implicitly a "currently certified against the most recent quarterly refresh" claim, which the CMM doesn't articulate. Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint.
 7. **`D7 L4`: "Quarterly red-team eval (Promptfoo / Mindgard CART / PyRIT / Garak)."** These four tools have very different scopes (Promptfoo: regression; PyRIT: orchestration; Garak: probe library; Mindgard: commercial CART). Treating them as interchangeable understates the work; an organization running only Garak will look like it satisfies `L4` but will miss agentic-orchestration attacks that PyRIT covers.
@@ -238,14 +232,13 @@ flowchart LR
 
 ## §7 Verdict
 
-> [!stale] Verdict from 2026-04-30 snapshot — all four blocking issues have been actioned; do not cite as current
-> The four issues this verdict cited as blocking defensibility have all been addressed:
-> 1. **Crosswalk matrix** — built; lives at [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]].
-> 2. **Scoring rubric / assessor protocol** — built; lives at [[agentic-ai-security-cmm-measurement-protocol|Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)]].
-> 3. **L5 forward-bet criteria** — addressed via the L5/L5+ split filed in [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test (2026-05-02)]] and adopted in the canonical CMM revision; L5 is now achievable with shipping products, research-stage capabilities live at L5+.
-> 4. **CSA ATF gates** — partially: the 2026-05-06 verification pass found ATF v0.9.1 promotion criteria are reasonably concrete (minimum time, accuracy thresholds, named validations, sign-off matrix), only the Principal-tier technical primitives remain abstract enough to need org-authored rubric. The CMM's `D3 L4` clause was rewritten 2026-05-06 to reflect this. The "CSA hasn't specified the gates" framing in the original verdict is wrong.
->
-> The current CMM's actual remaining limitations live in [[cmm-known-limitations|CMM Known Limitations]]. Treat that page as the current-state replacement for this §7.
+**Verdict from 2026-04-30 snapshot — all four blocking issues have been actioned; do not cite as current.** The four issues this verdict cited as blocking defensibility have all been addressed:
+1. **Crosswalk matrix** — built; lives at [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]].
+2. **Scoring rubric / assessor protocol** — built; lives at [[agentic-ai-security-cmm-measurement-protocol|Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)]].
+3. **L5 forward-bet criteria** — addressed via the L5/L5+ split filed in [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test (2026-05-02)]] and adopted in the canonical CMM revision; L5 is now achievable with shipping products, research-stage capabilities live at L5+.
+4. **CSA ATF gates** — partially: the 2026-05-06 verification pass found ATF v0.9.1 promotion criteria are reasonably concrete (minimum time, accuracy thresholds, named validations, sign-off matrix), only the Principal-tier technical primitives remain abstract enough to need org-authored rubric. The CMM's `D3 L4` clause was rewritten 2026-05-06 to reflect this. The "CSA hasn't specified the gates" framing in the original verdict is wrong.
+
+The current CMM's actual remaining limitations live in [[cmm-known-limitations|CMM Known Limitations]]. Treat that page as the current-state replacement for this §7.
 
 Defensible **as a draft** — not yet defensible **as an audit instrument**. The CMM correctly identifies the agentic-specific surface that broader frameworks ([[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]], [[iso-iec-42001|ISO/IEC 42001 — AI Management Systems]], [[microsoft-rai|Microsoft Responsible AI Standard (RAI)]]) miss, imports the right design lessons from CMMC and CMMI, and is uniquely concrete on cognitive file integrity, credential proxy, lethal-trifecta breakers, and runtime AI-BOM. But four issues block defensibility today: (1) no crosswalk matrix to the standards it cites, even though the author flags this in `Open questions`; (2) no scoring rubric or assessor protocol — two auditors will diverge; (3) several `L5` criteria depend on products and research artifacts that ship in May 2026 or later, making the top tier a forward bet rather than an audited state; (4) it imports CSA ATF gates that CSA itself has not yet specified. Closing items 1–4 would move the CMM from "well-argued proposal" to "auditable model" and would make it a serious contender to slot in alongside (not under) AIUC-1 and ISO 42001 in 2026 enterprise AI security programs.
 

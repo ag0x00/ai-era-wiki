@@ -2,7 +2,7 @@
 type: framework
 title: "A2A Protocol (Agent-to-Agent)"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - frameworks
   - protocols
@@ -33,6 +33,7 @@ related:
   - "[[cosai]]"
   - "[[owasp-agentic-ai-top-10]]"
   - "[[standards-review-saif-cosai-2026-Q2]]"
+  - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "https://a2a-protocol.org/latest/specification/"
   - "https://github.com/a2aproject/A2A"
@@ -41,6 +42,10 @@ sources:
   - "https://developers.googleblog.com/en/google-cloud-donates-a2a-to-linux-foundation/"
   - "https://cloudsecurityalliance.org/blog/2025/04/30/threat-modeling-google-s-a2a-protocol-with-the-maestro-framework"
   - "https://github.com/a2aproject/A2A/issues/1575"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read whole 2026-09-18 to confirm the two deleted wiki-correction callouts lost no fact: v1.0.0 and Linux Foundation governance survive in the frontmatter, lead and spec table, and Oktsec's 268 rules at v0.15.2 in the vendor-enforcement table. No .raw/ document opened"
 ---
 
 # A2A Protocol — Agent-to-Agent
@@ -58,9 +63,6 @@ The **Agent-to-Agent (A2A) Protocol** is an open standard for communication betw
 | Wire transports | JSON-RPC 2.0 over HTTP(S); Server-Sent Events; gRPC |
 | Discovery | `https://<base_url>/.well-known/agent-card.json` |
 | Complementary to | [[mcp-security\|MCP]] (agent ↔ tool); A2A is agent ↔ agent |
-
-> [!note] Wiki correction
-> Earlier wiki references cited "v0.3" with "no standalone security spec." That was accurate for the pre-LF Google snapshot. **The current state is v1.0.0 (Mar 2026), Linux Foundation-governed.** Pages still citing v0.3 are stale and have been updated as part of peer-review readiness #4.
 
 ## Security model — what's in the spec
 
@@ -85,7 +87,7 @@ A peer reviewer should know exactly what is missing:
 - **No CVEs** assigned to A2A in NVD as of 2026-05.
 - **No coverage of a channel that is not a channel.** The protocol secures an explicit link between two agents. Two agent runs that reach the same writable medium — a shared bucket, a wiki, a message board — pass data to each other without opening one, so signed Agent Cards and message authentication do not apply. [[owasp-agentic-ai-top-10|OWASP's ASI07]] classes that medium as inter-agent communication and reaches the same limit.
 
-This means an L3+ CMM claim depending on A2A security must specify the *org's own enforcement profile* — the wiki's [[agentic-ai-security-cmm-2026|CMM]] D5 L3 already requires this.
+An L3+ CMM claim resting on A2A security must therefore specify the organization's own enforcement profile (see [[agentic-ai-security-cmm-d5-egress-network|D5]] L3).
 
 ## Agent Cards
 
@@ -113,9 +115,6 @@ The spec is intentionally minimal. Production hardening lives in vendor implemen
 | **Red Hat A2A hardening guide** ([developers.redhat.com](https://developers.redhat.com/articles/2025/08/19/how-enhance-agent2agent-security)) | Platform-side hardening recipes (mTLS-everywhere, gateway-side scanning, identity-bridging) |
 | **IETF Agent Identity Protocol (AIP)** ([draft-prakash-aip-00](https://www.ietf.org/archive/id/draft-prakash-aip-00.html)) | Verifiable delegation primitives across MCP and A2A. Adjacent IETF work, not part of A2A |
 
-> [!note] Wiki correction — "175 detection rules"
-> Earlier wiki pages cited Oktsec's "175-rule" content scanning. **Oktsec ships 268 rules at v0.15.2.** "175" reflects an older release. Pages updated as part of this stub-fill.
-
 ## Threat model — independent reviews
 
 - **CSA "Threat Modeling Google's A2A Protocol with the MAESTRO Framework"** (April 2025) — pre-LF, pre-v1.0; identifies message-injection, agent-impersonation, and foundation-model-level risks. [CSA blog](https://cloudsecurityalliance.org/blog/2025/04/30/threat-modeling-google-s-a2a-protocol-with-the-maestro-framework). The MAESTRO 7-layer mapping is the canonical starting point.
@@ -130,6 +129,7 @@ The spec is intentionally minimal. Production hardening lives in vendor implemen
 | D5 L4 evidence (signed Card validation + content scanning) | [[agentic-ai-security-cmm-2026\|CMM]] |
 | Multi-agent runtime threats | [[multi-agent-runtime-security\|Multi-Agent Runtime Security]] — cascade detection, behavioral baselines, inter-agent IR |
 | ASI07 (Insecure Inter-Agent Comms) anchor | [[agentic-ai-security-reference-architecture\|RA]] threat-control matrix |
+| Absence claim against the spec | [[agentic-ai-security-ra-gaps\|RA Gaps]] gap 9 — v1.0.0 establishes identity at the transport layer and defines no delegation token and no chain validation |
 
 ## Maturity ladder for A2A enforcement
 

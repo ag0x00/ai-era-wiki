@@ -59,6 +59,7 @@ related:
   - "[[gke-agent-sandbox]]"
   - "[[google-cloud-agentic-security-profile]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
+  - "[[agentic-ai-security-ra-gaps]]"
   - "[[securing-workspace-genai-at-google-talk]]"
   - "[[geminijack-gemini-enterprise-injection]]"
   - "[[claude-cowork]]"
@@ -567,6 +568,7 @@ These six are the load-bearing positive contributions. For known *limitations* o
 ## Related
 
 - Defined by: [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] (the planes the CMM measures).
+- Bounded by: [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — twelve items, eleven of them a control no product ships or a property no vendor documents, and the twelfth a scope decision no plane table yet enforces. Where the gap is an unshipped control, it caps the rung a domain can reach on evidence, because an assessor cannot collect an artifact nobody ships.
 - Designed using: [[cybersecurity-cmms-exemplars|Cybersecurity Capability Maturity Models — Exemplars and Design Lessons]] (CMMI/BSIMM/SAMM/CMMC/NIST CSF 2.0 design lessons).
 - Validated by: [[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] (independent gap analysis vs widely adopted standards).
 - Reviewed against: [[standards-review-saif-cosai-2026-Q2|Google SAIF and CoSAI standards review]] — verified the SAIF taxonomy and the CoSAI workstream names/deliverable dates that anchor D1/D2/D4/D5/D8/D9. **Neither SAIF nor CoSAI supplies graded level criteria**: SAIF names control categories without acceptance thresholds and CoSAI ships workstream papers without a maturity model, so both ground a domain's threat model and control vocabulary rather than its per-level evidence rubric — the gap this CMM exists to fill.

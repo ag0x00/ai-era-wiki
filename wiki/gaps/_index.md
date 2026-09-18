@@ -6,7 +6,7 @@ updated: 2026-09-18
 tags: [domain, gaps]
 status: seed
 subdomain_of: ""
-page_count: 10
+page_count: 11
 ---
 
 # Gaps Index
@@ -16,6 +16,7 @@ Open questions, unresolved contradictions, research that's been flagged but not 
 ## Pages
 
 
+- [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — Twelve gaps run through the Agentic AI Security Reference Architecture.
 - [[agentic-ra-open-design-questions|Agentic AI Security RA: Open Implementation Questions]] — Six implementation questions that the Agentic AI Security Reference Architecture does not prescribe.
 - [[cmm-known-limitations|CMM Known Limitations (current state)]] — Current-state limitations of Agentic AI Security CMM 2026, restated 2026-05-06 and extended 2026-09-15.
 - [[comprehensive-agentic-ai-security-landscape-2026|Agentic AI Security Startup Landscape]]

@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Effective-Score Dependency Rules"
 address: c-000158
 created: 2026-05-04
-updated: 2026-08-20
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -31,6 +31,7 @@ related:
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
   - "[[owasp-ai-exchange]]"
+  - "[[agentic-cmm-vs-standards-validation]]"
 sources:
   - "[[cmm-calibration-stress-test-2026]] §Part 2 (cumulative-floor stress test)"
 ---
@@ -228,3 +229,4 @@ Comparison of the 5 archetypes from the [[cmm-calibration-stress-test-2026|stres
 - Updates: [[wiki-novelty-and-counterarguments-2026|Counter-Arguments Thesis 4]] — wiki's stated position changes from "keep floor" to "replace floor with dependency-resolved effective scores"
 - Anchored to: [[lethal-trifecta|Lethal Trifecta]] (DR-001, DR-002 directional rationale); [[hooking-coding-agents-with-cedar-talk|Sondera Cedar harness]] (DR-003 directional rationale); [[1-8m-prompts-30-alerts-talk|Salesforce Rittinghouse]] (DR-002 production evidence); [[breaking-the-lethal-trifecta-talk|Stripe Bullen]] (Stripe archetype worked example); [[agentcordon|AgentCordon]] (DR-001/003 OSS reference architecture)
 - Exercised by: [[agentic-cmm-regulated-fi-stress-test|Regulated-FI stress test]] — runs the D2→D5, D2→D7, and D3→D4 caps against a worked archetype and reports that weak per-agent identity and control pull egress, observability, and runtime down, which the stress test judges a fair reflection of reality rather than an artifact of the rules.
+- Credited by: [[agentic-cmm-vs-standards-validation|the CMM-vs-standards validation]] §4 as a CMM contribution with no standards analogue — CMMC 2.0 caps on a single cumulative floor, not on dependency-resolved, evidence-anchored cross-domain rules.

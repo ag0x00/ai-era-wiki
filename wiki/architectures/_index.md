@@ -2,7 +2,7 @@
 type: domain
 title: "Reference Architectures"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags: [domain, architectures]
 status: seed
 subdomain_of: ""
@@ -17,7 +17,7 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 
 
 - [[agent-identity-architecture|AI Agent Identity Architecture]] — The conceptual identity architecture for AI agents comprises three elements: the identity models available, the layers that authenticate...
-- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — The Agentic AI Security Reference Architecture (AAI-S RA) secures agentic AI applications under a vendor-neutral trust model.
+- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — The Agentic AI Security Reference Architecture (AAI-S RA) names the controls that hold an agentic AI application inside its permitted beh...
 - [[agentic-soc-ra-alert-triage|Agentic SOC Alert Triage Surface]] — Per-function deep-dive for the Alert triage surface of the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-detection-engineering|Agentic SOC Detection Engineering Surface]] — Per-function deep-dive for the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-exposure-vulnops|Agentic SOC Exposure and VulnOps Surface]] — The Exposure & VulnOps row of the Agentic SOC Reference Architecture runs continuous exposure and vulnerability discovery, plus remediati...

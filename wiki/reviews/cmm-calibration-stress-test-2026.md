@@ -4,7 +4,7 @@ title: "CMM Calibration Stress Test: Cumulative-Floor Rule"
 address: c-000164
 origin: produced
 created: 2026-05-02
-updated: 2026-05-29
+updated: 2026-09-18
 tags:
   - reviews
   - cmm
@@ -15,6 +15,8 @@ scope_axis:
   - sec-of-ai
 status: adopted
 target: "[[agentic-ai-security-cmm-2026]]"
+sources:
+  - "[[breaking-the-lethal-trifecta-talk]]"
 related:
   - "[[peer-review-readiness-2026-05-02]]"
   - "[[agentic-ai-security-cmm-2026]]"
@@ -22,6 +24,7 @@ related:
   - "[[wiki-novelty-and-counterarguments-2026]]"
   - "[[anti-patterns-and-failure-modes]]"
   - "[[cybersecurity-cmms-exemplars]]"
+  - "[[agentic-cmm-vs-standards-validation]]"
 ---
 
 # CMM Calibration Stress Test
@@ -258,12 +261,11 @@ This converts L4→L5 from a step to a campaign — closer to how CMMI's "Maturi
 
 This page does NOT unilaterally rewrite the [[agentic-ai-security-cmm-2026|CMM]]. It surfaces the calibration analysis the gap doc demanded and recommends 5 changes. Adoption is a separate decision — the wiki should hold the recommendations as candidate changes pending peer review of the framework as a whole.
 
-> [!check] Adoption status — 2026-05-04 (updated same day)
-> **Changes 1 (L5/L5+ split) and 5 (L4→L5 prerequisite gate)** adopted into the [[agentic-ai-security-cmm-2026|CMM]] and [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] in the 2026-05-04 revision. Every L5 row in the CMM was rewritten to point only to currently-shippable products / OSS / specs; research-stage and standards-contribution items moved to a new L5+ Leading Edge tier. The [[agentic-ai-security-cmm-crosswalk|crosswalk matrix]] is now explicitly L5-only with L5+ deferred until standards bodies publish leading-edge guidance.
->
-> **Changes 2 (matrix-as-primary-view) and 4 (D7 contradiction resolution)** adopted later the same day via the new [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] page. The cumulative-floor rule was replaced with dependency-resolved effective scores under a small conservative active rule set (v1 = 3 rules: D2→D5, D2→D7, D3→D4). Headline format becomes typical/weakest/strongest plus the per-domain matrix. Cherry-picking is now prevented by mandatory matrix disclosure rather than by mathematical aggregation. The dependency-rule registry is intentional scaffolding with explicit promotion criteria and quarterly revision protocol — designed to grow as new attack-path evidence and practitioner architectures land in the wiki. The Stripe-archetype D7 contradiction is resolved: D7 raw L2 reports honestly with a strategic-rationale field rather than collapsing the whole rating.
->
-> **Change 3 (5-archetype documentation in measurement protocol)** remains candidate. The 5 archetypes are documented in [[cmm-calibration-stress-test-2026|this stress test]] and the worked-examples section of the [[agentic-ai-security-cmm-dependency-rules|dependency-rules page]]; copying them into the measurement protocol as standalone templates is a documentation-clarity follow-up that doesn't gate any other change.
+**Adoption status — 2026-05-04 (updated same day).** **Changes 1 (L5/L5+ split) and 5 (L4→L5 prerequisite gate)** adopted into the [[agentic-ai-security-cmm-2026|CMM]] and [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] in the 2026-05-04 revision. Every L5 row in the CMM was rewritten to point only to currently-shippable products / OSS / specs; research-stage and standards-contribution items moved to a new L5+ Leading Edge tier. The [[agentic-ai-security-cmm-crosswalk|crosswalk matrix]] is now explicitly L5-only with L5+ deferred until standards bodies publish leading-edge guidance.
+
+**Changes 2 (matrix-as-primary-view) and 4 (D7 contradiction resolution)** adopted later the same day via the new [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] page. The cumulative-floor rule was replaced with dependency-resolved effective scores under a small conservative active rule set (v1 = 3 rules: D2→D5, D2→D7, D3→D4). Headline format becomes typical/weakest/strongest plus the per-domain matrix. Cherry-picking is now prevented by mandatory matrix disclosure rather than by mathematical aggregation. The dependency-rule registry is intentional scaffolding with explicit promotion criteria and quarterly revision protocol — designed to grow as new attack-path evidence and practitioner architectures land in the wiki. The Stripe-archetype D7 contradiction is resolved: D7 raw L2 reports honestly with a strategic-rationale field rather than collapsing the whole rating.
+
+**Change 3 (5-archetype documentation in measurement protocol)** remains candidate. The 5 archetypes are documented in [[cmm-calibration-stress-test-2026|this stress test]] and the worked-examples section of the [[agentic-ai-security-cmm-dependency-rules|dependency-rules page]]; copying them into the measurement protocol as standalone templates is a documentation-clarity follow-up that doesn't gate any other change.
 
 If adopted, the changes are minimally invasive:
 
@@ -284,3 +286,4 @@ If adopted, the changes are minimally invasive:
 - [[wiki-novelty-and-counterarguments-2026|Wiki Novelty and Counter-Arguments]] §Thesis 4 (cumulative floor) is the pre-stress-test framing
 - [[cybersecurity-cmms-exemplars|Cybersecurity CMM Exemplars]] — CMMI's L4→L5 precedent
 - [[breaking-the-lethal-trifecta-talk|Bullen-talk]] — Archetype 1 evidence
+- [[agentic-cmm-vs-standards-validation|Agentic AI CMM vs Adopted Standards Validation]] §6/§7 — recorded the L5/L5+ split adopted here as closing its "soften L5 forward-bet criteria" recommendation

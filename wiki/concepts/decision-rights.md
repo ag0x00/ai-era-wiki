@@ -2,7 +2,7 @@
 type: concept
 title: "Decision Rights for AI Agents"
 created: 2026-04-30
-updated: 2026-08-22
+updated: 2026-09-18
 tags:
   - concepts
   - governance
@@ -25,6 +25,7 @@ related:
   - "[[nist-ai-rmf]]"
   - "[[microsoft-zt4ai]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
+  - "[[agentic-cmm-vs-standards-validation]]"
 sources:
   - "[[ai-coding-agent-governance]]"
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
@@ -106,6 +107,7 @@ Without explicit halt rows, the practice has no audit trail and quietly degrades
 - Cross-functional body: [[ai-agent-layered-council|AI Agent Layered Council]] — the cross-functional body that approves portfolio-level decision-right assignments.
 - Containment: [[shadow-automation|Shadow Automation]] — without decision rights, agent inventory is not governance.
 - IAM context: [[non-human-identity|Non-Human Identity (NHI)]] — decision rights bind to NHI, not to the human delegating.
+- Provenance: [[agentic-cmm-vs-standards-validation|the CMM-vs-standards validation]] §8 records this matrix's introduction as a same-day Knostic-ingest sharpening that made it D1 L3 evidence.
 
 <!-- sources:auto -->
 ## Sources

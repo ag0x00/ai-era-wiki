@@ -183,7 +183,7 @@ The guide is compared below against [[agentic-ai-security-reference-architecture
 | Wiki concept | Gartner coverage | Why it stays |
 |---|---|---|
 | [[lethal-trifecta\|Lethal Trifecta]] | Not articulated | Sharper structural test for whether a deployment is unconditionally vulnerable |
-| [[credential-proxy-pattern\|Credential Proxy Pattern for AI Agents]] | Mentioned obliquely as IAM | The wiki carries the specific pattern with convergence evidence across five tools |
+| [[credential-proxy-pattern\|Credential Proxy Pattern for AI Agents]] | Mentioned obliquely as IAM | The wiki carries the specific pattern with convergence evidence across nine tools |
 | [[supply-chain-security-for-agents\|Supply Chain Security for Agentic AI]] §Cognitive file integrity | Not in Gartner | Novel control surface (SOUL.md, IDENTITY.md SHA-256 monitoring) |
 | [[ai-bom\|AI-BOM]] specifics (CycloneDX, SPDX 3.0) | High-level only | The wiki carries the operational format and the tooling |
 | Specific incident anchoring ([[clawhavoc\|ClawHavoc — Agentic Skill Marketplace Supply Chain Attack]], [[sandworm-mode-npm-worm\|SANDWORM_MODE npm worm — AI Toolchain Poisoning]], [[meta-sev-1-agent-breach\|Meta Sev 1 AI Agent Breach]], [[mcp-cves-q1-2026\|MCP CVEs Q1 2026]]) | Generic "supply chain attacks" | Concrete attack-evidence for control justification |
