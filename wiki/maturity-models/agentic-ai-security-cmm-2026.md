@@ -78,6 +78,8 @@ verified_note: "UNRESOLVED from the prior read (1): Phase 4c new content: D3/D4/
 
 An evidence-based Capability Maturity Model for agentic AI security. It applies the design lessons from CMMI, BSIMM, OWASP [[owasp-samm|SAMM]], CMMC 2.0, and NIST CSF 2.0 (see [[cybersecurity-cmms-exemplars|Cybersecurity Capability Maturity Models — Exemplars and Design Lessons]] for the per-exemplar treatment) to the threat surface and control stack in the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]].
 
+![The nine-domain CMM block diagram](agentic-ai-security-cmm-block-diagram.svg)
+
 The model is **descriptive at Levels 1–3** (controls observed in production at well-run organizations), **prescriptive at Level 4** (controls a mature program operates), and **achievable-today at Level 5** (capabilities available in shipping products and current specifications: Microsoft Agent 365, AgentGateway-LF, [[llamafirewall|LlamaFirewall]], [[aiuc-1|AIUC-1]] certification, Miggo DeepTracing). Integration across all nine domains remains rare. Research-stage and unshipped capabilities (TEE-backed guardrail attestation, multi-agent cascade-detection rule libraries, [[camel-pattern|CaMeL]] privileged/quarantined LLM split, cross-vendor AI-BOM federation, named standards contribution) sit in a separate **L5+ Leading Edge** tier that is aspirational and not required for L5. The [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test (2026-05-02)]] introduced the L5 / L5+ split to keep **L5 achievable today** with shipping products.
 
 The nine domains each carry a level summary here and full criteria in a deep dive. Read this page for the model — levels, domains, aggregation, and how to score against it; read a deep dive for the criteria, the dated control landscape, the cost model, and right-sizing by deployment shape.
@@ -212,41 +214,6 @@ Before claiming L5, the program MUST show: (a) ≥2 quarters of stable L4 operat
 ## Nine domains
 
 The CMM uses 9 domains, derived from the 6 reference-architecture planes plus 3 cross-cutting concerns (governance, supply chain, and operations/human factors). That derivation sets a scope boundary. The nine domains cover the deployment and operation of an agentic system, and none of them anchors its secure development. The Exchange's two development-programme controls, per the Scope section above, therefore have no cell to map into, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] names them. The 9-domain breakdown sharpens focus on agentic-specific controls and adds a domain for the operational and human-factors gaps that no surveyed standard covers as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]] §3).
-
-Cross-cutting domains (D1, D8, D9) wrap the per-plane domains as bands top and bottom. Per-plane domains (D2–D7) sit in a single row matching the [[agentic-ai-security-reference-architecture|RA]]'s plane order, with the same [[xacml|XACML]] / [[nist-sp-800-162|NIST SP 800-162]] §2.2 four-role color palette (PIP blue, PDP yellow, PEP red, mixed purple, cross-cutting green).
-
-```mermaid
-block-beta
-  columns 6
-
-  D1["D1 Governance & Accountability"]:6
-
-  D2["D2 Identity & Authorization"]
-  D3["D3 Control & Least-Agency"]
-  D4["D4 Runtime & Guardrails"]
-  D5["D5 Egress & Network"]
-  D6["D6 Data, Memory & RAG"]
-  D7["D7 Observability & Detection"]
-
-  D8["D8 Supply Chain & AI-BOM"]:6
-  D9["D9 Operations & Human Factors"]:6
-
-  classDef pip fill:#cfe2ff,stroke:#0d6efd,color:#000
-  classDef pdp fill:#fff3cd,stroke:#fd7e14,color:#000
-  classDef pep fill:#f8d7da,stroke:#dc3545,color:#000
-  classDef mixed fill:#e2d5f3,stroke:#6f42c1,color:#000
-  classDef cross fill:#d1e7dd,stroke:#198754,color:#000
-
-  class D1 cross
-  class D2 pip
-  class D3 pdp
-  class D4 pep
-  class D5 pep
-  class D6 mixed
-  class D7 pip
-  class D8 cross
-  class D9 cross
-```
 
 ### D1. Governance & Accountability
 

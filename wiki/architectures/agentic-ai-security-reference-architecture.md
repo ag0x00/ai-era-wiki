@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - architectures
   - reference-architecture
@@ -112,37 +112,7 @@ The Agentic AI Security Reference Architecture (**AAI-S RA**) secures agentic AI
 - [[#Prior work and comparison]]
 - [[#Relations]]
 
-```mermaid
-block-beta
-  columns 2
-  
-  User(["Human user"]):2
-  
-  Identity["Identity plane"]:2
-  
-  Control["Control plane"]:2
-  
-  Runtime["Runtime plane"]:2
-  
-  Egress["Egress plane"]
-  Data["Data plane"]
-  
-  Obs["Observability plane"]:2
-
-  classDef pip stroke:#0d6efd
-  classDef pdp stroke:#fd7e14
-  classDef pep stroke:#dc3545
-  classDef mixed stroke:#6f42c1
-  classDef user stroke:#198754
-  
-  class User user
-  class Identity pip
-  class Control pdp
-  class Runtime pep
-  class Egress pep
-  class Data mixed
-  class Obs pip
-```
+![The six planes of the Agentic AI Security Reference Architecture](agentic-ai-security-reference-architecture-planes.svg)
 
 ## Deliverables
 
@@ -175,38 +145,6 @@ The architecture decomposes into six logical planes. Multiple planes may be impl
 Plane order follows the action flow: User, then Identity, Control, Runtime, and Egress/Data. Each plane is annotated with its [[xacml|XACML]] role (PIP / PDP / PEP / PAP). Observability spans the bottom as a cross-cutting plane consuming signals from all five above.
 
 Each plane table carries a **Type** column classifying its reference implementations. **OSS** is open-source software and **COTS** a commercial off-the-shelf vendor product or SaaS. **Std** is a formally governed standard or specification from IETF, CNCF, OWASP, or NIST, and **Infra** a generic infrastructure primitive such as a cloud VPC or Docker networking. **Research** is an academic prototype with no shipped production implementation, and **Concept** an architectural concept with no canonical implementation yet. **Exploratory** covers a forward-looking prototype or ecosystem project such as OpenClaw, which indicates where agentic security is heading and stands as an emerging indicator rather than a foundational control. Many rows combine types, as in "OSS + COTS", where a capability has both free and commercial implementations in common use.
-
-```mermaid
-block-beta
-  columns 2
-  
-  User(["Human user"]):2
-  
-  Identity["Identity plane · PIP-side<br/>Workload identity · Agent lifecycle<br/>NHI governance · Credential proxy"]:2
-  
-  Control["Control plane · PDP + PAP<br/>Policy evaluation · Capability tokens<br/>Least-agency tiers · HITL"]:2
-  
-  Runtime["Runtime plane · PEP (in-process)<br/>Lifecycle hooks · Input filtering<br/>CoT auditing · Code scanning<br/>Sandboxing"]:2
-  
-  Egress["Egress plane · PEP (broker)<br/>Agent/MCP proxy · Tool authorization<br/>Tool integrity · Egress filtering"]
-  Data["Data plane · PIP + PEP<br/>AI-BOM · RAG provenance<br/>Memory integrity · State rollback<br/>Supply-chain scanning"]
-  
-  Obs["Observability plane<br/>PIP (cross-cutting)<br/>Distributed tracing<br/>Behavioral monitoring · AI-SPM<br/>Red-team integration"]:2
-
-  classDef pip fill:#cfe2ff,stroke:#0d6efd,color:#000
-  classDef pdp fill:#fff3cd,stroke:#fd7e14,color:#000
-  classDef pep fill:#f8d7da,stroke:#dc3545,color:#000
-  classDef mixed fill:#e2d5f3,stroke:#6f42c1,color:#000
-  classDef user fill:#d1e7dd,stroke:#198754,color:#000
-  
-  class User user
-  class Identity pip
-  class Control pdp
-  class Runtime pep
-  class Egress pep
-  class Data mixed
-  class Obs pip
-```
 
 The six planes map one-to-one onto the CMM's per-plane domains: Identity ↔ [[agentic-ai-security-cmm-d2-identity|D2]], Control ↔ [[agentic-ai-security-cmm-d3-control-least-agency|D3]], Runtime ↔ [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]], Egress ↔ [[agentic-ai-security-cmm-d5-egress-network|D5]], Data ↔ [[agentic-ai-security-cmm-d6-data-rag|D6]], Observability ↔ [[agentic-ai-security-cmm-d7-observability|D7]].
 
@@ -337,7 +275,7 @@ The ecosystem's dual-use status now has a sourced case. The [[taiwan-ai-agent-go
 | Supply-chain scanning | [[jfrog\|JFrog]] ML scan, ReversingLabs; [[agentshield\|AgentShield]] (OSS — scans the agent-harness config tree: secrets, hooks, MCP, permissions) | OSS + COTS | Developing |
 | Supply-chain scanning (emerging) | Aguara Watch (5 registries daily, SlowMist) | Exploratory | Exploratory — OpenClaw ecosystem; forward indicator for registry hygiene direction |
 
-Q1 2026's three largest agentic incidents all landed on the data plane: [[clawhavoc|ClawHavoc]] (1,184+ malicious skills), SANDWORM_MODE (npm worm into MCP), and the LiteLLM compromise. Defense requires registry, pre-install, checksum, and cognitive-file integrity controls layered together.
+Q1 2026's three largest agentic incidents all landed on the data plane: [[clawhavoc|ClawHavoc]] (1,184+ malicious skills)[^clawhavoc-count-ra], SANDWORM_MODE (npm worm into MCP), and the LiteLLM compromise. Defense requires registry, pre-install, checksum, and cognitive-file integrity controls layered together.
 
 Limiting the data attack surface sits upstream of every row in this table. The [[owasp-ai-exchange|OWASP AI Exchange]] groups five controls under sensitive data limitation, whose stated purpose is to reduce the impact of confidentiality and integrity threats by cutting the amount and variety of data held and the duration it is kept ([`/go/datalimit/`](https://owaspai.org/go/datalimit/)). A field that was never collected and a record deleted on schedule are unreachable by every path this plane mediates ([`/go/dataminimize/`](https://owaspai.org/go/dataminimize/), [`/go/shortretain/`](https://owaspai.org/go/shortretain/)). The entitlement row above governs reach into data that exists; this group governs whether the data is there to reach. It adds no row of its own because no entry in it names a reference implementation, and grading sits at [[agentic-ai-security-cmm-d6-data-rag|D6]].
 
@@ -422,39 +360,14 @@ The enterprise stack cuts operational overhead through vendor support and pre-bu
 
 Maps OWASP Agentic AI Top 10 (`ASI01`–`ASI10`) risk categories to the planes that primarily mitigate them. Most categories have controls in multiple planes; the following table identifies the *primary* control surface and lists reference controls for each.
 
-```mermaid
-flowchart LR
-    subgraph Threats[Threats]
-        ASI01[ASI01: Goal Hijack]
-        ASI02[ASI02: Tool Misuse]
-        ASI03[ASI03: Identity & Privilege]
-        ASI04[ASI04: Supply Chain]
-        ASI05[ASI05: Unexpected Code Execution]
-        ASI06[ASI06: Memory Poisoning]
-        ASI07[ASI07: Inter-Agent Comms]
-        ASI08[ASI08: Cascading Failures]
-        ASI09[ASI09: Human-Agent Trust]
-        ASI10[ASI10: Rogue Agents]
-    end
-    subgraph Planes[Planes]
-        ID[Identity]
-        CTL[Control]
-        RT[Runtime]
-        EG[Egress]
-        DT[Data]
-        OBS[Observability]
-    end
-    ASI01 --> RT & CTL
-    ASI02 --> CTL & EG
-    ASI03 --> ID
-    ASI04 --> DT
-    ASI05 --> RT & CTL
-    ASI06 --> DT
-    ASI07 --> EG
-    ASI08 --> CTL & OBS
-    ASI09 --> OBS & CTL
-    ASI10 --> ID & OBS
-```
+| Plane | Threats it mitigates |
+|---|---|
+| Identity | ASI03 (Identity & Privilege), ASI10 (Rogue Agents) |
+| Control | ASI01 (Goal Hijack), ASI02 (Tool Misuse), ASI05 (Unexpected Code Execution), ASI08 (Cascading Failures), ASI09 (Human-Agent Trust) |
+| Runtime | ASI01 (Goal Hijack), ASI05 (Unexpected Code Execution) |
+| Egress | ASI02 (Tool Misuse), ASI07 (Inter-Agent Comms) |
+| Data | ASI04 (Supply Chain), ASI06 (Memory Poisoning) |
+| Observability | ASI08 (Cascading Failures), ASI09 (Human-Agent Trust), ASI10 (Rogue Agents) |
 
 | OWASP ASI | Primary plane | Reference controls |
 |---|---|---|
@@ -498,19 +411,20 @@ Architectural trade-offs that vary with deployment scale, latency tolerance, and
 
 The items below are gaps in the architecture itself, across every platform. For the coverage of one platform, [[google-cloud-agentic-security-profile|the Google Cloud agentic security profile]] names the planes Google Cloud leaves to an off-stack component.
 
-> [!gap] Known unfilled spots
-> 1. **Compartmentalized LLM (CaMeL) reference pattern.** Privileged-LLM-coordinates-quarantined-LLM is theoretically sound but lacks a vendor-neutral reference implementation. (Google DeepMind research-stage.)
-> 2. **Cross-tenant MCP server signing.** MCP CVE rate (30+ in Q1 2026) suggests the ecosystem is pre-supply-chain-hardening. sigstore-for-MCP-servers is needed but not standardized.
-> 3. **Multi-agent failure containment.** ASI08 (Cascading Failures) and ASI10 (Rogue Agents) have no traditional cybersecurity equivalent. [[multi-agent-runtime-security|Multi-Agent Runtime Security]] covers the cascade-detection / behavioral-baseline / inter-agent IR depth, but 2026 remains the academic-prototype era: graph-walk monitors (SentinelAgent, TraceAegis) ship as papers, and vendor primitives exist (Oktsec rate limits + ACLs) without an integrated cascade-detection product shipping documented thresholds.
-> 4. **AI-BOM operationalization gap.** The CycloneDX ML-BOM is the format; the operational workflow (CI/CD integration, vendor disclosure norm, AI-VEX equivalent) is thin.
-> 5. **Transitive egress constraint on allowlisted destinations.** The Egress plane specifies filtering at the agent's own interface and says nothing about what an allowlisted destination can reach. Internal package proxies, artifact caches, and build services routinely hold broad internet access, which turns an allowlist entry into a relay reachable by SSRF ([[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]], 2026). No listed reference implementation emits evidence that an allowed service is itself constrained, and the plane's inter-agent controls assume an A2A protocol, leaving shared writable build infrastructure unmodeled as an agent-to-agent channel. The gap is wider than relaying: a permitted general-purpose host serves content directly, so an allowlist entry for `github.com` or `pypi.org` admits whatever those hosts publish ([[kimi-k3-sandbox-escape|Kimi K3]], 2026). Cataloguing what each allowlisted destination serves is unaddressed by every reference implementation listed.
-> 6. **Control initialization order.** Every plane specifies *what* is enforced and none specifies *when* enforcement begins relative to the harness's own startup. Agentic coding harnesses read workspace-supplied configuration during startup, and [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] shows that step preceding sandbox initialization, which puts the resulting execution outside all six planes.[^gemini-init] No vendor documents the ordering for any harness the wiki tracks, so the property cannot currently be assessed even where an operator wants to.
-> 7. **Identity binding when humans are decommissioned.** When the human owner of an agent leaves, the agent must be rotated or revoked. Okta and Microsoft Agent 365 cover this for managed agents; orphaned shadow agents are still discoverable but not always governable.
-> 8. **Shared services above the isolation boundary.** Runtime isolation partitions agent execution and leaves every service the agents call undivided. The Exchange names shared inference, credential, and policy services as implicit cross-agent channels that sandboxing does not reach.[^aix-sandbox-ra] This architecture creates two of the three by design: the Control plane concentrates policy in a single PDP, and the Identity plane's credential proxy is one service holding credentials for many agents. Both choices are correct for the reasons those planes give, and both mean an agent's behaviour is observable to, and influenceable through, a component every other agent shares. The observability pipeline is a fourth such component, and this architecture creates it deliberately: one trace backend, one detection stack, and one SIEM serve the whole fleet, and the Exchange separately states that a defensive monitoring agent is part of the attack surface.[^aix-monitoruse-ra] No plane above holds a control for any of these four shared components, and no listed reference implementation partitions inference, credential issuance, or policy evaluation per agent. Gap 5 concerns what an allowlisted destination can reach; this gap concerns what a mandatory shared component can carry between agents that never address each other. Document 5 of the Exchange reaches one of these four shared components with a test rather than a control: at the infrastructure layer of an agentic penetration test, verify that the agent cannot suppress or alter its own logs under adversarial conditions, cited to `MONITOR USE`.[^aix-testing-ra] Failing that test demonstrates the gap on the observability component. The inference endpoint, the credential proxy and the policy decision point have no equivalent test named. That test's own four-layer scope, and its relation to this architecture's partition, are stated under [The six planes](#the-six-planes).
-> 9. **Message-fabric integrity below the transport.** The Egress plane authenticates agents and blocks direct inter-agent paths; no plane validates the *content* of a structured message against a schema and a delegation scope once the transport is trusted. The Exchange states that peer-agent, tool, and orchestrator messages are untrusted input including inside single-agent tool loops, and that emergent collective behaviour can violate policy even where each agent complies in isolation.[^aix-amsm-ra] Signed delegation tokens with full-chain validation and scope non-expansion are the named control and have no reference implementation in any plane above. See [[agent-message-structure-manipulation|Agent Message Structure Manipulation]].
-> 10. **Fleet-wide consumption correlation.** Per-agent quotas are graded on the Runtime plane and per-agent volume ceilings on the Egress plane; both bound one agent at a time. The Exchange requires monitoring consumption across the fleet for correlated spikes and slow exhaustion attacks, which detects a campaign spread thinly enough that no single agent breaches its own cap.[^aix-limitresources-ra] No plane holds a row for it and no listed reference implementation emits fleet-level consumption as a detection signal. A denial-of-wallet campaign shows what the omission costs: the service stays available and every response is correct, so an availability monitor stays silent and the only signal is cost per unit of completed work.[^aix-exhaustion-ra]
-> 11. **Phantom-step detection on the orchestrator.** The Control plane's orchestrator-hardening row requires a tamper-evident workflow log held outside orchestrator memory and the reconciliation of executed agent actions against it, which surfaces steps that ran and were never planned.[^aix-oversight-ra] The Observability plane collects traces, behavioural baselines, and per-agent action history, and no row in it compares an execution record against an independent plan record. The comparison is what makes the log tamper-evidence useful: a log the orchestrator alone writes and alone reads records a compromised orchestrator's version of events. No listed reference implementation externalizes the workflow log, so the gap is the artifact as much as the detection built on it.
-> 12. **The development environment is outside all six planes.** This architecture is the implementation surface of an oversight layer in production, and its Data plane nonetheless claims training data in scope. The [[owasp-ai-exchange|OWASP AI Exchange]] §3.0 states seven particularities of the AI development environment; no plane above accounts for these five: it holds real sensitive data rather than test data; its data, code, configuration and parameters are targets for behaviour manipulation; source code, configuration and parameters are critical intellectual property; external software components run inside it and can reach training data or model parameters; and collaborative training across trust boundaries — federated learning, merged PEFT modules, model conversion services — extends the attack surface further.[^aix-devtime-ra] The Exchange's answering controls are `DEV SECURITY`, `SEGREGATE DATA`, `CONF COMPUTE`, `FEDERATED LEARNING` and `SUPPLY CHAIN MANAGE`, of which only the last has a home here, in the Data plane's supply-chain-scanning row. Whether this architecture gains a development-time plane or declares the surface out of scope is unresolved; the current position claims part of it in a scope sentence and models none of it. §3.2 puts three named threats against that surface rather than properties alone — development-time data leak, direct development-time model leak, and source code/configuration leak, all three keyed to a confidentiality impact on assets held in that environment ([`/go/devleak/`](https://owaspai.org/go/devleak/)).
+Twelve items remain unfilled:
+
+1. **Compartmentalized LLM (CaMeL) reference pattern.** Privileged-LLM-coordinates-quarantined-LLM is theoretically sound but lacks a vendor-neutral reference implementation. (Google DeepMind research-stage.)
+2. **Cross-tenant MCP server signing.** MCP CVE rate (30+ in Q1 2026) suggests the ecosystem is pre-supply-chain-hardening. sigstore-for-MCP-servers is needed but not standardized.
+3. **Multi-agent failure containment.** ASI08 (Cascading Failures) and ASI10 (Rogue Agents) have no traditional cybersecurity equivalent. [[multi-agent-runtime-security|Multi-Agent Runtime Security]] covers the cascade-detection / behavioral-baseline / inter-agent IR depth, but 2026 remains the academic-prototype era: graph-walk monitors (SentinelAgent, TraceAegis) ship as papers, and vendor primitives exist (Oktsec rate limits + ACLs) without an integrated cascade-detection product shipping documented thresholds.
+4. **AI-BOM operationalization gap.** The CycloneDX ML-BOM is the format; the operational workflow (CI/CD integration, vendor disclosure norm, AI-VEX equivalent) is thin.
+5. **Transitive egress constraint on allowlisted destinations.** The Egress plane specifies filtering at the agent's own interface and says nothing about what an allowlisted destination can reach. Internal package proxies, artifact caches, and build services routinely hold broad internet access, which turns an allowlist entry into a relay reachable by SSRF ([[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]], 2026). No listed reference implementation emits evidence that an allowed service is itself constrained, and the plane's inter-agent controls assume an A2A protocol, leaving shared writable build infrastructure unmodeled as an agent-to-agent channel. The gap is wider than relaying: a permitted general-purpose host serves content directly, so an allowlist entry for `github.com` or `pypi.org` admits whatever those hosts publish ([[kimi-k3-sandbox-escape|Kimi K3]], 2026). Cataloguing what each allowlisted destination serves is unaddressed by every reference implementation listed.
+6. **Control initialization order.** Every plane specifies *what* is enforced and none specifies *when* enforcement begins relative to the harness's own startup. Agentic coding harnesses read workspace-supplied configuration during startup, and [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] shows that step preceding sandbox initialization, which puts the resulting execution outside all six planes.[^gemini-init] No vendor documents the ordering for any harness the wiki tracks, so the property cannot currently be assessed even where an operator wants to.
+7. **Identity binding when humans are decommissioned.** When the human owner of an agent leaves, the agent must be rotated or revoked. Okta and Microsoft Agent 365 cover this for managed agents; orphaned shadow agents are still discoverable but not always governable.
+8. **Shared services above the isolation boundary.** Runtime isolation partitions agent execution and leaves every service the agents call undivided. The Exchange names shared inference, credential, and policy services as implicit cross-agent channels that sandboxing does not reach.[^aix-sandbox-ra] This architecture creates two of the three by design: the Control plane concentrates policy in a single PDP, and the Identity plane's credential proxy is one service holding credentials for many agents. Both choices are correct for the reasons those planes give, and both mean an agent's behaviour is observable to, and influenceable through, a component every other agent shares. The observability pipeline is a fourth such component, and this architecture creates it deliberately: one trace backend, one detection stack, and one SIEM serve the whole fleet, and the Exchange separately states that a defensive monitoring agent is part of the attack surface.[^aix-monitoruse-ra] No plane above holds a control for any of these four shared components, and no listed reference implementation partitions inference, credential issuance, or policy evaluation per agent. Gap 5 concerns what an allowlisted destination can reach; this gap concerns what a mandatory shared component can carry between agents that never address each other. Document 5 of the Exchange reaches one of these four shared components with a test rather than a control: at the infrastructure layer of an agentic penetration test, verify that the agent cannot suppress or alter its own logs under adversarial conditions, cited to `MONITOR USE`.[^aix-testing-ra] Failing that test demonstrates the gap on the observability component. The inference endpoint, the credential proxy and the policy decision point have no equivalent test named. That test's own four-layer scope, and its relation to this architecture's partition, are stated under [The six planes](#the-six-planes).
+9. **Message-fabric integrity below the transport.** The Egress plane authenticates agents and blocks direct inter-agent paths; no plane validates the *content* of a structured message against a schema and a delegation scope once the transport is trusted. The Exchange states that peer-agent, tool, and orchestrator messages are untrusted input including inside single-agent tool loops, and that emergent collective behaviour can violate policy even where each agent complies in isolation.[^aix-amsm-ra] Signed delegation tokens with full-chain validation and scope non-expansion are the named control and have no reference implementation in any plane above. See [[agent-message-structure-manipulation|Agent Message Structure Manipulation]].
+10. **Fleet-wide consumption correlation.** Per-agent quotas are graded on the Runtime plane and per-agent volume ceilings on the Egress plane; both bound one agent at a time. The Exchange requires monitoring consumption across the fleet for correlated spikes and slow exhaustion attacks, which detects a campaign spread thinly enough that no single agent breaches its own cap.[^aix-limitresources-ra] No plane holds a row for it and no listed reference implementation emits fleet-level consumption as a detection signal. A denial-of-wallet campaign shows what the omission costs: the service stays available and every response is correct, so an availability monitor stays silent and the only signal is cost per unit of completed work.[^aix-exhaustion-ra]
+11. **Phantom-step detection on the orchestrator.** The Control plane's orchestrator-hardening row requires a tamper-evident workflow log held outside orchestrator memory and the reconciliation of executed agent actions against it, which surfaces steps that ran and were never planned.[^aix-oversight-ra] The Observability plane collects traces, behavioural baselines, and per-agent action history, and no row in it compares an execution record against an independent plan record. The comparison is what makes the log tamper-evidence useful: a log the orchestrator alone writes and alone reads records a compromised orchestrator's version of events. No listed reference implementation externalizes the workflow log, so the gap is the artifact as much as the detection built on it.
+12. **The development environment is outside all six planes.** This architecture is the implementation surface of an oversight layer in production, and its Data plane nonetheless claims training data in scope. The [[owasp-ai-exchange|OWASP AI Exchange]] §3.0 states seven particularities of the AI development environment; no plane above accounts for these five: it holds real sensitive data rather than test data; its data, code, configuration and parameters are targets for behaviour manipulation; source code, configuration and parameters are critical intellectual property; external software components run inside it and can reach training data or model parameters; and collaborative training across trust boundaries — federated learning, merged PEFT modules, model conversion services — extends the attack surface further.[^aix-devtime-ra] The Exchange's answering controls are `DEV SECURITY`, `SEGREGATE DATA`, `CONF COMPUTE`, `FEDERATED LEARNING` and `SUPPLY CHAIN MANAGE`, of which only the last has a home here, in the Data plane's supply-chain-scanning row. Whether this architecture gains a development-time plane or declares the surface out of scope is unresolved; the current position claims part of it in a scope sentence and models none of it. §3.2 puts three named threats against that surface rather than properties alone — development-time data leak, direct development-time model leak, and source code/configuration leak, all three keyed to a confidentiality impact on assets held in that environment ([`/go/devleak/`](https://owaspai.org/go/devleak/)).
 
 ## Prior work and comparison
 
@@ -581,3 +495,5 @@ What the RA contributes above those inheritances is one chain in one vendor-neut
 [^dream-taiwan]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia) (2026-08-12); corroborated by Taiwan's Ministry of Digital Affairs, which independently named "Open Claw" in its own statement (Reuters, 2026-08-13). See [[taiwan-ai-agent-government-intrusion|the incident record]].
 
 [^mcp-exposure-ra]: Alfredo Oliveira and David Fiser, [*Update on Exposed MCP Servers: The Threat Widens to the Cloud*](https://www.trendmicro.com/vinfo/us/security/news/vulnerabilities-and-exploits/update-on-exposed-mcp-servers-the-threat-widens-to-the-cloud), Trend Micro, 2026-04-28. The same scan disclosed CVE-2026-5058 and CVE-2026-5059 against `aws-mcp-server`, both command injection at CVSS 9.8.
+
+[^clawhavoc-count-ra]: [Antiy Labs — ClawHavoc: Analysis of a Large-Scale Poisoning Campaign Targeting the OpenClaw Skill Market for AI Agents](https://www.antiy.net/p/clawhavoc-analysis-of-large-scale-poisoning-campaign-targeting-the-openclaw-skill-market-for-ai-agents/), retrieved 2026-09-18. States "at least 1,184 malicious Skills have historically appeared on ClawHub," with the single most prolific uploader ("hightower6eu") responsible for 677 of them.
