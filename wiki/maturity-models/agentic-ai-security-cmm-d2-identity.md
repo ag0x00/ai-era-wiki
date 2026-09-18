@@ -42,13 +42,14 @@ related:
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[shadow-ai]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[identity-credential-coupling]]"
-verified: 2026-09-10
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D2 Identity & Authorization (Deep Dive)
@@ -139,6 +140,8 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 | Deployment shape | Realistic D2 target | Why |
 |---|---|---|
 | Internal RAG / support chatbot (no/few tools) | L3 | Per-agent identity + owner + decoupled credentials. [[agentic-ai-security-cmm-recalibration-method-2026\|The persona]]'s bot sits here; per-task tokens and federation are irrelevant |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | The assistant acts as the employee and holds no agent principal, so the per-agent-identity and non-human-identity criteria are recorded not applicable with the reduced scope stated, and the criterion left standing is that every action traces to a human |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | This variant also holds no agent principal, so the per-agent-identity and non-human-identity criteria are again not applicable; what it adds is evidence for the credential criteria, because connector authorization tokens stay outside the sandbox and the tokens inside it expire within hours |
 | Data-science / coding copilot | L3 → L4 | Touches secrets and the SDLC; the credential broker and rotation discipline earn their cost |
 | MCP / skill provider serving others | L4 → selective L5 | Third-party blast radius raises the bar; scoped tokens per caller, attestation, shadow discovery |
 | High-autonomy multi-agent mesh | L5 (selective L5+) | Delegation chains make per-task attenuating tokens (L5+) load-bearing — the one shape where Warrant-class authority is worth its immaturity cost |

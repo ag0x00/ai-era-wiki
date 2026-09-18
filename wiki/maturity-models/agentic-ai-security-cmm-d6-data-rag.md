@@ -42,6 +42,7 @@ related:
   - "[[microsoft-sdl-evolving-security-practices]]"
   - "[[cyera-agent-guardian-release]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
@@ -49,11 +50,10 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-16
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D6 Data, Memory & RAG (Deep Dive)
@@ -178,6 +178,8 @@ The poisoning scan's residual is stated at the source and belongs in the assessm
 | Agent with long-lived memory | add L4 memory-integrity | Context/memory poisoning and rollback become first-order regardless of corpus shape |
 | No-retrieval tool agent | L2 | Little of D6 applies; record the reduced scope as an intentional trade-off |
 | Coding agent over a repository | L3 | The repository is the retrieved corpus; it is multi-writer and attacker-reachable, and the L3 criterion resolves against the developer's repository and branch grants |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 → L4 | The whole-tenant corpus spans every mailbox, file and calendar the employee can reach; the tenant access-control list with label-aware policy is the authorization layer, and oversharing is the recorded failure mode |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 → L4 | Two authorization layers carry the answer-time criterion: a connector resolves the member's permissions in the source system, and a connected folder resolves the member's operating-system account; the oversharing assessment covers the folder selection as well as the tenant |
 
 > [!check] A coding agent is a retrieval agent, and the repository is the corpus
 > Filing coding agents under "no-retrieval tool agent" understates D6 for this shape. [[guardfall-shell-injection-audit|GuardFall]] delivered its payloads through injected READMEs, compromised Makefiles, and malicious MCP servers, and the [[claude-code-github-action-credential-exposure|CI credential exposure]] arrived in a pull-request comment. The D6 controls that apply are the multi-writer-corpus ones — source-trust attribution and boundary marking between repository content and instructions — plus [[cognitive-file-integrity|cognitive file integrity]] over the instruction files themselves, since `CLAUDE.md`-class files are corpus and configuration at once.

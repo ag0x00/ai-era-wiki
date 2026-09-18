@@ -48,6 +48,8 @@ related:
   - "[[defending-code-harness]]"
   - "[[semgrep]]"
   - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
+  - "[[cmm-known-limitations]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[ai-era-supply-chain-hardening]]"
@@ -61,7 +63,7 @@ primary_documents:
 verified: 2026-09-18
 verified_against: []
 verified_findings: 0
-verified_note: "Read against the page's own Docker MCP catalog and gateway-signature footnote and the matching RA gap-2 text; no archived document opened. The distributor-versus-author distinction matches the RA and the L5+ rung statement was left untouched per its open issue"
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Desktop-agent row and its run-in read against those articles; the egress exclusion, the plugin marketplace and the Compliance API scope were corrected on the page."
 ---
 
 # Agentic AI Security CMM — D8 Supply Chain & AI-BOM (Deep Dive)
@@ -160,11 +162,17 @@ The documentation clause at L2 is a scope addition rather than a level change, a
 | Deployment shape | Realistic D8 target |
 |---|---|
 | Member-facing RAG bot / model consumer (the persona) | L2 → L3 |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L2 → L3 |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 |
 | Coding copilot — heaviest D8 | L4 |
 | MCP / skill provider serving others | L4 → selective L5 |
 | Model producer (self-trains / fine-tunes) | L4 → L5 incl. `[P]` |
 
 **A model consumer reaches L3 on verification alone.** Inventory plus an AI-BOM at deploy, dependency scanning with lockfiles, and signature-verification and backdoor-scanning of acquired models covers it; producer-grade generation, provenance, and ML-VEX do not apply. A closed first-party model supply leaves a low artifact-swap surface.
+
+**An in-suite productivity assistant is a model consumer, and the vendor's model card is its bill of materials.** Producer-grade generation, training-data provenance and ML-VEX do not apply, which is the same reading the member-facing bot above carries. The band opens at L2 because three of the L3 criteria — the build-time AI-BOM, the load policy over acquired models, and the signature over the organization's own agent artifacts — have no referent in a suite the customer neither builds nor loads; what stays in scope is the supplier assessment of the suite vendor and an inventory entry naming the assistant, its connectors and that model card. The row covers the in-suite variant alone.
+
+**A desktop agent acquires its own components, which is why this row opens a rung above the in-suite one.** Connectors, skills, plugins, MCP servers and desktop extensions are all components the organization acquires, so the L2 component inventory has referents here where a suite the customer neither builds nor loads gives it none. Two configurations carry the registry-provenance and pre-install half of L3. On a first-party deployment an owner enables each connector for the organization before any member authorizes it, and curates a plugin marketplace setting each plugin to installed by default, available, required or not available, which an Enterprise plan overrides per group. On a managed deployment the device profile [[claude-cowork|Claude Cowork]] documents adds the rest: it pushes the MCP servers members may use, states whether a member may add a local one, and states whether desktop extensions are permitted and whether unsigned ones are rejected. The product documentation states that a plugin bundles skills, connectors and sub-agents together, so a plugin approval is the widest single acquisition decision in this shape and the one a supplier assessment has to cover. The model half reads as the in-suite row does: a first-party hosted model leaves the load policy and the behaviour probes not applicable with the trust basis stated. The row covers the desktop-agent variant alone.
 
 **The coding copilot carries the heaviest D8 load, because slopsquatting lands on its dependency channel.** Lockfile enforcement, pre-install SCA on AI-suggested dependencies, MCP and IDE-extension provenance, and AI-assisted dependency remediation are all first-order. That channel is irreducibly external, so the trifecta lever that lowers the target level in other domains leaves this shape where it is.
 

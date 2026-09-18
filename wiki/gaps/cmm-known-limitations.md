@@ -29,7 +29,12 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk-us-fi]]"
   - "[[owasp-aivss]]"
   - "[[lethal-trifecta]]"
+  - "[[claude-cowork]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # CMM Known Limitations (current state)
@@ -82,11 +87,11 @@ All nine cost models now state the incumbency they price and what a Google Cloud
 
 ### 7. No shape row for an enterprise productivity assistant
 
-The core page's shape table (seven rows), the measurement protocol's Agent Card enum, all nine right-sizing tables and the reference architecture's eleven-row shape table carry no row for an assistant holding tools over a whole tenant's mail, files and calendar. The one profile the vault holds for a productivity-class deployment, [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]], excludes external write tools by scope, which is the property that restores the [[lethal-trifecta|lethal trifecta]] for this shape.
+The core page's shape table, the measurement protocol's Agent Card enum, all nine right-sizing tables and the reference architecture's shape table carried no row for an assistant holding tools over a whole tenant's mail, files and calendar. The one profile the vault holds for a productivity-class deployment, [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]], excludes external write tools by scope, which is the property that restores the [[lethal-trifecta|lethal trifecta]] for this shape.
 
-The shape is a class: Gemini for Workspace and Microsoft 365 Copilot inside the suite, where the tenant ACL and the DLP rule are the enforcement unit, and a desktop agent such as Claude Cowork, which adds local file access, MCP connectors, browser use and scheduled routines to the same mail, files and calendar reach. The desktop-agent variant carries tool-mediated writes outside the tenant, so D3, D5 and D8 grade it above the in-suite variant, and the row may need to split in two.
+The shape is a class: Gemini for Workspace and Microsoft 365 Copilot inside the suite, where the tenant ACL and the DLP rule are the enforcement unit, and a desktop agent such as [[claude-cowork|Claude Cowork]], which adds local file access, MCP connectors, browser use and scheduled routines to the same mail, files and calendar reach. The desktop-agent variant carries tool-mediated writes outside the tenant, and the two variants take a row each. Their rungs then move in both directions. [[agentic-ai-security-cmm-d8-supply-chain|D8]] rises, because the member acquires connectors, skills, plugins and MCP servers that a suite customer neither builds nor loads. [[agentic-ai-security-cmm-d5-egress-network|D5]] falls, because the organization's code-execution egress setting does not reach the web fetch tool, the web search tool or MCP servers. [[agentic-ai-security-cmm-d3-control-least-agency|D3]] holds level, because what the customer gains is a permission category per connector rather than a policy decision point it operates.
 
-**Status:** [new-2026-09-15]. The enum value was added to the protocol in the same pass and names both variants; the shape row is recommendation 16 and remains a calibration decision. Tracked in [#174](https://github.com/ag0x00/ai-era/issues/174) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [closed-2026-09-18]. The enum value was added to the protocol in September and names both variants. The class earns two rows under the reference architecture's own granularity rule, because the load-bearing controls change between the variants rather than the product name. Both rows are now written on the core shape table, the reference architecture's shape table and all nine right-sizing tables, and [[claude-cowork|Claude Cowork]] holds the control surface the desktop-agent row is scored against: session placement and the sandbox boundary, the five organization settings and the Enterprise custom-role model, connector authorization, folder scope, scheduled-task governance, and the observability channels that do and do not cover a session. One framing correction landed with the scoring. The desktop agent is not an endpoint deployment by construction, because that page records a session running in the vendor's cloud by default with the agent loop and code execution on the vendor's servers, and records the cloud-session setting as on for Team and off for Enterprise, so the placement is read off a setting, and what the variant gives the customer over the in-suite one is administrative rather than in-path. Tracked in [#174](https://github.com/ag0x00/ai-era/issues/174) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 8. `L5` gate contradicts selective L5
 
@@ -146,9 +151,9 @@ Two source facts stay unresolved and sit as watch items on the Canadian crosswal
 
 ### 18. Callout counts across the CMM family run over the one-per-page rule
 
-Six pages in the family carry more than the one callout the convention allows, measured 2026-09-18: three on the base crosswalk and on D9, two on D1, D2, D4 and D7. The count is debt across the family and bears on no rung.
+One page in the family carries more than the one callout the convention allows: [[agentic-ai-security-cmm-crosswalk|the base crosswalk]], at three. The count is debt across the family and bears on no rung.
 
-**Status:** [new-2026-09-15], recount [new-2026-09-18]. Four pages have come down since the first census: the assessor scorecard, from three, in the 2026-09-17 propagation pass; the core page from four, [[agentic-ai-security-cmm-d6-data-rag|D6]] from two, and this page from three, in the D6 L2 restatement below, which had to touch all three and inherited their callout debt with them, since this vault holds no lint baselines and a page is exempt only until it is touched. [[agentic-ai-security-cmm-d8-supply-chain|D8]] has carried one throughout and never needed reducing. The first census also omitted the base crosswalk, which carries three. Recommendation 29 reduces the six that remain. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [substantially-closed-2026-09-18]. Nine pages have come down since the first census. The assessor scorecard came down from three, the core page from four, [[agentic-ai-security-cmm-d6-data-rag|D6]] from two and this page from three, each when a pass touched it, since this vault holds no lint baselines and a page is exempt only until it is touched. [[agentic-ai-security-cmm-d1-governance|D1]], [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and [[agentic-ai-security-cmm-d7-observability|D7]] came down from two to none, [[agentic-ai-security-cmm-d9-operations|D9]] from three to one, and [[agentic-ai-security-cmm-d2-identity|D2]] from two to one. [[agentic-ai-security-cmm-d8-supply-chain|D8]] has carried one throughout and never needed reducing. Recommendation 29 reduces the base crosswalk, which is the one that remains. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 19. `D3 L3` grades a decision point the coding harness holds itself
 

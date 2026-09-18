@@ -4,7 +4,7 @@ title: "Azure-Native RAG Chatbot Security Profile (Copilot Studio)"
 address: c-000131
 origin: produced
 created: 2026-05-25
-updated: 2026-06-01
+updated: 2026-09-18
 tags:
   - architectures
   - reference-implementation
@@ -24,9 +24,14 @@ related:
   - "[[agentic-ai-security-cmm-d9-operations]]"
   - "[[inference-exposure]]"
   - "[[agentic-cmm-regulated-fi-stress-test]]"
+  - "[[google-cloud-agentic-security-profile]]"
 sources:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the September Google stress test; the trifecta-restoring scope exclusion is the review's own finding. The rung-citation advisory on its plane table is pre-existing."
 ---
 
 # Azure-Native RAG Chatbot Security Profile (Copilot Studio)
@@ -34,7 +39,7 @@ sources:
 This page projects the recalibrated [[agentic-ai-security-reference-architecture|six-plane RA]] and [[agentic-ai-security-cmm-2026|nine-domain CMM]] onto one common deployment: a **closed-corpus, member- or customer-facing RAG chatbot built on Microsoft Copilot Studio** in an E5 + Copilot tenant. Each plane and domain maps to a specific Microsoft control with its GA status and a realistic target level. The profile carries **no regulatory crosswalk** by design, so it applies to any organization running this shape. The FFIEC/GLBA and Canadian-finance crosswalks are separate pages.
 
 > [!gap] Scope and grounding
-> This profile covers the **closed-corpus chatbot shape**: it grounds on internal SharePoint/Dataverse/Graph content, answers users, and holds no external write tools. It does not cover coding copilots, MCP providers, or multi-agent meshes. Control mappings draw on the [[agentic-ai-security-cmm-d2-identity|D2]]–[[agentic-ai-security-cmm-d9-operations|D9]] deep dives plus verified Copilot Studio documentation. Tooling status is a May 2026 snapshot.
+> This profile covers the **closed-corpus chatbot shape**: it grounds on internal SharePoint/Dataverse/Graph content, answers users, and holds no external write tools. It does not cover coding copilots, MCP providers, multi-agent meshes, or the in-suite productivity assistant, whose whole-tenant reach and write tools restore the trifecta this shape breaks. Control mappings draw on the [[agentic-ai-security-cmm-d2-identity|D2]]–[[agentic-ai-security-cmm-d9-operations|D9]] deep dives plus verified Copilot Studio documentation. Tooling status is a May 2026 snapshot.
 
 ## The deployment shape
 

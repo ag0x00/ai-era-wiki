@@ -2,7 +2,7 @@
 type: practice
 title: "Oversharing Controls for AI Search"
 created: 2026-05-01
-updated: 2026-08-31
+updated: 2026-09-18
 tags:
   - practices
   - oversharing
@@ -15,6 +15,7 @@ maturity: emerging
 addresses_threat: "AI search tools (Microsoft Copilot, Glean, Gemini, custom LLMs) retrieving and combining content that is RBAC-permitted but contextually inappropriate"
 related:
   - "[[agentic-ai-security-reference-architecture]]"
+  - "[[agentic-ai-security-cmm-2026]]"
   - "[[ai-data-security]]"
   - "[[inference-exposure]]"
   - "[[ai-usage-control]]"
@@ -25,6 +26,10 @@ related:
   - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the CMM core row and the September Google stress test; dropped an unsourced superlative about shape breadth."
 ---
 
 # Oversharing Controls for AI Search
@@ -90,6 +95,8 @@ Oversharing controls span [[agentic-ai-security-cmm-2026|Agentic AI Security CMM
 - **D7 Observability** — disclosure decision audit trail
 
 The mature implementation requires all three.
+
+The deployment shape carrying this failure mode across a whole tenant is the in-suite productivity assistant, whose retrieval spans every corpus an employee can reach. The CMM's shape table carries a row for it, and answer-time entitlement over the whole tenant is what D6 grades for that shape.
 
 ## Open Issues
 

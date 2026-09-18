@@ -3,7 +3,7 @@ type: concept
 title: "Lethal Trifecta"
 address: c-000308
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - concepts
   - prompt-injection
@@ -43,15 +43,15 @@ related:
   - "[[echoleak-copilot-zero-click]]"
   - "[[geminijack-gemini-enterprise-injection]]"
   - "[[slack-ai-private-channel-exfiltration]]"
+  - "[[azure-rag-chatbot-security-profile]]"
 sources:
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
   - "[[.raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_slides.pdf]]"
   - "[[.raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_transcript.md]]"
-verified: 2026-09-16
-verified_against:
-  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_slides.pdf"
-  - ".raw/talks/2026-03-04_Andrew-Bullen_Breaking-the-Lethal-Trifecta_transcript.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Read against the Tenuo capability-authorization talk page and the Azure RAG profile; the new footnote carries the harness and replication caveats the talk states. Supersedes the 2026-09-16 read against 2 archived documents, which this read did not reopen."
 ---
 
 # Lethal Trifecta
@@ -98,7 +98,7 @@ Break the trifecta. Remove **at least one** of the three capabilities from any a
 3. **Treat retrieved content as data, not instructions.** Use [[system-prompt-architecture|system prompt architecture]] with explicit trust labels. This does not break the trifecta on its own (a determined injection can still succeed) but reduces the success rate.
 4. **Egress filtering.** Domain allowlists at the network layer make the "external communication" leg detectable and constrainable.
 5. **Capability-level audit.** Every agent definition should declare which legs of the trifecta it holds. The audit asks: is this combination justified?
-6. **Capability-based authorization at the action layer.** Even when an agent must hold all three legs, the *action it can take with them* can be deterministically constrained per task. [[capability-based-authorization|Capability-based authorization]] (e.g. [[tenuo-warrant|Tenuo Warrants]] from [[capability-based-authorization-talk|Niyikiza, Unprompted March 2026]]) issues task-scoped, holder-bound, delegation-aware capabilities; sub-agent capabilities can only narrow ([[monotonic-attenuation|monotonic attenuation]]). This contains an exfil-oriented prompt injection at execution time without removing any leg of the trifecta from the agent's *role* — the agent is allowed to ingest untrusted content, hold private-data access, and reach the network, but only the *specific action set* the warrant permits is allowed. Reports 90%→0% multi-agent ASR on Tenuo's custom harness.
+6. **Capability-based authorization at the action layer.** Even when an agent must hold all three legs, the *action it can take with them* can be deterministically constrained per task. [[capability-based-authorization|Capability-based authorization]] (e.g. [[tenuo-warrant|Tenuo Warrants]] from [[capability-based-authorization-talk|Niyikiza, Unprompted March 2026]]) issues task-scoped, holder-bound, delegation-aware capabilities; sub-agent capabilities can only narrow ([[monotonic-attenuation|monotonic attenuation]]). This contains an exfil-oriented prompt injection at execution time without removing any leg of the trifecta from the agent's *role* — the agent is allowed to ingest untrusted content, hold private-data access, and reach the network, but only the *specific action set* the warrant permits is allowed. Reports 90%→0% multi-agent ASR on Tenuo's custom harness.[^tenuo-asr]
 7. **Layered structural defenses ("Architecting the Fortress").** [[nicolas-lidzborski|Nicolas Lidzborski]]'s [[securing-workspace-genai-at-google-talk|Google Workspace talk at Unprompted March 2026]] presents a four-layer blueprint: (1) low-risk input — strip hidden content + abuse-signal-aware ingestion + data-provenance tracking; (2) prompt delimitation via [[sentinel-tokens|sentinel tokens]] + adversarial fine-tuning; (3) deterministic orchestration with state-aware FSM that constrains downstream capabilities by data origin; (4) output sanitization including markdown scrubbing, dynamic URL classification, and removal of ungrounded LLM-hallucinated URLs. Combined with [[plan-validate-execute|Plan-Validate-Execute]] for high-stakes irreversible actions. **Worked example:** the [[ben-nassi|Nassi]] et al. "Invitation Is All You Need" attack (calendar invite as zero-click hijack vector for Gemini) extended in Lidzborski's deployment to smart-home control (lights, curtains, heater) — a real-world demonstration of trifecta exploitation when the action surface is broader than recognized.
 
 This is the architectural premise of [[stripe|Stripe]]'s containment architecture, presented by [[andrew-bullen|Andrew Bullen]] at [[unprompted-conference-march-2026|Unprompted, March 2026]] — see [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta (Without Ruining Your Agents)]] for the full worked example. Stripe's argument: among the three legs, **only egress is feasible to remove** in a real enterprise (private data is needed by most agents; untrusted content is structurally hard to filter without losing utility). The same talk introduces the [[lethal-bifecta|Lethal Bifecta]] as a write-side analogue. Niyikiza's capability-warrants approach is **complementary**: when egress can't be fully removed, action-layer capability attenuation contains the blast radius even when the agent reaches it.
@@ -132,6 +132,8 @@ Slide 3 of Andrew Bullen's [[breaking-the-lethal-trifecta-talk|Breaking the Leth
 
 [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime & Guardrails]] uses the trifecta test to lower the required level: an agent that reaches no private data, or holds no exfiltration path, is a poor high-impact injection target and is graded against a lighter runtime bar.
 
+[[azure-rag-chatbot-security-profile|The Azure-native RAG chatbot profile]] is the worked deployment where the trifecta is broken by architecture rather than contained at runtime. A Copilot Studio agent grounded on a closed internal corpus reads private data and holds no external-communications or write path, which lowers the required maturity level across five CMM domains: Control and Least-Agency, Runtime and Guardrails, Egress and Network, Observability and Detection, and Operations and Human Factors.
+
 - [[indirect-prompt-injection|Indirect Prompt Injection]] — the dominant attack vector against trifecta agents
 - [[tool-abuse-chains|Tool-Abuse Chains]] — what happens when external communication is via tool calls rather than text rendering
 - [[prompt-injection-containment|Prompt Injection Containment for Agentic Systems]] — runtime containment when the trifecta cannot be broken at design time
@@ -144,6 +146,8 @@ The trifecta is the stated rationale for the [[agentic-ai-security-cmm-dependenc
 ## Notes
 
 [^aix-liaison]: OWASP AI Exchange, ["About the AI Exchange"](https://owaspai.org/go/about/), retrieved 2026-08-17. The Exchange states 70 pages contributed to prEN 18282 and 70 pages to ISO/IEC 27090 through official liaison partnership, plus contribution to ISO/IEC 27091. These are the source's own claims and are not independently verified here.
+
+[^tenuo-asr]: Niki Aimable Niyikiza, "Capability-Based Authorization for AI Agents", [Unprompted Conference slide deck](https://drive.google.com/file/d/17PGo15fAidNQxdpkhyHH0ZtxehVjduNb/view), March 2026. The 90%→0% multi-agent-delegation figure is measured on Tenuo's own custom harness, and the speaker states that no public benchmark exists for delegation-aware authorization at multi-agent scale, so the result is not third-party-replicated. The full result table is at [[capability-based-authorization-talk|Capability-Based Authorization for AI Agents]].
 
 [^asr-competition]: *Security Challenges in AI Agent Deployment: Insights from a Large Scale Public Competition* (arXiv), cited on slide 3 of Andrew Bullen, "Breaking the Lethal Trifecta (Without Ruining Your Agents)", Unprompted Conference, March 4, 2026. The competition scored attack success against undefended frontier models, with no architectural control in the measured system; the per-model table is reproduced at [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]].
 

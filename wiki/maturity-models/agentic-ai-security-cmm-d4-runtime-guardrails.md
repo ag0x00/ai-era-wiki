@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D4: Runtime and Guardrails"
 address: c-000126
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -45,22 +45,22 @@ related:
   - "[[falcon-guardian]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
   - "[[chain-of-thought-monitorability]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[prompt-injection]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-08-26
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D4 Runtime & Guardrails (Deep Dive)
 
 Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D4 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. D4 is the [[oversight-layer|Policy Enforcement Point]] at runtime: it enforces what [[agentic-ai-security-cmm-d3-control-least-agency|D3]] decides. The runtime threats it answers map to [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]]: Tool Misuse (T2), Intent Breaking and Goal Manipulation (T6), Unexpected RCE and Code Attacks (T11), and Rogue Agents in Multi-Agent Systems (T13), whose playbooks call for execution sandboxing with per-call reset and in-path reasoning-manipulation controls. The recalibration regrades this domain against what ships. The L2/L3 input-and-output controls are GA and cheap, and the L4 spine the current CMM names as deployable (chain-of-thought auditing, groundedness checking) sits at preview or experimental status, short of GA.
 
-> [!gap] Single-source grounding
-> Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is a May 2026 snapshot.
+**The levels and the cost model rest on one line of grounding.** They synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation, rather than on independent sources that agree. The tooling status below is a May 2026 snapshot.
 
 ## Threat coverage
 
@@ -161,6 +161,8 @@ The semantic-validation criterion sits a step behind those preview controls, and
 | Deployment shape | Realistic D4 target | Why |
 |---|---|---|
 | Web/desktop chatbot (no tools) | L3 (L4 only for high-stakes content) | No tool-call surface means no CoT-audit or code-safety need; input PI filter + output content safety suffice. [[agentic-ai-security-cmm-recalibration-method-2026\|The persona]]'s bot sits here |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | The injection path is the product's own retrieval surface and the screening against it runs inside the vendor, so the L3 criteria are recorded unanswerable, each naming the vendor evidence that would close it; what the customer holds is the enablement and data-loss-prevention configuration that bounds reach |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | The sandbox criterion is met from a documented boundary, stated per placement: a local session runs in a platform-hypervisor VM with syscall restriction and per-session user isolation, and the cloud sandbox reaches no private, link-local or metadata address; the injection screening runs inside the vendor and stays unanswerable |
 | Copilot / assistant (RAG + light tools) | L3 → L4 | Add groundedness (RAG) and tool-call gating; CoT auditing earns its cost once tools can write |
 | Generative coding harness (writes files, runs shell) | L3 → L4 | Code-safety analysis and sandbox scope carry the rung; chain-of-thought auditing and groundedness ship as preview or OSS, so the band tracks what the program assembles. Coverage note below |
 | MCP / skill provider (real tool reach) | L4 | CoT/alignment auditing, tool-call interception, and sandboxing become first-order |
@@ -170,10 +172,9 @@ The [[lethal-trifecta|lethal-trifecta]] test lowers the required level. An agent
 
 The core page assigns the generative coding shape the same L3-to-L4 band for this domain, and raises only [[agentic-ai-security-cmm-d8-supply-chain|D8]] to a flat L4, where the dependency channel stays external ([[cmm-known-limitations|CMM Known Limitations]] item 20).
 
-> [!check] State the coverage of "sandboxed" for the coding shape
-> For agentic coding harnesses the load-bearing D4 control is an OS boundary, and its scope must be recorded rather than assumed. A harness sandbox that covers shell subprocesses leaves in-process file tools, MCP servers, and hooks on the host — the asymmetry through which the [[claude-code-github-action-credential-exposure|June 2026 CI credential exfiltration]] ran while the shell boundary held. Whole-process wrappers such as [[anthropic-sandbox-runtime|`@anthropic-ai/sandbox-runtime`]] close it without requiring containers, at beta-research-preview grade. Authoring-time instruments such as the [[security-guidance-plugin|Security Guidance plugin]] warn without blocking and therefore carry no D4 level on their own. Full catalog with availability grades: [[securing-agentic-coding|Securing Agentic Coding]].
->
-> Scope is one of two coverage questions, and the second is when the boundary begins. A sandbox established after the harness has read workspace-supplied configuration is absent for that window, whatever it contains afterwards. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case on the record: headless Gemini CLI executed from an attacker-supplied `.gemini/` tree before its sandbox initialized, at CVSS 10.0, with the isolation control correctly implemented and never in the path. No vendor documentation states this ordering for any harness the wiki tracks, so an assessor cannot currently verify it from published material — record it as **unanswerable**, an unanswered vendor question rather than a met or unmet criterion, and do not read a documented sandbox scope as covering it.
+**An assessment of the coding shape records what "sandboxed" covers rather than assuming it.** The load-bearing D4 control for an agentic coding harness is an OS boundary. A harness sandbox that covers shell subprocesses leaves in-process file tools, MCP servers and hooks on the host, the asymmetry through which the [[claude-code-github-action-credential-exposure|June 2026 CI credential exfiltration]] ran while the shell boundary held. Whole-process wrappers such as [[anthropic-sandbox-runtime|`@anthropic-ai/sandbox-runtime`]] close it without requiring containers, at beta-research-preview grade. Authoring-time instruments such as the [[security-guidance-plugin|Security Guidance plugin]] warn without blocking and therefore carry no D4 level on their own. [[securing-agentic-coding|Securing Agentic Coding]] holds the full catalog with availability grades.
+
+Scope is one of two coverage questions, and the second is when the boundary begins. A sandbox established after the harness has read workspace-supplied configuration is absent for that window, whatever it contains afterwards. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case on the record, where headless Gemini CLI executed from an attacker-supplied `.gemini/` tree before its sandbox initialized, at CVSS 10.0, with the isolation control correctly implemented and never in the path. No vendor documentation this wiki holds states the ordering for any harness it tracks, so an assessor cannot verify it from published material and records it as **unanswerable**, an unanswered vendor question rather than a met or unmet criterion. A documented sandbox scope does not answer the ordering question.
 
 ## Cost model
 

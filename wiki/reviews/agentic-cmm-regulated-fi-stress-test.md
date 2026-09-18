@@ -4,7 +4,7 @@ title: "Agentic AI CMM: Regulated-FI Stress Test"
 address: c-000162
 origin: produced
 created: 2026-05-23
-updated: 2026-08-18
+updated: 2026-09-18
 tags:
   - reviews
   - cmm
@@ -32,7 +32,15 @@ related:
   - "[[tenuo-warrant]]"
   - "[[aiuc-1]]"
   - "[[credential-proxy-pattern]]"
-sources: []
+  - "[[google-cloud-agentic-security-profile]]"
+  - "[[azure-rag-chatbot-security-profile]]"
+sources:
+  - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-reference-architecture]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the Google Cloud profile and the Azure RAG profile; the single-stack absence claim is now scoped. The rung-citation advisory on its scoring table is pre-existing."
 ---
 
 # Agentic AI Security CMM — Regulated-FI Adoption Stress Test (Credit Union)
@@ -63,23 +71,29 @@ The reassuring finding sits underneath the score: the path to "good enough" for 
 
 ## Gaps and calibration issues surfaced
 
-> [!gap] 1. No regulated-FI standards crosswalk (the biggest gap)
-> The CMM crosswalks to EU AI Act, ISO 42001, NIST AI RMF, MITRE ATLAS, OWASP ASI, and [[aiuc-1|AIUC-1]]. A US financial institution is examined against none of those. There is no mapping to FFIEC interagency guidance, NCUA third-party-due-diligence expectations, the GLBA Safeguards Rule, or model-risk-management practice (SR 11-7-style, which examiners increasingly borrow). For a model that wants adoption by regulated FIs, this omission outweighs any missing control: an examiner will not accept "the CMM says L4," and the domains do not speak to the obligations the institution is actually graded on.
+### 1. No regulated-FI standards crosswalk
 
-> [!gap] 2. Microsoft-stack coverage gaps are real but narrow (corrected 2026-05-23)
-> The first draft of this point overstated the gap ("no Microsoft AI gateway; must go off-stack for the egress plane"). Verification against current Microsoft documentation corrects it. **Azure API Management's AI Gateway is GA** and is a genuine agent-aware LLM gateway (token-limit and token-metric policies, semantic caching, inline Azure AI Content Safety, backend load-balancing), and it **brokers MCP servers with Entra / OAuth 2.0 / JWT authorization at GA**; [[microsoft-entra-agent-id|Entra Internet Access]] adds network-layer prompt-injection and Shadow-AI egress filtering. So the LLM-traffic gateway and MCP authorization are covered natively. The genuine residual gaps an all-Microsoft buyer fills off-stack are narrow: (a) **MCP tool-integrity / rug-pull defense** — Microsoft's own OWASP-MCP-for-Azure guidance states "there is no single Azure service dedicated to MCP-specific protection"; (b) **per-task capability tokens** — Entra Agent ID issues per-*agent-identity* scoped tokens (OBO), not per-*task* holder-bound Warrant-style grants ([[tenuo-warrant|Tenuo Warrant]]-class); (c) **agent-to-agent (A2A) authorization beyond identity** (message signing, cross-agent ACLs, content-scanning rule packs) is thin. The RA's Egress row also omits APIM AI Gateway entirely and should add it. The lesson, which the wiki owner flagged: confirm a platform capability against current docs before asserting absence.
+The CMM crosswalks to EU AI Act, ISO 42001, NIST AI RMF, MITRE ATLAS, OWASP ASI, and [[aiuc-1|AIUC-1]]. A US financial institution is examined against none of those. There is no mapping to FFIEC interagency guidance, NCUA third-party-due-diligence expectations, the GLBA Safeguards Rule, or model-risk-management practice (SR 11-7-style, which examiners increasingly borrow). For a model that wants adoption by regulated FIs, this omission outweighs any missing control: an examiner will not accept "the CMM says L4," and the domains do not speak to the obligations the institution is actually graded on.
 
-> [!gap] 3. L5 assumes a procurement cadence regulated FIs cannot follow
-> Several L5 criteria point at products that reached GA within weeks of the CMM revision ([[microsoft-entra-agent-id|Agent 365]] May 1, Okta for AI Agents Apr 30). In a regulated institution, "GA three weeks ago" means twelve to eighteen months out after vendor risk assessment, SOC-2 review, and board sign-off. L5 is therefore unreachable on *cadence*, not capability — and the slow cadence is the examiner-approved behavior. A maturity model that effectively penalizes prudent third-party-risk discipline has a calibration problem for the entire regulated sector, not just one institution.
+### 2. Microsoft-stack coverage gaps, real but narrow
 
-> [!gap] 4. Right-sizing guidance is buried; vendor-neutrality is an integration tax for single-stack shops
-> The genuinely useful guidance — apply per application, default L4 with selective L5, dependency-resolved scoring, the architectural-containment carve-out — is real but sits under 400+ lines weighted toward L5/L5+ aspiration. For a single-stack buyer, the prized vendor-neutrality inverts into an integration tax: a 40-tool neutral catalog is work the buyer must redo to find the six controls already in the Microsoft tenant. The hyperscaler-locked framing the RA criticizes (Microsoft ZT4AI, "700+ controls, Azure-locked") is, for this buyer, the more actionable artifact.
+An earlier reading of this point recorded no Microsoft AI gateway and an unavoidable off-stack egress plane. Verification against current Microsoft documentation narrows that gap rather than confirming it. **Azure API Management's AI Gateway is GA** and is a genuine agent-aware LLM gateway (token-limit and token-metric policies, semantic caching, inline Azure AI Content Safety, backend load-balancing), and it **brokers MCP servers with Entra / OAuth 2.0 / JWT authorization at GA**; [[microsoft-entra-agent-id|Entra Internet Access]] adds network-layer prompt-injection and Shadow-AI egress filtering. So the LLM-traffic gateway and MCP authorization are covered natively. The genuine residual gaps an all-Microsoft buyer fills off-stack are narrow: (a) **MCP tool-integrity / rug-pull defense** — Microsoft's own OWASP-MCP-for-Azure guidance states "there is no single Azure service dedicated to MCP-specific protection"; (b) **per-task capability tokens** — Entra Agent ID issues per-*agent-identity* scoped tokens (OBO), not per-*task* holder-bound Warrant-style grants ([[tenuo-warrant|Tenuo Warrant]]-class); (c) **agent-to-agent (A2A) authorization beyond identity** (message signing, cross-agent ACLs, content-scanning rule packs) is thin. The RA's Egress row also omits APIM AI Gateway entirely and should add it. The correction sets the rule the rest of this review follows, which is to confirm a platform capability against current documentation before asserting its absence.
 
-> [!gap] 5. No external authority; the L5 AIUC-1 anchor is not regulator-recognized
-> The CMM is a synthesis (`attributed_to: Anton Goncharov + Claude`), not a recognized standard, and it says so. That is fine for an internal checklist, but it caps the L5 governance criterion: "AIUC-1 certified against the latest quarterly refresh" is meaningless to an NCUA examiner who has never heard of AIUC-1. ISO 42001 carries more weight; AIUC-1 carries little in this sector.
+### 3. An L5 cadence regulated FIs cannot follow
 
-> [!gap] 6. The cost model under-tells the dominant costs
-> The implementation roadmap is framed around control coverage and tooling. For a fully-licensed Microsoft shop the licensing delta is near zero; the dominant costs are elsewhere and largely unaddressed: (a) the **data-governance project** — classifying member data and remediating oversharing in Purview is a multi-quarter, people-owned effort and the true bottleneck (see [[inference-exposure|Inference / Retrieval Exposure]]); (b) **log-ingestion spend** — the RA's own note that agents emit 10–20× human log volume is a recurring Sentinel/Security-Copilot bill that scales with every agent; (c) **headcount** to operationalize one application's governance, logging, and red-team. The expensive, slow work is data governance and labor, not tool purchase.
+Several L5 criteria point at products that reached GA within weeks of the CMM revision ([[microsoft-entra-agent-id|Agent 365]] May 1, Okta for AI Agents Apr 30). In a regulated institution, "GA three weeks ago" means twelve to eighteen months out after vendor risk assessment, SOC-2 review, and board sign-off. L5 is therefore unreachable on *cadence*, not capability — and the slow cadence is the examiner-approved behavior. A maturity model that effectively penalizes prudent third-party-risk discipline has a calibration problem for the entire regulated sector, not just one institution.
+
+### 4. Buried right-sizing guidance and the vendor-neutrality tax
+
+The genuinely useful guidance — apply per application, default L4 with selective L5, dependency-resolved scoring, the architectural-containment carve-out — is real but sits under 400+ lines weighted toward L5/L5+ aspiration. For a single-stack buyer, the prized vendor-neutrality inverts into an integration tax: a 40-tool neutral catalog is work the buyer must redo to find the six controls already in the Microsoft tenant. The hyperscaler-locked framing the RA criticizes (Microsoft ZT4AI, "700+ controls, Azure-locked") is, for this buyer, the more actionable artifact.
+
+### 5. No external authority behind the L5 AIUC-1 anchor
+
+The CMM is a synthesis (`attributed_to: Anton Goncharov + Claude`), not a recognized standard, and it says so. That is fine for an internal checklist, but it caps the L5 governance criterion: "AIUC-1 certified against the latest quarterly refresh" is meaningless to an NCUA examiner who has never heard of AIUC-1. ISO 42001 carries more weight; AIUC-1 carries little in this sector.
+
+### 6. A cost model that under-tells the dominant costs
+
+The implementation roadmap is framed around control coverage and tooling. For a fully-licensed Microsoft shop the licensing delta is near zero; the dominant costs are elsewhere and largely unaddressed: (a) the **data-governance project** — classifying member data and remediating oversharing in Purview is a multi-quarter, people-owned effort and the true bottleneck (see [[inference-exposure|Inference / Retrieval Exposure]]); (b) **log-ingestion spend** — the RA's own note that agents emit 10–20× human log volume is a recurring Sentinel/Security-Copilot bill that scales with every agent; (c) **headcount** to operationalize one application's governance, logging, and red-team. The expensive, slow work is data governance and labor, not tool purchase.
 
 ## Well-calibrated areas
 
@@ -97,3 +111,5 @@ The model earns credit on several points the buyer values. The PDP/PEP/PIP decom
 Filed 2026-05-23 from a customer-persona stress test of the CMM and RA. Gaps 1 and 6 are the highest-value adds; gap 2 is a finding already latent in the RA's own enterprise-stack table. None requires new external research to act on — they are authoring and crosswalk tasks against artifacts the wiki already holds.
 
 Downstream resolution: gap 6's D6 finding was acted on in [[agentic-ai-security-cmm-d6-data-rag|the D6 Data, Memory and RAG deep dive]], which reframed the domain around answer-time oversharing and inference exposure, made entitlement enforcement the L3 capability, and stated the Purview data-governance project as a multi-quarter labor cost. The findings above stand as filed; this note records where they landed.
+
+The single-stack closure condition is answered on one platform of the three. [[google-cloud-agentic-security-profile|The Google Cloud agentic security profile]] reads the reference architecture and the CMM against Google Cloud alone, plane by plane and domain by domain, and names the planes where Google ships no native control and an off-stack component is unavoidable. No equivalent platform-wide reading exists for Microsoft or AWS; [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]] is a Microsoft reading of one deployment shape rather than of the platform.

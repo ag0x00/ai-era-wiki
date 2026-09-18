@@ -4,7 +4,7 @@ title: "Google Cloud Agentic Security Profile"
 address: c-629917
 origin: produced
 created: 2026-09-16
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - architectures
   - reference-implementation
@@ -51,6 +51,10 @@ sources:
   - "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency"
   - "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/iam-overview-uap"
   - "https://support.google.com/a/users/answer/17010577"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the September Google stress test; reconciled the needed bands with the live shape row."
 ---
 
 # Google Cloud Agentic Security Profile
@@ -84,7 +88,7 @@ The assistant reads private data, ingests untrusted content on every summarizati
 | **Supply chain ([[agentic-ai-security-cmm-d8-supply-chain\|D8]])** | L2 → L2 to L3 | Consumer-grade only: the vendor's model card is this shape's bill of materials; Assured Workloads bounds which products are in scope[^aw][^awprod] | Control packages documented; product membership per package[^awprod] | Producer-grade AI-BOM does not apply, and package membership decides what a regulated workload may use |
 | **Operations ([[agentic-ai-security-cmm-d9-operations\|D9]])** | L2 to L3 → L3 | Google SecOps SIEM and SOAR for the runbook, both in scope for Canada Protected B; the Admin console usage review[^awprod][^gemaicc] | SecOps in the Protected B product list[^awprod] | The involvement measure D9 asks for is a vendor-side override rate the customer cannot read |
 
-The first column carries the September scoring of this shape in [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]], band for band, and this page re-scores nothing. That review also records that neither the CMM's shape table nor the reference architecture's carries a row for a productivity assistant, so the model sets no target of its own; the row the review proposes for the missing shape reads L3 across all nine domains with L4 in D6 and D9.
+The first column reproduces the September scoring of this shape in [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]], band for band, and introduces no band of its own. That review also recorded that neither the CMM's shape table nor the reference architecture's carried a row for a productivity assistant; both now carry the in-suite row, which reads L3 across all nine domains with L4 in D6 and D9. The needed half of that column and the row differ in four domains, because the two were derived differently. The needed bands were taken from each domain's right-sizing table at a point when none of the nine carried a row for this shape, which sets D1, D3 and D4 a band higher and D9 a band lower than the row the review then proposed from the shape itself. The proposed row is what the model now carries and is the target an assessor scores against; the needed bands stay as the September reading of the tables as they then stood.
 
 ## The four controls the customer holds
 

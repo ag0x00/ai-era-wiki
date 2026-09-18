@@ -3,7 +3,7 @@ type: thesis
 title: "Generative Coding Deployment Shapes"
 address: c-000237
 created: 2026-07-30
-updated: 2026-09-17
+updated: 2026-09-18
 tags:
   - thesis
   - agentic-coding
@@ -43,6 +43,7 @@ related:
   - "[[shadow-automation|Shadow Automation]]"
   - "[[vibe-coding|Vibe Coding]]"
   - "[[pwc-stage-coverage-tiers|PwC Stage-Coverage Tiers]]"
+  - "[[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]"
 sources:
   - https://code.claude.com/docs/en/sandbox-environments
   - https://code.claude.com/docs/en/sandboxing
@@ -52,6 +53,10 @@ sources:
   - https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/
   - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the D9 deep dive; the new D9 bullet matches it and no longer refers to the page as a narrator."
 ---
 
 # Generative Coding Deployment Shapes
@@ -142,6 +147,7 @@ The [[agentic-ai-security-reference-architecture|RA]]'s generative-coding row sh
 - **[[agentic-ai-security-cmm-d5-egress-network|D5]]** — a hostname allowlist without TLS termination is a misconfiguration control, not an exfiltration control. Grade accordingly.
 - **[[agentic-ai-security-cmm-d7-observability|D7]]** — routing inference through a gateway for governance reasons removes first-party session analytics. OpenTelemetry export is the replacement and it is not automatic.
 - **[[agentic-ai-security-cmm-d8-supply-chain|D8]]** — the harness configuration tree is in scope, per [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]], and the fleet-shape inventory requirement is its natural extension. The workspace-local half of that tree is now exploited rather than hypothesized: a `.gemini/` directory arriving in a pull request was the delivery mechanism for a CVSS 10.0 finding.
+- **[[agentic-ai-security-cmm-d9-operations|D9]]** — approval fatigue is the mechanism that moves a deployment from one of the five shapes above to another. The documented remedy for prompt volume runs allowlisting, then autonomous modes, then suppressed prompts, so an assessor measures approval volume and disposition over time rather than approval existence, and reads a falling prompt count against a rising action count as a shape change that requires re-assessment.
 
 The full control catalog with FOSS and COTS instruments per plane is in [[securing-agentic-coding|Securing Agentic Coding]].
 

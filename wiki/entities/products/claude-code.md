@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Claude Code"
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-09-18
 tags:
   - entities
   - products
@@ -23,6 +23,7 @@ homepage: "https://github.com/anthropics/claude-code"
 related:
   - "[[anthropic|Anthropic]]"
   - "[[claude-code-security|Claude Code Security]]"
+  - "[[claude-cowork|Claude Cowork]]"
   - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
   - "[[manifold-security|Manifold Security]]"
   - "[[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]]"
@@ -40,15 +41,15 @@ related:
 sources:
   - "https://github.com/anthropics/claude-code"
   - "https://docs.claude.com/en/docs/claude-code/monitoring-usage"
+  - "https://claude.com/docs/cowork/overview"
   - "https://api.npmjs.org/downloads/point/2026-07-28:2026-08-27/@anthropic-ai/claude-code"
   - "https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/"
   - "https://www.manifold.security/blog/ai-coding-agents-git-hijack"
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-verified: 2026-09-17
-verified_against:
-  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
-verified_note: "GitSpawn rows and the npm figure verified; the conflation with Claude Code Security was removed. Non-GitSpawn claims rest on the pages they cite."
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Claude Code
@@ -57,7 +58,7 @@ verified_note: "GitSpawn rows and the npm figure verified; the conflation with C
 
 [[anthropic|Anthropic]]'s terminal-resident coding agent, published on npm as `@anthropic-ai/claude-code` and wrapped for continuous integration by a first-party GitHub Action. [[manifold-security|Manifold Security]] cites over 77 million npm downloads across the 31 days ending [2026-08-27](https://api.npmjs.org/downloads/point/2026-07-28:2026-08-27/@anthropic-ai/claude-code) for the package, the only distribution figure it gives for any agent in its [[gitspawn-coding-agent-git-config-rce|GitSpawn]] set; the count bounds distribution rather than installed base, because it includes mirrors, re-installs and continuous-integration fetches.[^npm]
 
-The coding agent is distinct from [[claude-code-security|Claude Code Security]], a separate Anthropic product that reads and reasons about codebases for vulnerability discovery.
+The coding agent is distinct from [[claude-code-security|Claude Code Security]], a separate Anthropic product that reads and reasons about codebases for vulnerability discovery. It is also distinct from [[claude-cowork|Claude Cowork]], which runs the same agentic architecture for knowledge work inside Claude Desktop and loads the skills and plugins enabled for the member's claude.ai account, because Cowork [does not read the Claude Code CLI's `~/.claude` directory on the machine](https://claude.com/docs/cowork/overview). The configuration tree below is therefore the coding agent's alone.
 
 Four surfaces matter here.
 

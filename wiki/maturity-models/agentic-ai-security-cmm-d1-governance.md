@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -40,24 +40,25 @@ related:
   - "[[agentic-ai-security-cmm-d9-operations]]"
   - "[[security-controls-for-ai-stacks]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[aiuc-1-critical-evaluation]]"
   - "[[iso-iec-42001]]"
   - "[[nist-ai-rmf]]"
-verified: 2026-09-10
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
-verified_findings: 1
-verified_note: "Full read. 1 CONTRADICTED found and fixed (Class 5 exclusivity vs threat-taxonomy-reconciliation, which resolves the class to D1 and D9). Verified against general-controls: 12 Gap verdicts across the six 1.1 governance controls, AI PROGRAM 8-step quickstart and 3-step bare minimum, 42001 lifecycle exclusions, RACI responsibility examples. Risk-analysis and organize claims were checked against owasp-ai-exchange-security-overview, which this page's sources chain does not reach."
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D1 Governance & Accountability (Deep Dive)
 
 Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D1 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. D1 fixes who is accountable for agent behavior, with what authority, and on what auditable record. The recalibration makes one material change: **L5 no longer mandates a single certification.** The [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] flagged that pinning L5 to [[aiuc-1|AIUC-1]] both moves the bar on a vendor's cadence and concentrates assurance in one certifier; the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]] examined the question and found the mandate indefensible. D1-L5 now states a capability that several schemes satisfy: *current, independent, third-party assurance of the governance program*.
 
-> [!gap] Single-source grounding
-> The level criteria and cost model synthesize the wiki's own recalibration method against one representative-customer source (the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]]) plus the [[aiuc-1-critical-evaluation|AIUC-1 evaluation]]. They are wiki-internal calibration, not an externally ratified standard, and will firm up as later domains and crosswalks test them. Part of the L2 criterion set now has an external counterpart. The Exchange's eight-step first iteration for AI governance names a published policy and assigned responsibilities, which L2 grades as the AI-use policy and the signed RACI ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). Three further steps in that iteration sit at no rung of this ladder: identifying the applicable laws and regulations, running an AI-literacy program, and the proposal half of its inventory survey, which covers AI ideas and concerns as well as AI in use. L3's shadow-agent inventory reaches deployed agents and stops there. In the other direction, L2's agent risk-tier scheme has no counterpart in the iteration. The level boundaries stay wiki-internal in every case.
+**The level criteria and the cost model rest on one line of grounding.** They synthesize the wiki's own recalibration method against one representative-customer source, the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]], plus the [[aiuc-1-critical-evaluation|AIUC-1 evaluation]], rather than on independent sources that agree. They are wiki-internal calibration and not an externally ratified standard, and they firm up as later domains and crosswalks test them.
+
+Part of the L2 criterion set has an external counterpart. The eight-step first iteration for AI governance published by the [[owasp-ai-exchange|OWASP AI Exchange]] names a published policy and assigned responsibilities, which L2 grades as the AI-use policy and the signed RACI ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). Three further steps in that iteration sit at no rung of this ladder: identifying the applicable laws and regulations, running an AI-literacy program, and the proposal half of its inventory survey, which covers AI ideas and concerns as well as AI in use. L3's shadow-agent inventory reaches deployed agents and stops there. In the other direction, L2's agent risk-tier scheme has no counterpart in the iteration. The level boundaries stay wiki-internal in every case.
 
 ## Threat coverage
 
@@ -134,12 +135,13 @@ The realistic target per [[agentic-ai-security-cmm-recalibration-method-2026|rul
 | Deployment shape | Realistic D1 target | Why |
 |---|---|---|
 | Internal RAG / support chatbot (no tools) | L2 → L3 | Owner, policy, risk body, decision-rights. Certification is not warranted near-term |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | Owner, policy and per-organizational-unit enablement reach L3; the per-agent-type decision-rights criterion resolves against the single assistant type the suite deploys, whatever the size of the agent population |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | Enterprise custom roles grant each capability from a closed default, which is the decision-rights record this rung asks for per agent type; the shadow-agent criterion needs an endpoint instrument, because an unsanctioned install is discovered at the endpoint rather than in a suite console |
 | Data-science / coding copilot | L3 → L4 | Adds board metrics and crosswalk once the agent touches the SDLC |
 | MCP / skill provider serving others | L4 | Third-party exposure raises the accountability bar; readiness assessment expected |
 | High-autonomy multi-agent mesh | L4 → selective L5 | Certification earns its cost where autonomy and blast radius are highest |
 
-> [!check] The coding row now has a governance object the criteria do not name
-> D1 asks who is accountable for agent behavior on what auditable record. For agentic coding the record includes the **harness configuration tree** — hooks, MCP manifests, subagents, skills, and instruction files — which composes runtime behavior from third-party parts and is usually held at per-developer discretion rather than under organizational policy. An L3 claim for this shape should evidence managed policy that local configuration cannot override, plus configuration held under review. Adoption outruns the inventory that governance assumes: peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. See [[securing-agentic-coding|Securing Agentic Coding]].
+**Agentic coding adds a governance object the criteria do not name: the harness configuration tree.** D1 asks who is accountable for agent behavior on what auditable record, and for agentic coding that record includes the hooks, MCP manifests, subagents, skills and instruction files that compose runtime behavior from third-party parts, held at per-developer discretion rather than under organizational policy in most deployments. An L3 claim for this shape must evidence managed policy that local configuration cannot override, plus configuration held under review. Adoption outruns the inventory governance assumes, because peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. [[securing-agentic-coding|Securing Agentic Coding]] carries the controls for this shape.
 
 Most enterprises land at **L4 with selective L5** in the domains tied to their exposure. A contained, low-agency design that legitimately needs less governance records the choice as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
 

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D3: Control and Least-Agency"
 address: c-000138
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -45,18 +45,15 @@ related:
   - "[[vvah]]"
   - "[[deepsec]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[least-agency-principle]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-01
-verified_against:
-  - ".raw/articles/aws-agentic-ai-security-scoping-matrix-2026-05-07.md"
-  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
-  - ".raw/talks/scaling-agentic-ai-cios-2026-05-01.md"
-  - ".raw/talks/securing-your-agents-2026-04-30.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Desktop-agent row and its run-in read against those articles; the egress exclusion, the plugin marketplace and the Compliance API scope were corrected on the page."
 ---
 
 # Agentic AI Security CMM — D3 Control & Least-Agency (Deep Dive)
@@ -163,11 +160,17 @@ AWS AgentCore Policy (GA), the Microsoft Agent Governance Toolkit (OSS), and Ver
 | Deployment shape | Realistic D3 target |
 |---|---|
 | Internal RAG / member-facing chatbot (few/no tools) | L2 → L3 |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 |
 | Data-science / coding copilot | L3 → L4 |
 | MCP / skill provider serving others | L4 → selective L5 |
 | High-autonomy multi-agent mesh | L5 (+L5+ where resourced) |
 
 **An allowlist, a PDP, and action-risk tiering are the whole of D3 for a chatbot with no tools.** With no external-communications reach the trifecta is broken by architecture, so per-task tokens, JIT elevation, and cryptographic SoD are controls for their own sake. [[agentic-ai-security-cmm-recalibration-method-2026|The persona]]'s bot sits here.
+
+**The tool-call mediation this domain grades runs inside an in-suite productivity assistant's vendor.** What the customer holds is per-organizational-unit enablement and data-loss-prevention rules bounding which sources the assistant reaches, so the evidence is configuration that bounds reach rather than a decision point the customer operates. The criteria that grade the decision point itself are recorded unanswerable, because the mediation exists and no customer-side evidence settles how it decides, and the assessment names the vendor statement that would close each one; the action-risk tiers and the decision-rights matrix stay customer artifacts. The row covers the in-suite variant alone.
+
+**A desktop agent mediates its own local tool calls, and the vendor mediates its connector calls server side.** The two variants land on the same rung on different evidence. [[claude-cowork|Claude Cowork]] lets an owner set a permission category per connector — always allow, needs approval, or blocked — which is this shape's action-risk tiering and an artifact the assessment can read; it pins permanent file deletion to an explicit approval; and it denies a permission prompt raised by a dispatched child task after ten minutes, with the task continuing without that action, so the gate denies on timeout rather than proceeding. The decision point over local files and the browser sits inside the desktop application, which is the condition the first L3 criterion states: an in-process decision point exposing no interface a tester can reach is recorded not applicable and evidenced from the deployed configuration, which on a managed deployment is the device profile's allowed workspace folders, disabled built-in tools and managed MCP server list. [[cmm-known-limitations|CMM Known Limitations]] item 19 carries the wider question that condition leaves open. What is not met is the decision-rights matrix, because the approver is whoever holds the session, and the settings recorded there bind a capability to a role and not an action class to an approver. The row covers the desktop-agent variant alone.
 
 **A copilot touches the SDLC, which makes segregation of duties load-bearing.** Proposer, approver, and deployer must be distinct agents, and JIT elevation stops a maintenance grant from becoming permanent.
 

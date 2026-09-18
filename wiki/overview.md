@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-18
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -14,6 +14,10 @@ scope_axis:
 permalink: "/"
 aliases:
   - index
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the measurement protocol enum and the live shape tables; the handbook half of the gap is closed for both variants and the line now says so."
 ---
 
 # Enterprise Security in the Agentic AI Era
@@ -78,7 +82,7 @@ Agent inventory is forming as a product category ahead of the schedule the field
 
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: the six-plane structural model (Identity, Control, Runtime, Egress, Data, Observability).
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: the five-level by nine-domain capability maturity model with cross-domain dependency caps and ID-tagged evidence.
-- [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]: the September re-run of the May calibration stress test, for a Canadian federally regulated FI on GCP and Google Workspace. Two shapes are scored per domain, Claude Code for software development and Gemini for day-to-day tasks. The CMM's rungs survive the platform swap; its core tooling map now carries a Platform-native (Google) column and all nine cost models now state the Google difference; the productivity-assistant shape still has no row on the core table or in the Assessor's Handbook.
+- [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]]: the September re-run of the May calibration stress test, for a Canadian federally regulated FI on GCP and Google Workspace. Two shapes are scored per domain, Claude Code for software development and Gemini for day-to-day tasks. The CMM's rungs survive the platform swap; its core tooling map now carries a Platform-native (Google) column and all nine cost models now state the Google difference; the productivity-assistant shape had no row on the core table or in the Assessor's Handbook, and both its variants now carry one.
 - [[threat-modeling-for-ai|Threat Modeling for AI]]: the spine that reconciles the seven threat taxonomies and walks one worked example from threat to control.
 - [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]]: the agent-orchestration risk taxonomy.
 - [[non-human-identity|Non-Human Identity]]: the machine credential an AI agent carries, now a GA platform-native capability on the three hyperscalers. Its fourth amplifier is onset: an agent exercises its launcher's entitlement set from day one, where a human hire grows into one.

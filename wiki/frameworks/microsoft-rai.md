@@ -2,7 +2,7 @@
 type: framework
 title: "Microsoft Responsible AI Standard (RAI)"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-09-18
 tags:
   - frameworks
   - microsoft
@@ -31,10 +31,15 @@ related:
   - "[[google-saif]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[nist-ai-rmf]]"
+  - "[[agentic-ai-security-cmm-d9-operations]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
 coined_by:
   - "[[microsoft]]"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Read against the D9 deep dive's RAI and Agent 365 paragraph; the A5 goal-and-mechanism pairing matches it."
 ---
 
 # Microsoft Responsible AI Standard (RAI)
@@ -55,6 +60,8 @@ RAI v2's General Requirements enumerate goals under five of the six principles (
 - **Privacy & Security** — PS1 Privacy Standard compliance
 
 The Accountability and Transparency goals carry the load: they anchor the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] governance domain (D1), with A5 and the human-oversight requirements reaching operations and human factors (D9). The standard names no agent-identity, least-agency, egress, or runtime control — those map from ZT4AI and Agent 365, not from RAI.
+
+A5 states the human-oversight outcome and measures none of it. [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]] reads the goal as that outcome statement, pairs it with Agent 365's lifecycle management as the management-plane mechanism behind it, and records that neither instrument supplies the HITL-fatigue measurement or the continuity testing at that domain's center.
 
 ## Location of the security substance
 

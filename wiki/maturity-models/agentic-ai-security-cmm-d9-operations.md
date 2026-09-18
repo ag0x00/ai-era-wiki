@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -40,21 +40,22 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[securing-workspace-genai-at-google-talk]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-08-26
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Desktop-agent row and its run-in read against those articles; the egress exclusion, the plugin marketplace and the Compliance API scope were corrected on the page."
 ---
 
 # Agentic AI Security CMM — D9 Operations & Human Factors (Deep Dive)
 
 Companion deep-dive to [[agentic-ai-security-cmm-2026|the CMM]]'s D9 domain, written under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]]. Of the nine domains, D9 carries the most process and labor and the fewest products. About half of it has no product answer on any platform and is pure operating-model work: HITL-fatigue and oversight-quality measurement, IR-runbook authoring, decommission drills, bus-factor continuity. Where products exist, they are platform-native primitives repurposed from adjacent domains (D2 identity lifecycle, D7 observability) rather than built as D9-specific tools.
 
-> [!gap] Single-source grounding
-> Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is a May 2026 snapshot.
+**The levels and the cost model rest on one line of grounding.** They synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation, rather than on independent sources that agree. The tooling status below is a May 2026 snapshot.
 
 ## Threat coverage
 
@@ -143,20 +144,25 @@ Right-sizing matters more in D9 than in any other domain: holding a single low-r
 | Deployment shape | Realistic D9 target |
 |---|---|
 | Member-facing RAG bot (no tools) — [[agentic-ai-security-cmm-recalibration-method-2026\|the persona]] | L2 → L3, narrow |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 → L4 |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 → L4 |
 | Coding / copilot | L3 → L4 |
 | MCP / skill provider serving others | L4 + selective L5 |
 | High-autonomy multi-agent mesh | L4 minimum, L5 where resourced |
 
 **Two controls are load-bearing for a read-only bot: system-prompt confidentiality and an owner-departure decommission runbook.** Canary tokens and `LLM07:2025` test cases cover the first. There is no HITL queue to fatigue, no multi-agent incident response, and no case for a quarterly drill. Holding this bot to L4 KPIs is the over-scoping the recalibration exists to prevent.
 
+**The approval population for an in-suite productivity assistant is the whole workforce.** Rubber-stamp rate and queue age carry the domain at that scale, and the vendor's own account of the class names approval-bot behavior as the expected drift ([[securing-workspace-genai-at-google-talk|Securing Workspace GenAI at Google]]). The involvement measure L4 asks for exists here as a vendor-side override rate the customer cannot read, so it is recorded unanswerable, naming the vendor telemetry that would close it, while the approval record and the published disclosure at L3 stay customer artifacts.
+
+**The approval measurements this domain asks for are readable from a desktop agent's own telemetry.** [[claude-cowork|Claude Cowork]]'s event export carries a decision and a decision source on every tool event, which separates a configured allow from a hook decision and from a human approval, so rubber-stamp rate and queue disposition are customer measurements here where the in-suite row records them unanswerable. The band still reaches L4 because the population is large: on Team plans the product is on for every member or for none, and only the Enterprise role model narrows it. Three limits sit against the measurement. Nothing is exported until an administrator sets the collector endpoint. Audit Logs do not yet cover the product, so the tamper-evidence the L3 approval record asks for is unanswerable, and the export is the only channel carrying the decision and its source, because the Compliance API returns transcript content rather than permission decisions. A local session's conversation history stays on the member's computer, outside the retention policy and outside central management or export, which bounds what a decommission or a legal hold reaches. The queue also has a documented failure mode: a permission prompt a dispatched child task raises is denied after ten minutes and the task continues without that action, so an unattended approval becomes a dropped step rather than a blocked one. The row covers the desktop-agent variant alone.
+
 **A copilot writes, and writing creates a HITL queue that can be rubber-stamped.** Decommission cadence and prompt leakage matter, and the approval volume makes rubber-stamp measurement worth instrumenting.
+
+**Approval fatigue is the mechanism that converts an interactive coding deployment into an unattended one.** The D9 human-factors question for agentic coding reaches past whether approvals are rubber-stamped to whether the approval volume has already changed the deployment shape. The documented remedy for prompt volume runs allowlisting, then autonomous modes, then suppressed prompts. Each step is defensible on its own, and together they move the deployment to a different row of the [[agentic-ai-security-reference-architecture|reference architecture]]'s shape table, where the load-bearing plane is Runtime rather than Control. An assessor measures approval volume and disposition over time rather than approval existence, and reads a falling prompt count against a rising action count as a shape change that requires re-assessment rather than as an efficiency gain. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] holds the shape definitions.
 
 **A provider owes its consumers federated CVE disclosure and a published deprecation policy** for every skill and MCP server it ships.
 
 **HITL fatigue at scale is the dominant operational risk in a mesh**, and closed-loop incident response and continuity testing earn their cost only at this shape. The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] runs the same topology from the attacker side: a human set the objective but did not mediate step-by-step sub-agent coordination across a four-day, 12-wave campaign.[^taiwan]
-
-> [!check] Approval fatigue is the mechanism that changes the deployment shape
-> For agentic coding the D9 human-factors question is not only whether approvals are rubber-stamped. It is whether approval fatigue is converting an interactive deployment into an unattended one. The documented remedy for prompt volume is allowlisting, then autonomous modes, then suppressed prompts — each step defensible on its own and cumulatively a move to a different row of the [[agentic-ai-security-reference-architecture|RA]]'s shape table, where the load-bearing plane is Runtime rather than Control. An assessor should measure approval *volume and disposition* over time, not approval *existence*, and should treat a falling prompt count with a rising action count as a shape change requiring re-assessment rather than as an efficiency gain. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]].
 
 The [[lethal-trifecta|lethal-trifecta]] test lowers D9 the same way it lowers D3/D5: a contained, low-autonomy bot legitimately scores lower, and the score records that as an intentional trade-off.
 

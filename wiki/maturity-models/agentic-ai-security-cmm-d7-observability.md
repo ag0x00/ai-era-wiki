@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D7: Observability and Detection"
 address: c-000128
 created: 2026-05-25
-updated: 2026-09-16
+updated: 2026-09-18
 tags:
   - maturity-models
   - cmm
@@ -50,18 +50,15 @@ related:
   - "[[llm-as-a-judge]]"
   - "[[prompt-volume-to-alert-ratio]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[claude-cowork]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[agent-observability]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-08-26
-verified_against:
-  - ".raw/papers/adr-agentic-detection-system-2026-05-17.md"
-  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
-  - ".raw/papers/securing-the-autonomous-future.md"
-  - ".raw/talks/unprompted-conference-talks-mar-2026.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 0
+verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D7 Observability & Detection (Deep Dive)
@@ -74,8 +71,7 @@ Offensive tooling now runs the analytic layer this domain grades on the defensiv
 
 D7 is the CMM domain that [[nist-ai-800-4|NIST AI 800-4]] maps most directly: the report is a descriptive landscape of the gaps, barriers, and open questions in monitoring deployed AI systems, and it is the requirements- and gap-source for this domain rather than a control standard. Its cross-cutting challenges — immature trusted methods, the lack of direct visibility into model properties, and the agent-specific items (agent-identifier standardization, monitoring multi-agent distributed systems, detecting deceptive or monitor-evading behavior) — name the open problems the upper levels here run into, and AI 800-4 supplies no mappable controls to close them.
 
-> [!gap] Single-source grounding
-> Levels and cost model synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation. Tooling status is a May 2026 snapshot.
+**The levels and the cost model rest on one line of grounding.** They synthesize the recalibration method against the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] plus vendor documentation, rather than on independent sources that agree. The tooling status below is a May 2026 snapshot.
 
 ## Threat coverage
 
@@ -164,14 +160,15 @@ The Microsoft-native behavioral detector (Defender XDR AI-agent detection) is pr
 | Deployment shape | Realistic D7 target | Why |
 |---|---|---|
 | Internal RAG / support chatbot (no/few tools) | L3 | OTel spans + identity multiplexing + action log; near-zero tool surface needs no behavioral-drift or multi-tool red team. The persona's bot sits here |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | The telemetry the organization holds is the administrative usage review; session-level agent traces belong to the vendor, so the span, multiplexing and action-log criteria are recorded unanswerable, each naming the vendor export that would close it |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | An administrator-configured OpenTelemetry export puts session, user and tool events in the organization's own backend, each tool event naming the tool, the MCP scope, the decision and its source; two vendor pages disagree on whether prompt content is captured by default |
 | Data-science / coding copilot | L3 → L4 | Long-running sessions and tool writes justify per-agent drift baselines and an eval cadence |
 | MCP / skill provider serving others | L4 | Third-party blast radius; MCP-protocol-aware anomaly detection and AI-SPM become first-order |
 | High-autonomy multi-agent mesh | L4 → selective L5+ | Cascade / rogue-agent detection and joint-distribution baselines become load-bearing only here |
 
 The [[lethal-trifecta|lethal-trifecta]] test is D7's strongest right-sizing lever. A program with strong D3/D4/D5 architectural containment may legitimately run no behavioral-observability layer and still be sound (the Stripe containment pattern). A contained design scoring low on D7 records the choice as an intentional trade-off.
 
-> [!check] Routing inference through a gateway silently removes first-party session analytics
-> A common D7 regression in the coding shape: an organization introduces an LLM gateway or a cloud-provider endpoint (Bedrock, Vertex, Foundry) for governance reasons, and the harness vendor's analytics API — which sees only sessions running against the vendor's own API — stops seeing them. OpenTelemetry export is the replacement and it is not automatic. Verify the SIEM actually receives session-correlated prompt, tool-result, and permission-decision events before crediting the level. See [[securing-agentic-coding|Securing Agentic Coding]] §Observability plane and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]].
+**Routing inference through a gateway removes the first-party analytics dashboards for the sessions it carries.** An organization that introduces an LLM gateway or a cloud-provider endpoint (Bedrock, Vertex, Foundry) for governance reasons moves its coding sessions off the harness vendor's own API, and that vendor's analytics API reports only the sessions still running against it. OpenTelemetry export is the replacement, and it is not automatic. An assessor confirms that the SIEM receives session-correlated prompt, tool-result and permission-decision events before crediting the level. [[securing-agentic-coding|Securing Agentic Coding]] §Observability plane and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] carry the deployment detail.
 
 ## Cost model
 

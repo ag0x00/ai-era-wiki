@@ -2,11 +2,11 @@
 type: domain
 title: "Maturity Models"
 created: 2026-04-30
-updated: 2026-08-19
+updated: 2026-09-18
 tags: [domain, maturity-models]
 status: developing
 subdomain_of: ""
-page_count: 4
+page_count: 26
 ---
 
 # Maturity Models Index
@@ -31,7 +31,7 @@ Capability-tier definitions for self-assessment and progression planning. Each m
 - [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]] — Companion deep-dive to the CMM's D2 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-d3-control-least-agency|CMM D3: Control and Least-Agency]] — Companion deep-dive to the CMM's D3 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime and Guardrails]] — Companion deep-dive to the CMM's D4 domain, written under the recalibration method.
-- [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]] — Companion deep-dive to the CMM's D5 domain, written under the recalibration method.
+- [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]] — D5 mediates agent egress at the network layer.
 - [[agentic-ai-security-cmm-d6-data-rag|CMM D6: Data, Memory and RAG]] — Companion deep-dive to the CMM's D6 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]] — Companion deep-dive to the CMM's D7 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Supply Chain and AI-BOM]] — Companion deep-dive to the CMM's D8 domain, written under the recalibration method.

@@ -3,7 +3,7 @@ type: framework
 title: "OWASP AI Exchange"
 address: c-000296
 created: 2026-08-17
-updated: 2026-08-31
+updated: 2026-09-18
 tags:
   - frameworks
   - owasp
@@ -94,16 +94,10 @@ sources:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "https://owaspai.org/docs/ai_security_overview"
-verified: 2026-08-26
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md"
-  - ".raw/papers/owasp-ai-exchange-security-overview-2026-08-17.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-threats-through-use-2026-08-18.md"
+verified: 2026-09-18
+verified_against: []
 verified_findings: 1
-verified_note: "Full doc 5 testing-strategies section verified clause by clause; Limits document-0 scoping is accurate; fixed stale control-catalogue line still calling document 5 out of scope"
+verified_note: "Read against the D9 oversight paragraphs; the four downsides and the numbering-gap footnote match what the page already recorded. Supersedes the 2026-08-26 read against 6 archived documents, which this read did not reopen."
 ---
 
 # OWASP AI Exchange
@@ -302,6 +296,8 @@ Mitigating unwanted behaviour creates two threats of its own. Overreliance is th
 
 `OVERSIGHT` is the section's largest control: detection of, and response to, unwanted AI behaviour by automated mechanisms and by humans, filed as a runtime control and positioned as the final checkpoint against a model that can be wrong or manipulated.[^aix-oversight] `LEAST MODEL PRIVILEGE` is the section's other large control: minimizing what a model can trigger or access, so a manipulated or mistaken model has less to work with, filed as a runtime information-security control.[^aix-leastmodelpriv] `LEAST MODEL PRIVILEGE` restricts model actions through permissions and is therefore preventative, while `OVERSIGHT` is reactive or gate-based; the Exchange states both may apply to the same action tier, and nests `OVERSIGHT` as one clause of the overarching `MONITOR USE` monitoring control.[^aix-oversight] [[oversight-layer|Oversight Layer]] and [[least-agency-principle|Least Agency Principle]] carry the two controls' full specification, including the oversight-requirement axis §1.3 adds to the wiki's existing risk-tier model and the approval-token mechanism carried on [[hitl|HITL]]. `OVERSIGHT`'s secure-orchestration guidance — coordination-only orchestrator permissions, a tamper-evident workflow log external to orchestrator memory, and reconciliation against it for phantom steps — is applied concretely to the Control and Egress planes in the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]].
 
+`OVERSIGHT` also names four downsides of human oversight: cost and slowness, approval fatigue, lack of expertise to judge, and lack of involvement, which the Exchange classes as a form of missing expertise and describes through the out-of-the-loop phenomenon, where a reviewer who does not perform the task loses the understanding of whether it is correct and a badly informed *go ahead* becomes the cheap answer.[^aix-oversight] The control supplies no measurement instrument for that state, so [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]] grades at L4 that an involvement measure exists and that its method is stated, and grades neither its accuracy nor a threshold against it.
+
 `MODEL ALIGNMENT` bakes wanted behaviour into the model itself through training, fine-tuning, and system prompts; the Exchange states it must be combined with deterministic external mechanisms — `OVERSIGHT` and `LEAST MODEL PRIVILEGE` among them — for high-risk or regulated use, since alignment alone is a probabilistic, model-internal control.[^aix-modelalignment] `AI TRANSPARENCY` informs users of the AI system's own properties so they can adjust how far they rely on it, what data they send it, and what further mitigations they apply. The entry names five such properties and states that the information *can include* them, which makes the list non-exhaustive rather than a required set: the rough working of the model, the training approach, the type of data used and its source, the expected accuracy and robustness of the system's output, and any residual security risk.[^aix-aitransparency] One element is stated as a floor — the simplest form of transparency is informing users that an AI model is involved, which the entry notes the EU AI Act requires for chatbots — and the Exchange states the control is explicitly not explainability of individual decisions, which is a separate control.[^aix-aitransparency] `CONTINUOUS VALIDATION` tests model behaviour against a reference set to catch drift, staleness, and permanent manipulation such as data or model poisoning; its stated blind spot is that backdoor poisoning is designed to trigger on input outside normal test sets and is therefore often designed to pass validation tests.[^aix-continuousvalidation] `EXPLAINABILITY` and `UNWANTED BIAS TESTING` close the section as its two stubs — explaining individual model decisions to build trust and catch overreliance, and testing for unwanted bias as a side effect of an attack on model behaviour rather than a security concern in itself — each a few lines with no Implementation or Limitations subsection.[^aix-explainability][^aix-unwantedbiastesting]
 
 **§1.3 carries five `Gap:` verdicts against named standards, on the same two-value scale document 1 uses for its governance controls.** `OVERSIGHT` names ISO/IEC 42001 B.9.3 for human oversight and autonomy decisions and grades it as covering the control partly — human oversight only, not business logic — then states that no further ISO/IEC standard covers it.[^aix-oversight] `LEAST MODEL PRIVILEGE` names ISO 27002 control 8.2 (privileged access rights) as covering the control fully, with the particularity that privileges assigned to autonomous model decisions are assigned with the risk of unwanted model behaviour in mind, and gives OpenCRE 368-633 the same verdict.[^aix-leastmodelpriv] `AI TRANSPARENCY` names ISO/IEC 42001 B.7.2 and grades it as covering the control minimally, since it reaches only the data-management part.[^aix-aitransparency] `CONTINUOUS VALIDATION` names ISO 5338's continuous-validation content as covering the control fully, and lists ISO/IEC 24029-2:2023, ISO/IEC 24027:2021, ISO/IEC 25059:2023, and CEN/CLC JT021008 without verdicts.[^aix-continuousvalidation] Three of the seven controls — `MODEL ALIGNMENT`, `EXPLAINABILITY`, and `UNWANTED BIAS TESTING` — carry no standards block at all, which is an absence rather than a nil verdict.[^aix-modelalignment][^aix-explainability][^aix-unwantedbiastesting]
@@ -465,12 +461,9 @@ Document 4 gives [[agent-escape|agent escape]] its own threat entry: an autonomo
 
 The controls are capability-based access control at the backend restricting tool sets, data sources, and action space independently of LLM reasoning, and role and scope boundary enforcement at every tool invocation — where a valid call to an individually authorised tool made during an out-of-scope task is itself an escape event.[^aix-escape] `OVERSIGHT` covers session-level jailbreak drift, and red teaming must include multi-turn and multi-session paths, because single-turn jailbreak testing underestimates production agentic risk.[^aix-escape] Two limitations are stated: an agent with very broad authorised scope can cause harm through jailbreak without technically escaping, and capability enforcement may be difficult to retrofit where tool access was historically managed in prompts alone.[^aix-escape]
 
-Agent sandboxing is specified as a runtime operational control rather than pre-deployment testing: each live agent runs in a bounded environment across compute, memory, storage, network, and IPC, so compromise, malfunction, or prompt injection cannot spread past its boundary.[^aix-sandbox] The implementation names a dedicated container, microVM, or OS-enforced sandbox with separate PID, network, mount, and UID namespaces; a read-only root with ephemeral writable layers discarded on termination; mandatory access control through seccomp, AppArmor, or SELinux; default-deny egress through a monitored proxy or service mesh; blocking of direct agent-to-agent network paths in favour of an authenticated orchestration layer or message bus; DNS restriction; segmentation of agents processing untrusted content away from sensitive internal services; tool credentials held outside the sandbox in a controlled credential store; destruction of transient state and in-sandbox credentials on termination; and per-agent resource quotas enforced by the platform rather than by agent self-management.[^aix-sandbox]
+Agent sandboxing is specified as a runtime operational control rather than pre-deployment testing: each live agent runs in a bounded environment across compute, memory, storage, network, and IPC, so compromise, malfunction, or prompt injection cannot spread past its boundary.[^aix-sandbox] The implementation names a dedicated container, microVM, or OS-enforced sandbox with separate PID, network, mount, and UID namespaces; a read-only root with ephemeral writable layers discarded on termination; mandatory access control through seccomp, AppArmor, or SELinux; default-deny egress through a monitored proxy or service mesh; blocking of direct agent-to-agent network paths in favour of an authenticated orchestration layer or message bus; DNS restriction; segmentation of agents processing untrusted content away from sensitive internal services; tool credentials held outside the sandbox in a controlled credential store; destruction of transient state and in-sandbox credentials on termination; and per-agent resource quotas enforced by the platform rather than by agent self-management.[^aix-sandbox][^aix-sandboxnumbering]
 
 The limitations are stated as plainly as the controls. Container or hypervisor escape undermines containment. Shared inference, credential, and policy services create implicit cross-agent channels. Network segmentation cannot stop exfiltration through legitimately permitted APIs. Host-OS variance weakens the same configuration on a different host. Sandbox overhead scales with concurrent agents.[^aix-sandbox] The wiki's [[agent-sandboxing|Agent Sandboxing]] practice and [[agent-sandbox-isolation-landscape|isolation landscape]] carry these against the shipping products.
-
-> [!note] A numbering gap in the source
-> Document 4's sandboxing implementation list numbers its sub-areas "(4.9.1)" and "(4.9.3)" with no "(4.9.2)" appearing anywhere in the section. Recorded here rather than silently normalized, since a reader following the source's own numbering will find the same gap.[^aix-sandbox]
 
 ## Document 5: AI security testing (testing strategies)
 
@@ -570,6 +563,8 @@ Document 1 §1.1 cites no OWASP sibling project by identifier — no `LLM##` cat
 [^aix-augintegrity]: [OWASP AI Exchange — AUGMENTATION DATA INTEGRITY](https://owaspai.org/go/augmentationdataintegrity/), retrieved 2026-08-18.
 [^aix-escape]: [OWASP AI Exchange — Agent escape](https://owaspai.org/go/agentescape/), retrieved 2026-08-18.
 [^aix-sandbox]: [OWASP AI Exchange — Agent sandboxing and isolation](https://owaspai.org/go/agentsandboxing/), retrieved 2026-08-18.
+
+[^aix-sandboxnumbering]: The same page numbers the implementation sub-areas "(4.9.1)" and "(4.9.3)", and no "(4.9.2)" appears anywhere in the section. The numbering is reproduced as published, so a reader following the source finds the same gap.
 [^aix-inputthreats]: [OWASP AI Exchange — Threats through use (input threats)](https://owaspai.org/go/inputthreats/), retrieved 2026-08-18. The group's alternative names, the five enumerated threat types, and the six generally applicable controls.
 [^aix-monitoruse]: [OWASP AI Exchange — MONITOR USE](https://owaspai.org/go/monitoruse/), retrieved 2026-08-18. The AI-specific logging set, the agentic incident lifecycle, the infrastructure-layer containment requirement, the monitoring-agent attack-surface statement, and the reasoning-trace qualification.
 [^aix-ratelimit]: [OWASP AI Exchange — RATE LIMIT](https://owaspai.org/go/ratelimit/), retrieved 2026-08-18. The experimentation-mitigation scope, the 10,000-interaction worked example, the query-volume table, the safety-critical exceptions, the stated limitations, and the agent fleet rate limits.
@@ -631,4 +626,9 @@ Document 1 §1.1 cites no OWASP sibling project by identifier — no `LLM##` cat
 ## Sources
 
 - [OWASP AI Exchange](https://owaspai.org/docs/ai_security_overview)
+- [owaspai.org](https://owaspai.org/docs/4_runtime_application_security_threats)
+- [owaspai.org](https://owaspai.org/docs/2_threats_through_use)
+- [owaspai.org](https://owaspai.org/docs/1_general_controls)
+- [owaspai.org](https://owaspai.org/docs/3_development_time_threats)
+- [owaspai.org](https://owaspai.org/docs/5_testing)
 <!-- /sources -->
