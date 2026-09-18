@@ -73,9 +73,11 @@ primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 verified: 2026-09-18
-verified_against: []
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
 verified_findings: 0
-verified_note: "Fixed the desktop-agent contrast, which asserted the in-suite row grades on vendor documentation alone while D3, D4 and D7 now grade it on the tenant interaction record."
+verified_note: "Issue-252 read, scoped to the overlay bullet naming the Exchange's two development-programme controls; the domain-count claim was corrected against the crosswalk's own anchor rows. The nine-domain ladder and the rest of the page were not reread."
 ---
 
 # Agentic AI Security Capability Maturity Model
@@ -122,7 +124,7 @@ For agentic coding the scored unit is the deployment variant. The product name d
 The CMM is three things:
 - A self-assessment instrument for CISOs, AI platform leads, and internal auditors.
 - A cumulative maturity ladder across 9 domains, with dependency-resolved effective-score aggregation.
-- An overlay on existing standards: [[nist-ai-rmf|NIST AI RMF]], [[iso-iec-42001|ISO/IEC 42001]], OWASP ASI, [[owasp-ai-exchange|OWASP AI Exchange]], [[mitre-atlas|MITRE ATLAS]], CoSAI Principles, [[microsoft-zt4ai|Microsoft ZT4AI]], [[csa-maestro|CSA Agentic Trust Framework]], [[aiuc-1|AIUC-1]], and the [[eu-ai-act|EU AI Act]]. The [[owasp-ai-exchange|AI Exchange]] contributes a named control catalogue that spans the whole AI lifecycle, development-time included, which no other overlay in this list covers end to end. The overlay is partial in one direction: neither of the Exchange's two development-programme controls has a CMM domain of its own, because the nine domains cover the deployment and operation of an agentic system and none covers development-time process. [[agentic-ai-security-cmm-crosswalk|The standards crosswalk]] names both controls and carries the control-to-domain map, that absence included.
+- An overlay on existing standards: [[nist-ai-rmf|NIST AI RMF]], [[iso-iec-42001|ISO/IEC 42001]], OWASP ASI, [[owasp-ai-exchange|OWASP AI Exchange]], [[mitre-atlas|MITRE ATLAS]], CoSAI Principles, [[microsoft-zt4ai|Microsoft ZT4AI]], [[csa-maestro|CSA Agentic Trust Framework]], [[aiuc-1|AIUC-1]], and the [[eu-ai-act|EU AI Act]]. The [[owasp-ai-exchange|AI Exchange]] contributes a named control catalogue that spans the whole AI lifecycle, development-time included, which no other overlay in this list covers end to end. The overlay is partial in one direction: neither of the Exchange's two development-programme controls has a CMM domain of its own, because the nine domains grade the assets and the enforcement points of a running system and none grades engineering practice. The development environment falls on the graded side of that line. The Exchange routes its protection to `DEV SECURITY`, whose controls the crosswalk anchors across six of the nine domains, so what stays unclaimed is AI threat modelling, secure coding practice and pre-deployment testing. [[agentic-ai-security-cmm-crosswalk|The standards crosswalk]] names both controls and carries the control-to-domain map, that split included.
 
 Four adjacent instruments fall outside it:
 - A certification program. Certification belongs to [[iso-iec-42001|ISO/IEC 42001]] and [[aiuc-1|AIUC-1]]; this is a measurement scaffold.

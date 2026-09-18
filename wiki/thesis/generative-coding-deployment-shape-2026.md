@@ -43,6 +43,7 @@ related:
   - "[[shadow-automation|Shadow Automation]]"
   - "[[vibe-coding|Vibe Coding]]"
   - "[[pwc-stage-coverage-tiers|PwC Stage-Coverage Tiers]]"
+  - "[[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]]"
   - "[[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]"
 sources:
   - https://code.claude.com/docs/en/sandbox-environments
@@ -56,7 +57,7 @@ sources:
 verified: 2026-09-18
 verified_against: []
 verified_findings: 0
-verified_note: "Read against the D9 deep dive; the new D9 bullet matches it and no longer refers to the page as a narrator."
+verified_note: "Issue-252 read, scoped to the new D2 bullet under Changes to the RA and CMM; it rests on the owner's issue comment and on the page's own five-shape section, and opened no archived document. Two internal inconsistencies corrected: the per-shape principal count and a requirement stated as fact."
 ---
 
 # Generative Coding Deployment Shapes
@@ -141,6 +142,7 @@ The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] 
 
 The [[agentic-ai-security-reference-architecture|RA]]'s generative-coding row should be read as five rows. The [[agentic-ai-security-cmm-2026|CMM]] consequence is sharper, and it is a scoring correction rather than a new domain:
 
+- **[[agentic-ai-security-cmm-d2-identity|D2]]** — the developer principal resolves shape by shape: a workstation identity in the interactive and sandboxed autonomous local shapes, a vendor-managed session identity in the delegated cloud shape, a workflow identity in the CI-runner shape, and one identity per agent at fleet scale. Each carries its own network-access policy, so a session running in a cloud sandbox and a session running on localhost are separate principals under separate rules. Grading one developer principal scores a shape the organization may not be running. A third persona sits between the developer and the user of the shipped application: the user of the AI application, on whose behalf the agent writes and runs code. Generating code on that user's request is the product working as designed, which moves the assessable question from who wrote the code to what the code may reach. The grading criterion is that code generated on a user's request reaches no production data store.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3]]** — a text-matching command guard is not a policy decision point. See [[guard-canonicalization-gap|guard canonicalization gap]]. An organization scoring D3 on an allowlist of Bash patterns has overstated by a level.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3]], second correction** — an allowlist an autonomy flag can suppress is not a decision point either. Gemini CLI's `--yolo` ignored the fine-grained tool allowlist outright before 0.39.1, so the enumerated permissions an assessor would have read as evidence were never consulted. Verify that the guard runs before grading what it holds.
 - **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]** — the runtime control for this shape is an OS boundary, and its coverage must be stated in two dimensions: what the boundary contains, and when it starts. "Sandboxed" means Bash only unless the whole process is wrapped, and it means nothing at all for the startup window in which the harness loads workspace configuration — see [[gemini-cli-workspace-trust-rce|the Gemini CLI advisory]].
