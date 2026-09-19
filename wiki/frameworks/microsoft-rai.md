@@ -44,7 +44,7 @@ verified_note: "Read against the D9 deep dive's RAI and Agent 365 paragraph; the
 
 # Microsoft Responsible AI Standard (RAI)
 
-**Microsoft RAI** is a responsible-AI goals standard, not a security-control catalogue. The RAI Standard v2 (2022) sets seventeen goals across six principles — fairness, reliability and safety, privacy and security, inclusiveness, transparency, and accountability. Each goal states a required outcome (an impact assessment completed, an AI interaction disclosed, a failure remediated), and defers the enforcing control to Microsoft's Security Development Lifecycle, the Privacy Standard, and, since 2026, the [[microsoft-zt4ai|Zero Trust for AI (ZT4AI)]] control catalogue and the [[microsoft-entra-agent-id|Agent 365]] control plane.
+**Microsoft RAI** is a responsible-AI goals standard, not a security-control catalogue. The RAI Standard v2 (2022) sets seventeen goals across six principles — fairness, reliability and safety, privacy and security, inclusiveness, transparency, and accountability. Each goal states a required outcome (an impact assessment completed, an AI interaction disclosed, a failure remediated), and defers the enforcing control to Microsoft's Security Development Lifecycle, the Privacy Standard, and, since 2026, the [[microsoft-zt4ai|Zero Trust for AI (ZT4AI)]] control catalogue and the [[microsoft-agent-365|Microsoft Agent 365]] control plane.
 
 > [!contradiction] This page previously conflated RAI with ZT4AI and Agent 365
 > Earlier revisions described RAI as "the most control-rich AI security framework available — 700+ specific controls" and dated Agent 365 to "March 9, 2026". Both belong elsewhere. The 700+-control figure is the [[microsoft-zt4ai|ZT4AI]] catalogue (and even there it is the whole Zero-Trust Workshop, not the AI pillar). Agent 365 launched at Ignite 2025 (2025-11-18) and reached GA 2026-05-01. RAI v2 itself defines seventeen goals. See [[standards-review-microsoft-rai-agent-365-2026-Q2|the RAI / Agent 365 standards review]] and [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]].
@@ -68,7 +68,7 @@ A5 states the human-oversight outcome and measures none of it. [[agentic-ai-secu
 RAI is the goals layer. The technical controls and the management plane are separate instruments with their own pages:
 
 - **[[microsoft-zt4ai|Zero Trust for AI (ZT4AI)]]** — the control catalogue (Prompt Shields, Purview answer-time entitlement, Defender runtime protection, the Agent Governance Toolkit). Reviewed in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]].
-- **[[microsoft-entra-agent-id|Agent 365]]** — the agent-management control plane (registry, access control, visualization, interoperability, security), launched at Ignite 2025 (2025-11-18), GA 2026-05-01.
+- **[[microsoft-agent-365|Microsoft Agent 365]]** — the agent-management control plane (registry, access control, visualization, interoperability, security), launched at Ignite 2025 (2025-11-18), GA 2026-05-01.
 
 ## OWASP ASI Top 10 Mapping
 
@@ -105,12 +105,12 @@ The **[FIDES]()** research framework (May–September 2025, still active) demons
 - RAI v2 specifies no technical security controls — the seventeen goals state outcomes, deferring enforcement to the SDL, the Privacy Standard, and (since 2026) ZT4AI / Agent 365
 - No agent-identity, least-agency, egress, or runtime goal — A5 governs human control over a system, not machine identity or agent agency
 - The 2022 v2 text predates Microsoft's agent-identity work (Entra Agent ID, 2026), so it carries no agent-specific goal
-- The control-richness and product-plane content lives in [[microsoft-zt4ai|ZT4AI]] and [[microsoft-entra-agent-id|Agent 365]], which carry their own platform-lock and licensing constraints
+- The control-richness and product-plane content lives in [[microsoft-zt4ai|ZT4AI]] and [[microsoft-agent-365|Microsoft Agent 365]], which carry their own platform-lock and licensing constraints
 
 ## See Also
 
 - [[microsoft-zt4ai|Microsoft Zero Trust for AI (ZT4AI)]] — the control catalogue that operationalizes the RAI goals
-- [[microsoft-entra-agent-id|Microsoft Entra Agent ID / Agent 365]] — the agent-management control plane over those controls
+- [[microsoft-agent-365|Microsoft Agent 365]] — the agent-management control plane over those controls
 - [[standards-review-microsoft-rai-agent-365-2026-Q2|RAI and Agent 365 Standards Review]] — goal- and capability-level coverage against the CMM
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — ASI Top 10 that Microsoft maps to its product suite
 - [[google-saif|Google SAIF — Secure AI Framework]] — comparable agentic security framework from a hyperscaler

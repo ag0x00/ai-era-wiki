@@ -4,7 +4,7 @@ entity_type: product
 title: "Onyx Platform (Onyx AI Control Plane)"
 homepage: "https://onyx.security/platform"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-09-18
 tags:
   - products
   - ai-control-plane
@@ -17,15 +17,22 @@ vendor: "Onyx Security"
 related:
   - "[[onyx-security]]"
   - "[[guardian-agent]]"
+  - "[[onyx-platform-open-questions]]"
   - "[[oversight-layer]]"
   - "[[ai-spm]]"
   - "[[agent-observability]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[wiz-ai-spm]]"
   - "[[palo-alto-prisma-airs]]"
+  - "[[microsoft-agent-365]]"
 sources:
   - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
   - "https://onyx.security/platform"
+verified: 2026-09-18
+verified_against:
+  - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
+verified_findings: 0
+verified_note: "Guardian Agent scale figures now footnoted to the vendor page; callout-to-prose conversion preserves the vendor-claim framing."
 ---
 
 # Onyx Platform (Onyx AI Control Plane)
@@ -54,9 +61,9 @@ The combined-surface positioning is broader than any single specialist competito
 
 The product's centerpiece is the **Onyx Guardian Agent** — described as a "supervisory AI that continuously works across the platform to identify risks and remediate issues." Per Onyx's marketing claims as of 2026-05-03:
 
-- 137,000+ agents secured across enterprise deployments
-- 593,000+ employees covered across deployments
-- 10M+ sessions analyzed for threats in real-time
+- 137,000+ agents secured across enterprise deployments[^guardian-stats]
+- 593,000+ employees covered across deployments[^guardian-stats]
+- 10M+ sessions analyzed for threats in real-time[^guardian-stats]
 
 These numbers should be treated as vendor-published claims pending independent triangulation.
 
@@ -94,26 +101,23 @@ This breadth is its competitive positioning **and** its primary skepticism vecto
 
 ## Critical assessment
 
-> [!note] Vendor marketing vs validated capability
-> The Onyx product page is the primary public source for capability claims; independent third-party validation (analyst write-ups, customer case studies, security research) is limited as of 2026-05-03. Treat the five-surface positioning as the **vendor's ambition** rather than confirmed delivery. Buyers should validate (a) which surfaces are GA vs roadmap, (b) integration depth claims (100+ integrations is significant if accurate), (c) Guardian Agent capability vs marketing description, and (d) the customer count and session-volume claims.
+**Independent validation of Onyx's claims is limited.** The Onyx product page is the primary public source for capability claims; independent third-party validation — analyst write-ups, customer case studies, security research — is limited as of 2026-05-03. The five-surface positioning is the vendor's ambition rather than confirmed delivery: a buyer needs to check which surfaces are GA versus roadmap, the depth behind the "100+ integrations" claim, whether the Guardian Agent's capability matches its marketing description, and the customer-count and session-volume figures above.[^guardian-stats]
 
-> [!note] Nomenclature is unsettled
-> Onyx's marketing uses "AI Control Plane" as the umbrella positioning and "Guardian Agent" as the centerpiece, but neither term is being defined by Onyx — both are picked up from elsewhere. "Guardian Agent" specifically tracks [[gartner|Gartner]]'s [[guardian-agent|Guardian Agent]] vendor category from the Feb 2026 Market Guide. The fact that the company has reached for an analyst category rather than a category of its own is itself a signal: the positioning is still being defined. The architecturally precise label for what Onyx actually does is closer to **runtime protection + AI-SPM + AI gateway**, layered together. Read the product capability claims (per-prompt/response/action interception, MCP gateway, behavioral baselining) as the load-bearing description; read the "AI control plane" wrapper as marketing scaffolding that may or may not survive into the eventual mature category language.
+**The "AI control plane" label is marketing scaffolding, not a settled category.** Onyx's marketing uses "AI Control Plane" as the umbrella positioning and "Guardian Agent" as the centerpiece, but neither term is Onyx's own coinage. "Guardian Agent" tracks [[gartner|Gartner]]'s [[guardian-agent|Guardian Agent]] vendor category from the Feb 2026 Market Guide; reaching for an analyst category rather than a company-specific one signals that the positioning is still being defined. The architecturally precise label for what Onyx does is closer to **runtime protection + AI-SPM + AI gateway**, layered together: the product capability claims (per-prompt/response/action interception, MCP gateway, behavioral baselining) are the load-bearing description, and the "AI control plane" wrapper may not survive into mature category language.
 
-> [!gap] Open questions about Onyx
-> 1. **Founding team and funding round details** — not in the marketing source clipped to `.raw/`
-> 2. **Specific GA dates** for each of the five product surfaces — single-page marketing does not enumerate
-> 3. **Pricing and licensing model** — not published
-> 4. **Customer references** — published metrics aggregate but do not name customers
-> 5. **Relationship to OSS AI gateway** — the marketing claim says "fully-managed, OSS AI gateway" but does not name which OSS gateway is the upstream
+Founding team and funding details, per-surface GA dates, pricing, named customer references, and the identity of the upstream OSS AI gateway are not in the marketing source clipped to `.raw/`; [[onyx-platform-open-questions|Onyx Platform: Open Questions]] tracks these.
 
 ## CMM positioning
 
 If the platform delivers as advertised, an Onyx-anchored deployment would target:
-- **D2 (Identity & Authorization) L3+** via discovery and policy enforcement
-- **D3 (Control & Least-Agency) L3** via the Guardian Agent's per-action interception and human oversight
-- **D4 (Runtime & Guardrails) L3+** via real-time prompt, response, and action protection
-- **D7 (Observability & Detection) L4** via session replay, behavioral baselining, and a SIEM/SOAR-integrated audit trail
-- **D8 (Supply Chain & AI-BOM) L3** via supply-chain risk coverage
+- **[[agentic-ai-security-cmm-d2-identity|D2 (Identity & Authorization)]] L3+** via discovery and policy enforcement
+- **[[agentic-ai-security-cmm-d3-control-least-agency|D3 (Control & Least-Agency)]] L3** via the Guardian Agent's per-action interception and human oversight
+- **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4 (Runtime & Guardrails)]] L3+** via real-time prompt, response, and action protection
+- **[[agentic-ai-security-cmm-d7-observability|D7 (Observability & Detection)]] L4** via session replay, behavioral baselining, and a SIEM/SOAR-integrated audit trail
+- **[[agentic-ai-security-cmm-d8-supply-chain|D8 (Supply Chain & AI-BOM)]] L3** via supply-chain risk coverage
 
 The product is a candidate for the **enterprise recommended stack** as a "single-pane-of-glass" alternative to assembling Wiz AI-SPM + Prisma AIRS + AgentGateway separately. Validation of that positioning requires independent assessment beyond the marketing source.
+
+## Notes
+
+[^guardian-stats]: [Onyx — Platform: Secure AI Control Plane for Enterprises](https://onyx.security/platform) (retrieved 2026-05-03). Vendor-published Guardian Agent scale claims (agents secured, employees covered, sessions analyzed), unaudited as of the clip date. Local copy: `.raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md`.

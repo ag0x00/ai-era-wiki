@@ -10,6 +10,7 @@ scope_axis:
 target: "[[agentic-ai-security-cmm-2026]]"
 related:
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[standards-validation-methodology-2026-05]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
@@ -153,13 +154,28 @@ Two source facts stay unresolved and sit as watch items on the Canadian crosswal
 
 One page in the family carries more than the one callout the convention allows: [[agentic-ai-security-cmm-crosswalk|the base crosswalk]], at three. The count is debt across the family and bears on no rung.
 
-**Status:** [substantially-closed-2026-09-18]. Nine pages have come down since the first census. The assessor scorecard came down from three, the core page from four, [[agentic-ai-security-cmm-d6-data-rag|D6]] from two and this page from three, each when a pass touched it, since this vault holds no lint baselines and a page is exempt only until it is touched. [[agentic-ai-security-cmm-d1-governance|D1]], [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and [[agentic-ai-security-cmm-d7-observability|D7]] came down from two to none, [[agentic-ai-security-cmm-d9-operations|D9]] from three to one, and [[agentic-ai-security-cmm-d2-identity|D2]] from two to one. [[agentic-ai-security-cmm-d8-supply-chain|D8]] has carried one throughout and never needed reducing. Recommendation 29 reduces the base crosswalk, which is the one that remains. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [closed-2026-09-18]. Nine pages have come down since the first census, and [[agentic-ai-security-cmm-crosswalk|the base crosswalk]] — the one page that still carried three — came down to none in the same pass that filed item 23 below. The assessor scorecard came down from three, the core page from four, [[agentic-ai-security-cmm-d6-data-rag|D6]] from two and this page from three, each when a pass touched it, since this vault holds no lint baselines and a page is exempt only until it is touched. [[agentic-ai-security-cmm-d1-governance|D1]], [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and [[agentic-ai-security-cmm-d7-observability|D7]] came down from two to none, [[agentic-ai-security-cmm-d9-operations|D9]] from three to one, and [[agentic-ai-security-cmm-d2-identity|D2]] from two to one. [[agentic-ai-security-cmm-d8-supply-chain|D8]] has carried one throughout and never needed reducing. Recommendation 29 closed. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 19. `D3 L3` grades a decision point the coding harness holds itself
 
 [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 requires a policy decision point outside the model context, deny-by-default, synchronous and failing closed, and the measurement protocol asks for a PDP config, a PDP-unreachability test showing deny and a direct-gateway invocation test showing deny. A coding harness enforcing a managed permission policy is the enforcement point and the governed component at once, so it produces none of the three artifacts, and the assessor either records the circularity or scores L2.
 
 **Status:** [new-2026-09-15]. Recommendation 30 gives D3 an evidence path for a harness-held enforcement point, or a not-applicable path where no external decision point exists. Tracked in [#170](https://github.com/ag0x00/ai-era/issues/170) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+
+### 23. Open items in the CMM–standards crosswalk (added 2026-09-18)
+
+[[agentic-ai-security-cmm-crosswalk|The base crosswalk]] carries eight open items, moved here when the page's callout count came down to the one-per-page ceiling (item 18):
+
+1. **Full 38-control ISO 42001 Annex A map.** The current map shows control families and high-leverage anchors; a control-by-control mapping is the next iteration, and the unreviewed [[owasp-genai-crosswalk|GenAI Crosswalk]] rows against ISO/IEC 42001 are a candidate list for it.
+2. **AIUC-1 Society pillar.** The CMM has no analogue for catastrophic-misuse or national-security externalities. This is a real gap, not a mapping bug.
+3. **EU AI Act high-risk classification trigger.** The crosswalk assumes high-risk classification; for limited-risk and minimal-risk systems, Annex IV does not apply and the crosswalk simplifies.
+4. **CSF 2.0 subcategory map.** A finer-grained NIST CSF 2.0 subcategory mapping (106 subcategories) would help organizations using CSF as their primary control catalogue; the [[owasp-genai-crosswalk|GenAI Crosswalk]]'s NIST CSF 2.0 rows are a candidate list on the same terms.
+5. **AIUC-1 quarterly drift.** AIUC-1 updates quarterly. The crosswalk shows the Q2 2026 state and needs a refresh after each quarterly release.
+6. **L5+ Leading Edge tier (added 2026-05-04).** The crosswalk maps to the CMM's L5 (Optimizing — achievable today) tier only. L5+ research-stage capabilities (TEE-backed guardrail attestation, [[camel-pattern|CaMeL]] split, multi-agent cascade-detection rule libraries, cross-vendor AI-BOM federation, sigstore-for-MCP) have no standards anchor yet because they predate the relevant specs; as CoSAI, OWASP, and NIST CAISI publish leading-edge guidance through 2026–2027, the crosswalk will gain an L5+ column.
+7. **Series-level detection has no settled domain (added 2026-08-18).** The D4 cell anchors `UNWANTED INPUT SERIES HANDLING`, whose implementation clusters and compares requests across a time window that is not limited to consecutive requests ([`/go/unwantedinputserieshandling/`](https://owaspai.org/go/unwantedinputserieshandling/)). [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]'s ladder grades no series-level detector, and [[agentic-ai-security-cmm-d7-observability|D7]] L4 grades a session-scoped drift signal over the same trajectory, so a D4 rung would collide with it at the boundary. The anchor stands and the grading domain is unresolved.
+8. **Post-acquisition model remediation has an anchor and no rung (added 2026-08-20).** `POISON ROBUST MODEL` is the one model-engineering control in the Exchange a deploying organization can apply to a model it did not train (§3.1.1). The poisoning-control paragraph on the crosswalk anchors it provisionally at D8, and [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]] grades verification of acquired artifacts rather than remediation of one. Whether the criterion belongs at D8 or at [[agentic-ai-security-cmm-d6-data-rag|D6]] is unresolved.
+
+**Status:** [new-2026-09-18]. None of the eight bears on a graded rung; each names a mapping boundary or a standards-drift risk. Carried here as a reference list rather than resolved individually.
 
 ## Limitations addressed by CMM revisions (archived)
 

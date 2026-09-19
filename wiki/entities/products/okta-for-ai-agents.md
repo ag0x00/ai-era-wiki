@@ -18,6 +18,7 @@ vendor: "Okta"
 ga_date: 2026-04-29
 related:
   - "[[microsoft-entra-agent-id]]"
+  - "[[microsoft-agent-365]]"
   - "[[agent-identity-architecture]]"
   - "[[nhi-governance-for-agents]]"
   - "[[credential-proxy-pattern]]"

@@ -56,7 +56,7 @@ The four don't share an axis. They split into three categorical groups:
 
 Forcing them onto a single axis would be misleading. PwC and Microsoft RAI compete on the org-maturity axis. Anthropic ASL is a model-capability metric — it does not measure organizations. OWASP is a control-catalog companion to all of the above; it does not measure maturity.
 
-One precision the [[standards-review-microsoft-rai-agent-365-2026-Q2|2026-Q2 RAI / Agent 365 review]] adds: the [[microsoft-rai|RAI Standard]] is itself a responsible-AI **goals** standard — seventeen goals across six principles — not a maturity model and not a control catalogue. It belongs in the org-maturity group here only because its goals are adopted through an internal Crawl / Walk / Run progression; the goals themselves are outcome statements, and the technical controls live in [[microsoft-zt4ai|ZT4AI]] with the management plane in [[microsoft-entra-agent-id|Agent 365]].
+One precision the [[standards-review-microsoft-rai-agent-365-2026-Q2|2026-Q2 RAI / Agent 365 review]] adds: the [[microsoft-rai|RAI Standard]] is itself a responsible-AI **goals** standard — seventeen goals across six principles — not a maturity model and not a control catalogue. It belongs in the org-maturity group here only because its goals are adopted through an internal Crawl / Walk / Run progression; the goals themselves are outcome statements, and the technical controls live in [[microsoft-zt4ai|ZT4AI]] with the management plane in [[microsoft-agent-365|Microsoft Agent 365]].
 
 ## Shape of a category-aware revival
 

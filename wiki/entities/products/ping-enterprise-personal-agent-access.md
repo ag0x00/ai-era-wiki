@@ -27,6 +27,7 @@ related:
   - "[[credential-proxy-pattern]]"
   - "[[okta-for-ai-agents]]"
   - "[[microsoft-entra-agent-id]]"
+  - "[[microsoft-agent-365]]"
   - "[[ping-identity]]"
   - "[[mcp-security]]"
 sources:

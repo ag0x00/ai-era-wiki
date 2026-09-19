@@ -44,10 +44,12 @@ sources:
   - "[[.raw/papers/nist-sp-800-218A.pdf]]"
 verified: 2026-09-18
 verified_against:
+  - ".raw/articles/microsoft-entra-agent-id-owners-sponsors-managers-2026-09-18.md"
+  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
   - ".raw/papers/nist-sp-800-218A.pdf"
   - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
 verified_findings: 1
-verified_note: "Issue-252 read: item 12 whole against Exchange §3.0 and 800-218A Table 1 (PDF text extracted with pypdf, 30 pages); six claims corrected, including the three-high-priority-task enumeration and the SEGREGATE DATA row attribution. Earlier passes read items 1-12 against the runtime-appsec, testing and threats-through-use Exchange documents, which this read did not reopen. Open: whether the Identity plane should be a named carrier of DEV SECURITY's access-control half is the owner's call, deferred."
+verified_note: "Two reads, kept as a set. Issue-252 read: item 12 whole against Exchange §3.0 and 800-218A Table 1 (PDF text extracted with pypdf, 30 pages); six claims corrected, including the three-high-priority-task enumeration and the SEGREGATE DATA row attribution. Issue-253 read: gap 7 and the leaver-event paragraph only, where two Entra Agent ID sources contradicted the page's own sponsor-succession footnote; the body now matches it. Earlier passes read items 1-12 against the runtime-appsec, testing and threats-through-use Exchange documents, which neither read reopened. Open: whether the Identity plane should be a named carrier of DEV SECURITY's access-control half is the owner's call, deferred."
 ---
 
 # Agentic AI Security RA Gaps
@@ -56,7 +58,7 @@ Twelve gaps run through the [[agentic-ai-security-reference-architecture|Agentic
 
 Items 1 to 11 state what the architecture requires, what ships against it as of September 2026, and where the shipped implementation stops. Item 12 states a scope decision and maps the development-time controls onto the plane rows that carry them. The architecture page cites these items by number.
 
-Two gaps turn on a mechanism a vendor shipped under a heading other than security. [[microsoft-entra-agent-id|Entra Agent ID]] reassigns an agent's sponsorship when its sponsor leaves and revokes nothing (gap 7), and the AWS Well-Architected Agentic AI Lens puts consumption anomaly detection in its cost pillar and routes the alert to the team that owns the agent, while the same lens's security pillar detects cross-agent anomalies over message rates and topology and over no cost metric (gap 10). A control filed under governance or cost reaches the operator who reads that pillar and stays invisible to the security review that would look for it.
+Two gaps turn on a mechanism a vendor shipped under a heading other than security. Entra Agent ID ships lifecycle workflow templates that can transfer an agent's sponsorship when its sponsor leaves, once deployed, and revoke nothing (gap 7), and the AWS Well-Architected Agentic AI Lens puts consumption anomaly detection in its cost pillar and routes the alert to the team that owns the agent, while the same lens's security pillar detects cross-agent anomalies over message rates and topology and over no cost metric (gap 10). A control filed under governance or cost reaches the operator who reads that pillar and stays invisible to the security review that would look for it.
 
 ## Open gaps
 
@@ -86,7 +88,7 @@ Every plane specifies *what* is enforced and none specifies *when* enforcement b
 
 ### 7. Identity binding when humans are decommissioned
 
-Ownership reassignment on a leaver event has a reference implementation. [[microsoft-entra-agent-id|Entra Agent ID]] transfers sponsorship of a departing sponsor's agent identities to that sponsor's manager, and Entra Lifecycle Workflows carries the transfer as a named leaver task.[^entra-sponsor-ra] Credential rotation and revocation do not travel with the transfer: every disabling, deleting and token-revoking task in that leaver catalogue is scoped to a user object, and disabling an agent stays a sponsor's manual decision in the My Account portal.[^entra-sponsor-ra] Ownership attestation, orphaned-identity detection and automatic revocation are three controls, and the third has no reference implementation: [[okta-for-ai-agents|Okta for AI Agents]], generally available since 2026-04-29, ships shadow-agent discovery, access reviews and an operator-invoked deactivation switch, and the shadow-agent products name a departing employee's agents without revoking them.[^okta-ga-ra] The Cloud Security Alliance puts the unowned population at 8% of enterprise identities, which hold no HR-system ownership linkage after their creator departs.[^csa-nhi-vacuum-ra]
+Ownership reassignment on a leaver event has a reference implementation. Entra Agent ID ships two lifecycle workflow templates that notify managers and cosponsors and can transfer sponsorship when a sponsor changes role or leaves; an administrator must deploy them, and the identity-governance overview names the departing sponsor's manager as the party sponsorship passes to.[^entra-sponsor-ra] Credential rotation and revocation do not travel with the transfer: every disabling, deleting and token-revoking task in that leaver catalogue is scoped to a user object, and disabling an agent stays a sponsor's manual decision in the My Account portal.[^entra-sponsor-ra] Ownership attestation, orphaned-identity detection and automatic revocation are three controls, and the third has no reference implementation: [[okta-for-ai-agents|Okta for AI Agents]], generally available since 2026-04-29, ships shadow-agent discovery, access reviews and an operator-invoked deactivation switch, and the shadow-agent products name a departing employee's agents without revoking them.[^okta-ga-ra] The Cloud Security Alliance puts the unowned population at 8% of enterprise identities, which hold no HR-system ownership linkage after their creator departs.[^csa-nhi-vacuum-ra]
 
 ### 8. Shared services above the isolation boundary
 

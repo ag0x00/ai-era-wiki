@@ -50,11 +50,13 @@ sources:
   - "[[openai-hugging-face-agent-incident]]"
 coined_by:
   - "[[insight-partners]]"
-verified: 2026-08-22
+verified: 2026-09-18
 verified_against:
-  - ".raw/papers/securing-the-autonomous-future.md"
-verified_findings: 3
-verified_note: "1 NOT-IN-SOURCE (per-task authority clause), 2 OVERSTATED (incumbent IAM verdict, Credential Zero as primary role); all fixed by re-attribution"
+  - ".raw/articles/microsoft-entra-agent-id-owners-sponsors-managers-2026-09-18.md"
+  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
+  - ".raw/articles/microsoft-entra-conditional-access-for-agents-2026-09-18.md"
+verified_findings: 0
+verified_note: "Read at the two repointed passages only: the access-pattern-versus-type correction and the sponsor-succession rewrite both hold against the Entra clips. Rest of the page carries its 2026-08-22 read."
 ---
 
 # AI Agent Identity Architecture
@@ -84,7 +86,7 @@ Two design problems sit underneath: a **principal problem** (every agent needs a
 
 ### Delegated access model
 
-The agent acts **on behalf of a human user** using that user's scoped access token, which is the usual arrangement for copilots and AI coding assistants. Governance stays simpler because the human remains the principal of record. [[microsoft-entra-agent-id|Microsoft Entra Agent ID]] calls this the **assistive** pattern (delegated permissions, acts for a user), and [[okta-for-ai-agents|Okta for AI Agents]] implements it as the OAuth 2.1 delegation flow.
+The agent acts **on behalf of a human user** using that user's scoped access token, which is the usual arrangement for copilots and AI coding assistants. Governance stays simpler because the human remains the principal of record. [[microsoft-entra-agent-id|Microsoft Entra Agent ID]] calls this *agents acting on behalf of a user*, one of its three agent access patterns; *assistive* is one of its agent **types**, which is a separate taxonomy. [[okta-for-ai-agents|Okta for AI Agents]] implements it as the OAuth 2.1 delegation flow.
 
 ### Autonomous agent model
 
@@ -114,7 +116,7 @@ Identity-based authorization is **ambient**: a verified agent carries its worklo
 
 ### Action-to-identity trace
 
-Every action is recorded against the identity that took it and the context that triggered it (human instruction versus autonomous decision). Entra Agent ID **sponsors** bind every agent to a named human whose accountability transfers automatically to their manager on departure, [[microsoft-entra-agent-id|Microsoft Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The remaining standards gap is capturing the *delegation chain* — who instructed the agent — at the protocol level rather than only in audit logs. The NIST CAISI Concept Paper takes it up in its OAuth 2.1 / OIDC extensions for agents, and the warrant's embedded delegation chain satisfies it cryptographically.
+Every action is recorded against the identity that took it and the context that triggered it (human instruction versus autonomous decision). Entra Agent ID **sponsors** — who can be groups as well as named individuals — are accountable for each agent, lifecycle workflow templates can transfer sponsorship to a manager or cosponsor when a sponsor changes role or leaves once an administrator deploys them, [[microsoft-agent-365|Microsoft Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The remaining standards gap is capturing the *delegation chain* — who instructed the agent — at the protocol level rather than only in audit logs. The NIST CAISI Concept Paper takes it up in its OAuth 2.1 / OIDC extensions for agents, and the warrant's embedded delegation chain satisfies it cryptographically.
 
 ## Platform-native landscape
 

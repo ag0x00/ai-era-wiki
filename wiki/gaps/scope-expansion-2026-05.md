@@ -3,7 +3,7 @@ type: gap
 title: "Scope Expansion Punch-List"
 address: c-000018
 created: 2026-05-13
-updated: 2026-08-21
+updated: 2026-09-18
 tags:
   - gap
   - scope-expansion
@@ -35,7 +35,7 @@ The following items were identified as the highest-priority gaps under the new s
 
 **Axis:** `ai-in-sec-defense`
 **Status:** seed stub at [[microsoft-security-copilot|Microsoft Security Copilot]] (`c-000024`). Page documents the five Microsoft-built role-specialized agents (Security Analyst, Alert Triage, Conditional Access Optimization, Data Security Posture, Data Security Triage) plus the 15-partner Security Store. **Substantive content deferred** to the next ingest — page is a routing address, not a full product write-up.
-**Remaining work:** sourced ingest specifically about Security Copilot (RSAC 2026 deeper material, partner-agent catalog detail, independent benchmarks if available); promote from `seed` to `developing`.
+**Remaining work:** sourced ingest specifically about Security Copilot (RSAC 2026 deeper material, partner-agent catalog detail, independent benchmarks if available); a substantive product description; agent-by-agent capability coverage; customer case studies; a detailed crosswalk to [[agentic-ai-security-cmm-2026|CMM]] D7 (Observability & Detection) and the [[agentic-soc-state-of-the-field|Agentic SOC]] thesis beyond the page's current domain-level anchor; promote from `seed` to `developing`.
 
 ### 2. Google Sec-PaLM / SecLM ecosystem
 

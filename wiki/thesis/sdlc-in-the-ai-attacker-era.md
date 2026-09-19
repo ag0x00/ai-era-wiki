@@ -51,6 +51,7 @@ related:
   - "[[nist-sp-800-218a]]"
   - "[[standards-review-nist-sp-800-218a-2026-Q2]]"
   - "[[apostol-vassilev]]"
+  - "[[scope-expansion-2026-05]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[glasswing]]"
   - "[[anthropic-glasswing-announcement]]"
@@ -198,7 +199,7 @@ The two academic findings share a mechanism this thesis otherwise lacks a name f
 
 **Real-world productivity gains may run behind capability gains.** The [[metr-rct-2025|METR 2025 RCT]] found 16 experienced developers 19% slower using AI tooling on familiar codebases, against an expectation of being faster.[^metr] The finding bounds the threat-velocity claim symmetrically: if productivity gains lag capability gains for defenders, the same gap applies to attackers. The exploit-velocity figures earlier on this page measure capability at the point of generation, not sustained operational throughput.
 
-**No SLSA, SSDF, or CSAF revision yet addresses AI-augmented adversaries directly.** [[nist-ssdf|NIST SSDF v1.1 (Feb 2022)]] addresses the secure-development side but not the AI-augmented-adversary side, and its threat assumptions remain human-paced. [[nist-sp-800-218a|SP 800-218A (July 2024)]] extends SSDF for AI model development but does not address deployment, operation, or the inverse problem of defending non-AI systems against AI-augmented attackers; [[standards-review-nist-sp-800-218a-2026-Q2|the 2026-Q2 standards review]] confirms it contributes development-time process tasks only, with no runtime guardrail, egress, or agent-identity control. Whether the frameworks should be updated, or the existing rules carry unchanged with tighter tolerances, is unresolved. The [[anthropic-glasswing-announcement|Glasswing announcement]] commits to "collaborate with leading security organizations" on this gap — named areas include vulnerability-disclosure processes, SDLC and secure-by-design, supply-chain security, and standards for regulated industries — but no concrete deliverable has landed yet.
+**No SLSA, SSDF, or CSAF revision yet addresses AI-augmented adversaries directly.** [[nist-ssdf|NIST SSDF v1.1 (Feb 2022)]] addresses the secure-development side but not the AI-augmented-adversary side, and its threat assumptions remain human-paced. [[nist-sp-800-218a|SP 800-218A (July 2024)]] extends SSDF for AI model development but does not address deployment, operation, or the inverse problem of defending non-AI systems against AI-augmented attackers; [[standards-review-nist-sp-800-218a-2026-Q2|the 2026-Q2 standards review]] confirms it contributes development-time process tasks only, with no runtime guardrail, egress, or agent-identity control. Whether the frameworks should be updated, or the existing rules carry unchanged with tighter tolerances, is unresolved. [[scope-expansion-2026-05|The 2026-05 scope-expansion punch-list]] carries the follow-on: a concept page for the AI-augmented-attacker threat model itself, so this argument can cite a structured artifact rather than carry the threat model in prose. The [[anthropic-glasswing-announcement|Glasswing announcement]] commits to "collaborate with leading security organizations" on this gap — named areas include vulnerability-disclosure processes, SDLC and secure-by-design, supply-chain security, and standards for regulated industries — but no concrete deliverable has landed yet.
 
 ## Open sub-questions
 

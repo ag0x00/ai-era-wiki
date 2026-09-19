@@ -28,6 +28,7 @@ related:
   - "[[capability-based-authorization-talk]]"
   - "[[oversight-layer]]"
   - "[[plan-validate-execute]]"
+  - "[[microsoft-entra-agent-id]]"
   - "[[orchestration-hijacking]]"
 sources:
   - "[[capability-based-authorization-talk]]"

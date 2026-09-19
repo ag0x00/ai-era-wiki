@@ -18,6 +18,7 @@ target: "[[agentic-ai-security-cmm-2026]]"
 related:
   - "[[standards-review-mitre-atlas-2026-Q2|MITRE ATLAS Standards Review]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[cmm-known-limitations]]"
   - "[[agentic-ai-security-cmm-recalibration-method-2026]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[agentic-ai-security-cmm-d2-identity]]"
@@ -113,7 +114,7 @@ flowchart LR
 
 Cell semantics: each cell names the **anchor control(s)** the CMM domain maps into, where evidence from the CMM (the artifacts in the level table) can be re-presented for each standard's audit. Empty cell = no clean anchor; the CMM domain is exceeding the standard's coverage there (see [[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §4).
 
-The Microsoft column was split by [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]]: the [[microsoft-rai|RAI Standard]] is a responsible-AI **goals** standard (seventeen goals across six principles), distinct from the [[microsoft-zt4ai|ZT4AI]] **control catalogue**. The master matrix now carries a separate RAI-goals column alongside the ZT4AI-control column so the goals-standard-versus-catalogue distinction is visible at a glance; [[microsoft-entra-agent-id|Agent 365]] is the management plane over the ZT4AI controls rather than a separate standard.
+The Microsoft column was split by [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]]: the [[microsoft-rai|RAI Standard]] is a responsible-AI **goals** standard (seventeen goals across six principles), distinct from the [[microsoft-zt4ai|ZT4AI]] **control catalogue**. The master matrix now carries a separate RAI-goals column alongside the ZT4AI-control column so the goals-standard-versus-catalogue distinction is visible at a glance; [[microsoft-agent-365|Microsoft Agent 365]] is the management plane over the ZT4AI controls rather than a separate standard.
 
 | CMM Domain | [[nist-ai-rmf\|NIST AI RMF]] + 600-1 / 800-4 | [[iso-iec-42001\|ISO/IEC 42001]] Annex A | [[mitre-atlas\|MITRE ATLAS]] v5.6.0 | [[owasp-agentic-ai-top-10\|OWASP ASI]] / [[owasp-aivss\|AIVSS]] / LLM | [[microsoft-rai\|Microsoft RAI]] (goals) | [[microsoft-zt4ai\|Microsoft ZT4AI]] (controls) | [[csa-maestro\|CSA MAESTRO / ATF]] | [[eu-ai-act\|EU AI Act]] | [[aiuc-1\|AIUC-1]] | [[cosai\|CoSAI]] / SAIF |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -262,7 +263,7 @@ The ISO 42001 normative text is paywalled and the primary Annex was not read for
 | A.9 Responsible/intended use | D3 | Process framing of intended use only — no least-agency or HITL technical control |
 | A.10 Third-party relationships | D8 | Supplier/customer responsibility allocation — no AI-BOM requirement |
 
-The full 38-control map remains summary-sourced and paywall-bounded; a control-by-control mapping from the primary Annex is the next iteration, contingent on acquiring the normative text.
+A control-by-control mapping from the primary Annex is the next iteration, contingent on acquiring the normative text.
 
 ## NIST SP 800-53 control families via IR 8605A COSAiS
 
@@ -319,15 +320,7 @@ Step 1 is where the workflow breaks. Anti-pattern E2 in [[anti-patterns-and-fail
 
 ## Open gaps in the crosswalk
 
-> [!gap] Known unfilled spots in this crosswalk
-> 1. **Full 38-control ISO 42001 Annex A map.** Current map shows control families and high-leverage anchors; a control-by-control mapping is next iteration, and the unreviewed [[owasp-genai-crosswalk|GenAI Crosswalk]] rows against ISO/IEC 42001 are a candidate list for it.
-> 2. **AIUC-1 Society pillar.** The CMM has no analogue for catastrophic-misuse / national-security externalities. This is a real gap, not a mapping bug.
-> 3. **EU AI Act high-risk classification trigger.** The crosswalk assumes high-risk classification; for limited-risk and minimal-risk systems Annex IV does not apply and the crosswalk simplifies.
-> 4. **CSF 2.0 subcategory map.** A finer-grained NIST CSF 2.0 subcategory mapping (106 subcategories) would help organizations using CSF as their primary control catalogue; the [[owasp-genai-crosswalk|GenAI Crosswalk]]'s NIST CSF 2.0 rows are a candidate list on the same terms.
-> 5. **AIUC-1 quarterly drift.** AIUC-1 updates quarterly. The crosswalk shows the Q2 2026 state; refresh required after each quarterly drop.
-> 6. **L5+ Leading Edge tier (added 2026-05-04).** This crosswalk maps to the CMM's **L5 (Optimizing — achievable today)** tier only. L5+ research-stage capabilities (TEE-backed guardrail attestation, [[camel-pattern|CaMeL]] split, multi-agent cascade-detection rule libraries, cross-vendor AI-BOM federation, sigstore-for-MCP) do not yet have standards anchors because they predate the relevant specs. As CoSAI / OWASP / NIST CAISI publish leading-edge guidance through 2026–2027, this crosswalk will gain an L5+ column; until then, L5+ is anchored to the underlying research literature, not to formal standards.
-> 7. **Series-level detection has no settled domain (added 2026-08-18).** The D4 cell anchors `UNWANTED INPUT SERIES HANDLING`, whose implementation is clustering, pairwise similarity, and frequency analysis across a time window that is not limited to consecutive requests ([`/go/unwantedinputserieshandling/`](https://owaspai.org/go/unwantedinputserieshandling/)). [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]'s ladder grades no series-level detector, and [[agentic-ai-security-cmm-d7-observability|D7]] L4 grades a session-scoped drift signal over the same trajectory, so a D4 rung would collide with it at the boundary. The anchor stands and the grading domain is unresolved.
-> 8. **Post-acquisition model remediation has an anchor and no rung (added 2026-08-20).** `POISON ROBUST MODEL` is the one model-engineering control in the Exchange a deploying organization can apply to a model it did not train (§3.1.1). The poisoning-control paragraph above anchors it provisionally at D8, and [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]] grades verification of acquired artifacts rather than remediation of one. Whether the criterion belongs at D8 or at [[agentic-ai-security-cmm-d6-data-rag|D6]] is unresolved.
+Eight items remain open: the full 38-control ISO 42001 Annex A map, the AIUC-1 Society pillar's missing analogue, the EU AI Act high-risk classification assumption, a finer-grained CSF 2.0 subcategory map, AIUC-1's quarterly drift against this crosswalk's Q2 2026 snapshot, the L5+ Leading Edge tier's missing standards anchor, series-level detection's unsettled domain between D4 and D7, and post-acquisition model remediation's unresolved domain between D8 and D6. [[cmm-known-limitations|CMM Known Limitations]] item 23 carries the full list.
 
 ## Relations
 

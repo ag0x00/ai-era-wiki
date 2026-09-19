@@ -166,7 +166,7 @@ A third supplier shape appeared in September 2026: security-platform incumbents 
 
 What remains a developing COTS layer is the NHI *governance* posture above bare identity: discovery of unenrolled agents, lifecycle, and least-privilege review, where [[oasis-security|Oasis Security]], Aembit, Astrix, and [[cyberark-conjur|CyberArk Conjur]] compete. Conditional Access for Agent Identities (Entra) adds risk-based step-up where the platform supports it.
 
-Shadow-agent discovery — the [[microsoft-entra-agent-id|Agent 365 Registry]], Okta Agent Discovery, [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]] discovery, [[falcon-guardian|Falcon Guardian]] endpoint discovery, and [[agentdesktop|agentdesktop]] desktop inventory — surfaces agents created at developer pace outside the enrollment process, addressing the [[shadow-automation|shadow automation]] (Microsoft's "agent sprawl") problem.
+Shadow-agent discovery — [[microsoft-agent-365|the Agent Registry]], Okta Agent Discovery, [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]] discovery, [[falcon-guardian|Falcon Guardian]] endpoint discovery, and [[agentdesktop|agentdesktop]] desktop inventory — surfaces agents created at developer pace outside the enrollment process, addressing the [[shadow-automation|shadow automation]] (Microsoft's "agent sprawl") problem.
 
 The [[microsoft-zt4ai|Microsoft ZT4AI]] framework extends the Zero Trust principles — verify explicitly, least privilege, assume breach — to these machine identities, with [[microsoft-entra-agent-id|Entra Agent ID]] as the per-agent identity anchor (see [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]).
 

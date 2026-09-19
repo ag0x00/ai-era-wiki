@@ -26,6 +26,7 @@ related:
   - "[[crowdstrike]]"
   - "[[falcon-guardian]]"
   - "[[okta-for-ai-agents]]"
+  - "[[microsoft-agent-365]]"
   - "[[microsoft-entra-agent-id]]"
   - "[[agentcordon]]"
 sources:

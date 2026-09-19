@@ -81,7 +81,7 @@ An earlier reading of this point recorded no Microsoft AI gateway and an unavoid
 
 ### 3. An L5 cadence regulated FIs cannot follow
 
-Several L5 criteria point at products that reached GA within weeks of the CMM revision ([[microsoft-entra-agent-id|Agent 365]] May 1, Okta for AI Agents Apr 30). In a regulated institution, "GA three weeks ago" means twelve to eighteen months out after vendor risk assessment, SOC-2 review, and board sign-off. L5 is therefore unreachable on *cadence*, not capability — and the slow cadence is the examiner-approved behavior. A maturity model that effectively penalizes prudent third-party-risk discipline has a calibration problem for the entire regulated sector, not just one institution.
+Several L5 criteria point at products that reached GA within weeks of the CMM revision ([[microsoft-agent-365|Microsoft Agent 365]] May 1, Okta for AI Agents Apr 30). In a regulated institution, "GA three weeks ago" means twelve to eighteen months out after vendor risk assessment, SOC-2 review, and board sign-off. L5 is therefore unreachable on *cadence*, not capability — and the slow cadence is the examiner-approved behavior. A maturity model that effectively penalizes prudent third-party-risk discipline has a calibration problem for the entire regulated sector, not just one institution.
 
 ### 4. Buried right-sizing guidance and the vendor-neutrality tax
 

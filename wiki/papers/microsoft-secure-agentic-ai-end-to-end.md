@@ -3,7 +3,7 @@ type: paper
 title: "Secure Agentic AI End-to-End"
 address: c-000013
 created: 2026-05-07
-updated: 2026-05-07
+updated: 2026-09-18
 tags:
   - papers
   - microsoft
@@ -23,12 +23,21 @@ source_url: https://www.microsoft.com/en-us/security/blog/2026/03/20/secure-agen
 event_context: "Pre-RSAC 2026 announcement"
 related:
   - "[[microsoft|Microsoft]]"
-  - "[[microsoft-entra-agent-id|Microsoft Entra Agent ID + Agent 365]]"
+  - "[[microsoft-agent-365|Microsoft Agent 365]]"
+  - "[[microsoft-entra-agent-id|Microsoft Entra Agent ID]]"
   - "[[microsoft-zt4ai|Microsoft ZT4AI]]"
   - "[[network-layer-prompt-injection-containment|Network-Layer Prompt Injection Containment]]"
   - "[[microsoft-rai|Microsoft RAI]]"
 sources:
   - "[[.raw/articles/microsoft-secure-agentic-ai-end-to-end-2026-05-07.md]]"
+verified: 2026-09-18
+verified_against:
+  - ".raw/articles/microsoft-agent-365-general-availability-2026-09-18.md"
+  - ".raw/articles/microsoft-agent-365-product-page-2026-09-18.md"
+  - ".raw/articles/microsoft-entra-agent-id-what-is-2026-09-18.md"
+  - ".raw/articles/microsoft-secure-agentic-ai-end-to-end-2026-05-07.md"
+verified_findings: 0
+verified_note: "Two load-bearing bullets restored to what the March 2026 post says; the 2026-09-18 pricing and five-console facts now carry their own date and link."
 ---
 
 # Secure Agentic AI End-to-End: Source Summary
@@ -39,7 +48,7 @@ Vasu Jakkal's pre-RSAC 2026 announcement post (2026-03-20) consolidating Microso
 
 Microsoft's positioning organizes the agentic-AI security portfolio under three pillars:
 
-1. **Secure agents**: [[microsoft-entra-agent-id|Agent 365]] as "the control plane for agents," with Defender / Entra / Purview capabilities included.
+1. **Secure agents**: [[microsoft-agent-365|Microsoft Agent 365]] as "the control plane for agents," with Defender / Entra / Purview capabilities included.
 2. **Secure foundations**: visibility (Security Dashboard for AI; Shadow AI Detection); identity (Entra extensions); data (Purview DLP for Copilot); threat detection (Defender for Cloud + new Predictive Shielding).
 3. **Defend with agents and experts**: Security Copilot agents in the SOC; Sentinel as the agentic defense platform; Defender Experts Suite.
 
@@ -47,8 +56,8 @@ Two terminological flourishes worth noting: the phrase "**security as the core p
 
 ## Load-bearing announcements
 
-- **Agent 365 GA May 1, 2026**: re-positioned from a sub-feature of Entra Agent ID (per the wiki's prior coverage) to the umbrella product. Bundles Defender, Entra, Purview capabilities for agent governance.
-- **Microsoft 365 E7: The Frontier Suite**: new SKU bundling Agent 365 + M365 Copilot + Entra Suite + M365 E5.
+- **Agent 365 GA May 1, 2026**: the post calls it "the control plane for agents" and names new capabilities across Defender, Entra and Purview. As of 2026-09-18, Microsoft's [service description](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-agent-365/microsoft-agent-365) lists five management consoles — the Microsoft 365 admin center, Defender, Entra, Intune and Purview — and documents [[microsoft-entra-agent-id|Entra Agent ID]] separately, with its own entitlement; see [[microsoft-agent-365|Microsoft Agent 365]].
+- **Microsoft 365 E7: The Frontier Suite**: the post names E7 as the SKU Agent 365 ships in, bundled with Microsoft 365 Copilot, Microsoft Entra Suite and Microsoft 365 E5. As of 2026-09-18, the [Agent 365 product page](https://www.microsoft.com/en-us/microsoft-agent-365) prices E7 at \$99.00 per user per month and Agent 365 standalone at \$15.00, carries Agent 365, E7 and E7 (No Teams) as the three SKUs on its pricing table, and uses "Frontier Suite" only as FAQ prose about E7; see [[microsoft-agent-365|Microsoft Agent 365]].
 - **Entra Internet Access Prompt Injection Protection (GA March 31)**: first major-vendor shipping of [[network-layer-prompt-injection-containment|network-layer prompt injection containment]]; surfaces a new architectural primitive distinct from application-layer guardrails.
 - **Defender Predictive Shielding (preview)**: adaptive policy contraction during active attacks. Dynamically tightens identity and access policies when threats are detected; reverts as the threat passes.
 - **Sentinel MCP Entity Analyzer (GA in April)**: first major SIEM with native MCP integration.
@@ -78,4 +87,4 @@ Too fresh to assess externally; the post was a product announcement, not a resea
 
 ## See also
 
-The full structural analysis lives at [[microsoft-zt4ai|the ZT4AI framework page]] and [[network-layer-prompt-injection-containment|Network-Layer Prompt Injection Containment]]. The Microsoft product portfolio is consolidated on the [[microsoft|Microsoft org page]]; agent-platform specifics on [[microsoft-entra-agent-id|the Entra Agent ID + Agent 365 product page]].
+The full structural analysis lives at [[microsoft-zt4ai|the ZT4AI framework page]] and [[network-layer-prompt-injection-containment|Network-Layer Prompt Injection Containment]]. The Microsoft product portfolio is consolidated on the [[microsoft|Microsoft org page]]; agent-platform specifics on [[microsoft-agent-365|the Agent 365]] and [[microsoft-entra-agent-id|Entra Agent ID]] product pages.
