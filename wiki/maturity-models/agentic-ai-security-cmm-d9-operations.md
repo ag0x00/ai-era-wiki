@@ -42,13 +42,14 @@ related:
   - "[[cyera-agent-guardian-release]]"
   - "[[securing-workspace-genai-at-google-talk]]"
   - "[[claude-cowork]]"
+  - "[[cmm-known-limitations]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. D9's two gate roles confirmed against the core page, the crosswalk and protocol conditions 1 and 3; only the continuity test is program-level."
+verified_note: "Read the right-sizing addition against the measurement protocol's live-observation clause and D9's own L3 approval-record criteria; no .raw document opened. Tier-register wording aligned to the tier assignments D3 L3 documents."
 ---
 
 # Agentic AI Security CMM — D9 Operations & Human Factors (Deep Dive)
@@ -150,7 +151,7 @@ Right-sizing matters more in D9 than in any other domain: holding a single low-r
 | MCP / skill provider serving others | L4 + selective L5 |
 | High-autonomy multi-agent mesh | L4 minimum, L5 where resourced |
 
-**Two controls are load-bearing for a read-only bot: system-prompt confidentiality and an owner-departure decommission runbook.** Canary tokens and `LLM07:2025` test cases cover the first. There is no HITL queue to fatigue, no multi-agent incident response, and no case for a quarterly drill. Holding this bot to L4 KPIs is the over-scoping the recalibration exists to prevent.
+**Two controls are load-bearing for a read-only bot: system-prompt confidentiality and an owner-departure decommission runbook.** Canary tokens and `LLM07:2025` test cases cover the first. There is no HITL queue to fatigue, no multi-agent incident response, and no case for a quarterly drill. Holding this bot to L4 KPIs is the over-scoping the recalibration exists to prevent. The absent queue reaches the assessment as well as the ladder: [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] records the live approval-gate fire an L3 assessment observes as **not applicable** for a shape whose documented tier assignments place no action in the `confirm` tier, and [[cmm-known-limitations|CMM Known Limitations]] item 24 carries the change.
 
 **The approval population for an in-suite productivity assistant is the whole workforce.** Rubber-stamp rate and queue age carry the domain at that scale, and the vendor's own account of the class names approval-bot behavior as the expected drift ([[securing-workspace-genai-at-google-talk|Securing Workspace GenAI at Google]]). The involvement measure L4 asks for exists here as a vendor-side override rate the customer cannot read, so it is recorded unanswerable, naming the vendor telemetry that would close it, while the approval record and the published disclosure at L3 stay customer artifacts.
 

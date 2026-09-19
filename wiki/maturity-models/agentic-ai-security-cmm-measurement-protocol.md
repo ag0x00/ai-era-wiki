@@ -40,6 +40,12 @@ related:
   - "[[claude-cowork]]"
   - "[[cmm-vocabulary-and-notation]]"
   - "[[ai-coding-agent-governance]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d9-operations]]"
+  - "[[iso-iec-42001]]"
+  - "[[aiuc-1]]"
+  - "[[aiuc-1-critical-evaluation]]"
+  - "[[azure-rag-chatbot-security-profile]]"
 sources:
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
@@ -48,7 +54,7 @@ sources:
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed: the stable definition placed its points inside a window whose endpoints sit outside it, restarted a calendar-quarter window on an arbitrary date, and admitted a clean-state attestation condition 1 did not name."
+verified_note: "Internal-consistency read of the #261 live-observation repair against D3 L3, D9 L3, the core page shape and level tables, the L4-to-L5 gate conditions 1-4, and the AIUC-1 critical evaluation's cadence comparison; no .raw document opened. Fixed: the not-applicable condition named a tier register the deep dives call tier assignments, and its first limit left an approval path running outside those assignments able to take the verdict."
 ---
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)
@@ -239,10 +245,14 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 
 The assessor MUST observe at least one live action per high-risk-tier agent in the assessed scope. Specifically:
 
-- One L3+ assessment requires: live OTel trace + live PDP decision + live HITL gate fire (synthetic if necessary; where D3 scores L5, the fire is checked against a bound approval token).
+- One L3+ assessment requires: live OTel trace + live PDP decision + live HITL gate fire (synthetic if necessary; where D3 scores L5, the fire is checked against a bound approval token). The gate fire alone takes a **not applicable** verdict where the deployment places no action in the `confirm` tier; the trace and the decision stay required.
 - One L4 assessment requires the above plus: live behavioral-drift event from the agent behavioral monitoring system + live red-team eval run.
-- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the prerequisite gate into L5 (≥2-quarter L4 evidence for the domain being scored L5, AIUC-1/ISO 42001 cert dated within last quarter, continuity-test execution proof).
+- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the prerequisite gate into L5 (≥2-quarter L4 evidence for the domain being scored L5, third-party assurance current or scheduled against a recognized scheme and evidenced at the cadence that scheme runs, continuity-test execution proof).
 - One L5+ assessment requires the above plus: live attestation chain verification (TEE-backed guardrail execution proof) OR live cascade-detection rule fire OR live cross-vendor AI-BOM reconciliation, AND verification of the named-contributor artifact.
+
+**A deployment that runs no approval queue cannot produce the L3 gate fire.** [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 grades four action-risk tiers — auto, notify, confirm, block — and requires the tier assignment for every action the agent can invoke to be documented ahead of runtime, so tier assignments placing no action in `confirm` record a deployment with no approval queue to watch. [[agentic-ai-security-cmm-2026|The CMM]] right-sizes a chatbot with no tools to L3 across all nine domains, and [[agentic-ai-security-cmm-d9-operations|D9]] records that a read-only retrieval bot has no approval queue to fatigue, so the model targets that shape at L3. The assessor records the gate fire **not applicable**, names those tier assignments as the reason, and drops the criterion from the denominator under the four-verdict scheme the scoring rubric states. Two limits hold the verdict shut. Where any action sits in `confirm`, or where the deployment operates a human approval path its tier assignments do not record, a deployment producing no fire has not met the requirement, whatever its shape, because the verdict turns on whether an approval queue exists at all. Where the vendor operates the approval path and exposes no test against it, the verdict is **unanswerable**: it counts against the vendor and leaves the rung open.
+
+**The L5 assurance evidence is read at the cadence of the scheme that issues it.** Condition 2 of the prerequisite gate below asks for independent third-party assurance scheduled or current, and the schemes it names run on different clocks. [[iso-iec-42001|ISO/IEC 42001]], the preferred path, runs an annual surveillance cycle, where [[aiuc-1|AIUC-1]] re-tests each quarter; [[aiuc-1-critical-evaluation|the AIUC-1 critical evaluation]] sets the two cadences side by side. A certificate dated within the last quarter is unobtainable on the preferred path, so the observation checks the assurance at its own scheme's cadence, which is what condition 2 already asks for.
 
 Static configs alone do not satisfy live-observation requirements at L3+.
 

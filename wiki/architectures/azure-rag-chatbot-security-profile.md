@@ -4,7 +4,7 @@ title: "Azure-Native RAG Chatbot Security Profile (Copilot Studio)"
 address: c-000131
 origin: produced
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - architectures
   - reference-implementation
@@ -26,13 +26,19 @@ related:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[google-cloud-agentic-security-profile]]"
   - "[[cmm-vocabulary-and-notation]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d4-runtime-guardrails]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain]]"
 sources:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Read against the September Google stress test; the trifecta-restoring scope exclusion is the review's own finding. The rung-citation advisory on its plane table is pre-existing."
+verified_note: "Read the six rung-citation links against each domain page's right-sizing table and the new not-applicable bullet against the measurement protocol; no .raw document opened. OTel and PDP dropped from the bullet as identifiers the page uses once and defines nowhere."
 ---
 
 # Azure-Native RAG Chatbot Security Profile (Copilot Studio)
@@ -62,13 +68,13 @@ The bot reads private data but has no external-communications or write path, so 
 | Plane / Domain | Realistic target | Microsoft control | Status | The one thing that matters |
 |---|---|---|---|---|
 | **Identity (D2)** | L3 | Entra Agent ID for the Copilot Studio agent (auto-created per environment)[^agentid]; end users authenticate with Entra[^auth] | Agent ID **preview**; user auth GA | Per-agent identity is the prerequisite that unlocks the egress and observability scores (the D2→D5 and D2→D7 caps) |
-| **Control / Least-Agency (D3)** | L2 → L3 | Copilot Studio topics + generative orchestration; **Power Platform DLP** classifying connectors Business/Non-Business/Blocked[^ppdlp]; managed environment | GA | Power Platform DLP governs connectors, tools, channels, and the auth requirement, not the generated text — a separate plane from response-content DLP |
-| **Runtime / Guardrails (D4)** | L3 | Azure AI Content Safety + **Prompt Shields**, on by default and non-optional, dual-pass; moderation level defaults to High[^content] | GA | Enterprise-baseline guardrails the maker can tune but not disable; a no-tool bot needs no chain-of-thought auditing |
-| **Egress / Network (D5)** | L2 → L3 | None needed for a no-tool bot beyond the platform boundary; if connectors reach out, Azure API Management AI Gateway / Entra Internet Access[^apim] | GA | Egress is mostly out of scope because the trifecta is broken, so a mesh gateway is unwarranted for one bot |
-| **Data / Memory / RAG (D6)** | **L3 → L4 — the load-bearing plane** | Entra-authenticated knowledge sources enforce **per-user permission trimming at answer time**[^auth]; **Purview DSPM for AI** + oversharing assessments; sensitivity labels honored on the SharePoint source; **Restricted SharePoint Search** as a stopgap[^dspm][^rss] | GA | Oversharing / [[inference-exposure\|inference exposure]] is the live risk, and the remediation is a multi-quarter labor project, not a purchase |
+| **Control / Least-Agency ([[agentic-ai-security-cmm-d3-control-least-agency\|D3]])** | L2 → L3 | Copilot Studio topics + generative orchestration; **Power Platform DLP** classifying connectors Business/Non-Business/Blocked[^ppdlp]; managed environment | GA | Power Platform DLP governs connectors, tools, channels, and the auth requirement, not the generated text — a separate plane from response-content DLP |
+| **Runtime / Guardrails ([[agentic-ai-security-cmm-d4-runtime-guardrails\|D4]])** | L3 | Azure AI Content Safety + **Prompt Shields**, on by default and non-optional, dual-pass; moderation level defaults to High[^content] | GA | Enterprise-baseline guardrails the maker can tune but not disable; a no-tool bot needs no chain-of-thought auditing |
+| **Egress / Network ([[agentic-ai-security-cmm-d5-egress-network\|D5]])** | L2 → L3 | None needed for a no-tool bot beyond the platform boundary; if connectors reach out, Azure API Management AI Gateway / Entra Internet Access[^apim] | GA | Egress is mostly out of scope because the trifecta is broken, so a mesh gateway is unwarranted for one bot |
+| **Data / Memory / RAG ([[agentic-ai-security-cmm-d6-data-rag\|D6]])** | **L3 → L4 — the load-bearing plane** | Entra-authenticated knowledge sources enforce **per-user permission trimming at answer time**[^auth]; **Purview DSPM for AI** + oversharing assessments; sensitivity labels honored on the SharePoint source; **Restricted SharePoint Search** as a stopgap[^dspm][^rss] | GA | Oversharing / [[inference-exposure\|inference exposure]] is the live risk, and the remediation is a multi-quarter labor project, not a purchase |
 | **Observability (D7)** | L3 | Copilot Studio analytics; **Purview DSPM for AI** sees the agent (Audit must be on); Sentinel ingestion; Defender **AIAgentsInfo** hunting table[^dspm][^defender] | GA; Defender AIAgentsInfo table newly released | Logging is near-zero licensing on E5; the variable is the SIEM ingestion run-rate, with low-fidelity logs tiered to a cheaper plane |
-| **Governance (D1)** | L2 → L3 | Power Platform admin center; Purview Compliance Manager; Agent 365 inventory; a named owner/sponsor | GA | A chatbot needs an owner, a policy, and a risk-tier — not a certification near-term |
-| **Supply Chain (D8)** | L2 → L3 | Consumer-grade only: knowledge-source and connector provenance; sensitivity-label hygiene; the agent is a **model consumer**, not a producer | GA | Producer-grade AI-BOM generation, training-data provenance, and ML-VEX do not apply to a model consumer |
+| **Governance ([[agentic-ai-security-cmm-d1-governance\|D1]])** | L2 → L3 | Power Platform admin center; Purview Compliance Manager; Agent 365 inventory; a named owner/sponsor | GA | A chatbot needs an owner, a policy, and a risk-tier — not a certification near-term |
+| **Supply Chain ([[agentic-ai-security-cmm-d8-supply-chain\|D8]])** | L2 → L3 | Consumer-grade only: knowledge-source and connector provenance; sensitivity-label hygiene; the agent is a **model consumer**, not a producer | GA | Producer-grade AI-BOM generation, training-data provenance, and ML-VEX do not apply to a model consumer |
 | **Operations (D9)** | L2 → L3, narrow | Owner-departure decommission via Entra Agent ID delete (cascades child cleanup); CoSAI-derived IR runbook; canary-token / system-prompt trip-wire | GA | No HITL queue to fatigue for a read-only bot; the load-bearing items are a decommission runbook and a system-prompt trip-wire |
 
 ## The four controls that carry this profile
@@ -89,6 +95,7 @@ For this shape, the following controls add cost without reducing risk. They are 
 - **Behavioral-drift detection and multi-tool red-team programs** (D7 L4): disproportionate for a single read-only bot; a basic eval (for example PyRIT) suffices.
 - **Producer-grade AI-BOM, training-data provenance, ML-VEX** (D8 `[P]`): the bot is a model consumer.
 - **Quarterly decommission drills, HITL-fatigue dashboards, certification** (D9 L4 / D1 L5): no HITL queue, and certification is premature near-term for a read-only, no-tool bot.
+- **The live HITL gate fire an L3 assessment observes** ([[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] §Live observation requirements): this shape places no action in the `confirm` tier, so the fire is recorded not applicable against its documented tier assignments, and the live trace and the live policy decision the same requirement names are still collected.
 
 ## Cost signal
 

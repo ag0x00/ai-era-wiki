@@ -33,10 +33,14 @@ related:
   - "[[claude-cowork]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
   - "[[agentic-ai-security-cmm-dependency-rules]]"
+  - "[[agentic-ai-security-cmm-d9-operations]]"
+  - "[[iso-iec-42001]]"
+  - "[[aiuc-1]]"
+  - "[[aiuc-1-critical-evaluation]]"
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed a doubled preposition in item 8's tracking-issue sentence; item 8's archived form, the archived-section lead and the surviving issue links checked against items 12, 20, 21 and 22."
+verified_note: "Read archived items 24 and 25 and the edited item 4 against the measurement protocol, the core page's Level 5 statement and auditor-evidence line, D3 L3, D9 L3 and the AIUC-1 critical evaluation; no .raw document opened. Item 4's referent corrected from an L5 row and column to the Level 5 statement and its auditor-evidence line, and item 24's limits aligned to the protocol."
 ---
 
 # CMM Known Limitations (current state)
@@ -71,9 +75,9 @@ The L5+ clause requires "cryptographic attestation that guardrails executed in a
 
 ### 4. `D1 L5` — AIUC-1 quarterly cadence and single-auditor capacity
 
-The clause requires "AIUC-1 certified." AIUC-1 updates quarterly (Q2 2026 update focused on MCP / third-party / agent identity per AIUC's own statements); a `L5` claim is implicitly "currently certified against the most recent quarterly refresh," which the CMM language does not quite articulate (the L5 row says "AIUC-1 certified against the most recent quarterly refresh OR ISO/IEC 42001 certified" + "most-recent cert dated within last quarter" in the auditor-evidence column — better than the original 2026-04-30 framing but still a moving target). Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint for organizations attempting L5 certification.
+The clause requires "AIUC-1 certified." AIUC-1 updates quarterly (Q2 2026 update focused on MCP / third-party / agent identity per AIUC's own statements); a `L5` claim is implicitly "currently certified against the most recent quarterly refresh," which the CMM language does not quite articulate (the Level 5 statement names [[iso-iec-42001|ISO/IEC 42001]] under active surveillance as preferred and AIUC-1 at its latest quarterly refresh as accepted, and its auditor-evidence line asks for assurance current or scheduled, evidenced at the cadence its scheme runs — better than the original 2026-04-30 framing, and on the AIUC-1 path still a moving target). Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint for organizations attempting L5 certification.
 
-**Status:** [verified-current], partly addressed by the "most-recent cert within last quarter" language. The capacity constraint is structural, and CMM language cannot fix it.
+**Status:** [verified-current]. The quarter-dated wording that partly addressed the freshness point was replaced by item 25 below, which reads each scheme's cadence off the scheme the program chose; the AIUC-1 path still lapses at each quarterly refresh. The capacity constraint is structural, and CMM language cannot fix it.
 
 ### 5. `D6 L3+` — `IDENTITY.md` / `SOUL.md` filename conventions are not industry-standard
 
@@ -174,7 +178,7 @@ One page in the family carries more than the one callout the convention allows: 
 
 ## Limitations addressed by CMM revisions (archived)
 
-CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16, item 22 on 2026-09-18 and item 8 on 2026-09-19. Kept as a historical record so a future reader does not reintroduce them.
+CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16, item 22 on 2026-09-18, and items 8, 24 and 25 on 2026-09-19. Kept as a historical record so a future reader does not reintroduce them.
 
 ### A. `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 
@@ -209,6 +213,18 @@ Original item: item 21 restated `D6` L3 so the criterion resolves the asking pri
 Original item: the prerequisite gate required two quarters of stable L4 across all nine domains before an assessor could score any domain L5, while the core page expected L4 across all domains with selective L5 where exposure justifies it and five right-sizing tables named selective L5 as a target. A program at L2 in one domain by recorded trade-off could never be scored L5 in another, and the September stress test classed the contradiction as blocking an assessment.
 
 Resolved by splitting the gate along the object each condition grades rather than by withdrawing selective L5. Condition 1, two quarters of stable L4, now grades the domain being scored L5 and the assessor repeats it per domain; conditions 2 to 4 — third-party assurance, bus-factor ≥2 with a continuity test, and the gap-closure plan — were already program-level and are graded once for the assessment. The deciding argument is that the model already accounts for cross-domain weakness along the dependency paths it records. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a floor over all nine duplicated that work and punished weakness with no path to the claiming domain, including the architectural-containment trade-off the aggregation rule's strategic-rationale field exists to record. The whole-program tier is unchanged and now reads as a separate object: a program rated L5 holds L5 in all nine domains, and L5+ adds its own criteria on top of that rating. May's open issue 2 closed in the same diff: *stable* is now a window of the two most recent complete calendar quarters, at least four dated observation points spanning it with no gap wider than 60 days, and a regression test that counts a drop below L4 or an L4 criterion met at one point and not met at a later one. Recommendation 18, shipped under [#173](https://github.com/ag0x00/ai-era/issues/173), a sub-issue of [#168](https://github.com/ag0x00/ai-era/issues/168).
+
+### 24. `L3` live observation demanded a gate fire from a shape with no approval queue (resolved 2026-09-19)
+
+Original item: [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]'s §Live observation requirements made a live human-in-the-loop gate fire a condition of every L3-or-higher assessment, and closed the escape with the rule that static configs alone do not satisfy the requirement. The model right-sizes a chatbot with no tools to L3 across all nine domains on the core page's shape table; [[agentic-ai-security-cmm-d3-control-least-agency|D3]] records that an allowlist, a policy decision point and action-risk tiering are the whole of that domain for the shape, and [[agentic-ai-security-cmm-d9-operations|D9]] records that a read-only retrieval bot has no approval queue to fatigue. An assessor grading the shape had to observe a queue the model had already right-sized away, and the requirement offered no not-applicable path although the protocol's own four-verdict scheme carries one. The September stress test classed the defect as blocking an assessment.
+
+Resolved by admitting the verdict that scheme already defines rather than by moving the observation to another rung. The gate fire alone takes a **not applicable** verdict where the deployment's documented tier assignments place no action in the confirm tier; the reason is recorded, the criterion leaves the denominator, and the live OpenTelemetry trace and policy-decision-point decision stay required. The deciding argument is the rung the fire evidences. D3 L3 grades the four action-risk tiers — auto, notify, confirm, block — enforced by the policy decision point, and D9 L3 grades the tamper-evident approval record, so moving the fire to L4 would have left both rungs with no live evidence on every shape that does run a queue, including the in-suite and desktop-agent productivity assistants the same table targets at L3. D3's L3 list already admits a per-criterion not-applicable path for an in-process decision point, which is the same mechanism at the same rung. Two limits hold the verdict shut: a deployment that assigns any action to the confirm tier, or that operates an approval path its tier assignments do not record, has not met the requirement where no fire is produced, and an approval path the vendor operates and exposes no test against is unanswerable rather than not applicable. [[azure-rag-chatbot-security-profile|The Azure RAG chatbot profile]] records the verdict for the shape it scores. Shipped under [#261](https://github.com/ag0x00/ai-era/issues/261), a sub-issue of [#168](https://github.com/ag0x00/ai-era/issues/168).
+
+### 25. `L5` live observation demanded a certificate the preferred scheme does not issue (resolved 2026-09-19)
+
+Original item: the protocol's L5 live-observation bullet verified the prerequisite gate against an "AIUC-1/ISO 42001 cert dated within last quarter", and the core page's L5 auditor-evidence line asked for a "most-recent cert dated within the last quarter". [[iso-iec-42001|ISO/IEC 42001]] is the model's preferred scheme and runs an annual surveillance cycle, where [[aiuc-1|AIUC-1]] re-tests each quarter, a comparison [[aiuc-1-critical-evaluation|the AIUC-1 critical evaluation]] sets out; a certificate dated within the last quarter was therefore unobtainable on the preferred path. The same gate's condition 2, a few lines below in the same document, was already scheme-neutral and asked for assurance scheduled or current, and the protocol's bullet still named AIUC-1 first where the May pass had made the rest of the page neutral. The September stress test classed the defect as blocking an assessment.
+
+Resolved by restating both lines as condition 2 states it: third-party assurance current or scheduled against a recognized scheme, evidenced at the cadence that scheme runs. The core page's L5 body now names ISO/IEC 42001 under active surveillance as the preferred path and records that each accepted scheme is evidenced at its own cadence. The internal inconsistency with condition 2 carries the fix on its own, and the cadence comparison is the vault's existing reading of the two schemes rather than a new claim. Shipped under [#261](https://github.com/ag0x00/ai-era/issues/261), a sub-issue of [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ## Contribution guide
 
