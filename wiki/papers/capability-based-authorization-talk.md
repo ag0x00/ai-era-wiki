@@ -2,7 +2,7 @@
 type: talk
 title: "Capability-Based Authorization for AI Agents"
 created: 2026-05-03
-updated: 2026-05-03
+updated: 2026-09-19
 tags:
   - papers
   - talks
@@ -36,6 +36,9 @@ supports:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
 related:
+  - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
   - "[[niki-aimable-niyikiza]]"
   - "[[tenuo]]"
   - "[[snap]]"
@@ -51,6 +54,10 @@ aliases:
   - papers/capability-based-authorization-niyikiza-talk
   - capability-based-authorization-niyikiza-talk
 
+verified: 2026-09-19
+verified_against: []
+verified_findings: 0
+verified_note: "Verify-and-fix for the per-task capability-token rung move (#169); read the restated consequence against the core page's D2, D3 and D5 L5+ rows and confirmed the account of the talk itself is untouched; no .raw document opened. No defect found on this page."
 ---
 
 # Capability-Based Authorization for AI Agents — Warrants That Survive Prompt Injection
@@ -246,7 +253,7 @@ Without the slides we'd have the lineage and analogies but no numbers, no CVEs, 
 ## Consequences for this corpus
 
 - **The PDP/PEP gap is partly closed.** [[pdp-pep-for-non-tool-mediated-actions|PDP/PEP for non-tool-mediated agent actions]] flagged this gap explicitly. Niyikiza is one of the *two* publicly disclosed answers (the other is Sondera Cedar, also at Unprompted). Capability warrants address the gap from the **delegation-aware authorization** angle; Cedar addresses it from the **policy-language reference monitor** angle. Both pages now cross-reference this talk.
-- **CMM D3 L5 has an exemplar.** [[agentic-ai-security-cmm-2026|CMM 2026]] D3 L5 already names "Capability tokens / Warrants per task with cryptographic binding" as a target evidence pattern but with no exemplar shipped. Tenuo is the first shipped vendor-neutral exemplar. CMM page now cites this talk.
+- **The CMM's leading-edge capability-token rung has an exemplar.** [[agentic-ai-security-cmm-2026|CMM 2026]] grades per-task capability tokens with cryptographic binding at L5+ in [[agentic-ai-security-cmm-d2-identity|D2]], [[agentic-ai-security-cmm-d3-control-least-agency|D3]] and [[agentic-ai-security-cmm-d5-egress-network|D5]], and the vault recorded no exemplar when the rung was written. Tenuo is the first shipped vendor-neutral exemplar the vault records, and its early-stage status is what holds the rung at the leading-edge tier. CMM page now cites this talk.
 - **Bifecta-Trifecta containment story now has a second leg.** Bullen's containment is *egress-side* (Smokescreen + agent-tag CI) + *tool-call-side* (Toolshed + ToolAnnotations). Niyikiza's containment is *delegation-side* (warrant attenuation + holder-binding). The two stack: a Stripe-style architecture *with* warrants would have all three legs of containment.
 - **AI confused deputy is now a tracked concept.** The talk's framing — ambient authority, derived authority, delegation as the missing primitive — is one of the cleanest structural arguments in the wiki. See [[ambient-vs-derived-authority|Ambient vs Derived Authority]].
 - **Constraint-design CVE list** cited on the slide gives the wiki a starting set for a future incident-class page on **prompt-injection-tooling-bypass CVEs** (LangChain / LlamaIndex / LlamaFactory / Claude Code allowlist). All four are real CVEs and all four target the constraint-as-string-match anti-pattern Niyikiza warned about.

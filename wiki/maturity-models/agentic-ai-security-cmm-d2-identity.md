@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - cmm
@@ -46,10 +46,10 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[identity-credential-coupling]]"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Read covered the four-verdict vocabulary paragraph this pass moved, confirmed byte-identical (sha256 8b4e0e7b…, 960 bytes) across all nine deep dives and consistent with the assurance classes in the measurement protocol; no archived document opened, no other claim on the page re-read."
+verified_note: "Verify-and-fix for the per-task capability-token rung move (#169); read the open-questions staleness note against the Tenuo product page (2026-08-20) and company page (2026-05-23); no .raw document opened. Fixed: the note attributed the demo-shaped-examples finding to both pages where only the company page records it."
 ---
 
 # Agentic AI Security CMM — D2 Identity & Authorization (Deep Dive)
@@ -99,13 +99,13 @@ Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|r
 - **L3 — Defined.** Every agent has a verifiable, attested per-agent identity (platform-native agent identity or SPIFFE workload ID); OAuth 2.1 token exchange handles delegation; the NHI lifecycle binds to the deploy pipeline, not HR joiner/mover/leaver; the inventory distinguishes coupled from decoupled credentials ([[identity-credential-coupling|identity-credential coupling]]); every NHI carries a human owner; every action traces to a human.
 - **L4 — Managed.** No credential sits in agent context: a broker or a credential-less identity model issues what an agent needs, a PDP authorizes each agent per action, and every session, token, and delegated grant binds to one identity and one task, so nothing carries across a task boundary or a delegation hop. Rotation and an orphaned-agent kill switch are automated and tested, each NHI carries a behavioral baseline, and a migration plan off coupled credentials is active.
 - **L5 — Optimizing.** A unified agent-governance program operates in production (registry, lifecycle API, per-agent identity graph, ownership transfer, scoped RBAC, audit-log integration); shadow-agent discovery is operational; risk/conditional access for agent identities is active where the platform supports it; identity binding carries cryptographic attestation (SPIFFE JWT-SVID or platform-attested identity); zero coupled credentials remain for agent-class NHIs.
-- **L5+ — Leading Edge.** Per-task capability tokens with cryptographic holder-binding and monotonic attenuation ([[tenuo-warrant|Tenuo Warrant]]-class — OSS-only, no platform-native implementation); multi-vendor agent-identity federation across two or more IDaaS platforms with cross-platform identity-graph reconciliation; named participation in a SPIFFE / OAuth / OIDC agent-extension working group.
+- **L5+ — Leading Edge.** Per-task capability tokens with cryptographic holder-binding and monotonic attenuation ([[tenuo-warrant|Tenuo Warrant]]-class — OSS-only, with no platform-native implementation in the control landscape above); multi-vendor agent-identity federation across two or more IDaaS platforms with cross-platform identity-graph reconciliation; named participation in a SPIFFE / OAuth / OIDC agent-extension working group.
 
 The L4 delegation clause supplies the token property that [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L4 consumes. That rung grades the policy engine validating a delegation chain end to end, enforcing a configured maximum depth, and holding a downstream agent to a subset of its delegator's grants. A chain is validatable only where the credentials carry it, so this domain grades the artifact and D3 grades the evaluation, and the capability is scored once in each place. Chain splicing is the failure the parent link closes: a credential correctly signed and correctly scoped, presented at a step of the chain it was never issued for. The [[owasp-ai-exchange|OWASP AI Exchange]] states the residue that survives both halves — a structurally valid token can still be contextually unauthorised, and short lifetimes, revocation, and attenuation carry what token construction cannot.[^aix-leastmodelpriv]
 
 The L4 session clause governs the authentication session and the issued token. Destruction of a sandbox's transient state at task completion is graded in [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L3, and review and reset of agent memory context at a session boundary in [[agentic-ai-security-cmm-d6-data-rag|D6]] L4; the three cover different artifacts and a program can hold any one without the others. The L4 mutual-authentication clause covers the agent-to-service call. The inter-agent channel, its transport profile, and its message-level replay protection are graded in [[agentic-ai-security-cmm-d5-egress-network|D5]] L3, so an assessor scores the inter-agent leg once and in that domain.
 
-Per-task holder-bound capability tokens leave L5 for L5+, the one structural move this page makes on the current D2. The current L5 implies they are deployable today, but the only implementation is an early-stage OSS primitive, and the platforms issue per-resource tokens, not per-task. This mirrors D6 moving cryptographic attestation up and entitlement enforcement down.
+Per-task holder-bound capability tokens leave L5 for L5+, the one structural move this page makes on the current D2. The current L5 implies they are deployable today, but the only implementation in the control landscape above is an early-stage OSS primitive, and the one platform grant that table records is per-resource, not per-task. This mirrors D6 moving cryptographic attestation up and entitlement enforcement down.
 
 ## Assessor detail per level
 
@@ -152,7 +152,7 @@ The [[lethal-trifecta|lethal-trifecta]] test lowers the target level. An agent w
 
 ## Cost model
 
-Entra Agent ID riding the directory, plus the Entra ID P1 entitlement E5 already includes, sets the near-zero licensing this table reports. Agent Identity and the auth-manager credential vault cover the same ground for a Google Cloud buyer — per-agent identity, credential lifecycle, zero-credential context — but stop there: the control landscape above marks conditional and risk-based access Microsoft-only, so no agent-specific version of it exists on Google Cloud at all. Coupled-credential migration labor and audit-log run-rate do not change between the two.
+Entra Agent ID riding the directory, plus the Entra ID P1 entitlement E5 already includes, sets the near-zero licensing this table reports. Agent Identity and the auth-manager credential vault cover the same ground for a Google Cloud buyer — per-agent identity, credential lifecycle, zero-credential context — but stop there: the control landscape above marks conditional and risk-based access Microsoft-only, and records no agent-specific version of it on Google Cloud. Coupled-credential migration labor and audit-log run-rate do not change between the two.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
@@ -173,7 +173,7 @@ Licensing is near-zero for the E5 incumbent through L5; the spend is the coupled
 
 ## Open questions
 
-- Tenuo production-readiness (early-stage OSS, no independent enterprise-deployment evidence) is the variable that would move per-task tokens from L5+ to L5. Re-check quarterly.
+- Tenuo production-readiness (early-stage OSS, no independent enterprise-deployment evidence) is the variable that would move per-task tokens from L5+ to L5. The vault's reading of that product dates to August 2026 and records no general-availability declaration, no version tag and no production deployment; its reading of the company dates to May 2026 and records the public examples as demo-shaped with production case studies pending. Re-check quarterly. [[agentic-ai-security-cmm-d3-control-least-agency|D3]] and [[agentic-ai-security-cmm-d5-egress-network|D5]] graded the same capability at L5 until September 2026 and now hold it at L5+ on the same reading, so one re-check answers for three domains.
 - AWS AgentCore Identity and GCP Agent Identity are GA, but precise GA dates and the scope of GCP coverage outside its own agent runtime are not cleanly published.
 - D2 maps cleanly to FFIEC/GLBA authentication-and-access expectations and NCUA third-party-NHI scrutiny; the mapping is deferred to the forthcoming FFIEC/GLBA crosswalk.
 - Behavioral trust and reputation scoring for agent identities has no standardised method. The [[owasp-ai-exchange|OWASP AI Exchange]] names it as an agentic authentication element with decay and circuit breakers, states that industry scoring methods are not yet standardised, and admits it only as supplementary to identity, policy, and monitoring.[^aix-mac] The L4 per-NHI behavioral baseline is graded on existence for the same reason, and a scoring-quality criterion is unavailable until a method is published.

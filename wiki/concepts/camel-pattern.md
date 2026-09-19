@@ -3,7 +3,7 @@ type: concept
 title: "CaMeL Pattern (Compartmentalized Machine Learning)"
 address: c-000300
 created: 2026-05-03
-updated: 2026-09-18
+updated: 2026-09-19
 origin: aggregated
 scope_axis:
   - sec-of-ai
@@ -92,7 +92,7 @@ The Exchange lists the pattern among five structural mitigations it recommends a
 ## In the RA / CMM
 
 - **RA Runtime Plane:** CaMeL is listed as "Compartmentalized LLMs (CaMeL pattern)," classified as `Research`.
-- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] L5+:** "A CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads (research, no shipping vendor)"; evidence requires a deployed pilot with documented exit criteria.
+- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] L5+:** "A CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads", stated as research with no vendor in that domain's tooling map; evidence requires a deployed pilot with documented exit criteria.
 - **[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4]] L5+:** "a CaMeL-style privileged/quarantined LLM split in production (research)" is one of three leading-edge primitives that can qualify for D4 L5+.
 
 ## See also

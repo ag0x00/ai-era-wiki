@@ -4,7 +4,7 @@ title: "ZT4AI Standards Review"
 address: c-000150
 origin: produced
 created: 2026-05-26
-updated: 2026-06-22
+updated: 2026-09-19
 tags:
   - reviews
   - standards-review
@@ -38,6 +38,10 @@ sources:
   - "https://learn.microsoft.com/en-us/entra/id-protection/concept-risky-agents"
   - "https://learn.microsoft.com/en-us/security/zero-trust/sfi/secure-agentic-systems"
   - "https://opensource.microsoft.com/blog/2026/04/02/introducing-the-agent-governance-toolkit-open-source-runtime-security-for-ai-agents/"
+verified: 2026-09-19
+verified_against: []
+verified_findings: 0
+verified_note: "Swept for surviving L5 claims on per-task capability tokens after the #169 rung move; read the residual note against the D2 and D3 ladders; no .raw document opened. Fixed: the residual's CMM coordinate still read D3 L5. The page's pre-existing rung-citation advisory on seven other coordinates is untouched."
 ---
 
 # Standards Review — Microsoft ZT4AI (Zero Trust for AI), 2026-Q2
@@ -139,7 +143,7 @@ The six [[agentic-ai-security-reference-architecture|RA]] planes map onto the sa
 
 What ZT4AI, as documented in the scope above, does not provide that the CMM scores. Each claim is bounded to the searched documents and reversible by the stated refuting evidence.
 
-1. **No per-task capability tokens.** ZT4AI scopes authorization to the agent identity (or its blueprint), not to a single task. *Searched:* the Entra security-for-AI overview, CA-for-agent-identities, and secure-agentic-systems pages. *Terms:* "per-task", "capability token", "task-scoped token", "warrant". *Verdict:* not addressed. *Refuting evidence:* any Microsoft control issuing a credential bound to one task rather than to the agent identity. *Reviewed 2026-05-26.* This is the CMM `D2 L5+` / `D3 L5` residual (see [[tenuo-warrant|Tenuo Warrant]] as the only shipping primitive).
+1. **No per-task capability tokens.** ZT4AI scopes authorization to the agent identity (or its blueprint), not to a single task. *Searched:* the Entra security-for-AI overview, CA-for-agent-identities, and secure-agentic-systems pages. *Terms:* "per-task", "capability token", "task-scoped token", "warrant". *Verdict:* not addressed. *Refuting evidence:* any Microsoft control issuing a credential bound to one task rather than to the agent identity. *Reviewed 2026-05-26.* This is the CMM `D2 L5+` / `D3 L5+` residual (see [[tenuo-warrant|Tenuo Warrant]], the only shipping primitive this review's scope found).
 
 2. **No single MCP tool-integrity / rug-pull product.** Microsoft's own guidance states there is no Azure service dedicated to MCP-specific protection and prescribes a composed pattern (internal tool registry, version-pinning, egress allowlists, runtime monitoring). *Searched:* the MCP03 Tool Poisoning guide, APIM AI Gateway docs, the ZT4AI announcement. *Terms:* "tool integrity", "rug pull", "tool poisoning", "MCP server verification". *Verdict:* covered only as guidance, no shipping product. *Refuting evidence:* a Microsoft service that verifies MCP tool integrity across versions automatically. *Reviewed 2026-05-26.* Matches CMM `D5 L4–L5+` (off-stack).
 

@@ -2,7 +2,7 @@
 type: concept
 title: "Human-in-the-Loop (HITL) for Agentic AI"
 created: 2026-05-03
-updated: 2026-09-16
+updated: 2026-09-19
 tags:
   - concepts
   - hitl
@@ -31,6 +31,10 @@ related:
   - "[[agents-rule-of-two]]"
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[precize-agentic-ai-top10]]"
+verified: 2026-09-19
+verified_against: []
+verified_findings: 0
+verified_note: "Swept for surviving L5 claims on per-task capability tokens after the #169 rung move; read the CMM section against the D3 ladder; no .raw document opened. Fixed: the page graded per-task capability tokens at D3 L5 alongside approval tokens."
 ---
 
 # Human-in-the-Loop (HITL) for Agentic AI
@@ -118,7 +122,7 @@ The two implementations cover complementary surfaces: Stripe emphasizes egress +
 
 ## HITL in the CMM
 
-In the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]], HITL is graded across [[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]], which holds the policy decision point and the per-action-class approval coverage, and [[agentic-ai-security-cmm-d9-operations|D9 Operations & Human Factors]], which holds approval-rate, queue-age, and fatigue measurement. [[agentic-ai-security-cmm-d9-operations|D9]] L3 also grades the high-risk approval record itself — pre-defined categories along the Exchange's four dimensions, a tamper-evident audit trail, the mandatory minimum delay, and segregation of duties for the highest-risk actions. Cryptographic approval tokens are graded at D3 L5 alongside per-task capability tokens, since both are cryptographic binding with no platform-native implementation; the token binds the approval to its parameters, while the D9 L3 record carries what was approved, by whom, and on what understanding. Read the criteria from those two deep dives rather than from this page.
+In the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]], HITL is graded across [[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]], which holds the policy decision point and the per-action-class approval coverage, and [[agentic-ai-security-cmm-d9-operations|D9 Operations & Human Factors]], which holds approval-rate, queue-age, and fatigue measurement. [[agentic-ai-security-cmm-d9-operations|D9]] L3 also grades the high-risk approval record itself — pre-defined categories along the Exchange's four dimensions, a tamper-evident audit trail, the mandatory minimum delay, and segregation of duties for the highest-risk actions. Cryptographic approval tokens are graded at D3 L5, and per-task capability tokens a rung higher at D3 L5+, where the production-maturity qualifier holds a capability with no platform-native implementation in D3's dated control landscape; the approval token binds the approval to its parameters, while the D9 L3 record carries what was approved, by whom, and on what understanding. Read the criteria from those two deep dives rather than from this page.
 
 The D9 fatigue criteria — behavioral evidence that gates fire and are not circumvented — have a specific failure mode in agentic coding. Approval fatigue does not usually announce itself as circumvention; it presents as a defensible sequence of allowlisting, then autonomous modes, then suppressed prompts, at the end of which the deployment has changed shape and the gate no longer exists to be bypassed. Measuring approval volume and disposition over time, rather than gate existence, is what [[agentic-ai-security-cmm-d9-operations|D9]] grades. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] and [[agents-rule-of-two|Agents Rule of Two]], whose supervision fallback carries the same unstated assumption that the supervising human is present.
 

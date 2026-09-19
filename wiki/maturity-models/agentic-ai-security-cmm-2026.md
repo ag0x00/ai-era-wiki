@@ -76,7 +76,7 @@ primary_documents:
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L5 assurance wording against the measurement protocol's gate condition 2 and D1's scheme-neutral L5; no .raw document opened. Fixed two legacy restatements the reword left behind: the L5 gate's condition (b) asked only for a scheduled readiness assessment, an L4 artifact, and the roadmap's Phase 4 row still read AIUC-1 / ISO 42001 cert."
+verified_note: "Verify-and-fix for the per-task capability-token rung move (#169); read the D3 and D5 rows, the whole-program Level 5 and Level 5+ statements and the implementation roadmap; no .raw document opened. Fixed: the capability left the Level 5 statement without reaching Level 5+."
 ---
 
 # Agentic AI Security Capability Maturity Model
@@ -208,7 +208,7 @@ Quantitative metrics are tracked continuously; agent behavioral monitoring detec
 
 ### Level 5: Optimizing
 
-Every control was reachable with shipping products at the May 2026 snapshot this page was written against: platform-level enforcement everywhere across all 9 domains; current independent third-party assurance of the governance program, scheme-neutral per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]] — [[iso-iec-42001|ISO/IEC 42001]] under active surveillance preferred, AIUC-1 at its latest quarterly refresh or a reviewed internal equivalent accepted, each evidenced at the cadence its own scheme runs; real-time AI-BOM (Miggo DeepTracing or equivalent shipping product); capability tokens / Warrants per task; a mesh AgentGateway sidecar per agent; at least two quarters of stable L4 operation; bus-factor ≥2 with a documented continuity test.
+Every control was reachable with shipping products at the May 2026 snapshot this page was written against: platform-level enforcement everywhere across all 9 domains; current independent third-party assurance of the governance program, scheme-neutral per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]] — [[iso-iec-42001|ISO/IEC 42001]] under active surveillance preferred, AIUC-1 at its latest quarterly refresh or a reviewed internal equivalent accepted, each evidenced at the cadence its own scheme runs; real-time AI-BOM (Miggo DeepTracing or equivalent shipping product); a mesh AgentGateway sidecar per agent; at least two quarters of stable L4 operation; bus-factor ≥2 with a documented continuity test.
 
 **Auditor evidence:** per-domain matrix at L5 across all 9 domains + third-party assurance current or scheduled, evidenced at the cadence its scheme runs + ≥2-quarter L4 history + continuity-test report.
 
@@ -216,9 +216,9 @@ The reachability claim was verified against the shipping landscape in May 2026 a
 
 ### Level 5+: Leading Edge
 
-All of L5, plus research-stage primitives in production: cryptographic guardrail attestation in a TEE (Nitro Enclaves-class); a CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads; a cascade-detection rule library with tuned thresholds for ASI07/08/10 multi-agent risk; cross-vendor AI-BOM federation with reconciliation; sigstore-for-MCP cross-tenant signing; and an active named contributor to one or more of CoSAI / OWASP / AIVSS / NIST CAISI / OASIS / Linux Foundation AAIF AI working groups (PR, RFC, or spec authorship — membership alone does not count).
+All of L5, plus research-stage primitives in production: per-task capability tokens bound to one task and one holder; cryptographic guardrail attestation in a TEE (Nitro Enclaves-class); a CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads; a cascade-detection rule library with tuned thresholds for ASI07/08/10 multi-agent risk; cross-vendor AI-BOM federation with reconciliation; sigstore-for-MCP cross-tenant signing; and an active named contributor to one or more of CoSAI / OWASP / AIVSS / NIST CAISI / OASIS / Linux Foundation AAIF AI working groups (PR, RFC, or spec authorship — membership alone does not count).
 
-**Auditor evidence:** TEE attestation logs + cascade-rule registry with thresholds + cross-vendor AI-BOM reconciliation report + named contributor list with PR/RFC/spec links.
+**Auditor evidence:** per-task capability-token sample + TEE attestation logs + cascade-rule registry with thresholds + cross-vendor AI-BOM reconciliation report + named contributor list with PR/RFC/spec links.
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.**
 
@@ -257,7 +257,7 @@ The Identity & Authorization domain assigns every agent a per-agent (non-human) 
 
 Maps to: OWASP ASI03, NIST CAISI Concept Paper (Feb 2026), ISO 27090 (FDIS Mar 2026); Microsoft ZT4AI Identity — [[microsoft-entra-agent-id|Entra Agent ID]], the three access patterns, attribute/blueprint Conditional Access, ID Protection for agents, Entra PIM time-limited active role assignment for agents (auto-expiring; agents cannot be PIM-*eligible*, so no agent self-activation — surfaced by the ZT4AI adversarial pass) (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
 
-See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is now GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens move to L5+:** no platform ships them, and the only implementation is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the D2→D5 and D2→D7 caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
+See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is now GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens move to L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the D2→D5 and D2→D7 caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
 
 | Level | Capability | Auditor evidence |
 |---|---|---|
@@ -276,7 +276,7 @@ Maps to: OWASP ASI02 (Tool Misuse and Exploitation — least-privilege tool prof
 
 The four action-risk tiers the L3 row names are auto, notify, confirm and block, from [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] §3.2; the OWASP ASI Top 10 names the least-agency principle and supplies no tiers.
 
-See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platform-native PDPs now sit at L3/L4 (AWS Bedrock AgentCore Policy, GA Mar 2026; Microsoft Agent Governance Toolkit, OSS). The L5+ formal-verification line is reframed: Cedar Analysis ships as OSS, so the leading-edge residual narrows to the MCP-wired, trajectory-aware extension of it. One prerequisite sits below every level: confirm the guard is consulted under each autonomy mode the deployment permits, then grade what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — an autonomy flag suppressed the tool allowlist outright, so a deployment presenting enumerated permissions as evidence had none.
+See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platform-native PDPs now sit at L3/L4 (AWS Bedrock AgentCore Policy, GA Mar 2026; Microsoft Agent Governance Toolkit, OSS). **Per-task capability tokens move from L5 to L5+ in D3 and D5, matching D2:** the production-maturity qualifier holds a capability at the leading-edge tier until a production-hardened implementation path exists, and the only implementation the D3 and D5 tooling maps carry is an early-stage open-source primitive. L5 keeps the approval token bound to the parameters a human approved. The L5+ formal-verification line is reframed: Cedar Analysis ships as OSS, so the leading-edge residual narrows to the MCP-wired, trajectory-aware extension of it. One prerequisite sits below every level: confirm the guard is consulted under each autonomy mode the deployment permits, then grade what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — an autonomy flag suppressed the tool allowlist outright, so a deployment presenting enumerated permissions as evidence had none.
 
 | Level | Capability | Auditor evidence |
 |---|---|---|
@@ -284,8 +284,8 @@ See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platfo
 | L2 | Per-agent tool allowlist; [[hitl\|HITL]] on destructive actions defined informally | allowlist config |
 | L3 | A synchronous, fail-closed PDP outside the model context mediates every tool call (Cedar/OPA, deny-by-default); the four action-risk tiers implemented; each action's risk tier documented | PDP config; tier assignments; PDP-unreachability test showing deny; direct-gateway invocation test showing deny |
 | L4 | 4-stage autonomy promotion; per-action HITL; trifecta breaker; JIT elevation; SoD; sessions non-transferable, task-bound; ledger blocks aggregates; delegation full-chain, subset-only, capped depth | promotion runbook; HITL telemetry; trifecta log; JIT expiry log; SoD policy; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) |
-| L5 | Per-task capability tokens and per-request approval tokens, cryptographically bound; D7-driven risk-adaptive step-up; deny-by-default policy compiled each release, no drift; cryptographic SoD | Warrant samples; step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) |
-| L5+ | [[camel-pattern\|CaMeL]]-style privileged/quarantined LLM split in production; formal verification of policy contradictions and vacuity over MCP; temporal-logic trajectory-aware policy | CaMeL production evidence; formal-verification reports; temporal-logic policy artifact |
+| L5 | Per-request approval tokens cryptographically bound to the parameters approved; D7-driven risk-adaptive step-up; deny-by-default policy compiled each release, no drift; cryptographic SoD | Step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) |
+| L5+ | Per-task capability tokens bound to one task and one holder, attenuating at each delegation hop; [[camel-pattern\|CaMeL]]-style privileged/quarantined LLM split in production; formal verification of policy contradictions and vacuity over MCP; temporal-logic trajectory-aware policy | Per-task capability-token sample (holder-binding, task scope, attenuation at each hop); CaMeL production evidence; formal-verification reports; temporal-logic policy artifact |
 
 ### D4. Runtime & Guardrails
 
@@ -310,11 +310,11 @@ See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L
 
 ### D5. Egress & Network
 
-The Egress & Network domain mediates agent egress at the network layer. An agent-aware gateway enforces the MCP, A2A, and LLM protocols; per-task egress capability tokens bind to upstream resources; SSRF is closed at the network layer so all outbound traffic leaves through the gateway.
+The Egress & Network domain mediates agent egress at the network layer. An agent-aware gateway enforces the MCP, A2A, and LLM protocols, and SSRF is closed at the network layer so all outbound traffic leaves through the gateway.
 
 Maps to: OWASP ASI02, ASI07; CoSAI Model Context Protocol (MCP) Security (2026-01-20; the "12 categories / 40 threats" figure was not re-verifiable in [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]] and is flagged for a deeper-source check); CSA MAESTRO Layer 4 (Deployment and Infrastructure) + Layer 7 (Agent Ecosystem) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]; Microsoft ZT4AI network — Entra Internet Access prompt-injection protection (GA), APIM AI Gateway with MCP brokering (GA), MCP tool-integrity guidance-only with no single Azure service (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
 
-See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eight D5 capabilities are GA platform-native for a Microsoft shop (Azure API Management AI Gateway; MCP brokering with Entra/OAuth/JWT; Entra Internet Access prompt-injection + Shadow-AI; per-agent network policy; identity-scoped tokens). The three genuine off-stack residuals — MCP tool-integrity/rug-pull, per-task tokens, A2A authorization beyond identity — sit at L4–L5+ and do not block an L3 target. D5 investment is wasted ahead of D2 (the D2→D5 cap).
+See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eight D5 capabilities are GA platform-native for a Microsoft shop (Azure API Management AI Gateway; MCP brokering with Entra/OAuth/JWT; Entra Internet Access prompt-injection + Shadow-AI; per-agent network policy; identity-scoped tokens). The three genuine off-stack residuals — MCP tool-integrity/rug-pull at L4, A2A authorization beyond identity at L4, per-task tokens at L5+ — do not block an L3 target. D5 investment is wasted ahead of D2 (the D2→D5 cap).
 
 | Level | Capability | Auditor evidence |
 |---|---|---|
@@ -322,8 +322,8 @@ See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eigh
 | L2 | Per-agent outbound allowlist (DNS or proxy-level), with the egress reach of each allowlisted internal destination recorded | proxy config |
 | L3 | An agent-aware gateway sits in-path enforcing per-tool authorization; MCP calls brokered with OAuth/JWT; [[a2a-protocol\|A2A]] over TLS 1.3 with a documented profile; tool fingerprinting | gateway config; certs; A2A enforcement profile; CVE-tagged finding log |
 | L4 | Per-tool-call OAuth 2.1 token exchange; rug-pull and tool-poisoning detection; A2A content scanning; MCP CVE feed integrated; no direct orchestrator egress | token-exchange logs; detection rule sets; orchestrator network policy showing no outbound path |
-| L5 | Mesh-deployed proxy per agent with zero bypass; per-task egress tokens bound to the upstream resource; SSRF and direct-egress closed at the network layer; CVE feed auto-quarantines without HITL | mesh topology with zero-bypass proof; token samples; SSRF closure verification; auto-quarantine log |
-| L5+ | sigstore-for-MCP cross-tenant signing (proposal stage); behavioral A2A drift detection (research-stage); cross-cloud egress federation across two or more agent-aware proxies | verifier deployment; A2A drift rule library; cross-cloud reconciliation report |
+| L5 | Mesh-deployed proxy per agent with zero bypass; SSRF and direct-egress closed at the network layer; CVE feed auto-quarantines without HITL | mesh topology with zero-bypass proof; SSRF closure verification; auto-quarantine log |
+| L5+ | Per-task egress capability tokens bound to the upstream resource and to their holder; sigstore-for-MCP cross-tenant signing (proposal stage); behavioral A2A drift detection (research-stage); cross-cloud egress federation across two or more agent-aware proxies | per-task egress token sample (holder-binding, upstream-resource scope); verifier deployment; A2A drift rule library; cross-cloud reconciliation report |
 
 ### D6. Data, Memory & RAG
 

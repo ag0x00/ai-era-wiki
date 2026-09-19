@@ -2,7 +2,7 @@
 type: product
 title: "Cedar"
 created: 2026-05-03
-updated: 2026-08-21
+updated: 2026-09-19
 tags:
   - products
   - policy-language
@@ -22,11 +22,17 @@ related:
   - "[[least-agency-principle]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
   - "[[tenuo-warrant]]"
   - "[[hooking-coding-agents-with-cedar-talk]]"
   - "[[sondera]]"
   - "[[capability-based-authorization-talk]]"
   - "[[agentcordon]]"
+verified: 2026-09-19
+verified_against: []
+verified_findings: 0
+verified_note: "Verify-and-fix for the per-task capability-token rung move (#169); read the RA and CMM coordinate bullets against the D3 ladder and the measurement protocol; no .raw document opened. No defect found on this page."
 ---
 
 # Cedar
@@ -61,9 +67,9 @@ For pure agentic-AI control-plane use (PDP for tool calls, capability enforcemen
 ## In the RA / CMM
 
 - **RA Control Plane (PDP):** Cedar is the reference implementation for policy-language-based PDPs, alongside OPA/Rego.
-- **CMM D3 L3:** Cedar or OPA policy repository is the evidence artifact for the criterion that the four least-agency action-risk tiers (auto / notify / confirm / block) are implemented.
-- **CMM D3 L5:** Capability tokens with cryptographic binding extend Cedar's policy model; [[tenuo-warrant|Tenuo Warrants]] can use Cedar as the constraint language.
-- **D1 L4:** Standards crosswalk matrix is maintained in Cedar policies (or OPA equivalent).
+- **CMM [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3:** Cedar or OPA policy repository is the evidence artifact for the criterion that the four least-agency action-risk tiers (auto / notify / confirm / block) are implemented.
+- **CMM D3 L5+:** Capability tokens with cryptographic binding extend Cedar's policy model; [[tenuo-warrant|Tenuo Warrants]] can use Cedar as the constraint language. The rung is L5+ rather than L5, because no implementation in D3's control landscape supplies a production-hardened path.
+- **[[agentic-ai-security-cmm-d1-governance|D1]] L4:** Standards crosswalk matrix is maintained in Cedar policies (or OPA equivalent).
 
 AWS offers Cedar as a managed service for AI agent authorization (March 2026 release), enabling policy evaluation without self-hosting the engine.
 

@@ -38,7 +38,7 @@ sources:
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Read the six rung-citation links against each domain page's right-sizing table and the new not-applicable bullet against the measurement protocol; no .raw document opened. OTel and PDP dropped from the bullet as identifiers the page uses once and defines nowhere."
+verified_note: "Verify-and-fix for the per-task capability-token rung move (#169); read the right-sized-out control bullet against the D3 and D5 ladders; no .raw document opened. No defect found on this page."
 ---
 
 # Azure-Native RAG Chatbot Security Profile (Copilot Studio)
@@ -90,7 +90,7 @@ Everything above reduces to four load-bearing controls. With these in place the 
 
 For this shape, the following controls add cost without reducing risk. They are recorded as intentional trade-offs, not deficiencies:
 
-- **Per-task capability tokens, mesh gateway sidecars, A2A authorization** (D5/D3 L5): there are no tools and no agent-to-agent traffic.
+- **Per-task capability tokens** ([[agentic-ai-security-cmm-d3-control-least-agency|D3]] and [[agentic-ai-security-cmm-d5-egress-network|D5]] L5+), **mesh gateway sidecars** (D5 L5) and **A2A authorization** (D5 L4): there are no tools and no agent-to-agent traffic.
 - **Chain-of-thought / alignment auditing** (D4 L4): no tool-call surface to hijack.
 - **Behavioral-drift detection and multi-tool red-team programs** (D7 L4): disproportionate for a single read-only bot; a basic eval (for example PyRIT) suffices.
 - **Producer-grade AI-BOM, training-data provenance, ML-VEX** (D8 `[P]`): the bot is a model consumer.
