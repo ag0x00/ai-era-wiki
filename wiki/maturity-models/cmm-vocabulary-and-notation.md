@@ -1,0 +1,80 @@
+---
+type: maturity-model-companion
+title: "CMM Vocabulary and Notation"
+created: 2026-09-18
+updated: 2026-09-18
+tags:
+  - maturity-models
+  - cmm
+  - vocabulary
+  - notation
+status: developing
+origin: produced
+scope_axis:
+  - sec-of-ai
+  - ai-in-sec-defense
+target: "[[agentic-ai-security-cmm-2026]]"
+related:
+  - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-soc-cmm]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol]]"
+  - "[[agentic-ai-security-cmm-dependency-rules]]"
+  - "[[agentic-ai-security-reference-architecture]]"
+  - "[[cybersecurity-cmms-exemplars]]"
+  - "[[google-cloud-agentic-security-profile]]"
+  - "[[azure-rag-chatbot-security-profile]]"
+  - "[[cmm-calibration-stress-test-2026]]"
+sources:
+  - "https://www.sei.cmu.edu/our-work/cybermaturity/"
+verified: 2026-09-18
+verified_against: []
+verified_findings: 0
+verified_note: "Fresh-eyes read against the vault pages the page describes (CMM core, measurement protocol, dependency rules, SOC CMM and its D1 and D6 deep dives, D9 operations, the AAI-S RA, the Google Cloud and Azure profiles, the SOC IR surface, the calibration stress test) plus issue #255; no archived .raw document opened."
+---
+
+# CMM Vocabulary and Notation
+
+Both maturity models score in terms each defines where it uses them. This page is the lookup. The two are [[agentic-ai-security-cmm-2026|the Agentic AI Security CMM]], nine domains, and [[agentic-soc-cmm|the Agentic SOC CMM]], eight; both number from D1, so a citation names its model first. The five-level shape is CMMI's, from [Carnegie Mellon's Software Engineering Institute](https://www.sei.cmu.edu/our-work/cybermaturity/); the criteria are this wiki's own ([[cybersecurity-cmms-exemplars|Cybersecurity CMM Exemplars and Design Lessons]]).
+
+## What an assessor recorded
+
+| Term | Means |
+|---|---|
+| domain | One practice area, cited `D` and a number |
+| ladder | The levels inside one domain |
+| rung | One level of one ladder. The same thing as a level |
+| L0 | No evidence the L1 baseline exists. Ladders start at L1, scores at 0 |
+| L5+ | The tier above L5: research-stage primitives in production, named contribution to a standard. Every domain in both models carries one |
+| raw score | The rung a domain evidences |
+| effective score | The lesser of a raw score and the raw scores it depends on ([[agentic-ai-security-cmm-dependency-rules\|the dependency rules]]) |
+| cap | A dependency rule that fired. The report names the domain that set it |
+| **floor** | **Retired.** The lowest domain score, the headline rating until 2026-05-04. Survives only in the L5 gate's gap-closure item |
+| verdict | One of four per criterion: met, not met, not applicable, unanswerable. A score counts met alone |
+| unanswerable | The customer can neither test nor read it, and the vendor states nothing. A finding against the vendor, never met |
+| assurance class | tested, inspected or attested, recorded beside a verdict and kept out of the score |
+
+## What an organization should aim at
+
+| Term | Means |
+|---|---|
+| deployment shape | An archetype of AI application. The core table grades nine. Also called an agent archetype |
+| org profile | The SOC model's equivalent axis: solo or small, mid, enterprise |
+| right-sizing | Setting a target per shape or profile instead of per organization |
+| band | A two-rung target, `L3 → L4`: the rung peers reach, then the rung exposure justifies. Never a score. Plainly, a target range |
+| spine | The control set a rung rests on |
+| plane | One of the six control layers of [[agentic-ai-security-reference-architecture\|the Reference Architecture]]: Identity, Control, Runtime, Egress, Data, Observability, pairing with D2 through D7 |
+
+## The arrow
+
+It carries three relations, and one page says which it means.
+
+- **A band**, in a right-sizing table. Its commonest use.
+- **Evidenced against needed**, in [[google-cloud-agentic-security-profile|the Google Cloud profile]], whose column head reads `Evidenceable → needed`. [[azure-rag-chatbot-security-profile|The Azure profile]] heads the same column `Realistic target` and means the band.
+- **A verb**, in prose. Retired vault-wide, surviving in the fixed names `L4→L5` and `D2→D5`.
+
+> [!contradiction] The arrow's relation is undeclared
+> A right-sizing cell and a Google Cloud profile cell carry the same glyph for different relations, and neither `wiki/meta/conventions.md` nor [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] settles which governs. Tracked as [#255](https://github.com/ag0x00/ai-era/issues/255).
+
+## Ladder-relative levels
+
+An `L` token means nothing without its ladder. The SOC model couples two: eight maturity domains from L1, and a per-function autonomy ladder from L0 to L4. A band in [[agentic-soc-cmm-d1-telemetry-data-readiness|a SOC domain page]] is a maturity target; a band in [[agentic-soc-ra-incident-response|the incident-response surface]] is an autonomy target. A governing domain sits about one maturity level above the autonomy it supports.

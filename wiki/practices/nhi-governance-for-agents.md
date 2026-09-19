@@ -57,7 +57,7 @@ sources:
 
 ## Method
 
-### 1. Inventory and discovery — D2 L2→L3
+### 1. Inventory and discovery — D2, level 2 to level 3
 
 Enumerate every service account, API key, JWT, OAuth token, and certificate assigned to agents, and tag each with owning agent, purpose, creation date, and expiry. Two refinements distinguish a mature inventory:
 
@@ -72,7 +72,7 @@ Issue [[spiffe|SPIFFE]] Verifiable Identity Documents (SVIDs) to each agent work
 
 For external service access (SaaS APIs, external MCP servers), retrieve short-lived tokens through a vault or the [[credential-proxy-pattern|credential proxy pattern]], scoped to the minimum the task needs. Never embed static credentials in agent code or container images. Where the platform offers a credential-less identity model (Managed Identities, AWS Bedrock AgentCore token vault, GCP auth-manager), prefer it — it reaches the same zero-credentials-in-context state without operating a separate proxy.
 
-### 4. Enforce least privilege and scope governance — D2 L4→L5+
+### 4. Enforce least privilege and scope governance — D2, level 4 to level 5+
 
 - Review OAuth and API scopes per agent on a cadence (Identity Security Posture Management, ISPM); revoke unused or over-broad scopes.
 - Apply risk-based / conditional access where the platform supports it — Conditional Access for Agent Identities (Entra ID P1) can block high-risk agents automatically.

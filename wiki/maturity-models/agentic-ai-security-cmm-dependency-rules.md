@@ -32,6 +32,7 @@ related:
   - "[[agentic-ai-security-cmm-d9-operations]]"
   - "[[owasp-ai-exchange]]"
   - "[[agentic-cmm-vs-standards-validation]]"
+  - "[[cmm-vocabulary-and-notation]]"
 sources:
   - "[[cmm-calibration-stress-test-2026]] §Part 2 (cumulative-floor stress test)"
 ---
@@ -222,6 +223,7 @@ Comparison of the 5 archetypes from the [[cmm-calibration-stress-test-2026|stres
 
 ## Relations
 
+- Summarized in: [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] — raw score, effective score and cap in one line each, with `floor` recorded as retired vocabulary
 - Replaces: the single cumulative-floor rule in [[agentic-ai-security-cmm-2026|CMM 2026]] (imported from CMMC 2.0)
 - Operationalized by: [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]] §Floor rule (rewritten 2026-05-04 to point here)
 - Resolves: [[cmm-calibration-stress-test-2026|stress test §Change 2]] (matrix-as-primary view) and §Change 4 (D7 contradiction recommendation) — both adopted via the new effective-score headline format

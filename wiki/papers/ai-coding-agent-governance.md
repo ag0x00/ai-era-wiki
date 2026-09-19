@@ -93,7 +93,7 @@ Engineering teams adopt coding agents faster than governance teams can review th
 - **Phase 2: Policy.** Standardize allowed use cases by role / data class / repo / environment. Define suggest-vs-execute. Require human review for high-risk + sensitive scopes. Document approvals / time limits / rollback conditions. Anchored to [[owasp-llm-top-10|OWASP Top 10 for LLM Applications]].
 - **Phase 3: Enforcement.** Least-privilege, scoped tokens, action logging at runtime. Block unregistered agents; deny actions outside declared use case. Tie every action to agent identity + human owner. Automate alerts on policy drift. Anchored to [[google-saif|Google SAIF — Secure AI Framework]].
 
-This phasing maps cleanly to the CMM's L2 → L3 → L4 progression (see Gap Analysis below).
+This phasing maps cleanly onto the CMM's climb from level 2 through level 4 (see Gap Analysis below).
 
 ### 5. Coding-agent-specific threats Kirin (Knostic product) targets
 

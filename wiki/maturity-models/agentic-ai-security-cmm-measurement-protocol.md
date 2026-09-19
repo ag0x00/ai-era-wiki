@@ -38,6 +38,8 @@ related:
   - "[[agentic-ai-security-cmm-crosswalk-us-fi]]"
   - "[[chain-of-thought-monitorability]]"
   - "[[claude-cowork]]"
+  - "[[cmm-vocabulary-and-notation]]"
+  - "[[ai-coding-agent-governance]]"
 sources:
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
@@ -248,6 +250,9 @@ Static configs alone do not satisfy live-observation requirements at L3+.
 
 #### Per-domain scoring rubric
 
+[[ai-coding-agent-governance|AI Coding Agent Governance (Knostic)]] names the controls a coding-tool deployment adds and states no assessment method, which is the gap this stage fills for that shape.
+
+
 For each of the 9 domains, the assessor scores the organization Level 0 (no evidence at L1) through Level 5. The rubric per cell:
 
 | Score | Criterion |
@@ -262,7 +267,7 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 
 **Auditability begins at Level 3.** Below L3 the organization is structurally vulnerable, and the assessment turns largely on whether the evidence supports L2 over L1. At L3 and above the assessor checks platform-level enforcement, ID tagging, and live behavior.
 
-**Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and the vendor supplies nothing that settles the question). A score in the rubric above counts only the **met** criteria. A **met** or **not met** verdict carries its assurance class — tested, inspected or attested, per Stage 2 — recorded beside the verdict and kept out of the score, so the matrix shows which controls the organization exercised and which its providers attest to. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is recorded where the customer can run no test and the vendor supplies neither an attestation nor inspectable output; it is a finding against the vendor rather than against the organization, and it never counts as met.
+**Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and the vendor supplies nothing that settles the question). A score in the rubric above counts only the **met** criteria. A **met** or **not met** verdict carries its assurance class — tested, inspected or attested, per Stage 2 — recorded beside the verdict and kept out of the score, so the matrix shows which controls the organization exercised and which its providers attest to. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is recorded where the customer can run no test and the vendor supplies neither an attestation nor inspectable output; it is a finding against the vendor rather than against the organization, and it never counts as met. [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] states the four verdicts and the three assurance classes in one line each, beside the rest of the vocabulary the two maturity models share.
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
 

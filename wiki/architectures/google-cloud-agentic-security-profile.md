@@ -42,6 +42,7 @@ related:
   - "[[spiffe]]"
   - "[[lethal-trifecta]]"
   - "[[inference-exposure]]"
+  - "[[cmm-vocabulary-and-notation]]"
 sources:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
@@ -75,6 +76,8 @@ This page reads the [[agentic-ai-security-reference-architecture|six-plane refer
 The assistant reads private data, ingests untrusted content on every summarization of an inbox or a calendar, and writes and shares, so all three legs of the [[lethal-trifecta|lethal trifecta]] are present. The vault's other deployment-shape profile, [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]], covers a closed-corpus bot whose broken trifecta lowers the required level across five domains; that reduction does not transfer here, and no plane falls out of scope.
 
 ## The control profile per plane and domain
+
+**The second column states a gap**: the rung Google's documentation evidences, then the rung this shape needs. A right-sizing table writes the same arrow as a two-rung target band, and [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] separates the two readings.
 
 | Plane / Domain | Evidenceable → needed | Google control | Status as documented | The one thing that matters |
 |---|---|---|---|---|

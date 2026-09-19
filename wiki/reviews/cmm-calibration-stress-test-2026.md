@@ -25,6 +25,7 @@ related:
   - "[[anti-patterns-and-failure-modes]]"
   - "[[cybersecurity-cmms-exemplars]]"
   - "[[agentic-cmm-vs-standards-validation]]"
+  - "[[cmm-vocabulary-and-notation]]"
 ---
 
 # CMM Calibration Stress Test
@@ -266,6 +267,8 @@ This page does NOT unilaterally rewrite the [[agentic-ai-security-cmm-2026|CMM]]
 **Changes 2 (matrix-as-primary-view) and 4 (D7 contradiction resolution)** adopted later the same day via the new [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] page. The cumulative-floor rule was replaced with dependency-resolved effective scores under a small conservative active rule set (v1 = 3 rules: D2→D5, D2→D7, D3→D4). Headline format becomes typical/weakest/strongest plus the per-domain matrix. Cherry-picking is now prevented by mandatory matrix disclosure rather than by mathematical aggregation. The dependency-rule registry is intentional scaffolding with explicit promotion criteria and quarterly revision protocol — designed to grow as new attack-path evidence and practitioner architectures land in the wiki. The Stripe-archetype D7 contradiction is resolved: D7 raw L2 reports honestly with a strategic-rationale field rather than collapsing the whole rating.
 
 **Change 3 (5-archetype documentation in measurement protocol)** remains candidate. The 5 archetypes are documented in [[cmm-calibration-stress-test-2026|this stress test]] and the worked-examples section of the [[agentic-ai-security-cmm-dependency-rules|dependency-rules page]]; copying them into the measurement protocol as standalone templates is a documentation-clarity follow-up that doesn't gate any other change.
+
+**The vocabulary these adoptions settled is collected in [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]]**: the L5 and L5+ tiers from Change 1, the raw and effective scores that replaced the floor from Changes 2 and 4, and `floor` itself as retired vocabulary.
 
 If adopted, the changes are minimally invasive:
 

@@ -25,6 +25,7 @@ related:
   - "[[inference-exposure]]"
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[google-cloud-agentic-security-profile]]"
+  - "[[cmm-vocabulary-and-notation]]"
 sources:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
@@ -55,6 +56,8 @@ This page projects the recalibrated [[agentic-ai-security-reference-architecture
 The bot reads private data but has no external-communications or write path, so **the [[lethal-trifecta|lethal trifecta]] is broken by architecture**. That fact lowers the required level across D3, D4, D5, D7, and D9. The required controls narrow to a short list, and most of the full RA falls out of scope here.
 
 ## The control profile (plane / domain → Microsoft control)
+
+**An arrow in the second column is a two-rung target band**, defined with the rest of the CMM's vocabulary in [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]]. [[google-cloud-agentic-security-profile|The Google Cloud Agentic Security Profile]] writes the same arrow for evidenced-against-needed.
 
 | Plane / Domain | Realistic target | Microsoft control | Status | The one thing that matters |
 |---|---|---|---|---|

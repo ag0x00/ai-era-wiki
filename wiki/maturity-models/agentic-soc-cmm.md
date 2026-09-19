@@ -34,9 +34,11 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[evaluating-ai-soc-agents]]"
   - "[[mythos-ready-security-program]]"
+  - "[[cmm-vocabulary-and-notation]]"
 sources:
   - "[[ai-augmented-soc-survey]]"
   - "[[agentic-soc-autonomy-ladders]]"
+  - "https://www.mdpi.com/2624-800X/5/4/95"
 ---
 
 # Agentic SOC Capability Maturity Model
@@ -78,7 +80,7 @@ The model's durable subject is **trusted-autonomy operations**: running automati
 
 ## The two coupled axes
 
-The model is a grid. Each **SOC function** (the rows) carries an **autonomy level**, meaning how much it runs without a human in the decision. Eight **maturity domains** (the gates) determine how high each function's autonomy can legitimately climb. An orthogonal **org-profile axis** right-sizes both. The reference architecture realizes the same grid as planes and agent surfaces; the CMM scores it.
+The model is a grid. Each **SOC function** (the rows) carries an **autonomy level**, meaning how much it runs without a human in the decision. Eight **maturity domains** (the gates) determine how high each function's autonomy can legitimately climb. An orthogonal **org-profile axis** right-sizes both. An `L` token is therefore ladder-relative: L3 on the autonomy ladder and L3 in a maturity domain measure different things, and [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] separates the two alongside the rest of the vocabulary the two maturity models share. The reference architecture realizes the same grid as planes and agent surfaces; the CMM scores it.
 
 ## Axis 1 — the autonomy ladder (per function)
 
