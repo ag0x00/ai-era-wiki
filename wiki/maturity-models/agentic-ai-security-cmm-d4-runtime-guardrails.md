@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D4: Runtime and Guardrails"
 address: c-000126
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - cmm
@@ -50,10 +50,10 @@ sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[prompt-injection]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 1
-verified_note: "Read against live Microsoft Learn, Google Workspace indirect-prompt-injection and Anthropic Cowork-safety pages; open: the L3 criterion is compound (in-path detection AND agent-loop interception) and no cited source evidences the second half, so the whole-criterion verdict needs an owner call."
+verified_note: "Verify-and-fix for the applied #229 research. Read the rescoped L5+ parenthetical against D3's new control-landscape row and against the 2026-09-19 FIDES findings; no .raw document opened. The cross-domain pointer resolves, D3's row grades the capability this rung names, and the parenthetical carries the status so a reader need not open D3. Open, unchanged from the 2026-09-18 read: the L3 criterion is compound (in-path detection AND agent-loop interception) and no cited source evidences the second half, so the whole-criterion verdict needs an owner call."
 ---
 
 # Agentic AI Security CMM — D4 Runtime & Guardrails (Deep Dive)
@@ -103,7 +103,7 @@ Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|r
 - **L3 — Defined.** Input arrives canonicalized and screened in path for direct *and* indirect [[prompt-injection|prompt injection]], output leaves through a content-safety classifier whose data-class scope is recorded, platform lifecycle hooks intercept the agent loop, and high-risk-tier actions run in a per-task sandbox built to the [[owasp-ai-exchange|OWASP AI Exchange]] specification. The classifiers and hooks ship on the major stacks at differing launch stages and the rest is configuration, so an assessor grades this rung off the deployment rather than off a product's status page.
 - **L4 — Managed.** Runtime control reaches the agent's reasoning and the semantics of its tool calls — chain-of-thought auditing, code-safety analysis, groundedness checking, framework-enforced trusted/untrusted context boundaries, and semantic validation of high-impact calls — and human approval stays mandatory for configured high-blast-radius operations however clean those checks come back. The load-bearing controls are preview, experimental, or specification-only, so an L4 program assembles this rung and evidences part of it from its own pipeline.
 - **L5 — Optimizing.** Every L4 control runs platform-level on every agent surface with no opt-out, and every guardrail carries a measured efficacy figure and an enforced budget — per-language bypass miss rates, encoding-aware response-leak scanning at egress, and latency and cost limits that fail closed on critical paths. The services every sandbox shares are enumerated, and each is either partitioned per agent or accepted in writing with its residual risk stated.
-- **L5+ — Leading Edge.** Cryptographic TEE attestation that guardrails executed in an enclave (reference pilots only); a CaMeL-style [[camel-pattern|privileged/quarantined LLM split]] in production (research); measurable bypass-class evidence with vendor-acknowledged remediation cycles.
+- **L5+ — Leading Edge.** Cryptographic TEE attestation that guardrails executed in an enclave (reference pilots only); a CaMeL-style [[camel-pattern|privileged/quarantined LLM split]] in production ([[agentic-ai-security-cmm-d3-control-least-agency|D3]]'s control landscape carries one vendor implementation, marked experimental by its vendor in September 2026); measurable bypass-class evidence with vendor-acknowledged remediation cycles.
 
 The level structure survives the recalibration largely intact. Product names move to the tooling map, and L4 gains an explicit maturity grade. The current text presents Azure Groundedness and AlignmentCheck as deployable. Both are preview or experimental, and a regulated buyer cannot deploy a preview control to claim a GA-grade L4.
 
