@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - practices
   - agentic-coding
@@ -22,6 +22,8 @@ related:
   - "[[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]"
   - "[[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]"
   - "[[agentic-ai-security-cmm-d1-governance|CMM D1 — Governance & Accountability]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 — Control & Least-Agency]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol]]"
   - "[[agentic-ai-security-cmm-d9-operations|CMM D9 — Operations & Human Factors]]"
   - "[[agent-sandboxing|Agent Sandboxing]]"
   - "[[anthropic-sandbox-runtime|Anthropic Sandbox Runtime]]"
@@ -69,10 +71,10 @@ sources:
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
   - https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
-verified: 2026-09-01
-verified_against:
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+verified: 2026-09-19
+verified_against: []
 verified_findings: 0
+verified_note: "Verify-and-fix for the D3 L3 decision-point paragraph (#170). Every claim in it checked against the rows on this page: scope ranking and merge semantics, the two non-merging managed delivery routes, the self-modification write-deny with symlink resolution and its loss under filesystem.disabled, permissions.deny under sandbox auto-allow and the skip-permissions flag, the ConfigChange hook, and the empty allowlist from a malformed allowedMcpServers. Fixed: the injection-resistance claim rested on a sandbox write-deny that covers shell commands and their children only, where this page records the file-editing tools running under the permission system, so the paragraph now names both paths and the evidence set covers the second. No .raw document opened; the page cites vendor documentation by URL."
 ---
 
 # Securing Agentic Coding
@@ -148,6 +150,8 @@ The `permissions.ask` row survives contact with an autonomous mode, and its beha
 The distinction that matters for scoring is the merge semantics described above: `excludedCommands` merges across scopes and has no managed-only lockdown, so a developer can always append entries that run commands outside the sandbox. Keep the managed list narrow and treat it as a reviewed artifact.
 
 **Eight managed-settings keys and one deployed configuration file admit MCP servers and close the customization escapes.** Admission runs on four keys and one file, `allowedMcpServers, deniedMcpServers, allowManagedMcpServersOnly, managedMcpServers, managed-mcp.json`. The server allowlist is taken whole from the highest-ranked source that sets it, and while malformed it is enforced as an **empty** allowlist. The server denylist merges from every scope, and the managed-only key with its deployed configuration file pins the admitted set to what a managed configuration names. Lockdown runs on the remaining four, `allowManagedPermissionRulesOnly, disableBypassPermissionsMode, disableSideloadFlags, strictPluginOnlyCustomization`. The managed-only permission-rules key extends the same semantics to permission rules; the bypass-mode key disables the permissions-bypass mode; the sideload-flags key rejects the plugin-directory, plugin-URL, agents and MCP-config startup flags outright; and the strict-customization key blocks skills, agents, hooks and MCP servers loaded from user or project sources, leaving plugin-delivered customization as the only route.
+
+**These rows are this shape's policy decision point, and [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 grades them as one.** The harness resolves the managed policy and returns permit or deny before the tool call runs, and the settings files the policy arrives in are write-denied to the session, so the decision holds against an injected instruction. That write-deny reaches two paths unevenly: the sandbox covers shell commands and their children, and the file-editing tools run under the permission system instead, so a deployment resting on the sandbox alone leaves the second path to a permission rule it has to write. What changes is the evidence set. An external decision point is tested through the interface it exposes; here the assessment collects the resolved settings read from an enrolled device with the delivery route named, the write-deny over the settings files and the managed directory with the rule covering the file-editing path beside it, the `ConfigChange` record of in-session changes, a `permissions.deny` rule firing under the most permissive autonomy mode the deployment allows, and the empty allowlist a malformed `allowedMcpServers` produces. The write-deny is a sandbox property and is lost where `filesystem.disabled` switches the sandbox's filesystem layer off, so the resolved value of that key belongs in the same record. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states the two limits on the substitution, and the circularity it records: vendor code interprets the customer's policy file.
 
 ### Runtime plane
 

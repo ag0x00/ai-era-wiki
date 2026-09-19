@@ -3,7 +3,7 @@ type: thesis
 title: "Generative Coding Deployment Shapes"
 address: c-000237
 created: 2026-07-30
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - thesis
   - agentic-coding
@@ -44,6 +44,7 @@ related:
   - "[[vibe-coding|Vibe Coding]]"
   - "[[pwc-stage-coverage-tiers|PwC Stage-Coverage Tiers]]"
   - "[[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol]]"
   - "[[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]"
 sources:
   - https://code.claude.com/docs/en/sandbox-environments
@@ -54,10 +55,10 @@ sources:
   - https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/
   - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Issue-252 read, scoped to the new D2 bullet under Changes to the RA and CMM; it rests on the owner's issue comment and on the page's own five-shape section, and opened no archived document. Two internal inconsistencies corrected: the per-shape principal count and a requirement stated as fact."
+verified_note: "Verify-and-fix for the third D3 bullet (#170). Read against the D3 deep dive and the measurement protocol: the bullet claims the shape survives the two prior corrections and that the harness is the decision point the rung grades, both of which the deep dive states, and it claims no rung verdict. No .raw document opened."
 ---
 
 # Generative Coding Deployment Shapes
@@ -145,6 +146,7 @@ The [[agentic-ai-security-reference-architecture|RA]]'s generative-coding row sh
 - **[[agentic-ai-security-cmm-d2-identity|D2]]** — the developer principal resolves shape by shape: a workstation identity in the interactive and sandboxed autonomous local shapes, a vendor-managed session identity in the delegated cloud shape, a workflow identity in the CI-runner shape, and one identity per agent at fleet scale. Each carries its own network-access policy, so a session running in a cloud sandbox and a session running on localhost are separate principals under separate rules. Grading one developer principal scores a shape the organization may not be running. A third persona sits between the developer and the user of the shipped application: the user of the AI application, on whose behalf the agent writes and runs code. Generating code on that user's request is the product working as designed, which moves the assessable question from who wrote the code to what the code may reach. The grading criterion is that code generated on a user's request reaches no production data store.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3]]** — a text-matching command guard is not a policy decision point. See [[guard-canonicalization-gap|guard canonicalization gap]]. An organization scoring D3 on an allowlist of Bash patterns has overstated by a level.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3]], second correction** — an allowlist an autonomy flag can suppress is not a decision point either. Gemini CLI's `--yolo` ignored the fine-grained tool allowlist outright before 0.39.1, so the enumerated permissions an assessor would have read as evidence were never consulted. Verify that the guard runs before grading what it holds.
+- **[[agentic-ai-security-cmm-d3-control-least-agency|D3]], the case the two corrections leave standing** — a managed permission policy the developer's session cannot widen survives both tests, and the harness resolving it is the decision point the rung grades. The evidence set differs from the one an external decision point produces, and [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] names the substitutes and the limits on them. The assessment records that one vendor's code both runs the model and enforces the policy.
 - **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]** — the runtime control for this shape is an OS boundary, and its coverage must be stated in two dimensions: what the boundary contains, and when it starts. "Sandboxed" means Bash only unless the whole process is wrapped, and it means nothing at all for the startup window in which the harness loads workspace configuration — see [[gemini-cli-workspace-trust-rce|the Gemini CLI advisory]].
 - **[[agentic-ai-security-cmm-d5-egress-network|D5]]** — a hostname allowlist without TLS termination is a misconfiguration control, not an exfiltration control. Grade accordingly.
 - **[[agentic-ai-security-cmm-d7-observability|D7]]** — routing inference through a gateway for governance reasons removes first-party session analytics. OpenTelemetry export is the replacement and it is not automatic.
