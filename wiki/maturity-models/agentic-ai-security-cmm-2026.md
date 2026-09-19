@@ -142,7 +142,7 @@ Four adjacent instruments fall outside it:
 |L2|Developing|policy + inventory|
 |L1|Initial|ad hoc|
 
-Cumulative semantics (CMMC lesson, modified): Level N requires every Level N–1 control plus the new criteria at Level N. **An organization's overall rating is reported as a per-domain matrix; aggregation uses dependency-resolved effective scores rather than a single floor.**
+Cumulative semantics (CMMC lesson, modified): Level N requires every Level N–1 control plus the new criteria at Level N. **An organization's overall rating is reported as a per-domain matrix; aggregation uses dependency-resolved effective scores rather than a single floor.** [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] defines the notation the model scores in, the `L3 → L4` band and the `L0` score included.
 
 A domain's effective score takes the lowest of its own raw score and the raw scores of its upstream-dependency domains under the active rule set. The active rule set is small and conservative; see [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] (v1 = 3 rules: D2→D5, D2→D7, D3→D4, all anchored to lethal-trifecta and Sondera/AgentCordon practitioner evidence). The headline reports three numbers: typical (median effective), weakest (min effective, with cap source labeled), and strongest (max raw, labeled).
 
@@ -161,26 +161,6 @@ Two coverage limits are deliberate. Multi-agent **cascade containment** (ASI08) 
 L5 is a **maturity tier**: every L5 criterion in this CMM points to a shipping product, an open-source project at v1.0+, or a documented capability deployable with currently available components. L5+ is a **leading-edge tier**: it requires L5 across all 9 domains *plus* research-stage capabilities and active named contribution to one or more standards bodies. A sufficiently resourced 2026 program can clear L5; only a frontier-lab or research-shop program clears L5+. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s per-domain matrix view reports both.
 
 **A domain scored L5 and a program rated L5 are different claims.** The level descriptions below state what a program at that level operates across all nine domains, so a whole-program L5 rating requires L5 in all nine and an L5+ rating adds its own tier criteria on top of that. The per-domain matrix scores each domain against its own ladder, so one domain reaches L5 while the program's rating stays lower. The prerequisite gate into L5 states which of its conditions an assessor checks once per domain scored L5 and which once for the whole program.
-
-### Global evidence rule
-
-Applies at L3 and above: all findings, gaps, eval results, and incident artifacts MUST be tagged with the standards-anchor IDs they relate to:
-
-- OWASP Agentic AI Top 10 — `ASI01`–`ASI10` (the agentic risk taxonomy)
-- [[owasp-llm-top-10|OWASP LLM Top 10]] (2025) — `LLM01:2025`–`LLM10:2025` (still apply to non-agentic and agent-as-LLM surfaces); the full code range is verified against the 2025 source by [[standards-review-owasp-llm-top-10-2026-Q2|the LLM Top 10 standards review]]
-- OWASP [[owasp-aivss|AIVSS]] v0.8 — full vector with the ten Agentic Risk Amplification Factors (Execution Autonomy, External Tool Control Surface, Natural Language Interface, Contextual Awareness, Behavioral Non-Determinism, Opacity & Reflexivity, Persistent State Retention, Dynamic Identity, Multi-Agent Interactions, Self-Modification)
-- MITRE ATLAS v5.6.0 — `AML.T####` techniques and `AML.M####` mitigations
-- NIST SP 800-53 control IDs (via NIST IR 8605A COSAiS overlay) where compliance evidence is needed
-- For incidents: CVE IDs and [[mcp-cves-q1-2026|MCP CVEs Q1 2026]]-class references
-- The [[agentic-ai-threat-classes-2026|five threat classes]] (insider, APT, collusion, model-version, jurisdictional) where a finding addresses a cross-cutting adversary model the ASI list does not name
-
-An untagged finding is L2-grade evidence at best. ID-tagging moves a CMM from *mapping to* standards to *operating on* them, and it makes findings machine-checkable, queryable across domains, and comparable over time.
-
-### Assurance class of the evidence
-
-The class of evidence settles a criterion, and the party operating the control does not. A control the customer tests, a control the vendor attests to in a document the customer holds, and a control whose operating state the customer reads out of vendor tooling each carry a met or not-met verdict, so a vendor-operated control is graded on the evidence the vendor produces. Where the customer can run no test and the vendor supplies neither an attestation nor inspectable output, the criterion is unanswerable and the assessment names what would close it.
-
-The three classes are tested, inspected and attested. The assessment records one beside each verdict and names the artifact behind it; [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] defines the classes and the fields each record carries. The class is recorded and never folded into the score, so the per-domain matrix shows which controls the organization exercised and which its providers attest to.
 
 ### Level 1: Initial
 
@@ -229,6 +209,28 @@ Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cr
 ## Nine domains
 
 The CMM uses 9 domains, derived from the 6 reference-architecture planes plus 3 cross-cutting concerns (governance, supply chain, and operations/human factors). That derivation sets a scope boundary. The nine domains cover the deployment and operation of an agentic system, and none of them anchors its secure development. The Exchange's two development-programme controls, per the Scope section above, therefore have no cell to map into, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] names them. The 9-domain breakdown sharpens focus on agentic-specific controls and adds a domain for the operational and human-factors gaps that no surveyed standard covers as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]] §3).
+
+Each row in the tables below summarizes one rung; the rung is graded from the domain deep dive.
+
+### Global evidence rule
+
+Applies at L3 and above: all findings, gaps, eval results, and incident artifacts MUST be tagged with the standards-anchor IDs they relate to:
+
+- OWASP Agentic AI Top 10 — `ASI01`–`ASI10` (the agentic risk taxonomy)
+- [[owasp-llm-top-10|OWASP LLM Top 10]] (2025) — `LLM01:2025`–`LLM10:2025` (still apply to non-agentic and agent-as-LLM surfaces); the full code range is verified against the 2025 source by [[standards-review-owasp-llm-top-10-2026-Q2|the LLM Top 10 standards review]]
+- OWASP [[owasp-aivss|AIVSS]] v0.8 — full vector with the ten Agentic Risk Amplification Factors (Execution Autonomy, External Tool Control Surface, Natural Language Interface, Contextual Awareness, Behavioral Non-Determinism, Opacity & Reflexivity, Persistent State Retention, Dynamic Identity, Multi-Agent Interactions, Self-Modification)
+- MITRE ATLAS v5.6.0 — `AML.T####` techniques and `AML.M####` mitigations
+- NIST SP 800-53 control IDs (via NIST IR 8605A COSAiS overlay) where compliance evidence is needed
+- For incidents: CVE IDs and [[mcp-cves-q1-2026|MCP CVEs Q1 2026]]-class references
+- The [[agentic-ai-threat-classes-2026|five threat classes]] (insider, APT, collusion, model-version, jurisdictional) where a finding addresses a cross-cutting adversary model the ASI list does not name
+
+An untagged finding is L2-grade evidence at best, and [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]'s per-domain scoring rubric applies that cap as a per-domain gate at scores 3 and 4. ID-tagging moves a CMM from *mapping to* standards to *operating on* them, and it makes findings machine-checkable, queryable across domains, and comparable over time.
+
+### Assurance class of the evidence
+
+The class of evidence settles a criterion, and the party operating the control does not. A control the customer tests, a control the vendor attests to in a document the customer holds, and a control whose operating state the customer reads out of vendor tooling each carry a met or not-met verdict, so a vendor-operated control is graded on the evidence the vendor produces. Where the customer can run no test and the vendor supplies neither an attestation nor inspectable output, the criterion is unanswerable and the assessment names what would close it.
+
+The three classes are tested, inspected and attested. The assessment records one beside each verdict and names the artifact behind it; [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] defines the classes and the fields each record carries, along with the four verdicts a criterion takes: met, not met, not applicable and unanswerable. The class is recorded and never folded into the score, so the per-domain matrix shows which controls the organization exercised and which its providers attest to.
 
 ### D1. Governance & Accountability
 
@@ -345,7 +347,7 @@ L3 and L4 now grade the Exchange's sensitive-data-limitation controls, L3 statin
 |---|---|---|
 | L1 | No corpus provenance; no memory integrity; retrieval inherits source-system permissions unreviewed | none |
 | L2 | Retrievals name their origin in corpus terms; retrieval-widening extensions reviewed manually; a corpus classification scheme on paper at that layer's grain; a first reach assessment has run | classification scheme; retrieval origin-label sample; reach-assessment report |
-| L3 | Per-source trust attribution; RAG-injection and poisoning scanning; [[cognitive-file-integrity\|cognitive file integrity]] over prompt and identity files; **answer-time entitlement enforcement** | scan results; CFI baseline; oversharing-remediation record; authorization-layer record; validation-corpus policy; corpus scope decision; retained-identifier exception list; scan-method and thresholds |
+| L3 | Per-source trust attribution; RAG-injection and poisoning scanning; [[cognitive-file-integrity\|cognitive file integrity]] over prompt and identity files; **answer-time entitlement enforcement** | scan results; CFI baseline; oversharing-remediation record; authorization-layer record; scan-method and thresholds |
 | L4 | Trust-weighted retrieval; context-poisoning detector wired to the SIEM; documented PoisonedRAG-class defense; continuous oversharing posture management with label-aware DLP; rollback tested | provenance-scoring config; detector-to-SIEM wiring; DLP response-gating policy; rollback drill; measured removal justification; source-to-derived linkage record; recorded obfuscation residuals |
 | L5 | Real-time corpus-drift detection; a documented poisoning-rate bound; cross-source contradiction detection; system-prompt confidentiality; answer-time semantic-boundary enforcement | drift dashboard; threshold-justification memo; canary-token log; quarterly rollback drill with RTO |
 | L5+ | Per-document signing and hash chain at ingest (no shipping product); formal taint lattice for cross-source contradiction (research-stage); zero-knowledge proofs for sensitive retrievals | attestation chain; taint-lattice evidence; ZK-proof verifier logs |
@@ -378,7 +380,9 @@ The Supply Chain & AI-BOM domain establishes provenance, integrity, and disclosu
 
 Maps to: OWASP ASI04, [[nist-sp-800-218a|NIST SP 800-218A]] (SSDF AI Profile) — model provenance, verification of acquired models, and weight protection; the Profile names SBOM and SLSA but specifies no AI-BOM artifact schema ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]] claim 3), EU AI Act Art. 11 / Annex IV — the closest binding instrument to an AI-BOM mandate, but a prose disclosure schema, not a machine-readable BOM format ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 5); CycloneDX ML-BOM (v1.7 current), SPDX 3.0; Microsoft ZT4AI supply chain — Defender for Cloud AI-SPM generative AI-BOM discovery across Azure/Bedrock/Vertex (GA), extended to MCP-server and AI-model-provider catalog coverage in Defender for Cloud Apps, and AI model scanning in CI/CD (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]].
 
-See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone. A model-consumer persona scores L1 against the old D8 criteria, which measured producer controls it never operates; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder now inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria sharpen with it. A malicious-serialization scan becomes a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. The supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
+See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. A model-consumer persona scores L1 against the old D8 criteria, which measured producer controls it never operates; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder now inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria sharpen with it. A malicious-serialization scan becomes a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. The supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
+
+D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone.
 
 | Level | Capability | Auditor evidence |
 |---|---|---|
