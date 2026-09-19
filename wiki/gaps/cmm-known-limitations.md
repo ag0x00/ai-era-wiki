@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "CMM Known Limitations (current state)"
 created: 2026-05-06
-updated: 2026-09-18
+updated: 2026-09-19
 tags: [gaps, cmm, known-limitations, current-state]
 status: developing
 scope_axis:
@@ -32,10 +32,11 @@ related:
   - "[[lethal-trifecta]]"
   - "[[claude-cowork]]"
   - "[[agent-runtime-protection-canvass-2026-09]]"
-verified: 2026-09-18
+  - "[[agentic-ai-security-cmm-dependency-rules]]"
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Scoped to the desktop-agent content this pass added; the rest of the page was not re-read."
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed a doubled preposition in item 8's tracking-issue sentence; item 8's archived form, the archived-section lead and the surviving issue links checked against items 12, 20, 21 and 22."
 ---
 
 # CMM Known Limitations (current state)
@@ -93,12 +94,6 @@ The core page's shape table, the measurement protocol's Agent Card enum, all nin
 The shape is a class: Gemini for Workspace and Microsoft 365 Copilot inside the suite, where the tenant ACL and the DLP rule are the enforcement unit, and a desktop agent such as [[claude-cowork|Claude Cowork]], which adds local file access, MCP connectors, browser use and scheduled routines to the same mail, files and calendar reach. The desktop-agent variant carries tool-mediated writes outside the tenant, and the two variants take a row each. Their rungs then move in both directions. [[agentic-ai-security-cmm-d8-supply-chain|D8]] rises, because the member acquires connectors, skills, plugins and MCP servers that a suite customer neither builds nor loads. [[agentic-ai-security-cmm-d5-egress-network|D5]] falls, because the organization's code-execution egress setting does not reach the web fetch tool, the web search tool or MCP servers. [[agentic-ai-security-cmm-d3-control-least-agency|D3]] holds level, because what the customer gains is a permission category per connector rather than a policy decision point it operates.
 
 **Status:** [closed-2026-09-18]. The enum value was added to the protocol in September and names both variants. The class earns two rows under the reference architecture's own granularity rule, because the load-bearing controls change between the variants rather than the product name. Both rows are now written on the core shape table, the reference architecture's shape table and all nine right-sizing tables, and [[claude-cowork|Claude Cowork]] holds the control surface the desktop-agent row is scored against: session placement and the sandbox boundary, the five organization settings and the Enterprise custom-role model, connector authorization, folder scope, scheduled-task governance, and the observability channels that do and do not cover a session. One framing correction landed with the scoring. The desktop agent is not an endpoint deployment by construction, because that page records a session running in the vendor's cloud by default with the agent loop and code execution on the vendor's servers, and records the cloud-session setting as on for Team and off for Enterprise, so the placement is read off a setting, and what the variant gives the customer over the in-suite one is administrative rather than in-path. Tracked in [#174](https://github.com/ag0x00/ai-era/issues/174) under [#168](https://github.com/ag0x00/ai-era/issues/168).
-
-### 8. `L5` gate contradicts selective L5
-
-The prerequisite gate requires two quarters of stable L4 across all nine domains before an assessor may score any domain L5, while the core page expects L4 across all domains with selective L5 where exposure justifies it and five right-sizing tables name selective L5 as a target. A program at L2 in one domain by recorded trade-off can never be scored L5 in another.
-
-**Status:** [new-2026-09-15]. Recommendation 18. Tracked in [#173](https://github.com/ag0x00/ai-era/issues/173) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 9. `D2 L5+` vs `D3 L5` and `D5 L5` — per-task capability tokens sit at two rungs
 
@@ -179,7 +174,7 @@ One page in the family carries more than the one callout the convention allows: 
 
 ## Limitations addressed by CMM revisions (archived)
 
-CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16 and item 22 on 2026-09-18. Kept as a historical record so a future reader does not reintroduce them.
+CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16, item 22 on 2026-09-18 and item 8 on 2026-09-19. Kept as a historical record so a future reader does not reintroduce them.
 
 ### A. `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 
@@ -208,6 +203,12 @@ Original item: `D6` L3 graded answer-time entitlement enforcement against a corp
 ### 22. `D6 L2` stated document-corpus capabilities after `L3` became shape-general (resolved 2026-09-18)
 
 Original item: item 21 restated `D6` L3 so the criterion resolves the asking principal's read authorization in whichever layer the corpus carries, and L2 was not restated with it. Its four clauses — source labels on retrievals, manual skill and plugin review, a sensitivity-labeling scheme on paper, and a first oversharing assessment — all described a document corpus. Grading is cumulative, so an assessor grading a coding agent or a productivity assistant had to decide unaided whether a repository-permission review counts as a data-risk assessment and whether source files carry a labeling scheme, and that decision governed whether the L3 verdict item 21 enabled was reachable at all. Resolved by giving L2 its grain from the same authorization layer L3 resolves in, with a per-shape reading on the deep dive: sensitivity labels over a document corpus or a tenant, and over a source repository a register of the repositories the agent reaches, each carrying a data classification and the paths excluded from retrieval. The repository is the unit because source control grants read access per repository and per branch, which is the grain L3 resolves against. No product in the D6 control landscape applies a data classification to a repository, so that register is an artifact a program builds rather than one it exports, and the deep dive states it. The core page's `D6` L2 row and the protocol's D6 artifact row and interview block moved in the same diff. Shipped under [#178](https://github.com/ag0x00/ai-era/issues/178).
+
+### 8. `L5` gate contradicts selective L5 (resolved 2026-09-19)
+
+Original item: the prerequisite gate required two quarters of stable L4 across all nine domains before an assessor could score any domain L5, while the core page expected L4 across all domains with selective L5 where exposure justifies it and five right-sizing tables named selective L5 as a target. A program at L2 in one domain by recorded trade-off could never be scored L5 in another, and the September stress test classed the contradiction as blocking an assessment.
+
+Resolved by splitting the gate along the object each condition grades rather than by withdrawing selective L5. Condition 1, two quarters of stable L4, now grades the domain being scored L5 and the assessor repeats it per domain; conditions 2 to 4 — third-party assurance, bus-factor ≥2 with a continuity test, and the gap-closure plan — were already program-level and are graded once for the assessment. The deciding argument is that the model already accounts for cross-domain weakness along the dependency paths it records. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a floor over all nine duplicated that work and punished weakness with no path to the claiming domain, including the architectural-containment trade-off the aggregation rule's strategic-rationale field exists to record. The whole-program tier is unchanged and now reads as a separate object: a program rated L5 holds L5 in all nine domains, and L5+ adds its own criteria on top of that rating. May's open issue 2 closed in the same diff: *stable* is now a window of the two most recent complete calendar quarters, at least four dated observation points spanning it with no gap wider than 60 days, and a regression test that counts a drop below L4 or an L4 criterion met at one point and not met at a later one. Recommendation 18, shipped under [#173](https://github.com/ag0x00/ai-era/issues/173), a sub-issue of [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ## Contribution guide
 

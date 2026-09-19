@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - cmm
@@ -45,10 +45,10 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Read covered the four-verdict vocabulary paragraph this pass moved, confirmed byte-identical (sha256 8b4e0e7b…, 960 bytes) across all nine deep dives and consistent with the assurance classes in the measurement protocol; no archived document opened, no other claim on the page re-read."
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. D9's two gate roles confirmed against the core page, the crosswalk and protocol conditions 1 and 3; only the continuity test is program-level."
 ---
 
 # Agentic AI Security CMM — D9 Operations & Human Factors (Deep Dive)
@@ -202,7 +202,7 @@ Four costs dominate and none of them appears on a license line. An **on-call rot
 
 D9 is a cross-cutting domain whose capabilities interact indirectly with the per-plane ones: HITL fatigue degrades D3's approval gates, decommission lag orphans D2 identities, and drift remediation feeds on D7 telemetry. Per [[agentic-ai-security-cmm-dependency-rules|the dependency rules]], D9 operational lag leaves upstream domains where they stand and is reported directly in D9's own row.
 
-The multi-quarter gate a program clears to reach L5 sits substantially inside D9. Two of its four conditions are D9 controls: bus-factor ≥2 with a documented continuity test, and the two-quarter stable-L4 history that D9's closed-loop attestations evidence. D9 therefore carries more than its own climb to L5 — its continuity-test and clean-state attestations supply the org-wide gate evidence every other domain's L5 claim rests on, so a program clears D9's continuity bar before it reaches L5 anywhere.
+The gate a program clears to reach L5 rests on D9 twice, and the two roles differ. Bus-factor ≥2 with a documented continuity test is a D9 control and a program-level condition: the assessor grades it once, and every domain's L5 claim rests on it, so a program clears D9's continuity bar before it reaches L5 anywhere. The two-quarter stable-L4 condition is graded per domain, so D9's clean-state attestations evidence D9's own two quarters and no other domain's. D9 therefore carries its own climb to L5 and one of the three conditions every other domain's climb depends on.
 
 ## Notes
 

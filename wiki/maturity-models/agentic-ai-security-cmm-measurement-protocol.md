@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Measurement Protocol (Assessor's Handbook)"
 address: c-000157
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - measurement
@@ -45,10 +45,10 @@ sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
   - "BSIMM observation/assertion model"
   - "CMMC 2.0 three-level assessment guides"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
-verified_findings: 1
-verified_note: "Assurance-class table fixed so a compliance report falls in one class only; open: the five-field rule the section states demands a period covered that no exemplar record on any deep dive carries."
+verified_findings: 0
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed: the stable definition placed its points inside a window whose endpoints sit outside it, restarted a calendar-quarter window on an arbitrary date, and admitted a clean-state attestation condition 1 did not name."
 ---
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)
@@ -241,7 +241,7 @@ The assessor MUST observe at least one live action per high-risk-tier agent in t
 
 - One L3+ assessment requires: live OTel trace + live PDP decision + live HITL gate fire (synthetic if necessary; where D3 scores L5, the fire is checked against a bound approval token).
 - One L4 assessment requires the above plus: live behavioral-drift event from the agent behavioral monitoring system + live red-team eval run.
-- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the prerequisite gate into L5 (≥2-quarter L4 evidence, AIUC-1/ISO 42001 cert dated within last quarter, continuity-test execution proof).
+- One L5 assessment requires the above plus: live closed-loop incident replay (an alert fires and controls update, closing the loop within SLA) and verification of the prerequisite gate into L5 (≥2-quarter L4 evidence for the domain being scored L5, AIUC-1/ISO 42001 cert dated within last quarter, continuity-test execution proof).
 - One L5+ assessment requires the above plus: live attestation chain verification (TEE-backed guardrail execution proof) OR live cascade-detection rule fire OR live cross-vendor AI-BOM reconciliation, AND verification of the named-contributor artifact.
 
 Static configs alone do not satisfy live-observation requirements at L3+.
@@ -262,23 +262,27 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 | 2 | L1 + L2 artifacts present and verifiable. |
 | 3 | L1 + L2 + L3 artifacts present, **AND ID tagging is operational** for findings in this domain (`ASI##` / [[owasp-aivss\|AIVSS]] / `AML.T####` / CVE), AND live observation requirement met. |
 | 4 | L3 + L4 artifacts AND quantitative metrics are tracked AND multi-tool eval is operational AND ID tagging is comprehensive (no untagged findings in last 90 days). |
-| 5 | L4 + L5 artifacts AND closed-loop evidence over ≥2 quarters AND **L4→L5 prerequisite gate met** (see below). |
+| 5 | L4 + L5 artifacts AND closed-loop evidence over ≥2 quarters AND **L4→L5 prerequisite gate met** — condition 1 in this domain, conditions 2 to 4 for the program (see below). |
 | 5+ | L5 + L5+ artifacts AND research-stage primitives in production with documented exit criteria AND active named contribution to one or more standards bodies (PR / RFC / spec authorship). |
 
 **Auditability begins at Level 3.** Below L3 the organization is structurally vulnerable, and the assessment turns largely on whether the evidence supports L2 over L1. At L3 and above the assessor checks platform-level enforcement, ID tagging, and live behavior.
 
 **Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and the vendor supplies nothing that settles the question). A score in the rubric above counts only the **met** criteria. A **met** or **not met** verdict carries its assurance class — tested, inspected or attested, per Stage 2 — recorded beside the verdict and kept out of the score, so the matrix shows which controls the organization exercised and which its providers attest to. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is recorded where the customer can run no test and the vendor supplies neither an attestation nor inspectable output; it is a finding against the vendor rather than against the organization, and it never counts as met. [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] states the four verdicts and the three assurance classes in one line each, beside the rest of the vocabulary the two maturity models share.
 
-**Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in any domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table):
+**Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in a domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table). Condition 1 is graded per domain and the assessor repeats it for each domain scored L5. Conditions 2 to 4 are graded once for the program and carry over to every domain in the same assessment.
 
-1. **≥2 quarters of stable L4 operation** across all 9 domains — no regression in the per-domain matrix during the look-back window. Evidence: prior assessment reports OR continuous-monitoring artifacts (KPIs, drift telemetry, red-team results, AI-BOM reconciliation) covering the period.
+1. **≥2 quarters of stable L4 operation in the domain being scored L5** — no regression in that domain's row of the per-domain matrix during the look-back window. Evidence: prior assessment reports, continuous-monitoring artifacts (KPIs, drift telemetry, red-team results, AI-BOM reconciliation), or clean-state attestations covering the period.
 2. **Independent third-party assurance scheduled or current** against a recognized scheme — ISO/IEC 42001 surveillance cycle (preferred), an AIUC-1 readiness assessment with an accredited auditor, or a documented internal-equivalent attestation under independent review. The scheme is the org's choice; no single certification is mandated (see [[aiuc-1-critical-evaluation|the AIUC-1 evaluation]] and [[agentic-ai-security-cmm-d1-governance|D1 deep dive]]). Evidence: signed engagement letter, surveillance-audit report, or reviewed attestation.
 3. **Bus-factor ≥2** with documented continuity test — a deputy has executed the runbook end-to-end at least once in the look-back window ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery). Evidence: continuity-test report.
-4. **Gap-closure plan from floor-domain to L5** — even if the floor is L5, the program must document what L5+ work it is or is not pursuing in each domain.
+4. **Gap-closure plan to L5** — for each domain below L5 the plan names the work that would take it there or the reason the program is not pursuing it, and for each domain already at L5 it names the L5+ work the program is or is not pursuing.
 
-Meeting every per-domain L5 row without the gate evidence scores **L4-stable** rather than L5. The gate is asymmetric: claiming L4 from L3 does not require it, because that jump is a single step rather than a sustained campaign.
+**Stable is a window, an observation count and a regression test**, each checkable from the evidence condition 1 already names. The window is the two most recent complete calendar quarters before the assessment start date. Across it the assessor collects at least four dated observation points — a prior assessment report, a continuous-monitoring extract, or a clean-state attestation — the first dated on or before the window opens, the last dated within 30 days of the assessment start date, and no more than 60 days between consecutive points. Two endpoints evidence two states and no continuity, which is why the count sits at four. A regression is an observation point that records the domain below L4, or an L4 criterion met at one point and not met at a later one; one regression fails condition 1 for that domain, and condition 1 is next met in an assessment whose window opens on or after the date the domain returned to L4. A lapse that the program's own monitoring detected and recorded, that the program closed inside its published remediation SLA, and that the next observation point shows met, is a recorded lapse and scores no regression; a lapse the assessor finds and the monitoring missed is a regression whatever its duration. Evidence covering fewer points, or leaving a wider gap, scores condition 1 **not met**, because the record does not cover the window.
 
-**L5+ Leading Edge tier.** A separate, optional tier requiring L5 across all 9 domains *plus* (a) at least one research-stage primitive in production deployment with documented exit criteria back to L5 if the pilot fails, and (b) active named contribution to one or more standards bodies through PR, RFC or spec authorship, where membership alone falls short. L5+ requires category-creation work, so most assessments terminate at L5. L5+ scoring suits frontier labs, hyperscaler platforms, and dedicated AI-security research shops.
+A domain that meets every per-domain L5 row without the gate evidence scores **L4-stable** rather than L5. The gate is asymmetric: claiming L4 from L3 does not require it, because that jump is a single step rather than a sustained campaign.
+
+**The gate grades no domain other than the one being scored L5.** The aggregation rule below handles cross-domain weakness instead: [[agentic-ai-security-cmm-dependency-rules|the dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, and the report names the cap source. A domain held at L2 by a recorded architectural-containment trade-off, carried in the strategic-rationale field, therefore blocks no L5 claim in a domain that depends on nothing it supplies. An L5 raw score whose upstream dependency sits lower still reports at the capped effective score.
+
+**L5+ Leading Edge tier.** A separate, optional tier graded on the whole program rather than on one domain, requiring L5 across all 9 domains *plus* (a) at least one research-stage primitive in production deployment with documented exit criteria back to L5 if the pilot fails, and (b) active named contribution to one or more standards bodies through PR, RFC or spec authorship, where membership alone falls short. L5+ requires category-creation work, so most assessments terminate at L5. L5+ scoring suits frontier labs, hyperscaler platforms, and dedicated AI-security research shops.
 
 #### Aggregation rule — dependency-resolved effective scores
 

@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Effective-Score Dependency Rules"
 address: c-000158
 created: 2026-05-04
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - cmm
@@ -33,8 +33,13 @@ related:
   - "[[owasp-ai-exchange]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[cmm-vocabulary-and-notation]]"
+  - "[[cmm-known-limitations]]"
 sources:
   - "[[cmm-calibration-stress-test-2026]] §Part 2 (cumulative-floor stress test)"
+verified: 2026-09-19
+verified_against: []
+verified_findings: 0
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed: the gate restatement named AIUC-1 as the assurance scheme and ISO/IEC 42001 as an equivalent, reversing the protocol's stated preference."
 ---
 
 # Agentic AI Security CMM — Effective-Score Dependency Rules
@@ -201,8 +206,9 @@ Comparison of the 5 archetypes from the [[cmm-calibration-stress-test-2026|stres
 
 - **Does not eliminate the cross-domain attack-path concern.** DR-001/002/003 capture the strongest known cases. Future incidents and architectures will surface more (the candidates are the parking lot).
 - **Does not allow cherry-picking.** Reports MUST publish the full matrix; reports that cite a single domain's score without the matrix are non-compliant with the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] (anti-pattern B2 reframed accordingly).
-- **Does not replace the prerequisite gate into L5** (≥2 quarters stable L4, [[aiuc-1|AIUC-1]] readiness scheduled, bus-factor ≥2, continuity test). Effective-score is *aggregation*; the prerequisite gate is *eligibility for L5 claims*. Both apply.
+- **Does not replace the prerequisite gate into L5** (≥2 quarters stable L4 in the domain being scored L5, third-party assurance scheduled or current against a recognized scheme, [[aiuc-1|AIUC-1]] among them, bus-factor ≥2, continuity test). Effective-score is *aggregation*; the prerequisite gate is *eligibility for L5 claims*. Both apply. The gate's stable-L4 condition grades the claiming domain alone, and these rules carry the cross-domain half of the question: a raw L5 whose upstream dependency sits lower reports at the capped effective score.
 - **Does not address weighted scoring.** All 9 domains are still treated as equally important when computing typical/weakest/strongest. Domain weighting (e.g. for high-risk-tier applications) is a separate question parked under the **agent-archetype tailoring** open gap on the CMM page.
+- **Does not list every CMM limitation.** The four above are this rule set's own. [[cmm-known-limitations|CMM Known Limitations]] is the register for the model as a whole, and it records the 2026-09-19 split of the L5 gate whose cross-domain half these rules carry.
 
 ## Open questions & caveats
 

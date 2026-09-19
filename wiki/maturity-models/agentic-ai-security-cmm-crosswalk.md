@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Standards Crosswalk Matrix"
 address: c-000159
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - crosswalk
@@ -61,12 +61,10 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
 sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #1"
-verified: 2026-09-18
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified: 2026-09-19
+verified_against: []
 verified_findings: 0
-verified_note: "Issue-252 read, scoped to the OWASP AI Exchange control-anchor rows, the SEC DEV PROGRAM and §3.0 paragraphs, and the two callouts converted to prose; four claims corrected, including a D5 cell that the prose claimed and did not carry. The ISO 42001 Annex A table stays summary-sourced and paywall-bounded."
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. The threat-class paragraph's D9 claim confirmed against the protocol's program-level condition 3; no other crosswalk claim re-read."
 ---
 
 # Agentic AI Security CMM — Standards Crosswalk Matrix
@@ -208,7 +206,7 @@ The master matrix maps published standards to domains. The wiki's [[agentic-ai-t
 | Class 4 — Model-version degradation | D4, D6, D8 (D9) | Customer eval suite versioned independently of the vendor; pin-by-hash |
 | Class 5 — Jurisdictional adversary | D1 (D9) | Multi-vendor abstraction; jurisdiction tagging; vendor-cutoff playbook |
 
-D9 Operations is the shared denominator across all five, which is why its bus-factor and continuity prerequisites gate every other domain's L5 claim. Classes 1, 2, and 4 collapse to a single observable — the eval-harness delta against a trusted baseline — so D6 and D8 carry the load-bearing control for three of the five.
+D9 Operations is the shared denominator across all five, which is why its bus-factor and continuity prerequisites, graded once for the whole program, gate every other domain's L5 claim. Classes 1, 2, and 4 collapse to a single observable — the eval-harness delta against a trusted baseline — so D6 and D8 carry the load-bearing control for three of the five.
 
 ## Annex IV (EU AI Act) crosswalk
 

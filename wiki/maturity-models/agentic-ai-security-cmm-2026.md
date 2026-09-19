@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic AI Security Capability Maturity Model"
 address: c-000156
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - agentic-ai
@@ -73,12 +73,10 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-18
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified: 2026-09-19
+verified_against: []
 verified_findings: 0
-verified_note: "Issue-252 read, scoped to the overlay bullet naming the Exchange's two development-programme controls; the domain-count claim was corrected against the crosswalk's own anchor rows. The nine-domain ladder and the rest of the page were not reread."
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed: the implementation roadmap's Phase 4 row still set an unqualified program-wide two-quarter L4 stability bar for a phase targeting selective L5."
 ---
 
 # Agentic AI Security Capability Maturity Model
@@ -162,6 +160,8 @@ Two coverage limits are deliberate. Multi-agent **cascade containment** (ASI08) 
 
 L5 is a **maturity tier**: every L5 criterion in this CMM points to a shipping product, an open-source project at v1.0+, or a documented capability deployable with currently available components. L5+ is a **leading-edge tier**: it requires L5 across all 9 domains *plus* research-stage capabilities and active named contribution to one or more standards bodies. A sufficiently resourced 2026 program can clear L5; only a frontier-lab or research-shop program clears L5+. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s per-domain matrix view reports both.
 
+**A domain scored L5 and a program rated L5 are different claims.** The level descriptions below state what a program at that level operates across all nine domains, so a whole-program L5 rating requires L5 in all nine and an L5+ rating adds its own tier criteria on top of that. The per-domain matrix scores each domain against its own ladder, so one domain reaches L5 while the program's rating stays lower. The prerequisite gate into L5 states which of its conditions an assessor checks once per domain scored L5 and which once for the whole program.
+
 ### Global evidence rule
 
 Applies at L3 and above: all findings, gaps, eval results, and incident artifacts MUST be tagged with the standards-anchor IDs they relate to:
@@ -222,7 +222,9 @@ All of L5, plus research-stage primitives in production: cryptographic guardrail
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.**
 
-Before claiming L5, the program MUST show: (a) ≥2 quarters of stable L4 operation across all 9 domains (no regression in the per-domain matrix); (b) a readiness assessment scheduled against a recognized assurance scheme with an accredited auditor (ISO/IEC 42001, AIUC-1, or a documented internal equivalent); (c) bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery); (d) gap-closure plan from the floor-domain to L5. This gate applies in addition to per-domain L5 criteria. A program that meets every per-domain L5 row without the gate evidence scores **L4-stable**. Adopted from [[cmm-calibration-stress-test-2026|stress-test §Change 5]].
+The gate below applies in addition to the per-domain L5 criteria. One of its four conditions is graded per domain, and the assessor repeats it for each domain scored L5: (a) ≥2 quarters of stable L4 in that domain, with no regression in that domain's row of the per-domain matrix across the look-back window. The other three are graded once for the program, whatever the domain: (b) a readiness assessment scheduled against a recognized assurance scheme with an accredited auditor (ISO/IEC 42001, AIUC-1, or a documented internal equivalent); (c) bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery); (d) a gap-closure plan naming, for each domain below L5, the work that would take it there or the reason the program is not pursuing it, and for each domain at L5, the L5+ work the program is or is not pursuing. A domain that meets every per-domain L5 row without the gate evidence scores **L4-stable**. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states what *stable* means as a window, an observation count and a regression test.
+
+Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cross-domain weakness reaches an L5 claim along the dependency paths the model records, and nowhere else. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a raw L5 whose upstream dependency sits lower reports at the capped effective score with the cap source named. A program that holds a domain at L2 by a recorded architectural-containment trade-off therefore still reaches L5 in a domain that trade-off does not touch. Adopted from [[cmm-calibration-stress-test-2026|stress-test §Change 5]], with the stable-L4 condition graded per domain from 2026-09-19.
 
 ## Nine domains
 
@@ -393,7 +395,7 @@ The Operations & Human Factors domain collects the cross-cutting operational and
 
 Maps to: [[nist-ai-800-4|NIST AI 800-4]] post-deployment monitoring (human factors flagged as biggest blind spot); EU AI Act Art. 12 logging, Art. 14 human oversight; OWASP `LLM07:2025` System Prompt Leakage; CoSAI AI Incident Response Framework (2025-10-30, per [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]]); CSA ATF Incident Response element (kill switch, demotion-to-Intern on critical incident) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]; Microsoft ZT4AI operations — Entra ID Governance sponsors with automatic manager-transfer and time-bound access packages (GA), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]], which also confirms ZT4AI ships no HITL-fatigue / human-factors tooling.
 
-See [[agentic-ai-security-cmm-d9-operations|the D9 deep dive]]. D9 is process- and labor-heavy and largely product-free: **HITL-fatigue measurement and bus-factor continuity have no product on any stack**, which is a market gap rather than a Microsoft one. Its dependencies are stable standards (CoSAI AI Incident Response Framework (2025-10-30), OTel/canary patterns, the GA Entra Agent ID lifecycle), so it is cadence-safe, and right-sizing matters most here: a contained low-autonomy bot targets a narrow L3 rather than mesh-grade incident response. The multi-quarter gate into L5 lives substantially inside D9 (the continuity test + two-quarter stable-L4 history), so every other domain's L5 claim depends on D9's continuity evidence.
+See [[agentic-ai-security-cmm-d9-operations|the D9 deep dive]]. D9 is process- and labor-heavy and largely product-free: **HITL-fatigue measurement and bus-factor continuity have no product on any stack**, which is a market gap rather than a Microsoft one. Its dependencies are stable standards (CoSAI AI Incident Response Framework (2025-10-30), OTel/canary patterns, the GA Entra Agent ID lifecycle), so it is cadence-safe, and right-sizing matters most here: a contained low-autonomy bot targets a narrow L3 rather than mesh-grade incident response. The continuity test the gate into L5 requires is a D9 control graded once for the program, so every other domain's L5 claim depends on D9's continuity evidence; the gate's two-quarter stable-L4 condition is graded per domain, and D9's clean-state attestations evidence D9's own.
 
 **D9 exists because seven operational gaps sit outside every surveyed standard.**
 
@@ -504,7 +506,7 @@ The roadmap runs four phases in order — Foundation, Standardization, Measureme
 | **1. Foundation** | 1–3 | Inventory + identity + operational baseline | D1 L2, D2 L2, D8 L2, D9 L2 |
 | **2. Standardization** | 4–9 | Platform-level enforcement (the critical inflection) + system-prompt confidentiality | D2 L3, D3 L3, D4 L3, D5 L3, D7 L3, D9 L3 |
 | **3. Measurement** | 10–18 | Behavioral monitoring + red-team + AI-BOM + HITL fatigue + decommission drills | D6 L3+, D7 L4, D8 L4, D9 L4 |
-| **4. Optimization** | 18+ | AIUC-1 / ISO 42001 cert; ≥2-quarter L4 stability; closed-loop ops improvement; bus-factor ≥2 with continuity test | D1 L5, selective L5 in domains tied to deployment exposure, D9 L5 |
+| **4. Optimization** | 18+ | AIUC-1 / ISO 42001 cert; ≥2-quarter L4 stability in each domain targeted for L5; closed-loop ops improvement; bus-factor ≥2 with continuity test | D1 L5, selective L5 in domains tied to deployment exposure, D9 L5 |
 | 5. Leading Edge (optional) | 24+ | Research-stage primitives in production (TEE attestation, CaMeL split, cascade-detection); active named standards contribution; cross-vendor federation | L5+ in 2–4 selected domains aligned to org's research / product portfolio |
 
 The roadmap's inflection falls at **the end of Phase 2 (month ~9)**, where Level 3 across D2–D5 and D7 marks the boundary between platform-level enforcement and prompt-level reliance. Below that boundary, an organization remains structurally vulnerable to prompt injection per the [[lethal-trifecta|Lethal Trifecta]] test.

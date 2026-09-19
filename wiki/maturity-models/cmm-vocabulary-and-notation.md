@@ -2,7 +2,7 @@
 type: maturity-model-companion
 title: "CMM Vocabulary and Notation"
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-19
 tags:
   - maturity-models
   - cmm
@@ -26,10 +26,10 @@ related:
   - "[[cmm-calibration-stress-test-2026]]"
 sources:
   - "https://www.sei.cmu.edu/our-work/cybermaturity/"
-verified: 2026-09-18
+verified: 2026-09-19
 verified_against: []
 verified_findings: 0
-verified_note: "Fresh-eyes read against the vault pages the page describes (CMM core, measurement protocol, dependency rules, SOC CMM and its D1 and D6 deep dives, D9 operations, the AAI-S RA, the Google Cloud and Azure profiles, the SOC IR surface, the calibration stress test) plus issue #255; no archived .raw document opened."
+verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed a truncated floor cell; L4-stable and program rating checked against the core page and protocol, and no live use of floor as a graded criterion survives."
 ---
 
 # CMM Vocabulary and Notation
@@ -48,7 +48,9 @@ Both maturity models score in terms each defines where it uses them. This page i
 | raw score | The rung a domain evidences |
 | effective score | The lesser of a raw score and the raw scores it depends on ([[agentic-ai-security-cmm-dependency-rules\|the dependency rules]]) |
 | cap | A dependency rule that fired. The report names the domain that set it |
-| **floor** | **Retired.** The lowest domain score, the headline rating until 2026-05-04. Survives only in the L5 gate's gap-closure item |
+| **floor** | **Retired.** The lowest domain score, the headline rating until 2026-05-04. No graded criterion uses it; a report dated before 2026-09-19 may still name it |
+| L4-stable | A domain that evidences every L5 criterion while the L5 gate's evidence is absent |
+| program rating | One level claimed for the whole program. L5 requires L5 in all nine domains, L5+ that rating plus its own tier criteria. Never one domain's score |
 | verdict | One of four per criterion: met, not met, not applicable, unanswerable. A score counts met alone |
 | unanswerable | The customer can neither test nor read it, and the vendor states nothing. A finding against the vendor, never met |
 | assurance class | tested, inspected or attested, recorded beside a verdict and kept out of the score |
