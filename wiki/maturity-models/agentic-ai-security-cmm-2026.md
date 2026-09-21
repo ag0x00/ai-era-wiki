@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic AI Security Capability Maturity Model"
 address: c-000156
 created: 2026-04-30
-updated: 2026-09-19
+updated: 2026-09-21
 tags:
   - maturity-models
   - agentic-ai
@@ -73,10 +73,10 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-19
+verified: 2026-09-21
 verified_against: []
-verified_findings: 0
-verified_note: "Verify-and-fix for the D3 L3 summary sentence and table row (#170). Read against the D3 deep dive. Fixed two divergences from the deep dive: the summary asserted the coding shape meets the rung where D3 records the decision-rights criterion not met for it, now scoped to the mediation criterion; and the L3 capability cell named Cedar/OPA alone where the deep dive now admits the hosting runtime's permission rule set, which is the same defect archived item 9 recorded. No .raw document opened."
+verified_findings: 1
+verified_note: "Verify-and-fix over the nine decomposed ladders (#283), read against the D1-D9 deep dives and the pre-image of each ladder table. Fixed three divergences: D2 L4 had turned the pre-image's parenthetical credential proxy into a second gradable criterion where the deep dive and the log accept a credential-less identity model instead; D4 L4 rendered the dry-run component of semantic tool validation as an unconditional criterion where the deep dive conditions it on the tool supporting one; and the Nine-domains preamble described a table rendering no domain now uses. Also removed nine repeated per-domain captions and two stale row references. Open: the core page still grades fewer criteria than the deep dives at several D2/D5/D6/D7/D8/D9 rungs, which is rung-bearing and tracked as #292. No .raw document opened."
 ---
 
 # Agentic AI Security Capability Maturity Model
@@ -202,7 +202,7 @@ All of L5, plus research-stage primitives in production: per-task capability tok
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.**
 
-The gate below applies in addition to the per-domain L5 criteria. One of its four conditions is graded per domain, and the assessor repeats it for each domain scored L5: (a) ≥2 quarters of stable L4 in that domain, with no regression in that domain's row of the per-domain matrix across the look-back window. The other three are graded once for the program, whatever the domain: (b) independent third-party assurance current or scheduled against a recognized assurance scheme — an ISO/IEC 42001 surveillance cycle, an AIUC-1 readiness assessment with an accredited auditor, or a documented internal equivalent under independent review; (c) bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery); (d) a gap-closure plan naming, for each domain below L5, the work that would take it there or the reason the program is not pursuing it, and for each domain at L5, the L5+ work the program is or is not pursuing. A domain that meets every per-domain L5 row without the gate evidence scores **L4-stable**. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states what *stable* means as a window, an observation count and a regression test.
+The gate below applies in addition to the per-domain L5 criteria. One of its four conditions is graded per domain, and the assessor repeats it for each domain scored L5: (a) ≥2 quarters of stable L4 in that domain, with no regression in that domain's row of the per-domain matrix across the look-back window. The other three are graded once for the program, whatever the domain: (b) independent third-party assurance current or scheduled against a recognized assurance scheme — an ISO/IEC 42001 surveillance cycle, an AIUC-1 readiness assessment with an accredited auditor, or a documented internal equivalent under independent review; (c) bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery); (d) a gap-closure plan naming, for each domain below L5, the work that would take it there or the reason the program is not pursuing it, and for each domain at L5, the L5+ work the program is or is not pursuing. A domain that meets every per-domain L5 criterion without the gate evidence scores **L4-stable**. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states what *stable* means as a window, an observation count and a regression test.
 
 Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cross-domain weakness reaches an L5 claim along the dependency paths the model records, and nowhere else. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a raw L5 whose upstream dependency sits lower reports at the capped effective score with the cap source named. A program that holds a domain at L2 by a recorded architectural-containment trade-off therefore still reaches L5 in a domain that trade-off does not touch. Adopted from [[cmm-calibration-stress-test-2026|stress-test §Change 5]], with the stable-L4 condition graded per domain from 2026-09-19.
 
@@ -210,7 +210,7 @@ Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cr
 
 The CMM uses 9 domains, derived from the 6 reference-architecture planes plus 3 cross-cutting concerns (governance, supply chain, and operations/human factors). That derivation sets a scope boundary. The nine domains cover the deployment and operation of an agentic system, and none of them anchors its secure development. The Exchange's two development-programme controls, per the Scope section above, therefore have no cell to map into, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] names them. The 9-domain breakdown sharpens focus on agentic-specific controls and adds a domain for the operational and human-factors gaps that no surveyed standard covers as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]] §3).
 
-Each row in the tables below summarizes one rung; the rung is graded from the domain deep dive.
+Each rung below states what one domain adds at one level, graded from that domain's deep dive, and lists item by item the criteria an assessor grades and the auditor evidence collected for the rung.
 
 ### Global evidence rule
 
@@ -244,14 +244,59 @@ L5 now requires scheme-neutral third-party assurance, ISO/IEC 42001 preferred an
 
 L3 also grades what the organization withholds about its own system. Technical details — the model type, the model implementation, and the technical content of material published about the system — are carried as classified assets in the information-security asset inventory, and technical publication passes a documented review that sets what is withheld against the disclosure `AI TRANSPARENCY` asks for ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/discrete/`](https://owaspai.org/go/discrete/)). The artifacts are the classification entry and the review record. The Exchange supplies a direction for the trade-off and no threshold, so the rung grades that the decision was taken and recorded.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No AI governance role; agents deploy without security review | none |
-| L2 | Named accountable owner; published AI-use policy; agent risk-tier scheme; signed RACI | policy doc; RACI; risk-tier scheme |
-| L3 | Cross-functional AI risk body, fixed cadence; risk tiers gate deployment; per-agent [[decision-rights\|decision rights]] and prohibited actions; shadow-agent reaper SLA; provider responsibility matrix | charter and minutes; decision-rights matrix; prohibited-action list; reaper SLA report; responsibility matrix with residue; technical-detail classification entry; publication review record |
-| L4 | Board-level governance metrics with `ASI##` / AIVSS rollups; maintained standards crosswalk; readiness assessment against a recognized assurance scheme | board pack; crosswalk; readiness-assessment report |
-| L5 | Current, independent, third-party assurance of the governance program — scheme-neutral, [[iso-iec-42001\|ISO/IEC 42001]] preferred | current certification or reviewed attestation; board-attested metrics; committee minutes ≥1 year; refreshed crosswalk |
-| L5+ | Named contribution to a governance or standards body (PR, RFC, or spec authorship); externally published governance or risk-observability artifact | contributor evidence; published research artifact; external observability dataset |
+- **D1-L1 (Initial):** No role in the organization owns AI governance.
+    - **Capability.** Agents deploy without security review.
+    - **Auditor evidence.** None.
+- **D1-L2 (Developing):** Accountability is named, and the policy behind it is published.
+    - **Capability.**
+        - A named accountable owner holds the AI governance role.
+        - An AI-use policy is published.
+        - An agent risk-tier scheme exists.
+        - A signed RACI assigns ownership.
+    - **Auditor evidence.**
+        - Policy doc.
+        - RACI.
+        - Risk-tier scheme.
+- **D1-L3 (Defined):** A standing body gates deployment and records the decisions it takes.
+    - **Capability.**
+        - A cross-functional AI risk body meets on a fixed cadence.
+        - Risk tiers gate deployment.
+        - Per-agent [[decision-rights|decision rights]] are documented.
+        - Prohibited actions are documented per agent.
+        - A shadow-agent reaper operates to an SLA.
+        - A provider responsibility matrix is documented.
+    - **Auditor evidence.**
+        - Charter and minutes.
+        - Decision-rights matrix.
+        - Prohibited-action list.
+        - Reaper SLA report.
+        - Responsibility matrix with residue.
+        - Technical-detail classification entry.
+        - Publication review record.
+- **D1-L4 (Managed):** The board receives governance metrics, and a readiness assessment measures the program against a scheme.
+    - **Capability.**
+        - Board-level governance metrics carry `ASI##` / AIVSS rollups.
+        - A standards crosswalk is maintained.
+        - A readiness assessment runs against a recognized assurance scheme.
+    - **Auditor evidence.**
+        - Board pack.
+        - Crosswalk.
+        - Readiness-assessment report.
+- **D1-L5 (Optimizing):** Assurance of the governance program comes from outside the organization.
+    - **Capability.** Current, independent, third-party assurance covers the governance program, scheme-neutral with [[iso-iec-42001|ISO/IEC 42001]] preferred.
+    - **Auditor evidence.**
+        - Current certification or reviewed attestation.
+        - Board-attested metrics.
+        - Committee minutes ≥1 year.
+        - Refreshed crosswalk.
+- **D1-L5+ (Leading Edge):** The organization contributes governance work back to the field.
+    - **Capability.**
+        - A named contribution to a governance or standards body is active, as a PR, an RFC, or spec authorship.
+        - A governance or risk-observability artifact is published externally.
+    - **Auditor evidence.**
+        - Contributor evidence.
+        - Published research artifact.
+        - External observability dataset.
 
 ### D2. Identity & Authorization
 
@@ -261,14 +306,60 @@ Maps to: OWASP ASI03, NIST CAISI Concept Paper (Feb 2026), ISO 27090 (FDIS Mar 2
 
 See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is now GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens move to L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the D2→D5 and D2→D7 caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | Agents share human credentials or service accounts; no inventory | none |
-| L2 | Distinct service-account identities in a manual inventory; delegation runs only through the human user | inventory artifact |
-| L3 | Verifiable per-agent identity; OAuth 2.1 token exchange; NHI lifecycle bound to the pipeline, not HR; [[identity-credential-coupling\|coupling]] recorded; human owner and traceability mandatory | identity graph; audit-trail sample; CI/CD-registered NHI list; owner-field coverage |
-| L4 | Zero credentials in agent context (credential proxy); per-agent policy at a PDP; tested orphaned-agent kill switch; automated rotation per credential class; per-NHI behavioral baseline | cred-proxy logs; policy repo; kill-switch tabletop; rotation-cadence report; migration plan; delegation-token sample (delegator, delegatee, scope, expiry, parent link) |
-| L5 | Unified agent-governance program in production (registry, lifecycle API, identity graph, scoped RBAC, audit integration); cryptographic identity attestation; zero coupled credentials | registry export; ISPM dashboard; attestation chain; migration report; `ASI03`-tagged finding log |
-| L5+ | Per-task capability tokens with holder-binding ([[tenuo-warrant\|Warrant]]-class, OSS-only); multi-vendor identity federation with graph reconciliation; SPIFFE or OIDC working-group participation | reconciliation report; standards-WG contribution evidence |
+- **D2-L1 (Initial):** Agents share human credentials or service accounts.
+    - **Capability.** No inventory of agent identities exists.
+    - **Auditor evidence.** None.
+- **D2-L2 (Developing):** Each agent holds an identity of its own, tracked by hand.
+    - **Capability.**
+        - Agents hold distinct service-account identities in a manual inventory.
+        - Delegation runs only through the human user.
+    - **Auditor evidence.** Inventory artifact.
+- **D2-L3 (Defined):** An agent's identity is verifiable, and its lifecycle follows the pipeline.
+    - **Capability.**
+        - Every agent has a verifiable per-agent identity.
+        - Delegation runs through OAuth 2.1 token exchange.
+        - The NHI lifecycle binds to the deploy pipeline rather than to HR.
+        - The inventory records [[identity-credential-coupling|coupling]].
+        - A human owner is mandatory for every NHI.
+        - Traceability to a human is mandatory.
+    - **Auditor evidence.**
+        - Identity graph.
+        - Audit-trail sample.
+        - CI/CD-registered NHI list.
+        - Owner-field coverage.
+- **D2-L4 (Managed):** The agent process never holds a credential, and a decision point authorizes it per action.
+    - **Capability.**
+        - Zero credentials sit in agent context, mediated by a credential proxy.
+        - A PDP holds per-agent policy.
+        - An orphaned-agent kill switch is tested.
+        - Rotation is automated per credential class.
+        - Each NHI carries a behavioral baseline.
+    - **Auditor evidence.**
+        - Cred-proxy logs.
+        - Policy repo.
+        - Kill-switch tabletop.
+        - Rotation-cadence report.
+        - Migration plan.
+        - Delegation-token sample (delegator, delegatee, scope, expiry, parent link).
+- **D2-L5 (Optimizing):** One governance program runs the identity estate, and each identity carries a cryptographic attestation.
+    - **Capability.**
+        - A unified agent-governance program operates in production (registry, lifecycle API, identity graph, scoped RBAC, audit integration).
+        - Identity binding carries cryptographic attestation.
+        - No coupled credentials remain.
+    - **Auditor evidence.**
+        - Registry export.
+        - ISPM dashboard.
+        - Attestation chain.
+        - Migration report.
+        - `ASI03`-tagged finding log.
+- **D2-L5+ (Leading Edge):** Each token binds to one task and one holder, and identity reconciles across vendors.
+    - **Capability.**
+        - Per-task capability tokens carry holder-binding, of the [[tenuo-warrant|Warrant]] class and available only as OSS.
+        - Multi-vendor identity federation reconciles across identity graphs.
+        - The organization participates in a SPIFFE or OIDC working group.
+    - **Auditor evidence.**
+        - Reconciliation report.
+        - Standards-WG contribution evidence.
 
 ### D3. Control & Least-Agency
 
@@ -276,18 +367,73 @@ The Control & Least-Agency domain authorizes agent actions (their scope, timing,
 
 Maps to: OWASP ASI02 (Tool Misuse and Exploitation — least-privilege tool profiles, Intent Gate PEP/PDP) and the OWASP Least-Agency principle (ASI09 in the published 2026 list covers Human-Agent Trust Exploitation, a separate concern from autonomy control), [[least-agency-principle|Least Agency Principle]], [[aws-agentic-ai-security-scoping-matrix|AWS Agentic AI Security Scoping Matrix]] (anchor for the agency-vs-autonomy distinction used throughout this domain), CSA Agentic Trust Framework progressive autonomy gates, CoSAI risk-based governance; Microsoft ZT4AI least-privilege — deny-by-default least-action design and the Agent Governance Toolkit policy decision point (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]). ZT4AI defines no progressive-autonomy tier model — that comes from the CSA ATF.
 
-The four action-risk tiers the L3 row names are auto, notify, confirm and block, from [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] §3.2; the OWASP ASI Top 10 names the least-agency principle and supplies no tiers.
+The four action-risk tiers the L3 rung names are auto, notify, confirm and block, from [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] §3.2; the OWASP ASI Top 10 names the least-agency principle and supplies no tiers.
 
 See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platform-native PDPs now sit at L3/L4 (AWS Bedrock AgentCore Policy, GA Mar 2026; Microsoft Agent Governance Toolkit, OSS). **Per-task capability tokens move from L5 to L5+ in D3 and D5, matching D2:** the production-maturity qualifier holds a capability at the leading-edge tier until a production-hardened implementation path exists, and the only implementation the D3 and D5 tooling maps carry is an early-stage open-source primitive. L5 keeps the approval token bound to the parameters a human approved. The L5+ formal-verification line is reframed: Cedar Analysis ships as OSS, so the leading-edge residual narrows to the MCP-wired, trajectory-aware extension of it. One prerequisite sits below every level: confirm the guard is consulted under each autonomy mode the deployment permits, then grade what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — an autonomy flag suppressed the tool allowlist outright, so a deployment presenting enumerated permissions as evidence had none. **Outside the model context tests whether an instruction reaching that context can rewrite the decision the enforcement point issues**, which a decision point inside the runtime hosting the model can satisfy; that shape meets the mediation criterion on the substitute evidence [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] names, the remaining L3 criteria are graded as written, and the assessment records that one vendor's code both runs the model and enforces the policy.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No tool-call policy; agents may call any tool | none |
-| L2 | Per-agent tool allowlist; [[hitl\|HITL]] on destructive actions defined informally | allowlist config |
-| L3 | A synchronous, fail-closed PDP outside the model context mediates every tool call (Cedar, OPA/Rego, or the permission rule set of the runtime hosting the model, deny-by-default); the four action-risk tiers implemented; each action's risk tier documented | PDP config; tier assignments; PDP-unreachability test showing deny; direct-gateway invocation test showing deny; in-process substitutes in the measurement protocol |
-| L4 | 4-stage autonomy promotion; per-action HITL; trifecta breaker; JIT elevation; SoD; sessions non-transferable, task-bound; ledger blocks aggregates; delegation full-chain, subset-only, capped depth | promotion runbook; HITL telemetry; trifecta log; JIT expiry log; SoD policy; session-replay test; agent-escape log; session-ledger sample (aggregate block); delegation-chain log (depth, subset) |
-| L5 | Per-request approval tokens cryptographically bound to the parameters approved; D7-driven risk-adaptive step-up; deny-by-default policy compiled each release, no drift; cryptographic SoD | Step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) |
-| L5+ | Per-task capability tokens bound to one task and one holder, attenuating at each delegation hop; [[camel-pattern\|CaMeL]]-style privileged/quarantined LLM split in production; formal verification of policy contradictions and vacuity over MCP; temporal-logic trajectory-aware policy | Per-task capability-token sample (holder-binding, task scope, attenuation at each hop); CaMeL production evidence; formal-verification reports; temporal-logic policy artifact |
+- **D3-L1 (Initial):** No tool-call policy governs the agents.
+    - **Capability.** An agent may call any tool.
+    - **Auditor evidence.** None.
+- **D3-L2 (Developing):** Tool access is enumerated per agent, and human approval is informal.
+    - **Capability.**
+        - A per-agent allowlist enumerates the tools an agent may call.
+        - [[hitl|HITL]] on destructive actions is defined informally.
+    - **Auditor evidence.** Allowlist config.
+- **D3-L3 (Defined):** A decision point outside the model context settles every tool call.
+    - **Capability.**
+        - A policy decision point outside the model context mediates every tool call, deny-by-default, in Cedar, OPA/Rego, or the permission rule set of the runtime hosting the model.
+        - The decision is synchronous and fails closed.
+        - The four action-risk tiers are implemented.
+        - Each action's risk tier is documented.
+    - **Auditor evidence.**
+        - PDP config.
+        - Tier assignments.
+        - PDP-unreachability test showing deny.
+        - Direct-gateway invocation test showing deny.
+        - In-process substitutes in the measurement protocol.
+- **D3-L4 (Managed):** The policy engine decides on session, task and delegation state as well as on the action.
+    - **Capability.**
+        - Autonomy is promoted through four stages.
+        - HITL applies per action.
+        - A trifecta breaker is active.
+        - Elevation is just-in-time and time-bounded.
+        - Segregation of duties is enforced.
+        - A session is non-transferable.
+        - A session is bound to its task.
+        - The session ledger blocks aggregates.
+        - Delegation is validated over the full chain, carries a subset of the delegator's grants, and is capped in depth.
+    - **Auditor evidence.**
+        - Promotion runbook.
+        - HITL telemetry.
+        - Trifecta log.
+        - JIT expiry log.
+        - SoD policy.
+        - Session-replay test.
+        - Agent-escape log.
+        - Session-ledger sample (aggregate block).
+        - Delegation-chain log (depth, subset).
+- **D3-L5 (Optimizing):** Cryptography carries the authority the rungs below hold in configuration.
+    - **Capability.**
+        - Per-request approval tokens are cryptographically bound to the parameters approved.
+        - D7 anomaly scores drive risk-adaptive step-up.
+        - A deny-by-default policy is compiled each release, with no drift.
+        - Segregation of duties is enforced cryptographically.
+    - **Auditor evidence.**
+        - Step-up logs.
+        - Per-release policy-compile artifact.
+        - Cryptographic SoD evidence.
+        - Approval-token sample (bound approver identity, parameters, expiry).
+- **D3-L5+ (Leading Edge):** A grant binds to one task and one holder, and formal methods verify the policy.
+    - **Capability.**
+        - Per-task capability tokens bind to one task and one holder, and attenuate at each delegation hop.
+        - A [[camel-pattern|CaMeL]]-style privileged/quarantined LLM split runs in production.
+        - Formal verification covers policy contradictions and vacuity over MCP.
+        - Policy is trajectory-aware and expressed in temporal logic.
+    - **Auditor evidence.**
+        - Per-task capability-token sample (holder-binding, task scope, attenuation at each hop).
+        - CaMeL production evidence.
+        - Formal-verification reports.
+        - Temporal-logic policy artifact.
 
 ### D4. Runtime & Guardrails
 
@@ -301,14 +447,62 @@ The Exchange's runtime control for disclosure of exposure-restricted data in out
 
 See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L3 input-and-output safety layer is GA and largely inside Azure entitlements, but the **L4 spine rests on preview and experimental controls: chain-of-thought auditing and groundedness checking have not reached GA** (Task Adherence preview; Groundedness Detection preview and English-only; AlignmentCheck experimental). Report D4 as raw + effective: the D3→D4 cap pulls effective D4 down wherever the PDP is weak. Sandbox coverage carries two questions: what the boundary contains, and when it starts. The first is now graded against a specification at L3: OS-level confinement with separate namespaces, a mandatory access control profile with unneeded capabilities dropped, clean termination of transient state and in-sandbox credentials, and platform-enforced compute and wall-clock ceilings. The second has no published answer for any harness the wiki tracks and is recorded as an open vendor question, per [[gemini-cli-workspace-trust-rce|the Gemini CLI advisory]], where isolation was correctly implemented and initialized after the harness had already executed attacker-supplied configuration.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No runtime guardrails, or only system-prompt instructions | none |
-| L2 | A provider default safety filter on input and a content-safety classifier on output | provider config |
-| L3 | In-path classifier detects direct and indirect [[prompt-injection\|prompt injection]]; platform lifecycle hooks intercept the agent loop; high-risk actions run in a per-task sandbox | hook code; firewall logs; sandbox and MAC profile config; indirect-injection test routed through the augmentation path |
-| L4 | CoT audit; code scan; groundedness check; injection-resistant boundary; semantic tool validation (dry-run, cross-family judge, session guardrails); human approval mandatory, high-blast-radius ops | AlignmentCheck logs; code-scan findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval |
-| L5 | Every L4 control enforced platform-level with no opt-out; multi-language bypass coverage measured against a current library; egress response-leak scanning; fail-closed latency and cost budgets | zero-opt-out coverage report; multi-language eval log; classifier refresh receipts; latency dashboard |
-| L5+ | Cryptographic TEE attestation that guardrails executed in an enclave; CaMeL split in production; measurable bypass-class evidence with vendor-acknowledged remediation cycles | TEE attestation logs; CaMeL deployment evidence; bypass-class results with remediation timeline |
+- **D4-L1 (Initial):** Nothing outside the prompt constrains the model at runtime.
+    - **Capability.** No runtime guardrail runs, or only system-prompt instructions do.
+    - **Auditor evidence.** None.
+- **D4-L2 (Developing):** Provider defaults screen what enters and what leaves.
+    - **Capability.**
+        - A provider default safety filter runs on input.
+        - A content-safety classifier runs on output.
+    - **Auditor evidence.** Provider config.
+- **D4-L3 (Defined):** Detection sits in the request path, and high-risk work runs confined.
+    - **Capability.**
+        - An in-path classifier detects direct and indirect [[prompt-injection|prompt injection]].
+        - Platform lifecycle hooks intercept the agent loop.
+        - High-risk actions run in a per-task sandbox.
+    - **Auditor evidence.**
+        - Hook code.
+        - Firewall logs.
+        - Sandbox and MAC profile config.
+        - Indirect-injection test routed through the augmentation path.
+- **D4-L4 (Managed):** Runtime control reaches the agent's reasoning and the meaning of its tool calls.
+    - **Capability.**
+        - A chain-of-thought audit covers the agent's reasoning.
+        - A code scan covers the code an agent generates.
+        - A groundedness check covers model output.
+        - An injection-resistant boundary separates trusted from untrusted context.
+        - Semantic tool validation computes a proposed state change by dry-run where the tool supports one.
+        - Semantic tool validation draws a judge from a different model family.
+        - Semantic tool validation evaluates cumulative session limits at the guardrail.
+        - Human approval is mandatory for high-blast-radius operations.
+    - **Auditor evidence.**
+        - AlignmentCheck logs.
+        - Code-scan findings.
+        - Grounding scores.
+        - Dry-run records.
+        - Judge findings (model family).
+        - Guardrail config (session-cumulative).
+        - Check-clean high-blast-radius approval.
+- **D4-L5 (Optimizing):** The platform enforces every guardrail, and each one carries a measured budget.
+    - **Capability.**
+        - Every L4 control is enforced platform-level with no opt-out.
+        - Multi-language bypass coverage is measured against a current library.
+        - Response-leak scanning runs at egress.
+        - Latency and cost budgets fail closed.
+    - **Auditor evidence.**
+        - Zero-opt-out coverage report.
+        - Multi-language eval log.
+        - Classifier refresh receipts.
+        - Latency dashboard.
+- **D4-L5+ (Leading Edge):** An enclave attestation shows that the guardrails ran, and bypass classes are measured.
+    - **Capability.**
+        - Cryptographic TEE attestation shows that guardrails executed in an enclave.
+        - A CaMeL split runs in production.
+        - Bypass-class evidence is measurable, with vendor-acknowledged remediation cycles.
+    - **Auditor evidence.**
+        - TEE attestation logs.
+        - CaMeL deployment evidence.
+        - Bypass-class results with remediation timeline.
 
 ### D5. Egress & Network
 
@@ -318,14 +512,56 @@ Maps to: OWASP ASI02, ASI07; CoSAI Model Context Protocol (MCP) Security (2026-0
 
 See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eight D5 capabilities are GA platform-native for a Microsoft shop (Azure API Management AI Gateway; MCP brokering with Entra/OAuth/JWT; Entra Internet Access prompt-injection + Shadow-AI; per-agent network policy; identity-scoped tokens). The three genuine off-stack residuals — MCP tool-integrity/rug-pull at L4, A2A authorization beyond identity at L4, per-task tokens at L5+ — do not block an L3 target. D5 investment is wasted ahead of D2 (the D2→D5 cap).
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | Agents have unrestricted network egress | none |
-| L2 | Per-agent outbound allowlist (DNS or proxy-level), with the egress reach of each allowlisted internal destination recorded | proxy config |
-| L3 | An agent-aware gateway sits in-path enforcing per-tool authorization; MCP calls brokered with OAuth/JWT; [[a2a-protocol\|A2A]] over TLS 1.3 with a documented profile; tool fingerprinting | gateway config; certs; A2A enforcement profile; CVE-tagged finding log |
-| L4 | Per-tool-call OAuth 2.1 token exchange; rug-pull and tool-poisoning detection; A2A content scanning; MCP CVE feed integrated; no direct orchestrator egress | token-exchange logs; detection rule sets; orchestrator network policy showing no outbound path |
-| L5 | Mesh-deployed proxy per agent with zero bypass; SSRF and direct-egress closed at the network layer; CVE feed auto-quarantines without HITL | mesh topology with zero-bypass proof; SSRF closure verification; auto-quarantine log |
-| L5+ | Per-task egress capability tokens bound to the upstream resource and to their holder; sigstore-for-MCP cross-tenant signing (proposal stage); behavioral A2A drift detection (research-stage); cross-cloud egress federation across two or more agent-aware proxies | per-task egress token sample (holder-binding, upstream-resource scope); verifier deployment; A2A drift rule library; cross-cloud reconciliation report |
+- **D5-L1 (Initial):** No control stands between an agent and the network.
+    - **Capability.** Agents have unrestricted network egress.
+    - **Auditor evidence.** None.
+- **D5-L2 (Developing):** Each agent's outbound destinations are enumerated, and the reach of each internal one is written down.
+    - **Capability.**
+        - Each agent has an outbound allowlist at DNS or proxy level.
+        - The egress reach of each allowlisted internal destination is recorded.
+    - **Auditor evidence.** Proxy config.
+- **D5-L3 (Defined):** An agent-aware gateway carries every call an agent makes outward.
+    - **Capability.**
+        - An agent-aware gateway sits in-path and enforces per-tool authorization.
+        - MCP calls are brokered with OAuth/JWT.
+        - [[a2a-protocol|A2A]] runs over TLS 1.3 under a documented profile.
+        - Tool fingerprinting is active.
+    - **Auditor evidence.**
+        - Gateway config.
+        - Certs.
+        - A2A enforcement profile.
+        - CVE-tagged finding log.
+- **D5-L4 (Managed):** Each call carries its own token, and the orchestrator reaches nothing directly.
+    - **Capability.**
+        - Token exchange under OAuth 2.1 runs per tool call.
+        - Rug-pull and tool-poisoning detection is active.
+        - A2A content scanning is active.
+        - An MCP CVE feed is integrated.
+        - The orchestrator holds no direct egress.
+    - **Auditor evidence.**
+        - Token-exchange logs.
+        - Detection rule sets.
+        - Orchestrator network policy showing no outbound path.
+- **D5-L5 (Optimizing):** A proxy per agent carries all egress, and quarantine runs without a human.
+    - **Capability.**
+        - A mesh-deployed proxy runs per agent with zero bypass.
+        - SSRF and direct egress are closed at the network layer.
+        - The CVE feed auto-quarantines without HITL.
+    - **Auditor evidence.**
+        - Mesh topology with zero-bypass proof.
+        - SSRF closure verification.
+        - Auto-quarantine log.
+- **D5-L5+ (Leading Edge):** Egress authority narrows to one task and one holder, and signing crosses tenants.
+    - **Capability.**
+        - Per-task egress capability tokens bind to the upstream resource and to their holder.
+        - Sigstore-for-MCP cross-tenant signing is in use, at proposal stage.
+        - Behavioral A2A drift detection is in use, at research stage.
+        - Cross-cloud egress federation spans two or more agent-aware proxies.
+    - **Auditor evidence.**
+        - Per-task egress token sample (holder-binding, upstream-resource scope).
+        - Verifier deployment.
+        - A2A drift rule library.
+        - Cross-cloud reconciliation report.
 
 ### D6. Data, Memory & RAG
 
@@ -343,14 +579,72 @@ L3 also brings the validation corpus inside the protection scope: it is held apa
 
 L3 and L4 now grade the Exchange's sensitive-data-limitation controls, L3 stating the scope and L4 showing that scope held across the derived copies ([`/go/datalimit/`](https://owaspai.org/go/datalimit/)). At L3 the retrieval corpus and any data the organization supplies for fine-tuning are scoped to the fields and records the application needs, with identifiers retained only to service data-removal requests or lifecycle management listed and excluded from training; the artifacts are the scope decision and the retained-identifier exception list. At L4 a removal decision is justified against measured effect on model performance rather than asserted, and deletions and corrections applied upstream propagate into the derived training and augmentation datasets, on a record linking a source record to the corpus entries and embeddings derived from it. Where the organization fine-tunes, exposure-restricted fields that cannot be removed are obfuscated, the mapping tables of any token-based approach are held under an access model at least as restrictive as the data they reverse, and the Exchange's two stated residuals are recorded. The L4 artifacts are the removal justification, that linkage record, and the recorded residuals.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No corpus provenance; no memory integrity; retrieval inherits source-system permissions unreviewed | none |
-| L2 | Retrievals name their origin in corpus terms; retrieval-widening extensions reviewed manually; a corpus classification scheme on paper at that layer's grain; a first reach assessment has run | classification scheme; retrieval origin-label sample; reach-assessment report |
-| L3 | Per-source trust attribution; RAG-injection and poisoning scanning; [[cognitive-file-integrity\|cognitive file integrity]] over prompt and identity files; **answer-time entitlement enforcement** | scan results; CFI baseline; oversharing-remediation record; authorization-layer record; scan-method and thresholds |
-| L4 | Trust-weighted retrieval; context-poisoning detector wired to the SIEM; documented PoisonedRAG-class defense; continuous oversharing posture management with label-aware DLP; rollback tested | provenance-scoring config; detector-to-SIEM wiring; DLP response-gating policy; rollback drill; measured removal justification; source-to-derived linkage record; recorded obfuscation residuals |
-| L5 | Real-time corpus-drift detection; a documented poisoning-rate bound; cross-source contradiction detection; system-prompt confidentiality; answer-time semantic-boundary enforcement | drift dashboard; threshold-justification memo; canary-token log; quarterly rollback drill with RTO |
-| L5+ | Per-document signing and hash chain at ingest (no shipping product); formal taint lattice for cross-source contradiction (research-stage); zero-knowledge proofs for sensitive retrievals | attestation chain; taint-lattice evidence; ZK-proof verifier logs |
+- **D6-L1 (Initial):** Nothing records where retrieved content came from or who may read it.
+    - **Capability.**
+        - No corpus provenance exists.
+        - No memory integrity control runs.
+        - Retrieval inherits source-system permissions, unreviewed.
+    - **Auditor evidence.** None.
+- **D6-L2 (Developing):** The reachable corpus is labelled, and its reach is assessed once.
+    - **Capability.**
+        - Retrievals name their origin in corpus terms.
+        - Retrieval-widening extensions are reviewed manually.
+        - A corpus classification scheme exists on paper at that layer's grain.
+        - A first reach assessment has run.
+    - **Auditor evidence.**
+        - Classification scheme.
+        - Retrieval origin-label sample.
+        - Reach-assessment report.
+- **D6-L3 (Defined):** Every retrieval is bounded by what the asker may read, and the corpus itself is scanned.
+    - **Capability.**
+        - Every source carries a trust attribution.
+        - RAG-injection scanning runs.
+        - Poisoning scanning runs.
+        - Prompt and identity files carry [[cognitive-file-integrity|cognitive file integrity]].
+        - **Answer-time entitlement enforcement** runs.
+    - **Auditor evidence.**
+        - Scan results.
+        - CFI baseline.
+        - Oversharing-remediation record.
+        - Authorization-layer record.
+        - Scan-method and thresholds.
+- **D6-L4 (Managed):** Provenance weights retrieval, and every data decision carries its own evidence.
+    - **Capability.**
+        - Retrieval is trust-weighted.
+        - A context-poisoning detector is wired to the SIEM.
+        - A PoisonedRAG-class defense is documented.
+        - Continuous oversharing posture management runs.
+        - Label-aware DLP gates responses.
+        - Rollback is tested.
+    - **Auditor evidence.**
+        - Provenance-scoring config.
+        - Detector-to-SIEM wiring.
+        - DLP response-gating policy.
+        - Rollback drill.
+        - Measured removal justification.
+        - Source-to-derived linkage record.
+        - Recorded obfuscation residuals.
+- **D6-L5 (Optimizing):** Corpus drift and contradiction are detected as they happen, and the answer boundary is enforced.
+    - **Capability.**
+        - Corpus-drift detection runs in real time.
+        - A poisoning-rate bound is documented.
+        - Cross-source contradiction detection runs.
+        - System-prompt confidentiality is enforced.
+        - Answer-time semantic-boundary enforcement runs.
+    - **Auditor evidence.**
+        - Drift dashboard.
+        - Threshold-justification memo.
+        - Canary-token log.
+        - Quarterly rollback drill with RTO.
+- **D6-L5+ (Leading Edge):** Cryptography carries document provenance and the privacy of a retrieval.
+    - **Capability.**
+        - Per-document signing and a hash chain run at ingest (no shipping product).
+        - A formal taint lattice covers cross-source contradiction (research-stage).
+        - Zero-knowledge proofs cover sensitive retrievals.
+    - **Auditor evidence.**
+        - Attestation chain.
+        - Taint-lattice evidence.
+        - ZK-proof verifier logs.
 
 ### D7. Observability & Detection
 
@@ -361,18 +655,59 @@ Maps to: NIST CSF 2.0 Detect, MITRE ATLAS detection layer, [[agent-observability
 See [[agentic-ai-security-cmm-d7-observability|the D7 deep dive]]. D7 carries the heaviest run-rate cost of the nine domains: high agent-log volume into the SIEM makes **log tiering** (route low-fidelity trace spans to a cheaper data-lake tier; reserve the analytics tier for detections that fire) the primary cost lever. The OTel `gen_ai.*` conventions remain experimental, and behavioral-detection products such as Defender XDR AI-agent detection are preview-stage and require platform licensing. Effective D7 is capped by D2 (the D2→D7 cap), so per-agent identity comes first and no monitoring product substitutes for it.
 
 > [!contradiction] Tension with the Stripe/Bullen architectural-containment view (mostly resolved)
-> [[breaking-the-lethal-trifecta-talk|Andrew Bullen's Unprompted talk]] presents a production agent platform with **no D7-style behavioral observability layer at all** — Stripe's defense is architectural containment ([[smokescreen|Smokescreen]] + agent-tag CI + [[toolshed|Toolshed]] + `ToolAnnotations` + HITL on sensitive writes). In Q&A Bullen explicitly says detective controls "have a place, especially for customer-facing products" but Stripe leans on "more deterministic, architectural controls." Implication for the CMM: a sophisticated practitioner with strong D3/D4/D5 may legitimately score lower on D7 and still have a sound program. The L4 row below requires behavioral monitoring + AI-SPM + quarterly multi-tool red-team — a Stripe-tier architecture would meet the CMM's safety bar without all of those, and forcing them would be controls-for-controls'-sake.
+> [[breaking-the-lethal-trifecta-talk|Andrew Bullen's Unprompted talk]] presents a production agent platform with **no D7-style behavioral observability layer at all** — Stripe's defense is architectural containment ([[smokescreen|Smokescreen]] + agent-tag CI + [[toolshed|Toolshed]] + `ToolAnnotations` + HITL on sensitive writes). In Q&A Bullen explicitly says detective controls "have a place, especially for customer-facing products" but Stripe leans on "more deterministic, architectural controls." Implication for the CMM: a sophisticated practitioner with strong D3/D4/D5 may legitimately score lower on D7 and still have a sound program. The L4 rung below requires behavioral monitoring + AI-SPM + quarterly multi-tool red-team — a Stripe-tier architecture would meet the CMM's safety bar without all of those, and forcing them would be controls-for-controls'-sake.
 >
 > **Resolution (2026-05-04 revision):** the new [[agentic-ai-security-cmm-dependency-rules|effective-score aggregation]] now reports D7 raw + the strategic-rationale field rather than dragging the headline rating down to D7's level. Stripe's matrix reads "L4 typical / L2 D7 (intentional trade-off — D3+D5 architectural containment)" instead of "L1 overall." A future candidate rule (DR-C002 in the dependency-rules registry) considers whether D5 strength can *raise* the D7 ceiling for architectural-containment archetypes; that's a v2+ design decision (negative-rules / floor-relaxation) parked as an open question on the dependency-rules page.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No agent-specific telemetry; only the vendor console | none |
-| L2 | A tool-call audit log records action history with user attribution | sample log |
-| L3 | Agents emit OpenTelemetry `gen_ai.*` spans; a trace backend sits in-path; logs carry per-agent identity multiplexing; every tool call meets a minimum action-log schema with a rollback reference | trace samples; span-schema validation; action-log conformance check |
-| L4 | Behavioral baselines/drift in SIEM/SOAR; AI-SPM; multi-category red-team eval; session-drift signal, routed disposition; control-state-change monitoring (HITL, self-relax); log integrity under attack | behavioral dashboards; multi-tool eval reports, `AML.T####`/AIVSS tags; session-drift disposition log (routed or suspended); control-state-change alert samples; adversarial log-integrity test record |
-| L5 | Agent-aware SIEM playbooks in production; baselines hold a documented [[prompt-volume-to-alert-ratio\|prompt-volume-to-alert ratio]] for ≥1 quarter; every alert wires to a controls update within SLA | playbook samples; ratio dashboard ≥1 quarter; actionable-rate report; SLA-bounded update log |
-| L5+ | Cascade-detection rule library with tuned thresholds for multi-agent risk (research-stage); cross-agent joint-distribution baselines; model forward-pass activation monitoring | cascade rule registry with thresholds; joint-baseline statistics; activation-monitor evidence |
+- **D7-L1 (Initial):** Nothing outside the vendor console records what an agent did.
+    - **Capability.** No agent-specific telemetry exists, and only the vendor console is available.
+    - **Auditor evidence.** None.
+- **D7-L2 (Developing):** Action history becomes reviewable, attributed to the human who asked.
+    - **Capability.** A tool-call audit log records action history with user attribution.
+    - **Auditor evidence.** Sample log.
+- **D7-L3 (Defined):** Telemetry the organization holds reconstructs every action an agent takes.
+    - **Capability.**
+        - Agents emit OpenTelemetry `gen_ai.*` spans.
+        - A trace backend sits in-path.
+        - Logs carry per-agent identity multiplexing.
+        - Every tool call meets a minimum action-log schema with a rollback reference.
+    - **Auditor evidence.**
+        - Trace samples.
+        - Span-schema validation.
+        - Action-log conformance check.
+- **D7-L4 (Managed):** Detection runs on that telemetry, and the pipeline watches the controls as well as the agents.
+    - **Capability.**
+        - Behavioral baselines and drift detection reach the SIEM/SOAR.
+        - AI-SPM is deployed.
+        - A multi-category red-team eval runs.
+        - A session-drift signal carries a routed disposition.
+        - Control-state-change monitoring covers HITL steps and agent self-relaxation.
+        - Log integrity holds under attack.
+    - **Auditor evidence.**
+        - Behavioral dashboards.
+        - Multi-tool eval reports, `AML.T####`/AIVSS tags.
+        - Session-drift disposition log (routed or suspended).
+        - Control-state-change alert samples.
+        - Adversarial log-integrity test record.
+- **D7-L5 (Optimizing):** Playbooks and a measured alert rate close the loop back into the controls.
+    - **Capability.**
+        - Agent-aware SIEM playbooks run in production.
+        - Baselines hold a documented [[prompt-volume-to-alert-ratio|prompt-volume-to-alert ratio]] for ≥1 quarter.
+        - Every alert wires to a controls update within an SLA.
+    - **Auditor evidence.**
+        - Playbook samples.
+        - Ratio dashboard ≥1 quarter.
+        - Actionable-rate report.
+        - SLA-bounded update log.
+- **D7-L5+ (Leading Edge):** Detection reaches across agents and into the model's forward pass.
+    - **Capability.**
+        - A cascade-detection rule library carries tuned thresholds for multi-agent risk (research-stage).
+        - Cross-agent joint-distribution baselines are held.
+        - Model forward-pass activation monitoring runs.
+    - **Auditor evidence.**
+        - Cascade rule registry with thresholds.
+        - Joint-baseline statistics.
+        - Activation-monitor evidence.
 
 ### D8. Supply Chain & AI-BOM
 
@@ -384,14 +719,64 @@ See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. A model-consum
 
 D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No model, skill, or dependency provenance; no AI-BOM | none |
-| L2 | Model and library versions tracked; model cards collected; an AI-component and dataset inventory with source, version, hash, maintainer, date; model and development documentation access-controlled | inventory incl. dataset provenance records; documentation register |
-| L3 | AI-BOM generated at build in a standard format; SCA in CI with lockfiles; acquired models assessed pre-execution or Safetensors-only loading; pre-install and supplier assessment; own artifacts signed | AI-BOM artifact; sigstore log; lockfile policy; model-assessment report; supplier assessment record |
-| L4 | Every artifact signature-verified at load; SLSA Build L2–L3 for own artifacts; runtime AI-BOM reconciles against build; cognitive-file integrity baselines; disclosures acted on within SLA | sig-verified registry; reconciliation report; ID-tagged ML-VEX feed |
-| L5 | Closed loop in production — provenance, AI-BOM, and posture reconcile, and every finding produces a controls update within a published SLA; SLSA Build L3; deploy gating blocks unverified artifacts | closed-loop diagram with SLA evidence; SLSA L3 attestation; reconciliation report; ML-VEX feed |
-| L5+ | Cross-vendor AI-BOM federation (aspirational); hermetic reproducible builds beyond SLSA Build L3 (unspecified for stochastic weights); cryptographic name→binary signing for MCP servers | federation reconciliation; named-contributor evidence |
+- **D8-L1 (Initial):** Nothing records where a model, skill, or dependency came from.
+    - **Capability.**
+        - No model, skill, or dependency provenance exists.
+        - No AI-BOM exists.
+    - **Auditor evidence.** None.
+- **D8-L2 (Developing):** Acquired components and datasets are inventoried, and their documentation is controlled.
+    - **Capability.**
+        - Model and library versions are tracked.
+        - Model cards are collected.
+        - An AI-component and dataset inventory carries source, version, hash, maintainer, date.
+        - Model and development documentation is access-controlled.
+    - **Auditor evidence.**
+        - Inventory incl. dataset provenance records.
+        - Documentation register.
+- **D8-L3 (Defined):** An acquired artifact is assessed before it loads, and the build emits its own bill of materials.
+    - **Capability.**
+        - An AI-BOM is generated at build in a standard format.
+        - SCA runs in CI with lockfiles.
+        - Acquired models are assessed pre-execution, or a Safetensors-only load policy holds.
+        - A pre-install assessment runs.
+        - A supplier assessment runs.
+        - The organization's own artifacts are signed.
+    - **Auditor evidence.**
+        - AI-BOM artifact.
+        - Sigstore log.
+        - Lockfile policy.
+        - Model-assessment report.
+        - Supplier assessment record.
+- **D8-L4 (Managed):** Each artifact is verified at load, and the runtime inventory is reconciled against the build.
+    - **Capability.**
+        - Every artifact is signature-verified at load.
+        - Build provenance reaches SLSA Build L2–L3 for the organization's own artifacts.
+        - The runtime AI-BOM reconciles against the build.
+        - Cognitive-file integrity baselines are held.
+        - Disclosures are acted on within an SLA.
+    - **Auditor evidence.**
+        - Sig-verified registry.
+        - Reconciliation report.
+        - ID-tagged ML-VEX feed.
+- **D8-L5 (Optimizing):** Reconciliation runs in production, and each finding produces a controls update on a published clock.
+    - **Capability.**
+        - A closed loop runs in production, reconciling provenance, AI-BOM, and posture.
+        - Every finding produces a controls update within a published SLA.
+        - Build provenance reaches SLSA Build L3.
+        - Deploy gating blocks unverified artifacts.
+    - **Auditor evidence.**
+        - Closed-loop diagram with SLA evidence.
+        - SLSA L3 attestation.
+        - Reconciliation report.
+        - ML-VEX feed.
+- **D8-L5+ (Leading Edge):** Provenance federates across vendors, and a published name binds to one binary.
+    - **Capability.**
+        - Cross-vendor AI-BOM federation runs (aspirational).
+        - Hermetic reproducible builds reach beyond SLSA Build L3 (unspecified for stochastic weights).
+        - Cryptographic name-to-binary signing covers MCP servers.
+    - **Auditor evidence.**
+        - Federation reconciliation.
+        - Named-contributor evidence.
 
 ### D9. Operations & Human Factors
 
@@ -407,14 +792,75 @@ The validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic A
 
 L3 also grades what the program tells its users. A published disclosure informs users that an AI model is involved, and each of the five properties `AI TRANSPARENCY` lists is either covered in that disclosure or recorded as omitted ([`/go/aitransparency/`](https://owaspai.org/go/aitransparency/)). The artifacts are the published disclosure and that coverage record. Depth stays ungraded: the Exchange states no measure of sufficiency for an individual property, so a one-line answer and a ten-page answer score alike, and the bound this rung sets on the withholding review at D1 reaches coverage only.
 
-| Level | Capability | Auditor evidence |
-|---|---|---|
-| L1 | No guardrail SLAs, decommission procedure, HITL-fatigue tracking, or system-prompt confidentiality controls | none |
-| L2 | A runbook documents guardrail fail behavior, agent decommission and credential rotation on owner departure, HITL queue monitoring, and basic system-prompt protection | runbook artifact |
-| L3 | Guardrail budgets, tested fail-mode; orphan reaper (SLA); HITL rate/queue-age; deprecation policy; high-risk categories defined; tamper-evident approval record; min delay + SoD, highest-risk | latency/cost dashboard; reaper logs; HITL telemetry; canary proof; community participation; high-risk category definition; tamper-evident audit extract; delay-and-multi-approver config |
-| L4 | HITL-fatigue metrics; benign vs adversarial drift; decommission drills; version-pinning; dependency map; involvement measure + method; oversight-path test across techniques; approval-rate limits | fatigue KPIs; benign-drift dashboard; drill report; AI-VEX feed; involvement-measure record (method stated); oversight red-team report; approval-rate-limit config with baseline-exceedance alerts |
-| L5 | Closed-loop improvement with a published SLA per severity; two attested quarters of zero orphaned credentials, prompt leaks, and undeprecated models; quarterly continuity test | SLA-bounded update log; clean-state attestations; continuity-test report; fatigue within thresholds |
-| L5+ | Externally published organization-level AI risk-observability metrics; named contribution of drift patterns and bypass classes to standards bodies; coordinated-disclosure leadership | external dataset; named contribution evidence; disclosure leadership artifacts |
+- **D9-L1 (Initial):** No operating discipline surrounds the agents.
+    - **Capability.**
+        - No guardrail SLAs exist.
+        - No decommission procedure exists.
+        - No HITL-fatigue tracking exists.
+        - No system-prompt confidentiality control exists.
+    - **Auditor evidence.** None.
+- **D9-L2 (Developing):** A runbook sets out how the operational controls behave.
+    - **Capability.**
+        - The runbook documents guardrail fail behavior.
+        - The runbook documents agent decommission and credential rotation on owner departure.
+        - The runbook documents HITL queue monitoring.
+        - The runbook documents basic system-prompt protection.
+    - **Auditor evidence.** Runbook artifact.
+- **D9-L3 (Defined):** The operating model is measured against a budget and leaves records.
+    - **Capability.**
+        - Guardrail budgets are set, with a tested fail-mode.
+        - An orphan reaper runs on an SLA.
+        - HITL approval rate and queue age are tracked.
+        - A deprecation policy is published.
+        - High-risk categories are defined.
+        - Each approval writes a tamper-evident record.
+        - The highest-risk categories carry a minimum delay and segregation of duties.
+    - **Auditor evidence.**
+        - Latency/cost dashboard.
+        - Reaper logs.
+        - HITL telemetry.
+        - Canary proof.
+        - Community participation.
+        - High-risk category definition.
+        - Tamper-evident audit extract.
+        - Delay-and-multi-approver config.
+- **D9-L4 (Managed):** Measurement reaches the reviewer, and the surrounding routine runs on a clock.
+    - **Capability.**
+        - HITL-fatigue metrics are tracked.
+        - Benign drift is separated from adversarial drift.
+        - Decommission drills run.
+        - Model versions are pinned.
+        - A dependency map is maintained.
+        - An involvement measure is held, with its method stated.
+        - The oversight path is tested across techniques.
+        - Approval-rate limits are enforced.
+    - **Auditor evidence.**
+        - Fatigue KPIs.
+        - Benign-drift dashboard.
+        - Drill report.
+        - AI-VEX feed.
+        - Involvement-measure record (method stated).
+        - Oversight red-team report.
+        - Approval-rate-limit config with baseline-exceedance alerts.
+- **D9-L5 (Optimizing):** The loop closes on a published clock, and the clean state is attested.
+    - **Capability.**
+        - Closed-loop improvement runs under a published SLA per severity.
+        - Two attested quarters show zero orphaned credentials, prompt leaks, and undeprecated models.
+        - A continuity test runs quarterly.
+    - **Auditor evidence.**
+        - SLA-bounded update log.
+        - Clean-state attestations.
+        - Continuity-test report.
+        - Fatigue within thresholds.
+- **D9-L5+ (Leading Edge):** The program's measurements and findings reach the field.
+    - **Capability.**
+        - Organization-level AI risk-observability metrics are published externally.
+        - A named contribution carries drift patterns and bypass classes to standards bodies.
+        - The organization leads coordinated disclosure.
+    - **Auditor evidence.**
+        - External dataset.
+        - Named contribution evidence.
+        - Disclosure leadership artifacts.
 
 ## Mapping to deployment shapes
 
