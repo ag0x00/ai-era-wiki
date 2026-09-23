@@ -2,11 +2,11 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-22
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 93
+page_count: 94
 ---
 
 # Papers Index
@@ -63,6 +63,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[guardrails-beyond-vibes-talk|Guardrails Beyond Vibes: Shipping Security Agents]] — Source: Unprompted Conference 2026, Stage 1 Lecture 05 (Jeffrey Zhang + Siddh Shah, Stripe).
 - [[hooking-coding-agents-with-cedar-talk|Hooking Coding Agents with Cedar]] — Source: Conference-only materials — slides PDF + audio-transcript via attendee Google Drive share.
 - [[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]] — Source: [Conference abstracts page](https://unpromptedcon.org/abstract-march2026/) · [Conference agenda](https://unpromptedcon.org/#) · U...
+- [[irregular-addressing-recent-incidents|Irregular Evaluation Incident Findings]] — Source:...
 - [[jfrog-ssc-state-of-union-2026|Software Supply Chain Security State of the Union]] — JFrog's annual report on the state of the software supply chain, built on three inputs: JFrog Platform telemetry (the platform held 18.2...
 - [[llamafirewall-2025|LlamaFirewall Guardrail Paper]] — Source paper for LlamaFirewall, Meta's open-source agent guardrail framework: "LlamaFirewall: An open source guardrail system for buildin...
 - [[llm-attack-navigator|LLM ATT&CK Navigator]] — Source: Kyla Guru, Alex Moix, and Jacob Klein,...

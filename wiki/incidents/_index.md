@@ -2,11 +2,11 @@
 type: domain
 title: "Incidents"
 created: 2026-04-30
-updated: 2026-09-17
+updated: 2026-09-22
 tags: [domain, incidents]
 status: developing
 subdomain_of: ""
-page_count: 30
+page_count: 31
 ---
 
 # Incidents Index
@@ -88,6 +88,7 @@ No incident page is currently maintained as a rolling tally. [[mcp-cves-q1-2026|
 - [[cve-2025-62453-copilot-vscode-prompt-injection|CVE-2025-62453 Copilot Prompt Injection]] — NVD's description for this CVE is a single sentence. The deeper attack mechanism documented here is inferred from the related...
 - [[echoleak-copilot-zero-click|EchoLeak Zero-Click Copilot Exfiltration]]
 - [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]]
+- [[gemini-irregular-evaluation-incident|Gemini Irregular Evaluation Incident]] — Google confirmed on 2026-09-18 that a Gemini model gained access to protected systems at three companies in May 2026, during a cybersecur...
 - [[geminijack-gemini-enterprise-injection|GeminiJack Gemini Enterprise Zero-Click Injection]]
 - [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]
 - [[gtg-1002-ai-orchestrated-espionage|GTG-1002: AI-Orchestrated Espionage Campaign]] — The first publicly disclosed APT-class campaign in which an AI agent, rather than a human operator, drove the majority of tactical operat...

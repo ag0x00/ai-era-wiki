@@ -6,7 +6,7 @@ updated: 2026-05-14
 tags: [domain, playbooks, assessor-guide]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 2
 scope_axis:
   - sec-of-ai
   - sec-against-ai

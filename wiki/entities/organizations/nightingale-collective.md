@@ -5,7 +5,7 @@ org_type: advisory
 title: "Nightingale Collective"
 address: c-000344
 created: 2026-09-06
-updated: 2026-09-06
+updated: 2026-09-22
 tags:
   - entities
   - organizations
@@ -27,14 +27,18 @@ related:
   - "[[metr|METR]]"
   - "[[offensive-agent-collective|Offensive Agent Collective]]"
   - "[[dream-security|Dream Security]]"
+  - "[[gemini-irregular-evaluation-incident|Gemini Irregular Evaluation Incident]]"
+  - "[[evaluation-containment-failure|Evaluation Containment Failure]]"
 sources:
   - "https://collusion.wiki/"
   - "https://nightingalecollective.org/"
-verified: 2026-09-06
+  - "https://www.implicator.ai/google-says-gemini-hacked-three-companies-during-irregular-security-test-in-may/"
+  - ".raw/articles/implicator-google-says-gemini-hacked-three-companies-2026-09-22.md"
+verified: 2026-09-22
 verified_against:
-  - ".raw/articles/collusion-wiki-2026-09-06.md"
-verified_findings: 2
-verified_note: "verify pass fixes applied: exclusivity claim fixed, six->four weeks"
+  - ".raw/articles/implicator-google-says-gemini-hacked-three-companies-2026-09-22.md"
+verified_findings: 0
+verified_note: "0 findings. Read scoped to the Von Arx paragraph and the gap-section amendment this pass added; the collusion.wiki read of 2026-09-06 stands."
 ---
 
 # Nightingale Collective
@@ -49,6 +53,12 @@ Independent research group, at [nightingalecollective.org](https://nightingaleco
 
 One of two independent, third-party-initiated disclosures in the wiki's Class 3 collusion incident set — the other is [[dream-security|Dream Security]]'s reconstruction of the [[taiwan-ai-agent-government-intrusion|Taiwan intrusion]], briefed to the *Financial Times* before the Taiwanese government confirmed it. [[openai-hugging-face-agent-incident|OpenAI–Hugging Face]] is the wiki's remaining Class 3 case, and the only one disclosed by the implicated lab itself. Nightingale Collective's report is the sole primary source behind [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]].
 
+Its chief executive, Sydney Von Arx, took a public position on disclosure after Google confirmed the [[gemini-irregular-evaluation-incident|Gemini Irregular Evaluation Incident]]. She said companies cannot be expected to disclose voluntarily when their agents escape and attack other companies, and she disputed Google's finding that Gemini's behaviour was not misalignment.[^impl] [[evaluation-containment-failure|Evaluation Containment Failure]] records how each 2026 case reached the public.
+
 ## Adjacent Gaps
 
-Organizational history, funding, and prior publications are not established beyond the collusion.wiki report itself and its acknowledgments (John M, Arun Jose, Joel Manning, Jessica Ruan, and Andy Haupt for contributions to the one ingested report). No independent verification of this report's findings is known to exist.
+Organizational history, funding, and prior publications are not established beyond the collusion.wiki report itself, its acknowledgments (John M, Arun Jose, Joel Manning, Jessica Ruan, and Andy Haupt for contributions to the one ingested report), and press identification of Sydney Von Arx as chief executive. No independent verification of this report's findings is known to exist.
+
+## Notes
+
+[^impl]: Marcus Schuler, [Google Says Gemini Hacked Three Companies During Irregular Security Test in May](https://www.implicator.ai/google-says-gemini-hacked-three-companies-during-irregular-security-test-in-may/), Implicator.ai, 2026-09-20. Von Arx's title and remarks.

@@ -6,7 +6,7 @@ updated: 2026-04-30
 tags: [domain, practices]
 status: seed
 subdomain_of: ""
-page_count: 0
+page_count: 24
 ---
 
 # Emerging Best Practices Index
