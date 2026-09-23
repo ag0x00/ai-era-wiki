@@ -2,7 +2,7 @@
 type: concept
 title: "MCP Security"
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-22
 tags:
   - concepts
   - mcp
@@ -31,8 +31,13 @@ related:
   - "[[artifactory]]"
   - "[[agentdesktop]]"
   - "[[falcon-guardian]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
+verified: 2026-09-22
+verified_against: []
+verified_findings: 0
+verified_note: "ATHF occurrence line read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 low fixed; rest of page not re-verified"
 ---
 
 # MCP Security
@@ -127,6 +132,7 @@ The last two threat rows read differently against such a server. Unauthenticated
 - [[mcp-exposure-measurements|MCP Exposure Measurements]] — the four published measurements of MCP risk, what each supports, and which to cite
 - [[agent-identity-architecture|AI Agent Identity Architecture]] — agent identity is exercised at the MCP boundary
 - [[agent-observability|Agent Observability]] — MCP traffic is part of the full-stack observability requirement
+- [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] — a defensive threat-hunting framework whose Level 3 connects hunting agents over MCP to SIEM search, EDR telemetry and ticketing, and lets them write findings back into hunt records; the launch post specifies no read-only scoping, credential handling or approval step for those connections
 
 ## Related Concepts
 

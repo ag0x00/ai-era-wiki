@@ -3,7 +3,7 @@ type: architecture
 title: "Agentic SOC Threat Hunting Surface"
 address: c-000198
 created: 2026-06-03
-updated: 2026-06-03
+updated: 2026-09-22
 tags:
   - architectures
   - agentic-soc
@@ -22,11 +22,20 @@ related:
   - "[[ai-automation-boundary-threat-hunting-talk]]"
   - "[[sift-claude-code-dfir-talk]]"
   - "[[cyber-poverty-line]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
+  - "[[agent-memory-isolation]]"
+  - "[[agentic-soc-autonomy-ladders]]"
 sources:
   - "[[ai-automation-boundary-threat-hunting-talk]]"
   - "[[sift-claude-code-dfir-talk]]"
   - "[[security-data-pipeline-architecture]]"
   - "[[agentic-soc-reference-architecture]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
+verified: 2026-09-22
+verified_against:
+  - ".raw/articles/agentic-threat-hunting-framework-2026-09-22.md"
+verified_findings: 0
+verified_note: "ATHF insertions checked against post; 1 low (MCP connection overstated) fixed; ladders back-link added"
 ---
 
 # Agentic SOC Threat Hunting Surface
@@ -50,6 +59,7 @@ The tools and data the hunt agent calls:
 - **Telemetry, search-in-place.** Hunting queries data where it lives rather than requiring everything pre-ingested into one store. The [[security-data-pipeline-architecture|security data pipeline architecture]]'s search-in-place and on-demand correlation layer is the concrete substrate: federated queries over object storage, data lakes, and live sources, with schema applied at read time. This is what makes hunting over schema-diverse telemetry tractable without a centralized SIEM holding all of it.
 - **Threat-intelligence grounding.** Threat-intel-led hunts begin from an external signal — a campaign report, a new technique, an IOC set — that the agent turns into hypotheses. The RA grounds this from the Data & Knowledge plane's threat-intel knowledge graph.
 - **A forensic / investigation toolset.** Where a hunt crosses into deep host or disk analysis, the agent orchestrates forensic tooling rather than raw queries. [[sift-claude-code-dfir-talk|Protocol SIFT]] is the dated instance: Claude Code wired over MCP to the SANS SIFT digital-forensics workstation, sequencing timeline generation, memory analysis, and malware sweeps from a natural-language "find evil" prompt — an agent orchestrating deterministic forensic utilities on a real workstation. (SANS frames it as experimental, not forensically validated; the deterministic utilities remain the sole source of analytical output.)
+- **Hunt memory.** The agent reads the team's record of past hunts: each hunt's hypothesis, queries, findings and follow-ups, kept in one structured format and searchable across the library. Without that record the agent drafts hypotheses from what the model already knows and repeats hunts the team has run. The [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] is the dated open-source instance: every hunt is a markdown file in a fixed four-step format (Learn, Observe, Check, Keep), a CLI validates the files and tracks ATT&CK coverage, and a context file describes the environment to the assistant. The record is also a write target, because the agent adds its findings to it, so it carries the same poisoning and write-authorization exposure as any shared agent memory, which [[agent-memory-isolation|Agent Memory Isolation]] governs.
 
 The **human-authority boundary** for hunting is the automation boundary itself, and it sits earlier than it does for triage. The agent runs the hunt — generates, refines, narrows — but the human hunter owns hypothesis selection at the start (which questions are worth asking, especially the novel ones an agent would not propose) and judgment on the findings at the end (whether a confirmed lead is a real threat or a plausible artifact). The agent accelerates the middle; the human keeps the ends. Any step from "the agent found this" to "the agent acted on this" crosses the boundary explicitly and is gated separately.
 
@@ -82,6 +92,7 @@ Real tools and patterns for hunting, deterministic and AI, dated and swappable. 
 | Hypothesis-and-hunt agent | Orchestrator-subagent hunt systems automating query generation, iterative refinement, and narrowing ([[ai-automation-boundary-threat-hunting-talk\|Datadog]]); single-agent → orchestrator-subagent migration is the reference pattern | Practitioner-reported from internal deployment; not a shipped commercial product |
 | Agentic DFIR / forensic hunt | [[sift-claude-code-dfir-talk\|Protocol SIFT]] — Claude Code over MCP orchestrating the SANS SIFT forensic toolset from a natural-language prompt | Experimental research initiative; explicitly not forensically validated or court-admissible |
 | Vendor hunt assists | Hunt-oriented copilots and agents in the major stacks — Microsoft Security Copilot, Google SecOps (Gemini), CrowdStrike — generating and running hunt queries from natural language | Mixed GA/preview across vendors; re-verify current name and status at use |
+| Hunt record and memory | Structured, searchable hunt history the agent reads and writes: [[agentic-threat-hunting-framework-athf\|ATHF]] keeps each hunt as a four-step markdown record with a validating CLI, and at its upper levels describes agents that reach SIEM, EDR and ticketing over MCP | Open-source release from one vendor; no published evaluation |
 | ATT&CK as hunt scaffold | MITRE ATT&CK technique and tactic catalogue as the structured basis for coverage-driven hunts and for tagging hunt findings | GA reference; plain-text catalogue, no wiki page |
 
 The load-bearing row is the **hypothesis-and-hunt agent**. The search substrate and ATT&CK scaffold are mature and mechanism-agnostic; what is new and unsettled is the agent that generates and refines hypotheses at scale, and the orchestrator-subagent topology that lets it fan out. That layer is practitioner-reported rather than independently benchmarked, which is why the automation boundary is drawn around it rather than assumed away.
@@ -115,4 +126,5 @@ AI is a barrier-lowering enabler at the small-team floor in a specific way for h
 - **Reference architecture:** the [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]] and its [[agentic-soc-reference-architecture#4-data--knowledge-plane|Data & Knowledge plane]] (telemetry and threat-intel grounding) and [[agentic-soc-reference-architecture#1-orchestration-plane|Orchestration plane]] (supervisor-worker hunt decomposition); the per-function table places hunting on these planes, gated by D1/D3/D5.
 - **Maturity model:** the [[agentic-soc-cmm|Agentic SOC CMM]] and its [[agentic-soc-cmm#the-gating-rule|gating rule]]. Hunting's governing domains deep-dive at [[agentic-soc-cmm-d1-telemetry-data-readiness|D1 Telemetry & Data Readiness]] (the data to hunt over), [[agentic-soc-cmm-d3-evaluation-ground-truth|D3 Evaluation & Ground-Truth]] (judging hypothesis quality; the gate on hunt-and-act), and [[agentic-soc-cmm-d5-observability-oversight|D5 Observability & Oversight]] (seeing and interrupting the agent's reasoning).
 - **Data substrate:** [[security-data-pipeline-architecture|Security Data Pipeline Architecture]] — search-in-place and on-demand correlation are what make hunting over schema-diverse telemetry tractable without a centralized SIEM.
+- **Hunt memory:** [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] supplies the recorded hunt history the agent reads, and grades a hunting program by memory and tool reach rather than by delegated authority, the axis [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]] sets beside the five oversight ladders; its top level keeps a human approving and refining the drafted hunts, consistent with the automation boundary above.
 - **Practitioner evidence:** [[ai-automation-boundary-threat-hunting-talk|Exploring the AI Automation Boundary for Threat Hunting]] (Datadog — the single-agent → orchestrator-subagent migration and the explicit automation boundary; the load-bearing source) and [[sift-claude-code-dfir-talk|Protocol SIFT]] (Claude Code over MCP on a DFIR/hunt workstation).

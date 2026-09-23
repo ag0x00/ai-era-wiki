@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic SOC CMM D2 Threat Intelligence and Knowledge"
 address: c-000202
 created: 2026-06-03
-updated: 2026-06-03
+updated: 2026-09-22
 tags:
   - maturity-models
   - cmm
@@ -25,11 +25,16 @@ related:
   - "[[cyber-poverty-line]]"
   - "[[cti-realm]]"
   - "[[vulnops]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
 sources:
   - "[[osint-to-knowledge-graph-talk]]"
   - "[[mate-cd-cr-continuous-detection-response]]"
   - "[[zero-day-clock]]"
   - "[[nist-ir-8596-cyber-ai-profile]]"
+verified: 2026-09-22
+verified_against: []
+verified_findings: 0
+verified_note: "ATHF insertions read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 medium fixed; rest of page not re-verified"
 ---
 
 # Agentic SOC CMM D2 Threat Intelligence and Knowledge
@@ -52,6 +57,7 @@ Threat-intelligence tooling has a mature interchange and storage layer; the new 
 | Feeds and sources | CISA KEV and VulnCheck KEV; commercial and OSINT indicator feeds; ISAC / sector intel-sharing groups | GA; KEV/CVE are structurally lagging signals — they capture *observed* exploitation, not novel discovery (see [[zero-day-clock\|Zero Day Clock]]) |
 | AI ingestion and curation | LLM extraction of entities and relationships from unstructured OSINT into a semi-structured knowledge graph, with per-statement source citation and an evaluation harness gating extraction quality | Production at scale at a large vendor ([[osint-to-knowledge-graph-talk\|Palo Alto Networks]], ~10,000 reports/week into a queryable graph); a leading-edge pattern, not yet a packaged product for most SOCs |
 | Knowledge graph in the loop | Investigation-side context graph where closed investigations compress into context-specific detections ([[mate-cd-cr-continuous-detection-response\|Mate Security Context Graph]]); queryable CTI graph as the substrate for tool-use over intel ([[cti-realm\|CTI-REALM]]) | Vendor-coined and directional; no independent benchmark yet |
+| Hunt history as knowledge | Each past hunt kept as a structured, searchable record (hypothesis, queries, findings, follow-ups) that a hunting agent reads before it drafts the next hunt ([[agentic-threat-hunting-framework-athf\|ATHF]]) | Open-source release from one vendor; no published evaluation |
 
 The defining shift in this landscape is the move from *feeds an analyst reads* to *a graph an agent queries*. Indicator feeds carry atomic facts but drop the context (which actor, which campaign, how an indicator was used), and that context is what grounds a downstream agent's answer. The OSINT-to-graph pattern preserves it by attaching a natural-language description to each edge and citing the source node per statement, which forces the agent to answer from curated graph evidence rather than model knowledge.
 
@@ -95,7 +101,7 @@ D2 is a curation-and-evaluation cost, not a feed-subscription cost. In the produ
 
 ## Open questions
 
-- The gating model treats D2 as an efficacy gate that does not cap autonomy. Whether some minimum D2 floor should be a *precondition* for delegating an intel-dependent function — rather than only a quality signal — is a calibration question the sibling autonomy gates do not settle.
+- The gating model treats D2 as an efficacy gate that does not cap autonomy. Whether some minimum D2 floor should be a *precondition* for delegating an intel-dependent function — rather than only a quality signal — is a calibration question the sibling autonomy gates do not settle. The [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] leans toward the precondition reading for hunting: its five levels put a structured hunt record below any AI assistance, on the argument that an assistant without the team's history guesses. It grades AI involvement rather than delegated authority, so it does not settle the delegation question.
 - The OSINT-to-graph extraction-accuracy figure reported by [[osint-to-knowledge-graph-talk|Sun's OSINT-to-knowledge-graph talk]] (roughly 90% after a few curation iterations in one production pipeline)[^sun-osint] is a single-vendor data point, not an industry benchmark. No standard benchmark exists for extracting entities and relationships from long threat reports.
 - The investigation-compresses-to-detection loop ([[mate-cd-cr-continuous-detection-response\|CD/CR]]) is vendor-coined and directional; its coverage-compounding claim is qualitative and not independently evaluated.
 - Novel-threat coverage beyond KEV/CVE is structurally hard to *measure*: a SOC cannot easily score coverage of threats that have no public catalogue entry. The L5 criterion names the capability; a rigorous metric for it is an open gap.

@@ -3,7 +3,7 @@ type: talk
 title: "Exploring the AI Automation Boundary for Threat Hunting"
 address: c-000146
 created: 2026-05-25
-updated: 2026-08-21
+updated: 2026-09-22
 tags:
   - papers
   - talks
@@ -24,9 +24,14 @@ related:
   - "[[datadog|Datadog]]"
   - "[[oversight-layer|Oversight Layer]]"
   - "[[agentic-soc-ra-threat-hunting|Agentic SOC Threat Hunting Surface]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
 sources:
   - "[[unprompted-conference-march-2026|Unprompted Conference (March 2026)]]"
   - https://unpromptedcon.org/#
+verified: 2026-09-22
+verified_against: []
+verified_findings: 0
+verified_note: "ATHF insertion read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 medium fixed; rest of page not re-verified"
 ---
 
 # Exploring the AI Automation Boundary for Threat Hunting
@@ -42,3 +47,5 @@ The talk's framing is that modern threat hunting is limited not by a lack of tel
 This is direct evidence for the threat-hunting capability in the [[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]] thesis. The single-agent → orchestrator-subagent migration matches the supervisor-worker pattern named in the [[oversight-layer|Oversight Layer]] and in the Salesforce [[beyond-the-chatbot-talk|Beyond the Chatbot]] Agentic SOC talk. The "automation boundary" is the operational form of the thesis's action-authority question: which steps an agent runs autonomously versus where a human stays in the loop.
 
 The [[agentic-soc-ra-threat-hunting|Agentic SOC Threat Hunting Surface]] is where the boundary becomes a design artifact in this wiki. That page treats the automation boundary as a bound independent of the [[agentic-soc-cmm|Agentic SOC CMM]]'s maturity gate: a SOC can be mature enough to earn high hunting autonomy and still be right to hold it lower, because past the boundary added autonomy produces plausible-but-wrong hypotheses instead of findings. It reads the boundary's position as a per-team judgment from this account rather than a calibrated threshold, which is the open calibration question the talk leaves for the function.
+
+Nebulock's [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] addresses the input side of the kind of system this talk describes; the two are unrelated projects. The Datadog account automates query generation and narrowing; ATHF supplies the structured record of past hunts that such an agent reads before it drafts a hypothesis and writes to when it finishes. Its highest level, several agents with shared memory drafting hunts from threat-intel feeds, still ends in a human approving and refining the drafted hunts, which keeps a human at the automation boundary this talk names.

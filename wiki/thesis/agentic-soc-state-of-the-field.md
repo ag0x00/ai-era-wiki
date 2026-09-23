@@ -3,7 +3,7 @@ type: thesis
 title: "Agentic SOC: State of the Field"
 address: c-000019
 created: 2026-05-13
-updated: 2026-08-17
+updated: 2026-09-22
 tags:
   - thesis
   - agentic-soc
@@ -35,6 +35,7 @@ related:
   - "[[beyond-the-chatbot-talk]]"
   - "[[detection-deception-engineering-orbie-talk]]"
   - "[[ai-automation-boundary-threat-hunting-talk]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
   - "[[taming-shai-hulud-with-ai-talk]]"
   - "[[rethinking-security-agent-evaluation-talk]]"
   - "[[agentic-soc-cmm]]"
@@ -60,6 +61,10 @@ related:
   - "[[hugging-face]]"
 sources:
   - "[[microsoft-secure-agentic-ai-end-to-end]]"
+verified: 2026-09-22
+verified_against: []
+verified_findings: 0
+verified_note: "ATHF insertion read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 medium, 2 low fixed; rest of page not re-verified"
 ---
 
 # Agentic SOC: State of the Field
@@ -109,10 +114,10 @@ The corollary constrains how the gap can be closed. Partial automation relocates
 ## Production evidence by SOC function
 
 The SOC functions named in the question — triage, detection engineering, response action, threat hunting, post-incident review, and the evaluation that spans them — now have credible agentic implementations. The evidence groups by function rather than by source, because the same capability surfaces across vendor products, practitioner production accounts, and open research:
-|Unprompted
+
 - **Whole-SOC architecture.** The supervisor-worker topology recurs at every scale: Microsoft's and Google's copilot-plus-specialized-agent fleets at the hyperscaler end, and Salesforce's Polyphonic supervisor-worker SOC ([[beyond-the-chatbot-talk|Beyond the Chatbot]]) as a production instance of the same shape.
 - **Detection engineering.** Agents author detection content from live telemetry instead of humans writing rules against vendor libraries. GreyNoise's [[detection-deception-engineering-orbie-talk|Orbie]] generates rules from internet-scale honeypot data; Palo Alto's [[syara-semantic-detection-talk|SYARA]] applies cost-ordered, YARA-like semantic detection; Microsoft's [[binaryshield-ai-fingerprints-talk|BinaryShield]] adds privacy-preserving cross-service threat-intel sharing. The recurring claim is that domain knowledge embedded in tooling matters more than model choice.
-- **Threat hunting.** Datadog's [[ai-automation-boundary-threat-hunting-talk|automation-boundary work]] migrates from a single agent to an orchestrator-subagent system and names an explicit boundary between where AI accelerates hunting and where it adds risk; SANS's [[sift-claude-code-dfir-talk|SIFT — Find Evil]] wires Claude Code into a DFIR workstation over MCP.
+- **Threat hunting.** Datadog's [[ai-automation-boundary-threat-hunting-talk|automation-boundary work]] migrates from a single agent to an orchestrator-subagent system and names an explicit boundary between where AI accelerates hunting and where it adds risk; SANS's [[sift-claude-code-dfir-talk|SIFT — Find Evil]] wires Claude Code into a DFIR workstation over MCP. Nebulock's open-source [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] supplies a different layer, a structured record of past hunts that an assistant reads and, at its upper levels, updates through MCP connections to SIEM, EDR and ticketing. Its launch post carries no deployment or evaluation data.
 - **Incident response and triage.** Wiz's [[taming-shai-hulud-with-ai-talk|Shai-Hulud post-mortem]] scales internet-scale incident response with multi-agent triage engines that parallelize victimology and automate secret-impact analysis; Salesforce's [[1-8m-prompts-30-alerts-talk|1.8M-prompts / 30-alerts]] work shows behavioral-baseline triage at production scale; Uber's [[adr-agentic-detection-system|ADR]] runs a SOC-shaped triage-then-reason detector over its own agent fleet across a ten-month production deployment, surfacing credential exposure as the dominant true positive and reporting a 49% false-positive share on context-rich coding sessions ([arXiv:2605.17380](https://arxiv.org/abs/2605.17380)); Stripe's "Guardrails beyond Vibes" runs threat-modeling and security-request-routing agents with offline and online evaluation.
 - **Evaluation.** Airbnb's [[rethinking-security-agent-evaluation-talk|capability-centric evaluation]] argues that outcome-only benchmarks misjudge agents on the multi-stage find→confirm→patch→validate loop; Meta's "measuring agent effectiveness" talk and Maxim Kovalsky's capability-based vendor framework approach the same problem. With [[evaluating-ai-soc-agents|Gartner's criteria]] and [[defensebench|DefenseBench]]'s scores, this cluster frames the evaluation gap below. Uber's [[adr-bench|ADR-Bench]] adds a 302-task, MCP-native comparator, though it measures detection of attacks *against* agents rather than agents performing SOC work, so it narrows the attack-detection axis without closing the agents-do-defense-work gap.
 
@@ -120,8 +125,7 @@ Across these accounts the production pattern is consistent: a supervisor-worker 
 
 ## Counter-evidence
 
-> [!gap] Independent benchmarks (narrowing)
-> A public defender-agent benchmark now exists: [[defensebench|DefenseBench]], whose active **BOTSv3** benchmark scores agents on incident investigation over Splunk's *Boss of the SOC v3* dataset. It narrows but does not close the gap. It is a research preview on a single Splunk-derived dataset, with thin published methodology, and its leaderboard currently measures general coding agents rather than purpose-built defender agents. There is still no broad, multi-task, community/academic comparator equivalent to [[agentdojo|AgentDojo]]'s role on the agent-security side, and vendor-published numbers still dominate the AI-SOC-agent category. [[evaluating-ai-soc-agents|Gartner's evaluation framework]] supplies buyer-side criteria (what to ask, what outcomes to measure) but not scored product comparisons.
+Independent benchmarks for defender agents remain thin. A public defender-agent benchmark now exists: [[defensebench|DefenseBench]], whose active **BOTSv3** benchmark scores agents on incident investigation over Splunk's *Boss of the SOC v3* dataset. It narrows but does not close the gap. It is a research preview on a single Splunk-derived dataset, with thin published methodology, and its leaderboard currently measures general coding agents rather than purpose-built defender agents. There is still no broad, multi-task, community/academic comparator equivalent to [[agentdojo|AgentDojo]]'s role on the agent-security side, and vendor-published numbers still dominate the AI-SOC-agent category. [[evaluating-ai-soc-agents|Gartner's evaluation framework]] supplies buyer-side criteria (what to ask, what outcomes to measure) but not scored product comparisons.
 
 > [!gap] The defender side has no run at the pace the attacker side just demonstrated
 > The convergence claim above describes the shape of the defender stack, not its speed. Against the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]], the operator ran a frontier-grade detection program on its own infrastructure and its workload alert fired on 2026-07-19, roughly eleven days after the second intrusion cluster began and three days after Hugging Face published; the two incidents were connected the following day through a credential-revocation exchange rather than through any detection. The investigation itself ran agents over more than 7 billion log entries and was still open when the reconstruction was presented. No published defender deployment closes an identify-to-remediate loop without a human step, so the supervisor-worker convergence this page documents is a structural result with the pacing question open underneath it.

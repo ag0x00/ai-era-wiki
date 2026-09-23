@@ -2,7 +2,7 @@
 type: concept
 title: "Agent Memory Isolation"
 created: 2026-05-03
-updated: 2026-08-18
+updated: 2026-09-22
 tags:
   - concepts
   - memory
@@ -32,9 +32,14 @@ related:
   - "[[openai-hugging-face-agent-incident]]"
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[artifactory]]"
+  - "[[agentic-threat-hunting-framework-athf]]"
 sources:
   - .raw/talks/2026-03-04_Brooks-McMillin_Building-Secure-Agentic-Systems_transcript.md
   - .raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md
+verified: 2026-09-22
+verified_against: []
+verified_findings: 0
+verified_note: "ATHF paragraph read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 low fixed; illustrative figure made non-numeric; rest not re-verified"
 ---
 
 # Agent Memory Isolation
@@ -49,11 +54,13 @@ Partitioning rather than non-sharability is the design point. A multi-agent syst
 
 When multiple agents share a single memory store (e.g., a Postgres table with no namespace partitioning), their stored facts, goals, and preferences bleed across agent boundaries:
 
-- Agent A stores a goal ("optimize for \$1,000/month revenue")
+- Agent A stores a goal ("maximize monthly revenue")
 - Agent B, unrelated to that goal, retrieves it because both agents share the same memory space
 - Agent B's outputs are contaminated by Agent A's objectives
 
 This is a form of [[memory-poisoning|Memory Poisoning]] originating not from adversarial injection but from architectural non-isolation — a cross-agent state leakage at design time.
+
+Shared memory also appears as a target configuration in defensive tooling. The top level of the [[agentic-threat-hunting-framework-athf|Agentic Threat Hunting Framework (ATHF)]] has multiple threat-hunting agents operate with shared memory while they monitor threat-intel feeds and draft hunts, and the launch post specifies no partition, write provenance or read-boundary check for that memory. Feed content is attacker-influenced, so the configuration joins the benign cross-contamination path above to the adversarial one.
 
 ## Implementation pattern (McMillin, 2026)
 
