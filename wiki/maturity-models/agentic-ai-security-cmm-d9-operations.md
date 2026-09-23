@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D9: Operations and Human Factors"
 address: c-000130
 created: 2026-05-25
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -46,10 +46,10 @@ related:
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-19
+verified: 2026-09-23
 verified_against: []
 verified_findings: 0
-verified_note: "Read the right-sizing addition against the measurement protocol's live-observation clause and D9's own L3 approval-record criteria; no .raw document opened. Tier-register wording aligned to the tier assignments D3 L3 documents."
+verified_note: "Changed clause checked: no coding-page row carries a D9 coordinate."
 ---
 
 # Agentic AI Security CMM — D9 Operations & Human Factors (Deep Dive)
@@ -159,7 +159,7 @@ Right-sizing matters more in D9 than in any other domain: holding a single low-r
 
 **A copilot writes, and writing creates a HITL queue that can be rubber-stamped.** Decommission cadence and prompt leakage matter, and the approval volume makes rubber-stamp measurement worth instrumenting.
 
-**Approval fatigue is the mechanism that converts an interactive coding deployment into an unattended one.** The D9 human-factors question for agentic coding reaches past whether approvals are rubber-stamped to whether the approval volume has already changed the deployment shape. The documented remedy for prompt volume runs allowlisting, then autonomous modes, then suppressed prompts. Each step is defensible on its own, and together they move the deployment to a different row of the [[agentic-ai-security-reference-architecture|reference architecture]]'s shape table, where the load-bearing plane is Runtime rather than Control. An assessor measures approval volume and disposition over time rather than approval existence, and reads a falling prompt count against a rising action count as a shape change that requires re-assessment rather than as an efficiency gain. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] holds the shape definitions.
+**Approval fatigue is the mechanism that converts an interactive coding deployment into an unattended one.** The D9 human-factors question for agentic coding reaches past whether approvals are rubber-stamped to whether the approval volume has already changed the deployment shape. The documented remedy for prompt volume runs allowlisting, then autonomous modes, then suppressed prompts. Each step is defensible on its own, and together they move the deployment to a different row of the [[agentic-ai-security-reference-architecture|reference architecture]]'s shape table, where the load-bearing plane is Runtime rather than Control. An assessor measures approval volume and disposition over time rather than approval existence, and reads a falling prompt count against a rising action count as a shape change that requires re-assessment rather than as an efficiency gain. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] holds the shape definitions, and [[securing-agentic-coding|Securing Agentic Coding]] holds the shape's controls, none of which carries a D9 coordinate, so this ladder grades the human-factors evidence directly.
 
 **A provider owes its consumers federated CVE disclosure and a published deprecation policy** for every skill and MCP server it ships.
 

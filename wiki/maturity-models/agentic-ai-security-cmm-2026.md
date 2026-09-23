@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic AI Security Capability Maturity Model"
 address: c-000156
 created: 2026-04-30
-updated: 2026-09-21
+updated: 2026-09-23
 tags:
   - maturity-models
   - agentic-ai
@@ -73,10 +73,10 @@ sources:
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-21
+verified: 2026-09-23
 verified_against: []
-verified_findings: 1
-verified_note: "Verify-and-fix over the nine decomposed ladders (#283), read against the D1-D9 deep dives and the pre-image of each ladder table. Fixed three divergences: D2 L4 had turned the pre-image's parenthetical credential proxy into a second gradable criterion where the deep dive and the log accept a credential-less identity model instead; D4 L4 rendered the dry-run component of semantic tool validation as an unconditional criterion where the deep dive conditions it on the tool supporting one; and the Nine-domains preamble described a table rendering no domain now uses. Also removed nine repeated per-domain captions and two stale row references. Open: the core page still grades fewer criteria than the deep dives at several D2/D5/D6/D7/D8/D9 rungs, which is rung-bearing and tracked as #292. No .raw document opened."
+verified_findings: 0
+verified_note: "D1-L3 harness-configuration bullet and evidence checked against the D1 page and vendor settings docs; aligned to the lock requirement."
 ---
 
 # Agentic AI Security Capability Maturity Model
@@ -85,28 +85,28 @@ An evidence-based Capability Maturity Model for agentic AI security. It applies 
 
 ![The nine-domain CMM block diagram](agentic-ai-security-cmm-block-diagram.svg)
 
-The model is **descriptive at Levels 1–3** (controls observed in production at well-run organizations), **prescriptive at Level 4** (controls a mature program operates), and **achievable-today at Level 5** (capabilities available in shipping products and current specifications: Microsoft Agent 365, AgentGateway-LF, [[llamafirewall|LlamaFirewall]], [[aiuc-1|AIUC-1]] certification, Miggo DeepTracing). Integration across all nine domains remains rare. Research-stage and unshipped capabilities (TEE-backed guardrail attestation, multi-agent cascade-detection rule libraries, [[camel-pattern|CaMeL]] privileged/quarantined LLM split, cross-vendor AI-BOM federation, named standards contribution) sit in a separate **L5+ Leading Edge** tier that is aspirational and not required for L5. The [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test (2026-05-02)]] introduced the L5 / L5+ split to keep **L5 achievable today** with shipping products.
+The model is **descriptive at Levels 1–3** (controls observed in production at well-run organizations), **prescriptive at Level 4** (controls a mature program operates), and **achievable-today at Level 5** (capabilities available in shipping products and current specifications: Microsoft Agent 365, AgentGateway-LF, [[llamafirewall|LlamaFirewall]], [[aiuc-1|AIUC-1]] certification, Miggo DeepTracing). Integration across all nine domains remains rare. Research-stage and unshipped capabilities (TEE-backed guardrail attestation, multi-agent cascade-detection rule libraries, [[camel-pattern|CaMeL]] privileged/quarantined LLM split, cross-vendor AI-BOM federation, named standards contribution) sit in a separate **L5+ Leading Edge** tier that is aspirational and not required for L5. The L5 / L5+ split keeps **L5 achievable today** with shipping products, per the [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test (2026-05-02)]].
 
 The nine domains each carry a level summary here and full criteria in a deep dive. Read this page for the model — levels, domains, aggregation, and how to score against it; read a deep dive for the criteria, the dated control landscape, the cost model, and right-sizing by deployment shape.
 
 ## On this page
 
-- [Foundational distinction: governance is not security](#foundational-distinction-governance-is-not-security)
+- [Governance and security as separate measures](#governance-and-security-as-separate-measures)
 - [Scope and boundaries](#scope-and-boundaries)
-- [Five levels + a leading-edge tier (cumulative)](#five-levels--a-leading-edge-tier-cumulative)
+- [Five cumulative levels and a leading-edge tier](#five-cumulative-levels-and-a-leading-edge-tier)
 - [Nine domains](#nine-domains)
 - [Mapping to deployment shapes](#mapping-to-deployment-shapes)
 - [Tooling map per domain](#tooling-map-per-domain)
 - [Practitioners worth following](#practitioners-worth-following)
 - [Implementation roadmap](#implementation-roadmap)
 - [Appendix: eleven security dimensions (complementary threat-surface view)](#appendix-eleven-security-dimensions-complementary-threat-surface-view)
-- [Appendix: what this CMM contributes beyond reviewed standards](#appendix-what-this-cmm-contributes-beyond-reviewed-standards)
+- [Appendix: contributions beyond reviewed standards](#appendix-contributions-beyond-reviewed-standards)
 - [Open questions and gaps](#open-questions-and-gaps)
 - [Related](#related)
 
-## Foundational distinction: governance is not security
+## Governance and security as separate measures
 
-**The CMM measures both *security* (preventing harm) and *governance* (defining authority and accountability); the two are not interchangeable.**
+**The CMM measures *security* (preventing harm) and *governance* (defining authority and accountability) as two separate properties.**
 
 Security controls (firewalls, EDR, prompt filters, sandboxes, credential proxies) prevent or contain harm.
 
@@ -114,7 +114,7 @@ Governance defines who has the authority to act, under what justification, with 
 
 Both must climb together. The [[ai-coding-agent-governance|AI Coding Agent Governance (Knostic, 2025–2026)]] page sharpens this distinction, and the [[decision-rights|Decision Rights for AI Agents]] concept operationalizes it. The coupling of the two makes [[shadow-automation|Shadow Automation]] a structurally different risk from shadow IT.
 
-One external catalogue draws the same distinction in the same place. The Exchange opens its AI-program governance control by conceding that the control is arguably out of scope for cybersecurity, then keeps it because it initiates the action that gets an organization in control of AI security ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). Governance sits outside the security boundary and gates what the security controls can be held to.
+One external catalogue draws the same distinction in the same place. The Exchange opens its AI-program governance control by conceding that the control is arguably out of scope for cybersecurity, then keeps it because it initiates the action that gets an organization in control of AI security ([[owasp-ai-exchange|OWASP AI Exchange]], [/go/aiprogram/](https://owaspai.org/go/aiprogram/)). Governance sits outside the security boundary and gates what the security controls can be held to.
 
 For agentic coding the scored unit is the deployment variant. The product name does not determine the score. The same harness produces different effective scores depending on where the process runs and whether a human sees an action before it executes; five variants are separated in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] and their controls catalogued in [[securing-agentic-coding|Securing Agentic Coding]]. The D1 through D9 deep dives carry the per-domain scoring corrections.
 
@@ -131,7 +131,7 @@ Four adjacent instruments fall outside it:
 - A vendor-neutral promise. Vendors and OSS projects are named where load-bearing at a given level. Naming them makes a level concrete and carries no endorsement.
 - An instrument for securing non-AI systems against AI-augmented attackers. The nine domains score the security of an agentic system. [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]] takes the adjacent question: which SLSA, [[nist-ssdf|SSDF]], CSAF, and ISO 27001 assumptions were calibrated against a human-paced attacker and now need recalibration. That page holds open whether the ground becomes a tenth domain here or a companion model of its own.
 
-## Five levels + a leading-edge tier (cumulative)
+## Five cumulative levels and a leading-edge tier
 
 |Level|Name|Notes|
 |---|---|---|
@@ -144,9 +144,9 @@ Four adjacent instruments fall outside it:
 
 Cumulative semantics (CMMC lesson, modified): Level N requires every Level N–1 control plus the new criteria at Level N. **An organization's overall rating is reported as a per-domain matrix; aggregation uses dependency-resolved effective scores rather than a single floor.** [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] defines the notation the model scores in, the `L3 → L4` band and the `L0` score included.
 
-A domain's effective score takes the lowest of its own raw score and the raw scores of its upstream-dependency domains under the active rule set. The active rule set is small and conservative; see [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] (v1 = 3 rules: D2→D5, D2→D7, D3→D4, all anchored to lethal-trifecta and Sondera/AgentCordon practitioner evidence). The headline reports three numbers: typical (median effective), weakest (min effective, with cap source labeled), and strongest (max raw, labeled).
+A domain's effective score takes the lowest of its own raw score and the raw scores of its upstream-dependency domains under the active rule set. The active rule set is small and conservative; see [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]] (v1 = 3 rules: `D2→D5`, `D2→D7`, `D3→D4`, all anchored to lethal-trifecta and Sondera/AgentCordon practitioner evidence). The headline reports three numbers: typical (median effective), weakest (min effective, with cap source labeled), and strongest (max raw, labeled).
 
-This **replaces the prior single-floor rule** drawn from CMMC 2.0. The floor misreported 3 of 5 realistic archetypes per the [[cmm-calibration-stress-test-2026|stress test]] (Stripe-style architectural containment, enterprises deploying a platform-native [[agent-catalog|agent registry]] such as Agent 365, resource-constrained startups). Effective-score scoring captures cross-domain attack-path failures where they are real (weak D2 caps D5 because per-agent egress cannot be enforced without per-agent identity) without punishing unrelated weakness (weak D9 ops lag does not drag D2 identity controls down). Mandatory matrix disclosure and a strategic-rationale field prevent cherry-picking; mathematical aggregation does not. The dependency-rule registry is **scaffolding**: it grows with new attack-path evidence and practitioner architectures via the documented promotion protocol.
+The model **departs from the single-floor rule** of CMMC 2.0, because the floor misreported 3 of 5 realistic archetypes per the [[cmm-calibration-stress-test-2026|stress test]] (Stripe-style architectural containment, enterprises deploying a platform-native [[agent-catalog|agent registry]] such as Agent 365, resource-constrained startups). Effective-score scoring captures cross-domain attack-path failures where they are real (weak D2 caps D5 because per-agent egress cannot be enforced without per-agent identity) without punishing unrelated weakness (weak D9 ops lag does not drag D2 identity controls down). Mandatory matrix disclosure and a strategic-rationale field prevent cherry-picking; mathematical aggregation does not. The dependency-rule registry is **scaffolding**: it grows with new attack-path evidence and practitioner architectures via the documented promotion protocol.
 
 ### Threat coverage and proportionality
 
@@ -156,7 +156,7 @@ The dependency caps supply proportionality: each states what is reachable, becau
 
 Two coverage limits are deliberate. Multi-agent **cascade containment** (ASI08) and **collusion** (Class 3) detection are research-stage, so the relevant evidence bars sit at D3/D7 L4+ rather than claiming a shipping control. **Model-layer attacks** and **Class 5 jurisdictional** risk resolve to the eval-harness delta (D6/D8) and governance (D1/D9) respectively, because no runtime control mitigates a trojaned weight or a legal cutoff. Both limits are scoped in [[agentic-ai-threat-classes-2026|the threat-classes page]] and the RA Gaps section.
 
-### L5 vs L5+ semantics
+### L5 and L5+ semantics
 
 L5 is a **maturity tier**: every L5 criterion in this CMM points to a shipping product, an open-source project at v1.0+, or a documented capability deployable with currently available components. L5+ is a **leading-edge tier**: it requires L5 across all 9 domains *plus* research-stage capabilities and active named contribution to one or more standards bodies. A sufficiently resourced 2026 program can clear L5; only a frontier-lab or research-shop program clears L5+. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s per-domain matrix view reports both.
 
@@ -170,51 +170,90 @@ Reactive and ad hoc: AI agents run in production with no inventory, no identity,
 
 ### Level 2: Developing
 
-A written AI security policy exists; the agent inventory is manual; some prompt-level guardrails are in place; identity is delegated through the human user only.
+A Level 2 program shows four properties:
+
+- A written AI security policy exists.
+- The agent inventory is manual.
+- Some prompt-level guardrails are in place.
+- Identity is delegated through the human user only.
 
 **Auditor evidence:** policy doc + spreadsheet inventory + sample agent design review.
 
 ### Level 3: Defined
 
-Practice is standardized org-wide: every agent has its own identity; platform-level hooks intercept tool calls; an AI-BOM exists for production agents; an AI-specific incident-response playbook is documented.
+Practice is standardized org-wide:
+
+- Every agent has its own identity.
+- Platform-level hooks intercept tool calls.
+- An AI-BOM exists for production agents.
+- An AI-specific incident-response playbook is documented.
 
 **Auditor evidence:** identity graph for all agents + Cedar/OPA policy repo + AI-BOM artifact + IR runbook.
 
 ### Level 4: Managed
 
-Quantitative metrics are tracked continuously; agent behavioral monitoring detects drift; a red-team eval program runs at least quarterly; a credential proxy is in use; high-risk tasks run in a sandbox.
+Level 4 adds measurement and containment:
+
+- Quantitative metrics are tracked continuously.
+- Agent behavioral monitoring detects drift.
+- A red-team eval program runs at least quarterly.
+- A credential proxy is in use.
+- High-risk tasks run in a sandbox.
 
 **Auditor evidence:** dashboard with KPIs + red-team report + cred-proxy traffic logs + sandbox config.
 
 ### Level 5: Optimizing
 
-Every control was reachable with shipping products at the May 2026 snapshot this page was written against: platform-level enforcement everywhere across all 9 domains; current independent third-party assurance of the governance program, scheme-neutral per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]] — [[iso-iec-42001|ISO/IEC 42001]] under active surveillance preferred, AIUC-1 at its latest quarterly refresh or a reviewed internal equivalent accepted, each evidenced at the cadence its own scheme runs; real-time AI-BOM (Miggo DeepTracing or equivalent shipping product); a mesh AgentGateway sidecar per agent; at least two quarters of stable L4 operation; bus-factor ≥2 with a documented continuity test.
+Every control was reachable with shipping products at the May 2026 snapshot this page was written against:
+
+- Platform-level enforcement everywhere across all 9 domains.
+- Current independent third-party assurance of the governance program, scheme-neutral per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]]: [[iso-iec-42001|ISO/IEC 42001]] under active surveillance preferred, AIUC-1 at its latest quarterly refresh or a reviewed internal equivalent accepted, each evidenced at the cadence its own scheme runs.
+- Real-time AI-BOM (Miggo DeepTracing or equivalent shipping product).
+- A mesh AgentGateway sidecar per agent.
+- At least two quarters of stable L4 operation.
+- Bus-factor ≥2 with a documented continuity test.
 
 **Auditor evidence:** per-domain matrix at L5 across all 9 domains + third-party assurance current or scheduled, evidenced at the cadence its scheme runs + ≥2-quarter L4 history + continuity-test report.
 
 The reachability claim was verified against the shipping landscape in May 2026 and has not been re-verified since. The nine deep dives carry the dated control landscape per domain and are the current reading. Treat the level criteria as durable and the product names as a snapshot.
 
-### Level 5+: Leading Edge
-
-All of L5, plus research-stage primitives in production: per-task capability tokens bound to one task and one holder; cryptographic guardrail attestation in a TEE (Nitro Enclaves-class); a CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads; a cascade-detection rule library with tuned thresholds for ASI07/08/10 multi-agent risk; cross-vendor AI-BOM federation with reconciliation; sigstore-for-MCP cross-tenant signing; and an active named contributor to one or more of CoSAI / OWASP / AIVSS / NIST CAISI / OASIS / Linux Foundation AAIF AI working groups (PR, RFC, or spec authorship — membership alone does not count).
-
-**Auditor evidence:** per-task capability-token sample + TEE attestation logs + cascade-rule registry with thresholds + cross-vendor AI-BOM reconciliation report + named contributor list with PR/RFC/spec links.
+### Prerequisite gate into L5
 
 **Reaching L5 from a stable L4 takes quarters of sustained operation.**
 
-The gate below applies in addition to the per-domain L5 criteria. One of its four conditions is graded per domain, and the assessor repeats it for each domain scored L5: (a) ≥2 quarters of stable L4 in that domain, with no regression in that domain's row of the per-domain matrix across the look-back window. The other three are graded once for the program, whatever the domain: (b) independent third-party assurance current or scheduled against a recognized assurance scheme — an ISO/IEC 42001 surveillance cycle, an AIUC-1 readiness assessment with an accredited auditor, or a documented internal equivalent under independent review; (c) bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery); (d) a gap-closure plan naming, for each domain below L5, the work that would take it there or the reason the program is not pursuing it, and for each domain at L5, the L5+ work the program is or is not pursuing. A domain that meets every per-domain L5 criterion without the gate evidence scores **L4-stable**. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states what *stable* means as a window, an observation count and a regression test.
+The gate applies in addition to the per-domain L5 criteria. One of its four conditions is graded per domain, and the assessor repeats it for each domain scored L5: (a) ≥2 quarters of stable L4 in that domain, with no regression in that domain's row of the per-domain matrix across the look-back window. The other three are graded once for the program, whatever the domain:
 
-Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cross-domain weakness reaches an L5 claim along the dependency paths the model records, and nowhere else. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a raw L5 whose upstream dependency sits lower reports at the capped effective score with the cap source named. A program that holds a domain at L2 by a recorded architectural-containment trade-off therefore still reaches L5 in a domain that trade-off does not touch. Adopted from [[cmm-calibration-stress-test-2026|stress-test §Change 5]], with the stable-L4 condition graded per domain from 2026-09-19.
+- (b) Independent third-party assurance current or scheduled against a recognized assurance scheme: an ISO/IEC 42001 surveillance cycle, an AIUC-1 readiness assessment with an accredited auditor, or a documented internal equivalent under independent review.
+- (c) Bus-factor ≥2 with a documented continuity test ([[anti-patterns-and-failure-modes|anti-pattern I3]] recovery).
+- (d) A gap-closure plan naming, for each domain below L5, the work that would take it there or the reason the program is not pursuing it, and for each domain at L5, the L5+ work the program is or is not pursuing.
+
+A domain that meets every per-domain L5 criterion without the gate evidence scores **L4-stable**. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] states what *stable* means as a window, an observation count and a regression test.
+
+Weakness in a domain the L5 claim does not rest on leaves the claim standing. Cross-domain weakness reaches an L5 claim along the dependency paths the model records, and nowhere else. [[agentic-ai-security-cmm-dependency-rules|The dependency rules]] cap a domain's effective score at the raw scores of the domains it depends on, so a raw L5 whose upstream dependency sits lower reports at the capped effective score with the cap source named. A program that holds a domain at L2 by a recorded architectural-containment trade-off therefore still reaches L5 in a domain that trade-off does not touch. Adopted from [[cmm-calibration-stress-test-2026|stress-test §Change 5]], with the stable-L4 condition graded per domain.
+
+### Level 5+: Leading Edge
+
+L5+ requires all of L5, plus research-stage primitives in production:
+
+- Per-task capability tokens bound to one task and one holder.
+- Cryptographic guardrail attestation in a TEE (Nitro Enclaves-class).
+- A CaMeL-style privileged/quarantined LLM split for trifecta-positive workloads.
+- A cascade-detection rule library with tuned thresholds for ASI07/08/10 multi-agent risk.
+- Cross-vendor AI-BOM federation with reconciliation.
+- Sigstore-for-MCP cross-tenant signing.
+- An active named contributor to one or more of CoSAI / OWASP / AIVSS / NIST CAISI / OASIS / Linux Foundation AAIF AI working groups (PR, RFC, or spec authorship; membership alone does not count).
+
+**Auditor evidence:** per-task capability-token sample + TEE attestation logs + cascade-rule registry with thresholds + cross-vendor AI-BOM reconciliation report + named contributor list with PR/RFC/spec links.
 
 ## Nine domains
 
-The CMM uses 9 domains, derived from the 6 reference-architecture planes plus 3 cross-cutting concerns (governance, supply chain, and operations/human factors). That derivation sets a scope boundary. The nine domains cover the deployment and operation of an agentic system, and none of them anchors its secure development. The Exchange's two development-programme controls, per the Scope section above, therefore have no cell to map into, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] names them. The 9-domain breakdown sharpens focus on agentic-specific controls and adds a domain for the operational and human-factors gaps that no surveyed standard covers as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]] §3).
+The CMM uses 9 domains, derived from the 6 reference-architecture planes plus 3 cross-cutting concerns (governance, supply chain, and operations/human factors). That derivation sets a scope boundary. The nine domains cover the deployment and operation of an agentic system, and none of them anchors its secure development. The OWASP AI Exchange's two development-programme controls therefore have no cell to map into, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] names them. The 9-domain breakdown sharpens focus on agentic-specific controls and adds a domain for the operational and human-factors gaps that no surveyed standard covers as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]] §3).
 
 Each rung below states what one domain adds at one level, graded from that domain's deep dive, and lists item by item the criteria an assessor grades and the auditor evidence collected for the rung.
 
 ### Global evidence rule
 
-Applies at L3 and above: all findings, gaps, eval results, and incident artifacts MUST be tagged with the standards-anchor IDs they relate to:
+Applies at L3 and above: all findings, gaps, eval results, and incident artifacts must be tagged with the standards-anchor IDs they relate to:
 
 - OWASP Agentic AI Top 10 — `ASI01`–`ASI10` (the agentic risk taxonomy)
 - [[owasp-llm-top-10|OWASP LLM Top 10]] (2025) — `LLM01:2025`–`LLM10:2025` (still apply to non-agentic and agent-as-LLM surfaces); the full code range is verified against the 2025 source by [[standards-review-owasp-llm-top-10-2026-Q2|the LLM Top 10 standards review]]
@@ -236,13 +275,21 @@ The three classes are tested, inspected and attested. The assessment records one
 
 The Governance & Accountability domain fixes who is accountable for agent behavior, with what authority, and on what auditable record. It spans AI security policy, executive ownership, the agent and NHI inventory, decision-rights matrices, and certification readiness. It treats accountability as a first-class security principle alongside Confidentiality, Integrity, and Availability: the **CIAA augmentation** of the classical CIA triad, introduced by [[maais-multilayer-agentic-ai-security|Arora & Hastings (MAAIS, 2025)]] for agentic systems.
 
-Maps to: NIST AI RMF Govern, ISO/IEC 42001 §5–§9, EU AI Act Art. 9 risk management, CoSAI Shared Accountability principle, [[maais-multilayer-agentic-ai-security|MAAIS]] Layer 5 (Accountability and Trustworthiness), [[operational-xai-for-gating|Operational XAI for Action Gating]] (justification-capture as the runtime accountability artifact); Microsoft ZT4AI Governance — [[microsoft-rai|Responsible AI Standard]], Purview Compliance Manager AI templates, Agent 365 registry (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
+Maps to:
+
+- NIST AI RMF Govern
+- ISO/IEC 42001 §5–§9
+- EU AI Act Art. 9 risk management
+- CoSAI Shared Accountability principle
+- [[maais-multilayer-agentic-ai-security|MAAIS]] Layer 5 (Accountability and Trustworthiness)
+- [[operational-xai-for-gating|Operational XAI for Action Gating]] (justification-capture as the runtime accountability artifact)
+- Microsoft ZT4AI Governance: [[microsoft-rai|Responsible AI Standard]], Purview Compliance Manager AI templates, Agent 365 registry (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
 
 See [[agentic-ai-security-cmm-d1-governance|the D1 deep dive]] for capability-decoupled criteria, the cost model, and right-sizing by deployment shape.
 
-L5 now requires scheme-neutral third-party assurance, ISO/IEC 42001 preferred and AIUC-1 or a reviewed internal-equivalent accepted, per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]].
+L5 requires scheme-neutral third-party assurance, ISO/IEC 42001 preferred and AIUC-1 or a reviewed internal-equivalent accepted, per the [[aiuc-1-critical-evaluation|AIUC-1 critical evaluation]].
 
-L3 also grades what the organization withholds about its own system. Technical details — the model type, the model implementation, and the technical content of material published about the system — are carried as classified assets in the information-security asset inventory, and technical publication passes a documented review that sets what is withheld against the disclosure `AI TRANSPARENCY` asks for ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/discrete/`](https://owaspai.org/go/discrete/)). The artifacts are the classification entry and the review record. The Exchange supplies a direction for the trade-off and no threshold, so the rung grades that the decision was taken and recorded.
+L3 also grades what the organization withholds about its own system. Technical details — the model type, the model implementation, and the technical content of material published about the system — are carried as classified assets in the information-security asset inventory, and technical publication passes a documented review that sets what is withheld against the disclosure `AI TRANSPARENCY` asks for ([[owasp-ai-exchange|OWASP AI Exchange]], [/go/discrete/](https://owaspai.org/go/discrete/)). The artifacts are the classification entry and the review record. The Exchange supplies a direction for the trade-off and no threshold, so the rung grades that the decision was taken and recorded.
 
 - **D1-L1 (Initial):** No role in the organization owns AI governance.
     - **Capability.** Agents deploy without security review.
@@ -265,6 +312,7 @@ L3 also grades what the organization withholds about its own system. Technical d
         - Prohibited actions are documented per agent.
         - A shadow-agent reaper operates to an SLA.
         - A provider responsibility matrix is documented.
+        - Coding-agent harness configuration runs under managed policy that local settings cannot override or, where the harness offers a lock, extend, and changes to it pass review (not applicable without harness-configurable coding agents).
     - **Auditor evidence.**
         - Charter and minutes.
         - Decision-rights matrix.
@@ -273,6 +321,8 @@ L3 also grades what the organization withholds about its own system. Technical d
         - Responsibility matrix with residue.
         - Technical-detail classification entry.
         - Publication review record.
+        - Resolved managed harness settings with their managed-only lock values.
+        - Harness-configuration change review record.
 - **D1-L4 (Managed):** The board receives governance metrics, and a readiness assessment measures the program against a scheme.
     - **Capability.**
         - Board-level governance metrics carry `ASI##` / AIVSS rollups.
@@ -302,9 +352,14 @@ L3 also grades what the organization withholds about its own system. Technical d
 
 The Identity & Authorization domain assigns every agent a per-agent (non-human) identity and governs its credential lifecycle: issuance, scoping, rotation, and revocation. The target state is zero-credentials-in-agent-context operation, with explicit treatment of coupled-credential workflows where credential and identity cannot be separated.
 
-Maps to: OWASP ASI03, NIST CAISI Concept Paper (Feb 2026), ISO 27090 (FDIS Mar 2026); Microsoft ZT4AI Identity — [[microsoft-entra-agent-id|Entra Agent ID]], the three access patterns, attribute/blueprint Conditional Access, ID Protection for agents, Entra PIM time-limited active role assignment for agents (auto-expiring; agents cannot be PIM-*eligible*, so no agent self-activation — surfaced by the ZT4AI adversarial pass) (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
+Maps to:
 
-See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is now GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens move to L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the D2→D5 and D2→D7 caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
+- OWASP ASI03
+- NIST CAISI Concept Paper (Feb 2026)
+- ISO 27090 (FDIS Mar 2026)
+- Microsoft ZT4AI Identity: [[microsoft-entra-agent-id|Entra Agent ID]], the three access patterns, attribute/blueprint Conditional Access, ID Protection for agents, Entra PIM time-limited active role assignment for agents (auto-expiring; agents cannot be PIM-*eligible*, so no agent self-activation) (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
+
+See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens sit at L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the `D2→D5` and `D2→D7` caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
 
 - **D2-L1 (Initial):** Agents share human credentials or service accounts.
     - **Capability.** No inventory of agent identities exists.
@@ -365,11 +420,25 @@ See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity
 
 The Control & Least-Agency domain authorizes agent actions (their scope, timing, human-in-the-loop coverage, and segregation of duties) at a [[oversight-layer|Policy Decision Point]] outside the model context. It adds progressive-autonomy promotion gates and time-bounded elevation.
 
-Maps to: OWASP ASI02 (Tool Misuse and Exploitation — least-privilege tool profiles, Intent Gate PEP/PDP) and the OWASP Least-Agency principle (ASI09 in the published 2026 list covers Human-Agent Trust Exploitation, a separate concern from autonomy control), [[least-agency-principle|Least Agency Principle]], [[aws-agentic-ai-security-scoping-matrix|AWS Agentic AI Security Scoping Matrix]] (anchor for the agency-vs-autonomy distinction used throughout this domain), CSA Agentic Trust Framework progressive autonomy gates, CoSAI risk-based governance; Microsoft ZT4AI least-privilege — deny-by-default least-action design and the Agent Governance Toolkit policy decision point (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]). ZT4AI defines no progressive-autonomy tier model — that comes from the CSA ATF.
+Maps to:
+
+- OWASP ASI02 (Tool Misuse and Exploitation: least-privilege tool profiles, Intent Gate PEP/PDP)
+- The OWASP Least-Agency principle (ASI09 in the published 2026 list covers Human-Agent Trust Exploitation, a separate concern from autonomy control)
+- [[least-agency-principle|Least Agency Principle]]
+- [[aws-agentic-ai-security-scoping-matrix|AWS Agentic AI Security Scoping Matrix]] (anchor for the agency-vs-autonomy distinction used throughout this domain)
+- CSA Agentic Trust Framework progressive autonomy gates
+- CoSAI risk-based governance
+- Microsoft ZT4AI least-privilege: deny-by-default least-action design and the Agent Governance Toolkit policy decision point (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
+
+ZT4AI defines no progressive-autonomy tier model; the CSA ATF supplies it.
 
 The four action-risk tiers the L3 rung names are auto, notify, confirm and block, from [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] §3.2; the OWASP ASI Top 10 names the least-agency principle and supplies no tiers.
 
-See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platform-native PDPs now sit at L3/L4 (AWS Bedrock AgentCore Policy, GA Mar 2026; Microsoft Agent Governance Toolkit, OSS). **Per-task capability tokens move from L5 to L5+ in D3 and D5, matching D2:** the production-maturity qualifier holds a capability at the leading-edge tier until a production-hardened implementation path exists, and the only implementation the D3 and D5 tooling maps carry is an early-stage open-source primitive. L5 keeps the approval token bound to the parameters a human approved. The L5+ formal-verification line is reframed: Cedar Analysis ships as OSS, so the leading-edge residual narrows to the MCP-wired, trajectory-aware extension of it. One prerequisite sits below every level: confirm the guard is consulted under each autonomy mode the deployment permits, then grade what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case — an autonomy flag suppressed the tool allowlist outright, so a deployment presenting enumerated permissions as evidence had none. **Outside the model context tests whether an instruction reaching that context can rewrite the decision the enforcement point issues**, which a decision point inside the runtime hosting the model can satisfy; that shape meets the mediation criterion on the substitute evidence [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] names, the remaining L3 criteria are graded as written, and the assessment records that one vendor's code both runs the model and enforces the policy.
+See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platform-native PDPs sit at L3/L4 (AWS Bedrock AgentCore Policy, GA Mar 2026; Microsoft Agent Governance Toolkit, OSS). **Per-task capability tokens sit at L5+ in D3 and D5, matching D2:** the production-maturity qualifier holds a capability at the leading-edge tier until a production-hardened implementation path exists, and the only implementation the D3 and D5 tooling maps carry is an early-stage open-source primitive. L5 keeps the approval token bound to the parameters a human approved. Cedar Analysis ships as OSS, so the L5+ formal-verification line narrows to the MCP-wired, trajectory-aware extension of it.
+
+One prerequisite sits below every level: confirm the guard is consulted under each autonomy mode the deployment permits, then grade what it matches. [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] is the case: an autonomy flag suppressed the tool allowlist outright, so a deployment presenting enumerated permissions as evidence had none.
+
+**Outside the model context tests whether an instruction reaching that context can rewrite the decision the enforcement point issues**, which a decision point inside the runtime hosting the model can satisfy; that shape meets the mediation criterion on the substitute evidence [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] names, the remaining L3 criteria are graded as written, and the assessment records that one vendor's code both runs the model and enforces the policy.
 
 - **D3-L1 (Initial):** No tool-call policy governs the agents.
     - **Capability.** An agent may call any tool.
@@ -439,13 +508,21 @@ See [[agentic-ai-security-cmm-d3-control-least-agency|the D3 deep dive]]. Platfo
 
 The Runtime & Guardrails domain defends against [[prompt-injection|prompt injection]], jailbreak, grounding failure, and output-safety violations at runtime. It instruments each guardrail with latency and cost budgets and fails closed on critical paths.
 
-Maps to: OWASP ASI01, ASI02; MITRE ATLAS `AML.T0051` (LLM Prompt Injection — incl. `.000` Direct / `.001` Indirect / `.002` Triggered) and `AML.T0054` (LLM Jailbreak); CoSAI Maximize Oversight; Microsoft ZT4AI runtime — Prompt Shields (GA), Groundedness Detection + Task Adherence (preview), Defender AI-agent runtime protection (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]] (the preview status confirms the L4-spine grading below); [[model-layer-attacks|Model-Layer Attacks]] (output-randomization and query-pattern-monitoring controls applicable at L4); [[agent-availability-threats|Agent Availability Threats]] (runtime step / token / recursion budgets at L3+); EU AI Act Art. 15 (cybersecurity) names the attack classes (data poisoning, model poisoning, adversarial examples / model evasion, confidentiality attacks, model flaws) as outcomes but specifies no control, threshold, or test procedure — a gap this domain's per-level evidence rubric and the ATLAS mitigation anchors fill for prompt injection and output safety, leave open for adversarial examples and model evasion, and cover confidentiality attacks partially ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 3).
+Maps to:
 
-The [[owasp-ai-exchange|OWASP AI Exchange]] names five controls against evasion ([`/go/evasion/`](https://owaspai.org/go/evasion/)). Three act at development time on a model the deploying organization trains. The two that run at runtime state limits bounding their own coverage: a detector that an adversarial sample may be crafted to evade, and a distortion defense that exempts zero-knowledge evasion and requires retraining the model with its transformations in place. D4 therefore grades no evasion criterion by design, and an assessor answering an Art. 15 question about adversarial examples reports the domain's coverage as partial with that reason.
+- OWASP ASI01, ASI02
+- MITRE ATLAS `AML.T0051` (LLM Prompt Injection, incl. `.000` Direct / `.001` Indirect / `.002` Triggered) and `AML.T0054` (LLM Jailbreak)
+- CoSAI Maximize Oversight
+- Microsoft ZT4AI runtime: Prompt Shields (GA), Groundedness Detection + Task Adherence (preview), Defender AI-agent runtime protection (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]] (the preview status confirms the L4-spine grading below)
+- [[model-layer-attacks|Model-Layer Attacks]] (output-randomization and query-pattern-monitoring controls applicable at L4)
+- [[agent-availability-threats|Agent Availability Threats]] (runtime step / token / recursion budgets at L3+)
+- EU AI Act Art. 15 (cybersecurity), which names the attack classes (data poisoning, model poisoning, adversarial examples / model evasion, confidentiality attacks, model flaws) as outcomes and specifies no control, threshold, or test procedure, a gap this domain's per-level evidence rubric and the ATLAS mitigation anchors fill for prompt injection and output safety, leave open for adversarial examples and model evasion, and cover confidentiality attacks partially ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 3)
 
-The Exchange's runtime control for disclosure of exposure-restricted data in output is `SENSITIVE OUTPUT HANDLING` ([`/go/sensitiveoutputhandling/`](https://owaspai.org/go/sensitiveoutputhandling/)). [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] requires the output classifier's data-class scope to be recorded at L3, because content safety and exposure-restricted data are separate detections, and grades encoding-aware response-leak scanning at L5; its recitation-detection mechanism is graded nowhere. The Exchange's own controls for model inversion, membership inference, and model exfiltration act at training time or produce post-theft evidence, and it states that model exfiltration is typically hard to protect against where an attacker can reach the model and the model allows intensive use ([`/go/modelexfiltration/`](https://owaspai.org/go/modelexfiltration/)). An assessor answering an Art. 15 question about confidentiality attacks reports output-side coverage as graded and model-recovery coverage as bounded by that statement.
+The [[owasp-ai-exchange|OWASP AI Exchange]] names five controls against evasion ([/go/evasion/](https://owaspai.org/go/evasion/)). Three act at development time on a model the deploying organization trains. The two that run at runtime state limits bounding their own coverage: a detector that an adversarial sample may be crafted to evade, and a distortion defense that exempts zero-knowledge evasion and requires retraining the model with its transformations in place. D4 therefore grades no evasion criterion by design, and an assessor answering an Art. 15 question about adversarial examples reports the domain's coverage as partial with that reason.
 
-See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L3 input-and-output safety layer is GA and largely inside Azure entitlements, but the **L4 spine rests on preview and experimental controls: chain-of-thought auditing and groundedness checking have not reached GA** (Task Adherence preview; Groundedness Detection preview and English-only; AlignmentCheck experimental). Report D4 as raw + effective: the D3→D4 cap pulls effective D4 down wherever the PDP is weak. Sandbox coverage carries two questions: what the boundary contains, and when it starts. The first is now graded against a specification at L3: OS-level confinement with separate namespaces, a mandatory access control profile with unneeded capabilities dropped, clean termination of transient state and in-sandbox credentials, and platform-enforced compute and wall-clock ceilings. The second has no published answer for any harness the wiki tracks and is recorded as an open vendor question, per [[gemini-cli-workspace-trust-rce|the Gemini CLI advisory]], where isolation was correctly implemented and initialized after the harness had already executed attacker-supplied configuration.
+The Exchange's runtime control for disclosure of exposure-restricted data in output is `SENSITIVE OUTPUT HANDLING` ([/go/sensitiveoutputhandling/](https://owaspai.org/go/sensitiveoutputhandling/)). [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] requires the output classifier's data-class scope to be recorded at L3, because content safety and exposure-restricted data are separate detections, and grades encoding-aware response-leak scanning at L5; its recitation-detection mechanism is graded nowhere. The Exchange's own controls for model inversion, membership inference, and model exfiltration act at training time or produce post-theft evidence, and it states that model exfiltration is typically hard to protect against where an attacker can reach the model and the model allows intensive use ([/go/modelexfiltration/](https://owaspai.org/go/modelexfiltration/)). An assessor answering an Art. 15 question about confidentiality attacks reports output-side coverage as graded and model-recovery coverage as bounded by that statement.
+
+See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L3 input-and-output safety layer is GA and largely inside Azure entitlements, but the **L4 spine rests on preview and experimental controls: chain-of-thought auditing and groundedness checking have not reached GA** (Task Adherence preview; Groundedness Detection preview and English-only; AlignmentCheck experimental). Report D4 as raw + effective: the `D3→D4` cap pulls effective D4 down wherever the PDP is weak. Sandbox coverage carries two questions: what the boundary contains, and when it starts. L3 grades the first against a specification: OS-level confinement with separate namespaces, a mandatory access control profile with unneeded capabilities dropped, clean termination of transient state and in-sandbox credentials, and platform-enforced compute and wall-clock ceilings. The second has no published answer for any harness the wiki tracks and is recorded as an open vendor question, per [[gemini-cli-workspace-trust-rce|the Gemini CLI advisory]], where isolation was correctly implemented and initialized after the harness had already executed attacker-supplied configuration.
 
 - **D4-L1 (Initial):** Nothing outside the prompt constrains the model at runtime.
     - **Capability.** No runtime guardrail runs, or only system-prompt instructions do.
@@ -508,9 +585,22 @@ See [[agentic-ai-security-cmm-d4-runtime-guardrails|the D4 deep dive]]. The L2/L
 
 The Egress & Network domain mediates agent egress at the network layer. An agent-aware gateway enforces the MCP, A2A, and LLM protocols, and SSRF is closed at the network layer so all outbound traffic leaves through the gateway.
 
-Maps to: OWASP ASI02, ASI07; CoSAI Model Context Protocol (MCP) Security (2026-01-20; the "12 categories / 40 threats" figure was not re-verifiable in [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]] and is flagged for a deeper-source check); CSA MAESTRO Layer 4 (Deployment and Infrastructure) + Layer 7 (Agent Ecosystem) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]; Microsoft ZT4AI network — Entra Internet Access prompt-injection protection (GA), APIM AI Gateway with MCP brokering (GA), MCP tool-integrity guidance-only with no single Azure service (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]).
+Maps to:
 
-See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eight D5 capabilities are GA platform-native for a Microsoft shop (Azure API Management AI Gateway; MCP brokering with Entra/OAuth/JWT; Entra Internet Access prompt-injection + Shadow-AI; per-agent network policy; identity-scoped tokens). The three genuine off-stack residuals — MCP tool-integrity/rug-pull at L4, A2A authorization beyond identity at L4, per-task tokens at L5+ — do not block an L3 target. D5 investment is wasted ahead of D2 (the D2→D5 cap).
+- OWASP ASI02, ASI07
+- CoSAI Model Context Protocol (MCP) Security (2026-01-20), whose "12 categories / 40 threats" figure [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]] could not re-verify
+- CSA MAESTRO Layer 4 (Deployment and Infrastructure) + Layer 7 (Agent Ecosystem) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]
+- Microsoft ZT4AI network: Entra Internet Access prompt-injection protection (GA), APIM AI Gateway with MCP brokering (GA), MCP tool-integrity guidance-only with no single Azure service (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
+
+See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eight D5 capabilities are GA platform-native for a Microsoft shop:
+
+- Azure API Management AI Gateway
+- MCP brokering with Entra/OAuth/JWT
+- Entra Internet Access prompt-injection + Shadow-AI
+- Per-agent network policy
+- Identity-scoped tokens
+
+The three off-stack residuals do not block an L3 target: MCP tool-integrity/rug-pull at L4, A2A authorization beyond identity at L4, and per-task tokens at L5+. D5 investment is wasted ahead of D2 (the `D2→D5` cap).
 
 - **D5-L1 (Initial):** No control stands between an agent and the network.
     - **Capability.** Agents have unrestricted network egress.
@@ -567,17 +657,29 @@ See [[agentic-ai-security-cmm-d5-egress-network|the D5 deep dive]]. Five of eigh
 
 The Data, Memory & RAG domain attributes trust and enforces integrity for everything the agent ingests, retrieves, or persists: its own system prompts and identity files ([[cognitive-file-integrity|cognitive file integrity]]), retrieval corpora, and per-session memory.
 
-Maps to: OWASP ASI06 (Memory & Context Poisoning); the MITRE ATLAS poisoning and context-poisoning techniques; [[nist-sp-800-218a|NIST SP 800-218A]] training-data integrity and protection — the federal build-time anchor, which carries no RAG or runtime-memory content ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]]); CoSAI MCP server data threats; PoisonedRAG / ConfusedPilot literature; the [[owasp-ai-exchange|OWASP AI Exchange]] development-time poisoning group (§3.1) for the data-poisoning class split and the ingest-scan detection set; [[differential-privacy|Differential Privacy]]; [[model-layer-attacks|Model-Layer Attacks]]; Microsoft ZT4AI data — Purview answer-time entitlement, DSPM for AI oversharing remediation, and label-aware DLP, all GA ([[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]). Clause-level IDs are in the [[agentic-ai-security-cmm-crosswalk|standards crosswalk]].
+Maps to:
 
-See [[agentic-ai-security-cmm-d6-data-rag|the D6 deep dive]] for capability-decoupled criteria, dated tooling-maturity grades, and the cost model. For a closed-corpus member- or customer-facing RAG bot, the live risk is **oversharing and [[inference-exposure|inference exposure]]** (over-permissioned content surfaced or reconstructed for an unentitled asker). **Answer-time entitlement enforcement is now the L3 spine**; poisoning controls move to L4/L5 and to open / multi-writer corpora.
+- OWASP ASI06 (Memory & Context Poisoning)
+- The MITRE ATLAS poisoning and context-poisoning techniques
+- [[nist-sp-800-218a|NIST SP 800-218A]] training-data integrity and protection, the federal build-time anchor, which carries no RAG or runtime-memory content ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]])
+- CoSAI MCP server data threats
+- PoisonedRAG / ConfusedPilot literature
+- The [[owasp-ai-exchange|OWASP AI Exchange]] development-time poisoning group (§3.1), for the data-poisoning class split and the ingest-scan detection set
+- [[differential-privacy|Differential Privacy]]
+- [[model-layer-attacks|Model-Layer Attacks]]
+- Microsoft ZT4AI data: Purview answer-time entitlement, DSPM for AI oversharing remediation, and label-aware DLP, all GA ([[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
+
+Clause-level IDs are in the [[agentic-ai-security-cmm-crosswalk|standards crosswalk]].
+
+See [[agentic-ai-security-cmm-d6-data-rag|the D6 deep dive]] for capability-decoupled criteria, dated tooling-maturity grades, and the cost model. For a closed-corpus member- or customer-facing RAG bot, the live risk is **oversharing and [[inference-exposure|inference exposure]]** (over-permissioned content surfaced or reconstructed for an unentitled asker). **Answer-time entitlement enforcement is the L3 spine**; poisoning controls sit at L4/L5 and bear on open / multi-writer corpora.
 
 L3 resolves the asking principal's read authorization in the **authorization layer** the corpus carries. Against a document corpus that layer is per-document entitlements; against a source repository it is the repository and branch grants of the asking developer, with a path-scoped retrieval; against a whole-tenant corpus it is the tenant access-control list with label-aware policy. The assessment names the layer, and a retrieval that no asker's grants narrow fails the criterion in every one of the three. Where the run carries no asking principal at all, the criterion is graded on the scope that binds the retrieval to the task.
 
-**L2 takes its grain from that same layer**, so the two rungs grade one corpus rather than two. Grading is cumulative, so an L2 clause a shape cannot evidence puts L3 out of reach whatever L3 says, and L2's clauses described a document corpus after L3 stopped doing so. The classification scheme is therefore written at the grain the authorization layer grants on — sensitivity labels over a document corpus or a tenant, and over a source repository a register of the repositories the agent reaches, each carrying a data classification and the paths excluded from retrieval. The first assessment reads the same way: the oversharing assessment over a document corpus or a tenant, and over a repository a review of which repositories and branches the agent reaches against the developers who can read them. [[agentic-ai-security-cmm-d6-data-rag|The D6 deep dive]] carries the per-shape reading and what each shape still cannot evidence.
+**L2 takes its grain from that same layer**, so the two rungs grade one corpus rather than two. Grading is cumulative, so an L2 clause a shape cannot evidence puts L3 out of reach whatever L3 says. The classification scheme is therefore written at the grain the authorization layer grants on — sensitivity labels over a document corpus or a tenant, and over a source repository a register of the repositories the agent reaches, each carrying a data classification and the paths excluded from retrieval. The first assessment reads the same way: the oversharing assessment over a document corpus or a tenant, and over a repository a review of which repositories and branches the agent reaches against the developers who can read them. [[agentic-ai-security-cmm-d6-data-rag|The D6 deep dive]] carries the per-shape reading and what each shape still cannot evidence.
 
-L3 also brings the validation corpus inside the protection scope: it is held apart from the training data and the model artifacts and under an access model at least as restrictive, so a compromise of the model does not reach the baseline the model is measured against and the test data's own confidentiality is protected alongside it, a leak the [[owasp-ai-exchange|OWASP AI Exchange]] scopes to train **or test** data at §3.2.1. The ingest poisoning scan at L3 also gains a method and a threshold discipline: the scan names the detection method it runs, establishes that method's fitness against a poisoned-dataset benchmark rather than asserting it, and carries two thresholds rather than one, the higher filtering a sample out of the corpus and the lower raising an alert, which the [[owasp-ai-exchange|OWASP AI Exchange]] sets out at §3.1.1. The artifact is the recorded method and its thresholds; [[agentic-ai-security-cmm-d6-data-rag|the D6 deep dive]] names the methods and the residual.
+L3 also brings the validation corpus inside the protection scope: it is held apart from the training data and the model artifacts and under an access model at least as restrictive, so a compromise of the model does not reach the baseline the model is measured against and the test data's own confidentiality is protected alongside it, a leak the [[owasp-ai-exchange|OWASP AI Exchange]] scopes to train **or test** data at §3.2.1. At L3 the ingest poisoning scan also carries a method and a threshold discipline: the scan names the detection method it runs, establishes that method's fitness against a poisoned-dataset benchmark rather than asserting it, and carries two thresholds rather than one, the higher filtering a sample out of the corpus and the lower raising an alert, which the [[owasp-ai-exchange|OWASP AI Exchange]] sets out at §3.1.1. The artifact is the recorded method and its thresholds; [[agentic-ai-security-cmm-d6-data-rag|the D6 deep dive]] names the methods and the residual.
 
-L3 and L4 now grade the Exchange's sensitive-data-limitation controls, L3 stating the scope and L4 showing that scope held across the derived copies ([`/go/datalimit/`](https://owaspai.org/go/datalimit/)). At L3 the retrieval corpus and any data the organization supplies for fine-tuning are scoped to the fields and records the application needs, with identifiers retained only to service data-removal requests or lifecycle management listed and excluded from training; the artifacts are the scope decision and the retained-identifier exception list. At L4 a removal decision is justified against measured effect on model performance rather than asserted, and deletions and corrections applied upstream propagate into the derived training and augmentation datasets, on a record linking a source record to the corpus entries and embeddings derived from it. Where the organization fine-tunes, exposure-restricted fields that cannot be removed are obfuscated, the mapping tables of any token-based approach are held under an access model at least as restrictive as the data they reverse, and the Exchange's two stated residuals are recorded. The L4 artifacts are the removal justification, that linkage record, and the recorded residuals.
+L3 and L4 grade the Exchange's sensitive-data-limitation controls, L3 stating the scope and L4 showing that scope held across the derived copies ([/go/datalimit/](https://owaspai.org/go/datalimit/)). At L3 the retrieval corpus and any data the organization supplies for fine-tuning are scoped to the fields and records the application needs, with identifiers retained only to service data-removal requests or lifecycle management listed and excluded from training; the artifacts are the scope decision and the retained-identifier exception list. At L4 a removal decision is justified against measured effect on model performance rather than asserted, and deletions and corrections applied upstream propagate into the derived training and augmentation datasets, on a record linking a source record to the corpus entries and embeddings derived from it. Where the organization fine-tunes, exposure-restricted fields that cannot be removed are obfuscated, the mapping tables of any token-based approach are held under an access model at least as restrictive as the data they reverse, and the Exchange's two stated residuals are recorded. The L4 artifacts are the removal justification, that linkage record, and the recorded residuals.
 
 - **D6-L1 (Initial):** Nothing records where retrieved content came from or who may read it.
     - **Capability.**
@@ -648,11 +750,23 @@ L3 and L4 now grade the Exchange's sensitive-data-limitation controls, L3 statin
 
 ### D7. Observability & Detection
 
-The Observability & Detection domain provides telemetry, detection, and continuous evaluation of running agents. Agents emit under OpenTelemetry `gen_ai.*` semantic conventions; behavioral-drift and AI-SPM monitoring run continuously; red-team evaluation spans distinct attack categories with multiple tools; analyst-actionable alerting wires back to closed-loop controls updates.
+The Observability & Detection domain provides telemetry, detection, and continuous evaluation of running agents through four practices:
 
-Maps to: NIST CSF 2.0 Detect, MITRE ATLAS detection layer, [[agent-observability|Agent Observability]], OWASP ASI08 / ASI10, [[agent-availability-threats|Agent Availability Threats]] (anomaly detection for runaway / recursive / resource-exhausting patterns); Microsoft ZT4AI observability — Agent 365 lifecycle telemetry (GA), Defender XDR AI-agent detections and Sentinel agentic-SOC tooling (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]] (preview status confirms the behavioral-detection grading below).
+- Agents emit under OpenTelemetry `gen_ai.*` semantic conventions.
+- Behavioral-drift and AI-SPM monitoring run continuously.
+- Red-team evaluation spans distinct attack categories with multiple tools.
+- Analyst-actionable alerting wires back to closed-loop controls updates.
 
-See [[agentic-ai-security-cmm-d7-observability|the D7 deep dive]]. D7 carries the heaviest run-rate cost of the nine domains: high agent-log volume into the SIEM makes **log tiering** (route low-fidelity trace spans to a cheaper data-lake tier; reserve the analytics tier for detections that fire) the primary cost lever. The OTel `gen_ai.*` conventions remain experimental, and behavioral-detection products such as Defender XDR AI-agent detection are preview-stage and require platform licensing. Effective D7 is capped by D2 (the D2→D7 cap), so per-agent identity comes first and no monitoring product substitutes for it.
+Maps to:
+
+- NIST CSF 2.0 Detect
+- MITRE ATLAS detection layer
+- [[agent-observability|Agent Observability]]
+- OWASP ASI08 / ASI10
+- [[agent-availability-threats|Agent Availability Threats]] (anomaly detection for runaway / recursive / resource-exhausting patterns)
+- Microsoft ZT4AI observability: Agent 365 lifecycle telemetry (GA), Defender XDR AI-agent detections and Sentinel agentic-SOC tooling (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]] (preview status confirms the behavioral-detection grading below)
+
+See [[agentic-ai-security-cmm-d7-observability|the D7 deep dive]]. D7 carries the heaviest run-rate cost of the nine domains: high agent-log volume into the SIEM makes **log tiering** (route low-fidelity trace spans to a cheaper data-lake tier; reserve the analytics tier for detections that fire) the primary cost lever. The OTel `gen_ai.*` conventions remain experimental, and behavioral-detection products such as Defender XDR AI-agent detection are preview-stage and require platform licensing. Effective D7 is capped by D2 (the `D2→D7` cap), so per-agent identity comes first and no monitoring product substitutes for it.
 
 > [!contradiction] Tension with the Stripe/Bullen architectural-containment view (mostly resolved)
 > [[breaking-the-lethal-trifecta-talk|Andrew Bullen's Unprompted talk]] presents a production agent platform with **no D7-style behavioral observability layer at all** — Stripe's defense is architectural containment ([[smokescreen|Smokescreen]] + agent-tag CI + [[toolshed|Toolshed]] + `ToolAnnotations` + HITL on sensitive writes). In Q&A Bullen explicitly says detective controls "have a place, especially for customer-facing products" but Stripe leans on "more deterministic, architectural controls." Implication for the CMM: a sophisticated practitioner with strong D3/D4/D5 may legitimately score lower on D7 and still have a sound program. The L4 rung below requires behavioral monitoring + AI-SPM + quarterly multi-tool red-team — a Stripe-tier architecture would meet the CMM's safety bar without all of those, and forcing them would be controls-for-controls'-sake.
@@ -713,9 +827,16 @@ See [[agentic-ai-security-cmm-d7-observability|the D7 deep dive]]. D7 carries th
 
 The Supply Chain & AI-BOM domain establishes provenance, integrity, and disclosure for the model, skill, dependency, and tool artifacts that compose an agent's runtime. It works through build-time and runtime AI-BOM, signed releases, registry and pre-install scanning, ML-VEX disclosure, and SLSA-graded provenance.
 
-Maps to: OWASP ASI04, [[nist-sp-800-218a|NIST SP 800-218A]] (SSDF AI Profile) — model provenance, verification of acquired models, and weight protection; the Profile names SBOM and SLSA but specifies no AI-BOM artifact schema ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]] claim 3), EU AI Act Art. 11 / Annex IV — the closest binding instrument to an AI-BOM mandate, but a prose disclosure schema, not a machine-readable BOM format ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 5); CycloneDX ML-BOM (v1.7 current), SPDX 3.0; Microsoft ZT4AI supply chain — Defender for Cloud AI-SPM generative AI-BOM discovery across Azure/Bedrock/Vertex (GA), extended to MCP-server and AI-model-provider catalog coverage in Defender for Cloud Apps, and AI model scanning in CI/CD (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]].
+Maps to:
 
-See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. A model-consumer persona scores L1 against the old D8 criteria, which measured producer controls it never operates; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder now inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria sharpen with it. A malicious-serialization scan becomes a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. The supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
+- OWASP ASI04
+- [[nist-sp-800-218a|NIST SP 800-218A]] (SSDF AI Profile) for model provenance, verification of acquired models, and weight protection; the Profile names SBOM and SLSA and specifies no AI-BOM artifact schema ([[standards-review-nist-sp-800-218a-2026-Q2|2026-Q2 review]] claim 3)
+- EU AI Act Art. 11 / Annex IV, the closest binding instrument to an AI-BOM mandate, which sets a prose disclosure schema and no machine-readable BOM format ([[standards-review-eu-ai-act-2026-Q2|2026-Q2 EU AI Act review]] claim 5)
+- CycloneDX ML-BOM (v1.7 current)
+- SPDX 3.0
+- Microsoft ZT4AI supply chain: Defender for Cloud AI-SPM generative AI-BOM discovery across Azure/Bedrock/Vertex (GA), extended to MCP-server and AI-model-provider catalog coverage in Defender for Cloud Apps, and AI model scanning in CI/CD (preview), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]]
+
+See [[agentic-ai-security-cmm-d8-supply-chain|the D8 deep dive]]. Graded on producer controls it never operates, a model-consumer persona scores L1; crediting consumer controls (lockfile SCA, signature verification, malicious-model scanning, mostly in E5 / GitHub entitlements) lifts it to L3. CycloneDX ML-BOM is version-agnostic here (v1.7 current); SLSA Build has no Level 4 in v1.0 (L1–L3 only). The consumer ladder inventories acquired datasets alongside acquired artifacts, since the [[owasp-ai-exchange|OWASP AI Exchange]] counts data among the four supplied assets its supply-chain control governs and puts data provenance inside that control (§3.0). Two L3 criteria follow from it. The malicious-serialization check is a pre-execution assessment covering the whole artifact and its behaviour under isolation, scoped by the Exchange to models from less trusted sources. The supplier itself is assessed against a recorded dimension set rather than credited on a model card. [[agentic-ai-security-cmm-d8-supply-chain|The D8 deep dive]] carries both criteria in full, and the residual the Exchange states for them.
 
 D8 splits along the **model-consumer vs model-producer axis**: producer-grade controls (build-time ML-BOM generation, training-data provenance, weight protection, ML-VEX publishing) are producer-only, so a model consumer reaches L4/L5 on verification-and-reconciliation of *acquired* artifacts alone.
 
@@ -782,7 +903,14 @@ D8 splits along the **model-consumer vs model-producer axis**: producer-grade co
 
 The Operations & Human Factors domain collects the cross-cutting operational and human-factor controls that no surveyed AI security standard mandates as a coherent set ([[agentic-cmm-vs-standards-validation|per the 11-standard validation]]): HITL-fatigue monitoring, decommission and rotation lifecycle, latency / cost discipline, system-prompt confidentiality, federated incident sharing, and model deprecation policy.
 
-Maps to: [[nist-ai-800-4|NIST AI 800-4]] post-deployment monitoring (human factors flagged as biggest blind spot); EU AI Act Art. 12 logging, Art. 14 human oversight; OWASP `LLM07:2025` System Prompt Leakage; CoSAI AI Incident Response Framework (2025-10-30, per [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]]); CSA ATF Incident Response element (kill switch, demotion-to-Intern on critical incident) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]; Microsoft ZT4AI operations — Entra ID Governance sponsors with automatic manager-transfer and time-bound access packages (GA), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]], which also confirms ZT4AI ships no HITL-fatigue / human-factors tooling.
+Maps to:
+
+- [[nist-ai-800-4|NIST AI 800-4]] post-deployment monitoring (human factors flagged as biggest blind spot)
+- EU AI Act Art. 12 logging, Art. 14 human oversight
+- OWASP `LLM07:2025` System Prompt Leakage
+- CoSAI AI Incident Response Framework (2025-10-30, per [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI review]])
+- CSA ATF Incident Response element (kill switch, demotion-to-Intern on critical incident) per [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 review]]
+- Microsoft ZT4AI operations: Entra ID Governance sponsors with automatic manager-transfer and time-bound access packages (GA), per [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]], which also confirms ZT4AI ships no HITL-fatigue / human-factors tooling
 
 See [[agentic-ai-security-cmm-d9-operations|the D9 deep dive]]. D9 is process- and labor-heavy and largely product-free: **HITL-fatigue measurement and bus-factor continuity have no product on any stack**, which is a market gap rather than a Microsoft one. Its dependencies are stable standards (CoSAI AI Incident Response Framework (2025-10-30), OTel/canary patterns, the GA Entra Agent ID lifecycle), so it is cadence-safe, and right-sizing matters most here: a contained low-autonomy bot targets a narrow L3 rather than mesh-grade incident response. The continuity test the gate into L5 requires is a D9 control graded once for the program, so every other domain's L5 claim depends on D9's continuity evidence; the gate's two-quarter stable-L4 condition is graded per domain, and D9's clean-state attestations evidence D9's own.
 
@@ -790,7 +918,7 @@ See [[agentic-ai-security-cmm-d9-operations|the D9 deep dive]]. D9 is process- a
 
 The validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §3) surfaced seven operational gaps that no surveyed standard mandates as a coherent set but a credible agentic-AI program must operate: guardrail latency / cost budgets, non-adversarial drift, agent decommission lifecycle, human-factors monitoring, federated incident sharing, model deprecation, system-prompt confidentiality. D9 packages these into one cross-cutting domain which the assessor measures and improves independently of the per-plane domains.
 
-L3 also grades what the program tells its users. A published disclosure informs users that an AI model is involved, and each of the five properties `AI TRANSPARENCY` lists is either covered in that disclosure or recorded as omitted ([`/go/aitransparency/`](https://owaspai.org/go/aitransparency/)). The artifacts are the published disclosure and that coverage record. Depth stays ungraded: the Exchange states no measure of sufficiency for an individual property, so a one-line answer and a ten-page answer score alike, and the bound this rung sets on the withholding review at D1 reaches coverage only.
+L3 also grades what the program tells its users. A published disclosure informs users that an AI model is involved, and each of the five properties `AI TRANSPARENCY` lists is either covered in that disclosure or recorded as omitted ([/go/aitransparency/](https://owaspai.org/go/aitransparency/)). The artifacts are the published disclosure and that coverage record. Depth stays ungraded: the Exchange states no measure of sufficiency for an individual property, so a one-line answer and a ten-page answer score alike, and the bound this rung sets on the withholding review at D1 reaches coverage only.
 
 - **D9-L1 (Initial):** No operating discipline surrounds the agents.
     - **Capability.**
@@ -901,7 +1029,14 @@ The desktop-agent row covers the same mail, file and calendar reach held through
 
 ## Tooling map per domain
 
-Four categories: **Standards / Specs** = formally governed specifications, frameworks, or guidance documents (IETF, CNCF, OWASP, NIST, CSA, etc.); **OSS tools** = open-source software with an Apache / MIT / similar license; **COTS / SaaS** = commercial off-the-shelf or managed cloud service, including the Microsoft and AWS platform-native services an incumbent already holds (Entra Agent ID, Prompt Shields, Purview, AWS Cedar managed); **Platform-native (Google)** = a Google Cloud or Google Workspace service that ships with the platform, carried in a column of its own so the Google reading stands beside the Microsoft and AWS services already in the COTS / SaaS column. A single capability may appear in multiple categories when standards define the protocol and both OSS and commercial implementations exist. See [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] §Recommended stacks for opinionated per-profile selections.
+The map sorts tooling into four categories:
+
+- **Standards / Specs**: formally governed specifications, frameworks, or guidance documents (IETF, CNCF, OWASP, NIST, CSA, etc.).
+- **OSS tools**: open-source software with an Apache / MIT / similar license.
+- **COTS / SaaS**: commercial off-the-shelf or managed cloud service, including the Microsoft and AWS platform-native services an incumbent already holds (Entra Agent ID, Prompt Shields, Purview, AWS Cedar managed).
+- **Platform-native (Google)**: a Google Cloud or Google Workspace service that ships with the platform, carried in a column of its own so the Google reading stands beside the Microsoft and AWS services already in the COTS / SaaS column.
+
+A single capability can appear in multiple categories when standards define the protocol and both OSS and commercial implementations exist. See [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] §Recommended stacks for opinionated per-profile selections.
 
 | Domain | Standards / Specs | OSS tools | COTS / SaaS | Platform-native (Google) |
 |---|---|---|---|---|
@@ -910,20 +1045,20 @@ Four categories: **Standards / Specs** = formally governed specifications, frame
 | D3 Control & Least-Agency | OWASP ASI least-agency principle; action-risk tiers from [[emerging-cybersecurity-practices-for-agentic-ai-applications\|Emerging Practices §3.2]]; CSA Agentic Trust Framework 5-gate model | [[opa\|OPA/Rego]] (CNCF OSS); [[cedar\|Cedar]] (Apache 2.0, AWS); [[tenuo-warrant\|Tenuo Warrants]] (OSS); [[agentshield\|AgentShield]] permission rules (MIT) | AWS Cedar managed (Mar 2026 AI release); Anthropic Compliance API; Permit.io; Topaz | IAM Unified Access Policies at Agent Gateway via Identity-Aware Proxy: CEL conditions, per-rule allow and deny, Principal Access Boundary, dry-run before enforce. No approval-gate primitive |
 | D4 Runtime & Guardrails | — | [[llamafirewall\|LlamaFirewall]] (PromptGuard 2, AlignmentCheck, CodeShield); NeMo Guardrails; Guardrails AI; Microsoft Agent Governance Toolkit; [[agentshield\|AgentShield]] | Lakera Guard; Lasso; HiddenLayer; Microsoft Prompt Shields; NeMo NIMs (commercial); Robust Intelligence. Input/output filtering; no COTS at L4 ([[agent-runtime-protection-canvass-2026-09\|canvass]]) | Model Armor, no stated launch stage, with Sensitive Data Protection embedded; check grounding API; [[gke-agent-sandbox\|GKE Agent Sandbox]] and Vertex sandboxed execution. No tool-call gating |
 | D5 Egress & Network | A2A v1.0 spec (Linux Foundation); CoSAI Model Context Protocol (MCP) Security (2026-01-20) | [[agentgateway\|AgentGateway]] (Linux Foundation, Apache 2.0); Oktsec; mTLS via Istio or Linkerd (both CNCF OSS); [[agentshield\|AgentShield]] MCP remote-transport rules (MIT) | Solo Enterprise for AgentGateway; Operant MCP Gateway; Natoma; Cloudflare AI Gateway; Kong AI Gateway | VPC Service Controls perimeters, GA for Model Armor and Agent Runtime; Agent Identity as a principal (preview); Apigee and Agent Gateway with inline Model Armor. No MCP brokering entry |
-| D6 Data, Memory & RAG | CycloneDX ML-BOM (OWASP); SPDX 3.0 AI extensions (Linux Foundation) | OWASP AIBOM Generator; sigstore / cosign; LangChain PII Middleware. *Research-grade, not deployable controls:* RAGShield, TrustRAG, Brain Git (SlowMist), SecureClaw | **GA, answer-time:** Purview DSPM for AI; DLP for M365 Copilot; Azure Groundedness (English-only); Restricted SharePoint Search. ReversingLabs; JFrog. See [[agentic-ai-security-cmm-d6-data-rag\|D6]] | No answer-time entitlement control documented. Sensitive Data Protection and CMEK cover the stored Google Cloud estate; neither narrows what a Gemini answer may draw from a Workspace corpus |
+| D6 Data, Memory & RAG | CycloneDX ML-BOM (OWASP); SPDX 3.0 AI extensions (Linux Foundation) | OWASP AIBOM Generator; sigstore / cosign; LangChain PII Middleware. *Research-grade, not deployable controls:* RAGShield, TrustRAG, Brain Git (SlowMist), SecureClaw | **GA, answer-time:** Purview DSPM for AI; DLP for M365 Copilot; Azure Groundedness (English-only); Restricted SharePoint Search. ReversingLabs; JFrog. See [[agentic-ai-security-cmm-d6-data-rag\|D6]] | No answer-time entitlement control documented. Sensitive Data Protection and CMEK cover the stored Google Cloud estate; neither narrows what a Gemini answer can draw from a Workspace corpus |
 | D7 Observability & Detection | [[opentelemetry-gen-ai\|OTel gen_ai.* SemConv]] v1.37+ (CNCF); MITRE ATLAS detection layer | Langtrace; Traceloop; Helicone; [[promptfoo\|Promptfoo]]; [[pyrit\|PyRIT]] (Microsoft OSS); [[garak\|Garak]] (NVIDIA OSS) | LangSmith; Wiz AI-SPM; Palo Alto Prisma AIRS; Orca AI-SPM; Reco; [[mindgard-cart\|Mindgard CART]]; Vectra AI; Miggo Security | OTel GenAI conventions into Cloud Trace, behind the experimental semantic-convention opt-in; Agent Anomaly Detection and Agent Platform Threat Detection, both preview. No drift detector |
 | D8 Supply Chain & AI-BOM | CycloneDX ML-BOM (v1.7); SPDX 3.0 AI ext; NIST SP 800-218A SSDF AI Profile; EU AI Act Art. 11 / Annex IV; GitHub Artifact Attestations (SLSA L2/L3) | OWASP AIBOM Generator; sigstore / cosign; Aguara Watch; SecureClaw 55-check audit; [[agentshield\|AgentShield]] MCP-package-provenance + skill-marketplace rules (MIT) | Anchore; Snyk AI; JFrog AI Catalog; ReversingLabs; IBM Granite disclosures; Lineaje | Cloud Build provenance; Artifact Registry signature verification; Artifact Analysis. No SLSA build level stated for the Google path and no first-party ML-BOM generator |
 | D9 Operations & Human Factors | NIST AI 800-4 monitoring categories; OWASP `LLM07:2025` test cases; CoSAI IR Framework v1.0; MITRE ATLAS coordinated-disclosure templates | [[opentelemetry-gen-ai\|OTel]] latency / cost spans; canary-token tooling; [[agentshield\|AgentShield]] baseline-drift gate + time-bound policy-exception lifecycle audit (MIT) | DataDog AI Monitoring; New Relic AI Monitoring; Sentry AI Tracing; AI-VEX disclosure platforms (emerging); Schellman / Coalfire AI risk-observability services | Google SecOps SIEM and SOAR; the agent-aware IR path stays thin. No orphan reaper. Canary trip-wires and HITL-fatigue measurement are native on no platform |
 
-Two rows carry no Google instrument for the capability the domain grades. Assured Workloads sets where data sits and which support personnel may reach it, so D1's evidence layer of crosswalk, risk register and board metrics has no Google entry. D6's answer-time row has no Google entry either, because Gemini inherits the signed-in user's Workspace permissions and the admin settings act on Gemini's access to Workspace data as a whole, above any single answer ([What controls Gemini's access to Workspace data](https://support.google.com/a/users/answer/17010577), fetched 2026-09-16). The nearest Google Cloud posture product, Data Security Posture Management, covers BigQuery, Cloud Storage and Agent Platform assets and is scheduled for shutdown on 2027-02-01 ([DSPM overview](https://docs.cloud.google.com/security-command-center/docs/dspm-data-security), fetched 2026-09-16).
+Two rows carry no Google instrument for the capability the domain grades. Assured Workloads sets where data sits and which support personnel can reach it, so D1's evidence layer of crosswalk, risk register and board metrics has no Google entry. D6's answer-time row has no Google entry either, because Gemini inherits the signed-in user's Workspace permissions and the admin settings act on Gemini's access to Workspace data as a whole, above any single answer ([What controls Gemini's access to Workspace data](https://support.google.com/a/users/answer/17010577), fetched 2026-09-16). The nearest Google Cloud posture product, Data Security Posture Management, covers BigQuery, Cloud Storage and Agent Platform assets and is scheduled for shutdown on 2027-02-01 ([DSPM overview](https://docs.cloud.google.com/security-command-center/docs/dspm-data-security), fetched 2026-09-16).
 
 Most Google entries above carry no documented launch stage. Google states none for Agent Identity, for Unified Access Policies, for the check grounding API or for the core Model Armor screening service, and announces General Availability for named Model Armor features and integrations only, among them the Agent Gateway integration in June 2026 ([Model Armor overview](https://docs.cloud.google.com/model-armor/overview) and [release notes](https://docs.cloud.google.com/model-armor/release-notes), both fetched 2026-09-16). Three entries carry Preview: Agent Identity as a VPC Service Controls principal at D5, and Agent Anomaly Detection and Agent Platform Threat Detection at D7. Agent Platform Threat Detection reports host-level and control-plane compromise such as malicious binaries, container escapes and reverse shells, and Google's agent-observability page names agent drift as a risk while documenting no detector, rule or baseline for it ([Agent observability](https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability), fetched 2026-09-16).
 
 One documented limit bounds the D3 entry. The Unified Access Policies page opens on the note that the feature does not support VPC Service Controls ([IAM Access policies overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/iam-overview-uap), fetched 2026-09-16), so the Google policy decision point for agent actions and the Google egress perimeter do not compose, and a design that needs both decides which path each one covers. [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] carries the single-stack reading behind this column.
 
-**[[agentshield|AgentShield]] appears in five rows above because its unit of analysis is the agent harness configuration tree**, a control surface application-code scanners and network-traffic tools do not cover. Its 102 rules across secrets, permissions, hooks, MCP servers and agents reach D3 through the permission rules, D4 through the hook, agent and prompt-injection rules and the MiniClaw reference sandbox, D5 through the MCP remote-transport and network-exposure rules, D8 through MCP-package provenance and skill-marketplace controls, and D9 through the baseline-drift gate and the time-bound exception-lifecycle audit. The D8 reach is the most distinctive of the five, because no other instrument in the map grades the provenance of a skill or an MCP package. AgentShield is MIT-licensed, from [[affaan-m|Affaan M]] and the *Everything Claude Code* ecosystem. Two disciplines it implements are held as candidate primitives for the next revision pass rather than graded here, [[harness-config-as-supply-chain-artifact|Harness Config as Supply-Chain Artifact]] and [[control-efficacy-gate|Control-Efficacy Gate]]; the promotion criterion for the provenance-label weighting scheme is item 5 of [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] §Open gaps in this protocol.
+**[[agentshield|AgentShield]] appears in five rows above because its unit of analysis is the agent harness configuration tree**, a control surface application-code scanners and network-traffic tools do not cover. Its 102 rules across secrets, permissions, hooks, MCP servers and agents reach D3 through the permission rules, D4 through the hook, agent and prompt-injection rules and the MiniClaw reference sandbox, D5 through the MCP remote-transport and network-exposure rules, D8 through MCP-package provenance and skill-marketplace controls, and D9 through the baseline-drift gate and the time-bound exception-lifecycle audit. The D8 reach is the most distinctive of the five, because no other instrument in the map grades the provenance of a skill or an MCP package. AgentShield is MIT-licensed, from [[affaan-m|Affaan M]] and the *Everything Claude Code* ecosystem. Two disciplines it implements are candidate primitives the model does not yet grade, [[harness-config-as-supply-chain-artifact|Harness Config as Supply-Chain Artifact]] and [[control-efficacy-gate|Control-Efficacy Gate]]; the promotion criterion for the provenance-label weighting scheme is item 5 of [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] §Open gaps in this protocol.
 
-**Application-code vulnerability-discovery tools are outside this map, and the omission is deliberate.** [[openant|OpenAnt]], [[codex-security|Codex Security]], [[claude-code-security|Claude Code Security]], [[mdash|MDASH]], [[big-sleep|Big Sleep]], [[codemender|CodeMender]] and [[xbow|XBOW]] find bugs in a codebase; the per-domain tooling map grades controls protecting the agent itself. [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] tracks them instead, across the eight production paths it catalogs and the false-positive-control-as-primary-stage discipline converging over them. An organization with a mature `ai-vuln-discovery` capability and an immature CMM posture is an ordinary observation, because the two surfaces grade different things. A placement would follow only if the CMM gained an AI-driven secure-SDLC evidence dimension at D8 beside the existing supply-chain controls, which is a candidate for a future revision pass.
+**Application-code vulnerability-discovery tools are outside this map, and the omission is deliberate.** [[openant|OpenAnt]], [[codex-security|Codex Security]], [[claude-code-security|Claude Code Security]], [[mdash|MDASH]], [[big-sleep|Big Sleep]], [[codemender|CodeMender]] and [[xbow|XBOW]] find bugs in a codebase; the per-domain tooling map grades controls protecting the agent itself. [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] tracks them instead, across the eight production paths it catalogs and the false-positive-control-as-primary-stage discipline converging over them. An organization with a mature `ai-vuln-discovery` capability and an immature CMM posture is an ordinary observation, because the two surfaces grade different things. A placement would follow only if the CMM gained an AI-driven secure-SDLC evidence dimension at D8 beside the existing supply-chain controls.
 
 ## Practitioners worth following
 
@@ -934,7 +1069,7 @@ These individuals and organizations have shipped substantive work on the control
 | **Simon Willison**                        | Lethal Trifecta (Jun 2025); CaMeL coverage; structural test for prompt-injection vulnerability                                    | [[simon-willison\|Simon Willison]]                              |
 | **Johann Rehberger**                      | Embrace The Red; Month of AI Bugs (Aug 2025); Jules AI kill chain                                                                 | [[johann-rehberger\|Johann Rehberger]]                          |
 | **Bill McIntyre**                         | *Securing Your Agents* (2026, AIE / RMAIIG); 40-slide layered playbook                                                            | [[bill-mcintyre\|Bill McIntyre]]                                |
-| **Jason Clinton** (Anthropic Deputy CISO) | AIVSS Distinguished Review Board; CISO's Guide to Agentic AI webinar                                                              | (entity stub candidate)                                         |
+| **Jason Clinton** (Anthropic Deputy CISO) | AIVSS Distinguished Review Board; CISO's Guide to Agentic AI webinar                                                              | —                                                               |
 | **Apostol Vassilev** (NIST)               | [[nist-ai-600-1\|NIST AI 600-1]] lead; CAISI early contributor                                                                                       | [[apostol-vassilev\|Apostol Vassilev]]                          |
 | **Ken Huang**                             | OWASP AIVSS leadership team and Leader Authors (v0.8); Agentic Skills Top 10 project lead                                             | [[ken-huang\|Ken Huang]]                                        |
 | **Meta Purple Llama team**                | LlamaFirewall (PromptGuard 2 / AlignmentCheck / CodeShield)                                                                       | [[llamafirewall\|LlamaFirewall]]                                |
@@ -945,7 +1080,7 @@ These individuals and organizations have shipped substantive work on the control
 | **CoSAI / OASIS**                         | Model Context Protocol (MCP) Security (2026-01-20); Principles for Secure-by-Design Agentic Systems; Agentic Identity and Access Management (2026-04-17) | [[cosai\|CoSAI — Coalition for Secure AI]]                      |
 | **OWASP Gen AI Project**                  | ASI Top 10; AIVSS v0.8; AIBOM Generator; Practical Guide for Secure MCP                                                           | [[owasp\|OWASP — Open Worldwide Application Security Project]]  |
 | **CSA**                                   | MAESTRO threat model; Agentic Trust Framework with 5 promotion gates (Feb 2, 2026)                                                | [[csa\|CSA — Cloud Security Alliance]]                          |
-| **AIUC**                                  | AIUC-1 standard; quarterly updates; Schellman accredited Feb 2026                                                                 | (entity stub candidate)                                         |
+| **AIUC**                                  | AIUC-1 standard; quarterly updates; Schellman accredited Feb 2026                                                                 | —                                                               |
 
 ## Implementation roadmap
 
@@ -979,19 +1114,32 @@ The CMM's nine domains are organized **by where to enforce** controls (governanc
 | 10 | AI incident response | IR for prompt injection / poisoning / agent containment | D7 + D9 |
 | 11 | Availability and cost control | AI resource exhaustion: sponge / energy-latency input, denial of wallet, runaway agent loops ([[owasp-ai-exchange\|Exchange]] §2.5) | D4 Runtime + D5 Egress (D7) |
 
-Dimension 3 spans four domains because the Exchange lists five general input controls against the query-based route to a replica and they anchor across all four: `MODEL ACCESS CONTROL` at D2, `ANOMALOUS INPUT HANDLING` and `UNWANTED INPUT SERIES HANDLING` at D4, `RATE LIMIT` at D5, and `MONITOR USE` at D7. The [[owasp-ai-exchange|OWASP AI Exchange]] states that where an attacker can reach the model and the model allows intensive use, this threat is typically hard to protect against, and that detection always requires further analysis because the same usage pattern can be benign ([`/go/modelexfiltration/`](https://owaspai.org/go/modelexfiltration/)). The four-domain spread records that no single domain grades the threat, and says nothing about coverage depth.
+Dimension 3 spans four domains because the Exchange lists five general input controls against the query-based route to a replica and they anchor across all four: `MODEL ACCESS CONTROL` at D2, `ANOMALOUS INPUT HANDLING` and `UNWANTED INPUT SERIES HANDLING` at D4, `RATE LIMIT` at D5, and `MONITOR USE` at D7. The [[owasp-ai-exchange|OWASP AI Exchange]] states that where an attacker can reach the model and the model allows intensive use, this threat is typically hard to protect against, and that detection always requires further analysis because the same usage pattern can be benign ([/go/modelexfiltration/](https://owaspai.org/go/modelexfiltration/)). The four-domain spread records that no single domain grades the threat, and says nothing about coverage depth.
 
-Dimension 11 carries the availability axis that D1's CIAA adoption makes first-class. The [[owasp-ai-exchange|OWASP AI Exchange]] names two threat-specific controls for AI resource exhaustion, one validating input and one capping resource use ([`/go/airesourceexhaustion/`](https://owaspai.org/go/airesourceexhaustion/)); [[agentic-ai-security-cmm-crosswalk|the crosswalk]] anchors the first at D4 and the second at D5. D4 is primary because input validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries fleet-wide consumption correlation; the nearest graded capability is [[agentic-ai-security-cmm-d7-observability|D7]]'s L5+ cross-agent joint-distribution baseline, which that domain marks research-stage, and no rung grades consumption as a signal. The dimension also carries a harm the other ten do not reach: the Exchange files depletion of funds under this row, and a denial-of-wallet attack succeeds while the system stays available.
+Dimension 11 carries the availability axis that D1's CIAA adoption makes first-class. The [[owasp-ai-exchange|OWASP AI Exchange]] names two threat-specific controls for AI resource exhaustion, one validating input and one capping resource use ([/go/airesourceexhaustion/](https://owaspai.org/go/airesourceexhaustion/)); [[agentic-ai-security-cmm-crosswalk|the crosswalk]] anchors the first at D4 and the second at D5. D4 is primary because input validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries fleet-wide consumption correlation; the nearest graded capability is [[agentic-ai-security-cmm-d7-observability|D7]]'s L5+ cross-agent joint-distribution baseline, which that domain marks research-stage, and no rung grades consumption as a signal. The dimension also carries a harm the other ten do not reach: the Exchange files depletion of funds under this row, and a denial-of-wallet attack succeeds while the system stays available.
 
 Use this lens when reasoning about *what kinds of AI threats* a deployment is exposed to; use the CMM's nine domains when deciding *where in the stack* to enforce the response.
 
-## Appendix: what this CMM contributes beyond reviewed standards
+## Appendix: contributions beyond reviewed standards
 
-The contributions below were checked against eleven widely-adopted AI-security standards ([[nist-ai-rmf|NIST AI RMF]] / 600-1 / 800-4 / IR 8605A; [[iso-iec-42001|ISO 42001]] Annex A + 27090 + 42006; [[mitre-atlas|MITRE ATLAS]] v5.6.0; OWASP ASI / AIVSS / LLM Top 10; Google [[google-saif|SAIF]]; CoSAI primaries; Microsoft RAI / ZT4AI; [[csa-maestro|CSA MAESTRO + ATF]]; [[eu-ai-act|EU AI Act]]; [[aiuc-1|AIUC-1]]) on 2026-05-06 via primary-source agent fetches. The check was keyword-level evidence collection; see [[agentic-cmm-vs-standards-validation|Validation page §3 / §4]] for per-claim tags and primary-source citations, and the audit backlog in [[standards-validation-methodology-2026-05|Standards Validation Methodology]] for the deeper clause-by-clause reviews still pending. The items below are load-bearing pending deeper audit, and their "no reviewed standard does X" claims are bounded to that surveyed set.
+The contributions below were checked on 2026-05-06, by primary-source fetches, against eleven widely-adopted AI-security standards:
+
+- [[nist-ai-rmf|NIST AI RMF]] / 600-1 / 800-4 / IR 8605A
+- [[iso-iec-42001|ISO 42001]] Annex A + 27090 + 42006
+- [[mitre-atlas|MITRE ATLAS]] v5.6.0
+- OWASP ASI / AIVSS / LLM Top 10
+- Google [[google-saif|SAIF]]
+- CoSAI primaries
+- Microsoft RAI / ZT4AI
+- [[csa-maestro|CSA MAESTRO + ATF]]
+- [[eu-ai-act|EU AI Act]]
+- [[aiuc-1|AIUC-1]]
+
+The check was keyword-level evidence collection; see [[agentic-cmm-vs-standards-validation|Validation page §3 / §4]] for per-claim tags and primary-source citations, and the audit backlog in [[standards-validation-methodology-2026-05|Standards Validation Methodology]] for the deeper clause-by-clause reviews still pending. The items below are load-bearing pending deeper audit, and their "no reviewed standard does X" claims are bounded to that surveyed set.
 
 1. **Cross-domain aggregation discipline (dependency-resolved effective scores).**
 
-No reviewed AI security standard enforces cross-domain aggregation. CMMC 2.0 uses cumulative levels; the CMM imports the discipline but uses [[agentic-ai-security-cmm-dependency-rules|dependency-resolved effective scores]] (v1 = 3 caps: D2→D5, D2→D7, D3→D4) that capture real cross-domain attack-path failures without punishing strategic trade-offs. This prevents the "L4 in governance, L1 in egress" cherry-picking that self-assessments otherwise invite.
+No reviewed AI security standard enforces cross-domain aggregation. CMMC 2.0 uses cumulative levels; the CMM imports the discipline but uses [[agentic-ai-security-cmm-dependency-rules|dependency-resolved effective scores]] (v1 = 3 caps: `D2→D5`, `D2→D7`, `D3→D4`) that capture real cross-domain attack-path failures without punishing strategic trade-offs. This prevents the "L4 in governance, L1 in egress" cherry-picking that self-assessments otherwise invite.
 2. **Cognitive File Integrity scoped to system prompts and identity files.**
 
 AIUC-1 B008.6 mandates cryptographic checksums for *model-artifact* tamper detection, the closest near-miss in any reviewed standard. The CMM's D6 L3+ extends the same primitive to **system prompts and identity files** (`SOUL.md` / `IDENTITY.md`), which no reviewed standard names. The file-discovery layer is not yet standardized; see [[cmm-known-limitations|CMM Known Limitations]] §5.
@@ -1003,10 +1151,10 @@ AIUC-1 B008.6 mandates cryptographic checksums for *model-artifact* tamper detec
 D3 L4 "lethal-trifecta breaker active" makes [[simon-willison|Simon Willison]]'s structural argument (untrusted input + sensitive data access + external communication) auditable. A verbatim search across CoSAI / SAIF / AIUC-1 / CSA ATF returned zero hits for "trifecta" or any structural naming. SAIF Focus on Agents describes the chain in prose under Rogue Actions framing without naming the pattern. See [[lethal-trifecta|Lethal Trifecta]].
 5. **Real-time AI-BOM at L5** (Miggo DeepTracing or equivalent).
 
-CycloneDX ML-BOM treats `machine-learning-model` as a static build-time component with no runtime reconciliation fields. EU AI Act Annex IV item 9 requires documentation OF a post-market monitoring system (per Article 72), not runtime reconciliation between deployed system and AI-BOM. Only the CMM grades runtime reconciliation as a level criterion.
+CycloneDX ML-BOM treats `machine-learning-model` as a static build-time component with no runtime reconciliation fields. EU AI Act Annex IV item 9 requires documentation of a post-market monitoring system (per Article 72) and says nothing of runtime reconciliation between deployed system and AI-BOM. No reviewed standard grades runtime reconciliation as a level criterion; the CMM grades it at L5.
 6. **Multi-agent cascade detection at L5+.**
 
-MITRE ATLAS v5.6.0 cross-check: zero matches for "multi-agent / agent-to-agent / A2A / inter-agent / cascade / sub-agent" across the full canonical YAML. AML.T0108 "AI Agent" and AML.T0103 "Deploy AI Agent" treat the agent as a single Persona-actor, not as a member of an inter-agent graph. [[standards-review-mitre-atlas-2026-Q2|The 2026-Q2 ATLAS review]] narrows that claim. Its adversarial pass surfaced one near-miss, `AML.T0061` (LLM Prompt Self-Replication), which models a prompt that replicates in its own output to propagate to other LLMs — worm-style propagation through a data channel. ATLAS therefore covers inter-LLM propagation, and the absence claim is bounded to agent-trust topology and cascade failure. CSA MAESTRO has only partial coverage. The CMM names the gap and points at the rule-library shape that would close it (cascade-detection rule library is research-stage; lives at L5+ explicitly aspirational).
+MITRE ATLAS v5.6.0 cross-check: zero matches for "multi-agent / agent-to-agent / A2A / inter-agent / cascade / sub-agent" across the full canonical YAML. AML.T0108 "AI Agent" and AML.T0103 "Deploy AI Agent" treat the agent as a single Persona-actor, not as a member of an inter-agent graph. [[standards-review-mitre-atlas-2026-Q2|The 2026-Q2 ATLAS review]] narrows that claim. It identifies one near-miss, `AML.T0061` (LLM Prompt Self-Replication), which models a prompt that replicates in its own output to propagate to other LLMs — worm-style propagation through a data channel. ATLAS therefore covers inter-LLM propagation, and the absence claim is bounded to agent-trust topology and cascade failure. CSA MAESTRO has only partial coverage. The CMM names the gap and points at the rule-library shape that would close it; because the cascade-detection rule library is research-stage, it sits at L5+, which is explicitly aspirational.
 
 These six are the load-bearing positive contributions. For known *limitations* of the same CMM, see [[cmm-known-limitations|CMM Known Limitations (current state)]].
 
@@ -1014,10 +1162,10 @@ These six are the load-bearing positive contributions. For known *limitations* o
 
 ## Open questions and gaps
 
-1. **Agent-archetype tailoring — partially addressed.** The **generative coding tool** archetype now has specific evidence (rules-file integrity, IDE extension provenance, typosquat defense, destructive-action classification) per the [[ai-coding-agent-governance|AI Coding Agent Governance]] ingest. The **customer-support / member-service chatbot** archetype is now substantially addressed via the [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] and the D1 and D6 recalibration deep-dives (oversharing / [[inference-exposure|inference exposure]] as the D6 spine; scheme-neutral assurance in D1). **Still TBD**: data-science copilot, multi-agent mesh, MCP-server-as-provider archetypes.
-2. **Multi-agent governance depth.** D5 + D7 + D9 acknowledge ASI07/08/10. As of the 2026-05-04 calibration, the cascade-detection rule library now lives explicitly at L5+ rather than being an under-specified L5 requirement — "how many agents in your mesh, with what cascade-detection coverage" is the open quantitative question for L5+ adoption rather than a qualitative L5 gap.
+1. **Agent-archetype tailoring — partially addressed.** The **generative coding tool** archetype has specific evidence (rules-file integrity, IDE extension provenance, typosquat defense, destructive-action classification) from [[ai-coding-agent-governance|AI Coding Agent Governance]]. The [[agentic-cmm-regulated-fi-stress-test|regulated-FI stress test]] and the D1 and D6 deep dives substantially address the **customer-support / member-service chatbot** archetype (oversharing / [[inference-exposure|inference exposure]] as the D6 spine; scheme-neutral assurance in D1). **Open**: data-science copilot, multi-agent mesh, MCP-server-as-provider archetypes.
+2. **Multi-agent governance depth.** D5 + D7 + D9 acknowledge ASI07/08/10. The cascade-detection rule library sits explicitly at L5+, so the open question for L5+ adoption is quantitative: how many agents a mesh holds, and with what cascade-detection coverage.
 3. **AIUC-1 Society pillar.** The CMM has no analogue for catastrophic-misuse / national-security externalities. Acknowledged in [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]].
-4. **Quantitative thresholds at L4.** "Quantitative HITL-fatigue indicators" lacks specific thresholds (rubber-stamp rate < X%, queue age p95 < Y minutes) — TBD pending early-adopter production data.
+4. **Quantitative thresholds at L4.** "Quantitative HITL-fatigue indicators" lacks specific thresholds (rubber-stamp rate < X%, queue age p95 < Y minutes), which await early-adopter production data.
 5. **Synthetic incident library.** Stage 2 of the measurement protocol calls for synthetic incidents (PoisonedRAG corpus injection, ClawHavoc-class skill swap, prompt-injection via retrieved doc, A2A impersonation) but no curated library exists.
 
 ## Related

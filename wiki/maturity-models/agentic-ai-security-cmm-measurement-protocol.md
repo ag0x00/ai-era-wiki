@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Measurement Protocol (Assessor's Handbook)"
 address: c-000157
 created: 2026-04-30
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - maturity-models
   - measurement
@@ -52,22 +52,23 @@ sources:
   - "[[agentic-cmm-vs-standards-validation]] §6 recommendation #2"
   - "BSIMM observation/assertion model"
   - "CMMC 2.0 three-level assessment guides"
-verified: 2026-09-19
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified: 2026-09-23
+verified_against: []
 verified_findings: 0
-verified_note: "Verify-and-fix for the D3 L3 in-process substitute set (#170). Harness facts checked against Securing Agentic Coding: scope ranking, non-merging managed delivery, the write-deny with symlink resolution lost under filesystem.disabled, permissions.deny under sandbox auto-allow and the skip-permissions flag, and the empty allowlist from a malformed allowedMcpServers all hold. Fixed: the first substitute overstated the merge semantics (boolean keys take the managed value; only merging keys let a lower scope widen), and the unanswerable limit dropped the attestation route this page's own assurance-class definition carries."
+verified_note: "D1 interview question and L3 artifact cell checked against D1-L3; question re-aimed at lock values and extendable lists, since vendor docs state no local scope overrides a managed value."
 ---
 
 # Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)
 
 > Companion to [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]].
 
-This protocol is the assessment instrument the validation page ([[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 rec #2) flagged as missing. It fixes the evidence bar, so two assessors auditing the same organization reach the same verdict.
+This protocol fixes the evidence bar for scoring an organization against the CMM, so two assessors auditing the same organization reach the same verdict. It supplies the assessment instrument that [[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] names as missing in its sixth section, recommendation 2.
 
 The protocol is modeled on **BSIMM's observation/assertion structure** (descriptive: record what is actually done) layered with **CMMC 2.0's three-level assessment guide pattern** (prescriptive: match observed state against documented criteria). It applies to all 9 CMM domains.
 
-This protocol measures deployments; [[standards-validation-methodology-2026-05|the Standards Validation Methodology]] measures documents. That methodology's per-standard reviews compare published text against published text, audit no production deployment, and assign the question of whether organizations implement the clauses they anchor to this protocol's audit backlog. An assessor who reads a standards anchor out of the [[agentic-ai-security-cmm-crosswalk|crosswalk]] at Stage 3 therefore inherits a verified reading of the published text and no evidence that the control operates anywhere.
+This protocol measures deployments; [[standards-validation-methodology-2026-05|the Standards Validation Methodology]] measures documents. That methodology's per-standard reviews compare published text against published text, audit no production deployment, and assign to this protocol's audit backlog the question of whether organizations implement the clauses they anchor. An assessor who reads a standards anchor out of the [[agentic-ai-security-cmm-crosswalk|crosswalk]] at Stage 3 therefore inherits a verified reading of the published text and no evidence that the control operates anywhere.
+
+[[ai-coding-agent-governance|AI Coding Agent Governance (Knostic)]] names the controls a coding-tool deployment adds and states no assessment method, which is the gap Stage 3 fills for that shape.
 
 ## On this page
 
@@ -88,7 +89,15 @@ This protocol measures deployments; [[standards-validation-methodology-2026-05|t
 - **D8 splits model-consumer from model-producer.** Producer-grade AI-BOM generation, training-data provenance, and ML-VEX are not required of a consumer, and SLSA Build has no Level 4 in v1.0.
 - **Per-task capability tokens are L5+ in D2, D3 and D5**, because the D3 and D5 tooling maps record no platform-native implementation and one early-stage open-source implementation. D3 and D5 graded the capability at L5 until September 2026, so an assessor now collects its artifact in the L5+ column of the checklist below and grades no L5 rung against it.
 - **D4/D7 reasoning-layer controls — CoT auditing, groundedness, behavioral detection — sit at preview or experimental status, short of GA**, so a defensible L4 may be assembled from preview and OSS components with a documented production date.
-- **`LEAST MODEL PRIVILEGE` and `OVERSIGHT` add graded criteria across four domains.** Per [[owasp-ai-exchange|OWASP AI Exchange]]: D3 L3 grades a synchronous fail-closed gate, D3 L4 grades a cumulative-session ledger and depth-limited subset-only delegation, D3 L5 grades per-request approval tokens and D3 L5+ grades per-task capability tokens, D4 L4 grades semantic tool validation on high-impact calls (evidenced in-house, since no product in D4's September 2026 canvass implements the dry-run and cross-family-judge specifications), D7 L4 grades a routed disposition on the session-drift signal plus control-state-change monitoring, D9 L3 grades the high-risk approval record, and D9 L4 grades a stated involvement measure and an adversarially tested oversight path.
+- **`LEAST MODEL PRIVILEGE` and `OVERSIGHT` add graded criteria across four domains.** Per [[owasp-ai-exchange|OWASP AI Exchange]], the added criteria are these.
+    - D3 L3 grades a synchronous fail-closed gate.
+    - D3 L4 grades a cumulative-session ledger and depth-limited subset-only delegation.
+    - D3 L5 grades per-request approval tokens.
+    - D3 L5+ grades per-task capability tokens.
+    - D4 L4 grades semantic tool validation on high-impact calls, evidenced in-house, since no product in D4's September 2026 canvass implements the dry-run and cross-family-judge specifications.
+    - D7 L4 grades a routed disposition on the session-drift signal plus control-state-change monitoring.
+    - D9 L3 grades the high-risk approval record.
+    - D9 L4 grades a stated involvement measure and an adversarially tested oversight path.
 
 ## Three-stage assessment
 
@@ -106,16 +115,16 @@ flowchart LR
 The organization under assessment delivers:
 
 1. **Scope letter** identifying which agents are in-scope. Each agent gets an Agent Card (system manifest) with: name, owner (human), purpose, data classifications touched, tools/MCP servers used, deployment shape (chatbot / RAG / productivity assistant / MCP server / mesh), production status, downstream consumers. Two cases carry a sub-value. A **productivity assistant** holds tools over a tenant's or a user's mail, files and calendar, either inside the suite (Gemini for Workspace, Microsoft 365 Copilot class) or as a desktop agent with local file access and connectors (the [[claude-cowork|Claude Cowork]] class, whose control surface spans the organization console, the Enterprise custom-role model, each connector's own authorization scope and, on a third-party deployment, a managed device profile). A **coding agent** also names its variant — interactive local, unattended local, delegated cloud, CI-runner, or fleet, per [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] — because the variants differ in which plane carries enforcement.
-2. **Agent inventory** export — the full registry, even if some agents are out-of-scope for this assessment. Required so the assessor can detect shadow agents.
+2. **Agent inventory** export — the full registry, even if some agents are out-of-scope for this assessment. The assessor needs the full registry to detect shadow agents.
 3. **Document request list response.** Standard requests: AI security policy, IR runbook, last red-team report, AI-BOM artifact, gateway config, identity graph export, latest decommission drill report, last quarterly board AI-risk pack, and the current [[threat-modeling-for-ai|threat model]]. The input surfaces, trust boundaries, and agents that threat model enumerates set the coverage baseline for Stage 2's evidence collection and Stage 3's coverage statement.
 4. **AI impact assessment** for each in-scope agent, with the signatory and the conclusion recorded. The Exchange makes impact analysis a first-class program element and lists what it must consider, including whether the required transparency can be provided, whether privacy rights can be achieved, whether unwanted bias can be sufficiently mitigated, whether the data may be used for the purpose, and whether AI is needed to solve the problem at all ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). ISO/IEC 42001 A.5 already anchors D1 in [[agentic-ai-security-cmm-crosswalk|the crosswalk]]; this request makes that anchor assessable.
 5. **AI-initiative inventory** covering deployed *and* proposed uses, distinct from the agent-registry export at item 2. The registry holds what was built; the Exchange's first governance iteration surveys current AI use, AI ideas, concerns, and where the AI expertise sits ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). An initiative that has not reached deployment appears in one and not the other.
 
-A document missing from item 3 scores automatic L1 in the relevant domain. Items 4 and 5 carry no such rule yet: the D1 ladder grades neither the impact assessment nor the initiative inventory at any rung, so the assessor collects both as context and records their absence as a finding rather than scoring it. Closing that gap is a change to [[agentic-ai-security-cmm-d1-governance|the D1 criteria]], not to this protocol.
+A document missing from item 3 scores automatic L1 in the relevant domain. Items 4 and 5 carry no such rule yet: the D1 ladder grades neither the impact assessment nor the initiative inventory at any rung, so the assessor collects both as context and records their absence as a finding rather than scoring it. Closing that gap belongs to [[agentic-ai-security-cmm-d1-governance|the D1 criteria]], and this protocol follows whatever they grade.
 
 ### Stage 2 — Evidence collection (2–4 weeks)
 
-Three parallel tracks: interviews, artifacts, live observation. The interview track runs a per-domain block and a cross-domain block. The assurance class below records the kind of evidence behind a verdict and the track it came from.
+Evidence collection runs three parallel tracks: interviews, artifacts and live observation. The interview track runs a per-domain block and a cross-domain block. The assurance class below records the kind of evidence behind a verdict and the track it came from.
 
 #### Assurance classes
 
@@ -144,6 +153,7 @@ Each domain has a structured interview block. Sample questions are not exhaustiv
 - Does the board get AI-risk reporting? Show the most recent pack.
 - Show me the impact assessment for agent `[X]`. Who signed it, and what did it conclude about whether AI was needed at all?
 - Show me the responsibility matrix allocating each identified threat between this organization and every party supplying part of the system — its hosting, model, extension and infrastructure providers, and the internal departments supplying data, models or fine-tuning artifacts. Where a supplier would not disclose its mitigation, show the recorded decision.
+- Show me the managed settings your coding agents run under, as resolved on an enrolled device. Which managed-only locks are set, and which list keys can a developer still extend locally? Show the review record for the last change to a hook, MCP manifest, subagent, skill or instruction file.
 
 **D2 Identity & Authorization**
 - Show me the identity for agent `[X]`. Trace one of its actions back to the human owner.
@@ -219,7 +229,7 @@ Each domain has a structured interview block. Sample questions are not exhaustiv
 
 These questions apply to every domain scored on a guard, a sandbox, a detector, or a classifier, and are asked in addition to the per-domain blocks above.
 
-**Enforcement-artifact equivalence.** Two questions, both applying to any domain scored on a guard or a sandbox:
+**Enforcement-artifact equivalence.** Two questions apply to any domain scored on a guard or a sandbox.
 
 1. *"Does the enforcement mechanism evaluate the same artifact the executor acts on?"* A check that inspects a string a shell, filesystem, or tool server rewrites before acting is advisory rather than preventive — see [[guard-canonicalization-gap|Guard Canonicalization Gap]]. Ten of eleven surveyed coding agents failed this test in [[guardfall-shell-injection-audit|the GuardFall audit]]. A control failing it should not carry a D3 policy-decision-point claim.
 2. *"What does your sandbox cover?"* Isolation scoped to shell subprocesses leaves in-process file tools, MCP servers, and hooks outside the boundary; the [[claude-code-github-action-credential-exposure|June 2026 CI credential exposure]] used exactly that gap. Record the covered surface as evidence rather than accepting "sandboxed" as a state.
@@ -232,7 +242,7 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 
 | Domain | L2 artifacts | L3 artifacts | L4 artifacts | L5 artifacts (achievable today) | L5+ artifacts (leading-edge) |
 |---|---|---|---|---|---|
-| D1 | Policy doc; RACI | Risk Committee minutes; deployment-gate evidence; decision-rights matrix per agent type; prohibited-action and oversight-tier list; reaper SLA report; provider responsibility matrix with residue | KPI dashboard; board pack; gap report; **standards crosswalk matrix**; readiness assessment against a recognized scheme | Current third-party assurance (ISO/IEC 42001 preferred, or AIUC-1, or reviewed internal-equivalent); board-attested risk metrics; ≥1-year committee minutes | Named-contributor evidence; published research; external observability dataset |
+| D1 | Policy doc; RACI | Risk Committee minutes; deployment-gate evidence; decision-rights matrix per agent type; prohibited-action and oversight-tier list; reaper SLA report; provider responsibility matrix with residue; resolved managed harness settings with lock values and harness-configuration review record (coding agents only) | KPI dashboard; board pack; gap report; **standards crosswalk matrix**; readiness assessment against a recognized scheme | Current third-party assurance (ISO/IEC 42001 preferred, or AIUC-1, or reviewed internal-equivalent); board-attested risk metrics; ≥1-year committee minutes | Named-contributor evidence; published research; external observability dataset |
 | D2 | Agent inventory | Identity graph; sample audit trail; OIDC tokens; coupled/decoupled credential classification; CI/CD-registered NHI list; owner-field coverage | Cred-proxy logs; tabletop drill report; delegation-token sample (delegator, delegatee, scope, expiry, parent link) | Registry export; ISPM dashboard; SPIFFE-JWT-SVID chain; coupled-credential migration report | NIST CAISI participation; cross-platform identity federation report |
 | D3 | Tool allowlist config | PDP config; tier assignments per agent; PDP-unreachability test showing deny; direct-gateway invocation test showing deny; for an in-process decision point, the substitutes below | Promotion-gate runbook (org-authored); policy repo (Cedar/OPA/equivalent); HITL telemetry; trifecta-detection log; session-replay test; agent-escape log; session-ledger sample; delegation-chain log | Step-up logs; per-release policy-compile artifact; cryptographic SoD evidence; approval-token sample (bound approver identity, parameters, expiry) | Per-task capability-token sample (holder-binding, task scope, attenuation at each delegation hop); [[camel-pattern\|CaMeL]] production deployment evidence; formal-verification reports; temporal-logic policy artifact |
 | D4 | Provider safety config | Hook code; firewall logs; sandbox config; indirect-injection test routed through the augmentation path | CoT/alignment-audit logs; CodeShield findings; grounding scores; dry-run records; judge findings (model family); guardrail config (session-cumulative); check-clean high-blast-radius approval | Platform-enforcement coverage report (zero opt-outs); multi-language eval log; classifier refresh receipts; response-leak alert log; latency/cost dashboard with fail-closed proof | TEE attestation chain; CaMeL split production evidence; bypass-class eval with remediation timeline |
@@ -252,7 +262,7 @@ Both questions belong in Stage 2 for every deployment shape, coding agents inclu
 
 #### Live observation requirements
 
-The assessor MUST observe at least one live action per high-risk-tier agent in the assessed scope. Specifically:
+The assessor must observe at least one live action per high-risk-tier agent in the assessed scope. Specifically:
 
 - One L3+ assessment requires: live OTel trace + live PDP decision + live HITL gate fire (synthetic if necessary; where D3 scores L5, the fire is checked against a bound approval token). The gate fire alone takes a **not applicable** verdict where the deployment places no action in the `confirm` tier; the trace and the decision stay required.
 - One L4 assessment requires the above plus: live behavioral-drift event from the agent behavioral monitoring system + live red-team eval run.
@@ -269,10 +279,7 @@ Static configs alone do not satisfy live-observation requirements at L3+.
 
 #### Per-domain scoring rubric
 
-[[ai-coding-agent-governance|AI Coding Agent Governance (Knostic)]] names the controls a coding-tool deployment adds and states no assessment method, which is the gap this stage fills for that shape.
-
-
-For each of the 9 domains, the assessor scores the organization Level 0 (no evidence at L1) through Level 5. The rubric per cell:
+For each of the 9 domains, the assessor scores the organization Level 0 (no evidence at L1) through Level 5. The rubric defines each score as follows.
 
 | Score | Criterion |
 |---|---|
@@ -288,7 +295,7 @@ For each of the 9 domains, the assessor scores the organization Level 0 (no evid
 
 **Each criterion takes one of four verdicts.** The domain deep dives grade on **met**, **not met**, **not applicable** and **unanswerable** (each of the nine deep dives states the scheme, [[agentic-ai-security-cmm-d1-governance|D1]] included; [[agentic-ai-security-cmm-d8-supply-chain|D8]] states *not applicable* in advance for its producer-only `[P]` items, and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] records *unanswerable* where the instance exists and the vendor supplies nothing that settles the question). A score in the rubric above counts only the **met** criteria. A **met** or **not met** verdict carries its assurance class — tested, inspected or attested, per Stage 2 — recorded beside the verdict and kept out of the score, so the matrix shows which controls the organization exercised and which its providers attest to. A **not applicable** verdict removes the criterion from the denominator and carries a recorded reason. An **unanswerable** verdict is recorded where the customer can run no test and the vendor supplies neither an attestation nor inspectable output; it is a finding against the vendor rather than against the organization, and it never counts as met. [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] states the four verdicts and the three assurance classes in one line each, beside the rest of the vocabulary the two maturity models share.
 
-**Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in a domain, the assessor MUST verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table). Condition 1 is graded per domain and the assessor repeats it for each domain scored L5. Conditions 2 to 4 are graded once for the program and carry over to every domain in the same assessment.
+**Reaching L5 from a stable L4 takes quarters of sustained operation.** Before scoring an organization L5 in a domain, the assessor must verify the prerequisite gate (per [[cmm-calibration-stress-test-2026|stress-test §Change 5]] and the CMM page level table). Condition 1 is graded per domain and the assessor repeats it for each domain scored L5. Conditions 2 to 4 are graded once for the program and carry over to every domain in the same assessment.
 
 1. **≥2 quarters of stable L4 operation in the domain being scored L5** — no regression in that domain's row of the per-domain matrix during the look-back window. Evidence: prior assessment reports, continuous-monitoring artifacts (KPIs, drift telemetry, red-team results, AI-BOM reconciliation), or clean-state attestations covering the period.
 2. **Independent third-party assurance scheduled or current** against a recognized scheme — ISO/IEC 42001 surveillance cycle (preferred), an AIUC-1 readiness assessment with an accredited auditor, or a documented internal-equivalent attestation under independent review. The scheme is the org's choice; no single certification is mandated (see [[aiuc-1-critical-evaluation|the AIUC-1 evaluation]] and [[agentic-ai-security-cmm-d1-governance|D1 deep dive]]). Evidence: signed engagement letter, surveillance-audit report, or reviewed attestation.
@@ -305,9 +312,9 @@ A domain that meets every per-domain L5 row without the gate evidence scores **L
 
 #### Aggregation rule — dependency-resolved effective scores
 
-The organization's overall rating is reported as a **per-domain matrix** (raw + effective scores). Aggregation uses **dependency-resolved effective scores** under the active rule set documented in [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]]. A domain's effective score = `min(raw, min over upstream-dependency raw scores)`.
+The organization's overall rating is reported as a **per-domain matrix** (raw + effective scores). Aggregation uses **dependency-resolved effective scores** under the active rule set documented in [[agentic-ai-security-cmm-dependency-rules|Effective-Score Dependency Rules]]. A domain's effective score is `min(raw, min over upstream-dependency raw scores)`.
 
-**Headline format** (replaces the prior single-floor headline):
+**Headline format:**
 
 - **Typical** = median of effective scores across all 9 domains
 - **Weakest** = min of effective scores, with the cap source labeled (which upstream domain set the cap, if any)
@@ -316,11 +323,17 @@ The organization's overall rating is reported as a **per-domain matrix** (raw + 
 
 **Mandatory matrix disclosure** prevents cherry-picking: any rating claim must publish the full per-domain matrix (raw + effective) and the active rule-set version. Reports that cite a single domain's score without the matrix are non-compliant. This replaces the prior single-floor rule (CMMC import) which misreported 3 of 5 realistic archetypes per the [[cmm-calibration-stress-test-2026|stress test]] (Stripe-style architectural-containment, Microsoft Agent 365-driven, resource-constrained startup all under-reported).
 
-Active rule set (v1, 2026-05-04): DR-001 D2 caps D5 (per-agent identity required for per-agent egress enforcement), DR-002 D2 caps D7 (per-agent identity required for behavioral attribution), DR-003 D3 caps D4 (PDP decisions required for runtime guardrail enforcement). See [[agentic-ai-security-cmm-dependency-rules|dependency-rules page]] for promotion criteria, candidate registry, and revision protocol.
+The active rule set (v1, 2026-05-04) holds three rules.
+
+- DR-001: D2 caps D5 (per-agent identity required for per-agent egress enforcement).
+- DR-002: D2 caps D7 (per-agent identity required for behavioral attribution).
+- DR-003: D3 caps D4 (PDP decisions required for runtime guardrail enforcement).
+
+See [[agentic-ai-security-cmm-dependency-rules|dependency-rules page]] for promotion criteria, candidate registry, and revision protocol.
 
 #### Gap report structure
 
-Final report contains, at minimum:
+The final report contains, at minimum:
 
 1. **Executive summary** — three-number headline (typical / weakest / strongest), three-sentence framing, active rule-set version cited.
 2. **Per-domain matrix** — 9 rows (D1–D9) × per-row columns: `raw level`, `effective level`, `cap source` (which upstream-dependency rule fired, if any), `verdict per L1–L5+ criterion` (met / not met / not applicable / unanswerable, per the four-verdict scheme in Stage 3), `assurance class per met and not-met verdict` (tested / inspected / attested, with the artifact named). The L5+ column may be left as "n/a" if the engagement does not target L5+.
@@ -351,7 +364,7 @@ For a mid-size enterprise with ~30 agents in scope, the engagement runs nine cal
 
 ## Assessor competence requirements
 
-Borrowed from ISO/IEC 42006:2025 (auditor competence) and CMMC C3PAO licensing patterns. The assessor MUST demonstrate:
+The requirements borrow from ISO/IEC 42006:2025 (auditor competence) and CMMC C3PAO licensing patterns. The assessor must demonstrate:
 
 1. Operational experience with at least 4 of the 9 domains.
 2. Working knowledge of: [[owasp-agentic-ai-top-10|OWASP ASI Top 10]], OWASP AIVSS v0.8, [[mitre-atlas|MITRE ATLAS]] v5.6.0, [[nist-ai-rmf|NIST AI RMF]] + 600-1, [[iso-iec-42001|ISO/IEC 42001]], [[eu-ai-act|EU AI Act]] high-risk classification.
@@ -386,5 +399,5 @@ Borrowed from ISO/IEC 42006:2025 (auditor competence) and CMMC C3PAO licensing p
 ## Relations
 
 - Companion to: [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — supplies the assessment instrument the CMM lacked.
-- Companion to: [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]] — assessor uses crosswalk in stage 3 step 5.
+- Companion to: [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]] — the assessor uses the crosswalk in the Stage 3 gap report, item 7.
 - Resolves: [[agentic-cmm-vs-standards-validation|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §6 recommendation #2.

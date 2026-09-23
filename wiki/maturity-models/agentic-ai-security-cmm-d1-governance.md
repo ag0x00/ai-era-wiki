@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-09-18
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -46,10 +46,10 @@ sources:
   - "[[aiuc-1-critical-evaluation]]"
   - "[[iso-iec-42001]]"
   - "[[nist-ai-rmf]]"
-verified: 2026-09-18
+verified: 2026-09-23
 verified_against: []
 verified_findings: 0
-verified_note: "Read covered the four-verdict vocabulary paragraph this pass moved, confirmed byte-identical (sha256 8b4e0e7b…, 960 bytes) across all nine deep dives and consistent with the assurance classes in the measurement protocol; no archived document opened, no other claim on the page re-read."
+verified_note: "Verify of the D1-L3 harness-configuration criterion against live Claude Code settings and managed-settings docs (fetched 2026-09-23) and the coding page. Fixed: criterion now requires managed-only locks, since list keys merge local entries, and names the local-admin restore; 'rung' corrected to criterion."
 ---
 
 # Agentic AI Security CMM — D1 Governance & Accountability (Deep Dive)
@@ -62,11 +62,11 @@ Part of the L2 criterion set has an external counterpart. The eight-step first i
 
 ## Threat coverage
 
-D1 wraps the other eight domains in accountability, so its threats cut across them rather than falling into a single ASI category. It is the primary domain for **Class 5 (jurisdictional adversary)** — vendor abstraction, jurisdiction tagging, and contract resilience against a regulatory cutoff, the one threat no technical plane control mitigates. The [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] matrix resolves that class to this domain and [[agentic-ai-security-cmm-d9-operations|D9]] alone, which carries the vendor-cutoff playbook; the class detail is on the [[agentic-ai-threat-classes-2026|threat-classes page]].
+D1 wraps the other eight domains in accountability, so its threats cut across them rather than falling into a single ASI category. It is the primary domain for **Class 5 (jurisdictional adversary)**, the one threat no technical plane control mitigates; D1 answers it with vendor abstraction, jurisdiction tagging, and contract resilience against a regulatory cutoff. The [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] matrix resolves that class to this domain and [[agentic-ai-security-cmm-d9-operations|D9]] alone, which carries the vendor-cutoff playbook; the class detail is on the [[agentic-ai-threat-classes-2026|threat-classes page]].
 
 ## Control landscape (dated)
 
-Governance has no enforcement engine. Its controls are documents, committees, and audits, so the landscape comprises assurance schemes and the platforms that hold the evidence.
+Governance controls are documents, committees, and audits, and no runtime engine enforces them, so the landscape comprises assurance schemes and the platforms that hold the evidence.
 
 | Layer | What ships today | Status (May 2026) |
 |---|---|---|
@@ -80,32 +80,47 @@ Governance has no enforcement engine. Its controls are documents, committees, an
 
 Outcome-based regulation states the result to be achieved, where control-focused regulation states the control to be operated, so an information security management system extended to AI needs assurance processes that demonstrate risks were sufficiently mitigated in place of an inventory showing controls exist ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/organize/`](https://owaspai.org/go/organize/)). That distinction sets what L4 and L5 evidence has to show. The Exchange states the sufficiency bar in a form a governance body can apply: an AI system is sufficiently secure when all identified risks can be treated, meaning transferred, avoided, or accepted, where acceptance sometimes follows directly and sometimes requires controls that bring the risk to an acceptable level ([`/go/riskanalysis/`](https://owaspai.org/go/riskanalysis/)). The four treatment options the same source names are mitigate, transfer, avoid, and accept. Its ISMS control `SEC PROGRAM` carries the same requirement into the security program, which must take the AI-specific assets and their threats onto its own books rather than treat AI as out of scope ([`/go/secprogram/`](https://owaspai.org/go/secprogram/)).
 
-The Exchange supplies no organizational maturity criteria. It does grade standards. Each governance control lists the standards relevant to it, and against some of them records a verdict — "covers this control fully" or "covers this control minimally" — twelve such verdicts across the six controls in the governance group ([`/go/governancecontrols/`](https://owaspai.org/go/governancecontrols/)). Most of the standards each control lists carry no verdict at all. Each verdict judges how well a standard covers a control, and says nothing about how mature a program is, so the claim above stands that no framework in this layer supplies maturity criteria. The nearest thing to a ladder the Exchange offers is a starting order: a three-step bare minimum — inventory current AI use and ideas, run risk analysis to identify threats, controls and who owns them, then continue with GUARD step 2 — sitting inside an eight-step first iteration ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). It sequences the work and grades neither its sufficiency nor its coverage.
+The Exchange grades standards and supplies no organizational maturity criteria. Each governance control lists the standards relevant to it, and against some of them records a verdict — "covers this control fully" or "covers this control minimally" — twelve such verdicts across the six controls in the governance group ([`/go/governancecontrols/`](https://owaspai.org/go/governancecontrols/)). Most of the standards each control lists carry no verdict at all. Each verdict judges how well a standard covers a control and says nothing about how mature a program is, so no framework in this layer supplies maturity criteria. The nearest thing to a ladder the Exchange offers is a starting order: a three-step bare minimum — inventory current AI use and ideas, run risk analysis to identify threats, controls and who owns them, then continue with GUARD step 2 — sitting inside an eight-step first iteration ([`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)). It sequences the work and grades neither its sufficiency nor its coverage.
 
-The AIUC-1 certified population is small; [[aiuc-1-critical-evaluation|the evaluation]] carries the count and its provenance. Purview governance is included in E5 entitlements, so the licensing delta on the evidence layer is near zero for an incumbent.
+The AIUC-1 certified population is small; [[aiuc-1-critical-evaluation|the evaluation]] carries the count and its provenance.
 
-The platform-native column matters for single-stack buyers. An all-Microsoft enterprise reaches the L4 evidence layer (crosswalk, board metrics, risk register) on Purview and Compliance Manager already in its licensing, without a separate GRC purchase. The [[microsoft-zt4ai|Microsoft ZT4AI]] Governance pillar (verify explicitly) grounds this layer in named controls — the [[microsoft-rai|Responsible AI Standard]] and the Purview Compliance Manager AI templates — crosswalked to D1 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]. The RAI Standard states responsible-AI **goals** and leaves the control catalogue to ZT4AI: its Accountability and Transparency goals carry D1 at the goal level — A1 Impact Assessment, A2 Oversight of significant adverse impacts, A5 Human oversight and control, T1 System intelligibility, T2 Communication to stakeholders. The goal-level mapping is set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]], which separates RAI's goals from the ZT4AI control catalogue.
+Platform-native evidence layers matter for single-stack buyers. An all-Microsoft enterprise reaches the L4 evidence layer (crosswalk, board metrics, risk register) on Purview and Compliance Manager already in its licensing, without a separate GRC purchase. Purview governance is included in E5 entitlements, so the licensing delta on the evidence layer is near zero for an incumbent. The [[microsoft-zt4ai|Microsoft ZT4AI]] Governance pillar (verify explicitly) grounds this layer in named controls — the [[microsoft-rai|Responsible AI Standard]] and the Purview Compliance Manager AI templates — crosswalked to D1 in [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]. The RAI Standard states responsible-AI **goals** and leaves the control catalogue to ZT4AI: its Accountability and Transparency goals carry D1 at the goal level — A1 Impact Assessment, A2 Oversight of significant adverse impacts, A5 Human oversight and control, T1 System intelligibility, T2 Communication to stakeholders. The goal-level mapping is set out in [[standards-review-microsoft-rai-agent-365-2026-Q2|the 2026-Q2 RAI / Agent 365 review]], which separates RAI's goals from the ZT4AI control catalogue.
 
-Cyera's Discover phase is a vendor example of the inventory half of the decision-rights and inventory row above: Cyera states it builds a live inventory of agents across cloud, SaaS, endpoint, and Shadow AI. Cyera states its Validate phase produces audit-ready regulatory evidence of the kind the platforms in the evidence and crosswalk row hold ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The release names no reaper and no decommission action, so the decision-rights and inventory row keeps its pattern-level status.
+Cyera Agent Guardian is a vendor example of the inventory half of the decision-rights and inventory row above. By Cyera's account, the product's Discover phase builds a live inventory of agents across cloud, SaaS, endpoint, and Shadow AI, and its Validate phase produces audit-ready regulatory evidence of the kind the platforms in the evidence and crosswalk row hold ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). The release names no reaper and no decommission action, so the decision-rights and inventory row keeps its pattern-level status.
 
 ## Capability-decoupled levels
 
 Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
 
 - **L1 — Initial.** No accountable owner; agents deploy without governance review.
-- **L2 — Developing.** A named accountable owner holds the role; an AI-use policy is published; an agent risk-tier scheme exists; a signed RACI assigns ownership, covering at least the responsibility types the Exchange gives as examples — model accountability, data accountability, and risk governance ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)).
-- **L3 — Defined.** A standing cross-functional risk body gates deployment by risk tier; decision rights and prohibited autonomous actions are documented per agent type; shadow agents are inventoried and reaped on an SLA; each identified threat is allocated between the organization and every party supplying part of the system, internal departments included, with the residue recorded; and technical detail about the system is classified as an asset and reviewed before publication. Every criterion yields a document rather than a product, so the rung is graded off the register and the minutes.
-- **L4 — Managed.** Quantitative governance metrics (incidents, drift events, escalations, with `ASI##` / [[owasp-aivss|AIVSS]] rollups) are reported at board level; the [[agentic-ai-security-cmm-crosswalk|standards-crosswalk matrix]] is maintained; a **readiness assessment is completed against a recognized third-party assurance scheme** — ISO/IEC 42001, AIUC-1, or a documented internal equivalent.
+- **L2 — Developing.**
+    - A named accountable owner holds the role.
+    - An AI-use policy is published.
+    - An agent risk-tier scheme exists.
+    - A signed RACI assigns ownership, covering at least the responsibility types the Exchange gives as examples — model accountability, data accountability, and risk governance ([[owasp-ai-exchange|OWASP AI Exchange]], [`/go/aiprogram/`](https://owaspai.org/go/aiprogram/)).
+- **L3 — Defined.**
+    - A standing cross-functional risk body gates deployment by risk tier.
+    - Decision rights and prohibited autonomous actions are documented per agent type.
+    - Shadow agents are inventoried and reaped on an SLA.
+    - Each identified threat is allocated between the organization and every party supplying part of the system, internal departments included, with the residue recorded.
+    - Technical detail about the system is classified as an asset and reviewed before publication.
+    - Where harness-configurable coding agents are deployed, their harness configuration runs under managed policy that local configuration cannot override or, where the harness offers a lock, extend, and changes only under review.
+
+    Every criterion yields a document or a configuration record rather than a product, so the rung is graded off the register, the minutes and the resolved settings.
+- **L4 — Managed.**
+    - Quantitative governance metrics (incidents, drift events, escalations, with `ASI##` / [[owasp-aivss|AIVSS]] rollups) are reported at board level.
+    - The [[agentic-ai-security-cmm-crosswalk|standards-crosswalk matrix]] is maintained.
+    - A **readiness assessment is completed against a recognized third-party assurance scheme** — ISO/IEC 42001, AIUC-1, or a documented internal equivalent.
 - **L5 — Optimizing (amended).** Current, independent, third-party assurance of the agentic-AI governance program, scheme-neutral: an [[iso-iec-42001|ISO/IEC 42001]] certification under active surveillance, an [[aiuc-1|AIUC-1]] certification at the latest quarterly refresh, or an independently reviewed internal equivalent satisfies it, alongside board-attested risk metrics and a decision history the risk body can show for a year.
 - **L5+ — Leading Edge.** All of L5, plus an active named contribution to a governance or standards body (PR / RFC / spec authorship, not membership) and an externally published governance or risk-observability artifact.
 
-The amendment removes a defect and keeps the requirement. The security bar is unchanged: independent assurance that the governance program does what it claims. What changes is that meeting it no longer depends on one vendor's product or audit cadence.
+The amendment removes a defect and keeps the requirement. The security bar is unchanged: independent assurance that the governance program does what it claims. Meeting it no longer depends on one vendor's product or audit cadence.
 
-[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] supplies a parallel governance-maturity ladder (Levels 0–4, from unaware/ad-hoc through experimentation, policy-defined HITL, integrated continuous oversight, to adaptive self-regulation) that this domain's levels track closely. Its central finding is the load-bearing context for D1: organizations are deploying agents faster than they can govern them, and additional budget for existing programs does not close that gap. The report pairs the governance ladder with an Adoption Tier (AT0–AT8) so required governance scales with what is deployed rather than against a flat checklist — the same right-sizing logic the deployment-shape table below applies.
+[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] supplies a parallel governance-maturity ladder (Levels 0–4, from unaware/ad-hoc through experimentation, policy-defined HITL, integrated continuous oversight, to adaptive self-regulation) that this domain's levels track closely. Its central finding frames D1: organizations are deploying agents faster than they can govern them, and additional budget for existing programs does not close that gap. The report pairs the governance ladder with an Adoption Tier (AT0–AT8) so required governance scales with what is deployed rather than against a flat checklist — the same right-sizing logic the deployment-shape table below applies.
 
 ## Assessor detail per level
 
-L1, L2, L4, and L5+ are graded from their statements above. The two rungs below carry criteria an assessor checks item by item, each list stating what its own rung adds.
+L1, L2, L4, and L5+ are graded from their statements above. The two rungs below carry criteria an assessor checks item by item, each list stating what its own rung adds. For three deployment shapes, [[#L3 evidence by deployment shape]] states how an L3 criterion resolves and what further evidence an L3 claim needs.
 
 Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
 
@@ -118,6 +133,7 @@ Each criterion takes one of four verdicts. **Met** and **not met** are read from
 - **A shadow-agent inventory and reaper SLA in operation.**
 - **A provider responsibility matrix.** A documented responsibility matrix allocates each identified threat between the organization and every party that supplies part of the system, with the unmitigated residue recorded as accepted, self-mitigated, or avoided ([`/go/riskanalysis/`](https://owaspai.org/go/riskanalysis/)). Those parties are the hosting, model, extension, and infrastructure providers, and the internal departments and teams that supply data, models, or fine-tuning artifacts. The Exchange places the internal half inside the same control: the supply chain can include the organization's own departments, since data and models come from different departments and sources, which puts data provenance inside supply-chain management (§3.0).[^aix-supplychainmanage] A corpus or model supplied by an internal team is therefore allocated on the same matrix as one acquired outside, and leaves the same residue record.
 - **Technical detail carried as a classified asset, and publication reviewed.** Technical details of the AI system — its model type, its model implementation, and the technical content of material published about it — are carried as classified assets in the information-security asset inventory, and technical publication about the system passes a documented review setting what is withheld against the disclosure `AI TRANSPARENCY` asks for ([`/go/discrete/`](https://owaspai.org/go/discrete/)). The artifacts are the classification entry and the review record. The Exchange supplies a direction for that trade-off and no threshold, so the rung grades that the decision was taken and recorded rather than where the line was drawn.
+- **Harness configuration under managed policy and review, for agentic coding.** A harness-configurable coding agent runs under managed policy that local configuration cannot override, and every change to its harness configuration tree — hooks, MCP manifests, subagents, skills and instruction files — passes a documented review. List keys merge entries from every scope, so a local file can extend a managed permission or hook list that it cannot override; the policy therefore sets the managed-only locks the harness offers for permission rules, hooks, MCP servers and user- or project-sourced customization, and the record names each list key a local scope can still extend ([Claude Code settings](https://code.claude.com/docs/en/settings), [managed settings](https://code.claude.com/docs/en/managed-settings)). The artifacts are the managed settings as the harness resolved them on an enrolled device with the lock values beside them, the means by which the fleet restores a managed file a local administrator can edit, and the review record for changes to the configuration tree. Not applicable where the organization deploys no harness-configurable coding agent.
 
 ### L5 detail
 
@@ -135,21 +151,26 @@ The realistic target per [[agentic-ai-security-cmm-recalibration-method-2026|rul
 | Deployment shape | Realistic D1 target | Why |
 |---|---|---|
 | Internal RAG / support chatbot (no tools) | L2 → L3 | Owner, policy, risk body, decision-rights. Certification is not warranted near-term |
-| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | Owner, policy and per-organizational-unit enablement reach L3; the per-agent-type decision-rights criterion resolves against the single assistant type the suite deploys, whatever the size of the agent population |
-| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | Enterprise custom roles grant each capability from a closed default, which is the decision-rights record this rung asks for per agent type; the shadow-agent criterion needs an endpoint instrument, because an unsanctioned install is discovered at the endpoint rather than in a suite console |
+| In-suite productivity assistant (Gemini for Workspace, Microsoft 365 Copilot) | L3 | Owner, policy and per-organizational-unit enablement reach L3 |
+| Desktop-agent productivity assistant ([[claude-cowork\|Claude Cowork]] class) | L3 | Enterprise custom roles grant each capability from a closed default, which is the decision-rights record this rung asks for per agent type |
 | Data-science / coding copilot | L3 → L4 | Adds board metrics and crosswalk once the agent touches the SDLC |
 | MCP / skill provider serving others | L4 | Third-party exposure raises the accountability bar; readiness assessment expected |
 | High-autonomy multi-agent mesh | L4 → selective L5 | Certification earns its cost where autonomy and blast radius are highest |
 
-**Agentic coding adds a governance object the criteria do not name: the harness configuration tree.** D1 asks who is accountable for agent behavior on what auditable record, and for agentic coding that record includes the hooks, MCP manifests, subagents, skills and instruction files that compose runtime behavior from third-party parts, held at per-developer discretion rather than under organizational policy in most deployments. An L3 claim for this shape must evidence managed policy that local configuration cannot override, plus configuration held under review. Adoption outruns the inventory governance assumes, because peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. [[securing-agentic-coding|Securing Agentic Coding]] carries the controls for this shape.
-
 Most enterprises land at **L4 with selective L5** in the domains tied to their exposure. A contained, low-agency design that legitimately needs less governance records the choice as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field.
+
+### L3 evidence by deployment shape
+
+- **In-suite productivity assistant.** The per-agent-type decision-rights criterion resolves against the single assistant type the suite deploys, whatever the size of the agent population.
+- **Desktop-agent productivity assistant.** The shadow-agent criterion needs an endpoint instrument, because an unsanctioned install is discovered at the endpoint rather than in a suite console.
+
+**Agentic coding adds a governance object, the harness configuration tree, and the [[#L3 detail|L3 harness-configuration criterion]] grades it.** D1 asks who is accountable for agent behavior on what auditable record, and for agentic coding that record includes the hooks, MCP manifests, subagents, skills and instruction files that compose runtime behavior from third-party parts, held at per-developer discretion rather than under organizational policy in most deployments. The criterion therefore asks for managed policy that local configuration cannot override, with every list key the harness can lock locked against local additions, plus configuration held under review. Adoption outruns the inventory governance assumes, because peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. [[securing-agentic-coding|Securing Agentic Coding]] carries the controls for this shape. This criterion is the one D1 criterion whose evidence that page supplies, and item 10 of [[cmm-known-limitations|CMM Known Limitations]] records the rest of the D1 ladder as having no row there to cite.
 
 ## Cost model
 
 Governance is labor-heavy, and for an incumbent the licensing line stays near zero until the L5 certification audit.
 
-Governance licensing separates cleanly by stack. A Microsoft E5 tenant holds the L4 evidence layer — Purview and Compliance Manager — inside entitlements it already owns, and the control landscape above names no Google counterpart on that layer, so a Google Cloud or Google Workspace buyer funds a GRC platform where the E5 buyer reads `~0`. Labor and certification fees are a constant on either stack.
+Governance licensing differs by stack. A Microsoft E5 tenant holds the L4 evidence layer — Purview and Compliance Manager — inside entitlements it already owns, and the control landscape above names no Google counterpart on that layer, so a Google Cloud or Google Workspace buyer funds a GRC platform where the E5 buyer reads `~0`. Labor and certification fees are a constant on either stack.
 
 | Level | Licensing | Operational labor | Run-rate |
 |---|---|---|---|
@@ -166,7 +187,7 @@ Governance licensing separates cleanly by stack. A Microsoft E5 tenant holds the
 - *"L5 is unreachable because it names a just-GA'd certification we can't procure in time."* Addressed: L5 is scheme-neutral, and the production-maturity qualifier in the ladder preamble applies — a scheme in the organization's approved-vendor pipeline with a documented production date satisfies the certification criterion.
 - *"A single-certifier mandate is a concentration risk and reads as a vendor play."* Addressed: AIUC-1 is demoted to one option among several, with ISO 42001 preferred. Full reasoning in [[aiuc-1-critical-evaluation|the evaluation]].
 - *"Cost is under-told."* Addressed: the cost model names labor and the evidence treadmill as the real spend, and marks licensing as near-zero for incumbents.
-- *"Authority to certify is itself contested."* Acknowledged but out of scope here. The wiki records the assurance-scheme landscape; an organization preparing for a regulator should map D1 to its examiner's expectations via the forthcoming FFIEC/GLBA crosswalk.
+- *"Authority to certify is itself contested."* Acknowledged but out of scope here. This page records the assurance-scheme landscape; an organization preparing for a regulator can map D1 to its examiner's expectations through the forthcoming FFIEC/GLBA crosswalk.
 
 ## Open questions
 
@@ -174,8 +195,8 @@ Governance licensing separates cleanly by stack. A Microsoft E5 tenant holds the
 - AIUC-1 pricing is not public, so the L5 AIUC-1 cost line is directional.
 - The exact 2026 ISO/IEC 42001 certified population is not cleanly published.
 - NIST has not shipped an agentic-specific Govern profile; the EU AI Act's agentic provisions remain preliminary, so D1's regulatory anchors will shift as both land.
-- The inventory the L3 disclosure clause builds on is graded only in part. [[agentic-ai-security-cmm-d8-supply-chain|D8]] L2 inventories model and development documentation, experiments included, and access-controls it as an asset class in its own right, so the documentation half of the Exchange's twelve-item AI asset list — recorded in full on [[security-controls-for-ai-stacks|the controls thesis]] — is graded there. Two objects stay outside every rung: material the organization publishes about the system, which is created for disclosure rather than acquired or produced as a runtime artifact, and the model-type and model-implementation choice `DISCRETE` names, which is a selection decision taken before an artifact exists. The clause carries those two entries itself.
-- The disclosure bound is stated per property. [[agentic-ai-security-cmm-d9-operations|D9]] L3 requires a published disclosure that informs users an AI model is involved and covers or records an omission against each of the five properties `AI TRANSPARENCY` lists, so a review here may not silently drop a property. How much detail each property carries is unbounded: the Exchange supplies a direction and no threshold, and no rung in this CMM states where the line falls.
+- The inventory the L3 technical-detail criterion builds on is graded only in part. [[agentic-ai-security-cmm-d8-supply-chain|D8]] L2 inventories model and development documentation, experiments included, and access-controls it as an asset class in its own right, so the documentation half of the Exchange's twelve-item AI asset list — recorded in full on [[security-controls-for-ai-stacks|the controls thesis]] — is graded there. Two objects stay outside every rung: material the organization publishes about the system, which is created for disclosure rather than acquired or produced as a runtime artifact, and the model-type and model-implementation choice `DISCRETE` names, which is a selection decision taken before an artifact exists. The L3 technical-detail criterion carries those two entries itself.
+- The disclosure bound is stated per property. [[agentic-ai-security-cmm-d9-operations|D9]] L3 requires a published disclosure that informs users an AI model is involved and covers or records an omission against each of the five properties `AI TRANSPARENCY` lists, so a review here cannot silently drop a property. How much detail each property carries is unbounded: the Exchange supplies a direction and no threshold, and no rung in this CMM states where the line falls.
 
 ## Notes
 

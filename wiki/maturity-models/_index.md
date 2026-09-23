@@ -2,7 +2,7 @@
 type: domain
 title: "Maturity Models"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-23
 tags: [domain, maturity-models]
 status: developing
 subdomain_of: ""
@@ -37,7 +37,7 @@ Capability-tier definitions for self-assessment and progression planning. Each m
 - [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Supply Chain and AI-BOM]] — Companion deep-dive to the CMM's D8 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]] — Companion deep-dive to the CMM's D9 domain, written under the recalibration method.
 - [[agentic-ai-security-cmm-dependency-rules|CMM: Effective-Score Dependency Rules]] — This page defines the dependency-resolved effective-score mechanism that replaces the single cumulative floor as the Agentic AI Security...
-- [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]] — This protocol is the assessment instrument the validation page (Validation: Agentic AI Security CMM vs Widely Adopted Standards §6 rec #2...
+- [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]] — This protocol fixes the evidence bar for scoring an organization against the CMM, so two assessors auditing the same organization reach t...
 - [[agentic-ai-security-cmm-recalibration-method-2026|CMM: Recalibration Method (Cadence and Cost)]] — This note governs the D1–D9 recalibration of the Agentic AI Security Capability Maturity Model.
 - [[agentic-soc-cmm-d1-telemetry-data-readiness|Agentic SOC CMM D1 Telemetry and Data Readiness]] — Companion deep-dive to the Agentic SOC CMM's D1 domain.
 - [[agentic-soc-cmm-d2-threat-intel-knowledge|Agentic SOC CMM D2 Threat Intelligence and Knowledge]] — Companion deep-dive to the Agentic SOC CMM's D2 domain.

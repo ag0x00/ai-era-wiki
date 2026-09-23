@@ -2,7 +2,7 @@
 type: gap-analysis
 title: "CMM Known Limitations (current state)"
 created: 2026-05-06
-updated: 2026-09-19
+updated: 2026-09-23
 tags: [gaps, cmm, known-limitations, current-state]
 status: developing
 scope_axis:
@@ -37,10 +37,10 @@ related:
   - "[[iso-iec-42001]]"
   - "[[aiuc-1]]"
   - "[[aiuc-1-critical-evaluation]]"
-verified: 2026-09-19
+verified: 2026-09-23
 verified_against: []
 verified_findings: 0
-verified_note: "Verify-and-fix for item 19's archival (#170). Format checked against archived items 8, 24 and 25: Original-item paragraph, then the resolution with its recommendation and issue. Item 19 is gone from the live list and the archived text matches what D3 and the protocol now say. Fixed: the archive preamble's 2026-09-19 enumeration omitted item 9, which closed the same day. No .raw document opened."
+verified_note: "Item 10 status corrected: the control set's rows still lack D1 coordinates, and the stress test's approved-harness register replacement is still open."
 ---
 
 # CMM Known Limitations (current state)
@@ -103,7 +103,7 @@ The shape is a class: Gemini for Workspace and Microsoft 365 Copilot inside the 
 
 [[agentic-ai-security-cmm-d8-supply-chain|D8]] states that fleet inventory — which harnesses, which versions, which MCP servers, attributable to which human — is an evidence dimension the L3 and L4 criteria omit, and it is the load-bearing evidence for a coding-agent deployment the model right-sizes to L4. [[securing-agentic-coding|The coding-shape control catalog]] files the same inventory under [[agentic-ai-security-cmm-d7-observability|D7]] as a runtime AI-BOM, so one artifact serves two domains until a rung names it. The only commercial instrument the vault records for it is a single vendor with no dated GA and no independent evaluation, which a third-party-risk function treats as a concentration finding.
 
-**Status:** [new-2026-09-15]. Recommendation 27, together with the absent D1 and D9 coordinates in [[securing-agentic-coding|the coding-shape control set]]. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
+**Status:** [new-2026-09-15]. Recommendation 27, together with the D1 and D9 coordinates the rows of [[securing-agentic-coding|the coding-shape control set]] still lack. Its D1 half narrowed on 2026-09-23: [[agentic-ai-security-cmm-d1-governance|D1]] L3 now grades the harness configuration under managed policy and review, with its evidence read off the set's managed-policy and lock rows and its configuration-review step. The D1 replacement [[cmm-stress-test-canadian-fi-google-2026-09|the Canadian-FI stress test]] names, harness-fleet ownership and an approved-harness register with decision rights per repository risk tier, appears neither in the control set nor in the D1 ladder, and the rest of that ladder has no row in the control set to cite. Tracked in [#177](https://github.com/ag0x00/ai-era/issues/177) under [#168](https://github.com/ag0x00/ai-era/issues/168).
 
 ### 11. B-13's in-force date has no source in the vault or in the pages it cites
 
