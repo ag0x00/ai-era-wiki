@@ -2,7 +2,7 @@
 type: maturity-model-companion
 title: "CMM Vocabulary and Notation"
 created: 2026-09-18
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -52,7 +52,7 @@ Both maturity models score in terms each defines where it uses them. This page i
 | L4-stable | A domain that evidences every L5 criterion while the L5 gate's evidence is absent |
 | program rating | One level claimed for the whole program. L5 requires L5 in all nine domains, L5+ that rating plus its own tier criteria. Never one domain's score |
 | verdict | One of four per criterion: met, not met, not applicable, unanswerable. A score counts met alone |
-| unanswerable | The customer can neither test nor read it, and the vendor states nothing. A finding against the vendor, never met |
+| unanswerable | The customer can neither test nor read it, and the vendor states nothing that names the control. A finding against the vendor, never met |
 | assurance class | tested, inspected or attested, recorded beside a verdict and kept out of the score |
 
 ## What an organization should aim at

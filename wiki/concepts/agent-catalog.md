@@ -2,7 +2,7 @@
 type: concept
 title: "AI Agent Catalog"
 created: 2026-05-01
-updated: 2026-09-18
+updated: 2026-09-23
 tags:
   - concepts
   - agent-catalog
@@ -32,6 +32,7 @@ related:
   - "[[falcon-guardian]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
+  - "[[agentic-ai-security-cmm-d2-identity]]"
 sources:
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
@@ -125,22 +126,20 @@ Three more suppliers reached for the same position in the first week of Septembe
 | [[non-human-identity\|Non-Human Identity (NHI)]] | Catalog is the inventory layer for NHI; agent cards = NHI metadata |
 | [[agent-identity-architecture\|AI Agent Identity Architecture]] | The architectural reference for how catalog identities are assigned and used |
 | [[guardian-agent\|Guardian Agent]] | Catalog is mandatory feature category 1 (visibility and traceability) |
-| [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] D2 Identity | Catalog L3+ requirement: comprehensive across all four populations |
+| [[agentic-ai-security-cmm-d2-identity\|CMM D2: Identity and Authorization]] | The catalog evidences D2-INVENTORY at L2, D2-OWNER at L3 and D2-REGISTRY at L5 |
 | [[shadow-ai\|Shadow AI]], [[shadow-automation\|Shadow Automation]] | Catalog discovery surfaces both |
 
-## CMM L3+ evidence requirements
+## CMM D2 criteria the catalog evidences
 
-For an organization to claim Level 3 on D2 Identity & Authorization in the [[agentic-ai-security-cmm-2026|CMM]], the catalog evidence must include:
+[[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]], the identity domain of the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]], grades one deployment at a time, and the catalog is the artifact behind the following D2 criteria:
 
-1. **Comprehensive agent inventory** with documented coverage of all four populations (not just registered)
-2. **Agent cards** for every cataloged agent with the field set above
-3. **Risk-score methodology** documented and applied uniformly
-4. **Catalog refresh cadence** (continuous discovery, not point-in-time)
-5. **Owner attribution** per cataloged agent, with orphan detection for the agents that carry none
+- **D2-INVENTORY, at L2.** An inventory records each agent in the deployment and every non-human identity it holds, and each identity's entry names its agent. An inventory kept by hand meets it.
+- **D2-OWNER, at L3.** Every agent and every non-human identity in the deployment names a human owner whom the personnel record shows as current. The bar is every one, with no percentage threshold, because the deployment's own design enumerates its identities and one unowned identity inside it is the failure the criterion grades.
+- **D2-COUPLING, at L3, and D2-BASELINE, at L4.** The inventory classes each credential as coupled or decoupled, and each non-human identity carries a behavioral baseline with a detection.
+- **D2-REGISTRY and D2-DISCOVER, at L5.** A registry the deploy pipeline writes through an API holds each agent's identity graph, and scheduled discovery reports every agent the registry does not hold until each is registered or removed.
+- **D2-FEDERATE and D2-FEDERATE-RECONCILE, at L5+.** Agent identities federate across identity platforms from different vendors and reconcile into one identity graph, the problem the first catalog gap below records as unsolved.
 
-L4 adds: integration with runtime decisions (catalog signals feed Operative behavior); behavioral baselines per agent.
-
-L5 adds: cross-vendor federation (catalog spans Microsoft + AWS + Google + on-prem with unified ID).
+D2's levels grade no risk-score methodology and no coverage of all four populations; both are catalog capabilities the [[guardian-agents-market-guide|Market Guide]] describes.
 
 ## Open issues
 

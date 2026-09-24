@@ -3,7 +3,7 @@ type: review
 title: "CMM Stress Test: Canadian FI on Google Cloud"
 address: c-676733
 created: 2026-09-15
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - reviews
   - cmm
@@ -420,6 +420,8 @@ This page is an immutable dated snapshot. Its scores describe the vault's state 
 One statement in Part 4 is superseded on direction rather than by a re-run. Its D5 paragraph reads that a broad allowlist entry stays reachable by domain fronting. The vendor reference states the reverse: the proxy decides from the client-supplied hostname without inspecting TLS, so code running inside the sandbox can use domain fronting to reach hosts outside the allowlist. The risk is escape from the allowlist rather than exposure of an entry within it, and [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]] carries the corrected statement with its source.
 
 Its D3 reading is superseded the same way. Part 4 scores the coding shape against a rung asking for a decision point outside the model context and treats the harness holding that point as the ground for L2, offering the bank a recorded circularity as the alternative. [[agentic-ai-security-cmm-d3-control-least-agency|CMM D3: Control and Least-Agency]] now reads the requirement as injection resistance rather than process separation, so a harness resolving a policy the session cannot write satisfies the criterion and the substitute evidence set sits in [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. The shape's score is unchanged in range; what moved is the reason it lands there, and the decision-rights criterion rather than the decision point's location is what holds it below L3.
+
+Its reading of recalibration rule 2 is superseded the same way. Part 2's D4 section and Part 4's verdict read the rule as admitting a preview or open-source component once it sits in the approved-vendor pipeline with a production date, and the verdict takes that reading to tell the bank which half of the L4 band it can budget for. The shared preamble to the deep dives' level definitions now defines the production date as the date the control entered the organization's production and gives a planned date no credit, and [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime and Guardrails]] carries that text: a component counts toward L4 from the day it runs in the bank's production, and a budgeted one counts for nothing until then.
 
 [^managed]: [Claude Code managed settings](https://code.claude.com/docs/en/managed-settings), fetched 2026-09-15.
 [^iam]: [Claude Code identity and access management](https://code.claude.com/docs/en/iam), fetched 2026-09-15.

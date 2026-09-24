@@ -158,7 +158,7 @@ Two coverage limits are deliberate. Multi-agent **cascade containment** (ASI08) 
 
 ### L5 and L5+ semantics
 
-L5 is a **maturity tier**: every L5 criterion in this CMM points to a shipping product, an open-source project at v1.0+, or a documented capability deployable with currently available components. L5+ is a **leading-edge tier**: it requires L5 across all 9 domains *plus* research-stage capabilities and active named contribution to one or more standards bodies. A sufficiently resourced 2026 program can clear L5; only a frontier-lab or research-shop program clears L5+. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s per-domain matrix view reports both.
+L5 is a **maturity tier**: every L5 criterion in this CMM points to a shipping product, an open-source project at v1.0+, or a documented capability deployable with currently available components. L5+ is a **leading-edge tier**. A program rated L5+ holds L5 across all 9 domains *plus* research-stage capabilities and active named contribution to one or more standards bodies; the all-domain condition governs that program rating, and a domain row scores L5+ against its own levels, where cumulative grading already requires that domain's L5. A sufficiently resourced 2026 program can clear L5; only a frontier-lab or research-shop program clears L5+. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s per-domain matrix view reports both.
 
 **A domain scored L5 and a program rated L5 are different claims.** The level descriptions below state what a program at that level operates across all nine domains, so a whole-program L5 rating requires L5 in all nine and an L5+ rating adds its own tier criteria on top of that. The per-domain matrix scores each domain against its own ladder, so one domain reaches L5 while the program's rating stays lower. The prerequisite gate into L5 states which of its conditions an assessor checks once per domain scored L5 and which once for the whole program.
 
@@ -267,9 +267,9 @@ An untagged finding is L2-grade evidence at best, and [[agentic-ai-security-cmm-
 
 ### Assurance class of the evidence
 
-The class of evidence settles a criterion, and the party operating the control does not. A control the customer tests, a control the vendor attests to in a document the customer holds, and a control whose operating state the customer reads out of vendor tooling each carry a met or not-met verdict, so a vendor-operated control is graded on the evidence the vendor produces. Where the customer can run no test and the vendor supplies neither an attestation nor inspectable output, the criterion is unanswerable and the assessment names what would close it.
+The class of evidence settles a criterion, and the party operating the control does not. A control the customer tests, a control whose operating state the customer reads out of vendor tooling or out of a record the organization keeps, and a control the vendor attests to in a document the customer holds each carry a met or not-met verdict, so a vendor-operated control is graded on the evidence the vendor produces. An attestation settles a criterion only where its own scope statement names the control. One that does not counts as no attestation, so where the customer can run no test and keeps no record of the control's state, and the vendor supplies no inspectable output either, the criterion is unanswerable and the assessment names what would close it.
 
-The three classes are tested, inspected and attested. The assessment records one beside each verdict and names the artifact behind it; [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] defines the classes and the fields each record carries, along with the four verdicts a criterion takes: met, not met, not applicable and unanswerable. The class is recorded and never folded into the score, so the per-domain matrix shows which controls the organization exercised and which its providers attest to.
+The three classes are tested, inspected and attested, and a record the organization keeps, such as an inventory, an owner field or a plan, is inspected evidence. The assessment records one beside each verdict and names the artifact behind it; [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]] defines the classes and the fields each record carries, along with the four verdicts a criterion takes: met, not met, not applicable and unanswerable. The class is recorded and never folded into the score, so the per-domain matrix shows which controls the organization exercised and which its providers attest to.
 
 ### D1. Governance & Accountability
 
@@ -359,62 +359,92 @@ Maps to:
 - ISO 27090 (FDIS Mar 2026)
 - Microsoft ZT4AI Identity: [[microsoft-entra-agent-id|Entra Agent ID]], the three access patterns, attribute/blueprint Conditional Access, ID Protection for agents, Entra PIM time-limited active role assignment for agents (auto-expiring; agents cannot be PIM-*eligible*, so no agent self-activation) (control-level anchors in [[standards-review-microsoft-zt4ai-2026-Q2|the ZT4AI review]])
 
-See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens sit at L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the `D2→D5` and `D2→D7` caps), which reaches further than any other single rung in the model. L4 also grades the construction of a delegated credential — signed, naming delegator and delegatee, scope, task and expiry, and linked to the delegation it descends from — which is the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
+See [[agentic-ai-security-cmm-d2-identity|the D2 deep dive]]. Per-agent identity is GA platform-native on all three hyperscalers (Entra Agent ID, AWS AgentCore, GCP Agent Identity). **Per-task capability tokens sit at L5+:** no platform in D2's control landscape ships them, and the only implementation it carries is an early-stage OSS primitive. D2-L3 raises the D5 and D7 effective-score ceilings (the `D2→D5` and `D2→D7` caps), which reaches further than any other single level in the model. D2 grades one deployment at a time: an agent application, or a vendor's agent platform with the agents the organization runs on it. Each criterion below carries the name the deep dive gives it, and the deep dive states it in full, with the evidence it names and any not-applicable condition. D2-DELEGATE-TOKEN and D2-DELEGATE-LINK grade the construction of a delegated credential, the artifact property that makes D3 L4's full-chain validation possible and closes chain splicing.
 
 - **D2-L1 (Initial):** Agents share human credentials or service accounts.
     - **Capability.** No inventory of agent identities exists.
     - **Auditor evidence.** None.
-- **D2-L2 (Developing):** Each agent holds an identity of its own, tracked by hand.
+- **D2-L2 (Developing):** Each agent holds an identity of its own and acts for a human only within that human's access.
     - **Capability.**
-        - Agents hold distinct service-account identities in a manual inventory.
-        - Delegation runs only through the human user.
-    - **Auditor evidence.** Inventory artifact.
-- **D2-L3 (Defined):** An agent's identity is verifiable, and its lifecycle follows the pipeline.
-    - **Capability.**
-        - Every agent has a verifiable per-agent identity.
-        - Delegation runs through OAuth 2.1 token exchange.
-        - The NHI lifecycle binds to the deploy pipeline rather than to HR.
-        - The inventory records [[identity-credential-coupling|coupling]].
-        - A human owner is mandatory for every NHI.
-        - Traceability to a human is mandatory.
+        - **D2-IDENTITY.** Each agent authenticates as a non-human identity no other party can use.
+        - **D2-INVENTORY.** An inventory, kept by hand or by the pipeline, records each agent and its identities.
+        - **D2-DELEGATE.** An agent acting for a human exercises no access beyond that human's own.
     - **Auditor evidence.**
-        - Identity graph.
-        - Audit-trail sample.
-        - CI/CD-registered NHI list.
-        - Owner-field coverage.
-- **D2-L4 (Managed):** The agent process never holds a credential, and a decision point authorizes it per action.
+        - Identity-provider record of each agent identity and the principals able to use each credential (D2-IDENTITY).
+        - Inventory export reconciled against the identity provider (D2-INVENTORY).
+        - Effective-access comparison, agent against a sampled human it acts for (D2-DELEGATE).
+- **D2-L3 (Defined):** An agent's identity is verifiable and follows the pipeline, and every action traces to an accountable human.
     - **Capability.**
-        - Zero credentials sit in agent context, mediated by a credential proxy.
-        - A PDP holds per-agent policy.
-        - An orphaned-agent kill switch is tested.
-        - Rotation is automated per credential class.
-        - Each NHI carries a behavioral baseline.
+        - **D2-IDENTITY-VERIFY.** An identity provider issues each agent's identity, and called services verify it from a signed assertion.
+        - **D2-DELEGATE-EXCHANGE.** Every delegation hop is a token exchange naming both parties.
+        - **D2-LIFECYCLE.** The deploy pipeline issues, rotates and revokes the identity, independent of HR events.
+        - **D2-COUPLING.** The inventory classes each credential as coupled or decoupled ([[identity-credential-coupling|coupling]]).
+        - **D2-OWNER.** Every agent and NHI names a current human owner.
+        - **D2-TRACE.** Every action traces to the agent and to the human accountable for it.
     - **Auditor evidence.**
-        - Cred-proxy logs.
-        - Policy repo.
-        - Kill-switch tabletop.
-        - Rotation-cadence report.
-        - Migration plan.
-        - Delegation-token sample (delegator, delegatee, scope, expiry, parent link).
-- **D2-L5 (Optimizing):** One governance program runs the identity estate, and each identity carries a cryptographic attestation.
+        - Identity-provider configuration and signed-assertion sample (D2-IDENTITY-VERIFY).
+        - Exchanged-token sample naming both parties (D2-DELEGATE-EXCHANGE).
+        - Pipeline definition that issues, rotates and revokes the identity (D2-LIFECYCLE).
+        - Coupled/decoupled credential classification (D2-COUPLING).
+        - Owner-field coverage checked against personnel records (D2-OWNER).
+        - Re-traced action sample (D2-TRACE).
+- **D2-L4 (Managed):** No stored credential sits in agent context, and each session, token and delegated grant binds to one identity and one task.
     - **Capability.**
-        - A unified agent-governance program operates in production (registry, lifecycle API, identity graph, scoped RBAC, audit integration).
-        - Identity binding carries cryptographic attestation.
-        - No coupled credentials remain.
+        - **D2-NOCRED.** Zero credentials sit in agent context, enforced by a broker or vault, or by a credential-less identity model.
+        - **D2-AUTHZ.** The decision point's rules name the calling agent.
+        - **D2-KILL.** An orphaned-agent kill switch revokes one agent in one operation, and its execution is recorded.
+        - **D2-TASKBIND.** Sessions and tokens bind to one identity and one task.
+        - **D2-MUTUAL.** Agent-to-service authentication is mutual and cryptographic.
+        - **D2-DELEGATE-TOKEN.** A delegated credential is signed and names delegator, delegatee, scope, task and expiry.
+        - **D2-DELEGATE-LINK.** A credential one agent issues to another links to its parent.
+        - **D2-ROTATE.** Rotation is automated per credential class.
+        - **D2-ROTATE-MAP.** A documented consumer-dependency map covers each credential.
+        - **D2-BASELINE.** Each NHI carries a behavioral baseline and a detection.
+        - **D2-COUPLING-MIGRATE.** An active migration plan covers each coupled credential.
     - **Auditor evidence.**
-        - Registry export.
-        - ISPM dashboard.
-        - Attestation chain.
-        - Migration report.
-        - `ASI03`-tagged finding log.
-- **D2-L5+ (Leading Edge):** Each token binds to one task and one holder, and identity reconciles across vendors.
+        - Deployment specification with broker or vault logs, or the credential-less identity configuration (D2-NOCRED).
+        - Per-agent policy export and decision-log sample (D2-AUTHZ).
+        - Kill-switch execution record (D2-KILL).
+        - Session and token sample with a token refused after its task (D2-TASKBIND).
+        - Service authentication configuration (D2-MUTUAL).
+        - Delegation-token sample showing delegator, delegatee, scope, task and expiry (D2-DELEGATE-TOKEN).
+        - Second-hop token sample with its parent link (D2-DELEGATE-LINK).
+        - Rotation-cadence report (D2-ROTATE).
+        - Consumer-dependency map (D2-ROTATE-MAP).
+        - Baseline record and detection rule per NHI (D2-BASELINE).
+        - Coupled-credential migration plan (D2-COUPLING-MIGRATE).
+- **D2-L5 (Optimizing):** One governance program runs the deployment's agents and identities over a pipeline-maintained registry, and identity binding carries a cryptographic attestation.
     - **Capability.**
-        - Per-task capability tokens carry holder-binding, of the [[tenuo-warrant|Warrant]] class and available only as OSS.
-        - Multi-vendor identity federation reconciles across identity graphs.
-        - The organization participates in a SPIFFE or OIDC working group.
+        - **D2-REGISTRY.** A registry the pipeline writes through an API holds each agent's identity graph.
+        - **D2-OWNER-TRANSFER.** An owner's departure passes each agent and identity to a named successor.
+        - **D2-ADMIN.** Roles scope administrative rights over agents.
+        - **D2-AUDIT.** Every identity lifecycle event writes an audit record.
+        - **D2-DISCOVER.** Scheduled discovery reports every unregistered agent and closes each finding.
+        - **D2-CONDITIONAL.** Risk and conditional access applies to agent identities where the platform offers it.
+        - **D2-IDENTITY-ATTEST.** Identity binding carries cryptographic attestation.
+        - **D2-COUPLING-ZERO.** No coupled credential remains in the deployment.
     - **Auditor evidence.**
-        - Reconciliation report.
-        - Standards-WG contribution evidence.
+        - Registry export with the pipeline step that writes it (D2-REGISTRY).
+        - Ownership-transfer records (D2-OWNER-TRANSFER).
+        - Administrative role assignments (D2-ADMIN).
+        - Lifecycle audit-log sample (D2-AUDIT).
+        - Discovery report with each finding's outcome (D2-DISCOVER).
+        - Conditional-access policy and sign-in evaluation sample (D2-CONDITIONAL).
+        - Attestation chain, such as a SPIFFE JWT-SVID chain (D2-IDENTITY-ATTEST).
+        - Coupled-credential migration report (D2-COUPLING-ZERO).
+- **D2-L5+ (Leading Edge):** Each token binds to one task and one holder and narrows at each hop, and identity reconciles across vendors.
+    - **Capability.**
+        - **D2-TASKTOKEN.** Per-task capability tokens carry holder-binding, of the [[tenuo-warrant|Warrant]] class and available only as OSS.
+        - **D2-TASKTOKEN-ATTENUATE.** A token passed on carries a subset of its holder's capabilities.
+        - **D2-FEDERATE.** Agent identity federates across two or more vendors' identity platforms.
+        - **D2-FEDERATE-RECONCILE.** A reconciliation joins each agent's identities into one graph.
+        - **D2-STANDARDS.** The organization contributes to a SPIFFE, OAuth or OIDC agent-extension working group.
+    - **Auditor evidence.**
+        - Per-task capability-token sample with holder binding (D2-TASKTOKEN).
+        - Two-hop token sample showing attenuation (D2-TASKTOKEN-ATTENUATE).
+        - Federation configuration (D2-FEDERATE).
+        - Cross-platform reconciliation report (D2-FEDERATE-RECONCILE).
+        - Working-group contribution record (D2-STANDARDS).
 
 ### D3. Control & Least-Agency
 
@@ -1044,7 +1074,7 @@ A single capability can appear in multiple categories when standards define the 
 | D2 Identity | [[spiffe\|SPIFFE]] (CNCF standard); OAuth 2.1 (IETF RFC 9700); OIDC (OpenID Foundation); NIST CAISI Concept Paper (Feb 2026) | [[spiffe\|SPIRE]] (CNCF OSS); AgentKeys; Keychains.dev; Aegis; OneCLI; AgentSecrets | Okta for AI Agents; Microsoft Entra Agent ID/365; [[crowdstrike-agentic-identity-provider\|CrowdStrike Agentic IdP]]; [[ping-enterprise-personal-agent-access\|Ping EPAA]]; Aembit; Astrix; CyberArk | Agent Identity (SPIFFE IDs, 24-hour X.509 certificates); auth-manager credential vault; Workload Identity Federation. No agent-specific conditional access and no per-task capability tokens |
 | D3 Control & Least-Agency | OWASP ASI least-agency principle; action-risk tiers from [[emerging-cybersecurity-practices-for-agentic-ai-applications\|Emerging Practices §3.2]]; CSA Agentic Trust Framework 5-gate model | [[opa\|OPA/Rego]] (CNCF OSS); [[cedar\|Cedar]] (Apache 2.0, AWS); [[tenuo-warrant\|Tenuo Warrants]] (OSS); [[agentshield\|AgentShield]] permission rules (MIT) | AWS Cedar managed (Mar 2026 AI release); Anthropic Compliance API; Permit.io; Topaz | IAM Unified Access Policies at Agent Gateway via Identity-Aware Proxy: CEL conditions, per-rule allow and deny, Principal Access Boundary, dry-run before enforce. No approval-gate primitive |
 | D4 Runtime & Guardrails | — | [[llamafirewall\|LlamaFirewall]] (PromptGuard 2, AlignmentCheck, CodeShield); NeMo Guardrails; Guardrails AI; Microsoft Agent Governance Toolkit; [[agentshield\|AgentShield]] | Lakera Guard; Lasso; HiddenLayer; Microsoft Prompt Shields; NeMo NIMs (commercial); Robust Intelligence. Input/output filtering; no COTS at L4 ([[agent-runtime-protection-canvass-2026-09\|canvass]]) | Model Armor, no stated launch stage, with Sensitive Data Protection embedded; check grounding API; [[gke-agent-sandbox\|GKE Agent Sandbox]] and Vertex sandboxed execution. No tool-call gating |
-| D5 Egress & Network | A2A v1.0 spec (Linux Foundation); CoSAI Model Context Protocol (MCP) Security (2026-01-20) | [[agentgateway\|AgentGateway]] (Linux Foundation, Apache 2.0); Oktsec; mTLS via Istio or Linkerd (both CNCF OSS); [[agentshield\|AgentShield]] MCP remote-transport rules (MIT) | Solo Enterprise for AgentGateway; Operant MCP Gateway; Natoma; Cloudflare AI Gateway; Kong AI Gateway | VPC Service Controls perimeters, GA for Model Armor and Agent Runtime; Agent Identity as a principal (preview); Apigee and Agent Gateway with inline Model Armor. No MCP brokering entry |
+| D5 Egress & Network | A2A v1.0 spec (Linux Foundation); CoSAI Model Context Protocol (MCP) Security (2026-01-20) | [[agentgateway\|AgentGateway]] (Linux Foundation, Apache 2.0); Oktsec; mTLS via Istio or Linkerd (both CNCF OSS); [[agentshield\|AgentShield]] MCP remote-transport rules (MIT) | Solo Enterprise for AgentGateway; Operant MCP Gateway; Natoma; Cloudflare AI Gateway; Kong AI Gateway | VPC Service Controls perimeters, GA for Model Armor and Agent Runtime; Agent Identity as a principal (GA); Apigee and Agent Gateway with inline Model Armor. No MCP brokering entry |
 | D6 Data, Memory & RAG | CycloneDX ML-BOM (OWASP); SPDX 3.0 AI extensions (Linux Foundation) | OWASP AIBOM Generator; sigstore / cosign; LangChain PII Middleware. *Research-grade, not deployable controls:* RAGShield, TrustRAG, Brain Git (SlowMist), SecureClaw | **GA, answer-time:** Purview DSPM for AI; DLP for M365 Copilot; Azure Groundedness (English-only); Restricted SharePoint Search. ReversingLabs; JFrog. See [[agentic-ai-security-cmm-d6-data-rag\|D6]] | No answer-time entitlement control documented. Sensitive Data Protection and CMEK cover the stored Google Cloud estate; neither narrows what a Gemini answer can draw from a Workspace corpus |
 | D7 Observability & Detection | [[opentelemetry-gen-ai\|OTel gen_ai.* SemConv]] v1.37+ (CNCF); MITRE ATLAS detection layer | Langtrace; Traceloop; Helicone; [[promptfoo\|Promptfoo]]; [[pyrit\|PyRIT]] (Microsoft OSS); [[garak\|Garak]] (NVIDIA OSS) | LangSmith; Wiz AI-SPM; Palo Alto Prisma AIRS; Orca AI-SPM; Reco; [[mindgard-cart\|Mindgard CART]]; Vectra AI; Miggo Security | OTel GenAI conventions into Cloud Trace, behind the experimental semantic-convention opt-in; Agent Anomaly Detection and Agent Platform Threat Detection, both preview. No drift detector |
 | D8 Supply Chain & AI-BOM | CycloneDX ML-BOM (v1.7); SPDX 3.0 AI ext; NIST SP 800-218A SSDF AI Profile; EU AI Act Art. 11 / Annex IV; GitHub Artifact Attestations (SLSA L2/L3) | OWASP AIBOM Generator; sigstore / cosign; Aguara Watch; SecureClaw 55-check audit; [[agentshield\|AgentShield]] MCP-package-provenance + skill-marketplace rules (MIT) | Anchore; Snyk AI; JFrog AI Catalog; ReversingLabs; IBM Granite disclosures; Lineaje | Cloud Build provenance; Artifact Registry signature verification; Artifact Analysis. No SLSA build level stated for the Google path and no first-party ML-BOM generator |
@@ -1052,7 +1082,7 @@ A single capability can appear in multiple categories when standards define the 
 
 Two rows carry no Google instrument for the capability the domain grades. Assured Workloads sets where data sits and which support personnel can reach it, so D1's evidence layer of crosswalk, risk register and board metrics has no Google entry. D6's answer-time row has no Google entry either, because Gemini inherits the signed-in user's Workspace permissions and the admin settings act on Gemini's access to Workspace data as a whole, above any single answer ([What controls Gemini's access to Workspace data](https://support.google.com/a/users/answer/17010577), fetched 2026-09-16). The nearest Google Cloud posture product, Data Security Posture Management, covers BigQuery, Cloud Storage and Agent Platform assets and is scheduled for shutdown on 2027-02-01 ([DSPM overview](https://docs.cloud.google.com/security-command-center/docs/dspm-data-security), fetched 2026-09-16).
 
-Most Google entries above carry no documented launch stage. Google states none for Agent Identity, for Unified Access Policies, for the check grounding API or for the core Model Armor screening service, and announces General Availability for named Model Armor features and integrations only, among them the Agent Gateway integration in June 2026 ([Model Armor overview](https://docs.cloud.google.com/model-armor/overview) and [release notes](https://docs.cloud.google.com/model-armor/release-notes), both fetched 2026-09-16). Three entries carry Preview: Agent Identity as a VPC Service Controls principal at D5, and Agent Anomaly Detection and Agent Platform Threat Detection at D7. Agent Platform Threat Detection reports host-level and control-plane compromise such as malicious binaries, container escapes and reverse shells, and Google's agent-observability page names agent drift as a risk while documenting no detector, rule or baseline for it ([Agent observability](https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability), fetched 2026-09-16).
+Google's release notes date general availability for Agent Identity on 2026-04-22 ([IAM release notes](https://docs.cloud.google.com/iam/docs/release-notes#April_22_2026)) and for Unified Access Policies on 2026-08-31 ([Agent Platform release notes](https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#August_31_2026)), both retrieved 2026-09-23. Google states no launch stage for the check grounding API or for the core Model Armor screening service, and for Model Armor it announces General Availability only for named features and integrations, among them the Agent Gateway integration in June 2026 ([Model Armor overview](https://docs.cloud.google.com/model-armor/overview) and [release notes](https://docs.cloud.google.com/model-armor/release-notes), both fetched 2026-09-16). Two entries carry Preview: Agent Anomaly Detection and Agent Platform Threat Detection at D7. Agent identities have been generally available as VPC Service Controls principals at D5 since 2026-06-29 ([VPC Service Controls release notes](https://docs.cloud.google.com/vpc-service-controls/docs/release-notes#June_29_2026), retrieved 2026-09-23). Agent Platform Threat Detection reports host-level and control-plane compromise such as malicious binaries, container escapes and reverse shells, and Google's agent-observability page names agent drift as a risk while documenting no detector, rule or baseline for it ([Agent observability](https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability), fetched 2026-09-16).
 
 One documented limit bounds the D3 entry. The Unified Access Policies page opens on the note that the feature does not support VPC Service Controls ([IAM Access policies overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/policies/iam-overview-uap), fetched 2026-09-16), so the Google policy decision point for agent actions and the Google egress perimeter do not compose, and a design that needs both decides which path each one covers. [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] carries the single-stack reading behind this column.
 

@@ -4,7 +4,7 @@ entity_type: product
 title: "Okta for AI Agents"
 homepage: "https://www.okta.com"
 created: 2026-05-03
-updated: 2026-09-18
+updated: 2026-09-23
 tags:
   - products
   - identity
@@ -30,6 +30,8 @@ related:
   - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/"
+  - "https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/"
+  - "https://auth0.com/blog/auth0-for-ai-agents-generally-available/"
 verified: 2026-09-18
 verified_against: []
 verified_findings: 1
@@ -40,7 +42,7 @@ verified_note: "Read against the Okta GA announcement of 2026-04-29 cited in the
 
 **Sources:** [Okta (homepage)](https://www.okta.com) · [Managing AI Agents with Okta (whitepaper)](https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/)
 
-Okta for AI Agents is Okta's identity and lifecycle management platform for non-human identities (NHIs), specifically AI agents. It reached **general availability on 2026-04-29**.[^okta-ga] Auth0 for AI Agents, the developer-platform product in the same line, reached general availability in October 2025. Okta for AI Agents is one of the first purpose-built agentic-AI identity-governance products from a major IAM vendor.
+Okta for AI Agents is Okta's identity and lifecycle management platform for non-human identities (NHIs), specifically AI agents. It reached **general availability on 2026-04-29**.[^okta-ga] Auth0 for AI Agents, the developer-platform product in the same line, reached general availability on 2025-11-19.[^auth0-ga] Okta for AI Agents is one of the first purpose-built agentic-AI identity-governance products from a major IAM vendor.
 
 ## Function
 
@@ -92,3 +94,4 @@ Okta for AI Agents' published integration patterns focus on Okta-as-IdP deployme
 ## Notes
 
 [^okta-ga]: Okta, [*Okta for AI Agents is now generally available*](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/) (2026-04-29), retrieved 2026-09-18. Covers discovery, onboarding, protection and governance of agent identities across agent frameworks, clouds and SaaS environments; agent deactivation is described as an operator-invoked kill switch. Agent-to-agent delegation, an Agent Gateway, threat detection and human-in-the-loop controls are named as roadmap rather than GA.
+[^auth0-ga]: Auth0, [*Auth0 for AI Agents is Now Generally Available (GA)*](https://auth0.com/blog/auth0-for-ai-agents-generally-available/) (2025-11-19), by Gareth Davies, Chief Product Officer at Auth0, retrieved 2026-09-23: "TL;DR: Auth0 for AI Agents is now available in GA!"

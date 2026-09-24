@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Supply Chain and AI-BOM"
 address: c-000129
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -128,11 +128,19 @@ The skill half of the provenance row now has a populated acquisition channel. Se
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone, and the production date is the date the control entered the organization's production. A planned date satisfies none, and neither does a product the organization does not yet run in production, whatever the vendor has announced.
 
-Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
+L1 describes where a deployment starts and carries no criterion, so a deployment that does not meet every L2 criterion scores L1, or 0 under the measurement protocol's rubric where no evidence of the L1 baseline exists.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control: a customer test, a vendor attestation, or vendor tooling output the customer can inspect. The assessment records the assurance class beside the verdict — **tested**, **inspected** or **attested** — and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and the vendor supplies neither an attestation nor inspectable output; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion.
+Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a level is met only where every level below it is met.
+
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control. The assessment records the evidence's assurance class beside the verdict and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]:
+
+- **Tested**: the customer or the assessor exercised the control and recorded what it did.
+- **Inspected**: vendor tooling the customer can reach, or a record the organization keeps, such as an inventory or a plan, shows the control's state in the deployment.
+- **Attested**: the vendor states the control in a document the customer holds, and the document's own scope names the control.
+
+**Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and keeps no record of the control's state, and the vendor supplies neither inspectable output nor an attestation that names the control. An unanswerable criterion never counts as met: its level stays open, and every level above it stays open under cumulative grading. The assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion.
 
 Producer-only items are tagged **`[P]`**, which is the not-applicable verdict stated in advance for one class of buyer: a model consumer holds no instance of what those items govern, scores them not applicable, and records the reduced scope as an intentional trade-off.
 

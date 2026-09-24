@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D6: Data, Memory and RAG"
 address: c-000139
 created: 2026-05-24
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -91,7 +91,7 @@ Cyera states its Protect phase strips sensitive fields out of a response before 
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced. The answer-time enforcement thread the recalibration adds runs from L3 to L5.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone, and the production date is the date the control entered the organization's production. A planned date satisfies none, and neither does a product the organization does not yet run in production, whatever the vendor has announced. The answer-time enforcement thread the recalibration adds runs from L3 to L5.
 
 - **L1 — Initial.** No corpus provenance; no memory integrity; retrieval inherits source-system permissions with no oversharing review.
 - **L2 — Developing.** A retrieval names its origin in the terms the corpus indexes; the extensions that widen what the agent retrieves are reviewed by a person before use; a classification scheme covers the reachable corpus on paper, at the grain the authorization layer grants on; and a **first assessment of what the agent reaches and for whom** has been run.
@@ -104,7 +104,7 @@ The old D6 built L4 and L5 around cryptographic document attestation, which is t
 
 The access model a corpus carries is its **authorization layer**, and the layer follows the corpus: a corpus holding no per-document access model is graded on the layer it does hold. A document corpus carries per-document entitlements. A source repository carries the repository and branch grants of the asking developer, which reach the retrieval as a branch and path scope on what the agent may read. A whole-tenant corpus — the mail, files and calendar a productivity assistant reaches — carries the tenant access-control list with label-aware policy over it. The [[cmm-stress-test-canadian-fi-google-2026-09|September stress test]] scored a coding shape at L2 to L3 against an L3 target, and recorded that the L3 spine, worded then as per-user entitlements, described no repository. That shape now evidences the developer's repository and branch grants, and the path scope of the working copy the agent retrieves from.
 
-**L2 takes its grain from the same layer.** Grading is cumulative, so a rung is met only where every rung below it is met, and an L2 clause a shape holds no instance of stops that shape before it reaches the criterion above. A corpus clause written for documents therefore puts L3 out of reach for a repository or a tenant whatever L3 says, because an assessor has to decide unaided whether a repository-permission review is a data-risk assessment and whether source files carry a sensitivity-labeling scheme. Two assessors answer differently. The corpus clauses read at the grain the authorization layer grants on, and the origin a retrieval names is the one the corpus indexes:
+**L2 takes its grain from the same layer.** Grading is cumulative, so a level is met only where every level below it is met, and an L2 clause a shape holds no instance of stops that shape before it reaches the criterion above. A corpus clause written for documents therefore puts L3 out of reach for a repository or a tenant whatever L3 says, because an assessor has to decide unaided whether a repository-permission review is a data-risk assessment and whether source files carry a sensitivity-labeling scheme. Two assessors answer differently. The corpus clauses read at the grain the authorization layer grants on, and the origin a retrieval names is the one the corpus indexes:
 
 | Corpus | Classification scheme | A retrieval names | First assessment |
 |---|---|---|---|
@@ -138,11 +138,17 @@ The obfuscation clause at L4 states its own residual and its own scope. The Exch
 
 ## Assessor detail per level
 
-L1, L2, L5, and L5+ are graded from their statements above. The two rungs below carry criteria an assessor checks item by item, each list stating what its own rung adds.
+L1 describes where a deployment starts and carries no criterion, so a deployment that does not meet every L2 criterion scores L1, or 0 under the measurement protocol's rubric where no evidence of the L1 baseline exists. L2, L5, and L5+ are graded from their statements above. The two levels detailed below carry criteria an assessor checks item by item, each list stating what its own level adds.
 
-Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
+Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a level is met only where every level below it is met.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control: a customer test, a vendor attestation, or vendor tooling output the customer can inspect. The assessment records the assurance class beside the verdict — **tested**, **inspected** or **attested** — and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and the vendor supplies neither an attestation nor inspectable output; the rung stays open and the assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion. For a coding agent over a repository, the right-sizing section below names the subset of the corpus criteria that shape carries.
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control. The assessment records the evidence's assurance class beside the verdict and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]:
+
+- **Tested**: the customer or the assessor exercised the control and recorded what it did.
+- **Inspected**: vendor tooling the customer can reach, or a record the organization keeps, such as an inventory or a plan, shows the control's state in the deployment.
+- **Attested**: the vendor states the control in a document the customer holds, and the document's own scope names the control.
+
+**Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and keeps no record of the control's state, and the vendor supplies neither inspectable output nor an attestation that names the control. An unanswerable criterion never counts as met: its level stays open, and every level above it stays open under cumulative grading. The assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. Each level's list below holds criteria only, and a paragraph after a list states no criterion: it carries maturity, market or provenance commentary, or the boundary between this domain and another. For a coding agent over a repository, the right-sizing section below names the subset of the corpus criteria that shape carries.
 
 ### L3 detail
 

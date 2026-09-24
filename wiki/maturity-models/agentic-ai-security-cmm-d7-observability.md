@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D7: Observability and Detection"
 address: c-000128
 created: 2026-05-25
-updated: 2026-09-19
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -103,7 +103,7 @@ Cyera states that Agent Guardian counts behavioral baselines among its inputs, t
 
 ## Capability-decoupled levels
 
-Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone; a product the organization does not yet run in production satisfies none, whatever the vendor has announced.
+Stated as capabilities per [[agentic-ai-security-cmm-recalibration-method-2026|rule 1]]; a control counts when it operates in production per rule 2. A control implemented through a product in the organization's approved-vendor pipeline with a documented production date satisfies its criterion on that basis alone, and the production date is the date the control entered the organization's production. A planned date satisfies none, and neither does a product the organization does not yet run in production, whatever the vendor has announced.
 
 - **L1 — Initial.** No agent-specific telemetry; only the vendor console.
 - **L2 — Developing.** A tool-call audit log records action history with user attribution.
@@ -130,11 +130,17 @@ The evidence class carries a limit the incident does not show. The [[owasp-ai-ex
 
 ## Assessor detail per level
 
-L1, L2, L5, and L5+ are graded from their statements above. The two rungs below carry criteria an assessor checks item by item, each list stating what its own rung adds.
+L1 describes where a deployment starts and carries no criterion, so a deployment that does not meet every L2 criterion scores L1, or 0 under the measurement protocol's rubric where no evidence of the L1 baseline exists. L2, L5, and L5+ are graded from their statements above. The two levels detailed below carry criteria an assessor checks item by item, each list stating what its own level adds.
 
-Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a rung is met only where every rung below it is met.
+Grading is cumulative: Level N requires every Level N–1 control plus the new criteria at Level N ([[agentic-ai-security-cmm-2026|the CMM]]), so a level is met only where every level below it is met.
 
-Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control: a customer test, a vendor attestation, or vendor tooling output the customer can inspect. The assessment records the assurance class beside the verdict — **tested**, **inspected** or **attested** — and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]. **Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and the vendor supplies neither an attestation nor inspectable output; the rung stays open and the assessment names what would close it. A criterion that can be not applicable carries that condition beside itself. The lists below hold criteria only; a paragraph after a list carries maturity or market commentary and states no criterion.
+Each criterion takes one of four verdicts. **Met** and **not met** are read from the evidence the criterion names, whoever operates the control. The assessment records the evidence's assurance class beside the verdict and names the artifact behind it, its issuer and its date, per [[agentic-ai-security-cmm-measurement-protocol|the measurement protocol]]:
+
+- **Tested**: the customer or the assessor exercised the control and recorded what it did.
+- **Inspected**: vendor tooling the customer can reach, or a record the organization keeps, such as an inventory or a plan, shows the control's state in the deployment.
+- **Attested**: the vendor states the control in a document the customer holds, and the document's own scope names the control.
+
+**Not applicable** is recorded where the deployment holds no instance of what the criterion governs, and the reduced scope is recorded as an intentional trade-off in the [[agentic-ai-security-cmm-dependency-rules|effective-score]] strategic-rationale field. **Unanswerable** is recorded where the instance exists, the customer can run no test and keeps no record of the control's state, and the vendor supplies neither inspectable output nor an attestation that names the control. An unanswerable criterion never counts as met: its level stays open, and every level above it stays open under cumulative grading. The assessment names what would close it. A criterion that can be not applicable states that condition alongside the criterion. Each level's list below holds criteria only, and a paragraph after a list states no criterion: it carries maturity, market or provenance commentary, or the boundary between this domain and another.
 
 ### L3 detail
 

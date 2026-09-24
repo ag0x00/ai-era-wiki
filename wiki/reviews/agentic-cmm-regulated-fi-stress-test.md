@@ -4,7 +4,7 @@ title: "Agentic AI CMM: Regulated-FI Stress Test"
 address: c-000162
 origin: produced
 created: 2026-05-23
-updated: 2026-09-18
+updated: 2026-09-23
 tags:
   - reviews
   - cmm
@@ -113,3 +113,5 @@ Filed 2026-05-23 from a customer-persona stress test of the CMM and RA. Gaps 1 a
 Downstream resolution: gap 6's D6 finding was acted on in [[agentic-ai-security-cmm-d6-data-rag|the D6 Data, Memory and RAG deep dive]], which reframed the domain around answer-time oversharing and inference exposure, made entitlement enforcement the L3 capability, and stated the Purview data-governance project as a multi-quarter labor cost. The findings above stand as filed; this note records where they landed.
 
 The single-stack closure condition is answered on one platform of the three. [[google-cloud-agentic-security-profile|The Google Cloud agentic security profile]] reads the reference architecture and the CMM against Google Cloud alone, plane by plane and domain by domain, and names the planes where Google ships no native control and an off-stack component is unavoidable. No equivalent platform-wide reading exists for Microsoft or AWS; [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]] is a Microsoft reading of one deployment shape rather than of the platform.
+
+Gap 3 dates the general availability of Okta for AI Agents to 30 April. Okta announced it on 2026-04-29 ([Okta — Okta for AI Agents is Now Generally Available](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/)), a day before the 30 April date its release of 16 March 2026 had given ([Okta — Okta announces new blueprint for the secure agentic enterprise](https://www.okta.com/newsroom/press-releases/showcase-2026/)), and [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]] carries the announcement date. The finding stands on either date.

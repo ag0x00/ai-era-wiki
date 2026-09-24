@@ -67,12 +67,6 @@ The L5+ clause requires "cryptographic attestation that guardrails executed in a
 
 **Status:** [verified-current], reduced impact (L5+ is explicitly aspirational).
 
-### 3. `D2 L5` — Microsoft Agent 365 Registry "or equivalent" remains underspecified
-
-[[agentic-ai-security-cmm-d2-identity|D2]]'s clause references "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01; deployment evidence is now possible but not yet published at scale. "Or equivalent" softens the dependency on a single vendor, but the criterion does not state which capabilities an equivalent must match, so an assessor has no basis for grading a non-Microsoft deployment against it. A CISO at L5 needs to either pick Agent 365 or build the equivalent capability set themselves.
-
-**Status:** [verified-current]. Re-check by 2026-Q3 once Agent 365 deployment evidence and competing-product feature parity are observable.
-
 ### 4. `D1 L5` — AIUC-1 quarterly cadence and single-auditor capacity
 
 The clause requires "AIUC-1 certified." AIUC-1 updates quarterly (Q2 2026 update focused on MCP / third-party / agent identity per AIUC's own statements); a `L5` claim is implicitly "currently certified against the most recent quarterly refresh," which the CMM language does not quite articulate (the Level 5 statement names [[iso-iec-42001|ISO/IEC 42001]] under active surveillance as preferred and AIUC-1 at its latest quarterly refresh as accepted, and its auditor-evidence line asks for assurance current or scheduled, evidenced at the cadence its scheme runs — better than the original 2026-04-30 framing, and on the AIUC-1 path still a moving target). Schellman is currently the only accredited auditor — single-auditor capacity is a real gating constraint for organizations attempting L5 certification.
@@ -166,7 +160,7 @@ One page in the family carries more than the one callout the convention allows: 
 
 ## Limitations addressed by CMM revisions (archived)
 
-CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16, item 22 on 2026-09-18, and items 8, 9, 19, 24 and 25 on 2026-09-19. Kept as a historical record so a future reader does not reintroduce them.
+CMM revisions have resolved the items below. Items A to C appeared in §5 of the older validation page and closed during May 2026, ahead of the numbering the still-current list uses; items 12, 20 and 21 closed on 2026-09-16, item 22 on 2026-09-18, items 8, 9, 19, 24 and 25 on 2026-09-19, and item 3 on 2026-09-23. Kept as a historical record so a future reader does not reintroduce them.
 
 ### A. `D3 L4` CSA ATF five-stage promotion gates (resolved 2026-05-06)
 
@@ -225,6 +219,16 @@ Resolved at L5+ across the three domains, by applying the recalibration method's
 Original item: [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 requires a policy decision point outside the model context, deny-by-default, synchronous and failing closed, and the measurement protocol asks for a PDP config, a PDP-unreachability test showing deny and a direct-gateway invocation test showing deny. A coding harness enforcing a managed permission policy is the enforcement point and the governed component at once, so it produces none of the three artifacts, and the assessor either records the circularity or scores L2.
 
 Resolved in the evidence rows rather than in the rung, because the item's first point does not hold. "Outside the model context" names one property, that an instruction reaching the model's context cannot rewrite the decision the enforcement point issues, and the D3 L3 criterion now states that property in the criterion itself. A harness resolving a managed permission policy holds it: the policy arrives from an administrative scope the session cannot write, and the harness decides before the tool call runs. The item's second point holds. Two of the L3 artifacts assume an interface a tester can address, and D3 L3 already recorded the direct-invocation test as not applicable for an in-process decision point exposing none, which disposed of one of the two; the unreachability test carried no such path. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] now names four substitute artifacts — the resolved policy read from an enrolled device with its administrative scope, the write-deny holding the model out of that scope with the audit record of in-session changes, a deny observed under the most permissive autonomy mode the deployment permits, and the documented behavior when the policy source is absent or malformed — and two limits that hold the substitution shut: a decision point outside the hosting runtime anywhere on the call path restores the original tests for the calls that cross it, and a vendor-operated enforcement point exposing neither a customer test nor inspectable output scores unanswerable rather than met. The circularity is recorded rather than removed, and it is narrower than this item stated. The enforcement point sits outside the model's context and inside the vendor's software, so vendor code interprets a customer-administered policy file and every artifact comes from the code path that policy governs. Injection resistance survives that; the independence of the evidence does not, and three records the harness does not hold narrow it. Recommendation 30, shipped under [#170](https://github.com/ag0x00/ai-era/issues/170), a sub-issue of [#168](https://github.com/ag0x00/ai-era/issues/168).
+
+### 3. `D2 L5` — Microsoft Agent 365 Registry "or equivalent" was underspecified (resolved 2026-09-23)
+
+Original item: [[agentic-ai-security-cmm-d2-identity|D2]]'s clause referenced "Microsoft Agent 365 Registry or equivalent unified governance." Agent 365 GA was 2026-05-01, and deployment evidence was possible but not yet published at scale. "Or equivalent" softened the dependency on a single vendor, but the criterion did not state which capabilities an equivalent must match, so an assessor had no basis for grading a non-Microsoft deployment against it, and a CISO at L5 had to either pick Agent 365 or build the equivalent capability set.
+
+Resolved by stating the capability set as criteria. [[agentic-ai-security-cmm-d2-identity|D2]]'s L5 names each capability an equivalent must match as its own criterion, with the evidence an assessor collects, so a non-Microsoft deployment is graded on the same criteria:
+
+- D2-REGISTRY and D2-AUDIT, for the registry, its lifecycle API and its audit integration.
+- D2-OWNER-TRANSFER and D2-ADMIN, for ownership transfer and scoped administration.
+- D2-DISCOVER, D2-CONDITIONAL, D2-IDENTITY-ATTEST and D2-COUPLING-ZERO, for the rest of the level.
 
 ## Contribution guide
 

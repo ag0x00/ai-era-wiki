@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM: Recalibration Method (Cadence and Cost)"
 address: c-000140
 created: 2026-05-23
-updated: 2026-09-17
+updated: 2026-09-23
 tags:
   - maturity-models
   - cmm
@@ -64,7 +64,7 @@ Each level criterion states a **capability**, not a product. Capabilities are du
 
 ### 2. Production-maturity (cadence) qualifier
 
-A control counts toward a level when it is **operating in the org's production environment**, regardless of how recently the underlying product reached GA. To prevent the bar from tracking bleeding-edge releases, level criteria avoid naming a capability whose *only* implementations are less than roughly two quarters past GA; such capabilities belong in L5+ (leading edge) until a production-hardened implementation path exists. This makes the ladder reachable for buyers whose adoption cadence is externally constrained, without lowering the security bar: the capability requirement is unchanged, only its dependence on just-shipped tooling is removed. A conservative-adoption reading is explicit: "implemented via a product in your approved-vendor pipeline with a documented production date" satisfies the criterion.
+A control counts toward a level when it is **operating in the org's production environment**, regardless of how recently the underlying product reached GA. To prevent the bar from tracking bleeding-edge releases, level criteria avoid naming a capability whose *only* implementations are less than roughly two quarters past GA; such capabilities belong in L5+ (leading edge) until a production-hardened implementation path exists. This makes the levels reachable for buyers whose adoption cadence is externally constrained, without lowering the security bar: the capability requirement is unchanged, only its dependence on just-shipped tooling is removed. A conservative-adoption reading is explicit: "implemented via a product in your approved-vendor pipeline with a documented production date" satisfies the criterion, and the production date is the date the control entered the organization's production. A planned date satisfies no criterion.
 
 ### 3. Cost dimension per level
 
