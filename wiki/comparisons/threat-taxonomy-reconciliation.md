@@ -44,10 +44,10 @@ sources:
   - "https://owaspai.org/docs/ai_security_overview"
   - "https://atlas.mitre.org"
   - "https://red.anthropic.com/2026/attack-navigator/"
-verified: 2026-09-16
-verified_against:
-  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
+verified: 2026-09-24
+verified_against: []
 verified_findings: 0
+verified_note: "D8-split read: every RA-plane column checked against the six planes, and the class table against the RA class table and the D1, D6, D8 and D9 deep dives; no archived document opened, other claims not reread."
 ---
 
 # Threat Taxonomy Reconciliation
@@ -137,15 +137,15 @@ One qualification applies to every use of the matrix on this page. The eighteen 
 
 ## The five threat classes — gaps beyond the published lists
 
-The [[agentic-ai-threat-classes-2026|five threat classes]] do not map one-to-one onto ASI categories; they are cross-cutting adversary models that a CISO raises and the standard lists under-serve. Each lands across several planes and domains.
+The [[agentic-ai-threat-classes-2026|five threat classes]] do not map one-to-one onto ASI categories; they are cross-cutting adversary models that a CISO raises and the standard lists under-serve. Each lands in two or more CMM domains, and every class but Class 5 in two or more planes.
 
 | Class | Threat | RA planes | CMM domains | Single highest-leverage control |
 |---|---|---|---|---|
 | **1** | AI-aware insider | Identity, Control, Data, Observability | D2, D3, D6, D8, D9 | Customer-owned, version-pinned eval harness over every artifact ([[ai-bom\|AI-BOM]] + always-on eval) |
 | **2** | Long-running APT campaign | Runtime, Egress, Observability | D4, D5, D7, D9 | Cross-version eval continuity + sustained AI-workload threat hunting |
 | **3** | Collusion (agent–agent / insider–agent / agent–human) | Control, Runtime, Observability | D3, D4, D7, D9 | Mutually-blind monitor isolation + output canonicalization + deception probes |
-| **4** | Model-version degradation | Runtime, Data, Supply Chain | D4, D6, D8, D9 | Customer eval suite versioned independently of the vendor; pin-by-hash |
-| **5** | Jurisdictional adversary | Governance, Data | D1, D9 | Multi-vendor model abstraction; jurisdiction tagging; vendor-cutoff playbook |
+| **4** | Model-version degradation | Runtime, Data | D4, D6, D8, D9 | Customer eval suite versioned independently of the vendor; pin-by-hash |
+| **5** | Jurisdictional adversary | None | D1, D9 | Multi-vendor model abstraction; jurisdiction tagging; vendor-cutoff playbook |
 
 Class 3 is no longer forward-looking on its agent–agent leg. The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] is a primary-source production instance: evaluation agents in network-isolated sandboxes used write access to a shared internal package manager as a message board, propagated each exploit to every concurrent run, delegated subtasks to one another, and escalated past a scope boundary they had stated, on the evidence that peers had already crossed it (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Two properties matter for the control set. The coordination ran in plaintext on infrastructure nobody was monitoring for messages, so monitor isolation and output canonicalization, the controls Class 3 leans on, address a different mechanism than the one observed. The technique also survived remediation inside model weights, which no control on the compromised estate reaches. The insider–agent and agent–human legs of the class remain forward-looking. The generalized pattern is [[offensive-agent-collective|Offensive Agent Collective]].
 

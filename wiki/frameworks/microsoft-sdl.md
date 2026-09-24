@@ -3,7 +3,7 @@ type: framework
 title: "Microsoft Secure Development Lifecycle (SDL)"
 address: c-000045
 created: 2026-05-14
-updated: 2026-07-30
+updated: 2026-09-24
 tags:
   - framework
   - secure-sdlc
@@ -41,6 +41,11 @@ related:
 sources:
   - "https://www.microsoft.com/en-us/securityengineering/sdl/"
   - "[[.raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md]]"
+verified: 2026-09-24
+verified_against:
+  - ".raw/articles/microsoft-sdl-evolving-security-practices-2026-02-03.md"
+verified_findings: 1
+verified_note: "D8-split read: the six focus areas against the announcement and each CMM-domain cell against the domain titles; four cells and the 218A interval corrected. Open: the threat-modeling row names an off-scheme D4, and the core page states no domain grades AI threat modelling, which would falsify 'each area maps to a distinct CMM domain'; left for the owner."
 ---
 
 # Microsoft Secure Development Lifecycle (SDL)
@@ -48,9 +53,6 @@ sources:
 **Microsoft SDL**, Microsoft's secure-by-design software development framework, codifies a set of security activities applied across the software lifecycle (training, requirements, design, implementation, verification, release, response). Originally published in 2004 as a response to the 2002 Trustworthy Computing memo, SDL is one of the foundational influences on the modern secure-SDLC field and is referenced as a precursor by [[nist-ssdf|NIST SSDF (SP 800-218)]], [[owasp-samm|OWASP SAMM]], and ISO/IEC 27034. The framework is published publicly at `microsoft.com/en-us/securityengineering/sdl/` as a set of practice descriptions, training material, and reference tooling (including the Microsoft Threat Modeling Tool).
 
 On **2026-02-03**, Microsoft published [[microsoft-sdl-evolving-security-practices|*Microsoft SDL: Evolving Security Practices for an AI-Powered World*]] (Yonatan Zunger), announcing the explicit extension of SDL to AI workloads. This page tracks both the classical SDL framework and its 2026 AI extension as a single anchor; the per-area substantive AI guidance is promised "in the coming months."
-
-> [!gap] Pre-2026 SDL coverage on this page is summary-level
-> The dedicated SDL practice areas — Training, Requirements, Design, Implementation, Verification, Release, Response — are documented on Microsoft's SDL homepage but not fully transcribed here. The wiki's coverage focuses on the 2026 AI extension and the framework's role in the broader secure-SDLC ecosystem. Track the per-area follow-up posts as they land.
 
 ## Position in the secure-SDLC ecosystem
 
@@ -60,7 +62,7 @@ Microsoft SDL is **vendor-authored, prescriptive, free, and pre-AI by inheritanc
 |---|---|---|---|
 | **Microsoft SDL** | Secure-SDLC framework (vendor-authored) | [[microsoft\|Microsoft]] | Practice-oriented; concrete tooling; explicit named source for SSDF (cited as `MSSDL` in NIST SP 800-218 Table 1) |
 | [[nist-ssdf\|NIST SSDF (SP 800-218)]] | Secure-SDLC framework (standard) | [[nist\|NIST]] | Outcomes-oriented; federal regulatory anchor (EO 14028); synthesizes Microsoft SDL + BSAFSS + OWASP SAMM + others |
-| [[nist-sp-800-218a\|NIST SP 800-218A]] | SSDF Community Profile for AI | [[nist\|NIST]] | Federal AI extension of SSDF (EO 14110); ~6 months ahead of the Microsoft SDL-for-AI announcement |
+| [[nist-sp-800-218a\|NIST SP 800-218A]] | SSDF Community Profile for AI | [[nist\|NIST]] | Federal AI extension of SSDF (EO 14110); final about 18 months ahead of the Microsoft SDL-for-AI announcement |
 | [[owasp-samm\|OWASP SAMM v2]] | Secure-SDLC maturity model | OWASP | 5 functions × 3 practices × 3 levels; vendor-neutral assessment |
 | BSIMM | Secure-SDLC industry benchmark | Synopsys / Black Duck | Descriptive industry benchmark; survey of observed practices |
 
@@ -74,10 +76,10 @@ Per [[microsoft-sdl-evolving-security-practices|the 2026-02-03 announcement]], M
 |---|---|---|---|
 | **Threat modeling for AI** | [[threat-modeling-for-ai\|Threat modeling for AI]] *(gap)* | D4 — Threat Modeling & Adversarial Defense | Control |
 | **AI system observability** | [[agent-observability\|Agent observability]] | D7 — Observability and Detection | Observability |
-| **AI memory protections** | [[agent-memory-isolation\|Agent memory isolation]] | D5 — Data & Memory Governance | Identity / Data |
-| **Agent identity and RBAC enforcement** | [[agent-identity-architecture\|Agent identity architecture]] | D3 — Identity & Access Management | Identity |
-| **AI model publishing** | [[supply-chain-security-for-agents\|Supply chain security for agents]] | D6 — Supply Chain & Component Governance | Identity / Egress |
-| **AI shutdown mechanisms** | [[distributed-kill-switch\|Distributed kill switch]] | D9 — Incident Response & Recovery | Observability / Egress |
+| **AI memory protections** | [[agent-memory-isolation\|Agent memory isolation]] | D6 — Data, Memory and RAG | Identity / Data |
+| **Agent identity and RBAC enforcement** | [[agent-identity-architecture\|Agent identity architecture]] | D2 — Identity and Authorization | Identity |
+| **AI model publishing** | [[supply-chain-security-for-agents\|Supply chain security for agents]] | D8 — Supply Chain and AI-BOM | Identity / Egress |
+| **AI shutdown mechanisms** | [[distributed-kill-switch\|Distributed kill switch]] | D9 — Operations and Human Factors | Observability / Egress |
 
 The six-area scope is unusually clean: each area maps to a distinct CMM domain with negligible overlap, and three of the six (memory protections, agent identity & RBAC, shutdown mechanisms) had not previously been named as first-order concerns by any major-vendor secure-SDLC framework.
 

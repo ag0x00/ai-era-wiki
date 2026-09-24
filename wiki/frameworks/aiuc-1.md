@@ -2,7 +2,7 @@
 type: framework
 title: "AIUC-1 AI Agent Certification Standard"
 created: 2026-05-02
-updated: 2026-09-16
+updated: 2026-09-24
 origin: aggregated
 tags:
   - frameworks
@@ -36,22 +36,23 @@ related:
   - "[[owasp-genai-crosswalk]]"
   - "[[aisi-uk]]"
   - "[[aiuc]]"
+  - "[[agentic-ai-threat-classes-2026]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
 sources:
   - "https://aiuc-1.com"
   - "https://www.schellman.com/blog/news/schellman-becomes-the-first-accredited-auditor-for-aiuc-1"
   - "https://www.aiuc-1.com/research/quarterly-update-of-aiuc-1-q1-2026"
   - "https://www.uipath.com/newsroom/uipath-achieves-aiuc-1-certification"
   - "https://www.lrqa.com/en/latest-news/lrqa-partners-with-aiuc-1/"
-verified: 2026-09-16
-verified_against:
-  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
-verified_findings: 1
-verified_note: "Registry misattribution paragraph checked against the framework registry row; fixed the certification-issuance clause, which reversed the page's own two-actor model."
+verified: 2026-09-24
+verified_against: []
+verified_findings: 0
+verified_note: "D8-split read: the UiPath quotation against the live announcement, the D1 L4 and L5 statements against the core page's current D1 levels (stale quoted CMM wording replaced) and the eight-gap sentence against the crosswalk page; other claims not reread."
 ---
 
 # AIUC-1 — AI Agent Certification Standard
 
-The first independent **security, safety, and reliability certification** for enterprise AI agents, positioned by its publisher as "SOC 2 for AI agents." Created by the Artificial Intelligence Underwriting Company ([[aiuc|AIUC]]) and audited by accredited third parties. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites AIUC-1 readiness as **D1 L4** evidence and AIUC-1 certification as **D1 L5** evidence.
+The first independent **security, safety, and reliability certification** for enterprise AI agents, positioned by its publisher as "SOC 2 for AI agents." Created by the Artificial Intelligence Underwriting Company ([[aiuc|AIUC]]) and audited by accredited third parties. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites AIUC-1 readiness as **[[agentic-ai-security-cmm-d1-governance|D1]] L4** evidence and AIUC-1 certification as **D1 L5** evidence.
 
 ## Definition
 
@@ -72,13 +73,13 @@ The Society pillar is **the one the wiki's CMM does not have an analogue for**, 
 
 AIUC-1 is updated formally each quarter. The Q1-2026 update modified 26 requirements and added evidence-category labels (legal / technical / operational / third-party) plus a capability-specific scoping questionnaire. The **Q2-2026 update** is themed *"Strengthening MCP security, agent permissions & third-party risk,"* directly relevant to the wiki's [[mcp-security|MCP Security]] and [[non-human-identity|NHI]] coverage.
 
-Implication for the CMM: a D1 L5 "AIUC-1 certified" claim holds only for the most recent quarterly refresh and lapses at the next one. The CMM's L5 evidence requirement reflects this: *"AIUC-1 certified against the most recent quarterly refresh."*
+Implication for the CMM: a D1 L5 "AIUC-1 certified" claim holds only for the most recent quarterly refresh and lapses at the next one. The CMM's L5 criterion reflects this: it accepts AIUC-1 at its latest quarterly refresh, with ISO/IEC 42001 under active surveillance preferred, each evidenced at the cadence its own scheme runs.
 
 ## Standards crosswalks
 
 AIUC publishes crosswalks against: [[iso-iec-42001|ISO 42001]], [[nist-ai-rmf|NIST AI RMF]], [[eu-ai-act|EU AI Act]], [[mitre-atlas|MITRE ATLAS]], [[owasp-llm-top-10|OWASP LLM Top 10]], [[owasp-aivss|OWASP AIVSS]], IBM AI Risk Atlas, Cisco AI Security & Safety, [[csa-maestro|CSA AICM]]. AIUC-1 maintains a current map across all of these; the wiki's [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] uses AIUC-1 as its **anchoring artifact** at L4+.
 
-A dedicated bidirectional crosswalk against the [[owasp-agentic-ai-top-10|OWASP ASI Top 10]] was co-published with OWASP in May 2026; the wiki summary, including the eight observed AIUC-1 gaps and five newly validated mappings, is at [[owasp-asi-aiuc1-crosswalk|the OWASP ASI to AIUC-1 crosswalk]].
+A dedicated bidirectional crosswalk against the [[owasp-agentic-ai-top-10|OWASP ASI Top 10]] was co-published with OWASP in May 2026; the wiki summary, including the eight observed AIUC-1 gaps and five newly validated mappings, is at [[owasp-asi-aiuc1-crosswalk|the OWASP ASI to AIUC-1 crosswalk]]. Three of the eight, inter-agent authentication, runtime monitoring and cascading-failure containment, overlap the adversary classes in [[agentic-ai-threat-classes-2026|Agentic AI Threat Classes]].
 
 AIUC-1's entry in one third-party registry attributes it to the wrong publisher. The [[owasp-genai-crosswalk|GenAI Crosswalk]] framework registry records AIUC-1 as published by the [[aisi-uk|UK AI Safety Institute]] under Open Government Licence v3.0. The standard is instead written by the Artificial Intelligence Underwriting Company, a private firm that also issues the certification, with an ANAB-accredited auditor collecting the evidence; the wiki's attribution above is correct. That registry record carries 147 mappings and, like every other row in the dataset, was never reviewed by a named person.
 
@@ -101,14 +102,14 @@ AIUC-1's entry in one third-party registry attributes it to the wrong publisher.
 
 - *"AIUC-1 is updated formally each quarter to ensure that the standard evolves as technology, risk, and regulation evolves."* (aiuc-1.com)
 - *"The first security, safety, and reliability standard for AI agents."* (Schellman press release, Feb 3 2026)
-- *"More than 2,000 enterprise risk scenarios."* (UiPath certification announcement)
+- *"More than 2,000 enterprise risk scenarios."* ([UiPath certification announcement](https://www.uipath.com/newsroom/uipath-achieves-aiuc-1-certification), 2026-03-09)
 
 ## Use in this wiki
 
 | Use | Where |
 |---|---|
-| D1 L4 evidence | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] — "AIUC-1 readiness assessment complete" |
-| D1 L5 evidence | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] — "AIUC-1 certified against the most recent quarterly refresh" |
+| D1 L4 evidence | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] — a readiness assessment against a recognized assurance scheme |
+| D1 L5 evidence | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] — current third-party assurance, AIUC-1 at its latest quarterly refresh accepted |
 | Standards crosswalk anchor | [[agentic-ai-security-cmm-crosswalk\|Agentic AI Security CMM — Standards Crosswalk Matrix]] — six-pillar map |
 | Validation comparator | [[agentic-cmm-vs-standards-validation\|Validation: Agentic AI Security CMM vs Widely Adopted Standards]] §2 |
 

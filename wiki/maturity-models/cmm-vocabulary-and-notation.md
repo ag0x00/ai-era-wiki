@@ -26,10 +26,10 @@ related:
   - "[[cmm-calibration-stress-test-2026]]"
 sources:
   - "https://www.sei.cmu.edu/our-work/cybermaturity/"
-verified: 2026-09-19
+verified: 2026-09-24
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed a truncated floor cell; L4-stable and program rating checked against the core page and protocol, and no live use of floor as a graded criterion survives."
+verified_note: "D8-split read: the plane entry checked against the RA's plane-to-domain paragraph; the rest of the page was not reread."
 ---
 
 # CMM Vocabulary and Notation
@@ -66,7 +66,7 @@ Both maturity models score in terms each defines where it uses them. This page i
 | **band** | **Retired.** A synonym for target range |
 | core criteria | The control set a level rests on |
 | **spine** | **Retired.** A synonym for core criteria |
-| plane | One of the six control layers of [[agentic-ai-security-reference-architecture\|the Reference Architecture]]: Identity, Control, Runtime, Egress, Data, Observability, pairing with D2 through D7 |
+| plane | One of the six control layers of [[agentic-ai-security-reference-architecture\|the Reference Architecture]]: Identity, Control, Runtime, Egress, Data, Observability, graded in D2 through D7 in that order, with the Data plane's supply-chain rows in D8 |
 
 ## The arrow
 
