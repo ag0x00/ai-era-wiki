@@ -3,7 +3,7 @@ type: playbook
 title: "Assessor's Quick Scorecard: Secure-SDLC and AI"
 address: c-000050
 created: 2026-05-14
-updated: 2026-09-17
+updated: 2026-09-24
 tags:
   - playbook
   - assessor-guide
@@ -70,7 +70,7 @@ A condensed two-party-advisor assessment instrument for evaluating a large Ontar
 
 **Evidence type per question.** Each question has an expected evidence type — `D` document, `I` interview, `O` live observation, `T` telemetry / log sample. A "Yes" without the expected evidence type is downgraded to "Partial."
 
-**Section maturity ladder.**
+**Section maturity levels.**
 
 | Tier | Threshold | Interpretation |
 |---|---|---|

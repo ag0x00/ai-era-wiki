@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-24
 tags:
   - architectures
   - identity
@@ -172,7 +172,7 @@ Ambient federation trust produces the same structural failure on the identity pl
 ## Placement in the RA and CMM
 
 - **Reference architecture.** The [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] **Identity plane** is the implementation surface of this page: workload identity, agent/NHI lifecycle governance, the credential proxy, action-to-identity tracing, and OAuth 2.1/OIDC delegation, with the capability-token layer split across Identity and Control.
-- **Maturity model.** The [[agentic-ai-security-cmm-d2-identity|CMM D2 deep dive]] turns these layers into a graded ladder: per-agent identity + human owner + deploy-pipeline lifecycle at L3, zero-credentials-in-context + automated rotation at L4, a unified governance program with shadow-agent discovery at L5, and per-task holder-bound capability tokens at L5+. Egress and observability cannot exceed D2-L3, which is why that rung is built first.
+- **Maturity model.** The [[agentic-ai-security-cmm-d2-identity|CMM D2 deep dive]] turns these layers into graded levels: per-agent identity + human owner + deploy-pipeline lifecycle at L3, zero-credentials-in-context + automated rotation at L4, a unified governance program with shadow-agent discovery at L5, and per-task holder-bound capability tokens at L5+. Egress and observability cannot exceed D2-L3, which is why that level is built first.
 
 ## See also
 

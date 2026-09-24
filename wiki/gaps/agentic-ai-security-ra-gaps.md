@@ -2,7 +2,7 @@
 type: gap
 title: "Agentic AI Security RA Gaps"
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-24
 tags:
   - gaps
   - reference-architecture
@@ -121,7 +121,7 @@ The AWS Well-Architected Agentic AI Lens is evidence for this shape, and reading
 ## Related
 
 - Gapped artifact: [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — the six planes each item is measured against.
-- Measured by: [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] — where a gap here caps a domain's reachable rung.
+- Measured by: [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] — where a gap here caps a domain's reachable level.
 - Implementation trade-offs the architecture declines to prescribe: [[agentic-ra-open-design-questions|Agentic AI Security RA: Open Implementation Questions]]. Those are choices with several defensible answers; the items here have none yet.
 - Sibling deliverable: [[cmm-known-limitations|CMM Known Limitations (current state)]] — the same accounting for the maturity model.
 - Adversary models the planes absorb only in part: [[agentic-ai-threat-classes-2026|Agentic AI Threat Classes — 2026 Expansion]].

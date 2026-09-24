@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Standards Crosswalk Matrix"
 address: c-000159
 created: 2026-04-30
-updated: 2026-09-19
+updated: 2026-09-24
 tags:
   - maturity-models
   - crosswalk
@@ -281,7 +281,7 @@ For organizations mapping to NIST SP 800-53 (federal compliance), the IR 8605A C
 
 ## Microsoft ZT4AI control-level crosswalk
 
-Named Microsoft controls per CMM domain, from [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]] (deep links and primary-source dates there). Status reflects May 2026 Microsoft documentation. The control-level evidence validated the [[agentic-ai-security-cmm-recalibration-method-2026|2026-05 recalibration]]: the controls Microsoft ships as preview or guidance match the rungs the recalibration graded preview or off-stack.
+Named Microsoft controls per CMM domain, from [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]] (deep links and primary-source dates there). Status reflects May 2026 Microsoft documentation. The control-level evidence validated the [[agentic-ai-security-cmm-recalibration-method-2026|2026-05 recalibration]]: the controls Microsoft ships as preview or guidance match the levels the recalibration graded preview or off-stack.
 
 | CMM domain | Named ZT4AI / Microsoft controls | Zero Trust pillar | Status |
 |---|---|---|---|

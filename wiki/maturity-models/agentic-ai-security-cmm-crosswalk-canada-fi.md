@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Canadian Regulated-Finance Crosswalk"
 address: c-000133
 created: 2026-05-26
-updated: 2026-09-16
+updated: 2026-09-24
 tags:
   - maturity-models
   - crosswalk
@@ -74,7 +74,7 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 
 ## Practical guidance for a Canadian FRFI
 
-- **Treat E-23 as the spine, and start now.** It takes effect 1 May 2027 and covers AI/ML, generative AI, and third-party models. Its lifecycle runs design, independent review, deployment, monitoring and decommission, and maps onto CMM D1/D6/D7/D9 and D8. Building the CMM evidence now produces the E-23 documentation later.
+- **Treat E-23 as the primary framework, and start now.** It takes effect 1 May 2027 and covers AI/ML, generative AI, and third-party models. Its lifecycle runs design, independent review, deployment, monitoring and decommission, and maps onto CMM D1/D6/D7/D9 and D8. Building the CMM evidence now produces the E-23 documentation later.
 - **Map B-13 to the technical planes.** B-13's tech-risk, resilience, and cyber-defense expectations re-present cleanly as CMM D1/D4/D5/D7/D8/D9 evidence.
 - **If any member is a Quebec resident, Law 25's ADM disclosure applies.** A member-facing bot that makes or materially drives a decision based exclusively on automated processing must inform the member and offer human review. This is a D6/D1/D9 obligation regardless of where the FRFI is headquartered.
 - **Consumer-facing AI is FCAC territory.** Fair treatment, non-deceptive behaviour, and accessible complaint handling are market-conduct expectations (D1/D9).

@@ -3,7 +3,7 @@ type: comparison
 title: "Threat Taxonomy Reconciliation"
 address: c-000235
 created: 2026-06-23
-updated: 2026-09-16
+updated: 2026-09-24
 tags:
   - comparisons
   - threat-modeling
@@ -52,7 +52,7 @@ verified_findings: 0
 
 # Threat Taxonomy Reconciliation
 
-Seven threat taxonomies are in active use across agentic and generative AI security as of August 2026, each built for a different job. This page is the single cross-walk that maps them to one another and onto the wiki's two control artifacts: the [[agentic-ai-security-reference-architecture|AAI-S RA]] six planes and the [[agentic-ai-security-cmm-2026|CMM]] nine domains. It is the source of truth that [[threat-modeling-for-ai|Threat Modeling for AI]], the RA Threat-Control Matrix, and the [[agentic-ai-security-cmm-crosswalk|CMM Standards Crosswalk]] all reference; the narrative explaining *when to use which* taxonomy lives on the [[threat-modeling-for-ai|spine page]].
+Seven threat taxonomies are in active use across agentic and generative AI security as of August 2026, each built for a different job. This page is the single cross-walk that maps them to one another and onto the wiki's two control artifacts: the [[agentic-ai-security-reference-architecture|AAI-S RA]] six planes and the [[agentic-ai-security-cmm-2026|CMM]] nine domains. It is the source of truth that [[threat-modeling-for-ai|Threat Modeling for AI]], the RA Threat-Control Matrix, and the [[agentic-ai-security-cmm-crosswalk|CMM Standards Crosswalk]] all reference; the narrative explaining *when to use which* taxonomy lives on [[threat-modeling-for-ai|Threat Modeling for AI]].
 
 ## The seven taxonomies and their jobs
 
@@ -74,7 +74,7 @@ Three structural tests sit alongside the catalogs: the [[lethal-trifecta|Lethal 
 
 ## Primary reconciliation — by OWASP ASI category
 
-The ASI Top 10 is the spine. Each row gives the cross-taxonomy anchors plus the RA plane and CMM domain where the wiki places the primary control. Secondary planes/domains are in parentheses. Codes verified against the published ASI 2026 PDF, the T1–T17 reference model, and ATLAS v5.6.0 per the [[standards-review-owasp-agentic-aivss-2026-Q2|2026-Q2 standards review]].
+The ASI Top 10 organizes the table. Each row gives the cross-taxonomy anchors plus the RA plane and CMM domain where the wiki places the primary control. Secondary planes/domains are in parentheses. Codes verified against the published ASI 2026 PDF, the T1–T17 reference model, and ATLAS v5.6.0 per the [[standards-review-owasp-agentic-aivss-2026-Q2|2026-Q2 standards review]].
 
 | ASI | Threat | T-codes | LLM Top 10 | MITRE ATLAS | MAESTRO | RA plane | CMM domain | Example control |
 |---|---|---|---|---|---|---|---|---|
@@ -91,7 +91,7 @@ The ASI Top 10 is the spine. Each row gives the cross-taxonomy anchors plus the 
 
 Three ASI categories (ASI07, ASI08, ASI10) are new risk classes carrying no LLM Top 10 anchor and no MITRE ATLAS technique as of v5.6.0, which is why the wiki's multi-agent controls lean on the RA Egress and Observability planes rather than an external catalog.
 
-## Coverage outside the ASI spine
+## Coverage outside the ASI Top 10
 
 The ASI Top 10 enumerates risks reachable through model use at runtime, so the primary reconciliation above inherits that boundary. The [[owasp-ai-exchange|AI Exchange]] matrix sorts on asset and impact first and carries a lifecycle key on the attack surface, which puts fourteen threat categories in scope that no row above anchors ([permalink](https://owaspai.org/go/aisecuritymatrix/)). Thirteen are rows of the eighteen-row matrix. The fourteenth, direct augmentation data leak, carries a permalink and a control set in the runtime application security threats deep dive with no matrix row of its own.
 
@@ -114,13 +114,13 @@ The ASI Top 10 enumerates risks reachable through model use at runtime, so the p
 
 The three poisoning rows differ by where the manipulation happened and agree on what it produces, which is why they carry the same asset and impact and split across two domains. Data poisoning and development-environment model poisoning both occur inside the organization's own engineering environment; supply-chain model poisoning arrives with an artifact obtained from elsewhere, which places it primarily at [[agentic-ai-security-cmm-d8-supply-chain|D8]] where acquired artifacts are graded. The Exchange states the receiver's position plainly: protection of model parameters at the moment of manipulation is not in the hands of the party that obtained the model, so what remains to that party is the data-poisoning control set, the broad-poisoning controls, and supply chain management, with the rest owed by the supplier (§3.1.3).[^aix-supplymodelpoison] The D6 secondary reflects the routes through which a poisoned artifact reaches the graded corpus. Where the supplied model is used for further training, the Exchange names the result a transfer learning attack.[^aix-supplymodelpoison]
 
-The D6 assignment on the inversion and membership-inference row names the domain that owns the data, and [[agentic-ai-security-cmm-d6-data-rag|D6]] grades no rung against either threat. Its entitlement thread consults an access model held beside the data, and a model's weights carry none, so the Exchange's threat-specific control sits at training time and outside what this CMM assesses. Read the cell as an ownership pointer rather than as a claim that the domain supplies a graded control.
+The D6 assignment on the inversion and membership-inference row names the domain that owns the data, and [[agentic-ai-security-cmm-d6-data-rag|D6]] grades no level against either threat. Its entitlement thread consults an access model held beside the data, and a model's weights carry none, so the Exchange's threat-specific control sits at training time and outside what this CMM assesses. Read the cell as an ownership pointer rather than as a claim that the domain supplies a graded control.
 
 The same reading applies to the two development-time leak rows, with one exception. [[agentic-ai-security-cmm-d6-data-rag|D6]] grades the corpus, the augmentation store, agent memory and the validation corpus, and [[agentic-ai-security-cmm-d8-supply-chain|D8]] grades acquisition and provenance; neither grades a boundary around the engineering environment, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] records that absence for `DEV SECURITY`, `SEGREGATE DATA` and `CONF COMPUTE` alike. Neither cell claims a graded environment boundary; D6's validation-corpus criterion reaches the test-data half of §3.2.1 and no further — it grades the corpus being held apart, not who inside the environment can reach it.
 
 The model-exfiltration row carries three secondary domains and the [[agentic-ai-security-cmm-2026|CMM]]'s dimension-3 row carries four domains with no primary. Both readings derive from one control set: the Exchange routes the query-based route to a replica through five general input controls, which the [[agentic-ai-security-cmm-crosswalk|crosswalk]] anchors at D2 (`MODEL ACCESS CONTROL`), D4 (`ANOMALOUS INPUT HANDLING`, `UNWANTED INPUT SERIES HANDLING`), D5 (`RATE LIMIT`), and D7 (`MONITOR USE`). D5 is primary here because the threat's mechanism is query volume through a permitted interface, and `RATE LIMIT` is the control aimed at that volume. The CMM's appendix states the spread with no primary because it maps an anchor threat to every domain a control lands in. Neither cell measures coverage: the Exchange states that where an attacker can reach the model and the model allows intensive use, the threat is typically hard to protect against.[^aix-exfil-ttr]
 
-The resource-exhaustion row is the one entry in this table keyed to an availability impact; every other row is keyed to confidentiality or integrity. The Exchange names two threat-specific controls for it and they anchor in two domains: `DOS INPUT VALIDATION` at [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and `LIMIT RESOURCES` at [[agentic-ai-security-cmm-d5-egress-network|D5]].[^aix-resourceexhaustion-ttr] D4 is primary because validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries the fleet-wide consumption correlation the Exchange names; the nearest graded capability is [[agentic-ai-security-cmm-d7-observability|D7]]'s L5+ cross-agent joint-distribution baseline, which that domain marks research-stage, and no rung grades consumption as a signal.
+The resource-exhaustion row is the one entry in this table keyed to an availability impact; every other row is keyed to confidentiality or integrity. The Exchange names two threat-specific controls for it and they anchor in two domains: `DOS INPUT VALIDATION` at [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and `LIMIT RESOURCES` at [[agentic-ai-security-cmm-d5-egress-network|D5]].[^aix-resourceexhaustion-ttr] D4 is primary because validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries the fleet-wide consumption correlation the Exchange names; the nearest graded capability is [[agentic-ai-security-cmm-d7-observability|D7]]'s L5+ cross-agent joint-distribution baseline, which that domain marks research-stage, and no level grades consumption as a signal.
 
 > [!gap] Evasion has no row in this table
 > Evasion is a matrix row that no ASI category anchors, on the same footing as the AI resource exhaustion row added above, and it is absent here. This table also does not state which of the eighteen matrix rows it treats as already anchored, so its count cannot be checked from the page. Resolving both means re-deriving the anchored set row by row.
@@ -131,7 +131,7 @@ Two further rows now carry permalinks from the development-time deep dive: devel
 
 Disclosure of sensitive data in model output is the one row in this table that carries anchors in two other taxonomies without holding an ASI row: the Exchange cites OWASP LLM Top 10 `LLM02:2025` Sensitive Information Disclosure and the MITRE ATLAS LLM Data Leakage technique (`AML.T0057`) for it.[^aix-disclosureoutput] The ASI Top 10 ranks agentic risks reachable through the agent's actions, and disclosure through ordinary model output is a generative-AI risk the agentic list inherits rather than ranks, which is the same boundary the introduction to this section states. Its domain assignment follows the control rather than the asset: `SENSITIVE OUTPUT HANDLING` is a runtime output-side control anchored to D4 in the [[agentic-ai-security-cmm-crosswalk|crosswalk]], with D6 secondary because the augmentation-data supply route is graded there.
 
-The direction reverses for four ASI categories. ASI07, ASI08, ASI09, and ASI10 have no Exchange row: the Exchange covers multi-agent behaviour in prose under the general matrix rather than as threat categories ([permalink](https://owaspai.org/go/agenticaioverview/)). That boundary is specific to the multi-agent categories. The Exchange does publish agentic threat entries where the failure is single-agent — [[agent-escape|agent escape]] carries its own permalink, control set, and worked example, and agent sandboxing carries its own control permalink.[^aix-escape][^aix-sandbox] Agent escape cross-cuts ASI02, ASI03, and ASI05, so it sits outside the spine table above; augmentation data manipulation is anchored inside it at ASI06.[^aix-augmanip] The two artifacts partition the space on different axes, and each reaches material the other leaves out.
+The direction reverses for four ASI categories. ASI07, ASI08, ASI09, and ASI10 have no Exchange row: the Exchange covers multi-agent behaviour in prose under the general matrix rather than as threat categories ([permalink](https://owaspai.org/go/agenticaioverview/)). That boundary is specific to the multi-agent categories. The Exchange does publish agentic threat entries where the failure is single-agent — [[agent-escape|agent escape]] carries its own permalink, control set, and worked example, and agent sandboxing carries its own control permalink.[^aix-escape][^aix-sandbox] Agent escape cross-cuts ASI02, ASI03, and ASI05, so it sits outside the ASI Top 10 table above; augmentation data manipulation is anchored inside it at ASI06.[^aix-augmanip] The two artifacts partition the space on different axes, and each reaches material the other leaves out.
 
 One qualification applies to every use of the matrix on this page. The eighteen matrix rows are the Exchange's sorted threat view rather than its complete threat set. Three such threats sit in the runtime deep dive — direct augmentation data leak, augmentation data manipulation, and agent escape — each with a permalink and a control set and no matrix row.[^aix-augleak][^aix-augmanip][^aix-escape] A fourth sits in the development-time deep dive: source code/configuration leak carries a permalink and a control set at §3.2.3 and appears in no matrix row, which puts the pattern on both sides of the lifecycle key rather than only the runtime side ([permalink](https://owaspai.org/go/devcodeleak/)).[^aix-devcodeleak-ttr] Read a missing matrix row as evidence about the matrix's axes.
 
@@ -196,7 +196,7 @@ For a design-time assessment, start with the structural tests, run [[stride-ai-2
 
 ## See also
 
-- [[threat-modeling-for-ai|Threat Modeling for AI]] — the spine: when to use which taxonomy, plus the worked example
+- [[threat-modeling-for-ai|Threat Modeling for AI]] — the parent page: when to use which taxonomy, plus the worked example
 - [[agentic-ai-threat-classes-2026|Agentic AI Threat Classes]] — the five-class expansion in full
 - [[ai-security-standards-in-q1-2026|AI Security Standards in Q1 2026]] — the framework-coverage gap matrix (standards vs ASI)
 - [[agentic-ai-security-reference-architecture|AAI-S RA]] · [[agentic-ai-security-cmm-2026|CMM]] — the control artifacts each row lands on

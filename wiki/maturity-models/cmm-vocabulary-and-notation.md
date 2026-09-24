@@ -2,7 +2,7 @@
 type: maturity-model-companion
 title: "CMM Vocabulary and Notation"
 created: 2026-09-18
-updated: 2026-09-23
+updated: 2026-09-24
 tags:
   - maturity-models
   - cmm
@@ -41,11 +41,11 @@ Both maturity models score in terms each defines where it uses them. This page i
 | Term | Means |
 |---|---|
 | domain | One practice area, cited `D` and a number |
-| ladder | The levels inside one domain |
-| rung | One level of one ladder. The same thing as a level |
-| L0 | No evidence the L1 baseline exists. Ladders start at L1, scores at 0 |
+| **ladder** | **Retired.** A synonym for a domain's levels, or its level definitions |
+| **rung** | **Retired.** A synonym for level |
+| L0 | No evidence the L1 baseline exists. Level definitions start at L1, scores at 0 |
 | L5+ | The tier above L5: research-stage primitives in production, named contribution to a standard. Every domain in both models carries one |
-| raw score | The rung a domain evidences |
+| raw score | The level a domain evidences |
 | effective score | The lesser of a raw score and the raw scores it depends on ([[agentic-ai-security-cmm-dependency-rules\|the dependency rules]]) |
 | cap | A dependency rule that fired. The report names the domain that set it |
 | **floor** | **Retired.** The lowest domain score, the headline rating until 2026-05-04. No graded criterion uses it; a report dated before 2026-09-19 may still name it |
@@ -62,16 +62,18 @@ Both maturity models score in terms each defines where it uses them. This page i
 | deployment shape | An archetype of AI application. The core table grades nine. Also called an agent archetype |
 | org profile | The SOC model's equivalent axis: solo or small, mid, enterprise |
 | right-sizing | Setting a target per shape or profile instead of per organization |
-| band | A two-rung target, `L3 → L4`: the rung peers reach, then the rung exposure justifies. Never a score. Plainly, a target range |
-| spine | The control set a rung rests on |
+| target range | A two-level target, `L3 → L4`: the level peers reach, then the level exposure justifies. Never a score |
+| **band** | **Retired.** A synonym for target range |
+| core criteria | The control set a level rests on |
+| **spine** | **Retired.** A synonym for core criteria |
 | plane | One of the six control layers of [[agentic-ai-security-reference-architecture\|the Reference Architecture]]: Identity, Control, Runtime, Egress, Data, Observability, pairing with D2 through D7 |
 
 ## The arrow
 
 It carries three relations, and one page says which it means.
 
-- **A band**, in a right-sizing table. Its commonest use.
-- **Evidenced against needed**, in [[google-cloud-agentic-security-profile|the Google Cloud profile]], whose column head reads `Evidenceable → needed`. [[azure-rag-chatbot-security-profile|The Azure profile]] heads the same column `Realistic target` and means the band.
+- **A target range**, in a right-sizing table. Its commonest use.
+- **Evidenced against needed**, in [[google-cloud-agentic-security-profile|the Google Cloud profile]], whose column head reads `Evidenceable → needed`. [[azure-rag-chatbot-security-profile|The Azure profile]] heads the same column `Realistic target` and means the target range.
 - **A verb**, in prose. Retired vault-wide, surviving in the fixed names `L4→L5` and `D2→D5`.
 
 > [!contradiction] The arrow's relation is undeclared
