@@ -3,7 +3,7 @@ type: entity
 title: "Anthropic Sandbox Runtime"
 address: c-000245
 created: 2026-07-30
-updated: 2026-09-17
+updated: 2026-09-24
 tags:
   - entities
   - product
@@ -22,6 +22,7 @@ maintainer: "[[anthropic|Anthropic]]"
 related:
   - "[[agent-sandboxing|Agent Sandboxing]]"
   - "[[securing-agentic-coding|Securing Agentic Coding]]"
+  - "[[claude-code-control-sheet|Claude Code Control Sheet]]"
   - "[[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]"
   - "[[anthropic|Anthropic]]"
   - "[[gvisor|gVisor]]"
@@ -32,6 +33,10 @@ related:
 sources:
   - https://code.claude.com/docs/en/sandbox-environments
   - https://github.com/anthropic-experimental/sandbox-runtime
+verified: 2026-09-24
+verified_against: []
+verified_findings: 0
+verified_note: "Diff-scoped 2026-09-24: Placement closing sentence (item 16) checked against the sheet's D4 section and sandbox-environments.md l.76-84, built-in tools added; the preceding sentence's 'unmediated' narrowed to no OS boundary. Rest of page not re-read."
 ---
 
 # Anthropic Sandbox Runtime
@@ -60,4 +65,4 @@ Runtime plane of the [[agentic-ai-security-reference-architecture|AAI-S RA]]. It
 
 D4 evidence has to name the covered surface, and naming this package does not do that. [[anti-patterns-and-failure-modes|RA and CMM Anti-Patterns and Failure Modes]] entry B6 grades "sandboxed" recorded as a state as an anti-pattern, so the assessable artifact records which paths, destinations, and identities the boundary admits. The same entry sets whole-process isolation — this runtime, a container, or a VM — as the requirement for unattended runs, and grades per-command isolation as insufficient there.
 
-The scope argument for it is made in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]: the built-in Bash sandbox constrains Bash and its children, while in-process file tools, MCP servers, and hooks run on the host. Wherever a deployment shape suppresses the approval prompt, that residual surface is unmediated, which is what moves this package from a convenience to the load-bearing runtime control.
+The scope argument for it is made in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]: the built-in Bash sandbox constrains Bash and its children, while in-process file tools, MCP servers, and hooks run on the host. Wherever a deployment shape suppresses the approval prompt, that residual surface runs with no OS boundary around it, which is what moves this package from a convenience to the load-bearing runtime control. [[claude-code-control-sheet|Claude Code Control Sheet]] cites it in its D4 section as the whole-process boundary around the built-in tools, MCP servers and command hooks that the per-command sandbox leaves outside.

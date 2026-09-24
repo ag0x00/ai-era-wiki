@@ -2,7 +2,7 @@
 type: incident
 title: "GitSpawn Coding-Agent Git-Config RCE"
 created: 2026-09-17
-updated: 2026-09-17
+updated: 2026-09-24
 tags:
   - incidents
   - agentic-coding
@@ -47,18 +47,18 @@ sources:
   - "https://github.com/aaif-goose/goose/security/advisories/GHSA-r5pp-p5r8-466r"
   - "https://www.cve.org/CVERecord?id=CVE-2026-71963"
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-verified: 2026-09-17
+verified: 2026-09-24
 verified_against:
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
 verified_findings: 0
-verified_note: "All claims re-read against the Manifold post; 6 findings fixed on the page (attribution, arithmetic, hedges). Goose GHSA and CVE records not opened."
+verified_note: "Diff-scoped 2026-09-24: body links to the practice page and thesis added at the ordering paragraph (item 9); l.61 timing scoped to some agents and l.89 re-checked against the Manifold raw (l.24, l.75, l.99, l.135); 'ladder' changed to 'levels'. The 2026-09-17 whole-page read left nothing open."
 ---
 
 # GitSpawn Coding-Agent Git-Config RCE
 
 ## Summary
 
-On 2026-09-01 [[manifold-security|Manifold Security]] published eight findings across seven CLI coding agents under the name **GitSpawn**.[^manifold] Each agent runs `git` as a background subprocess to work out what repository it has been opened in, and each passes the repository's own `.git/config` through to that subprocess unfiltered. Several git configuration settings name a program that git then executes, so the repository chooses what runs. The command runs as the developer, on the host, outside the agent's sandbox, and before the permission model or the workspace-trust prompt is consulted.[^manifold]
+On 2026-09-01 [[manifold-security|Manifold Security]] published eight findings across seven CLI coding agents under the name **GitSpawn**.[^manifold] Each agent runs `git` as a background subprocess to work out what repository it has been opened in, and each passes the repository's own `.git/config` through to that subprocess unfiltered. Several git configuration settings name a program that git then executes, so the repository chooses what runs. The command runs as the developer, on the host, outside the agent's sandbox and unseen by its permission model, and on some agents before the workspace-trust prompt is accepted or the user has authenticated.[^manifold]
 
 The affected products are [[claude-code|Claude Code]] (two separate findings), Goose, Qwen Code, Grok Build, [[hermes-agent|Hermes]], OpenAI Codex and [[cursor-ide|Cursor]]. Manifold states it found the same pattern in further agents it does not name. Four of the eight findings were unpatched at publication, each re-confirmed against a current release beforehand. Two carry CVE identifiers: CVE-2026-72718 against Goose, scored [7.0 by the maintainers](https://github.com/aaif-goose/goose/security/advisories/GHSA-r5pp-p5r8-466r),[^goose] and [CVE-2026-71963](https://www.cve.org/CVERecord?id=CVE-2026-71963) against Hermes, assigned by [[vulncheck|VulnCheck]] as an independent CVE Numbering Authority after the vendor failed to triage the report.[^manifold]
 
@@ -86,7 +86,7 @@ Manifold states that git does not carry the payload: cloning a hostile URL runs 
 
 ### The subprocess precedes every control the agent has
 
-The git call belongs to the agent's own code rather than to a tool the model asked for, so it runs outside the sandbox and raises no approval prompt.[^manifold] Manifold's Claude Code recording shows the payload dropping a marker file while the workspace-trust prompt is still on screen waiting to be accepted, and its Qwen Code case executes before the user has authenticated.[^manifold] The permission model, the sandbox and the trust prompt are all downstream of a subprocess that has already run. This is the ordering property the [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]] established for a harness configuration directory, reached here through an artifact the agent never reads and never authored.
+The git call belongs to the agent's own code rather than to a tool the model asked for, so it runs outside the sandbox and raises no approval prompt.[^manifold] Manifold's Claude Code recording shows the payload dropping a marker file while the workspace-trust prompt is still on screen waiting to be accepted, and its Qwen Code case executes before the user has authenticated.[^manifold] The permission model, the sandbox and the trust prompt are all downstream of a subprocess that has already run. This is the ordering property the [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]] established for a harness configuration directory, reached here through an artifact the agent never reads and never authored. [[securing-agentic-coding|Securing Agentic Coding]] cites both cases for the rule that a sandbox constrains only what runs after it initializes, and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] cites them in its open question on when isolation starts relative to configuration loading.
 
 ## Findings by agent
 
@@ -130,7 +130,7 @@ Manifold states it kept the published detail deliberately minimal: a sink, a tri
 
 ## Defensive Lessons
 
-**A subprocess the harness spawns for itself sits outside every control the harness advertises.** The sandbox, the permission prompt and the workspace-trust gate all govern actions the model asks for, and context gathering is not one of those. The question to ask of a coding agent is which processes it starts before its first model call, and under what configuration; [[agent-sandboxing|Agent Sandboxing]] carries that limit and [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4]] the runtime-control ladder it sits under.
+**A subprocess the harness spawns for itself sits outside every control the harness advertises.** The sandbox, the permission prompt and the workspace-trust gate all govern actions the model asks for, and context gathering is not one of those. The question to ask of a coding agent is which processes it starts before its first model call, and under what configuration; [[agent-sandboxing|Agent Sandboxing]] carries that limit and [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4]] the runtime-control levels it sits under.
 
 **Executable configuration is not confined to the harness config tree.** [[harness-config-as-supply-chain-artifact|Harness Config as Supply-Chain Artifact]] was written around directories the harness itself reads, `.claude/` and its analogues. `.git/config` is read by git, not by the agent, and the agent's only contribution is to hand it to a program that honours it. Any file the agent passes to a third-party tool carries that tool's configuration semantics, and the agent inherits them.
 

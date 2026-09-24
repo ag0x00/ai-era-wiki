@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-24
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -14,10 +14,10 @@ scope_axis:
 permalink: "/"
 aliases:
   - index
-verified: 2026-09-18
+verified: 2026-09-24
 verified_against: []
-verified_findings: 0
-verified_note: "Read against the measurement protocol enum and the live shape tables; the handbook half of the gap is closed for both variants and the line now says so."
+verified_findings: 1
+verified_note: "Diff-scoped: coding-shape section and reading-list entry, read against Adversa, the Microsoft blog with figures, Novee and a search excerpt of the Gartner release (page blocked); three fixed. Open: Novee post is dated 2026-04-29, footnote says 2026-04-30 (vault-wide)."
 ---
 ## About
 
@@ -84,7 +84,13 @@ The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]
 
 ### Securing generative code today needs controls across multiple deployment shapes
 
-Generative coding runs in five deployment shapes — interactive local, sandboxed autonomous local, delegated cloud, CI-runner, and fleet — and each shifts where a human is positioned to see an action before it executes, so no single control point covers all five. Three 2026 findings show what happens without shape-specific controls: [[guardfall-shell-injection-audit|GuardFall]] drove ten of eleven surveyed open-source coding agents into arbitrary shell execution through repository content; [[claude-code-github-action-credential-exposure|Microsoft Defender]] took a model API key **out of a CI workflow** through a pull-request comment; and the [[gemini-cli-workspace-trust-rce|Gemini CLI advisory]] (CVSS 10.0) ran commands from an attacker-supplied configuration directory before the harness sandbox initialized — ahead of every runtime control rather than past one.[^gemini] Gartner forecasts more than 65% of agentic-coding teams will treat the IDE as optional by 2027, removing the reviewing developer most control designs assume.[^ide] See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] and [[securing-agentic-coding|Securing Agentic Coding]].
+Generative coding runs in five deployment shapes: interactive local, sandboxed autonomous local, delegated cloud, CI-runner and fleet. Each shape moves the point where a human can see an action before it runs, so no single control point covers all five. Three 2026 findings show the cost of a missing shape-specific control:
+
+- [[guardfall-shell-injection-audit|GuardFall Shell-Injection Audit]] drove ten of eleven surveyed open-source coding agents into arbitrary shell execution through injected content the agents read, such as a README, a Makefile or an MCP server's response ([Adversa AI](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/)).
+- Microsoft Defender researchers took a model API key **out of a CI workflow** through a prompt injection in issue or pull-request content ([Microsoft Security](https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/)), as [[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]] records.
+- [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]] (CVSS 10.0) let headless Gemini CLI run commands from an attacker-supplied configuration directory before the harness sandbox started, ahead of every runtime control.[^gemini]
+
+Gartner forecasts that more than 65% of agentic-coding teams will treat the IDE as optional by 2027.[^ide] If the forecast holds, most teams lose the reviewing developer that most control designs assume. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] defines the shapes, [[securing-agentic-coding|Securing Agentic Coding]] catalogs their controls, and [[claude-code-control-sheet|Claude Code Control Sheet]] grades one harness against the maturity model.
 
 ### Industrialized discovery has collapsed time-to-exploit, on the strength of the harness over the model
 
@@ -117,6 +123,7 @@ Agent inventory is forming as a product category ahead of the schedule the field
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: the testing thesis covering probe libraries, orchestration, and continuous adversarial evaluation.
 - [[microsoft-sdl-evolving-security-practices|Microsoft SDL for AI]]: the first major-vendor secure-SDLC framework with an explicit AI extension.
 - [[securing-agentic-coding|Securing Agentic Coding]]: the plane-by-plane control catalog for coding agents, graded first-party, FOSS, or COTS.
+- [[claude-code-control-sheet|Claude Code Control Sheet]]: Claude Code's configurable controls mapped to maturity-model criteria in all nine domains, with the evidence an assessor collects.
 - [[agent-sandbox-isolation-landscape|Agent Sandbox Isolation Landscape]]: surveys sandbox and isolation technology (gVisor, Firecracker, GKE Agent Sandbox) along two axes — what supplies the isolation boundary, and whether it ships as an open primitive or a vendor-bound managed service.
 - [[mcp-exposure-measurements|MCP Exposure Measurements]]: separates four circulating MCP-exposure statistics that differ by a factor of twenty because each counts a different population by a different method.
 

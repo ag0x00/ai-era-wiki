@@ -4,7 +4,7 @@ entity_type: product
 title: "Gemini CLI"
 address: c-000291
 created: 2026-08-16
-updated: 2026-09-17
+updated: 2026-09-24
 tags:
   - products
   - gemini-cli
@@ -33,6 +33,10 @@ sources:
   - "https://github.com/google-gemini/gemini-cli"
   - "https://github.com/google-github-actions/run-gemini-cli"
   - "https://github.com/advisories/GHSA-wpqr-6v78-jr5g"
+verified: 2026-09-24
+verified_against: []
+verified_findings: 0
+verified_note: "Whole page read 2026-09-24; GHSA page blocked by session GitHub scoping, so the CI-runner facts were read against Novee's write-up and the incident page; Claude Code's hooks reference confirms no enforcement-grade model hook."
 ---
 
 # Gemini CLI
@@ -41,13 +45,13 @@ sources:
 
 Google's terminal-resident coding agent, published on npm as `@google/gemini-cli`. Its CI wrapper, the `google-github-actions/run-gemini-cli` Action, carries the wiki's only maximum-severity coding-agent advisory.
 
-Three surfaces matter here.
+Three roles matter here.
 
 **As a policy-enforcement target.** [[sondera|Sondera]]'s [[hooking-coding-agents-with-cedar-talk|Cedar hook harness]] enumerates Gemini CLI as one of three intercepted coding-agent surfaces. It is the only one of the three offering model-level hooks — before and after the model, permitting individual tokens to be streamed — where [[claude-code|Claude Code]] exposes none and [[cursor-ide|Cursor]] intercepts at the tool and shell layer instead. The multi-turn information-flow-control demo in that talk runs on Gemini CLI.
 
 **As a configuration tree.** The harness reads a workspace-local `.gemini/` directory for settings and environment, and a user-level `~/.gemini/settings.json` carrying the fine-grained tool allowlist. Both are instances of [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]], and the workspace-local one is where [[gemini-cli-workspace-trust-rce|GHSA-wpqr-6v78-jr5g]] landed.
 
-**As a CI-runner agent.** `run-gemini-cli` places the harness in the [[generative-coding-deployment-shape-2026|CI-runner shape]] — event-triggered, no human positioned to see an action before it executes. Two autonomy controls define its posture there: workspace trust, which since 0.39.1 must be granted explicitly through `GEMINI_TRUST_WORKSPACE` rather than inferred in headless mode, and `--yolo`, which auto-approves tool calls and, before the same release, also suppressed the tool allowlist.
+**As a CI-runner agent.** `run-gemini-cli` places the harness in the CI-runner shape of [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]: event-triggered, with no human positioned to see an action before it executes. Two autonomy controls define its posture there: workspace trust, which since 0.39.1 must be granted explicitly through `GEMINI_TRUST_WORKSPACE` rather than inferred in headless mode, and `--yolo`, which auto-approves tool calls and, before the same release, also suppressed the tool allowlist.
 
 ## Security Record
 

@@ -2,7 +2,7 @@
 type: talk
 title: "Hooking Coding Agents with Cedar"
 created: 2026-05-03
-updated: 2026-08-22
+updated: 2026-09-24
 tags:
   - papers
   - talks
@@ -57,6 +57,12 @@ aliases:
   - papers/hooking-coding-agents-with-cedar-maisel-talk
   - hooking-coding-agents-with-cedar-maisel-talk
 
+verified: 2026-09-24
+verified_against:
+  - ".raw/talks/2026-03-03_Matt-Maisel_Hooking-Coding-Agents-with-Cedar_slides.pdf"
+  - ".raw/talks/2026-03-03_Matt-Maisel_Hooking-Coding-Agents-with-Cedar_transcript.md"
+verified_findings: 0
+verified_note: "Diff-scoped 2026-09-24: l.268 shape rename (item 3); [!stale] spelling callout converted to [^sondera-spelling], checked against transcript l.14 and l.50, the deck's link annotations and sondera.ai; kept [!gap] checked against transcript l.86; D3 and D4 coordinates linked. Rest of page not re-read."
 ---
 
 # Hooking Coding Agents with Cedar — A Deterministic Reference Monitor for Coding Agent Actions
@@ -67,10 +73,7 @@ aliases:
 
 ## Speaker and context
 
-[[matt-maisel|Matt Maisel]] is CTO and co-founder of [[sondera|Sondera]], which builds "trustworthy agent partners." He has 15 years at the intersection of machine learning, security, and software engineering. This is a **lightning talk** — the talk completes the full build of a hook-based harness within 10 minutes.
-
-> [!stale] Earlier name confusion (corrected 2026-05-04)
-> Initial ingest used the auto-generated transcript spelling "Sendera." The slide deck and the company's actual homepage at [sondera.ai](https://www.sondera.ai) confirm the spelling is **Sondera**. All references corrected. Lesson: trust slides over transcripts for proper-noun spelling.
+[[matt-maisel|Matt Maisel]] is CTO and co-founder of [[sondera|Sondera]],[^sondera-spelling] which builds "trustworthy agent partners." He has 15 years at the intersection of machine learning, security, and software engineering. This is a **lightning talk** — the talk completes the full build of a hook-based harness within 10 minutes.
 
 ## The trajectory event model
 
@@ -258,14 +261,14 @@ The key structural difference: Niyikiza's system needs a **delegation chain** �
 | [[pdp-pep-for-non-tool-mediated-actions\|PDP/PEP for non-tool-mediated agent actions]] | Partially closes the gap from the hook-based angle — Cedar harness is exactly the pattern the gap page was waiting for |
 | [[lethal-trifecta\|Lethal Trifecta]] | Adds hook-based Cedar enforcement as containment lever — the trajectory event model gives the most granular structural mapping of the trifecta yet |
 | [[agent-observability\|Agent Observability]] | Trajectory event model + entity/trajectory store are a concrete observability primitive for coding agents |
-| [[agentic-ai-security-cmm-2026\|Agentic AI Security CMM 2026]] | D3 L3 evidence: Cedar policy repo via the harness; D4 L3 evidence: behavioral control via IFC taint tracking |
+| [[agentic-ai-security-cmm-2026\|Agentic AI Security CMM 2026]] | [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] L3 evidence: Cedar policy repo via the harness; [[agentic-ai-security-cmm-d4-runtime-guardrails\|D4]] L3 evidence: behavioral control via IFC taint tracking |
 | [[unprompted-conference-march-2026\|Unprompted Conference catalog]] | Row updated to "ingested" with link to this page |
 
 The harness also carries a structural claim beyond its own evidence rows. A hook enforces a policy decision, so a hook firing where no decision exists has no effect, and the [[agentic-ai-security-cmm-dependency-rules|CMM: Effective-Score Dependency Rules]] cite this talk as the directional rationale for adopted rule DR-003: a D4 runtime-guardrail score is capped by the raw D3 control score.
 
 ## Precondition: Cedar must see the canonical action
 
-The harness's soundness rests on a precondition the talk does not foreground: the hook must hand Cedar the action in the form the executor will run, not the form the model emitted. Where the two differ, through shell expansion, symlink resolution, or argument rewriting behind a tool name, the policy decision is about a different action than the one performed. [[guardfall-shell-injection-audit|GuardFall]] later demonstrated this failing in ten of eleven surveyed coding agents; see [[guard-canonicalization-gap|Guard Canonicalization Gap]]. The harness still sits in the control plane of [[securing-agentic-coding|Securing Agentic Coding]] and remains the reference design for per-action enforcement in [[generative-coding-deployment-shape-2026|the interactive and unattended local shapes]].
+The harness's soundness rests on a precondition the talk does not foreground: the hook must hand Cedar the action in the form the executor will run, not the form the model emitted. Where the two differ, through shell expansion, symlink resolution, or argument rewriting behind a tool name, the policy decision is about a different action than the one performed. [[guardfall-shell-injection-audit|GuardFall]] later demonstrated this failing in ten of eleven surveyed coding agents; see [[guard-canonicalization-gap|Guard Canonicalization Gap]]. The harness still sits in the control plane of [[securing-agentic-coding|Securing Agentic Coding]] and remains the reference design for per-action enforcement in the interactive local and sandboxed autonomous local shapes of [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]].
 
 ## Open questions
 
@@ -283,3 +286,7 @@ The harness's soundness rests on a precondition the talk does not foreground: th
 - [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta — Bullen, Stripe]] — egress/tool-annotation angle on containment
 - [[lethal-trifecta|Lethal Trifecta]] · [[oversight-layer|Oversight Layer]] · [[pdp-pep-for-non-tool-mediated-actions|PDP/PEP gap]]
 - [[unprompted-conference-march-2026|Unprompted Conference — March 3–4, 2026]]
+
+## Notes
+
+[^sondera-spelling]: The auto-generated transcript, `.raw/talks/2026-03-03_Matt-Maisel_Hooking-Coding-Agents-with-Cedar_transcript.md`, spells the company "Sendera". The slide deck of 2026-03-03 links the harness code at [GitHub — sondera-ai/sondera-coding-agent-hooks](https://github.com/sondera-ai/sondera-coding-agent-hooks), and the company's own site, sondera.ai, gives the name as Sondera.

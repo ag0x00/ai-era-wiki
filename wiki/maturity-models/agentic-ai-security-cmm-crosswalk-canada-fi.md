@@ -26,9 +26,14 @@ related:
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
   - "[[cmm-known-limitations]]"
   - "[[securing-agentic-coding]]"
+  - "[[google-cloud-agentic-security-profile]]"
 sources:
   - "[[osfi-b-13]]"
   - "[[osfi-e-23-2027]]"
+verified: 2026-09-24
+verified_against: []
+verified_findings: 0
+verified_note: "Diff-scoped read of the residency bullets and the R25 pointer against the Model Armor region and residency pages, the profile and the review; filter count and attack attribution fixed; none open."
 ---
 
 # Agentic AI Security CMM — Canadian Regulated-Finance Crosswalk
@@ -80,11 +85,17 @@ This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]
 - **Consumer-facing AI is FCAC territory.** Fair treatment, non-deceptive behaviour, and accessible complaint handling are market-conduct expectations (D1/D9).
 - **Do not adopt US frameworks as Canadian requirements.** FFIEC/GLBA/NIST are not Canadian mandates; cite them only if the entity is *also* US-regulated. CPCSC applies only to DND suppliers, not to FRFIs as such.
 - **AIDA is not law.** Plan against OSFI, OPC, and provincial expectations, not the lapsed bill.
-- **Data residency on Google's stack is a B-10 vendor fact, and it resolves differently for each deployment shape.** B-10 governs third-party arrangements and expects the institution to know where a provider processes its data; it names no jurisdiction, so a processing location outside Canada is a fact the third-party file records and justifies. No single Canadian region carries both Gemini model serving and Model Armor screening, so a Canadian-resident deployment spans Montréal and Toronto by construction, and the guardrail trades filter coverage for residency in Toronto. See [[#Google Cloud data residency]] below for the region-by-region detail and the coding harness's Canadian position.
+- **Data residency on Google's stack is a B-10 vendor fact, and it resolves differently for each deployment shape.** B-10 governs third-party arrangements and expects the institution to know where a provider processes its data. It names no jurisdiction, so a processing location outside Canada is a fact the third-party file records and justifies. [[#Google Cloud data residency]] below states the position for each shape.
 
 ## Google Cloud data residency
 
-Google Cloud operates two Canadian regions, Montréal `northamerica-northeast1` and Toronto `northamerica-northeast2`.[^gcpregions] The whole-tenant assistant cannot meet a Canadian requirement: Workspace data regions cover Gemini prompts and responses both at rest and during processing, and the locations they offer are the United States or Europe.[^wsdatareg] A Gemini deployment on Google Cloud can meet a Canadian requirement, across both regions and on part of the model line: seven of the twenty-seven Google-model rows on the Agent Platform residency table carry a Montréal commitment, those for Gemini 3.5 Flash, Gemini 2.5 Flash at 128k and 1M, Gemini 2.5 Pro at 64k and 1M, `text-embedding-004` and `text-multilingual-embedding-002`. The table holds no 3.x flagship above 3.5 Flash and no tuning row, and the deployments-and-endpoints page lists Montréal under Americas without listing Toronto, so a Canadian model call resolves to Montréal.[^gcpmodels] Model Armor screens in Toronto and not in Montréal, at limited feature support: a Toronto template with data-residency compliance enabled keeps the Responsible AI, Sensitive Data Protection and prompt-injection-and-jailbreak filters and drops malicious-URL detection, multi-language detection, CSAM screening, image support and antivirus scanning, while floor settings restore every filter and stop enforcing residency for data in use and in transit. At-rest residency in Toronto holds under both.[^maregion] No single Canadian region therefore carries both the model and the guardrail, so a Canadian-resident deployment runs the agent runtime and Agent Gateway in Toronto beside Model Armor and calls a model served from Montréal.[^agentloc] The coding harness has no Canadian option to configure: partner models sit on a separate residency table with no Canada column, so no Anthropic model carries a Canadian ML-processing commitment, and `us-east5` is Claude Code's documented default region, as [[securing-agentic-coding|Securing Agentic Coding]] records.[^gcpmodels][^ccvertex]
+Google Cloud operates two Canadian regions, Montréal `northamerica-northeast1` and Toronto `northamerica-northeast2`,[^gcpregions] and the residency position differs by deployment shape:
+
+- **The whole-tenant assistant cannot meet a Canadian requirement.** Workspace data regions cover Gemini prompts and responses both at rest and during processing, and the locations they offer are the United States or Europe.[^wsdatareg]
+- **A Gemini deployment on Google Cloud can, across both regions and on part of the model line.** Seven of the twenty-seven Google-model rows on the Agent Platform residency table carry a Montréal commitment, and a Canadian model call resolves to Montréal.[^gcpmodels] Model Armor screens in Toronto and not in Montréal, so a Canadian-resident deployment runs the agent runtime and Agent Gateway in Toronto beside Model Armor and calls a model served from Montréal.[^maregion][^agentloc] A Toronto template with data-residency compliance enabled drops the malicious-URL filter and four other features, and floor settings restore all five and stop enforcing residency for data in use and in transit; at-rest residency in Toronto holds under both.[^maregion]
+- **The coding harness has no Canadian option to configure.** Partner models sit on a separate residency table with no Canada column, so no Anthropic model carries a Canadian ML-processing commitment, and `us-east5` is Claude Code's documented default region, as [[securing-agentic-coding|Securing Agentic Coding]] records.[^gcpmodels][^ccvertex]
+
+[[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] carries the region-by-region detail, the guardrail trade over the exfiltration route that recorded attacks on in-suite assistants used, and the Assured Workloads coverage.
 
 ## Open questions and watch items
 
@@ -92,7 +103,7 @@ Google Cloud operates two Canadian regions, Montréal `northamerica-northeast1` 
 - FIFAI II's AGILE framework and any successor OSFI guidance may add agentic-AI expectations. Watch for an OSFI AI-specific guideline or letter.
 - The OPC's PIPEDA-reform proposals (right to explanation, algorithmic impact assessments) lapsed with C-27. A future privacy reform could reintroduce them.
 - Provincial privacy regimes beyond Quebec (for example, forthcoming Alberta and BC updates) may add ADM obligations.
-- B-13's in-force date is unconfirmed against the sources this crosswalk cites; see [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] Part 3 and [[cmm-known-limitations|CMM Known Limitations]] item 11.
+- B-13's in-force date is unconfirmed against the sources this crosswalk cites; see recommendation 25 of [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] and item 11 of [[cmm-known-limitations|CMM Known Limitations (current state)]].
 - B-10's effective date carries the same gap: the cited guideline page states a publication date and no effective or in-force date, so 2024-05-01 above is unconfirmed against the source and held as a watch item.
 - Two facts behind the residency position above stay unresolved at source. Google gates Workspace data-regions coverage *during processing* by Workspace edition and points at a comparison table this crosswalk has not read, so which editions carry the processing half of that coverage is unconfirmed.[^wsdatareg] Model Armor is in scope for the Canada Data Boundary and Canada Data Boundary and Support control packages and absent from Data Boundary for Canada Protected B, which leaves open whether a Protected B workload runs an agent with no guardrail plane or places that plane outside the boundary.[^awcanada] The residency position names B-10 as the instrument that examines this evidence and asserts no date for it, since B-10's own effective date stays unconfirmed against its source.
 

@@ -2,7 +2,7 @@
 type: concept
 title: "Indirect Prompt Injection"
 created: 2026-04-30
-updated: 2026-08-25
+updated: 2026-09-24
 origin: aggregated
 tags:
   - concepts
@@ -103,7 +103,7 @@ The transformer architecture sees a single token sequence. Trust labels in the s
 
 Where the payload enters the context window matters as much as what it says. See [[three-retrieval-paths|Three Retrieval Paths for Injection Payloads]] for the full breakdown:
 
-1. **Vector-embedded RAG** (hardest path for attackers: payload must survive chunking and embedding, but research shows instructions retain semantic fidelity; ~5 crafted documents in millions can achieve 90% success).
+1. **Vector-embedded RAG** (hardest path for attackers: payload must survive chunking and embedding, but research shows instructions retain semantic fidelity; ~5 crafted documents in millions can achieve 90% success).[^poisonedrag]
 2. **Full-text / direct retrieval** (biggest practical risk: entire document hits the context window intact: web pages, emails, PDFs, Google Docs, MCP tool responses). How [[echoleak-copilot-zero-click|EchoLeak]] and [[geminijack-gemini-enterprise-injection|GeminiJack]] operated.
 3. **Metadata and hidden fields** (sneakiest: payload hides where humans don't look but agents parse: PDF metadata, HTML comments, zero-width Unicode, image alt text, MCP tool descriptions).
 
@@ -133,7 +133,7 @@ Each row above names a control visible in configuration; its operation is not. T
 - **[[unit-42-prompt-injection-observations|Unit 42 production telemetry]]**: first in-the-wild measurement.
 - The [[month-of-ai-bugs|August 2025 "Month of AI Bugs"]] series: dozens of disclosures, the majority indirect.
 
-Coding agents widened the delivery surface in mid-2026. [[guardfall-shell-injection-audit|GuardFall]] carried payloads in injected READMEs, compromised Makefiles, and malicious MCP servers — content that arrives with any repository the agent is pointed at — and the [[claude-code-github-action-credential-exposure|Claude Code GitHub Action exposure]] used an HTML comment in a pull-request body, invisible to a human reviewer of the rendered page. In both, the operator never typed the payload and the repository itself was the injection channel.
+Coding agents widened the delivery surface in mid-2026. [[guardfall-shell-injection-audit|GuardFall]] carried payloads in injected READMEs, compromised Makefiles, and malicious MCP servers — content that arrives with any repository the agent is pointed at — and the [[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]] carried its injection in issue or pull-request content, the kind of untrusted text an issue-triggered workflow reads. In both, the operator never typed the payload and the repository itself was the injection channel.
 
 ## Mapping to Frameworks
 
@@ -159,9 +159,11 @@ Coding agents widened the delivery surface in mid-2026. [[guardfall-shell-inject
 [^aix-ipi]: [OWASP AI Exchange — Indirect prompt injection](https://owaspai.org/go/indirectpromptinjection/), retrieved 2026-08-18. Indirect injection as the typically dominant threat class where a system retrieves external content, invokes tools, or shares memory across sessions; the comparison to remote code execution.
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Stored injection as a subclass of indirect injection; multi-agent propagation to a higher-privileged agent; the statement that prompt injection is not solvable at the model layer alone.
 [^aix-testing]: [OWASP AI Exchange — Testing against Prompt injection](https://owaspai.org/go/testingpromptinjection/), retrieved 2026-08-19. The requirement to route attack inputs through the same insertion mechanism untrusted data uses, the dedicated-testing-API note, and the "Ignore previous instructions" tactic named for indirect payloads.
+[^poisonedrag]: [Zou et al., "PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models", arXiv:2402.07867](https://arxiv.org/abs/2402.07867), retrieved 2026-09-24. The abstract: "PoisonedRAG could achieve a 90% attack success rate when injecting five malicious texts for each target question into a knowledge database with millions of texts."
 
 <!-- sources:auto -->
 ## Sources
 
 - [billdx.github.io](https://billdx.github.io/Presentations/Securing%20Your%20Agents/securing-ai-agentic-apps.html)
+- [owaspai.org](https://owaspai.org/docs/5_testing)
 <!-- /sources -->

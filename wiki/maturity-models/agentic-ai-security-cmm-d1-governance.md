@@ -46,10 +46,10 @@ sources:
   - "[[aiuc-1-critical-evaluation]]"
   - "[[iso-iec-42001]]"
   - "[[nist-ai-rmf]]"
-verified: 2026-09-23
+verified: 2026-09-24
 verified_against: []
 verified_findings: 0
-verified_note: "Verify of the D1-L3 harness-configuration criterion against live Claude Code settings and managed-settings docs (fetched 2026-09-23) and the coding page. Fixed: criterion now requires managed-only locks, since list keys merge local entries, and names the local-admin restore; 'rung' corrected to criterion."
+verified_note: "Diff-scoped: the one sentence added to L3 evidence by deployment shape, checked against the control sheet's D1 table and D1's L3 detail; no criterion touched."
 ---
 
 # Agentic AI Security CMM — D1 Governance & Accountability (Deep Dive)
@@ -170,7 +170,7 @@ Most enterprises land at **L4 with selective L5** in the domains tied to their e
 - **In-suite productivity assistant.** The per-agent-type decision-rights criterion resolves against the single assistant type the suite deploys, whatever the size of the agent population.
 - **Desktop-agent productivity assistant.** The shadow-agent criterion needs an endpoint instrument, because an unsanctioned install is discovered at the endpoint rather than in a suite console.
 
-**Agentic coding adds a governance object, the harness configuration tree, and the [[#L3 detail|L3 harness-configuration criterion]] grades it.** D1 asks who is accountable for agent behavior on what auditable record, and for agentic coding that record includes the hooks, MCP manifests, subagents, skills and instruction files that compose runtime behavior from third-party parts, held at per-developer discretion rather than under organizational policy in most deployments. The criterion therefore asks for managed policy that local configuration cannot override, with every list key the harness can lock locked against local additions, plus configuration held under review. Adoption outruns the inventory governance assumes, because peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. [[securing-agentic-coding|Securing Agentic Coding]] carries the controls for this shape. This criterion is the one D1 criterion whose evidence that page supplies, and item 10 of [[cmm-known-limitations|CMM Known Limitations]] records the rest of the D1 levels as having no row there to cite.
+**Agentic coding adds a governance object, the harness configuration tree, and the [[#L3 detail|L3 harness-configuration criterion]] grades it.** D1 asks who is accountable for agent behavior on what auditable record, and for agentic coding that record includes the hooks, MCP manifests, subagents, skills and instruction files that compose runtime behavior from third-party parts, held at per-developer discretion rather than under organizational policy in most deployments. The criterion therefore asks for managed policy that local configuration cannot override, with every list key the harness can lock locked against local additions, plus configuration held under review. Adoption outruns the inventory governance assumes, because peer proximity predicts uptake at odds ratios no enrollment process matches ([[microsoft-cli-coding-agent-adoption-study|Microsoft, 2026]]), which makes [[shadow-automation|shadow automation]] the expected default state rather than a failure. [[securing-agentic-coding|Securing Agentic Coding]] carries the controls for this shape. This criterion is the one D1 criterion whose evidence that page supplies, and item 10 of [[cmm-known-limitations|CMM Known Limitations]] records the rest of the D1 levels as having no row there to cite. [[claude-code-control-sheet|Claude Code Control Sheet]] maps this criterion and three other L3 criteria against one harness, two of them to controls outside it.
 
 ## Cost model
 

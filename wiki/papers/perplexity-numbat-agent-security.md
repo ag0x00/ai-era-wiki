@@ -3,7 +3,7 @@ type: paper
 title: "Numbat Agent Security Suite"
 address: c-000249
 created: 2026-07-31
-updated: 2026-09-17
+updated: 2026-09-24
 tags:
   - papers
   - tool
@@ -45,6 +45,11 @@ related:
 sources:
   - "https://research.perplexity.ai/articles/securing-agents-across-perplexity%E2%80%99s-client-endpoints-with-numbat"
   - ".raw/articles/perplexity-numbat-agent-security-suite-2026-07-31.md"
+verified: 2026-09-24
+verified_against:
+  - ".raw/articles/perplexity-numbat-agent-security-suite-2026-07-31.md"
+verified_findings: 0
+verified_note: "Diff-scoped: the unlinked 'Codex' under Fleet deployment, checked against the raw article's 'client-side coding agents including Claude Code, Codex, OpenCode, and Pi'."
 ---
 
 # Numbat Agent Security Suite
@@ -94,7 +99,7 @@ Two built-ins are reproduced in simplified form. `privilege.sudoers_tamper` fire
 
 ## Fleet deployment
 
-Perplexity runs Numbat across thousands of its own endpoints to secure engineers' use of [[claude-code|Claude Code]], [[codex-security|Codex]], OpenCode, and Pi, distributed through MDM as with Bumblebee, the company's open-source supply-chain exposure scanner. Each installation records locally and sends structured telemetry to central security systems.
+Perplexity runs Numbat across thousands of its own endpoints to secure engineers' use of [[claude-code|Claude Code]], Codex, OpenCode, and Pi, distributed through MDM as with Bumblebee, the company's open-source supply-chain exposure scanner. Each installation records locally and sends structured telemetry to central security systems.
 
 Perplexity Computer, the company's agentic system, then reviews findings and audit logs on a schedule: it investigates detections, reconstructs sessions, and applies extra scrutiny to actions Numbat blocked. It also looks for coverage gaps, analyzing new behavior, proposing detection improvements, testing them, and opening pull requests for human review. The article describes the result as a self-improving loop in which agent activity becomes normalized telemetry, an agentic reviewer proposes rule changes, and human-approved updates harden the next session. This layers a defending-with-AI pattern on top of a securing-AI control: the same deployment supplies both the monitored surface and the reviewing agent.
 
