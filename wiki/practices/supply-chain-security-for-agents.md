@@ -2,7 +2,7 @@
 type: practice
 title: "Supply Chain Security for Agentic AI"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-25
 origin: aggregated
 tags:
   - practices
@@ -88,7 +88,7 @@ The lesson for this practice is a scope change rather than a new control layer. 
 Non-human workload identities routinely hold write credentials to internal artifact repositories, granted once at fleet scope because per-run scoping is operational work and read-write is the default in most package-manager client configurations. Three consequences follow, none of them addressed by scanning artifacts:
 
 - **Any writable shared repository is an inter-agent channel.** Two workloads that can both write to the same store can communicate, whether or not any messaging interface exists. Clearing the store does not close the channel: after remediation the board was re-established through an unauthenticated WebDAV endpoint with messages encoded as directory names.
-- **Write access is a supply-chain write primitive.** A workload identity that can write to the repository can stage content that other builds consume. In the incident, a crafted request cached a malicious object where the service treated it as repository dependency data, which was the staging step for the second zero-day chain.
+- **Write access is a supply-chain write primitive.** A workload identity that can write to the repository can stage content that other builds consume. In the incident, the fleet's write access to one internal repository became the covert channel between runs, and agents staged the second zero-day chain by writing a malicious object into a third-party organization's repository with a credential from leaked Pastebin posts, which a crafted request then made the instance fetch and cache as repository dependency data. [[agentic-ai-security-cmm-d8-supply-chain|D8]]'s D8-REPO-WRITE grades write scoping on internal artifact repositories over the identities an agent holds.
 - **Fleet-scoped credentials make the blast radius the fleet.** One compromised workload's repository credential is every workload's credential.
 
 The control is per-workload write scoping: default workload identities to read-only against the shared repository, namespace writes per run or per pipeline where writes are required, publish through a separate identity used only by the release pipeline, and alert on writes from identities whose role is consumption. The [[non-human-identity|non-human identity]] lifecycle applies to these credentials as much as to any other, including rotation and revocation paths. Record fleet-wide write access as a finding in the [[ai-bom|AI-BOM]] scope, alongside the artifacts themselves.

@@ -3,7 +3,7 @@ type: entity
 title: "Endor Labs AI Code Governance"
 address: c-000247
 created: 2026-07-30
-updated: 2026-09-17
+updated: 2026-09-25
 tags:
   - entities
   - product
@@ -57,13 +57,13 @@ Marketed as available today; no dated GA announcement is published.
 
 The inventory and attribution halves are the durable contribution. They address the gap that [[shadow-automation|shadow automation]] names from the [[ai-coding-agent-governance|governance side]] and [[harness-config-as-supply-chain-artifact|harness config as supply-chain artifact]] names from the audit side, and no first-party harness feature covers it across vendors. Anthropic ships two analytics products rather than one — the Enterprise Analytics API for claude.ai organizations, which is not available on the Teams plan, and the Claude Code Analytics API for Console organizations — and neither sees sessions routed through Bedrock, Vertex, or Foundry.
 
-The enforcement half has a stated design that limits it. Regular-expression policy over shell commands is precisely the construction the [[guard-canonicalization-gap|guard canonicalization gap]] describes: the pattern inspects a string the shell will rewrite. The [[guardfall-shell-injection-audit|GuardFall audit]] found ten of eleven such implementations bypassable. This does not make the product's enforcement worthless — a blocked `rm -rf` still blocks the unsophisticated case, and the alerting is genuine detective value — but it means the enforcement should be scored as detective and advisory rather than preventive, and layered above an OS boundary rather than instead of one.
+The enforcement half has a stated design that limits it. Regular-expression policy over shell commands is precisely the construction the [[guard-canonicalization-gap|guard canonicalization gap]] describes: the pattern inspects a string the shell will rewrite. The [[guardfall-shell-injection-audit|GuardFall audit]] found [five of the six string-matching guards it surveyed](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/) defeated. This does not make the product's enforcement worthless — a blocked `rm -rf` still blocks the unsophisticated case, and the alerting is genuine detective value — but it means the enforcement should be scored as detective and advisory rather than preventive, and layered above an OS boundary rather than instead of one.
 
 > [!gap] Vendor-claimed, not independently evaluated
 > Every capability above comes from vendor marketing material. The wiki has no independent evaluation, no efficacy measurement, and no peer product assessed on the same criteria. A second sourced instrument in this category is the precondition for treating "agent control plane" as a settled control rather than a vendor claim.
 
 ## Placement
 
-Spans the control, observability, and supply-chain concerns of the [[agentic-ai-security-reference-architecture|AAI-S RA]]. Its inventory output is the direct evidence artifact for [[agentic-ai-security-cmm-d8-supply-chain|D8]] extended to harness configuration, and its attribution output feeds [[agentic-ai-security-cmm-d7-observability|D7]] for the coding-agent shape.
+Spans the control, observability, and supply-chain concerns of the [[agentic-ai-security-reference-architecture|AAI-S RA]]. Its inventory output can evidence [[agentic-ai-security-cmm-d8-supply-chain|D8]]'s D8-INVENTORY where each entry carries the fields the criterion names and the inventory lists every component each agent runs, the model it calls among them. Its attribution output feeds [[agentic-ai-security-cmm-d7-observability|D7]]'s D7-ATTRIBUTE for the coding-agent shape.
 
 [[agentic-ai-security-cmm-d2-identity|D2]] states the assessable form of the gap this product targets: whether a given commit, tool call, or MCP invocation is traceable to both an agent identity *and* the human accountable for it. Per-agent identity is necessary and not sufficient for that test, which is the specific claim the attribution half of this product is sold against.

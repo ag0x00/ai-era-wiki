@@ -2,7 +2,7 @@
 type: framework
 title: "ISO/IEC 42001: AI Management Systems"
 created: 2026-04-30
-updated: 2026-08-17
+updated: 2026-09-25
 tags:
   - frameworks
   - iso
@@ -35,6 +35,8 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+  - "https://www.iso.org/standard/44546.html"
+  - "https://webstore.iec.ch/en/publication/108460"
 ---
 
 # ISO/IEC 42001 — AI Management Systems
@@ -55,7 +57,7 @@ The emerging **"triple stack"**: ISO 42001 + ISO 27001 + ISO 27701 is increasing
 **Base standard: unchanged.** No amendment or revision published or planned for 2026.
 
 Key companion developments:
-- **ISO/IEC 42006:2025** — Published (date confirmed Q1 2026); establishes formal requirements for AI management system audit and certification bodies, including auditor competence, audit time calculation, and certification documentation. This resolves the critical gap in certification body consistency.
+- **ISO/IEC 42006:2025** — published in July 2025, before the quarter;[^iso42006] establishes formal requirements for AI management system audit and certification bodies, including auditor competence, audit time calculation, and certification documentation. This resolves the critical gap in certification body consistency.
 - **ISO/IEC 27090** — AI cybersecurity guidance; registered FDIS on March 12, 2026; entered the 8-week approval ballot; publication expected mid-2026. This will be the first ISO AI cybersecurity standard, though guidance-only (not certifiable).
 - **Schellman** became the first ANAB-accredited ISO 42001 certification body (January 2026); market demand described as "surging"
 - **Microsoft** expanded ISO 42001 certification scope to cover Microsoft 365 Copilot; plans for Copilot Studio, Dragon Copilot, Security Copilot, GitHub Copilot, and Microsoft Foundry
@@ -105,15 +107,18 @@ Key companion developments:
 - [[iso|ISO/IEC]] (publisher)
 - [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]] — voluntary governance complement; no certification but broader practitioner adoption in the U.S.
 - [[eu-ai-act|EU AI Act]] — regulatory framework that ISO 42001 is a primary compliance pathway for
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — ISO 42001 alignment is **D1 L4** evidence; certification is **D1 L5**; Annex A 38-control crosswalk in [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — ISO 42001 alignment is **[[agentic-ai-security-cmm-d1-governance|D1]] L4** evidence; certification is **D1 L5**; Annex A 38-control crosswalk in [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]
 - [[standards-review-iso-42001-27090-2026-Q2|ISO/IEC 42001 and 27090 Standards Review]] — citation-only, paywall-bounded CMM coverage map; corrects the crosswalk's Annex A numbering and confirms ISO 27090's FDIS-unpublished status
 
 ## Notes
 
 [^aix-liaison]: OWASP AI Exchange, ["About the AI Exchange"](https://owaspai.org/go/about/), retrieved 2026-08-17. The Exchange states 70 pages contributed to prEN 18282 and 70 pages to ISO/IEC 27090 through official liaison partnership, plus contribution to ISO/IEC 27091. These are the source's own claims and are not independently verified here.
+[^iso42006]: [ISO — ISO/IEC 42006:2025](https://www.iso.org/standard/44546.html), *Information technology — Artificial intelligence — Requirements for bodies providing audit and certification of artificial intelligence management systems*, edition 1, ISO/IEC JTC 1/SC 42, retrieved 2026-09-25. Publication date 2025-07-07, as ISO's open-data deliverables catalogue records it for that entry and [the IEC webstore listing](https://webstore.iec.ch/en/publication/108460) states it.
 
 <!-- sources:auto -->
 ## Sources
 
 - [ISO/IEC 42001: AI Management Systems](https://www.iso.org/standard/42001)
+- [iso.org](https://www.iso.org/standard/44546.html)
+- [webstore.iec.ch](https://webstore.iec.ch/en/publication/108460)
 <!-- /sources -->

@@ -2,7 +2,7 @@
 type: domain
 title: "Products"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-24
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
@@ -67,7 +67,7 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[numbat|Numbat]] — Announcement:...
 - [[okta-for-ai-agents|Okta for AI Agents]] — Sources: [Okta (homepage)](https://www.okta.com) ·...
 - [[onyx-platform|Onyx Platform (Onyx AI Control Plane)]] — Sources: [Onyx Platform (homepage)](https://onyx.security/platform)
-- [[opa|OPA / Rego (Open Policy Agent)]] — Open Policy Agent (OPA) is a CNCF-graduated open-source policy engine (Apache 2.0).
+- [[opa|OPA / Rego (Open Policy Agent)]] — Open Policy Agent (OPA) is an open-source policy engine that decouples policy decision-making from enforcement.
 - [[openant|OpenAnt]] — Sources: [Project page — openant.knostic.ai](https://openant.knostic.ai/) ·...
 - [[openclaw|OpenClaw]] — Open-source, self-hostable agentic coding and task-execution platform with its own skill marketplace, ClawHub.
 - [[palo-alto-prisma-airs|Palo Alto Prisma AIRS (AI Runtime Security)]] — Prisma AIRS is Palo Alto Networks' end-to-end AI security platform protecting the full lifecycle of AI applications and agents — model se...

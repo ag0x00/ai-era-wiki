@@ -28,6 +28,8 @@ related:
   - "[[mindgard-cart]]"
   - "[[mitre-atlas]]"
   - "[[owasp-llm-top-10]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[red-teaming-for-ai-synthesis]]"
 sources:
   - "https://github.com/NVIDIA/garak"
   - "https://docs.garak.ai/"
@@ -37,7 +39,7 @@ sources:
 
 **Sources:** [Garak (NVIDIA/garak repo)](https://github.com/NVIDIA/garak) · [Garak docs](https://docs.garak.ai/)
 
-NVIDIA's open-source **LLM vulnerability scanner**. A probe-and-detector library that runs a fixed taxonomy of attack probes against a target model and reports per-probe pass/fail rates. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites Garak as the **"probe library"** attack category in the D7 L4 four-quadrant red-team coverage requirement.
+NVIDIA's open-source **LLM vulnerability scanner**. A probe-and-detector library that runs a fixed taxonomy of attack probes against a target model and reports per-probe pass/fail rates. [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]] places Garak in the **probe library** testing category, one of the four from which the wiki's [[agentic-ai-security-cmm-2026|CMM]] asks for tools in two at L4, under D7-EVAL-TOOLS.
 
 ## Function
 
@@ -62,7 +64,7 @@ Output: JSONL hit logs, `garak.log`, plus an HTML report.
 | Run mode | Batch scan | Interactive / scripted orchestration |
 | Best for | "Run the canon against this model" | "Build a novel multi-turn attack" |
 
-The wiki's CMM D7 L4 requires **both** — single-tool coverage is not L4.
+[[agentic-ai-security-cmm-d7-observability|D7]]'s D7-EVAL-TOOLS asks for tools from **two** testing categories at L4, so single-tool coverage is not L4, and Garak with PyRIT meets the count.
 
 ## Coverage caveats
 
@@ -78,7 +80,7 @@ The wiki's CMM D7 L4 requires **both** — single-tool coverage is not L4.
 ## Use in this wiki
 
 - [[agentic-ai-security-cmm-2026|CMM]] D7 L4 — probe-library red-team category
-- [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]] — listed as one of four required tools at L4 ("single-tool coverage is not L4")
+- [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]] — named among the four tools the D7 evaluation question asks about
 - Closes the **breadth-of-known-CVE-style-probe-coverage** seam: Garak gives reproducible coverage of named jailbreak/injection/leak categories that PyRIT and Promptfoo would have to re-implement.
 
 ## See Also

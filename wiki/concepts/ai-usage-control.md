@@ -2,7 +2,7 @@
 type: concept
 title: "AI Usage Control (AI-UC / UCON for AI)"
 created: 2026-05-01
-updated: 2026-08-18
+updated: 2026-09-25
 tags:
   - concepts
   - access-control
@@ -85,7 +85,7 @@ AI-UC is most naturally placed at the boundary between Control and Runtime — a
 
 The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] names this model as the generalization behind its answer-time entitlement enforcement and oversharing-remediation control, with Microsoft Purview DSPM for AI and label-aware DLP for M365 Copilot as the GA instances.
 
-The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] files the shipping instantiation of this control on the data plane (D6): answer-time entitlement enforcement through Microsoft Purview [[dspm|DSPM for AI]] and its oversharing assessments, label-aware DLP for M365 Copilot, and Restricted SharePoint Search as a site-capped stopgap, classified COTS and generally available. Those controls evaluate the entitlements and sensitivity labels the data plane supplies, covering the Authorizations component alone, and the RA marks that set as the load-bearing control against [[inference-exposure|inference exposure]] for closed-corpus member and customer bots. The Control/Runtime placement above describes the full UCON loop, which a deployment reaches once one decision point evaluates session-drift Conditions and mid-session Obligations on every turn.
+The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] files the shipping instantiation of this control on the data plane (D6), classified COTS and generally available: answer-time entitlement enforcement through Microsoft Purview Data Security Posture Management, the successor to [[dspm|DSPM for AI]], and its oversharing assessments, label-aware DLP for M365 Copilot, and Restricted Content Discovery, which hides a site from Copilot without changing who can open it. The same row records Restricted SharePoint Search as retiring. Those controls evaluate the entitlements and sensitivity labels the data plane supplies, covering the Authorizations component alone, and the RA marks that set as the load-bearing control against [[inference-exposure|inference exposure]] for closed-corpus member and customer bots. The Control/Runtime placement above describes the full UCON loop, which a deployment reaches once one decision point evaluates session-drift Conditions and mid-session Obligations on every turn.
 
 ## Open Issues
 

@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic SOC CMM D7 Resilience and Agent Supply Chain"
 address: c-000193
 created: 2026-06-03
-updated: 2026-06-23
+updated: 2026-09-25
 tags:
   - maturity-models
   - cmm
@@ -48,7 +48,7 @@ The supply-chain controls are the same primitives the application-security stack
 
 | Layer | What ships today | Status (mid-2026) |
 |---|---|---|
-| Artifact provenance & signing | Sigstore / cosign for model and skill artifacts; SLSA provenance (Build L1–L3; no L4 in v1.0); CycloneDX ML-BOM and SPDX 3.0 AI extensions for the [[ai-bom\|AI-BOM]] | Signing and ML-BOM tooling GA; reproducible builds for stochastic model weights remain unsolved |
+| Artifact provenance & signing | Sigstore / cosign for model and skill artifacts; SLSA provenance (Build L1–L3, with no Build L4 through v1.2, the current version); CycloneDX ML-BOM and SPDX 3.0 AI extensions for the [[ai-bom\|AI-BOM]] | Signing and ML-BOM tooling GA; reproducible builds for stochastic model weights remain unsolved |
 | MCP-server provenance | [[mcp-security\|MCP]] registry namespace provenance; OAuth/auth surface per the MCP spec; pre-install and registry scanning of servers and skills | Registry gives namespace provenance only; cryptographic name→binary signing for MCP servers does not exist yet |
 | Agent-harness integrity | Cognitive-file integrity (SHA-256 baselines) over prompts, tool definitions, and identity files; SAST-style scanning of the [[harness-config-as-supply-chain-artifact\|harness configuration tree]] (hooks, tool manifests, retrieval config) | Hashing is trivial; harness-config SAST is early and not a converged product category |
 | Runtime reconciliation | Runtime [[ai-bom\|AI-BOM]] / AI-SPM discovery reconciling running components against the build-time manifest ([[ai-spm\|AI-SPM]] platforms) | GA on major clouds; drift policy is the operator's to define |

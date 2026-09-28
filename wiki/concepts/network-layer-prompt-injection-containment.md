@@ -98,7 +98,7 @@ The two layers' strengths are complementary: application-layer can assess intent
 
 ## Relation to wiki
 
-- **CMM D5 (Egress & Network)** — network-layer PI containment belongs as an L3+ control; pairs with the existing egress-proxy / domain-allowlist / agent-tag controls.
+- **[[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]]** — D5 grades prompt-injection screening on an agent's egress path: D5-GATEWAY-SCREEN at L3 requires the agent-aware gateway every call passes to screen content inline, in both directions. A network-layer filter meets it only where it is that gateway, and a filter that screens staff devices' traffic to AI applications, as Entra Internet Access does, meets no D5 criterion.
 - **CMM D4 (Runtime & Guardrails)** — note that application-layer Prompt Shields (Layer 1 in the containment stack) live in D4; this concept is upstream of D4.
 - **[[prompt-injection-containment|Prompt Injection Containment]]** — carries the three-layer model with Layer 0 citing this page, alongside the Exchange's seven-layer precedence ordering.
 - **[[microsoft-zt4ai|Microsoft ZT4AI]]** — the Network pillar names this control; Microsoft is the first major vendor shipping it at scale.

@@ -50,7 +50,7 @@ The wiki adds these that are not in OWASP ASI Top 10, NIST AI RMF, Gartner Guard
 | **Cognitive File Integrity (CFI) for `SOUL.md` / `IDENTITY.md` / system prompts** | [[supply-chain-security-for-agents\|Supply Chain Security]], [[agent-observability\|Agent Observability]] | Extension of traditional FIM to agentic-specific identity files; not in any standard |
 | **Identity-Credential Coupling concept** | [[identity-credential-coupling\|Identity-Credential Coupling]] | Surfaced from [[what-are-non-human-identities\|Oasis]] but operationalized as a CMM [[agentic-ai-security-cmm-d2-identity\|D2]] L4 evidence requirement (coupled-credential migration plan); not in NIST or ISO |
 | **D9 Operations & Human Factors as 9th cross-cutting domain** | [[agentic-ai-security-cmm-2026\|CMM]] D9 | Packages the operational gaps NIST AI 800-4 flagged as biggest blind spot; no current standard names it |
-| **Four-quadrant red-team coverage requirement at [[agentic-ai-security-cmm-d7-observability\|D7]] L4** | [[agentic-ai-security-cmm-2026\|CMM]] D7 L4 | "Single-tool coverage is not L4" — orchestration ([[pyrit\|PyRIT]]) × probe library ([[garak\|Garak]]) × CI regression ([[promptfoo\|Promptfoo]]) × continuous CART ([[mindgard-cart\|Mindgard]]). Independent benchmark anchor ([[agentdojo\|AgentDojo]]). Not in any standard |
+| **Two-category red-team tool rule at [[agentic-ai-security-cmm-d7-observability\|D7]] L4** | [[agentic-ai-security-cmm-2026\|CMM]] D7-EVAL-TOOLS | Tools from two of four categories each quarter: orchestration ([[pyrit\|PyRIT]]), probe library ([[garak\|Garak]]), CI regression ([[promptfoo\|Promptfoo]]), continuous ([[mindgard-cart\|Mindgard]]) |
 | **Multi-agent runtime security depth** | [[multi-agent-runtime-security\|Multi-Agent Runtime Security]] | Cascade-detection symptoms + 3 academic primitives + stop-mesh-vs-isolate IR decision tree + maturity ladder honest about academic-prototype state. ASI08 names the threat; no standard designs the response |
 | **Five-class threat expansion beyond OWASP ASI** | [[agentic-ai-threat-classes-2026\|Threat Classes 2026]] | Insider with model access; long-running adaptive APT; agent-agent collusion; model-version-degradation; jurisdictional adversaries — none of these are first-class in OWASP ASI / MITRE ATLAS |
 | **AI-BOM + always-on customer eval as multi-class absorber** | [[agentic-ai-threat-classes-2026\|Threat Classes 2026]] §Cross-class synthesis | Single highest-leverage control argument absorbs Classes 1, 2, 4. Synthesis is wiki-original |
@@ -139,7 +139,7 @@ Attack-success rates from the public competition on slide 3 of [[breaking-the-le
 
 ### Thesis 6 — *"Behavioral monitoring (UEBA-for-agents) for ephemeral agents"*
 
-**The wiki's position:** behavioral monitoring with baselines + drift detection at D7 L3+, already softened from the "UEBA for Agents" branding to architecturally-neutral language.
+**The wiki's position:** behavioral monitoring with baselines + drift detection at D7 L4 (D7-BASELINE, D7-DRIFT), already softened from the "UEBA for Agents" branding to architecturally-neutral language.
 
 **Strongest counter-argument: classical UEBA needs stable identities and persistent baselines.** AI agents are often ephemeral and non-deterministic; baselines collapse if the agent population churns. UEBA products had largely merged into SIEM/XDR by 2020, so the metaphor transfers poorly.
 

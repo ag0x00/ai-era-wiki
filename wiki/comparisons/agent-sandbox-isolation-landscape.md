@@ -39,6 +39,8 @@ sources:
   - "https://cloud.google.com/blog/products/containers-kubernetes/bringing-you-agent-sandbox-on-gke-and-agent-substrate"
   - "https://github.com/kubernetes-sigs/agent-sandbox"
   - "https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/"
+  - "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents"
+  - "https://devblogs.microsoft.com/foundry/whats-new-in-microsoft-foundry-july-august-2026/"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
   - "[[.raw/reports/google-mantis-repository-2026-09-18.md]]"
 verified: 2026-09-18
@@ -61,7 +63,7 @@ A third delivery model sits alongside those two. Semgrep's July 2026 survey of o
 |---|---|---|---|---|
 | **[[gke-agent-sandbox\|Agent Sandbox]]** (Google / SIG Apps) | Open custom resource definitions (CRDs) + managed GKE | [[gvisor\|gVisor]] default; Kata/runc pluggable | Any Kubernetes cluster[^repo] | Open primitive; managed tier adds warm-pool performance |
 | **AWS Bedrock AgentCore** code interpreter | Proprietary managed (Bedrock) | Managed sandbox | AWS-bound | Recorded in [[agentic-ai-security-cmm-d4-runtime-guardrails\|D4]]; not a standalone primitive |
-| **Azure Foundry** hosted-agent sandbox | Proprietary managed (preview) | Per-session microVM | Azure-bound | Public preview; bound to Foundry agents |
+| **Azure Foundry** hosted-agent sandbox | Proprietary managed (GA 2026-07-09) | Per-session VM-isolated sandbox[^foundry] | Azure-bound | GA; bound to Foundry agents |
 | **Cloudflare Sandboxes** | Proprietary managed (Workers) | Container isolation + V8 isolates | Cloudflare-bound | Edge-resident; lighter workloads on isolates[^infoq] |
 | **E2B** | Independent SaaS / self-host | [[firecracker\|Firecracker]] microVM | Vendor runtime | Independent sandbox vendor; microVM boundary[^infoq] |
 
@@ -124,6 +126,7 @@ Both tables sort on the boundary and its delivery, and score every offering on w
 [^repo]: [GitHub — kubernetes-sigs/agent-sandbox](https://github.com/kubernetes-sigs/agent-sandbox), 2026. SIG Apps subproject; Apache 2.0; runs on any Kubernetes cluster; gVisor/Kata pluggable runtimes.
 [^blog]: [Google Cloud blog — Bringing you Agent Sandbox on GKE and Agent Substrate](https://cloud.google.com/blog/products/containers-kubernetes/bringing-you-agent-sandbox-on-gke-and-agent-substrate), May 2026. 300 sandboxes/sec per cluster; 90% under 200 ms; warm pools; Pod Snapshots.
 [^bhusa]: Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06); summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
-[^semgrep]: Semgrep, [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (July 2026; no day-level date is exposed, and the month is inferred from an embedded screenshot dated 2026-07-20 and a forward reference to a Black Hat announcement in August 2026). The pipelines-versus-skills comparison and every value in the isolation column are labelled by Semgrep as LLM-generated summaries of the repositories. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
+[^semgrep]: Semgrep (Isaac Evans), [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (2026-07-20, the byline date on the live page, retrieved 2026-09-24; the page metadata carries no date). The pipelines-versus-skills comparison and every value in the isolation column are labelled by Semgrep as LLM-generated summaries of the repositories. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
+[^foundry]: [Microsoft Learn — What are hosted agents?](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents), updated 2026-09-11, read 2026-09-25: "Hosted agents run in per-session VM-isolated sandboxes." Microsoft announced general availability on 2026-07-09 ([Microsoft Foundry Blog — What's new in Microsoft Foundry: July and August 2026](https://devblogs.microsoft.com/foundry/whats-new-in-microsoft-foundry-july-august-2026/), 2026-09-09: "We announced general availability for Hosted Agents on July 9").
 [^infoq]: [InfoQ — Google Announces GKE Agent Sandbox and Hypercluster at Next '26](https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/), May 2026. "Only native agent sandbox offering among the three major hyperscalers"; Cloudflare Sandboxes (container + V8 isolates) and E2B (Firecracker microVMs) as the independent comparison set.
 [^mantis-repo]: [google/mantis](https://github.com/google/mantis), read at commit `21ef4b4c45ccd1d2a33b9079b2e37ec37d934571` (2026-09-17): 21 skills and an ADK reference harness under Apache 2.0, with the sandbox roster and the responsible-use constraints quoted from README.md and README_AGENTS.md. Local extract at `.raw/reports/google-mantis-repository-2026-09-18.md`. Summarized at [[mantis|Mantis (Google)]].

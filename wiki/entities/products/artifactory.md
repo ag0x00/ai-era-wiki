@@ -4,7 +4,7 @@ entity_type: product
 title: "JFrog Artifactory"
 address: c-000256
 created: 2026-08-14
-updated: 2026-09-10
+updated: 2026-09-25
 tags:
   - entities
   - product
@@ -58,7 +58,7 @@ The second chain required composing Artifactory caching behavior with JRuby dese
 
 ## Agent artifact scope (September 2026)
 
-JFrog extended Artifactory and Xray on 2026-09-02 to hold and scan the artifacts AI agents consume: MCP servers, skills, plugins, prompts and instruction sets alongside packages and model weights. Agent Package Resolution routes an agent's dependency fetches through Artifactory, and traffic-controller partnerships block an agent from reading a public registry directly, so the deployment shape JFrog recommends makes Artifactory the single path for everything an agent fetches. The full capability set is on [[jfrog|JFrog]]'s page, including the AI Asset Scanning capability [[agentic-ai-security-cmm-d8-supply-chain|CMM D8]] grades as a named COTS implementation of its L3 skill/MCP-server pre-install-scan criterion.
+JFrog extended Artifactory and Xray on 2026-09-02 to hold and scan the artifacts AI agents consume: MCP servers, skills, plugins, prompts and instruction sets alongside packages and model weights. Agent Package Resolution routes an agent's dependency fetches through Artifactory, and traffic-controller partnerships block an agent from reading a public registry directly, so the deployment shape JFrog recommends makes Artifactory the single path for everything an agent fetches. The full capability set is on [[jfrog|JFrog]]'s page, including the AI Asset Scanning capability [[agentic-ai-security-cmm-d8-supply-chain|CMM D8]] grades as a named COTS implementation of D8-ABILITY-SCAN, its L3 scan of each skill, plugin or local MCP server before it installs.
 
 The incident above ran through exactly that shape. Evaluation workloads reached Artifactory as their single permitted dependency, and each of the three failures followed from the concentration rather than from any artifact the service held: the outbound access it carried made it an egress path, the write access it granted fleet-wide made it a channel, and its own defect surface made it a target. An estate that routes every agent's resolution through it adopts that concentration deliberately. The control implications below apply to such a deployment unchanged, and per-workload write scoping is the first of them.
 

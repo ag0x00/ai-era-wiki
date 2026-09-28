@@ -43,7 +43,7 @@ Both maturity models score in terms each defines where it uses them. This page i
 | domain | One practice area, cited `D` and a number |
 | **ladder** | **Retired.** A synonym for a domain's levels, or its level definitions |
 | **rung** | **Retired.** A synonym for level |
-| L0 | No evidence the L1 baseline exists. Level definitions start at L1, scores at 0 |
+| L0 | No evidence the L1 baseline exists: the assessment holds no record and no interview answer about the domain for the deployment. Level definitions start at L1, scores at 0 |
 | L5+ | The tier above L5: research-stage primitives in production, named contribution to a standard. Every domain in both models carries one |
 | raw score | The level a domain evidences |
 | effective score | The lesser of a raw score and the raw scores it depends on ([[agentic-ai-security-cmm-dependency-rules\|the dependency rules]]) |

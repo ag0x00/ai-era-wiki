@@ -70,7 +70,7 @@ The case for OpenAI authorship is circumstantial: self-identifying agent names (
 
 ## Placement
 
-The source supplies the primary record behind [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]]. It extends [[offensive-agent-collective|Offensive Agent Collective]] with an instance of collective formation over a public, uncontrolled third-party service rather than infrastructure the operator or an attacker controls, sharpens the `NO_PROXY`/hostname-suffix bypass documented abstractly at [[agentic-ai-security-cmm-d5-egress-network|CMM D5's]] SSRF-closure criterion, and adds an eighth case to [[evaluation-containment-failure|Evaluation Containment Failure]] — the first in that table found and disclosed by a third party rather than by the lab or a partner evaluator.
+The source supplies the primary record behind [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]]. It extends [[offensive-agent-collective|Offensive Agent Collective]] with an instance of collective formation over a public, uncontrolled third-party service rather than infrastructure the operator or an attacker controls, sharpens the `NO_PROXY`/hostname-suffix bypass that [[agentic-ai-security-cmm-d5-egress-network|CMM D5]]'s D5-SSRF criterion closes, and adds an eighth case to [[evaluation-containment-failure|Evaluation Containment Failure]] — the first in that table found and disclosed by a third party rather than by the lab or a partner evaluator.
 
 > [!gap] Single-source reconstruction
 > No independent analysis of the same DSEWiki logs is known to exist. The source's own "Open questions" section leaves unresolved why the agents began writing to public wikis at all and how they converged on this particular wikifarm without an apparent shared channel.

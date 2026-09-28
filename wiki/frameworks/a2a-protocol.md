@@ -87,7 +87,7 @@ A peer reviewer should know exactly what is missing:
 - **No CVEs** assigned to A2A in NVD as of 2026-05.
 - **No coverage of a channel that is not a channel.** The protocol secures an explicit link between two agents. Two agent runs that reach the same writable medium — a shared bucket, a wiki, a message board — pass data to each other without opening one, so signed Agent Cards and message authentication do not apply. [[owasp-agentic-ai-top-10|OWASP's ASI07]] classes that medium as inter-agent communication and reaches the same limit.
 
-An L3+ CMM claim resting on A2A security must therefore specify the organization's own enforcement profile (see [[agentic-ai-security-cmm-d5-egress-network|D5]] L3).
+An L3+ CMM claim resting on A2A security must therefore specify the organization's own enforcement profile: [[agentic-ai-security-cmm-d5-egress-network|D5]]'s D5-A2A-REPLAY requires the profile to state the replay check at L3, and D5-A2A-SIGN requires a published signing profile at L5.
 
 ## Agent Cards
 
@@ -125,8 +125,10 @@ The spec is intentionally minimal. Production hardening lives in vendor implemen
 | Use | Where |
 |---|---|
 | Egress-plane PEP between agents | [[agentic-ai-security-reference-architecture\|RA]] §Egress + §Multi-agent mesh deployment shape |
-| D5 L3 evidence (mTLS for A2A; org-authored enforcement profile) | [[agentic-ai-security-cmm-2026\|CMM]] |
-| D5 L4 evidence (signed Card validation + content scanning) | [[agentic-ai-security-cmm-2026\|CMM]] |
+| D5 L3 evidence: D5-A2A-TLS and D5-A2A-AUTH, TLS 1.3 and mutual authentication on the inter-agent leg | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
+| D5 L3 evidence: D5-A2A-REPLAY, the org-authored enforcement profile's replay check | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
+| D5 L4 evidence: D5-A2A-SCREEN, content screening on the inter-agent path | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
+| D5 L5 evidence: D5-A2A-SIGN, signed messages and signed Agent Cards under a published profile | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
 | Multi-agent runtime threats | [[multi-agent-runtime-security\|Multi-Agent Runtime Security]] — cascade detection, behavioral baselines, inter-agent IR |
 | ASI07 (Insecure Inter-Agent Comms) anchor | [[agentic-ai-security-reference-architecture\|RA]] threat-control matrix |
 | Absence claim against the spec | [[agentic-ai-security-ra-gaps\|RA Gaps]] gap 9 — v1.0.0 establishes identity at the transport layer and defines no delegation token and no chain validation |
@@ -143,7 +145,12 @@ A practical layering for orgs adopting A2A:
 | L4 — Trust framework | Issue #1575 / AIP-class scoped delegation with cascade revocation + 3-signature execution chain + policy-engine enforcement |
 | L5 — Formal | Formally specified mesh invariants + automated containment doctrine — **does not exist in production as of mid-2026** |
 
-This ladder is consistent with the wiki's [[agentic-ai-security-cmm-2026|CMM]] D5 levels.
+The tiers order adoption, and their numbers are independent of the CMM's levels. [[agentic-ai-security-cmm-d5-egress-network|D5]] grades the A2A controls at these levels:
+
+- L3: TLS 1.3, mutual authentication, replay protection and a delegation reference on each delegated message, as D5-A2A-TLS, D5-A2A-AUTH, D5-A2A-REPLAY and D5-A2A-CHAIN.
+- L4: content screening on the inter-agent path and a broker as the only channel between agents, as D5-A2A-SCREEN and D5-A2A-BROKER.
+- L5: signed messages and signed Agent Cards under a published profile audited per release, as D5-A2A-SIGN and D5-A2A-SIGN-AUDIT.
+- L5+: a behavioral baseline over each agent's inter-agent messages, as D5-A2A-BASELINE.
 
 ## See Also
 

@@ -24,6 +24,8 @@ related:
   - "[[pyrit]]"
   - "[[garak]]"
   - "[[promptfoo]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[red-teaming-for-ai-synthesis]]"
 sources:
   - "https://mindgard.ai/"
   - "https://mindgard.ai/blog/continuous-automated-red-teaming"
@@ -35,7 +37,7 @@ sources:
 
 **Sources:** [Mindgard (homepage)](https://mindgard.ai) · [CART explainer (Mindgard blog)](https://mindgard.ai/blog/continuous-automated-red-teaming) · [Mindgard spinout coverage (TechCrunch)](https://techcrunch.com/2024/12/20/british-university-spinoff-mindgard-protects-companies-from-ai-threats/)
 
-Commercial **Continuous Automated Red Teaming (CART)** product line that simulates adversarial attacks against AI systems on a 24/7 cadence. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites Mindgard CART as the **"continuous CART"** attack category in the D7 L4 four-quadrant red-team coverage requirement, explicitly marking it as the *commercial* slot ("Mindgard or equivalent").
+Commercial **Continuous Automated Red Teaming (CART)** product line that simulates adversarial attacks against AI systems on a 24/7 cadence. [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]] places Mindgard CART in the **continuous adversarial testing** category, one of the four from which the wiki's [[agentic-ai-security-cmm-2026|CMM]] asks for tools in two at L4, under D7-EVAL-TOOLS, and no D7 criterion requires this category.
 
 ## Definition of CART
 
@@ -82,15 +84,15 @@ The wiki should not invent these numbers.
 
 ## Use in this wiki
 
-- [[agentic-ai-security-cmm-2026|CMM]] D7 L4: continuous CART red-team category, *commercial slot*
-- [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]]: one of four required tools at L4 ("Mindgard or equivalent")
+- [[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d7-observability|D7]] L4: continuous adversarial testing category
+- [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]]: named among the four tools the D7 evaluation question asks about
 - Closes the **24/7 / SaaS-managed** seam that PyRIT (DIY orchestration), Garak (point-in-time scan) and Promptfoo (CI-trigger-only) don't cover by default
 
 ## Caveats
 
 - **Vendor-published "best AI red-team tools" comparisons**: useful but partisan; cross-check with independent sources.
 - **CART acronym is vendor-coined**: the wiki should keep flagging this until a framework body picks it up (similar discipline to [[insight-partners|Insight Partners]]'s "UEBA for Agents").
-- **"Mindgard or equivalent"** in the CMM is deliberate. The L4 requirement is *the four-quadrant coverage*, not Mindgard specifically. Equivalents to evaluate: AI-Driven Pen Testing services from large security platforms, Lakera Red, [[knostic|Knostic]] for coding-agent specific, HiddenLayer.
+- **D7-EVAL-TOOLS counts testing categories.** Continuous adversarial testing is one of the four, and Mindgard is one instance of it. The protocol's evaluation question names Mindgard CART beside PyRIT, Garak and Promptfoo. Equivalents to evaluate: AI-Driven Pen Testing services from large security platforms, Lakera Red, [[knostic|Knostic]] for coding-agent specific, HiddenLayer.
 
 ## See Also
 

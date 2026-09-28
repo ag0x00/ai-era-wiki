@@ -2,7 +2,7 @@
 type: practice
 title: "AI-BOM: AI Bill of Materials"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-25
 tags:
   - practices
   - supply-chain
@@ -101,7 +101,7 @@ Align AI-BOM maturity with the [[agentic-ai-security-cmm-2026|Agentic AI Securit
 | Level 4   | Signed AI-BOMs; ML-BOM for all production models; runtime discovery     |
 | Level 5   | Full provenance verification (SLSA); continuous runtime BOM diffing; threat intel integration |
 
-Level 4 corresponds to "ML-BOM for all production models" in the CMM's Domain 5 (Supply Chain) criteria.
+D8 places a model's ML-BOM at L4 only for a model the organization trains or fine-tunes, under D8-LINEAGE, and the runtime discovery at L4 under D8-AIBOM-RUNTIME, which reconciles it against the release AI-BOM.
 
 ## Implementation Priorities
 
@@ -132,4 +132,4 @@ Level 4 corresponds to "ML-BOM for all production models" in the CMM's Domain 5 
 
 - [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]] — the broader supply chain practice this feeds into
 - [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] — AI-BOM closes the flagged data-layer gap
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — **D8 Supply Chain & AI-BOM** progression criteria reference AI-BOM at L3 (CycloneDX/SPDX 3.0 build-time), L4 (sigstore + runtime reconciliation), L5 (cross-vendor federation, SLSA Level 4 for AI artifacts)
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — [[agentic-ai-security-cmm-d8-supply-chain|D8 Supply Chain & AI-BOM]] grades the AI-BOM of each release at L3 (D8-AIBOM, in CycloneDX or SPDX 3.0), its reconciliation against the running deployment at L4 (D8-AIBOM-RUNTIME), the drift it finds against a documented tolerance at L5 (D8-AIBOM-DRIFT), and cross-vendor federation at L5+ (D8-AIBOM-FEDERATE)

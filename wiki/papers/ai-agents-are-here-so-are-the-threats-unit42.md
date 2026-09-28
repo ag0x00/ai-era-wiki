@@ -38,6 +38,8 @@ related:
   - "[[guardrails-beyond-vibes-talk]]"
   - "[[hooking-coding-agents-with-cedar-talk]]"
   - "[[building-secure-agentic-systems-talk]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
 sources:
   - "https://unit42.paloaltonetworks.com/agentic-ai-threats/"
   - "[[.raw/articles/agentic-ai-threats-unit42-2025-05-01.md]]"
@@ -123,9 +125,9 @@ These five strategies map directly onto the wiki's [[agentic-ai-security-referen
 
 ## In the RA / CMM
 
-- **CMM D7 L4 (multi-tool red-team coverage)** — the open-source reference implementation is a candidate for the **regression suite** slot alongside [[promptfoo|Promptfoo]], complementing [[pyrit|PyRIT]] (orchestration) + [[garak|Garak]] (probe library) + [[mindgard-cart|Mindgard CART]] (continuous CART). It's framework-aware in a way the others aren't.
+- **[[agentic-ai-security-cmm-d7-observability|CMM D7]] L4 (multi-tool red-team coverage)** — the open-source reference implementation is a candidate for the **regression suite** slot alongside [[promptfoo|Promptfoo]], complementing [[pyrit|PyRIT]] (orchestration) + [[garak|Garak]] (probe library) + [[mindgard-cart|Mindgard CART]] (continuous CART). It's framework-aware in a way the others aren't.
 - **CMM D4 (Runtime & Guardrails)** — empirically validates content filtering (L4) and code executor sandboxing (L5 — cited explicitly in the article's mitigation 5).
-- **CMM D5 (Egress & Network)** — the metadata-service-token-exfiltration scenario (#6) is exactly the kind of cloud-instance-specific egress that [[smokescreen|Smokescreen]]-class controls were designed for; SSRF closure to internal IPs / metadata endpoints is a D5 baseline.
+- **CMM D5 (Egress & Network)** — the metadata-service-token-exfiltration scenario (#6) is exactly the kind of cloud-instance-specific egress that [[smokescreen|Smokescreen]]-class controls were designed for; [[agentic-ai-security-cmm-d5-egress-network|D5]]'s D5-SSRF grades the closure of routes to internal, link-local and metadata addresses at L5.
 - **CMM D8 (Supply Chain & AI-BOM)** — tool vulnerability scanning (mitigation 4) is the article's framing of the supply-chain control.
 - **RA Control plane** — agent-to-agent delegation requires explicit policy (per [[hooking-coding-agents-with-cedar-talk|Sondera Cedar harness]] for coding agents); this article's scenarios #2/#3 demonstrate the consequence of *not* having such policy in the multi-agent investment app.
 

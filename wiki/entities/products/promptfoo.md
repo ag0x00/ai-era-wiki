@@ -26,6 +26,8 @@ related:
   - "[[agentic-ai-threat-classes-2026]]"
   - "[[owasp-llm-top-10]]"
   - "[[nist-ai-rmf]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[red-teaming-for-ai-synthesis]]"
 sources:
   - "https://www.promptfoo.dev/"
   - "https://www.promptfoo.dev/blog/model-upgrades-break-agent-safety/"
@@ -34,7 +36,7 @@ sources:
 
 # Promptfoo — LLM evaluation and red-teaming framework
 
-Open-source LLM evaluation and red-teaming framework that runs **YAML-defined test suites in CI** to catch prompt regressions, vulnerability findings, and behavioral drift. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites Promptfoo as the **"regression suite"** attack category in the D7 L4 four-quadrant red-team coverage requirement, and as the empirical source for the model-version-degradation finding in [[agentic-ai-threat-classes-2026|Threat Classes Class 4]].
+Open-source LLM evaluation and red-teaming framework that runs **YAML-defined test suites in CI** to catch prompt regressions, vulnerability findings, and behavioral drift. [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]] places Promptfoo in the **regression suite** testing category, one of the four from which [[agentic-ai-security-cmm-d7-observability|D7]]'s D7-EVAL-TOOLS asks for tools in two at L4, and [[agentic-ai-threat-classes-2026|Threat Classes Class 4]] takes it as the empirical source for the model-version-degradation finding.
 
 > [!note] Acquisition
 > The Promptfoo public site banner reads *"Promptfoo is now part of OpenAI"* (2026). The project remains MIT-licensed and the framework continues to ship; the wiki's vendor-neutrality framing in [[agentic-ai-security-cmm-2026|CMM]] D7 L4 should note the new organizational home.

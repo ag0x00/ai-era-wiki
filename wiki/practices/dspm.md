@@ -2,7 +2,7 @@
 type: practice
 title: "Data Security Posture Management (DSPM) for AI"
 created: 2026-05-01
-updated: 2026-08-20
+updated: 2026-09-25
 tags:
   - practices
   - posture-management
@@ -91,7 +91,7 @@ A complete posture program runs both. Most enterprises in 2026 have partial DSPM
 
 ## CMM Mapping
 
-DSPM-for-AI is a [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] **D6 Data, Memory & RAG** capability. The DSPM-feeding-AI-SPM-feeding-guardrails chain is what distinguishes Level 4 (measured / cross-cutting) from Level 3 (defined per-asset) at D6.
+DSPM-for-AI is a [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] **D6 Data, Memory & RAG** capability. Its classification evidences [[agentic-ai-security-cmm-d6-data-rag|D6]]'s D6-CLASSIFY at L2 where it gives a class to each data source the agents read, at the grain the source grants access on. Its oversharing assessment evidences D6-REACH, the first reach assessment at L2, where it covers every corpus location the agents reach and sets each location's reach against the readers intended for it. The same assessment run again over that scope at a stated cadence and after each new corpus or extension, with each run's findings closed within the period, evidences D6-REACH-CADENCE at L4.
 
 ## See Also
 

@@ -2,7 +2,7 @@
 type: domain
 title: "Frameworks"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-25
 tags: [domain, frameworks]
 status: seed
 subdomain_of: ""
@@ -18,7 +18,7 @@ Published, named guidance for AI/agentic-AI security. Each framework gets its ow
 
 - [[a2a-protocol|A2A Protocol (Agent-to-Agent)]] — The Agent-to-Agent (A2A) Protocol is an open standard for communication between AI agents across organizational and platform boundaries.
 - [[ai-trism|Gartner AI TRiSM]] — AI TRiSM (AI Trust, Risk, and Security Management) is Gartner's analyst-defined market category for the AI security buying surface.
-- [[aiuc-1|AIUC-1 AI Agent Certification Standard]] — The first independent security, safety, and reliability certification for enterprise AI agents, positioned by its publisher as "SOC 2 for...
+- [[aiuc-1|AIUC-1 AI Agent Certification Standard]] — The first independent security, safety, and reliability certification for enterprise AI agents, positioned by its publisher as "SOC-2 for...
 - [[aws-agentic-ai-security-scoping-matrix|AWS Agentic AI Security Scoping Matrix]] — A four-scope categorization scheme for autonomous AI systems published by AWS on 2025-11-21, structured around two foundational concepts...
 - [[clasp|CLASP]] — CLASP (Capability-Centric Evaluation for Security Lifecycle) is a capability-centric rubric for assessing autonomous security agents beyo...
 - [[continuous-threat-exposure-management|Continuous Threat Exposure Management (CTEM)]] — CTEM is Gartner's five-stage program for managing exposure as a continuous, business-prioritized cycle rather than a periodic scan-and-pa...

@@ -45,6 +45,7 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"
+  - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
 verified: 2026-09-16
 verified_against:
   - ".raw/papers/llamafirewall-arxiv-2505-03574-2026-06-23.md"
@@ -159,7 +160,7 @@ Key mitigations:
 3. **Action scope bounded by trigger source**: if retrieved web content triggered an action rather than the user, require confirmation before executing high-risk actions.
 4. **[[cognitive-file-integrity|Cognitive file integrity]]**: indirect injection can modify SOUL.md or IDENTITY.md to change the agent's behavioral rules. Cognitive FIM detects this. See [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]].
 
-Coding agents have the least platform support of any containment case. The injection arrives in repository content the agent must read to do its job, including READMEs, Makefiles, and issue and pull-request bodies, so filtering the input out removes the capability with it. [[guardfall-shell-injection-audit|GuardFall]] showed that the command-level guards standing in for containment were bypassable in ten of eleven surveyed agents. Containment for this shape rests on the isolation boundary and the egress restriction catalogued in [[securing-agentic-coding|Securing Agentic Coding]].
+Coding agents have the least platform support of any containment case. The injection arrives in repository content the agent must read to do its job, including READMEs, Makefiles, and issue and pull-request bodies, so filtering the input out removes the capability with it. [[guardfall-shell-injection-audit|GuardFall]] showed the command-level guards standing in for containment defeated in five of eleven surveyed agents, and five more exposing the shell through no static guard or a sandbox opt-out.[^guardfall] Containment for this shape rests on the isolation boundary and the egress restriction catalogued in [[securing-agentic-coding|Securing Agentic Coding]].
 
 ## Mapping to OWASP ASI
 
@@ -201,3 +202,4 @@ Categories below come from the [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Precedence among text-level, model-level, and execution-level detection.
 [^astra-cot]: [OpenAI GPT-6 Astra System Card](https://deploymentsafety.openai.com/gpt-6-astra), OpenAI Deployment Safety Hub, published 2026-09-03: *"GPT-6 Astra shows a substantial decrease in chain-of-thought monitorability compared to previous models."*
 [^cot-evasion]: [arXiv:2609.15989](https://arxiv.org/abs/2609.15989), 2026-09-14: *"25-33% monitor evasion rates across different monitorability benchmarks"* under deliberate plan injection.
+[^guardfall]: [Adversa AI — GuardFall: a universal shell injection vulnerability in open-source AI agents](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/), Omer Ben Simon, 2026-06-30, modified 2026-08-11, retrieved 2026-09-24. Of the eleven open-source coding and computer-use agents surveyed, ten "leave the agent-to-bash boundary exploitable, in one of four ways": three ship "a guard that exists and is defeated", two ship "a tokenized guard that leaks only on quoted substitution and destructive flags", and the other five ship no static guard or a container sandbox that "fails under a documented and commonly used local mode opt-out". The eleventh, Continue, "is the only one with a correctly implemented guard".

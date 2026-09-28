@@ -82,7 +82,7 @@ CyberGym is presently the **most-cited public leaderboard** for AI-driven vulner
 The benchmark's role on the wiki:
 
 - The first independently-verifiable comparison surface for agentic-AI-vuln-discovery claims by [[mdash|MDASH]], future Anthropic Glasswing releases, and any subsequent vendor entries in [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]].
-- Counterpart to [[agentdojo|AgentDojo]] (prompt-injection) and [[clasp|CLASP]] (capability-centric agent evaluation) in the [[red-teaming-for-ai-synthesis|four-quadrant red-team grid]] — CyberGym sits in the "real-world reproduction" slot.
+- Counterpart to [[agentdojo|AgentDojo]] (a prompt-injection benchmark) and [[clasp|CLASP]] (a capability-centric evaluation rubric), among the evaluation instruments that sit beside the [[red-teaming-for-ai-synthesis|four-quadrant red-team grid]], whose four categories sort tools.
 
 The operational reading of these results — which levers move a discovery pipeline's yield, and how a reproduction claim is validated — is on [[agentic-vulnerability-discovery|Agentic Vulnerability Discovery]]; this page is the instrument.
 
@@ -148,7 +148,7 @@ CyberGym's open-ended runs make the [[uc-berkeley-rdi|UC Berkeley RDI]] group on
 
 ## Limitations and Caveats
 
-- **Description quality matters**: Microsoft's failure analysis of MDASH's remaining ~12% errors shows that **82% of wrong-area findings came from tasks with vague descriptions that also lacked function or file identifiers** — description quality is a major factor in scan accuracy.
+- **Description quality matters**: Microsoft's failure analysis of MDASH's remaining ~12% errors shows that **82% of wrong-area findings came from tasks with vague descriptions that also lacked function or file identifiers**, which Microsoft reads as suggesting that description quality is a major factor in scan accuracy ([Microsoft Security Blog, 2026-05-12](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/)).
 - **Harness-format mismatch**: agents occasionally constructed libFuzzer-style inputs when the benchmark task required honggfuzz format, producing otherwise-sound reproductions that fail on harness-format mismatch.
 - **OSS-Fuzz domain**: CyberGym is biased toward C/C++ memory-safety bug classes typical of OSS-Fuzz; coverage of web vulns, [[prompt-injection|prompt-injection]], supply-chain, or AI-application classes is structurally limited.
 - **Public-benchmark contamination risk**: as vendors target the leaderboard, model training data may absorb the corpus; the same concern that motivated XBOW's StorageDrive private-benchmark design.
@@ -172,7 +172,7 @@ The contamination caveat above and this exposure are one mechanism running at tw
 
 ## CMM / RA Maps-to
 
-- **[[agentic-ai-security-cmm-d7-observability|CMM D7 (Observability & Detection)]] L4** — fits the four-quadrant red-team grid's "real-world reproduction benchmark" slot. Should be cited alongside [[agentdojo|AgentDojo]] in CMM evidence checklists for D7 L4.
+- **[[agentic-ai-security-cmm-d7-observability|CMM D7 (Observability & Detection)]] L4** — no direct fit. D7-EVAL reads evaluations of an agent's own security across threat categories, and CyberGym measures an agent's vulnerability-reproduction capability, which no D7 criterion grades.
 
 ## See Also
 

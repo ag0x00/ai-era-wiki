@@ -116,8 +116,8 @@ The wiki has historically treated availability as a side concern (mentioned in [
 
 ## Relation to wiki
 
-- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 (Control and Least-Agency)]]** — runtime budgets, recursion-depth limits, and step ceilings are proposed here as L3 controls, with soft-signal anomaly detection at L4. D3's published ladder grades none of them at any rung today, so this bullet is a placement proposal rather than a reading of the domain.
-- **[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 (Runtime and Guardrails)]]** — sandbox-enforced resource quotas belong at L3, where the ladder already sets per-agent compute and wall-clock ceilings at the platform rather than by agent self-management.
+- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 (Control and Least-Agency)]]** — runtime budgets, recursion-depth limits, and step ceilings are proposed here as L3 controls, with soft-signal anomaly detection at L4. D3 grades one of them in part: D3-CHAIN-DEPTH at L4 caps delegation depth, which bounds a recursive loop that passes through other agents. The rest of this bullet is a placement proposal rather than a reading of the domain.
+- **[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 (Runtime and Guardrails)]]** — sandbox-enforced resource quotas belong at L3, where D4-SANDBOX-LIMITS has the platform that runs each sandbox set and enforce its CPU, memory and wall-clock limits, and counts no limit the agent's own code keeps.
 - **[[agentic-ai-security-cmm-d7-observability|CMM D7 (Observability and Detection)]]** — anomaly detection for unbounded patterns and runaway-agent identification belong at L4.
 - **CMM D9 (Operations & Human Factors)** — runaway-agent decommission drills and HITL-fatigue-aware kill-switch operations belong at L4.
 - **MAAIS Layer 4 (Agent Execution and Control)** — names "policy enforcement" and "runtime safety verification" which directly cover these threat classes.

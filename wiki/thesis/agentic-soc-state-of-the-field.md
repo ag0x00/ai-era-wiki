@@ -59,6 +59,7 @@ related:
   - "[[offensive-agent-collective]]"
   - "[[artifactory]]"
   - "[[hugging-face]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
 sources:
   - "[[microsoft-secure-agentic-ai-end-to-end]]"
 verified: 2026-09-22
@@ -92,7 +93,7 @@ Three load-bearing capabilities distinguish a real agentic SOC from an LLM bolte
 
 1. **Defender-LLM governance.** The same identity, authorization, and audit substrate that secures *agentic AI applications* (see [[microsoft-entra-agent-id|Microsoft Entra Agent ID]], [[microsoft-zt4ai|Microsoft ZT4AI]]) applies to defender agents. A triage agent is a non-human identity that must be inventoried, authorized, and audited.
 2. **Action authority and blast radius.** What an agent can do unilaterally, with HITL approval, or never. The [[plan-validate-execute|Plan-Validate-Execute]] pattern from the agentic-AI side translates directly: the SOC variant gates response actions through approval workflows.
-3. **Continuous evaluation.** The [[prompt-volume-to-alert-ratio|prompt-volume-to-alert ratio]] is one signal-to-noise metric; the broader question is how the four-quadrant red-team coverage from [[agentic-ai-security-cmm-2026|CMM D7 L4]] applies to the defender agents themselves.
+3. **Continuous evaluation.** The [[prompt-volume-to-alert-ratio|prompt-volume-to-alert ratio]] is one signal-to-noise metric; the broader question is how the evaluation [[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d7-observability|D7]] L4 grades, quarterly and with tools from two testing categories, applies to the defender agents themselves.
 
 All three are shaped by an asymmetry that acquired an existence proof in August 2026.
 

@@ -2,7 +2,7 @@
 type: paper
 title: "AI Coding Agent Governance"
 created: 2026-04-30
-updated: 2026-09-01
+updated: 2026-09-25
 tags:
   - papers
   - agentic-ai
@@ -40,6 +40,11 @@ related:
   - "[[endor-labs-ai-code-governance]]"
   - "[[securing-agentic-coding]]"
   - "[[generative-coding-deployment-shape-2026]]"
+  - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
 sources:
   - "[[.raw/articles/knostic-ai-coding-agent-governance-2026-04-30.md]]"
   - "https://www.knostic.ai/blog/ai-coding-agent-governance"
@@ -114,12 +119,12 @@ This was the user's primary reason for ingesting. Comparison against [[agentic-a
 
 | Knostic emphasis | Where it already lives |
 |---|---|
-| Unique agent identities, agent in IAM, lifecycle | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D2** L2–L5; [[agent-identity-architecture\|AI Agent Identity Architecture]]; [[non-human-identity\|Non-Human Identity (NHI)]] |
-| Least-privilege scoping | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D3** L3; [[least-agency-principle\|Least Agency Principle]] |
+| Unique agent identities, agent in IAM, lifecycle | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **[[agentic-ai-security-cmm-d2-identity\|D2]]** L2–L5; [[agent-identity-architecture\|AI Agent Identity Architecture]]; [[non-human-identity\|Non-Human Identity (NHI)]] |
+| Least-privilege scoping | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **[[agentic-ai-security-cmm-d3-control-least-agency\|D3]]** L3; [[least-agency-principle\|Least Agency Principle]] |
 | HITL escalation for high-risk | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D3** L3+; Human-in-the-Loop control gate |
-| Audit trails + rollback | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D7** L3+ (OTel `gen_ai.*`); **D9** rollback drills; [[supply-chain-security-for-agents\|Supply Chain Security for Agentic AI]] §Brain Git |
-| Shadow agent discovery | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D2** L5 (Okta ISPM Agent Discovery, Microsoft Agent 365 Registry) |
-| MCP server validation | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D5** L4; [[mcp-security\|MCP Security]]; [[agentgateway\|AgentGateway]] |
+| Audit trails + rollback | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **[[agentic-ai-security-cmm-d7-observability\|D7]]** L3+ (OTel `gen_ai.*`); **D9** rollback drills; [[supply-chain-security-for-agents\|Supply Chain Security for Agentic AI]] §Brain Git |
+| Shadow agent discovery | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **D2** L5 (Okta ISPM Agent Discovery, Microsoft Agent 365 Registry); **[[agentic-ai-security-cmm-d1-governance\|D1]]** L3 (D1-SHADOW, across the organization's estate) |
+| MCP server validation | [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] **[[agentic-ai-security-cmm-d5-egress-network\|D5]]** L4; [[mcp-security\|MCP Security]]; [[agentgateway\|AgentGateway]] |
 | Phase 1/2/3 phasing | Implicit in CMM L2 → L3 → L4 (Foundation → Standardization → Measurement) |
 
 ### Gaps Knostic surfaces that the CMM should sharpen
@@ -127,9 +132,9 @@ This was the user's primary reason for ingesting. Comparison against [[agentic-a
 **Five sharpenings worth applying.**
 
 1. **Governance ≠ security** is not stated as a foundational principle in the CMM. It should be — "the CMM measures both *security* (preventing harm) and *governance* (defining authority/accountability) and the two are not interchangeable" — most usefully as a callout in the CMM intro and in [[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]].
-2. **"Decision rights" as a D1 vocabulary item.** The CMM uses "tier" and "approval" but never names *decision rights* — Knostic's sharper formulation. D1 L3 should require a documented decision-rights matrix per agent type.
-3. **Sample audit log schema at D7 L3.** The CMM requires OTel `gen_ai.*` traces but doesn't specify minimum-fields-per-action. Knostic's schema (`{timestamp, agent_id, user_id, action_type, resource_path, approval_status, rollback_ref}`) is concrete and worth requiring.
-4. **Time-bounded elevation / maintenance-window scoping** at D3. The CMM has step-up gates at L5 but no explicit time-bounded elevation criterion at L4 (which is where it most belongs given JIT-access patterns).
+2. **"Decision rights" as a D1 vocabulary item.** The CMM grades decision rights, Knostic's sharper formulation, in two domains. D1-BOUNDARY, at [[agentic-ai-security-cmm-d1-governance|D1]] L3, grades a dated record for each agent type of which actions its agents take on their own, which wait for a human approval and whose, and which they never take, and D3-RIGHTS, at [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3, grades a decision-rights matrix that the decision path applies at call time.
+3. **Sample audit log schema at D7 L3.** D7-LOG-SCHEMA sets the fields each tool call's records carry at L3: the arguments, the target resource, the outcome and a join identifier, and for a write a reference that locates what it changed. Knostic's schema (`{timestamp, agent_id, user_id, action_type, resource_path, approval_status, rollback_ref}`) adds the approval status, which no D7 criterion requires in the action record.
+4. **Time-bounded elevation / maintenance-window scoping** at D3. D3-ELEVATE, at D3 L4, grades a grant beyond an agent's standing allowlist that is issued just in time for one task and carries an expiry the decision point enforces.
 5. **Coding-agent archetype evidence rubric.** The CMM's Open Questions §1 explicitly flagged "no agent-archetype tailoring." Knostic's four threat vectors (rules-file integrity, IDE extension provenance, typosquatted dependencies, destructive actions) provide the rubric for the **generative coding tool** archetype — should be added as a deployment-shape addendum.
 
 ### CMM coverage beyond Knostic

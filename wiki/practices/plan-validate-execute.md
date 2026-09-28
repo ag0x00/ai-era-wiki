@@ -15,6 +15,7 @@ scope_axis:
 attributed_to: "Google Workspace, presented by Nicolas Lidzborski at Unprompted March 2026"
 sources:
   - "[[securing-workspace-genai-at-google-talk]]"
+  - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
 related:
   - "[[hitl]]"
   - "[[least-agency-principle]]"
@@ -100,7 +101,7 @@ The [[owasp-ai-exchange|OWASP AI Exchange]] names two of the same mitigations as
 
 ## Limit: the validator must see what the executor sees
 
-The deterministic gatekeeper is only as sound as the equivalence between the plan it validates and the action that runs. Where the executor transforms its input before acting — a shell that expands and unquotes, a filesystem that resolves a symlink, a tool server that rewrites arguments behind a name — a validator reading the pre-transformation form is deciding about a different action than the one performed. [[guard-canonicalization-gap|The guard canonicalization gap]] names this failure, and [[guardfall-shell-injection-audit|the GuardFall audit]] found ten of eleven surveyed coding agents bypassable on exactly it.
+The deterministic gatekeeper is only as sound as the equivalence between the plan it validates and the action that runs. Where the executor transforms its input before acting — a shell that expands and unquotes, a filesystem that resolves a symlink, a tool server that rewrites arguments behind a name — a validator reading the pre-transformation form is deciding about a different action than the one performed. [[guard-canonicalization-gap|The guard canonicalization gap]] names this failure, and [[guardfall-shell-injection-audit|the GuardFall audit]] found the guards of five of eleven surveyed coding and computer-use agents defeated on exactly it.[^guardfall]
 
 This does not weaken the pattern; it specifies a precondition. Validate canonicalized actions, and place an isolation boundary beneath the gatekeeper so that a validation error is contained rather than executed.
 
@@ -127,8 +128,8 @@ A reference implementation pairs:
 In the [[agentic-ai-security-cmm-2026|CMM]]:
 
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]] L3+**: the pattern that takes a deployment from "guardrails exist" to "guardrails are structurally enforced"
-- **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4 Runtime & Guardrails]] L3**: operationalizes HITL for irreversible actions via the deterministic gate
-- **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4**: the semantic-validation clause — proposed state change computed by dry run and the cross-family adversarial judge — that this pattern's Validate stage adds; D4's own maturity caveat records both as specifications with no named implementation, preview or otherwise, so a deployment assembling and evidencing them in-house — rather than a vendor status page — is what discharges this rung
+- **D3 L3**: D3-TIER-DESTRUCT places each destructive action at confirm or block, and D3-APPROVE-GATE holds a confirm-tier action at the deterministic gate until a person approves it
+- **[[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L4**: D4-VALIDATE-DRYRUN, D4-VALIDATE-JUDGE and D4-VALIDATE-IMPACT, the dry-run state change, the cross-family adversarial judge and the per-call limit on parsed impact that this pattern's Validate stage adds, while its cumulative session limit is D3-LEDGER's; Microsoft's Task Adherence, the one named preview component, compares planned tool calls with the user's intent and evidences the judge only where the deployment records its model family, and a deployment builds the dry run and the impact rules itself and evidences them from its own pipeline
 - **[[agentic-ai-security-cmm-d7-observability|D7 Observability & Detection]] L3**: the plan, validation, and execution triple is high-value audit data
 
 ## Cross-references
@@ -141,3 +142,4 @@ In the [[agentic-ai-security-cmm-2026|CMM]]:
 ## Notes
 
 [^aix-oversight]: [OWASP AI Exchange — OVERSIGHT](https://owaspai.org/go/oversight/), retrieved 2026-08-19. The simulate-before-execute specification: proposed state change, cross-family adversarial judge, deterministic guardrails with cumulative-session limits, and the approval-fatigue and review-interface requirements.
+[^guardfall]: [Adversa AI — GuardFall: a universal shell injection vulnerability in open-source AI agents](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/), Omer Ben Simon, 2026-06-30, modified 2026-08-11, retrieved 2026-09-24. Of the eleven open-source coding and computer-use agents surveyed, ten "leave the agent-to-bash boundary exploitable, in one of four ways": three ship "a guard that exists and is defeated", two ship "a tokenized guard that leaks only on quoted substitution and destructive flags", and the other five ship no static guard or a container sandbox that "fails under a documented and commonly used local mode opt-out". The eleventh, Continue, "is the only one with a correctly implemented guard".

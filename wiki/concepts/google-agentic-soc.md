@@ -68,7 +68,7 @@ Google's [[a2a-protocol|Agent2Agent (A2A) protocol]] provides cross-agent intero
 At Google Cloud Next 2026 Google paired the SOC agents with agent-governance primitives that map onto the [[agentic-ai-security-reference-architecture|reference architecture]]'s Identity and Observability planes:[^next26]
 
 - **Agent Identity** — every agent gets a unique cryptographic identity, creating an auditable trail mapped to authorization policies (the [[agent-identity-architecture|agent identity]] control).
-- **Agent Anomaly Detection** — real-time detection of suspicious agent behavior using statistical models and an [[llm-as-a-judge|LLM-as-a-judge]] framework to flag unusual reasoning.
+- **Agent Anomaly Detection** — real-time detection of suspicious agent behavior using statistical models and an [[llm-as-a-judge|LLM-as-a-judge]] framework to flag unusual reasoning. It is a Gemini Enterprise Agent Platform service, listed among the Agent Platform features in the Next 2026 wrap-up,[^next26] and it has been in allowlisted preview since 2026-09-16, with its findings surfaced in Security Command Center.[^gaad]
 - **Agent Security dashboard** — Security Command Center-powered discovery that maps agent-to-model relationships and scans for vulnerabilities.
 
 Wiz integration feeds Wiz Defend detections into Google SecOps and Mandiant Threat Defense, adds an AI Bill of Materials to inventory [[shadow-ai|shadow AI]], and injects inline security checks into IDE and agent workflows.[^next26]
@@ -95,6 +95,7 @@ Google's figures are vendor-reported and not independently benchmarked. A named 
 [^triage]: [Google Cloud — Use the Triage and Investigation Agent to investigate alerts](https://docs.cloud.google.com/chronicle/docs/secops/triage-investigation-agent), 2026. Autonomous evidence gathering, deobfuscation, true/false-positive verdict, transparent audit log; Mandiant-derived analysis principles.
 [^triageprev]: [Google Cloud Community — Alert Triage and Investigation Agent now in public preview](https://security.googlecloudcommunity.com/news-announcements-9/be-one-step-ahead-with-the-google-secops-alert-triage-and-investigation-agent-now-in-public-preview-6244), 2026. Public-preview status; Google-reported triage time (~30 min to ~60 sec) and 50% faster MTTR.
 [^gus]: [Google Cloud — Google Unified Security](https://cloud.google.com/security/google-unified-security), 2026. Converged platform spanning SecOps, Google Threat Intelligence, Security Command Center, Mandiant, and Chrome Enterprise.
+[^gaad]: [Google Cloud — Agent Anomaly Detection overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-anomalies-overview), Gemini Enterprise Agent Platform, updated 2026-09-24: Preview, "available to approved users that are signed in to their browser with an allowlisted email address"; statistical and lightweight machine-learning models flag sessions for a reasoning layer, and findings "are surfaced directly in Security Command Center". [Google Developers Blog — Agent Anomaly Detection, now in Private Preview on the Gemini Enterprise Agent Platform](https://developers.googleblog.com/agent-anomaly-detection-now-in-private-preview-on-the-gemini-enterprise-agent-platform/), 2026-09-16.
 
 <!-- sources:auto -->
 ## Sources

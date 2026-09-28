@@ -2,7 +2,7 @@
 type: framework
 title: "EU AI Act"
 created: 2026-04-30
-updated: 2026-08-17
+updated: 2026-09-25
 tags:
   - frameworks
   - regulation
@@ -37,6 +37,8 @@ primary_documents:
   - "Article-by-article + Annex IV rendering: https://artificialintelligenceact.eu/"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
+  - "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng"
+  - "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng"
 ---
 
 # EU AI Act
@@ -77,7 +79,8 @@ One contributor to prEN 18282 is identifiable and quantified. The [[owasp-ai-exc
 - **Article 10**: Data governance requirements
 - **Article 12**: Logging and record-keeping
 - **Article 14**: Human oversight measures
-- **Article 50**: Transparency obligations for GPAI models (applies August 2026 regardless of Omnibus delay)
+
+**Article 50** sits outside the high-risk requirements, and its paragraphs 1 to 4 leave the Chapter III requirements unaffected. It sets transparency obligations for providers and deployers of certain AI systems, among them systems that interact directly with people and systems that generate synthetic content, general-purpose AI systems included.[^art50] It applies from 2 August 2026, and Regulation (EU) 2026/1744, the Digital Omnibus on AI, gives providers of generative systems placed on the market before that date until 2 December 2026 to meet the Article 50(2) marking obligation.[^omnibus-art50] The obligations for providers of general-purpose AI models sit in Chapter V, Articles 51 to 56.[^art50]
 
 ## AI-BOM Implications
 
@@ -101,7 +104,7 @@ The [[owasp-ai-exchange|OWASP AI Exchange]] reads the Act's compliance model as 
 - **CEN/CENELEC harmonized standards**: targeting end 2026; critical for certification pathway
 - **National AI Authority establishment** across EU Member States
 - **AI Sandbox requirements**: applicable August 2, 2026 regardless of Omnibus delay
-- **Article 50 transparency obligations**: apply August 2026
+- **Article 50 transparency obligations**: apply from 2 August 2026, and generative systems placed on the market before that date have until 2 December 2026 for the Article 50(2) marking obligation[^omnibus-art50]
 
 ## See Also
 
@@ -113,10 +116,13 @@ The [[owasp-ai-exchange|OWASP AI Exchange]] reads the Act's compliance model as 
 ## Notes
 
 [^aix-liaison]: OWASP AI Exchange, ["About the AI Exchange"](https://owaspai.org/go/about/), retrieved 2026-08-17. The Exchange states 70 pages contributed to prEN 18282 and 70 pages to ISO/IEC 27090 through official liaison partnership, plus contribution to ISO/IEC 27091. These are the source's own claims and are not independently verified here.
+[^art50]: [Regulation (EU) 2024/1689, Article 50](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng#art_50), Official Journal text of 2024-07-12, retrieved 2026-09-25. Chapter IV and Article 50 are both titled "Transparency obligations for providers and deployers of certain AI systems". Article 50(1) covers AI systems intended to interact directly with natural persons, 50(2) providers "of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content", 50(3) deployers of emotion recognition and biometric categorisation systems, and 50(4) deployers of deep fakes and of AI-generated text published to inform the public. Article 50(6): "Paragraphs 1 to 4 shall not affect the requirements and obligations set out in Chapter III". Chapter V, "General-purpose AI models", holds Articles 51 to 56, and Article 113 applies the Regulation "from 2 August 2026" except where it names another date.
+[^omnibus-art50]: [Regulation (EU) 2026/1744, the Digital Omnibus on AI](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng), Official Journal text of 2026-07-24, in force on the third day after publication, retrieved 2026-09-25. Article 1, point (39)(b), adds Article 111(4) to Regulation (EU) 2024/1689: "Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2 December 2026."
 
 <!-- sources:auto -->
 ## Sources
 
 - [EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng)
 - [artificialintelligenceact.eu](https://artificialintelligenceact.eu/)
+- [eur-lex.europa.eu](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng)
 <!-- /sources -->

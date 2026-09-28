@@ -2,7 +2,7 @@
 type: product
 title: "Cedar"
 created: 2026-05-03
-updated: 2026-09-19
+updated: 2026-09-25
 tags:
   - products
   - policy-language
@@ -29,6 +29,9 @@ related:
   - "[[sondera]]"
   - "[[capability-based-authorization-talk]]"
   - "[[agentcordon]]"
+sources:
+  - https://docs.cedarpolicy.com/policies/syntax-policy.html
+  - https://aws.amazon.com/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/
 verified: 2026-09-19
 verified_against: []
 verified_findings: 0
@@ -67,9 +70,9 @@ For pure agentic-AI control-plane use (PDP for tool calls, capability enforcemen
 ## In the RA / CMM
 
 - **RA Control Plane (PDP):** Cedar is the reference implementation for policy-language-based PDPs, alongside OPA/Rego.
-- **CMM [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3:** Cedar or OPA policy repository is the evidence artifact for the criterion that the four least-agency action-risk tiers (auto / notify / confirm / block) are implemented.
-- **CMM D3 L5+:** Capability tokens with cryptographic binding extend Cedar's policy model; [[tenuo-warrant|Tenuo Warrants]] can use Cedar as the constraint language. The rung is L5+ rather than L5, because no implementation in D3's control landscape supplies a production-hardened path.
-- **[[agentic-ai-security-cmm-d1-governance|D1]] L4:** Standards crosswalk matrix is maintained in Cedar policies (or OPA equivalent).
+- **CMM [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3:** Cedar or OPA policy rules, compared with the tier record D3-TIER grades, are the policy evidence for D3-TIER-ENFORCE, the criterion that the decision point enforces the four least-agency action-risk tiers (auto / notify / confirm / block), and a decision-log entry for each tier in use completes that evidence.
+- **CMM D3 L5+:** Capability tokens with cryptographic binding extend Cedar's policy model; [[tenuo-warrant|Tenuo Warrants]] can use Cedar as the constraint language. The level is L5+ rather than L5, because no implementation in D3's control landscape supplies a production-hardened path.
+- **[[agentic-ai-security-cmm-d1-governance|D1]] L4:** Cedar annotations attach arbitrary key-value pairs to a policy without affecting its evaluation,[^cedar-annotations] so a policy can carry a reference to the control it implements, and the organization's crosswalk that D1-CROSSWALK grades at this level can cite the policies that enforce a mapped control.
 
 AWS offers Cedar as a managed service for AI agent authorization (March 2026 release), enabling policy evaluation without self-hosting the engine.
 
@@ -84,7 +87,7 @@ This is the primary production-grade, open-source reference implementation of Ce
 
 ### Cedar's statelessness as a constraint
 
-Cedar is inherently stateless — each policy evaluation has no memory of previous evaluations. The Sondera harness compensates with entity and trajectory stores that track IFC taint labels across turns. For long-running agents, this creates an integrity dependency on the store. Temporal logic systems (linear temporal logic, others) may be a better fit for policies that need to reason over the full trajectory; this is an open research area.
+Cedar is inherently stateless — each policy evaluation has no memory of previous evaluations. The Sondera harness compensates with entity and trajectory stores that track IFC taint labels across turns. For long-running agents, this creates an integrity dependency on the store. Temporal logic fits policies that need to reason over the full trajectory. Dogwood, an Apache-2.0 language AWS released in August 2026, evaluates existing Cedar policies and adds temporal conditions over an agent's prior events, and AgentCore Policy supports it.[^dogwood]
 
 ## Cedar in the AgentCordon credential broker (2026)
 
@@ -101,3 +104,8 @@ Cedar is inherently stateless — each policy evaluation has no memory of previo
 - [[agentcordon|AgentCordon]] — Cedar PDP applied to credential vending and MCP authorization
 
 - [[xacml|XACML]] — Cedar supersedes its XML policy language, but deploys the same PDP/PEP/PIP/PAP separation. The architecture outlived the language, which is why XACML remains the vocabulary citation even where Cedar is the implementation.
+
+## Notes
+
+[^cedar-annotations]: [Cedar Policy Language Reference Guide — Basic Cedar syntax, §Annotations](https://docs.cedarpolicy.com/policies/syntax-policy.html#term-parc-annotations), retrieved 2026-09-24: "You can attach arbitrary key-value pairs to Cedar policies in the form of annotations. An annotation has no impact on policy evaluation."
+[^dogwood]: [AWS Open Source Blog — Introducing Dogwood: runtime verification for AI agents](https://aws.amazon.com/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/), Marc Brooker, Joseph Tassarotti and Jean-Baptiste Tristan, 2026-08-06, retrieved 2026-09-24. Cedar "supports efficient point-in-time authorization decisions where each request is evaluated in isolation"; "Dogwood supports evaluating existing Cedar policies and adds in a new and powerful tool: temporal conditions"; "We've also launched Dogwood policy support inside AgentCore Policy"; and "The Dogwood language is released under an Apache 2.0 license."

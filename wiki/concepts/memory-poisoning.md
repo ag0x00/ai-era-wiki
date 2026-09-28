@@ -2,7 +2,7 @@
 type: concept
 title: "Memory Poisoning (Agentic AI)"
 created: 2026-05-03
-updated: 2026-08-20
+updated: 2026-09-25
 tags:
   - concepts
   - memory-poisoning
@@ -59,9 +59,9 @@ The PoisonedRAG attack (published 2024) demonstrated that carefully crafted adve
 
 Long-running agents that store and retrieve memories across sessions face a compounding risk: any content that enters memory through an injection attack in session N becomes part of the retrieved context for session N+1 through N+∞.
 
-Published example (Microsoft Defender for Cloud Apps, March 2026): researchers found 50+ examples of successful memory injection in production agentic systems, in which a single adversarial interaction planted instructions that persisted across sessions. The injected memory caused the agent to take unauthorized actions in later, unrelated user sessions.
+Microsoft's Defender Security Research Team reviewed 60 days of AI-related URLs in email traffic and found 50 distinct attempts, from 31 companies in more than a dozen industries, to plant instructions in AI assistants' memory through links whose pre-filled prompts tell the assistant to remember a company as a trusted source or to recommend it first.[^mspoison] The effectiveness and persistence of the attempts varied by assistant and over time, and their aim was to bias the assistant's later recommendations.
 
-This is the self-propagating variant of indirect prompt injection: the attack scales across all future agent interactions without further attacker involvement. [[cosnitch-copilot-personal-exfiltration|CoSnitch]] (Varonis, disclosed against Microsoft Copilot Personal in August 2026) is a sourced case with a stronger persistence claim than the Defender for Cloud Apps count above: the vendor states its planted memory entries survive a password change, a session revocation, and device re-enrollment, and leave no forensic footprint a conventional security tool would flag. If accurate, none of the identity-layer controls a defender would reach for first — credential rotation, session termination — reach a poisoned entry; only a control that operates on the memory store itself does. The [[owasp-ai-exchange|OWASP AI Exchange]] names the mechanism **stored injection** and files it as a subclass of indirect prompt injection, an input threat, where the payload persists in a retrieval index, a shared document, or a database and is retrieved in later sessions.[^aix-pi] The same mechanism appears elsewhere in the Exchange as persistent memory poisoning, a surface of augmentation data manipulation and therefore a runtime threat.[^aix-augmanip] One store and one entry sit under two threat headings, which means a prompt-injection defense program and a memory-integrity program are working the same surface from opposite ends.
+This is the self-propagating variant of indirect prompt injection: the attack scales across all future agent interactions without further attacker involvement. [[cosnitch-copilot-personal-exfiltration|CoSnitch]] (Varonis, disclosed against Microsoft Copilot Personal in August 2026) is a sourced case with a stronger persistence claim than the Microsoft count above: the vendor states its planted memory entries survive a password change, a session revocation, and device re-enrollment, and leave no forensic footprint a conventional security tool would flag. If accurate, none of the identity-layer controls a defender would reach for first — credential rotation, session termination — reach a poisoned entry; only a control that operates on the memory store itself does. The [[owasp-ai-exchange|OWASP AI Exchange]] names the mechanism **stored injection** and files it as a subclass of indirect prompt injection, an input threat, where the payload persists in a retrieval index, a shared document, or a database and is retrieved in later sessions.[^aix-pi] The same mechanism appears elsewhere in the Exchange as persistent memory poisoning, a surface of augmentation data manipulation and therefore a runtime threat.[^aix-augmanip] One store and one entry sit under two threat headings, which means a prompt-injection defense program and a memory-integrity program are working the same surface from opposite ends.
 
 The cross-agent path is the sharper version. Where several agents share a store, content written by one may be retrieved by another, so a compromised write is a future read attack against a different agent.[^aix-augmanip] The [[owasp-ai-exchange|OWASP AI Exchange]]'s worked case is a multi-agent customer-support system on a shared vector store: an adversary submits a request containing a fabricated return policy, an agent summarises it into the shared store, and subsequent agents serve the fabricated policy to other customers until the entry is found and removed.[^aix-augmanip] Detection and removal, rather than prevention, bound the damage window in that scenario.
 
@@ -73,7 +73,7 @@ Each document or memory entry should carry a cryptographic provenance record: wh
 
 ### Retrieval-side content filtering
 
-Retrieved content should be inspected for embedded instructions before being passed to the model's context. [[llamafirewall|LlamaFirewall]] PromptGuard 2 operates on the input side and can be applied to retrieved context, not just user messages. This is a probabilistic defense (97.5% recall, 1% FPR on its benchmark) — not a guarantee.
+Retrieved content should be inspected for embedded instructions before being passed to the model's context. [[llamafirewall|LlamaFirewall]] PromptGuard 2 operates on the input side and can be applied to retrieved context, not just user messages. This is a probabilistic defense, measured at 97.5% recall and a 1% false-positive rate on Meta's direct-jailbreak benchmark rather than on retrieved content.[^lf-pg2]
 
 ### Memory integrity monitoring
 
@@ -119,12 +119,15 @@ In the [[agentic-ai-security-reference-architecture|RA]], memory poisoning defen
                               [Retrieved context] → input filter → [Model]
 ```
 
-The Microsoft Defender for Cloud Apps memory-injection detector is the only production-grade commercial control in this row as of Q2 2026; the other implementations (RAGShield, Brain Git, SHA-256 monitoring) are Exploratory.
+Microsoft's Defender AI-agent detection, in preview, names indirect prompt injection among its detections and names no memory poisoning, and Microsoft covers memory poisoning with advanced-hunting queries for the links that plant it.[^defxdr][^mspoison] The plane's other implementations (RAGShield, Brain Git, SHA-256 monitoring) are Exploratory, so the RA names no generally available detection of memory poisoning.
 
 ## Notes
 
 [^aix-augmanip]: [OWASP AI Exchange — Augmentation data manipulation](https://owaspai.org/go/augmentationdatamanipulation/), retrieved 2026-08-18.
 [^aix-augintegrity]: [OWASP AI Exchange — AUGMENTATION DATA INTEGRITY](https://owaspai.org/go/augmentationdataintegrity/), retrieved 2026-08-18.
+[^mspoison]: [Microsoft Security Blog — Manipulating AI memory for profit: The rise of AI Recommendation Poisoning](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/), Microsoft Defender Security Research Team and Noam Kochavi, 2026-02-10, read 2026-09-25. The 60-day review of AI-related URLs in email traffic, the 50 attempts from 31 companies, the varying effectiveness and persistence, and the advanced-hunting queries over Defender for Office 365 email and Teams messages for links whose pre-filled prompts carry memory-manipulation keywords.
+[^defxdr]: [Microsoft Learn — Detect and investigate threats to AI agents using Microsoft Defender (Preview)](https://learn.microsoft.com/en-us/defender-xdr/security-for-ai/ai-agent-detection-protection), updated 2026-09-03, read 2026-09-25. "This feature is currently in public preview." The detection list names jailbreak attempts, indirect prompt injection (XPIA) attempts, malicious content propagation, secret and credential leakage, evasion techniques, LLM reconnaissance, and suspicious user or IP access.
+[^lf-pg2]: [Meta — LlamaFirewall: An open source guardrail system for building secure AI agents, §4.1 PromptGuard 2](https://arxiv.org/html/2505.03574#S4.SS1), arXiv:2505.03574, 2025, read 2026-09-25. The 86M model's recall of 97.5% at a 1% false-positive rate, on Meta's in-house direct jailbreak evaluation set in English.
 [^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Stored injection as a subclass of indirect prompt injection, with the payload persisting in a retrieval index, shared documents, or a database for retrieval in later sessions.
 
 > [!gap]

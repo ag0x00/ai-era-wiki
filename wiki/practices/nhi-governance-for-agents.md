@@ -3,7 +3,7 @@ type: practice
 title: "NHI Governance for AI Agents"
 address: c-000189
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-25
 tags:
   - practices
   - identity
@@ -78,7 +78,7 @@ For external service access (SaaS APIs, external MCP servers), retrieve short-li
 - Apply risk-based / conditional access where the platform supports it — Conditional Access for Agent Identities (Entra ID P1) can block high-risk agents automatically.
 - For high-autonomy multi-agent meshes, bound *authority per task* rather than per workload. Workload identity is task-blind; a [[tenuo-warrant|capability token]] ([[capability-based-authorization|capability-based authorization]] with [[monotonic-attenuation|monotonic attenuation]]) carries task-scoped, attenuating authority so a compromised sub-agent cannot exceed the scope minted for it. No hyperscaler ships per-task holder-bound tokens yet, so this is the L5+ frontier.
 
-### 5. Trace every action to a human — D2 L3 (audit at D8)
+### 5. Trace every action to a human — D2 L3 (audit at D7)
 
 Log every action alongside the agent identity and the triggering context (human instruction versus autonomous decision); this feeds [[agent-observability|Agent Observability]] and forensic attribution. The accountability primitive has matured into a named human owner: Entra Agent ID **sponsors** bind each agent to a person whose accountability transfers automatically to their manager on departure, [[microsoft-agent-365|Microsoft Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The standards gap — extending *delegation chain* capture from audit logs to the protocol layer — is the subject of the NIST CAISI Concept Paper's OAuth 2.1 / OIDC extensions and is met cryptographically by a warrant's embedded chain.
 

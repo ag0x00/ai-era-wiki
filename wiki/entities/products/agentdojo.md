@@ -26,6 +26,7 @@ related:
   - "[[llamafirewall]]"
   - "[[llamafirewall-2025]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
 sources:
   - "https://arxiv.org/abs/2406.13352"
   - "https://arxiv.org/abs/2505.03574"
@@ -52,7 +53,7 @@ A peer-reviewed, **independent** benchmark for prompt injection against tool-usi
 
 The wiki's prompt-injection detection-rate citations are mostly vendor self-evaluation: [[anthropic|Anthropic]] Constitutional Classifiers, Meta LlamaFirewall, [[promptfoo|Promptfoo]] regression numbers. **AgentDojo is the cleanest third-party comparator** — Meta's own evaluation uses it, which means the same benchmark numbers appear in vendor-published evaluations and in independent papers, making cross-comparison defensible.
 
-For the wiki's [[agentic-ai-security-cmm-2026|CMM]] D7 L4 evidence requirement (multi-tool red-team eval), AgentDojo serves as the **independent benchmark anchor** that vendor self-evals are compared against. Mature D7 L4 programs should report both vendor-self-eval and AgentDojo numbers for the same defense.
+For the wiki's [[agentic-ai-security-cmm-2026|CMM]] [[agentic-ai-security-cmm-d7-observability|D7]] L4 evidence requirement (multi-tool red-team eval), AgentDojo serves as the **independent benchmark anchor** that vendor self-evals are compared against. Mature D7 L4 programs should report both vendor-self-eval and AgentDojo numbers for the same defense.
 
 ## Distinction from vendor red-team tools
 
@@ -64,7 +65,7 @@ For the wiki's [[agentic-ai-security-cmm-2026|CMM]] D7 L4 evidence requirement (
 | [[mindgard-cart\|Mindgard CART]] | Continuous SaaS | Commercial vendor library |
 | **AgentDojo** | **Academic benchmark** | **Peer-reviewed; venue-validated** |
 
-The wiki's CMM D7 L4 should require *at least one* independent benchmark (AgentDojo or InjecAgent or WASP) alongside the four-quadrant tool coverage to count as L4 evidence.
+The wiki's CMM D7 L4 should require *at least one* independent benchmark (AgentDojo or InjecAgent or WASP) beside the two testing categories D7-EVAL-TOOLS asks for, to count as L4 evidence; no D7 criterion requires one yet.
 
 ## Related benchmarks
 

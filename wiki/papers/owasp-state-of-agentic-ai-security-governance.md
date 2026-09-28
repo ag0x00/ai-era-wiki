@@ -3,7 +3,7 @@ type: paper
 title: "State of Agentic AI Security and Governance"
 address: c-000220
 created: 2026-06-22
-updated: 2026-08-20
+updated: 2026-09-25
 tags:
   - papers
   - owasp
@@ -200,7 +200,7 @@ Weaknesses:
 - Scores severity via the AIVSS measurement layer; see [[owasp-aivss|AIVSS]] and the [[standards-review-owasp-agentic-aivss-2026-Q2|2026-Q2 OWASP standards review]].
 - Pairs with the [[owasp-ai-exchange|OWASP AI Exchange]] as the adoption-process counterpart to this report's Levels 0–4 governance ladder and Adoption Tiers: the Exchange's five-step G.U.A.R.D. model organizes the same governance work OWASP's other flagship project measures. The Exchange does not restate, contradict, or supersede this report's findings.
 
-[^exec]: OWASP GenAI Security Project, *State of Agentic AI Security and Governance*, v2.01, June 2026 — Executive Summary (pp. 7–8): "Most organizations are deploying agents faster than they can govern them. More budget for the programs we already run will not close that gap"; three findings. `.raw/papers/owasp-state-of-agentic-ai-security-governance-v2.01.pdf`.
+[^exec]: OWASP GenAI Security Project, *State of Agentic AI Security and Governance*, v2.01, June 2026 — Executive Summary (pp. 7–8): "Most organizations are deploying agents faster than they can govern them. More budget for the programs we already run will not close that gap"; three findings. The two quoted sentences sit in the page-7 graphic and not in the PDF's text layer, so a text search of the file does not find them. `.raw/papers/owasp-state-of-agentic-ai-security-governance-v2.01.pdf`.
 [^mm]: Same source, Enterprise Adoption Maturity Model (pp. 53–60): two dimensions (Adoption Tier AT0–AT8, Governance Maturity Levels 0–4) and the Governance Posture Matrix.
 [^scope]: Same source, Scope and Audience / Fit with Agentic Initiative Resources (pp. 9–11) and Agents Taxonomy Scope (p. 12): CISO/C-level audience; detailed controls deferred to companion OWASP resources.
 [^tracker]: Same source, Real-World Incidents and Exploits Tracker (pp. 35–36): "424+ Total CVEs, 74 Critical, 17 Platforms Studied"; "2026* OpenClaw 238, MCP 30+, CrewAI, PraisonAI (Q1 only): 290 CVEs."

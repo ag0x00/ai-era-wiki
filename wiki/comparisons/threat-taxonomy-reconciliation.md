@@ -3,7 +3,7 @@ type: comparison
 title: "Threat Taxonomy Reconciliation"
 address: c-000235
 created: 2026-06-23
-updated: 2026-09-24
+updated: 2026-09-25
 tags:
   - comparisons
   - threat-modeling
@@ -114,7 +114,7 @@ The ASI Top 10 enumerates risks reachable through model use at runtime, so the p
 
 The three poisoning rows differ by where the manipulation happened and agree on what it produces, which is why they carry the same asset and impact and split across two domains. Data poisoning and development-environment model poisoning both occur inside the organization's own engineering environment; supply-chain model poisoning arrives with an artifact obtained from elsewhere, which places it primarily at [[agentic-ai-security-cmm-d8-supply-chain|D8]] where acquired artifacts are graded. The Exchange states the receiver's position plainly: protection of model parameters at the moment of manipulation is not in the hands of the party that obtained the model, so what remains to that party is the data-poisoning control set, the broad-poisoning controls, and supply chain management, with the rest owed by the supplier (§3.1.3).[^aix-supplymodelpoison] The D6 secondary reflects the routes through which a poisoned artifact reaches the graded corpus. Where the supplied model is used for further training, the Exchange names the result a transfer learning attack.[^aix-supplymodelpoison]
 
-The D6 assignment on the inversion and membership-inference row names the domain that owns the data, and [[agentic-ai-security-cmm-d6-data-rag|D6]] grades no level against either threat. Its entitlement thread consults an access model held beside the data, and a model's weights carry none, so the Exchange's threat-specific control sits at training time and outside what this CMM assesses. Read the cell as an ownership pointer rather than as a claim that the domain supplies a graded control.
+The D6 assignment on the inversion and membership-inference row names the domain that owns the data. The Exchange lists sensitive data limitation first among the controls against both threats,[^aix-inversion-ttr] and [[agentic-ai-security-cmm-d6-data-rag|D6]] grades three controls of that group at L3 and L4: data minimization, short retention and training-data obfuscation. D6 grades no control specific to either threat. Its entitlement thread consults an access model held beside the data, and a model's weights carry none, so the one control the Exchange names for these two threats alone, a model kept too small to store individual training records, sits at training time and outside what this CMM assesses.
 
 The same reading applies to the two development-time leak rows, with one exception. [[agentic-ai-security-cmm-d6-data-rag|D6]] grades the corpus, the augmentation store, agent memory and the validation corpus, and [[agentic-ai-security-cmm-d8-supply-chain|D8]] grades acquisition and provenance; neither grades a boundary around the engineering environment, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] records that absence for `DEV SECURITY`, `SEGREGATE DATA` and `CONF COMPUTE` alike. Neither cell claims a graded environment boundary; D6's validation-corpus criterion reaches the test-data half of §3.2.1 and no further — it grades the corpus being held apart, not who inside the environment can reach it.
 
@@ -221,6 +221,8 @@ For a design-time assessment, start with the structural tests, run [[stride-ai-2
 [^aix-devcodeleak-ttr]: [OWASP AI Exchange — Source code/configuration leak](https://owaspai.org/go/devcodeleak/), retrieved 2026-08-25. Unauthorized access, through a data leak of the development environment, to the code or configuration that preprocesses the training and test data and trains the model, with the stated impact a confidentiality breach of model intellectual property; and the control set of general controls with sensitive data limitation plus `DEV SECURITY` and `SEGREGATE DATA`.
 
 [^aix-augintegrity]: [OWASP AI Exchange — AUGMENTATION DATA INTEGRITY](https://owaspai.org/go/augmentationdataintegrity/), retrieved 2026-08-18.
+
+[^aix-inversion-ttr]: [OWASP AI Exchange — Model inversion and membership inference](https://owaspai.org/go/modelinversionandmembership/), retrieved 2026-09-25. The entry's control list: general controls with sensitive data limitation first, four input controls, `SMALL MODEL` as the one control specific to the two threats, and protection against model theft.
 
 [^aix-disclosureoutput]: [OWASP AI Exchange — Disclosure of sensitive data in model output](https://owaspai.org/go/disclosureinoutput/), retrieved 2026-08-19. The threat definition and the cited OWASP LLM Top 10 Sensitive Information Disclosure and MITRE ATLAS LLM Data Leakage (`AML.T0057`) anchors. The Exchange links the 2026 edition of the LLM Top 10 for this anchor and writes the identifier as `LLM02:2026` in the sibling inversion entry; the wiki's verified set is the 2025 edition, which carries Sensitive Information Disclosure at `LLM02:2025`. The category number matches and the edition year does not, so the wiki writes `LLM02:2025` and records the discrepancy as unreconciled, on the same basis as the Improper Output Handling identifier noted below.
 

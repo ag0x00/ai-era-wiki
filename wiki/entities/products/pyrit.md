@@ -28,6 +28,8 @@ related:
   - "[[mindgard-cart]]"
   - "[[microsoft-rai]]"
   - "[[mitre-atlas]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[red-teaming-for-ai-synthesis]]"
 sources:
   - "https://github.com/microsoft/PyRIT"
   - "https://microsoft.github.io/PyRIT/"
@@ -38,7 +40,7 @@ sources:
 
 **Sources:** [PyRIT (repo)](https://github.com/microsoft/PyRIT) · [PyRIT docs](https://microsoft.github.io/PyRIT/) · [PyRIT releases](https://github.com/microsoft/PyRIT/releases)
 
-Microsoft AI Red Team's open-source Python framework for **orchestrating multi-turn and single-turn adversarial attacks** against generative-AI systems. The wiki's [[agentic-ai-security-cmm-2026|CMM]] cites PyRIT as the **"orchestration / multi-turn"** attack category in the D7 L4 four-quadrant red-team coverage requirement.
+Microsoft AI Red Team's open-source Python framework for **orchestrating multi-turn and single-turn adversarial attacks** against generative-AI systems. [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]] places PyRIT in the **multi-turn orchestration** testing category, one of the four from which the wiki's [[agentic-ai-security-cmm-2026|CMM]] asks for tools in two at L4, under D7-EVAL-TOOLS.
 
 ## Function
 
@@ -67,7 +69,7 @@ The canonical repo is now **`microsoft/PyRIT`** (formerly `Azure/PyRIT`, archive
 | Regression-style pass/fail dashboards | [[promptfoo\|Promptfoo]] |
 | 24/7 managed continuous service | [[mindgard-cart\|Mindgard CART]] |
 
-This is the basis for the wiki's **four-quadrant** D7 L4 evidence requirement: single-tool coverage is explicitly not L4.
+The three gaps are the other three testing categories, and [[agentic-ai-security-cmm-d7-observability|D7]]'s D7-EVAL-TOOLS asks for tools from two of the four at L4, so PyRIT alone does not meet it.
 
 ## Direct quotes
 

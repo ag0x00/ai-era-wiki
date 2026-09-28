@@ -3,7 +3,7 @@ type: framework
 title: "OWASP Top 10 for LLM Applications"
 address: c-000309
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-25
 origin: aggregated
 tags:
   - frameworks
@@ -124,7 +124,7 @@ Translated into 10+ languages. Vendor integrations by Kong, Lakera (acquired by 
 - [[owasp|OWASP]] (publisher)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — the agentic complement; covers ASI01–ASI10
 - [[owasp-aivss|OWASP AI Vulnerability Scoring System (AIVSS)]] — OWASP's AI vulnerability scoring system
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — LLM Top 10 IDs anchor: `LLM01:2025` Prompt Injection maps to **D4 Runtime**; `LLM04:2025` Data and Model Poisoning to **D6 Data**; `LLM06:2025` Excessive Agency to **D3**; `LLM07:2025` System Prompt Leakage to **D6 + D9**; `LLM08:2025` Vector and Embedding Weaknesses to **D6**; `LLM10:2025` Unbounded Consumption to **D4 + D5**
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — LLM Top 10 IDs anchor: `LLM01:2025` Prompt Injection maps to **D4 Runtime**; `LLM04:2025` Data and Model Poisoning to **D6 Data**; `LLM06:2025` Excessive Agency to **D3**; `LLM07:2025` System Prompt Leakage to **D9**; `LLM08:2025` Vector and Embedding Weaknesses to **D6**; `LLM10:2025` Unbounded Consumption to **D4 + D5**
 - [[standards-review-owasp-llm-top-10-2026-Q2|Standards Review — OWASP LLM Top 10]] — primary-source verification of all ten codes and the CMM coverage matrix
 - [[stride-ai-2026|STRIDE-AI Threat Modeling Framework]] — academic threat-modeling method that proposes the LLM Top 10 as the technical taxonomy bridged to NIST AI RMF governance
 

@@ -3,7 +3,7 @@ type: playbook
 title: "Assessor's Quick Scorecard: Secure-SDLC and AI"
 address: c-000050
 created: 2026-05-14
-updated: 2026-09-24
+updated: 2026-09-25
 tags:
   - playbook
   - assessor-guide
@@ -120,9 +120,9 @@ Anchors: **[[osfi-e-23-2027|OSFI E-23]] (2027)** Sections B (Enterprise-wide MRM
 | B2 | Is each AI/ML system risk-rated against the bank's defined criteria (purpose, impact, data sensitivity, autonomy level) with corresponding control intensity? | D | E-23 C.2, C.3 |
 | B3 | Is there an AI governance body with documented charter, escalation paths, multi-disciplinary participation (legal, compliance, ethics), and at least quarterly review cadence? | D, I | E-23 B.1; Voluntary AI Code §1 (Accountability) |
 | B4 | Is independent model validation performed by reviewers separated from development, with review triggers covering new development, modifications, performance breaches, and significant data changes? | D, I | E-23 D Stage 2 (Review) |
-| B5 | Is an [[ai-bom\|AI-BOM]] maintained for each deployed AI/ML system, covering training-data sources, RAG corpus, frameworks, MCP servers, reward models, and adaptation layers? | D, T | SP 800-218A PS.3.2; E-23 App. A — **`[P]` producer:** consuming a hosted model scores training-data/reward-model limbs *N/A* with reason, per [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]] |
+| B5 | Is an [[ai-bom\|AI-BOM]] maintained for each deployed AI/ML system, covering training-data sources, RAG corpus, frameworks, MCP servers, reward models, and adaptation layers? | D, T | SP 800-218A PS.3.2; E-23 App. A — **producer limbs:** consuming a hosted model scores the training-data and reward-model limbs *N/A* with reason, as [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]] reads D8-LINEAGE only for a model the bank trains or fine-tunes |
 | B6 | Is training-data provenance tracked when known, integrity-verified before use, and documented when provenance is not knowable? | D, T | SP 800-218A PW.3.1, PW.3.2 |
-| B7 | Are model weights and configuration parameters protected with cryptographic hashes, digital signatures, least-privilege access, and risk-proportionate additional controls (encryption / multi-party authorization / air-gap)? | D, T, O | SP 800-218A PS.1.3, PS.1.3.R4 — **`[P]` producer:** a bank not hosting or fine-tuning its own weights scores this *N/A* with reason, per [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]] |
+| B7 | Are model weights and configuration parameters protected with cryptographic hashes, digital signatures, least-privilege access, and risk-proportionate additional controls (encryption / multi-party authorization / air-gap)? | D, T, O | SP 800-218A PS.1.3, PS.1.3.R4 — **producer only:** a bank not hosting or fine-tuning its own weights scores this *N/A* with reason, as [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8]]'s D8-WEIGHTS reads only a model the bank trains or fine-tunes |
 | B8 | Is there an Algorithmic Impact Assessment (or PIPEDA-aligned privacy impact assessment) for each high-risk AI system handling consumer financial data, with documented mitigations? | D | PIPEDA Principle 4 (Limiting Collection); Voluntary AI Code §2 (Safety) |
 | B9 | Is the AI system designed such that no critical-path security or financial decision is taken without a human in the loop where the decision is irreversible, material, or rights-affecting? | D, O | SP 800-218A PW.1.1.C2; Voluntary AI Code §5 (Human Oversight) |
 | B10 | Are documented model-shutdown / rollback criteria and procedures in place, tested at least quarterly, with named accountable owner per system? | D, T | SP 800-218A RV.2.2.R2, RV.2.2.C1; E-23 D Decommissioning |

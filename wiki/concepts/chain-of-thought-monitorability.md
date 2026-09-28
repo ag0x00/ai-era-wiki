@@ -53,11 +53,11 @@ The literature uses chain-of-thought monitorability, chain-of-thought monitoring
 
 ## Controls that read the trace
 
-D4 of the [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM]] lists chain-of-thought and alignment auditing among the capabilities an L4 runtime-guardrails program assembles. Two implementations carry that rung. The catalog names [[llamafirewall|LlamaFirewall]]'s AlignmentCheck at an experimental grade, and Microsoft's Content Safety Task Adherence, the platform-native alternative, remains in public preview.
+D4 of the [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM]] grades alignment auditing at L4 as D4-ALIGN, a monitor outside the agent that checks each tool call against the task before it runs, reading the agent's stated reasoning where the model exposes one. D4's control landscape lists [[llamafirewall|LlamaFirewall]]'s AlignmentCheck, a chain-of-thought auditor, at an experimental grade, and Microsoft's Content Safety Task Adherence, which checks planned tool calls against user intent and for which Microsoft documents no reasoning-trace input, in public preview.
 
 AlignmentCheck's published figures have stood still. The paper reports an 83% attack-success reduction on the [[agentdojo|AgentDojo]] benchmark, and 80%+ recall at under 4% false-positive rate on its own goal-hijacking benchmark.[^alignmentcheck-numbers] Both date from a 2025-05-13 commit, roughly sixteen months before this page, while the surrounding repository stayed active through 2026-08-18.[^alignmentcheck-stale]
 
-Both controls read the property this page describes, so the property's reliability bounds what either one can promise. [[prompt-injection-containment|Prompt-injection containment]] therefore places AlignmentCheck as one layer of a combined defense, and the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s D4 assessor questions ask an auditor to watch a chain-of-thought or alignment audit fire on a real agent run, whichever implementation the deployment runs, in place of a vendor claim on file.
+AlignmentCheck reads the property this page describes, so the property's reliability bounds what it can promise. [[prompt-injection-containment|Prompt-injection containment]] therefore places AlignmentCheck as one layer of a combined defense, and the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s D4-ALIGN question asks for a call the alignment monitor held or blocked, on a production run or in a test, and records which monitor it was, in place of a vendor claim on file.
 
 The [[agent-runtime-protection-canvass-2026-09|Agent Runtime Protection Market Canvass]] surveys vendor coverage of this capability across the wider runtime-guardrails market.
 

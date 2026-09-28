@@ -2,7 +2,7 @@
 type: paper
 title: "Non-Human Identities"
 created: 2026-04-30
-updated: 2026-06-23
+updated: 2026-09-25
 tags:
   - papers
   - non-human-identity
@@ -35,6 +35,11 @@ related:
   - "[[identity-credential-coupling]]"
   - "[[credential-proxy-pattern]]"
   - "[[shadow-automation]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain]]"
+  - "[[agentic-ai-security-cmm-d9-operations]]"
 sources:
   - "[[.raw/articles/oasis-what-are-non-human-identities-2026-04-30.md]]"
   - "https://www.oasis.security/blog/what-are-non-human-identities"
@@ -112,11 +117,11 @@ Eight structural differences:
 
 | Pillar | Maps to [[agentic-ai-security-cmm-2026\|Agentic AI Security Capability Maturity Model]] |
 |---|---|
-| Enforce least privilege by default | **D2 L3+** (already covered) |
-| Establish ownership and accountability | **D1 L3** (decision-rights matrix) + **D2 L3** (per-NHI human owner field) |
+| Enforce least privilege by default | **[[agentic-ai-security-cmm-d2-identity\|D2]] L3+** (already covered) |
+| Establish ownership and accountability | **[[agentic-ai-security-cmm-d1-governance\|D1]] L2** (D1-REGISTER, the person accountable for each deployment) + **D2 L3** (D2-OWNER, a current human owner per agent and NHI) |
 | Automate credential rotation | **D2 L4** (credential proxy + rotation cadence) |
-| Monitor behavior continuously | **D7 L4** (per-credential behavioral baselines for NHIs) |
-| **Integrate NHI governance into the development lifecycle** | **D8 L3 + D2 L3** (CI/CD gate; new: dev-lifecycle integration as level criterion) |
+| Monitor behavior continuously | **D2 L4** (D2-BASELINE, a behavioral baseline per NHI) and **[[agentic-ai-security-cmm-d7-observability\|D7]] L4** (D7-BASELINE, each agent's tool calls) |
+| **Integrate NHI governance into the development lifecycle** | **[[agentic-ai-security-cmm-d8-supply-chain\|D8]] L3 + D2 L3** (CI/CD gate; new: dev-lifecycle integration as level criterion) |
 | Align NHI governance with Zero Trust principles | **D2 + D5** (already covered conceptually; sharpened to "Zero Trust without NHI visibility is incomplete") |
 
 ### 6. Real-world incidents
@@ -146,7 +151,7 @@ Eight structural differences:
 
 1. **Identity-credential coupling** is a load-bearing concept the wiki has not named. Where the credential IS the identity (SAS tokens, storage access keys, PATs, Snowflake API keys), the credential proxy pattern cannot help — these workflows must rotate-as-identity-rotation. New concept page: [[identity-credential-coupling|Identity-Credential Coupling]].
 2. **HR-driven vs code-pace lifecycle mismatch** — NHIs don't have joiner/mover/leaver. The CMM **D2 L3** should explicitly require an NHI lifecycle that does not depend on HR events; **D2 L4** should require automated provisioning gates at code-deploy time (tied to CI/CD, not to onboarding).
-3. **Dependency mapping before rotation** — Oasis: "Where rotation is operationally risky, invest in dependency mapping to understand what will break before making changes." This is concrete CMM **D9 L4** evidence: the org must maintain a per-credential consumer-graph (what depends on this credential) before automated rotation is enabled.
+3. **Dependency mapping before rotation** — Oasis: "Where rotation is operationally risky, invest in dependency mapping to understand what will break before making changes." This is concrete CMM **[[agentic-ai-security-cmm-d2-identity|D2]] L4** evidence for D2-ROTATE-MAP, which asks for a documented map naming, for each stored credential, every consumer that must take the new value when it rotates.
 4. **NHI scale evidence** is currently single-sourced (CyberArk 82:1). Oasis adds Rubrik 45:1 and arxiv 250K-per-enterprise — both worth surfacing in [[non-human-identity|Non-Human Identity (NHI)]] for triangulation.
 5. **Eleven NHI types vs current treatment** — wiki lists service accounts and SPIFFE-flavor workload IDs but does not enumerate Service Principals, IAM Roles, PATs, SAS tokens, Storage Access Keys, Database Users. Each has a distinct rotation / ownership / detection profile. Worth enumerating in [[non-human-identity|Non-Human Identity (NHI)]].
 

@@ -3,7 +3,7 @@ type: concept
 title: "Vibe Coding"
 address: c-000041
 created: 2026-05-13
-updated: 2026-08-22
+updated: 2026-09-25
 tags:
   - concepts
   - agentic-coding
@@ -27,16 +27,17 @@ related:
   - "[[microsoft-cli-coding-agent-adoption-study]]"
   - "[[gartner-mq-enterprise-ai-coding-agents-2026]]"
   - "[[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d1-governance]]"
 sources:
   - ".raw/papers/pwc-future-of-solutions-dev-gen-ai-2026.pdf"
+  - "https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf"
+  - "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
 ---
 
 # Vibe Coding
 
 **Vibe coding** is an informal term for **generating or modifying code by describing the "vibe" or high-level intent in natural language**, relying on LLM inference rather than exact specifications. The term was **coined by [[andrej-karpathy|Andrej Karpathy]]** (computer scientist, OpenAI co-founder, ex-Tesla AI director) in a **February 2025 post on X**, describing the idea of "fully giving in to the vibes" when using AI to generate and run code for quick, throw-away projects. The term is now widely adopted across the AI development community and is formally cataloged in advisory thought-leadership including [[pwc-agentic-sdlc-in-practice|PwC's 2026 Agentic SDLC report]].
-
-> [!gap] Andrej Karpathy entity page
-> Karpathy is the originator of this term and the broader "Software 2.0" framing. He has multiple wiki-relevant publications and roles (OpenAI co-founder, Tesla AI, "From Models to Agents" talks). A dedicated wiki entity page is a gap; ingest candidate.
 
 ## Definition
 
@@ -59,10 +60,10 @@ PwC names **"Vibe-coder"** as one of the *new / growth roles* in the agentic SDL
 
 ## Tension With the Collaboration Paradox
 
-Vibe coding's claim of "fully giving in to the vibes" sits in tension with [[collaboration-paradox|the collaboration paradox]] (60% of developer work uses AI; only 0-20% is "fully delegated"). Two interpretations:
+Vibe coding's claim of "fully giving in to the vibes" sits in tension with [[collaboration-paradox|the collaboration paradox]] (roughly 60% of developer work uses AI; only 0-20% is "fully delegated").[^anthropic-60] Two interpretations:
 
-1. **Vibe coding is bounded to the 0-20% band**. Karpathy's original framing applies to throw-away projects where verification cost is low; the practitioner data shows that production work falls in the active-collaboration band even for AI-fluent users.
-2. **Vibe coding is the operating mode for the 0-20% that gets fully delegated**. Under this reading, vibe coding *is* the productized form of full delegation, but it remains a minority of work.
+1. **Vibe coding is bounded to the 0-20% band**.[^anthropic-60] Karpathy's original framing applies to throw-away projects where verification cost is low; the practitioner data shows that production work falls in the active-collaboration band even for AI-fluent users.
+2. **Vibe coding is the operating mode for the 0-20% that gets fully delegated**.[^anthropic-60] Under this reading, vibe coding *is* the productized form of full delegation, but it remains a minority of work.
 
 Both interpretations are consistent with the data. The wiki's position: **vibe coding is a real and productively-used mode for some classes of work (prototyping, exploratory analysis, scripting), but cannot be the default mode for high-stakes production work where the [[plan-validate-execute|Plan-Validate-Execute]] pattern applies.** See also [[anthropic-2026-agentic-coding-trends|Anthropic's Trends Report]] Trend 4 ("Human oversight scales through intelligent collaboration") for the convergent vendor-strategic framing.
 
@@ -70,7 +71,7 @@ Both interpretations are consistent with the data. The wiki's position: **vibe c
 
 Vibe-coded artifacts inherit specific risk patterns:
 
-- **Vulnerability density**: LLM-generated code from underspecified prompts tends to fall back on training-data norms, including common-but-insecure patterns. METR 2025 RCT findings (experienced devs 19% slower with AI tools) suggest the verification cost of vibe-coded artifacts is non-trivial; see [[metr-rct-2025|METR 2025 RCT]].
+- **Vulnerability density**: LLM-generated code from underspecified prompts tends to fall back on training-data norms, including common-but-insecure patterns. METR 2025 RCT findings (experienced devs 19% slower with AI tools)[^metr-study] suggest the verification cost of vibe-coded artifacts is non-trivial; see [[metr-rct-2025|METR 2025 RCT]].
 - **Cognitive file integrity exposure**: vibe-coded changes to identity files (system prompts, `SOUL.md`, `IDENTITY.md`) can introduce subtle behavioral shifts that the operator doesn't notice. See [[cognitive-file-integrity|Cognitive File Integrity]] for the defensive control.
 - **Coding-agent governance**: applying vibe coding through coding agents (Cursor, Claude Code, Copilot) bypasses traditional code-review chokepoints. See [[ai-coding-agent-governance|Knostic's AI Coding Agent Governance]] framework for the operational response.
 - **Supply-chain exposure**: vibe-coded artifacts often pull in dependencies the operator hasn't vetted. See [[supply-chain-security-for-agents|Supply Chain Security for Agents]] for the AI-BOM perspective.
@@ -82,7 +83,8 @@ One practitioner response treats the first of these as a context problem rather 
 ## CMM / RA Maps-to
 
 - **[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 (Supply Chain & AI-BOM)]] L3+** — vibe-coded artifacts inherit dependency-graph risk; D8 controls (AI-BOM, dependency scanning) gate this.
-- **[[agentic-ai-security-cmm-d9-operations|CMM D9 (Operations & Human Factors)]]** — vibe coding sits on a spectrum from disposable prototypes to production deployment; D9 controls (code review, change management) govern the transition.
+- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3: Control and Least-Agency]] L4** — vibe coding sits on a spectrum from disposable prototypes to production deployment, and D3-SOD governs the transition: each change an agent proposes to a production system's code, configuration, infrastructure or access policy passes three distinct principals, the one who proposes it, the one who approves it and the one who deploys it.
+- **[[agentic-ai-security-cmm-d1-governance|CMM D1: Governance and Accountability]] L3** — D1-HARNESS-REVIEW puts each change to a coding agent's configuration tree through a documented review before it takes effect, so a vibe-coded edit to an instruction file the harness loads passes the same gate.
 
 ## Provenance Note
 
@@ -101,8 +103,15 @@ The Karpathy X post (February 2025) is the canonical origin citation. PwC's 2026
 - [[ai-coding-agent-governance|AI Coding Agent Governance]] — operational response framework.
 - [[anthropic-2026-agentic-coding-trends|Anthropic 2026 Trends Report]] — adjacent vendor-strategic framing.
 
+## Notes
+
+[^anthropic-60]: [Anthropic — 2026 Agentic Coding Trends Report](https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf#page=3), January 2026, PDF page 3: research from Anthropic's Societal Impacts team "reveals that while developers use AI in roughly 60% of their work, they report being able to "fully delegate" only 0-20% of tasks". Both figures are developers' self-reported shares.
+[^metr-study]: [METR — Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/), 2025-07-10, retrieved 2026-09-25. A randomized controlled trial with 16 experienced open-source developers working 246 real issues: "when developers use AI tools, they take 19% longer than without", the time to complete an issue with AI tools allowed against disallowed.
+
 <!-- sources:auto -->
 ## Sources
 
 - [Vibe Coding](https://x.com/karpathy/status/1886192184808149383)
+- [resources.anthropic.com](https://resources.anthropic.com/hubfs/2026%20Agentic%20Coding%20Trends%20Report.pdf)
+- [metr.org](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
 <!-- /sources -->

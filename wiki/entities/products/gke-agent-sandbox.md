@@ -29,6 +29,9 @@ sources:
   - "https://github.com/kubernetes-sigs/agent-sandbox"
   - "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/machine-learning/agent-sandbox"
   - "https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/"
+  - "https://agent-sandbox.sigs.k8s.io/docs/sandbox/lifecycle/"
+  - "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents"
+  - "https://devblogs.microsoft.com/foundry/whats-new-in-microsoft-foundry-july-august-2026/"
 ---
 
 # GKE Agent Sandbox
@@ -62,7 +65,7 @@ The controller runs on any conformant Kubernetes cluster, not only GKE; the repo
 
 Coverage describes Agent Sandbox as "the only native agent sandbox offering among the three major hyperscalers."[^infoq] That phrasing needs precision, because AWS and Azure both ship sandboxes:
 
-- **AWS** exposes a code-interpreter sandbox inside Bedrock AgentCore, and **Azure** ships a per-session microVM sandbox in Foundry hosted agents (public preview) — both already recorded in [[agentic-ai-security-cmm-d4-runtime-guardrails|D4 of the CMM]].
+- **AWS** exposes a code-interpreter sandbox inside Bedrock AgentCore, and **Azure** runs Foundry hosted agents in per-session VM-isolated sandboxes, generally available since 2026-07-09[^foundry] — both already recorded in [[agentic-ai-security-cmm-d4-runtime-guardrails|D4 of the CMM]].
 - The distinction is that those are **proprietary managed-service features bound to a vendor agent platform**, not standalone infrastructure primitives. Agent Sandbox is the only one delivered as an **open, Kubernetes-native, cross-cluster-portable** resource.
 
 So the accurate reading is "the only open Kubernetes-native sandbox primitive among the hyperscalers," not "the only sandbox." The independent sandbox vendors — [Cloudflare Sandboxes](https://blog.cloudflare.com/) (container isolation plus V8 isolates) and [E2B](https://e2b.dev/) ([[firecracker|Firecracker]] microVMs) — remain the comparison set; see [[agent-sandbox-isolation-landscape|the isolation landscape comparison]].
@@ -74,7 +77,7 @@ The CRD manages the execution environment; it does not monitor what happens insi
 ## Role in the RA / CMM
 
 - **[[agentic-ai-security-reference-architecture|RA]] Runtime plane** — Agent Sandbox is the Kubernetes-native reference implementation in the Sandbox / containment row, alongside [[firecracker|Firecracker]] (per-task VM) and [[gvisor|gVisor]] (the runtime it wraps).
-- **[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 L3]]** — "per-task sandbox for high-risk-tier actions": a `SandboxClaim` against a network-default-deny `SandboxTemplate` is a clean evidence artifact, and the open CRDs make the control portable across clouds rather than entitlement-locked.
+- **[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 L3]]** — the sandbox family: a `SandboxClaim` against a `SandboxTemplate` is the sandbox D4-SANDBOX asks for, the template's resources carry the CPU and memory limits of D4-SANDBOX-LIMITS, a `shutdownTime` with the `Delete` policy sets its wall-clock limit as a deadline the controller enforces,[^lifecycle] and D4-SANDBOX-CLEAN is met where each claimed sandbox is deleted when its task ends. The open CRDs make the control portable across clouds rather than entitlement-locked.
 
 ## See also
 
@@ -89,3 +92,5 @@ The CRD manages the execution environment; it does not monitor what happens insi
 [^repo]: [GitHub — kubernetes-sigs/agent-sandbox](https://github.com/kubernetes-sigs/agent-sandbox), 2026. SIG Apps subproject; Apache 2.0; CRDs Sandbox, SandboxTemplate, SandboxClaim, SandboxWarmPool; runs on any Kubernetes cluster.
 [^infoq]: [InfoQ — Google Announces GKE Agent Sandbox and Hypercluster at Next '26](https://www.infoq.com/news/2026/05/gke-agent-sandbox-hypercluster/), May 2026. Launched as a Kubernetes SIG Apps subproject at KubeCon NA 2025; Lovable 200,000+ AI-generated projects/day; "only native agent sandbox offering among the three major hyperscalers"; Cloudflare Sandboxes and E2B as the independent-vendor comparison.
 [^armo]: [ARMO — Securing AI Agents on GKE: Where gVisor, Workload Identity, and VPC Service Controls Stop Working](https://www.armosec.io/blog/sandboxing-ai-agents-gke-workload-identity/), 2026. Isolation manages the environment, not in-sandbox behavior; identity tokens are intent-blind; VPC-SC misses sanctioned-path exfiltration; recommends eBPF runtime behavioral detection inside the sandbox.
+[^lifecycle]: [Kubernetes SIG Apps — Agent Sandbox documentation, "Agent Sandbox Shutdown Time"](https://agent-sandbox.sigs.k8s.io/docs/sandbox/lifecycle/), read 2026-09-25. "While standard sandboxes run until manually deleted, configuring a shutdownTime allows you to schedule an exact expiration timestamp. Once this timestamp is reached, the sandbox and its associated resources are automatically garbage-collected by the control plane", set on a `Sandbox` with `shutdownPolicy: Delete`, or on a claim's `spec.lifecycle` through the Python SDK's `shutdown_after_seconds`.
+[^foundry]: [Microsoft Learn — What are hosted agents?](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents), updated 2026-09-11, read 2026-09-25: "Hosted agents run in per-session VM-isolated sandboxes." Microsoft announced general availability on 2026-07-09 ([Microsoft Foundry Blog — What's new in Microsoft Foundry: July and August 2026](https://devblogs.microsoft.com/foundry/whats-new-in-microsoft-foundry-july-august-2026/), 2026-09-09: "We announced general availability for Hosted Agents on July 9").

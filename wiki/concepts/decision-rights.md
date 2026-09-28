@@ -2,7 +2,7 @@
 type: concept
 title: "Decision Rights for AI Agents"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-25
 tags:
   - concepts
   - governance
@@ -81,9 +81,9 @@ The action-risk tiering is the *mechanism*; decision rights are the *justificati
 
 ## Place in the CMM
 
-- **[[agentic-ai-security-cmm-d1-governance|D1]] L3 evidence**: documented decision-rights matrix per registered agent type (sharpening from the Knostic ingest).
+- **[[agentic-ai-security-cmm-d1-governance|D1]] L3 evidence**: a dated decision-rights matrix per agent type can evidence D1-BOUNDARY, which asks for a record of which actions each type's agents take on their own, which wait for a human approval and whose, and which they never take, with every agent of the deployment under such a record.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3+ evidence**: the matrix is operationalized in the PDP (Cedar / OPA policies) — every tool call is mediated by the matrix at runtime.
-- **[[agentic-ai-security-cmm-d9-operations|D9]] L4 evidence**: HITL approval-rate metrics per matrix row (rubber-stamp detection).
+- **[[agentic-ai-security-cmm-d9-operations|D9]] evidence**: D9-QUEUE-RATE tracks the approval rate of each approval path at L3, and D9-QUEUE-STAMP its rubber-stamp rate at L4, where a matrix row that requires an approval opens an approval path.
 
 This maps onto the [[microsoft-zt4ai|Microsoft ZT4AI]] Governance pillar (verify explicitly), whose named accountable owners and re-evaluate-at-use posture supply the authority-and-justification record decision rights formalize (see [[standards-review-microsoft-zt4ai-2026-Q2|the 2026-Q2 ZT4AI review]]).
 
