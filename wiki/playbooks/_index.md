@@ -2,7 +2,7 @@
 type: domain
 title: "Playbooks"
 created: 2026-05-14
-updated: 2026-09-24
+updated: 2026-09-29
 tags: [domain, playbooks, assessor-guide]
 status: seed
 subdomain_of: ""
@@ -28,5 +28,5 @@ The folder is deliberately bounded to engagement-shaped artifacts and is not a c
 
 
 - [[canadian-bank-secure-sdlc-ai-assessor-scorecard|Assessor's Quick Scorecard: Secure-SDLC and AI]] — A condensed two-party-advisor assessment instrument for evaluating a large Ontario-based federally-regulated bank's secure-SDLC practices...
-- [[claude-code-control-sheet|Claude Code Control Sheet]] — The configurable controls of Claude Code, Anthropic's agentic coding harness, map to the criteria of the Agentic AI Security Capability M...
+- [[claude-code-control-sheet|Claude Code Control Sheet]] — This control sheet pairs requirements with enforcers and evidence tests for Claude Code across five enterprise deployment shapes.
 - [[mythos-ready-security-program|Mythos-ready Security Program]] — Operational instrument from The "AI Vulnerability Storm": Building a "Mythos-ready" Security Program (CSA + SANS + Unprompted + OWASP Gen...
