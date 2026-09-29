@@ -3,7 +3,7 @@ type: comparison
 title: "OSS AI Vuln-Discovery Harness Landscape"
 address: c-000341
 created: 2026-08-31
-updated: 2026-09-18
+updated: 2026-09-28
 tags:
   - comparisons
   - ai-vuln-discovery
@@ -72,24 +72,37 @@ related:
   - "[[adversarial-reflexion]]"
   - "[[mantis]]"
   - "[[google-cloud-autonomous-sdlc-security]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[semgrep-oss-ai-security-harness-comparison|Comparing Open Source AI Code Security Harnesses]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses"
   - "[[.raw/reports/google-mantis-repository-2026-09-18.md]]"
   - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
-verified: 2026-09-18
+  - "https://openai.com/business/solutions/cybersecurity/"
+  - "https://openai.com/index/daybreak-securing-the-world/"
+  - "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/"
+  - "https://learn.chatgpt.com/use-cases/scan-code-changes-for-security"
+  - "https://learn.chatgpt.com/use-cases/deep-security-scan"
+  - "https://learn.chatgpt.com/use-cases/remediate-vulnerability-backlog"
+  - "[[.raw/articles/cybersecurity-2026-09-28.md]]"
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
+  - "[[.raw/articles/openai-expanding-daybreak-2026-09-28.md]]"
+  - "[[.raw/articles/openai-codex-security-scan-code-changes-2026-09-28.md]]"
+  - "[[.raw/articles/openai-codex-security-deep-scan-2026-09-28.md]]"
+  - "[[.raw/articles/openai-codex-security-remediate-backlog-2026-09-28.md]]"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/reports/google-mantis-repository-2026-09-18.md"
+  - ".raw/articles/cybersecurity-2026-09-28.md"
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+  - ".raw/articles/openai-expanding-daybreak-2026-09-28.md"
 verified_findings: 0
-verified_note: "Read scoped to the Mantis row and the paragraph correcting it. Star count, licence and the ~15-skill survey figure confirmed against Semgrep; 21 skills and three host targets confirmed at the repository. Backlinks added on big-sleep and mythos."
+verified_note: "verify2, diff-scoped to the three retargeted footnotes; no findings"
 ---
 
 # OSS AI Vuln-Discovery Harness Landscape
 
-Every commercial AI vulnerability-discovery programme compared below reaches an operator through a vendor gate. [[mdash|MDASH]] runs in limited private preview, [[claude-code-security|Claude Code Security]] and [[codex-security|Codex Security]] as research previews bound to an enterprise subscription, and [[codemender|CodeMender]] as a managed Google Cloud preview since July 2026. [[big-sleep|Big Sleep]] stays inside Google, and [[mythos|Mythos]] has no general availability planned. Semgrep's July 2026 survey sets nine open-source harnesses against that picture, and a team can install any of the nine today under Apache 2.0, MIT or CC-BY-SA.[^semgrep] This page compares the two populations and states what the open path supplies an operator and what it withholds.
+Every commercial AI vulnerability-discovery programme compared below reaches an operator through a vendor gate. [[mdash|MDASH]] runs in limited private preview, [[claude-code-security|Claude Code Security]] as a research preview bound to an enterprise subscription, and [[codemender|CodeMender]] as a managed Google Cloud preview since July 2026. [[codex-security|Codex Security]] ships inside OpenAI's Codex as a plugin, a CLI and a cloud service that launched in research preview in March 2026.[^daybreak-cs][^daybreak-solutions] Codex Security covers the common defensive workflows, and OpenAI reserves the more permissive models of [[openai-daybreak|OpenAI Daybreak]] for individuals and organizations it approves.[^daybreak-solutions][^daybreak-aug] [[big-sleep|Big Sleep]] stays inside Google, and [[mythos|Mythos]] has no general availability planned. Semgrep's July 2026 survey sets nine open-source harnesses against that picture, and a team can install any of the nine today under Apache 2.0, MIT or CC-BY-SA.[^semgrep] This page compares the two populations and states what the open path supplies an operator and what it withholds.
 
 ## The nine harnesses
 
@@ -119,6 +132,9 @@ Semgrep separates standalone pipelines from agent-native skills, and the split g
 
 No commercial programme below ships in the skill shape; each arrives as a product with its own surface, whether a dashboard, a CI integration, or a managed cloud service. A skill adds an audit methodology to an agent an engineering team already runs, so acquisition is an installation rather than a procurement, and every security property of the run belongs to the host harness. [[harness-config-as-supply-chain-artifact|Harness configuration as a supply-chain artifact]] carries what that inheritance costs.
 
+> [!contradiction] Conflict with [[codex-security|Codex Security]]
+> This paragraph states that no commercial programme ships in the skill shape, and the Deployment shape row of the table below says the same. OpenAI documents a Codex Security plugin that installs into Codex, where change review, deep scanning and single-finding fixes run as skills invoked from a Codex prompt.[^codex-plugin] The plugin predates this page: OpenAI released an update to it on 2026-06-22.[^daybreak-cs] Needs resolution: whether the deployment-shape split still separates the two populations once a commercial programme ships skills that run on its own vendor's agent and models.
+
 ## Dimensions against the commercial set
 
 | Dimension | Semgrep's nine | Commercial and vendor-internal programmes |
@@ -131,7 +147,7 @@ No commercial programme below ships in the skill shape; each arrives as a produc
 | Isolation posture | Assembled per harness: gVisor plus egress allowlist; Landlock, seccomp and namespaces; bubblewrap, Seatbelt or microVM; a tool sandbox without Bash; none for the static scanner | Vendor-operated, or customer-managed for CodeMender; the primitive is undisclosed for Codex Security |
 | Model dependency | Swappable on four of the five pipelines; one runs a security-tuned 8B model locally | Bound to the seller's model, with CodeMender offering a choice among Google models |
 | Maintenance | No support commitment; several closed to contributions or unmaintained | Vendor support inside the preview's terms |
-| Published evidence | No benchmark score, recall figure or finding count for any of the nine | Recall or false-positive figures for MDASH, Codex Security and Big Sleep; finding and patch volumes for CodeMender and Claude Code Security |
+| Published evidence | No benchmark score, recall figure or finding count for any of the nine | Recall or false-positive figures for MDASH, Codex Security and Big Sleep; finding and patch volumes for CodeMender and Claude Code Security, and scan and fixed-finding counts for Codex Security |
 
 Every isolation value, model default and stage count in the open column comes from the LLM-generated matrix and detail sections.[^semgrep] The remaining open-column cells come from the survey's human-written body. The commercial column restates what each product's own page records from its vendor's announcement. [[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]] grades the tool-allowlist narrowing behind two of those rows: VVAH's no-Bash tool sandbox and deepsec's read-only agent tools.
 
@@ -145,13 +161,13 @@ The other two categories cross no such gate. A hybrid or a skill pack asks a mod
 
 ### Model choice and data residency
 
-Four of the five pipelines accept a model of the operator's choosing: [[vvah|VVAH]] runs vendor-neutral backends behind a Sonnet and Opus default, [[deepsec|deepsec]] defaults to Codex GPT-5.5 with Claude and Pi alternatives, [[raptor|RAPTOR]] runs multi-model consensus across Claude and GPT, and [[ai-deep-sast|ai-deep-sast]] runs either a frontier model or the security-tuned Foundation-Sec-8B on the operator's own machine.[^semgrep] The commercial programmes bind the reasoner to the seller. [[claude-code-security|Claude Code Security]] runs Claude Opus 4.6, [[codex-security|Codex Security]] runs inside Codex, and [[codemender|CodeMender]] lets a customer select among Google models, with third-party frontier models planned for later in 2026.
+Four of the five pipelines accept a model of the operator's choosing: [[vvah|VVAH]] runs vendor-neutral backends behind a Sonnet and Opus default, [[deepsec|deepsec]] defaults to Codex GPT-5.5 with Claude and Pi alternatives, [[raptor|RAPTOR]] runs multi-model consensus across Claude and GPT, and [[ai-deep-sast|ai-deep-sast]] runs either a frontier model or the security-tuned Foundation-Sec-8B on the operator's own machine.[^semgrep] The commercial programmes bind the reasoner to the seller. [[claude-code-security|Claude Code Security]] runs Claude Opus 4.6, [[codex-security|Codex Security]] runs inside Codex, and [[codemender|CodeMender]] lets a customer select among Google models, with third-party frontier models planned for later in 2026. OpenAI also offers its Daybreak models for an operator's own security harness, so OpenAI's approval gates the model and the operator keeps the choice of harness.[^daybreak-solutions]
 
 No commercial programme compared here is documented as running its reasoner on the operator's hardware. CodeMender's enterprise terms reach VPC traffic routing, zero retention of source code and customer-operated sandboxes, and the model still runs at Google. Microsoft has not stated whether MDASH deploys on an operator's own infrastructure. ai-deep-sast's fully local mode answers a data-residency requirement that the commercial column leaves open, and Semgrep records the trade it makes as depth and proof for breadth and speed.
 
 ### Method visible end to end
 
-A pipeline published under an open licence discloses its stages as code. VVAH's eleven stages, RAPTOR's staged exploitability filter and defending-code-harness's T0–T3 patch ladder are all readable in the repository.[^semgrep] The commercial products name their stages and ship none of them: [[codex-security|Codex Security]] states that validation attempts the exploit in an isolated sandbox and leaves the sandbox primitive undisclosed, and [[mdash|MDASH]] names five stages without saying which models occupy which role. An assessor scoring a control against evidence reads the open harness, and takes the commercial one on its vendor's description.
+A pipeline published under an open licence discloses its stages as code. VVAH's eleven stages, RAPTOR's staged exploitability filter and defending-code-harness's T0–T3 patch ladder are all readable in the repository.[^semgrep] The commercial products name their stages, and none of their vendors points an assessor to code that implements them: [[codex-security|Codex Security]] states that validation attempts the exploit in an isolated sandbox and leaves the sandbox primitive undisclosed, and [[mdash|MDASH]] names five stages without saying which models occupy which role. OpenAI's solutions page calls the Codex Security CLI open source and links no repository for it.[^daybreak-solutions] An assessor scoring a control against evidence reads the open harness, and takes the commercial one on its vendor's description.
 
 The same visibility reaches the false-positive control. Semgrep names four open-source implementations of adversarial validation, in which a second independent agent tries to falsify each finding, and reports the technique working best when a different model attempts the disproof.[^semgrep] [[adversarial-reflexion|Adversarial Reflexion]] holds the mechanism and its vendor-side instances.
 
@@ -194,3 +210,7 @@ An open-source licence removes the procurement gate on the harness and leaves th
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026. No day-level publication date is exposed; July is inferred from an embedded screenshot dated 2026-07-20 and the article's forward reference to a Black Hat announcement in August 2026, and no author is named. The human-written body carries the categorisation, the star counts, the six cross-cutting findings, the finding-definition and execution tables, and the market-structure argument; the per-tool detail sections and two of the four tables are labelled by Semgrep as LLM-generated summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
 [^mantis-repo]: [google/mantis](https://github.com/google/mantis), read at commit `21ef4b4c45ccd1d2a33b9079b2e37ec37d934571` (2026-09-17): 21 skills and an ADK reference harness under Apache 2.0, with the sandbox roster and the responsible-use constraints quoted from README.md and README_AGENTS.md. Local extract at `.raw/reports/google-mantis-repository-2026-09-18.md`. Summarized at [[mantis|Mantis (Google)]].
 [^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].
+[^daybreak-cs]: [OpenAI — Daybreak: Tools for securing every organization in the world, "From findings to fixes with Codex Security"](https://openai.com/index/daybreak-securing-the-world/#from-findings-to-fixes-with-codex-security), 2026-06-22: the March 2026 research-preview launch of Codex Security cloud, the product's integration into Codex, and the plugin update released with the post. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-solutions]: [OpenAI — AI for Cybersecurity Teams](https://openai.com/business/solutions/cybersecurity/), undated, fetched 2026-09-28: the three Codex Security surfaces, with the CLI described as open source and no repository linked, the FAQ on when Daybreak Access is needed, the application on each tier card, and the offer of Daybreak models for Codex Security or an operator's own security harness. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-aug]: [OpenAI — Expanding Daybreak as the Cyber Defense Window Narrows](https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/), 2026-08-10: the Daybreak Blue and Daybreak Red tiers, open to approved individuals and organizations, and the controls OpenAI places on that access. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^codex-plugin]: [OpenAI — Scan code changes for security](https://learn.chatgpt.com/use-cases/scan-code-changes-for-security), [OpenAI — Run a deep security scan](https://learn.chatgpt.com/use-cases/deep-security-scan) and [OpenAI — Remediate a vulnerability backlog](https://learn.chatgpt.com/use-cases/remediate-vulnerability-backlog), undated, fetched 2026-09-28: the three Codex Security plugin skills, each started from a Codex prompt after the plugin quickstart. Local copies: `.raw/articles/openai-codex-security-scan-code-changes-2026-09-28.md`, `.raw/articles/openai-codex-security-deep-scan-2026-09-28.md`, `.raw/articles/openai-codex-security-remediate-backlog-2026-09-28.md`.

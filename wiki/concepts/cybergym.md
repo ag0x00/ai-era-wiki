@@ -3,7 +3,7 @@ type: concept
 title: "CyberGym Benchmark"
 address: c-000030
 created: 2026-05-13
-updated: 2026-08-31
+updated: 2026-09-28
 tags:
   - concepts
   - benchmarks
@@ -51,6 +51,7 @@ related:
   - "[[cybergym-e2e]]"
   - "[[uc-berkeley-rdi]]"
   - "[[agentic-vulnerability-discovery]]"
+  - "[[openai-daybreak]]"
 sources:
   - https://www.cybergym.io
   - https://www.cybergym.io/cybergym/
@@ -61,14 +62,15 @@ sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"
   - ".raw/articles/cybergym-benchmark-2026-08-31.md"
   - ".raw/articles/cybergym-observatory-2026-08-31.md"
-verified: 2026-08-31
+  - "https://openai.com/index/daybreak-securing-the-world/"
+  - "https://www.cybergym.io/assets/data/cybergym.json"
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
-  - ".raw/articles/cybergym-observatory-2026-08-31.md"
-  - ".raw/articles/exploitgym-2026-08-31.md"
-  - ".raw/articles/microsoft-defense-at-ai-speed-2026-05-13.md"
-verified_findings: 2
-verified_note: "Read against the 4 cybergym.io raw docs (microsoft raw not read): fixed an open-ended-discovery mislabel over the evaluation-run findings; added the 18-vs-17 incomplete-patch headline gap beside the 34-vs-35 one. 35->10 dedup and 34/35 non-reconciliation correct."
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+  - ".raw/reports/cybergym-leaderboard-data-2026-09-28.json"
+verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted footnote and table cell; meaning unchanged; no findings"
 ---
 
 # CyberGym Benchmark
@@ -93,8 +95,11 @@ The operational reading of these results — which levers move a discovery pipel
 | Microsoft [[mdash\|MDASH]] | **88.45%** | [[mdash-defense-at-ai-speed\|Microsoft, May 2026]] | level 1 |
 | [[mythos\|Claude Mythos Preview]] (raw model) | **83.1%** | [[anthropic-glasswing-announcement\|Anthropic Glasswing, May 2026]] | level 1 |
 | [[mythos\|Claude Opus 4.6]] (raw model) | 66.6% | [[anthropic-glasswing-announcement\|Anthropic Glasswing, May 2026]] | level 1 |
+| GPT-5.5-Cyber (OpenAI, single model) | 85.6% | OpenAI's June 2026 post, on [[openai-daybreak\|OpenAI Daybreak]] | level 1, one trial, on the operator's leaderboard[^cybergym-board] |
 
 **Harness over model — the ~5-point delta.** On Level 1, MDASH sits about 5 percentage points above the raw model (see the Known Results table above). The MDASH harness (multi-model ensemble + specialized agents + debate + dedup + automated PoC construction) adds roughly that delta over the raw model alone. This is the clearest quantitative measurement on the wiki of the "harness over model" architectural argument from both [[xbow-mythos-evaluation|XBOW]] and [[mdash-defense-at-ai-speed|Microsoft]].
+
+OpenAI's June 2026 announcement gives GPT-5.5 the same 81.8% as the snapshot below and reports the purpose-trained GPT-5.5-Cyber at 85.6%, which OpenAI calls the highest CyberGym score it has measured from a single model.[^daybreak-model] The post states no difficulty level, trial count, budget or harness. The operator's Level-1 leaderboard supplies them: it lists the 85.6% as OpenAI's single-trial submission on OpenAI's agent and ranks it above Anthropic's single-trial 83.1% for Mythos Preview, so the snapshot below no longer describes the model ranking.[^cybergym-board] Read on 2026-09-28, the leaderboard's default view of model entries puts Mythos Preview seventh, behind GPT-5.5-Cyber and five later submissions, and 17 harness entries sit above 90%, MDASH among them at 90.97%.[^cybergym-board] The operator's caution about modest score differences between leading systems applies to every one of these margins.[^cybergym-site] [[ai-vuln-discovery-benchmark-landscape|AI Vuln-Discovery Benchmark Landscape]] sets the May ranking beside the current one.
 
 ### Cross-vendor leaderboard snapshot (2026-05-23)
 
@@ -151,7 +156,7 @@ CyberGym's open-ended runs make the [[uc-berkeley-rdi|UC Berkeley RDI]] group on
 - **Description quality matters**: Microsoft's failure analysis of MDASH's remaining ~12% errors shows that **82% of wrong-area findings came from tasks with vague descriptions that also lacked function or file identifiers**, which Microsoft reads as suggesting that description quality is a major factor in scan accuracy ([Microsoft Security Blog, 2026-05-12](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/)).
 - **Harness-format mismatch**: agents occasionally constructed libFuzzer-style inputs when the benchmark task required honggfuzz format, producing otherwise-sound reproductions that fail on harness-format mismatch.
 - **OSS-Fuzz domain**: CyberGym is biased toward C/C++ memory-safety bug classes typical of OSS-Fuzz; coverage of web vulns, [[prompt-injection|prompt-injection]], supply-chain, or AI-application classes is structurally limited.
-- **Public-benchmark contamination risk**: as vendors target the leaderboard, model training data may absorb the corpus; the same concern that motivated XBOW's StorageDrive private-benchmark design.
+- **Public-benchmark contamination risk**: as vendors target the leaderboard, model training data may absorb the corpus; the same concern that led Microsoft to test [[mdash|MDASH]] on StorageDrive, a never-published interview driver, so that no model could have learned the answers ([Microsoft Security Blog, 2026-05-12](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/)).
 - **Ordering confound**: the [[analyzer-ordering-confound|analyzer ordering confound]] gives this contamination risk a causal mechanism — a second analyzer's apparent gain over a first is often an artifact of running order rather than capability, and the same training contamination blocks the rewind-and-reanalyze experiment that would isolate the two.[^asu-keynote]
 - **The operators state their own limits on the leaderboard.** Results are evaluated and submitted by individual teams, and agent runs are stochastic, so scores vary across evaluations. Vulnerability descriptions can be ambiguous, and the authors state that with leading systems already scoring high, modest score differences may not reflect meaningful capability gaps.[^cybergym-site]
 - **Two leaderboard labels denote evaluation strategy rather than an easier task.** `dynamic` marks an agent running against a sanitized vulnerable Docker image or the compiled binary of the target. `test-time mem.` marks an agent relying on a test-time-updated knowledge base or memory carried across instances. The authors state both denote different evaluation strategies rather than a reduction in task difficulty.[^cybergym-site]
@@ -176,7 +181,7 @@ The contamination caveat above and this exposure are one mechanism running at tw
 
 ## See Also
 
-- [[mdash|MDASH]] — current leaderboard leader.
+- [[mdash|MDASH]] — Microsoft's multi-model harness, the top reported CyberGym result in May 2026 and one of the 17 harness entries above 90% in September.[^cybergym-board]
 - [[mdash-defense-at-ai-speed|Microsoft's MDASH announcement]] — citing source.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] — the wiki thesis CyberGym anchors as a benchmark surface.
 - [[agentdojo|AgentDojo]] — sibling public benchmark, different bug class (prompt injection).
@@ -186,6 +191,8 @@ The contamination caveat above and this exposure are one mechanism running at tw
 [^cybergym-site]: UC Berkeley RDI, [CyberGym](https://www.cybergym.io/cybergym/) (fetched 2026-08-31). Published at ICLR 2026, [OpenReview `2YvbLQEdYt`](https://openreview.net/forum?id=2YvbLQEdYt); preprint [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Local copy: `.raw/articles/cybergym-benchmark-2026-08-31.md`.
 [^exploitgym]: UC Berkeley RDI, [ExploitGym](https://www.cybergym.io/exploitgym/) (fetched 2026-08-31); [arXiv:2605.11086](https://arxiv.org/abs/2605.11086). Local copy: `.raw/articles/exploitgym-2026-08-31.md`.
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
+[^daybreak-model]: [OpenAI — Daybreak, "Updating GPT-5.5-Cyber"](https://openai.com/index/daybreak-securing-the-world/#updating-gpt-55-cyber-pairing-capability-with-permissiveness), 2026-06-22: CyberGym (single-model), ExploitGym and SEC-bench Pro scores for GPT-5.5-Cyber and GPT-5.5 as OpenAI measured them, with no level, budget or harness stated. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^cybergym-board]: UC Berkeley RDI, [CyberGym leaderboard](https://www.cybergym.io/cybergym/), Level 1, read on 2026-09-28 from the page's data file [`cybergym.json`](https://www.cybergym.io/assets/data/cybergym.json); local copy `.raw/reports/cybergym-leaderboard-data-2026-09-28.json`. The leaderboard shows single-trial entries only, ranks model entries by score in its default view, and shows the 17 entries above 90% in random order with the note "The score is only for reference." Model entries above Claude Mythos Preview's 83.1% (Anthropic, 2026-04-07): XekRung-1.5-27B-Preview 88.92%, Gemini 3.8 Flash Cyber 86.26%, ASL-Cyber-Flash 85.87%, GPT-5.5-Cyber 85.6% (OpenAI, 2026-06-22, sourced to OpenAI's June post), GLM-5.3 84.5%, DeepSeek-V4-Pro 83.3%; MDASH at 90.97% (Microsoft, 2026-06-17).
 
 <!-- sources:auto -->
 ## Sources
@@ -197,4 +204,6 @@ The contamination caveat above and this exposure are one mechanism running at tw
 - [github.com](https://github.com/sunblaze-ucb/cybergym)
 - [rdi.berkeley.edu](https://rdi.berkeley.edu/blog/cybergym/)
 - [microsoft.com](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/)
+- [openai.com](https://openai.com/index/daybreak-securing-the-world/)
+- [cybergym.io](https://www.cybergym.io/assets/data/cybergym.json)
 <!-- /sources -->

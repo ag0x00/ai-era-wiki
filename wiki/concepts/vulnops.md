@@ -3,7 +3,7 @@ type: concept
 title: "VulnOps: Vulnerability Operations"
 address: c-000069
 created: 2026-05-15
-updated: 2026-09-18
+updated: 2026-09-28
 tags:
   - concepts
   - vulnops
@@ -55,16 +55,19 @@ related:
   - "[[vvah|VVAH]]"
   - "[[defending-code-harness|defending-code-harness]]"
   - "[[google-cloud-autonomous-sdlc-security]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
   - "[[vulnops-l1-soc-extinction|CYBR.SEC.Media VulnOps article]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - "[[.raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md]]"
-verified: 2026-09-18
+  - "[[.raw/articles/openai-daybreak-hub-2026-09-28.md]]"
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
 verified_findings: 0
-verified_note: "Read scoped to the rollout-and-rollback property this pass extended. Posture-stage automation and the code-patch human gate confirmed; no rollback statement exists in the article, and the page says so."
+verified_note: "verify2, diff-scoped to the retargeted June-post footnotes; footnote descriptions match the post; no findings"
 ---
 
 # VulnOps — Vulnerability Operations
@@ -92,6 +95,8 @@ The volume is also mostly noise. JFrog's 2026 analysis found that **66% of analy
 Triage scope is the second half of that discipline. [[autonomous-exploit-generation|Autonomous Exploit Generation]] records agents reaching code execution through a code path adjacent to the defect they were handed, so a remediation scoped to the reported line leaves the path the agent used. The queue inherits that difference, and a closed ticket bounds the fix rather than the finding.
 
 **Primary-source confirmation of the bottleneck inversion (2026-05-22).** [[anthropic-glasswing-initial-update|Anthropic's one-month Glasswing update]] states the VulnOps premise as a direct finding from roughly 50 coalition partners: *"Progress on software security used to be limited by how quickly we could find new vulnerabilities. Now it's limited by how quickly we can verify, disclose, and patch."*[^glasswing] The open-source funnel makes it concrete: 6,202 estimated high/critical found, only 1,752 assessed and 75 patched, at a roughly two-week mean patch time, and maintainers asked Anthropic to slow down disclosures.[^glasswing] The update provides the strongest primary-source evidence to date that the scarce resource has shifted from discovery to triage-and-remediation, the premise VulnOps exists to address.
+
+**A second frontier lab states the inversion (2026-06-22).** OpenAI's Daybreak announcement places the bottleneck at patching, because defenders are now overwhelmed by the number of vulnerabilities found.[^daybreak-june] The programme page for [[openai-daybreak|OpenAI Daybreak]] publishes a loop shaped like this function: inventory, discovery, dynamic validation, ownership assignment and verified remediation, then back to inventory, with a shared `SECURITY.md` that every stage reads and extends so that later passes start from the established map, ownership and evidence.[^daybreak-hub] In that loop, people review consequential changes and verify deployed fixes independently.[^daybreak-hub] The programme page glosses the fourth stage, ownership assignment, as identify, route and follow up: the stage puts an owner on each validated finding before remediation.[^daybreak-hub] None of the five operating properties below names that step. Through the programme's Patch the Planet initiative, OpenAI funds expert researchers who validate and deduplicate patches as well as findings before a maintainer sees either, which carries property 3's triage discipline onto the fix.[^daybreak-ptp]
 
 **The bottleneck moves rather than clears.** The August 2026 [[openai-hugging-face-agent-incident|OpenAI–Hugging Face disclosure]] states the same finding as a design constraint on how much of the loop is automated: automating discovery alone relocates the bottleneck to patching and drowns human engineers in findings, so the loop has to close through identification, proposed patch, rollout, and rollback on an availability regression.[^bh] The rollback leg is the part the current framings omit. Applying a fix without a tested automated reversal converts a bad patch into an outage, and the operator's response is to re-insert the human approval the automation was built to remove — which restores the original bottleneck one stage later. The same disclosure motivates continuous agentic red teaming as the input side of the function: the estate will be examined by model intelligence regardless, and the operational question is whether the organization spends enough of it on its own infrastructure before a threat actor does.[^bh] JFrog's applicability figures and the Glasswing funnel bound the triage problem; this source bounds the remediation problem the triage feeds.
 
@@ -149,3 +154,6 @@ This bounds what VulnOps can claim, and [[sdlc-in-the-ai-attacker-era|SDLC in th
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
 [^google-talk]: Heather Adkins and Four Flynn, *Evaluating Threats & Automating Defense: How Google is Advancing Code Security*, [\[un\]prompted, San Francisco](https://www.youtube.com/watch?v=B_7RpP90rUk) (2026-03-03): Big Sleep at zero false positives end-to-end on deep memory-safety bugs, with a working exploit built as proof of vulnerability; CodeMender at 178 open-source fixes, 48 patched and 130 hardening; verification presented as the gate, and full autonomy stated as the design intent. See [[autonomous-code-security-google-talk|the talk summary]].
 [^gcp-sdlc]: [Google Cloud — Cloud CISO Perspectives: Our path to autonomous SDLC security](https://cloud.google.com/blog/products/identity-security/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally), 2026-06-29, by CISO Chris Betz and Security Engineering senior director Ruchi Shah: a first-party account of the five-stage agentic SDLC Google Cloud runs on its own products. Summarized at [[google-cloud-autonomous-sdlc-security|Google Cloud Autonomous SDLC Security]].
+[^daybreak-june]: [OpenAI — Daybreak: Tools for securing every organization in the world, "Cyber defense at an inflection point"](https://openai.com/index/daybreak-securing-the-world/#cyber-defense-at-an-inflection-point), 2026-06-22: defenders overwhelmed by the number of vulnerabilities found, with patching named as the new bottleneck. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-hub]: [OpenAI — Daybreak](https://openai.com/daybreak/), programme page, undated, fetched 2026-09-28: the five-stage agentic defense loop, each stage's three-verb gloss, and SECURITY.md as shared context. Local copy: `.raw/articles/openai-daybreak-hub-2026-09-28.md`.
+[^daybreak-ptp]: [OpenAI — Daybreak, "Patch the Planet: landing fixes in open-source"](https://openai.com/index/daybreak-securing-the-world/#patch-the-planet-landing-fixes-in-open-source), 2026-06-22: founders, the funded-researcher engagement model, participant benefits and the first sprint. Summarized at [[openai-daybreak|OpenAI Daybreak]].

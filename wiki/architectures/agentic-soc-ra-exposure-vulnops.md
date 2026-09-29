@@ -3,7 +3,7 @@ type: architecture
 title: "Agentic SOC Exposure and VulnOps Surface"
 address: c-000200
 created: 2026-06-03
-updated: 2026-09-01
+updated: 2026-09-28
 tags:
   - architectures
   - agentic-soc
@@ -39,18 +39,22 @@ related:
   - "[[semgrep-oss-ai-security-harness-comparison]]"
   - "[[semgrep]]"
   - "[[adversarial-reflexion]]"
+  - "[[openai-daybreak]]"
+  - "[[codex-security]]"
 sources:
   - "[[agentic-soc-reference-architecture]]"
   - "[[agentic-soc-cmm]]"
   - "[[vulnops]]"
   - "[[zero-day-clock]]"
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
-verified: 2026-09-01
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
+  - "[[.raw/articles/openai-daybreak-hub-2026-09-28.md]]"
+  - "[[.raw/articles/anthropic-glasswing-2026-05-13.md]]"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-  - ".raw/articles/zero-day-clock-call-to-action-2026-05-25.md"
-  - ".raw/articles/zero-day-clock-the-collapse-2026-05-25.md"
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
 verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted June-post footnotes; footnote descriptions match the post; no findings"
 ---
 
 # Agentic SOC Exposure and VulnOps Surface
@@ -93,7 +97,7 @@ Two changes to the function's shape follow from the [[openai-hugging-face-agent-
 
 The defined failure mode is **operating above the earned ceiling**: granting remediation autonomy the governing domains do not support. Auto-applying patches (L3 remediation) when D4 cannot bound blast radius, or when D3 cannot measure whether the agent's exploitability triage is correct, is reckless autonomy, because a wrong containment or a bad patch is itself an availability incident. The weakest governing domain sets the ceiling, and the common split leaves discovery several rungs above remediation.
 
-**The false-positive flood bounds this function before any autonomy rung does.** AI-generated findings arrive faster than human triage capacity, and most are not reachable in practice. [[anthropic-glasswing-initial-update|Anthropic's Glasswing one-month update]] reported the bottleneck inverting from discovery to verification: of roughly 6,202 estimated high/critical findings, 1,752 were assessed and 75 patched, and maintainers asked Anthropic to slow disclosures.[^glasswing] JFrog's 2026 analysis found 66% of analyzed CVEs had a low applicability rate (0–20%) and only 12% were highly exploitable in real environments.[^jfrog] Exploitability triage bounds the flood — severity and confidence scoring, deduplication, and reachability analysis as first-class queue stages — which [[mythos-ready-security-program|Mythos-ready PA 11]] names as designing VulnOps around triage discipline from the start.
+**The false-positive flood bounds this function before any autonomy rung does.** AI-generated findings arrive faster than human triage capacity, and most are not reachable in practice. [[anthropic-glasswing-initial-update|Anthropic's Glasswing one-month update]] reported the bottleneck inverting from discovery to verification: of roughly 6,202 estimated high/critical findings, 1,752 were assessed and 75 patched, and maintainers asked Anthropic to slow disclosures.[^glasswing] JFrog's 2026 analysis found 66% of analyzed CVEs had a low applicability rate (0–20%) and only 12% were highly exploitable in real environments.[^jfrog] A month later, OpenAI's Daybreak announcement placed the new bottleneck at patching, because defenders are now overwhelmed by the number of vulnerabilities found.[^daybreak-june] The same announcement describes open-source maintainers sifting through thousands of reports, many of them low-quality false positives, and OpenAI's Patch the Planet initiative responds with a triage stage in front of the code owner: funded researchers validate and deduplicate both the findings and the patches before a maintainer sees either.[^daybreak-ptp] Beside its description of the initiative, OpenAI's Daybreak programme page counts 41 open-source projects under review, 858 issues identified, 263 patches produced and 143 patches accepted upstream.[^daybreak-hub] Deduplicating patches as well as findings carries the triage discipline onto the remediation side of the queue. Exploitability triage bounds the flood — severity and confidence scoring, deduplication, and reachability analysis as first-class queue stages — which [[mythos-ready-security-program|Mythos-ready PA 11]] names as designing VulnOps around triage discipline from the start.
 
 ## Control landscape (dated)
 
@@ -104,7 +108,9 @@ Vendors and patterns below are swappable examples carrying a date, and none is a
 | Exposure / attack-surface management | Continuous attack-surface and exposure management platforms; cloud security posture management for the control plane | GA; an established category |
 | Continuous exposure program model | Gartner [[continuous-threat-exposure-management\|CTEM]] as the program spine for continuous discovery, prioritization, validation, and mobilization | GA as a framework; adoption maturity varies |
 | Asset / dependency inventory | SBOM generation and dependency-chain resolution; [[ai-bom\|AI-BOM]] for the AI-component supply chain | SBOM GA; AI-BOM emerging |
-| AI-assisted code audit, commercial | [[codex-security\|Codex Security]], [[claude-code-security\|Claude Code Security]], [[codemender\|CodeMender]]; vendor-internal [[big-sleep\|Big Sleep]] and [[mythos\|Mythos]]-class models | Preview-gated; CodeMender in [[google-cloud-codemender-preview\|managed preview]] since July 2026; Mythos preview-only, no GA planned |
+| AI-assisted code audit, commercial: OpenAI | [[codex-security\|Codex Security]] plugin, cloud service and CLI; cyber models in two [[openai-daybreak\|OpenAI Daybreak]] access tiers | Cloud launched in research preview in March 2026; out-of-the-box plugin workflows since a June 2026 update[^daybreak-cs] |
+| AI-assisted code audit, commercial: Anthropic | [[claude-code-security\|Claude Code Security]]; [[mythos\|Mythos]] Preview for Glasswing partners | Preview-gated; Mythos preview-only, no GA planned[^glasswing-launch] |
+| AI-assisted code audit, commercial: Google | [[codemender\|CodeMender]]; vendor-internal [[big-sleep\|Big Sleep]] | CodeMender in [[google-cloud-codemender-preview\|managed preview]] since July 2026 |
 | AI-assisted code audit, open source | [[openant\|OpenAnt]] and the [[oss-ai-vuln-discovery-harness-landscape\|nine harnesses]] Semgrep surveyed, under Apache 2.0, MIT and CC-BY-SA | Installs today; one entry runs a fully local model; no reference implementation has emerged and Semgrep expects none soon |
 | Offensive testing at scale | [[wiz\|Wiz]] Red Agent, [[palo-alto-networks\|Palo Alto]] Unit 42 AI pentesting, [[crowdstrike\|CrowdStrike]] Frontier AI Readiness | Productized; vendor-reported coverage figures |
 | Exploitability triage | Severity and confidence scoring, deduplication, reachability and applicability analysis as queue stages; [[adversarial-reflexion\|adversarial-reflexion]] control; sandboxed PoC as a pre-patch gate | Pattern-level; the load-bearing scarce-resource discipline. Now packaged in commercial preview, without published false-positive data |
@@ -148,6 +154,7 @@ Targets split into a discovery rung and a remediation rung, because the two move
 - The operational home of [[vulnops|VulnOps]]; the discovery-and-remediation and CTI-fusion framings are sourced in [[vulnops-l1-soc-extinction|From Threat Intel to VulnOps]] and the [[mythos-ready-security-program|Mythos-ready program]] (PA 5 continuous patching, PA 7 inventory/attack-surface reduction, PA 11 stand up VulnOps).
 - Driven by the time-to-exploit collapse documented in the [[zero-day-clock|Zero Day Clock]]; the discovery-capability thesis is [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]].
 - Build-time counterpart: [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]] owns security as code is written; this function is the operate-and-monitor seam where production exposure is owned. The two meet at the DevSecOps handoff.
+- Vendor instance of the loop: [[openai-daybreak|OpenAI Daybreak]] packages a five-stage defense loop, from inventory to verified remediation, as one programme,[^daybreak-hub] and its Patch the Planet initiative places validated, deduplicated findings and patches in front of open-source maintainers.[^daybreak-ptp]
 - Real patterns as dated examples: [[continuous-threat-exposure-management|CTEM]], SBOM, [[ai-bom|AI-BOM]], continuous patching, and exposure/attack-surface management.
 
 ## Notes
@@ -158,10 +165,15 @@ Targets split into a discovery rung and a remediation rung, because the two move
 
 [^frontier]: [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]. The harness around the model does the validation work; the gap between a candidate finding and a validated one is load-bearing.
 
-[^glasswing]: [Anthropic — Project Glasswing: An initial update](https://www.anthropic.com/research/glasswing-initial-update), 2026, via [[vulnops|VulnOps]]. Open-source scanning funnel: 6,202 estimated high/critical found, 1,752 assessed, 75 patched, ~2-week mean patch time; the constraint named as verification, disclosure, and patching, not discovery.
+[^glasswing]: [Anthropic — Project Glasswing: An initial update](https://www.anthropic.com/research/glasswing-initial-update), 2026-05-22, via [[vulnops|VulnOps]]. Open-source scanning funnel: 6,202 estimated high/critical found, 1,752 assessed, 75 patched, ~2-week mean patch time; the constraint named as verification, disclosure, and patching, not discovery.
 
 [^bh]: Michael Dalton and Eric Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, 2026-08-06. Four zero-days found and chained by autonomous agents against production infrastructure; defender recommendations of continuous agentic red teaming and a fully automated identify → propose patch → roll out → roll back loop, on the reasoning that automating discovery alone relocates the bottleneck to patching. Summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 
 [^jfrog]: JFrog 2026 Software Supply Chain Security State of the Union, via [[vulnops|VulnOps]]: 66% of analyzed CVEs had a low applicability rate (0–20%); only 12% were highly exploitable in real enterprise environments.
 [^semgrep]: Semgrep (Isaac Evans), [Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses) (2026-07-20, the byline date on the live page, retrieved 2026-09-24; the page metadata carries no date): nine open-source harnesses under Apache 2.0, MIT and CC-BY-SA; five compared pipelines with five different definitions of a finding; adversarial validation widely adopted; one pipeline able to run a fully local security-tuned 8B model. The per-tool detail and the isolation column are labelled LLM-generated. See [[semgrep-oss-ai-security-harness-comparison|the source summary]].
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
+[^daybreak-june]: [OpenAI — Daybreak: Tools for securing every organization in the world, "Cyber defense at an inflection point"](https://openai.com/index/daybreak-securing-the-world/#cyber-defense-at-an-inflection-point), 2026-06-22: defenders overwhelmed by the number of vulnerabilities found, with patching named as the new bottleneck. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-ptp]: [OpenAI — Daybreak, "Patch the Planet: landing fixes in open-source"](https://openai.com/index/daybreak-securing-the-world/#patch-the-planet-landing-fixes-in-open-source), 2026-06-22: maintainers sifting through thousands of reports, many of them low-quality false positives, and funded researchers who validate and deduplicate both vulnerabilities and patches before they reach maintainers.
+[^daybreak-hub]: [OpenAI — Daybreak](https://openai.com/daybreak/), programme page, undated, fetched 2026-09-28: the counts in its "What defenders have achieved" section, which follows the Patch the Planet description (41 open-source projects under review, 858 issues identified, 263 patches produced, 143 accepted upstream; the page dates none of them), and the five-stage defense loop. Local copy: `.raw/articles/openai-daybreak-hub-2026-09-28.md`.
+[^daybreak-cs]: [OpenAI — Daybreak, "From findings to fixes with Codex Security"](https://openai.com/index/daybreak-securing-the-world/#from-findings-to-fixes-with-codex-security), 2026-06-22: Codex Security cloud launched in research preview in March 2026, and the June 2026 plugin update that adds out-of-the-box defensive workflows. See [[codex-security|Codex Security]].
+[^glasswing-launch]: [Anthropic — Project Glasswing](https://www.anthropic.com/glasswing), 2026-05-12: Mythos Preview for the launch partners and over 40 additional organizations, with no plan to make it generally available. Local copy: `.raw/articles/anthropic-glasswing-2026-05-13.md`. See [[mythos|Claude Mythos Preview (Anthropic)]].

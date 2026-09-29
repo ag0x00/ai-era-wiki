@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-24
+updated: 2026-09-28
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -14,10 +14,11 @@ scope_axis:
 permalink: "/"
 aliases:
   - index
-verified: 2026-09-24
-verified_against: []
+verified: 2026-09-28
+verified_against:
+  - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
 verified_findings: 1
-verified_note: "Diff-scoped: coding-shape section and reading-list entry, read against Adversa, the Microsoft blog with figures, Novee and a search excerpt of the Gartner release (page blocked); three fixed. Open: Novee post is dated 2026-04-29, footnote says 2026-04-30 (vault-wide)."
+verified_note: "Diff-scoped 2026-09-28 by child E (Daybreak sentences and Start-here bullet read against AUG, JUNE, HUB, TAC, UPD, none reached by sources:); parent re-attributed the automate-the-whole-loop warning from OpenAI's postmortem to its Black Hat talk (transcript 1:40, 33:10). Open: the Novee footnote date carried from 2026-09-24 (vault-wide)"
 ---
 ## About
 
@@ -131,7 +132,7 @@ Agent inventory is forming as a product category ahead of the schedule the field
 
 Defenders run AI in two disciplines.
 
-**Vulnerability discovery and remediation.** Five vendors now run six production pipelines that find real bugs in shipped software: Anthropic ([[claude-code-security-announcement|Claude Code Security]]), Microsoft ([[mdash-defense-at-ai-speed|MDASH]]), Google ([[google-big-sleep-projectzero|Big Sleep]], [[google-codemender-deepmind|CodeMender]]), OpenAI ([[codex-security-announcement|Codex Security]]), and [[knostic|Knostic]] ([[openant-announcement|OpenAnt]]) — the [[agentic-ai-security-cmm-2026|CMM]]'s canonical vendor set. [[anthropic-glasswing-announcement|Project Glasswing]], the twelve-partner critical-infrastructure coalition, sits alongside this set rather than inside it, and so does [[aisle|AISLE]], which found all twelve OpenSSL CVEs in the January 2026 coordinated release, one of them dating to 1998. The vendors converge on a shared discipline: rule-based static analysis is the prior generation, the model reads code the way a researcher does, and the harness owns false-positive control. Google put figures on that harness in March 2026. Big Sleep reports a false-positive rate of zero on deep memory-safety bugs, held there by a final phase that builds a working exploit before any finding is reported, and CodeMender has landed 178 fixes in open source — **130 of them proactive hardening, 48 reactive patches** ([[autonomous-code-security-google-talk|Adkins and Flynn]]). Autonomous fixing lands mostly where a whole class can be transformed and checked, and less often where a single root cause has to be reasoned out. Open-source pipelines such as OpenAnt and AISLE supply the auditable counterpart to the proprietary vendor stacks, and Google has now published one of its own: [[mantis|Mantis]], the skill set behind the code-review pipeline it runs internally, released under Apache 2.0 with a README disclaiming production use while the announcement presents the internal version as securing customers. Automating discovery without automating patch, rollout, and rollback moves the bottleneck rather than closing it: OpenAI's own postmortem named that risk, and [[frontier-ai-for-vuln-discovery|the vuln-discovery thesis]] now places it one stage further out, at redeploying mended code across an estate at scale, a gap Google's own engineers state no approach to yet.
+**Vulnerability discovery and remediation.** Five vendors now run six production pipelines that find real bugs in shipped software: Anthropic ([[claude-code-security-announcement|Claude Code Security]]), Microsoft ([[mdash-defense-at-ai-speed|MDASH]]), Google ([[google-big-sleep-projectzero|Big Sleep]], [[google-codemender-deepmind|CodeMender]]), OpenAI ([[codex-security-announcement|Codex Security]]), and [[knostic|Knostic]] ([[openant-announcement|OpenAnt]]) — the [[agentic-ai-security-cmm-2026|CMM]]'s canonical vendor set. [[anthropic-glasswing-announcement|Project Glasswing]], the twelve-partner critical-infrastructure coalition, sits alongside this set rather than inside it, and so does [[aisle|AISLE]], which found all twelve OpenSSL CVEs in the January 2026 coordinated release, one of them dating to 1998. OpenAI now runs a counterpart to Glasswing, [[openai-daybreak|OpenAI Daybreak]]. It admits vetted defenders to two tiers of cyber-capable models and lets partner vendors build its models into their own security products. Like Anthropic, OpenAI states that the bottleneck has moved from finding vulnerabilities to fixing them. The vendors converge on a shared discipline: rule-based static analysis is the prior generation, the model reads code the way a researcher does, and the harness owns false-positive control. Google put figures on that harness in March 2026. Big Sleep reports a false-positive rate of zero on deep memory-safety bugs, held there by a final phase that builds a working exploit before any finding is reported, and CodeMender has landed 178 fixes in open source — **130 of them proactive hardening, 48 reactive patches** ([[autonomous-code-security-google-talk|Adkins and Flynn]]). Autonomous fixing lands mostly where a whole class can be transformed and checked, and less often where a single root cause has to be reasoned out. Open-source pipelines such as OpenAnt and AISLE supply the auditable counterpart to the proprietary vendor stacks, and Google has now published one of its own: [[mantis|Mantis]], the skill set behind the code-review pipeline it runs internally, released under Apache 2.0 with a README disclaiming production use while the announcement presents the internal version as securing customers. Automating discovery without automating patch, rollout, and rollback moves the bottleneck rather than closing it: OpenAI's own Black Hat account of the Hugging Face incident named that risk, and [[frontier-ai-for-vuln-discovery|the vuln-discovery thesis]] now places it one stage further out, at redeploying mended code across an estate at scale, a gap Google's own engineers state no approach to yet.
 
 The capability has moved from demonstration to product. OpenAI, Anthropic, and Google all offer the same shape in commercial preview: reason over the code, validate the finding in a sandbox, generate a patch a developer approves. Three vendors shipping one shape makes sandboxed validation a baseline feature rather than a differentiator. Google's [[google-cloud-codemender-preview|CodeMender preview]] (July 2026) is the newest, and its launch post publishes no efficacy data, four months after Google gave patch counts for the research programme from a conference stage. That omission dates the market and measures no capability. The offerings differ in the surrounding estate: only CodeMender is documented as composing with a cloud asset graph and an offensive agent on the same platform.
 
@@ -144,6 +145,7 @@ The capability has moved from demonstration to product. OpenAI, Anthropic, and G
 - [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]] and [[agentic-soc-cmm|Agentic SOC CMM]]: the produced defender-operations pair.
 - [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]]: the five published autonomy ladders that fixed the SOC CMM's own gating rule, and the design choices they left open.
 - [[anthropic-glasswing-announcement|Project Glasswing]]: the twelve-partner coalition organizing AI vulnerability discovery on critical infrastructure.
+- [[openai-daybreak|OpenAI Daybreak]]: OpenAI's gated programme for its cyber-capable models, with a partner network and an open-source patching initiative.
 - [[jagged-frontier|Jagged Frontier]]: the empirical observation that capability does not scale smoothly with model size, which bounds vendor productivity claims.
 
 ## III. AI for Offense

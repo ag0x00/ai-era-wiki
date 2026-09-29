@@ -3,7 +3,7 @@ type: concept
 title: "Harness Config as Supply-Chain Artifact"
 address: c-000058
 created: 2026-05-15
-updated: 2026-09-25
+updated: 2026-09-28
 tags:
   - concepts
   - supply-chain
@@ -33,17 +33,20 @@ related:
   - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
   - "[[semgrep|Semgrep]]"
+  - "[[codex-security|Codex Security]]"
+  - "[[openai-daybreak|OpenAI Daybreak]]"
 sources:
   - "[[agentshield-announcement|AgentShield README]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-verified: 2026-09-17
+  - ".raw/articles/openai-codex-security-deep-scan-2026-09-28.md"
+  - ".raw/articles/openai-daybreak-hub-2026-09-28.md"
+verified: 2026-09-28
 verified_against:
-  - ".raw/articles/agentshield-2026-05-15.md"
-  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/articles/openai-codex-security-deep-scan-2026-09-28.md"
+  - ".raw/articles/openai-daybreak-hub-2026-09-28.md"
 verified_findings: 0
-verified_note: "2026-09-17 pass read the GitSpawn source only and verified the new paragraph; the AgentShield and Semgrep reads are carried from 2026-09-01."
+verified_note: "Read scoped to the 2026-09-28 SECURITY.md/AGENTS.md paragraph; 1 low fixed (narrator phrase). The AgentShield, GitSpawn and Semgrep reads of 2026-09-17 were not repeated."
 ---
 
 # Harness Config as Supply-Chain Artifact
@@ -74,6 +77,8 @@ Distribution has crossed harnesses even though tooling has not. Trail of Bits pu
 
 The artifact class is wider than the trees the harness reads. In the [[gitspawn-coding-agent-git-config-rce|GitSpawn]] findings (2026-09-01), the executing configuration is the repository's own `.git/config`, which no agent parses: the agent spawns `git` to gather repository context, git reads its own configuration, and a setting such as `core.fsmonitor` names a helper program that git then runs on the host.[^gitspawn] Manifold Security reports the pattern in eight findings across seven coding agents, two of which carry CVEs. The artifact still arrives with the project and still executes before the permission model sees it, so the position holds; what changes is the inventory a scanner needs. A rule corpus that enumerates `.claude/`, `.gemini/` and their siblings covers the files the harness authored and reads, and misses every configuration file the harness hands to a third-party tool it shells out to. The scanner boundary is the set of programs the agent can start, not the set of directories it parses.
 
+A security agent's own policy files belong to the same class. OpenAI's deep-scan guide for [[codex-security|Codex Security]] puts architecture, trust-boundary, security-invariant, finding-criteria, exclusion and severity guidance in a repository's `SECURITY.md`, with nested `SECURITY.md` files setting directory-specific policy, and keeps the build, test and validation commands the scan uses in `AGENTS.md`.[^codex-deep] OpenAI's Daybreak programme makes `SECURITY.md` the shared context that every stage of its defense loop reads and extends.[^daybreak-hub] Both files arrive with the repository, and an edit to either changes what the scanner reports, excludes or runs, so both belong in the same supply-chain assurance flow as the rest of the harness configuration tree.
+
 AgentShield's rule corpus assumes the config tree is a *persistent* artifact on a developer's machine, where a finding describes what an installed hook or MCP manifest can do. In the CI-runner shape the tree arrives with the repository under review, so provenance-aware confidence weighting inverts: a `.gemini/` directory appearing in a fork's pull request is the highest-confidence finding the scanner can produce, because it arrived with the code under review rather than from a trusted template catalog.
 
 ## Relationship to Existing Wiki Coverage
@@ -97,3 +102,5 @@ AgentShield's rule corpus assumes the config tree is a *persistent* artifact on 
 
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The ~40-plugin figure and the category-list licences are human-written; the `npx skills add` install command, the deployment-shape inheritance table, and the per-tool descriptions are from Semgrep's LLM-generated repository summaries. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
 [^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the `core.fsmonitor` execution sink, the files-not-clone delivery constraint, and the eight findings across seven agents. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].
+[^codex-deep]: [OpenAI — Run a deep security scan](https://learn.chatgpt.com/use-cases/deep-security-scan), undated, fetched 2026-09-28: `SECURITY.md` and `AGENTS.md` guidance for the Codex Security deep scan. Local copy: `.raw/articles/openai-codex-security-deep-scan-2026-09-28.md`.
+[^daybreak-hub]: [OpenAI — Daybreak](https://openai.com/daybreak/), programme page, undated, fetched 2026-09-28: SECURITY.md as the shared context every stage of the defense loop reads and extends. Local copy: `.raw/articles/openai-daybreak-hub-2026-09-28.md`.

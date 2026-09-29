@@ -4,7 +4,7 @@ entity_type: product
 title: "Claude Mythos Preview (Anthropic)"
 address: c-000027
 created: 2026-05-13
-updated: 2026-09-18
+updated: 2026-09-28
 tags:
   - products
   - anthropic
@@ -46,11 +46,17 @@ related:
   - "[[aisi-unsanctioned-agent-behaviour|AISI Unsanctioned Agent Behaviour]]"
   - "[[evaluation-containment-failure|Evaluation Containment Failure]]"
   - "[[oss-ai-vuln-discovery-harness-landscape|OSS AI Vuln-Discovery Harness Landscape]]"
+  - "[[openai-daybreak]]"
 sources:
   - "https://www.anthropic.com/glasswing"
   - "https://anthropic.com/claude-mythos-preview-system-card"
   - "https://xbow.com/blog/mythos-offensive-security-xbow-evaluation"
   - "https://www.reuters.com/world/china/taiwan-says-it-was-targeted-last-month-ai-driven-hacking-campaign-2026-08-13/"
+  - "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/"
+verified: 2026-09-29
+verified_against: []
+verified_findings: 0
+verified_note: "verify2, diff-scoped: retargeted footnote read against the August Daybreak post, which this page cites by URL only; no findings"
 ---
 
 # Claude Mythos Preview (Anthropic)
@@ -126,6 +132,8 @@ Mythos sits at the intersection of four wiki scope axes:
 
 That distribution shape is the page-level claim of [[oss-ai-vuln-discovery-harness-landscape|the open-source harness landscape]], which sets the vendor-gated programmes against nine harnesses installable under a permissive licence and records Mythos as the case with no general availability planned at all.
 
+OpenAI gates its counterpart through an access tier. [[openai-daybreak|OpenAI Daybreak]] offers its purpose-trained GPT-5.6-Cyber in the Daybreak Red tier to approved individuals and organizations doing authorized work, under identity verification, account security, monitoring, approved-use restrictions and legal attestations, where Mythos Preview reaches the organizations of the Glasswing coalition.[^daybreak-aug]
+
 ## Adjacent Frontier Models
 
 | Model | Vendor | Role in Mythos evaluation |
@@ -158,3 +166,4 @@ That distribution shape is the page-level claim of [[oss-ai-vuln-discovery-harne
 [^glasswing-update]: Anthropic, [Project Glasswing: initial update](https://www.anthropic.com/research/glasswing-initial-update) (2026-05-22): partner-reported findings one month in, including Cloudflare's 2,000 bugs with 400 high or critical. Local copy: `.raw/articles/anthropic-glasswing-initial-update-2026-05-22.md`. Summarized at [[anthropic-glasswing-initial-update|the initial update]]. Partner self-reported, not an independent benchmark.
 [^xbow]: XBOW, [Mythos Preview: an offensive security evaluation](https://xbow.com/blog/mythos-offensive-security-xbow-evaluation) (2026-05-12): false-negative reduction against Opus 4.6 and the hand-labelled command-safety benchmark. Local copy: `.raw/articles/xbow-mythos-evaluation-2026-05-13.md`. Summarized at [[xbow-mythos-evaluation|the XBOW evaluation]].
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].
+[^daybreak-aug]: [OpenAI — Expanding Daybreak as the Cyber Defense Window Narrows](https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/), 2026-08-10: GPT-5.6-Cyber in the Daybreak Red tier and the access controls on both tiers. Summarized at [[openai-daybreak|OpenAI Daybreak]].

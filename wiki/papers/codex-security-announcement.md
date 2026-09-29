@@ -3,7 +3,7 @@ type: paper
 title: "Aardvark / Codex Security Announcement"
 address: c-000063
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-09-28
 tags:
   - papers
   - vuln-discovery
@@ -29,15 +29,23 @@ related:
   - "[[mdash|MDASH]]"
   - "[[big-sleep|Big Sleep]]"
   - "[[codemender|CodeMender]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[.raw/articles/openai-aardvark-codex-security-2026-05-15.md]]"
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
   - https://openai.com/index/introducing-aardvark/
   - https://openai.com/index/codex-security-now-in-research-preview/
   - https://openai.com/policies/outbound-coordinated-disclosure-policy/
+  - https://openai.com/index/daybreak-securing-the-world/
 aliases:
   - papers/openai-aardvark-codex-security-2026-05-15
   - openai-aardvark-codex-security-2026-05-15
 
+verified: 2026-09-29
+verified_against:
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+verified_findings: 0
+verified_note: "verify2, diff-scoped: Updated-by bullet names the June post; usage counts and SARIF export match; no findings"
 ---
 
 # Introducing Aardvark — Agentic Security Researcher
@@ -90,11 +98,11 @@ An LLM-reasoning + tool-use agentic pipeline can continuously analyze repositori
 - **Supports** [[adversarial-reflexion|Adversarial Reflexion]] obliquely — Aardvark's Validation stage *attempts to trigger the candidate vulnerability in an isolated sandboxed environment*, which is the dynamic-execution form of the same FP-control discipline. OpenAnt formalizes this as *constrained-attacker-persona with explicit trace*; Aardvark formalizes it as *sandbox-trigger validation*; CCS formalizes it as *Claude attempting to prove or disprove its own findings*; MDASH formalizes it as a *prover stage*. Four mechanism instances, same disciplinary commitment.
 - **Authored at** [[openai|OpenAI]]. Adds to OpenAI's product family alongside Codex (now hosting Codex Security as a built-in capability) and the broader Codex ecosystem.
 - **Convergent with** [[claude-code-security-announcement|Claude Code Security]] (Anthropic, Feb 2026) on the methodological frame: both products explicitly reject rule-based pattern-matching SAST and explicitly adopt the human-security-researcher metaphor. Both are commercial closed-source private-preview offerings.
+- **Updated by** OpenAI's post "Daybreak: Tools for securing every organization in the world" (2026-06-22), recorded on [[openai-daybreak|OpenAI Daybreak]]. OpenAI reports that Codex Security cloud scanned over 30 million commits across more than 30,000 codebases between its March 2026 research-preview launch and June 2026, with more than 70,000 findings marked fixed by human reviewers and over 500,000 determined fixed automatically, and describes a plugin update that validates other tools' findings and exports SARIF; [[codex-security|Codex Security]] carries the product as it now ships.[^daybreak-cs]
 
 **Methodological frame convergence — rejecting rule-based SAST.** Both Aardvark and [[claude-code-security-announcement|Claude Code Security]] frame themselves *against* the classical SAST product category: *"Aardvark does not rely on traditional program analysis techniques like fuzzing or software composition analysis"* (OpenAI) and *"Rather than scanning for known patterns, Claude Code Security reads and reasons about your code the way a human security researcher would"* (Anthropic). The frame is convergent: rule-based pattern matching is positioned as the prior generation, LLM-reasoning + tool-use as the successor. [[openant-announcement|OpenAnt]] (Knostic) reaches the same conclusion from the OSS side. This is now a sourced framing across three vendors.
 
-> [!gap] FRT zero-days post not yet ingested
-> [red.anthropic.com/2026/zero-days/](https://red.anthropic.com/2026/zero-days/) (cited inline by Claude Code Security: *"using Claude Opus 4.6, our team found over 500 vulnerabilities in production open-source codebases"*) is the load-bearing quantitative reference for the Anthropic side. Already on the wiki's gap list for the [[frontier-ai-for-vuln-discovery|frontier-AI thesis]]; reiterated here as next-ingest candidate.
-
 > [!gap] Common third-party benchmark for vuln-discovery harnesses
 > Aardvark (92% on internal golden repos), MDASH (88.45% on CyberGym), raw Mythos (83.1% on CyberGym), XBOW × Mythos (42-55% FN reduction vs Opus 4.6), OpenAnt (no published recall) — all use different evaluation surfaces. A common third-party benchmark (CyberGym extension, AISI evaluation, or new) for verified-exploitable findings is the largest measurement gap on this axis.
+
+[^daybreak-cs]: [OpenAI — Daybreak, "From findings to fixes with Codex Security"](https://openai.com/index/daybreak-securing-the-world/#from-findings-to-fixes-with-codex-security), 2026-06-22: commits and codebases scanned since the March 2026 research-preview launch, findings marked fixed by human reviewers, findings determined fixed automatically, and the plugin update. See [[codex-security|Codex Security]].

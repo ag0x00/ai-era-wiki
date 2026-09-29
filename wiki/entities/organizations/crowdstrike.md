@@ -4,7 +4,7 @@ entity_type: organization
 org_type: vendor
 title: "CrowdStrike"
 created: 2026-05-04
-updated: 2026-09-10
+updated: 2026-09-28
 tags:
   - entities
   - organizations
@@ -25,10 +25,18 @@ related:
   - "[[claude-partners-opus-cybersecurity]]"
   - "[[falcon-guardian]]"
   - "[[crowdstrike-agentic-identity-provider]]"
+  - "[[openai-daybreak]]"
 sources:
   - "https://www.crowdstrike.com/platform/falcon-ai"
   - "https://www.anthropic.com/glasswing"
   - "[[.raw/articles/claude-partners-opus-cybersecurity-2026-05-23.md]]"
+  - "https://openai.com/daybreak/partners-new/"
+  - "https://openai.com/business/solutions/cybersecurity/"
+verified: 2026-09-29
+verified_against:
+  - ".raw/articles/cybersecurity-2026-09-28.md"
+verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted solutions-page footnote; strip and quote match; no findings"
 ---
 
 # CrowdStrike
@@ -42,8 +50,15 @@ CrowdStrike is an endpoint detection and SIEM vendor extending the Falcon platfo
 
 CrowdStrike's [Frontier AI Readiness and Resilience Service](https://www.crowdstrike.com/en-us/services/ai-security-services/frontier-ai-readiness-and-resilience/) pairs [[mythos|Claude Opus]] with the firm's AI Red Team Services and proprietary agent frameworks to hunt latent zero-days in customer applications, validate findings, and accelerate remediation before new code reaches production, extending the service to a platform more than 60% of the Fortune 500 use (see [[claude-partners-opus-cybersecurity|the Opus partner ecosystem]]). Global VP of Consulting Services Mark Manglicmot: *"Frontier models like Anthropic's Claude Opus are giving defenders a capability advantage that didn't exist a year ago, pushing vulnerability management all the way to the left."*
 
+## OpenAI Daybreak partnership
+
+CrowdStrike is one of the twenty partners on the [[openai-daybreak|OpenAI Daybreak]] Defense Network page,[^daybreak-network] and OpenAI's cybersecurity solutions page lists it under "Trusted by leading security organizations".[^daybreak-solutions] Its Glasswing launch-partner role places it in Anthropic's programme as well, and the Opus-based service above appears in Anthropic's partner roundup.
+
 ## Agent security at Fal.Con 2026
 
 CrowdStrike announced two agent-security products on consecutive days at Fal.Con 2026. [[falcon-guardian|Falcon Guardian]] (September 1) makes the endpoint the enforcement point for AI agents: it discovers known and shadow agents on Windows, macOS and Linux, defines which agent types may run there, correlates a user prompt to the tool calls and system actions that follow it, and delivers the result to Falcon Next-Gen SIEM as first-party telemetry alongside identity, cloud and SaaS data. George Kurtz stated the position as the one CrowdStrike took for EDR: *"CrowdStrike pioneered EDR by making the endpoint the control point for stopping attacks. AI demands the same approach."* CrowdStrike discloses no general-availability date and no pricing for Falcon Guardian itself, names an AI Gateway as forthcoming without a date, and states the Falcon Complete for Guardian managed service for later in Q3 2026.
 
 [[crowdstrike-agentic-identity-provider|The Agentic Identity Provider]] (September 2) is the identity layer beneath it. Falcon Guardian's discovery registers each agent in a single directory, the Agentic IdP issues it a cryptographically verifiable identity, and access runs through short-lived tokens scoped to one task rather than through standing credentials, with every action bound to the delegating human or workload. Scott Kriz, General Manager of Continuous Identity, stated the premise: *"Traditional identity providers break the moment an agent acts on its own."* CrowdStrike states the product is in development, discloses no general-availability date, publishes no cryptographic detail, and positions it to work alongside Okta and Microsoft Entra for privileged access in AWS.
+
+[^daybreak-network]: [OpenAI — Daybreak Defense Network](https://openai.com/daybreak/partners-new/), undated, fetched 2026-09-28: the twenty listed partners. Local copy: `.raw/articles/openai-daybreak-defense-network-2026-09-28.md`.
+[^daybreak-solutions]: [OpenAI — AI for Cybersecurity Teams](https://openai.com/business/solutions/cybersecurity/), undated, fetched 2026-09-28: the "trusted by" strip. Local copy: `.raw/articles/cybersecurity-2026-09-28.md`. Summarized at [[openai-daybreak|OpenAI Daybreak]].

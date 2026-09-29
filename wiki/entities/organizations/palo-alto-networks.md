@@ -4,7 +4,7 @@ entity_type: organization
 org_type: vendor
 title: "Palo Alto Networks"
 created: 2026-04-30
-updated: 2026-05-26
+updated: 2026-09-28
 tags:
   - entities
   - organizations
@@ -18,7 +18,7 @@ scope_axis:
   - sec-of-ai
   - ai-in-sec-defense
   - sec-against-ai
-role: "Cybersecurity platform vendor (NGFW, SASE, CNAPP, AI security); acquirer of Protect AI (2025), Dig Security (2023), and CyberArk (2026); Project Glasswing launch partner (May 2026)"
+role: "Cybersecurity platform vendor (NGFW, SASE, CNAPP, AI security); acquirer of Protect AI (2025), Dig Security (2023), and CyberArk (2026); Project Glasswing launch partner (May 2026); OpenAI Daybreak Defense Network partner (2026)"
 related:
   - "[[palo-alto-prisma-airs]]"
   - "[[cyberark]]"
@@ -30,10 +30,20 @@ related:
   - "[[anthropic-glasswing-announcement]]"
   - "[[mythos]]"
   - "[[claude-partners-opus-cybersecurity]]"
+  - "[[openai-daybreak]]"
 sources:
   - "https://www.paloaltonetworks.com/"
   - "https://www.anthropic.com/glasswing"
   - "[[.raw/articles/claude-partners-opus-cybersecurity-2026-05-23.md]]"
+  - "https://openai.com/daybreak/partners-new/"
+  - "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/"
+  - "https://openai.com/business/solutions/cybersecurity/"
+verified: 2026-09-29
+verified_against:
+  - ".raw/articles/cybersecurity-2026-09-28.md"
+  - ".raw/articles/openai-expanding-daybreak-2026-09-28.md"
+verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted footnotes; no findings"
 ---
 
 # Palo Alto Networks
@@ -63,6 +73,16 @@ The CyberArk acquisition is the most strategically significant for the agent sec
 ## Project Glasswing partnership (May 2026)
 
 Palo Alto Networks is a named launch partner in [[glasswing|Project Glasswing]] (Anthropic coalition initiative). **Lee Klarich** (Chief Product & Technology Officer) is the quoted executive, with the canonical wiki citation on the AI-attacker threat reframing: *"There will be more attacks, faster attacks, and more sophisticated attacks. Now is the time to modernize cybersecurity stacks everywhere."* The quote directly supports the [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]] thesis.
+
+## OpenAI Daybreak participation
+
+OpenAI names Palo Alto Networks in three places in its cyber-programme material:
+
+- The [[openai-daybreak|OpenAI Daybreak]] Defense Network page lists it among twenty partners.[^daybreak-network]
+- OpenAI's cybersecurity solutions page lists it under "Trusted by leading security organizations".[^daybreak-solutions]
+- The August 2026 announcement names it among the trusted customer partners that received early access to GPT-5.6-Cyber, OpenAI's latest cybersecurity-specific model.[^daybreak-aug]
+
+With its Glasswing launch-partner role above, Palo Alto Networks takes part in the cyber programmes of both Anthropic and OpenAI.
 
 ## Notable 2025–2026 events
 
@@ -94,3 +114,7 @@ Together: lab evidence (May 2025) + production-telemetry confirmation (March 202
 - [[ai-agents-are-here-so-are-the-threats-unit42|Unit 42 — AI Agents Are Here. So Are the Threats.]]: lab study
 - [[unit-42-prompt-injection-observations|Unit 42 — In-the-Wild Prompt Injection Observations]]: production telemetry
 - [[agentic-ai-security-reference-architecture|RA]]: Prisma AIRS appears in Runtime, Egress, Data, and Observability planes
+
+[^daybreak-network]: [OpenAI — Daybreak Defense Network](https://openai.com/daybreak/partners-new/), undated, fetched 2026-09-28: the twenty listed partners. Local copy: `.raw/articles/openai-daybreak-defense-network-2026-09-28.md`.
+[^daybreak-solutions]: [OpenAI — AI for Cybersecurity Teams](https://openai.com/business/solutions/cybersecurity/), undated, fetched 2026-09-28: the "trusted by" strip. Local copy: `.raw/articles/cybersecurity-2026-09-28.md`. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-aug]: [OpenAI — Expanding Daybreak as the Cyber Defense Window Narrows](https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/), 2026-08-10: the customer partners given early access to GPT-5.6-Cyber. Local copy: `.raw/articles/openai-expanding-daybreak-2026-09-28.md`. Summarized at [[openai-daybreak|OpenAI Daybreak]].

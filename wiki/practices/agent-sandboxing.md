@@ -2,7 +2,7 @@
 type: practice
 title: "Agent Sandboxing"
 created: 2026-04-30
-updated: 2026-09-17
+updated: 2026-09-28
 tags:
   - practices
   - agentic-ai
@@ -35,6 +35,7 @@ related:
   - "[[openai-dsewiki-agent-collusion]]"
   - "[[gitspawn-coding-agent-git-config-rce]]"
   - "[[claude-code]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
@@ -42,14 +43,12 @@ sources:
   - "[[openai-hugging-face-agent-incident]]"
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/
-verified: 2026-09-17
+  - "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/agentic-ai-threats-unit42-2025-05-01.md"
-  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
-  - ".raw/papers/securing-the-autonomous-future.md"
+  - ".raw/articles/openai-expanding-daybreak-2026-09-28.md"
 verified_findings: 0
-verified_note: "2026-09-17 pass read the GitSpawn source only and verified the new Limits bullet; the 2026-09-06 reads are carried forward."
+verified_note: "verify2, diff-scoped to the retargeted August-post footnote; no findings"
 ---
 
 # Agent Sandboxing
@@ -78,6 +77,14 @@ verified_note: "2026-09-17 pass read the GitSpawn source only and verified the n
 9. **Platform-enforced quotas**: bound per-agent CPU, memory, API volume, tool invocations, and wall-clock time at the platform, because an agent that manages its own quota can revise it.[^aix-sandbox]
 
 [[stripe|Stripe]]'s containment architecture, from the "Breaking the [[lethal-trifecta|Lethal Trifecta]]" talk, applies the same philosophy to prompt-injection containment: controlled egress with a CI check on egress configuration, tool annotations evaluated by the agent framework, and human confirmation flows. Sandboxing extends that approach to the OS level.
+
+OpenAI's best practices for the models it offers through [[openai-daybreak|OpenAI Daybreak]] apply the method to cyber-capable agents:[^daybreak-aug]
+
+- **Sandbox and isolate.** Run security workflows in a controlled environment that cannot reach sensitive production systems or the open internet, and test the sandbox boundary regularly.
+- **Monitor agent actions.** Use auto-review mode to check tool calls outside the Codex sandbox before they execute, and add monitoring and human oversight to higher-risk workflows.
+- **Define the scope.** Specify which systems and actions are authorized, and enforce those limits with scoped permission profiles.
+
+OpenAI steers Daybreak customers using Codex from full-access mode to auto-review mode through app defaults and UI features. Auto-review evaluates actions that need elevated permissions before they execute and can block requests with a significant risk of destructive behavior.[^daybreak-aug] The numbered Method list above names no step that tests the boundary itself.
 
 ## Mechanism
 
@@ -155,3 +162,4 @@ Sandboxing for AI agents is currently an emerging practice. It is likely to be c
 [^aix-sandbox]: [OWASP AI Exchange — Agent sandboxing and isolation](https://owaspai.org/go/agentsandboxing/), retrieved 2026-08-18.
 [^gitspawn]: [Manifold Security — GitSpawn: A Single Flaw Lets Untrusted Repos Run Code in Claude Code, Codex, Cursor, and Grok](https://www.manifold.security/blog/ai-coding-agents-git-hijack), Francisco Rosales, 2026-09-01. Source for the context-gathering subprocess, its position outside the sandbox and ahead of the approval prompt, and the eight findings across seven agents. Summarized at [[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]].
 [^guardfall]: [Adversa AI — GuardFall: a universal shell injection vulnerability in open-source AI agents](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/), Omer Ben Simon, 2026-06-30, modified 2026-08-11, retrieved 2026-09-24. Of the eleven open-source coding and computer-use agents surveyed, ten "leave the agent-to-bash boundary exploitable, in one of four ways": three ship "a guard that exists and is defeated", two ship "a tokenized guard that leaks only on quoted substitution and destructive flags", and the other five ship no static guard or a container sandbox that "fails under a documented and commonly used local mode opt-out". The eleventh, Continue, "is the only one with a correctly implemented guard".
+[^daybreak-aug]: [OpenAI — Expanding Daybreak as the Cyber Defense Window Narrows](https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/), 2026-08-10: best practices for the Daybreak models (sandbox and isolate, monitor agent actions, define the scope) and the auto-review default. Summarized at [[openai-daybreak|OpenAI Daybreak]].

@@ -5,7 +5,7 @@ org_type: vendor
 title: "Cloudflare"
 address: c-000090
 created: 2026-05-22
-updated: 2026-09-01
+updated: 2026-09-28
 tags:
   - entities
   - organizations
@@ -25,15 +25,18 @@ related:
   - "[[anthropic-glasswing-initial-update]]"
   - "[[security-audit-skill|security-audit-skill]]"
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[anthropic-glasswing-initial-update]]"
   - "https://blog.cloudflare.com/cyber-frontier-models/"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified: 2026-09-01
+  - "https://openai.com/daybreak/partners-new/"
+  - "https://openai.com/business/solutions/cybersecurity/"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/articles/cybersecurity-2026-09-28.md"
 verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted solutions-page footnote; strip and quote match; no findings"
 ---
 
 # Cloudflare
@@ -52,13 +55,20 @@ Per [[anthropic-glasswing-initial-update|Anthropic's one-month update]] and Clou
 
 Cloudflare also publishes a security-audit methodology as open source. [[security-audit-skill|`security-audit-skill`]] is an MIT-licensed six-phase multi-agent audit with adversarial validation, distributed as a skill a coding agent installs, and Semgrep's July 2026 survey reports it at ~2K stars.[^semgrep] The phases run reconnaissance, a parallel hunt across attack classes, adversarial validation in which separate agents attempt to disprove each finding, a report, a schema-validated findings file, and an independent verification pass against source; the skill carries the methodology and the host agent supplies the model. Semgrep recommends it to a team already working inside a coding agent that wants a rigorous audit method with no new infrastructure.
 
+## OpenAI Daybreak partnership
+
+Cloudflare also takes part in OpenAI's cyber programme. It is one of the twenty partners on the [[openai-daybreak|OpenAI Daybreak]] Defense Network page.[^daybreak-network] OpenAI's cybersecurity solutions page quotes its CTO, Dane Knecht, as excited about the potential of OpenAI's cyber capabilities to bring "stronger reasoning and more agentic execution into security workflows".[^daybreak-solutions] With the Glasswing result above, Cloudflare works with the cyber programmes of both Anthropic and OpenAI.
+
 ## See Also
 
 - [[glasswing|Project Glasswing]] — the coalition.
 - [[anthropic-glasswing-initial-update|Glasswing initial update]] — source for the result above.
 - [[mythos|Claude Mythos Preview]] — the model deployed.
 - [[security-audit-skill|security-audit-skill]] — Cloudflare's open-source audit methodology.
+- [[openai-daybreak|OpenAI Daybreak]] — OpenAI's programme, whose partner network lists Cloudflare.
 
 ## Notes
 
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The licence, star count and six-phase framing are human-written; the per-phase detail is from Semgrep's LLM-generated repository summary. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
+[^daybreak-network]: [OpenAI — Daybreak Defense Network](https://openai.com/daybreak/partners-new/), undated, fetched 2026-09-28: the twenty listed partners. Local copy: `.raw/articles/openai-daybreak-defense-network-2026-09-28.md`.
+[^daybreak-solutions]: [OpenAI — AI for Cybersecurity Teams](https://openai.com/business/solutions/cybersecurity/), undated, fetched 2026-09-28: the quote from Cloudflare CTO Dane Knecht and the "trusted by" strip. Local copy: `.raw/articles/cybersecurity-2026-09-28.md`. Summarized at [[openai-daybreak|OpenAI Daybreak]].

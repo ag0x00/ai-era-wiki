@@ -2,11 +2,11 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-09-22
+updated: 2026-09-29
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 94
+page_count: 95
 ---
 
 # Papers Index

@@ -2,11 +2,11 @@
 type: domain
 title: "Organizations"
 created: 2026-04-30
-updated: 2026-09-17
+updated: 2026-09-29
 tags: [domain, entities, organizations]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 106
+page_count: 107
 ---
 
 # Organizations Index
@@ -81,7 +81,8 @@ Companies, standards bodies, consortia, vendors.
 - [[oasis-security|Oasis Security]] — Sources: [Oasis Security (homepage)](https://www.oasis.security) ·...
 - [[onyx-security|Onyx Security]] — Sources: [Onyx Security (homepage)](https://onyx.security) · Onyx Platform (wiki product page)
 - [[open-secure-ai-alliance|Open Secure AI Alliance]] — Sources:...
-- [[openai|OpenAI]] — AI lab; foundation-model and agentic-platform provider; CoSAI member.
+- [[openai-daybreak|OpenAI Daybreak]] — Sources: [OpenAI — Daybreak](https://openai.com/daybreak/) ·...
+- [[openai|OpenAI]] — Sources: [OpenAI (homepage)](https://openai.com) · [OpenAI — Daybreak](https://openai.com/daybreak/) ·...
 - [[osfi|OSFI (Canada)]] — Sources: [OSFI (homepage)](https://www.osfi-bsif.gc.ca) ·...
 - [[owasp|OWASP]] — Sources: [OWASP (homepage)](https://owasp.org) · [OWASP GenAI Security Project](https://genai.owasp.org) ·...
 - [[palo-alto-networks|Palo Alto Networks]] — Palo Alto Networks (NASDAQ: PANW) is one of the largest publicly-traded cybersecurity vendors.

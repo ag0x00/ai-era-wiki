@@ -2,7 +2,7 @@
 type: domain
 title: "Comparisons"
 created: 2026-04-30
-updated: 2026-09-25
+updated: 2026-09-28
 tags: [domain, comparisons]
 status: seed
 subdomain_of: ""
@@ -18,7 +18,7 @@ Side-by-side analyses. Useful when two or more frameworks, architectures, vendor
 
 - [[agent-sandbox-isolation-landscape|Agent Sandbox Isolation Landscape]] — The market for running untrusted, model-generated agent code splits along two questions.
 - [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]] — External prior art for the planned Agentic SOC reference architecture and capability maturity model.
-- [[ai-vuln-discovery-benchmark-landscape|AI Vuln-Discovery Benchmark Landscape]] — The vuln-discovery thesis long flagged the absence of a common cross-vendor benchmark as its largest measurement gap.
+- [[ai-vuln-discovery-benchmark-landscape|AI Vuln-Discovery Benchmark Landscape]] — Six public benchmarks now score AI systems on vulnerability work, and no two of them report on the same scale.
 - [[aiuc-1-critical-evaluation|AIUC-1 Critical Evaluation]] — The Agentic AI Security CMM once named AIUC-1 certification as a hard Level-5 criterion in D1 (Governance & Accountability).
 - [[cybersecurity-cmms-exemplars|Cybersecurity CMM Exemplars and Design Lessons]] — A reference catalogue of widely adopted cybersecurity Capability Maturity Models (CMMs), comparing their structure, scoring approach, and...
 - [[maturity-model-spread-axis-mismatch|Maturity Model Spread and Axis Mismatch]]

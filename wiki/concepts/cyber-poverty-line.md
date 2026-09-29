@@ -3,7 +3,7 @@ type: concept
 title: "Cyber Poverty Line"
 address: c-000071
 created: 2026-05-15
-updated: 2026-08-21
+updated: 2026-09-28
 tags:
   - concepts
   - cyber-poverty-line
@@ -19,8 +19,16 @@ related:
   - "[[supply-chain-security-for-agents|Supply Chain Security for Agents]]"
   - "[[agentic-soc-ra-investigation-case-management|Agentic SOC Investigation Surface]]"
   - "[[agentic-soc-ra-incident-response|Agentic SOC Incident Response Surface]]"
+  - "[[openai-daybreak]]"
 sources:
   - "[[mythos-ready-briefing|Mythos-ready paper]]"
+  - "[[.raw/articles/openai-daybreak-hub-2026-09-28.md]]"
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
+verified: 2026-09-29
+verified_against:
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted June-post footnotes; footnote descriptions match the post; no findings"
 ---
 
 # Cyber Poverty Line
@@ -36,6 +44,16 @@ AI-driven vulnerability discovery widens the offense/defense capacity gap. Organ
 
 The agentic SOC surfaces record where the rise in below-line capability stops. The [[agentic-soc-ra-investigation-case-management|Agentic SOC Investigation Surface]] puts tier-2 reasoning work — enrichment, timeline building, next-pivot suggestions — within reach of a one-person team working over telemetry borrowed from an MDR/MSSP or ISAC, with the human still owning the narrative. The [[agentic-soc-ra-incident-response|Agentic SOC Incident Response Surface]] marks the limit: pre-staged, parameterized containment reaches a small team without the SOAR playbook engineering it once demanded, while delegated response stays unwarranted below the line, because the blast radius of a wrong containment outweighs the speed gained. Capability crosses the line asymmetrically — findings-producing work crosses further than action-taking authority does.
 
+The [[openai-daybreak|OpenAI Daybreak]] programme names below-line categories in its subsidy, under the heading "Daybreak for the frontline defenders who need it most". OpenAI commits \$1 billion in subsidized Daybreak access over six months, and five kinds of organization can register interest in that support:[^daybreak-hub]
+
+- state and local governments
+- critical-infrastructure operators
+- community banks
+- nonprofits
+- open-source maintainers
+
+OpenAI's Patch the Planet initiative reaches the capacity half for one below-line population as well as the capability half: it funds expert researchers to validate and deduplicate findings and patches before an open-source maintainer sees them, and gives participating projects ChatGPT Pro, conditional access to Codex Security and API credits.[^daybreak-ptp] Both are vendor-run and bounded, one by a six-month term and the other by programme admission, so they widen who can reach the capability without showing that below-line organizations gain lasting capacity.
+
 ## Adjacent / Open
 
 - Quantitative threshold is not formally defined by Nather; it is a *qualitative* construct describing structural capacity deficit rather than a numeric metric.
@@ -45,3 +63,6 @@ The agentic SOC surfaces record where the rise in below-line capability stops. T
 
 - [[wendy-nather|Wendy Nather]] — concept creator.
 - [[mythos-ready-security-program|Mythos-ready Security Program]] §5 *How to Adapt* — explicit guidance for below-line organizations.
+
+[^daybreak-hub]: [OpenAI — Daybreak](https://openai.com/daybreak/), programme page, undated, fetched 2026-09-28: the \$1 billion subsidized-access commitment over six months, the "frontline defenders" heading above it, and the five categories of organization invited to register interest. Local copy: `.raw/articles/openai-daybreak-hub-2026-09-28.md`.
+[^daybreak-ptp]: [OpenAI — Daybreak, "Patch the Planet: landing fixes in open-source"](https://openai.com/index/daybreak-securing-the-world/#patch-the-planet-landing-fixes-in-open-source), 2026-06-22: founders, the funded-researcher engagement model, participant benefits and the first sprint. Summarized at [[openai-daybreak|OpenAI Daybreak]].

@@ -2,7 +2,7 @@
 type: entity
 title: "Project Glasswing"
 created: 2026-04-30
-updated: 2026-09-01
+updated: 2026-09-28
 tags:
   - entities
   - initiatives
@@ -33,6 +33,7 @@ related:
   - "[[crowdstrike]]"
   - "[[palo-alto-networks]]"
   - "[[nvidia]]"
+  - "[[cisco]]"
   - "[[xbow]]"
   - "[[mdash]]"
   - "[[cybergym]]"
@@ -41,17 +42,23 @@ related:
   - "[[vvah|VVAH]]"
   - "[[visa|Visa]]"
   - "[[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]]"
+  - "[[openai-daybreak]]"
 sources:
   - "https://www.anthropic.com/glasswing"
   - "[[anthropic-glasswing-announcement]]"
   - "[[anthropic-glasswing-initial-update]]"
   - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
-verified: 2026-09-01
+  - "https://openai.com/index/daybreak-securing-the-world/"
+  - "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/"
+  - "[[.raw/articles/openai-daybreak-securing-the-world-2026-09-28.md]]"
+  - "[[.raw/articles/openai-expanding-daybreak-2026-09-28.md]]"
+verified: 2026-09-29
 verified_against:
-  - ".raw/articles/anthropic-glasswing-2026-05-13.md"
-  - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
-  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
+  - ".raw/articles/cybersecurity-2026-09-28.md"
+  - ".raw/articles/openai-daybreak-securing-the-world-2026-09-28.md"
+  - ".raw/articles/openai-expanding-daybreak-2026-09-28.md"
 verified_findings: 0
+verified_note: "verify2, diff-scoped to the retargeted footnotes; no findings"
 ---
 
 # Project Glasswing
@@ -75,7 +82,7 @@ Named partner and evaluator results:
 | Oracle | Finding and fixing vulnerabilities multiple times faster |
 | One partner bank | Mythos helped prevent a fraudulent \$1.5M wire transfer |
 
-In parallel, Anthropic's open-source scanning program (1,000+ projects) estimated **6,202 high/critical** vulnerabilities, of which 1,752 have been assessed (90.6% true positives) and only **75 patched** so far, the funnel that gives the bottleneck-inversion its empirical shape. Maintainer overload is a named constraint: some maintainers asked Anthropic to **slow down** disclosures. See [[anthropic-glasswing-initial-update|the update page]] for the full funnel and tooling releases ([[claude-code-security|Claude Security]] public beta, the Cyber Verification Program, shared skills/harness/threat-model-builder).
+In parallel, Anthropic's open-source scanning program (1,000+ projects) estimated **6,202 high/critical** vulnerabilities, of which 1,752 have been assessed (90.6% true positives) and an estimated 530 disclosed to maintainers, with only **75 patched** so far,[^glasswing-update] the funnel that gives the bottleneck-inversion its empirical shape. Maintainer overload is a named constraint: some maintainers asked Anthropic to **slow down** disclosures. See [[anthropic-glasswing-initial-update|the update page]] for the full funnel and tooling releases ([[claude-code-security|Claude Security]] public beta, the Cyber Verification Program, shared skills/harness/threat-model-builder).
 
 ## Coalition Partners
 
@@ -87,7 +94,7 @@ In parallel, Anthropic's open-source scanning program (1,000+ projects) estimate
 | Anthropic | [[anthropic\|Anthropic]] | Model vendor; initiative lead |
 | Apple | (no wiki page yet) | (no public quote) |
 | Broadcom | (no wiki page yet) | (no public quote) |
-| Cisco | (no wiki page yet) | Anthony Grieco (SVP & CSTO): "AI capabilities have crossed a threshold" |
+| Cisco | [[cisco\|Cisco]] | Anthony Grieco (SVP & CSTO): "AI capabilities have crossed a threshold" |
 | CrowdStrike | [[crowdstrike\|CrowdStrike]] | Elia Zaitsev (CTO): "the window … has collapsed" |
 | Google | [[google\|Google]] | Heather Adkins (VP Security Engineering): Mythos via Vertex AI |
 | JPMorganChase | (no wiki page yet) | Pat Opet (CISO): financial-system framing |
@@ -147,6 +154,8 @@ Anthropic frames Glasswing as a defensive imperative against state-sponsored thr
 
 Glasswing is the **organizing artifact** for the wiki's `ai-in-sec-defense` axis as of May 13, 2026, and for [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]] within it. It supersedes the wiki's previous treatment of defender-AI as a vendor-by-vendor productized capability with a coalition-backed industrial-scale framing. Semgrep's July 2026 market-structure finding sits at a different layer and does not contradict this: no reference open-source harness will emerge today, and many organizations will build their own "shop jigs" for vulnerability finding, so where Glasswing consolidates model access, the harness layer built around that access is diffusing rather than consolidating.[^semgrep]
 
+Since the June 2026 expansion of [[openai-daybreak|OpenAI Daybreak]], Glasswing shares that organizing role with it. Daybreak is the programme through which OpenAI gates its own cyber-capable models, and the two distribute access differently. Glasswing admits organizations to a coalition around one preview model. Daybreak admits approved individuals and organizations to two tiers, frontier general-purpose models with production safeguards removed and purpose-trained cyber models.[^daybreak-aug] It also lets partner vendors build its models into their own products, and direct model access stays with the partners. Under the June 2026 terms the partner model was OpenAI's general model with trusted access, its primary model for most defensive workflows.[^daybreak-partners] Both labs state that the constraint has moved from discovery to what follows it: OpenAI names patching,[^daybreak-june] and Anthropic names verification, disclosure and patching.[^glasswing-update] OpenAI's Patch the Planet answers the maintainer overload recorded above with funded researchers who validate and deduplicate findings and patches before a maintainer sees them.[^daybreak-ptp]
+
 Critical context:
 
 - **Glasswing is not a product**; it is a coalition initiative. The product (model) is [[mythos|Claude Mythos Preview]].
@@ -170,10 +179,18 @@ Critical context:
 - [[anthropic|Anthropic]]: initiative lead.
 - [[xbow-mythos-evaluation|XBOW's Mythos Evaluation]]: independent (non-partner) third-party evaluation of Mythos.
 - [[mdash-defense-at-ai-speed|MDASH announcement]]: Glasswing-partner defender-AI artifact.
-- [[cybergym|CyberGym]]: benchmark on which both Mythos (raw, 83.1%) and MDASH (88.45%) sit.
+- [[cybergym|CyberGym]]: benchmark on which both Mythos (raw, 83.1%) and MDASH (88.45%) sit.[^glasswing-ann][^mdash-blog]
+- [[openai-daybreak|OpenAI Daybreak]]: OpenAI's counterpart programme, with tiered model access and a partner network.
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]: wiki thesis Glasswing anchors.
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: adjacent thesis directly supported by Glasswing's framing.
 
 ## Notes
 
 [^semgrep]: [Semgrep — Comparing open source AI code security harnesses](https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses), July 2026 (no day-level date exposed; author not named). The market-structure argument (no reference open-source harness, "shop jigs") is human-written; the VVAH description ("built on learnings from Project Glasswing," licence, closed-to-contributions) is from Semgrep's LLM-generated repository summary. Summarized at [[semgrep-oss-ai-security-harness-comparison|OSS AI Security Harness Comparison]].
+[^glasswing-update]: Anthropic, [Project Glasswing: An initial update](https://www.anthropic.com/research/glasswing-initial-update) (2026-05-22): the open-source scanning funnel (estimated high- and critical-severity findings, those assessed with the true-positive share among them, those disclosed to maintainers, and those patched), and progress named as limited by how quickly vulnerabilities can be verified, disclosed and patched. Summarized at [[anthropic-glasswing-initial-update|Project Glasswing: Initial Update]].
+[^glasswing-ann]: Anthropic, [Project Glasswing](https://www.anthropic.com/glasswing) (2026-05-12): raw Claude Mythos Preview's CyberGym score, the share of reproduction tasks solved. Summarized at [[anthropic-glasswing-announcement|Project Glasswing: Securing Critical Software]].
+[^mdash-blog]: Microsoft Security Blog, [Defense at AI speed](https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/) (2026-05-12): MDASH's CyberGym score. Summarized at [[mdash-defense-at-ai-speed|MDASH: Defense at AI Speed]].
+[^daybreak-aug]: [OpenAI — Expanding Daybreak as the Cyber Defense Window Narrows](https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/) (2026-08-10): the Daybreak Blue and Red access tiers. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-partners]: [OpenAI — Daybreak: Tools for securing every organization in the world, "Working with the security ecosystem"](https://openai.com/index/daybreak-securing-the-world/#working-with-the-security-ecosystem) (2026-06-22): partners use GPT-5.5 with Trusted Access for Cyber in the security products and services they provide to customers, and direct model access stays with the partners.
+[^daybreak-june]: [OpenAI — Daybreak: Tools for securing every organization in the world, "Cyber defense at an inflection point"](https://openai.com/index/daybreak-securing-the-world/#cyber-defense-at-an-inflection-point) (2026-06-22): the bottleneck named as patching now that defenders are overwhelmed by the number of vulnerabilities found. Summarized at [[openai-daybreak|OpenAI Daybreak]].
+[^daybreak-ptp]: [OpenAI — Daybreak, "Patch the Planet: landing fixes in open-source"](https://openai.com/index/daybreak-securing-the-world/#patch-the-planet-landing-fixes-in-open-source) (2026-06-22): the funded-researcher engagement model, with vulnerabilities and patches validated and deduplicated before they reach maintainers. Summarized at [[openai-daybreak|OpenAI Daybreak]].
