@@ -42,6 +42,7 @@ related:
   - "[[standards-review-iso-42001-27090-2026-Q2]]"
   - "[[threat-modeling-for-ai]]"
   - "[[threat-taxonomy-reconciliation]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://www.iso.org/standard/44546.html"

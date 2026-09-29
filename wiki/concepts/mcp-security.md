@@ -32,6 +32,7 @@ related:
   - "[[agentdesktop]]"
   - "[[falcon-guardian]]"
   - "[[agentic-threat-hunting-framework-athf]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
 verified: 2026-09-22

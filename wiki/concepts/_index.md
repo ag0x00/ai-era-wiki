@@ -2,7 +2,7 @@
 type: domain
 title: "Concepts"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-09-29
 tags: [domain, concepts]
 status: seed
 subdomain_of: ""
@@ -20,7 +20,7 @@ Domain concepts that don't fit neatly into a framework, architecture, or practic
 - [[adversarial-reflexion|Adversarial Reflexion]] — Adversarial Reflexion is an agentic vulnerability-verification technique that wraps the LLM in a tightly constrained attacker persona and...
 - [[agency-gap|Agency Gap]] — The non-deterministic disconnect between a user's actual intent and the autonomous execution performed by an AI agent.
 - [[agent-availability-threats|Agent Availability Threats]] — Agentic AI's autonomy multiplies the blast radius of availability failures.
-- [[agent-catalog|AI Agent Catalog]] — The AI agent catalog is a mandatory primitive for any guardian-agent deployment per Gartner.
+- [[agent-catalog|AI Agent Catalog]] — The AI agent catalog is one of the mandatory features in Gartner's market definition of a Guardian Agent....
 - [[agent-commander-prompt-c2|Agent Commander: Prompt-Level Command and Control]] — Agent Commander is a research tool built by Johann Rehberger that implements command-and-control (C2) infrastructure operating entirely a...
 - [[agent-escape|Agent Escape]]
 - [[agent-memory-isolation|Agent Memory Isolation]]

@@ -21,6 +21,7 @@ related:
   - "[[non-human-identity]]"
   - "[[nhi-governance-for-agents]]"
   - "[[google-cloud-agentic-security-profile]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
 ---

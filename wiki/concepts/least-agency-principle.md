@@ -39,6 +39,7 @@ related:
   - "[[agents-rule-of-two]]"
   - "[[accidental-meltdown|Accidental Meltdown]]"
   - "[[evaluation-containment-failure|Evaluation Containment Failure]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/talks/securing-your-agents-2026-04-30.md]]"

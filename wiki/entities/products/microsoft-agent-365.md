@@ -45,6 +45,7 @@ related:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
+  - "[[agent-catalog]]"
 sources:
   - "https://www.microsoft.com/en-us/microsoft-agent-365"
   - "https://learn.microsoft.com/en-us/microsoft-agent-365/overview"

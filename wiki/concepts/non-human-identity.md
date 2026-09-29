@@ -45,6 +45,7 @@ related:
   - "[[falcon-guardian]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[what-are-non-human-identities]]"

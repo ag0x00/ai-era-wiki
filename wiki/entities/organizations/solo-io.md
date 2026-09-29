@@ -24,6 +24,7 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[agentic-ai-security-cmm-d5-egress-network]]"
   - "[[mcp-security]]"
+  - "[[agent-catalog]]"
 sources:
   - "https://www.solo.io"
   - "https://www.solo.io/blog/introducing-agentdesktop"

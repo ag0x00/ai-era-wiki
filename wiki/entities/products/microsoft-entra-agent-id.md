@@ -42,6 +42,7 @@ related:
   - "[[microsoft-security-copilot]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
+  - "[[agent-catalog]]"
 sources:
   - "https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id"
   - ".raw/articles/microsoft-entra-agent-id-what-is-2026-09-18.md"

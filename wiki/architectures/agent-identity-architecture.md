@@ -45,6 +45,7 @@ related:
   - "[[falcon-guardian]]"
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
+  - "[[agent-catalog]]"
 sources:
   - "[[securing-the-autonomous-future]]"
   - "[[openai-hugging-face-agent-incident]]"

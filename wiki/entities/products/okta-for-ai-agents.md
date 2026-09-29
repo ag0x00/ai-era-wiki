@@ -28,6 +28,7 @@ related:
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentic-ai-security-ra-gaps]]"
+  - "[[agent-catalog]]"
 sources:
   - "https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/"
   - "https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/"

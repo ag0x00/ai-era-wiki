@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-28
+updated: 2026-09-29
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -113,7 +113,7 @@ The recurring failure mode is prompt injection that reaches a privileged action.
 
 The Exchange sorts on asset and impact rather than on runtime model use, so it reaches fourteen development-time, model-layer, and runtime application-security categories that the [[owasp-agentic-ai-top-10|OWASP Agentic Top 10]] does not rank. It leaves four multi-agent ASI categories unanchored in turn. Its runtime deep dive also separates [[agent-escape|agent escape]] from jailbreaking by the layer each defeats, and the two failures take different controls. The reference architecture then organizes the responses: deterministic policy enforcement, plan-validate-execute patterns, and runtime guardrails.
 
-Agent inventory is forming as a product category ahead of the schedule the field predicted. Gartner places unified catalog discovery with independent guardian-agent vendors in 2027–2028. A data-security incumbent that the same guide puts in none of its six vendor segments is already marketing the unified position ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]). That claim is a vendor self-report carrying no coverage figure, so it bears on when the category forms. The four-population gap [[agent-catalog|the agent catalog]] describes stays open.
+Agent inventory is forming as a product category. The [[guardian-agents-market-guide|Gartner Market Guide for Guardian Agents]] makes the [[agent-catalog|AI Agent Catalog]] a mandatory guardian-agent feature and expects independent guardian agents to supply unified oversight across cloud, identity and data environments. Incumbents from adjacent markets are already shipping agent discovery: a data-security vendor the guide lists only under information governance markets one unified inventory ([[cyera-agent-guardian-release|Cyera Agent Guardian Release]]), and endpoint, identity and infrastructure vendors also announced agent discovery in September 2026. None of their releases gives a coverage figure across the four agent populations the catalog must enumerate, so that gap stays open.
 
 **Start here:**
 
