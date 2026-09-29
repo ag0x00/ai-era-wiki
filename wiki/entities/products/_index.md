@@ -2,7 +2,7 @@
 type: domain
 title: "Products"
 created: 2026-04-30
-updated: 2026-09-24
+updated: 2026-09-29
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
@@ -19,7 +19,7 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[adr-bench|ADR-Bench]] — A defender-side benchmark for detecting attacks against AI agents that operate through the Model Context Protocol, released with the ADR...
 - [[agentcordon|AgentCordon]] — Sources: [Homepage](https://agentcordon.dev) · [GitHub repo](https://github.com/agentcordon/agentcordon) ·...
 - [[agentdesktop|agentdesktop]] — Sources: [GitHub repository](https://github.com/agentdesktop-dev/agentdesktop) ·...
-- [[agentdojo|AgentDojo]] — A peer-reviewed, independent benchmark for prompt injection against tool-using AI agents.
+- [[agentdojo|AgentDojo]] — Sources: [AgentDojo benchmark paper](https://arxiv.org/abs/2406.13352), [LlamaFirewall evaluation](https://arxiv.org/abs/2505.03574).
 - [[agentforce|Agentforce (Salesforce)]] — Sources: [Homepage](https://www.salesforce.com/agentforce/)
 - [[agentgateway|AgentGateway]] — Sources: [AgentGateway (repo)](https://github.com/agentgateway/agentgateway)
 - [[agentshield|AgentShield]] — Sources: [GitHub — `affaan-m/agentshield`](https://github.com/affaan-m/agentshield) ·...
