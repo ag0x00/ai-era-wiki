@@ -73,7 +73,6 @@ The [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] assesses nine domai
 Its meaning depends on the table or diagram that uses it.
 
 - **A target range**, in an older right-sizing table.
-- **Evidenced against needed**, in [[google-cloud-agentic-security-profile|the Google Cloud profile]], whose column head reads `Evidenceable → needed`. [[azure-rag-chatbot-security-profile|The Azure profile]] heads the same column `Realistic target` and means the target range.
 - **A verb**, in prose. Retired vault-wide, surviving in the fixed names `L4→L5` and `D2→D5`.
 
 ## Ladder-relative levels

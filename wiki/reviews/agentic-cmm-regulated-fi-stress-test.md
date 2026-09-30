@@ -56,13 +56,13 @@ Per the CMM's deployment-shape table, a chatbot targets L3 across all domains an
 | Domain | Today | Basis |
 |---|---|---|
 | D1 Governance | L1→L2 | Draft AI policy; no AI risk committee yet |
-| D2 Identity | L2 | Entra app identity; not per-agent Agent ID; not zero-credential |
+| D2 Identity | L2 | Entra app identity without per-agent Agent ID or zero-credential access |
 | D3 Control / least-agency | L1–L2 | Few tools; informal HITL on write actions |
 | D4 Runtime guardrails | L2–L3 | Prompt Shields + Content Safety default; Groundedness lifts to L3 |
-| D5 Egress | L2 | Destination allowlist; no agent-aware gateway, but little egress need |
+| [[agentic-ai-security-cmm-d5-egress-network\|CMM D5: Egress and Network]] | L2 | Destination allowlist; no agent-aware gateway, but little egress need |
 | **D6 Data, Memory and RAG** | **L1–L2** | **Member-PII oversharing is the real risk; Purview AI half-deployed** |
-| D7 Observability | L2–L3 | Sentinel/Defender ingest; no behavioral baselines or multi-tool red team |
-| D8 Supply chain / AI-BOM | L1–L2 | Manual model/version tracking; no AI-BOM |
+| [[agentic-ai-security-cmm-d7-observability\|CMM D7: Observability and Detection]] | L2–L3 | Sentinel/Defender ingest; no behavioral baselines or multi-tool red team |
+| [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Engineering and Supply Assurance]] | L1–L2 | Manual model/version tracking; no AI-BOM |
 | D9 Operations | L1–L2 | No formal decommission or HITL-fatigue tracking |
 
 Applying the [[agentic-ai-security-cmm-dependency-rules|effective-score dependency caps]] (D2→D5, D2→D7, D3→D4): weak per-agent identity and control pull egress, observability, and runtime down, which is a fair reflection of reality. The three-number summary lands near **L2 typical / L1 weakest (D6, D8) / L3 strongest (D4)**.
@@ -77,7 +77,13 @@ The CMM crosswalks to EU AI Act, ISO 42001, NIST AI RMF, MITRE ATLAS, OWASP ASI,
 
 ### 2. Microsoft-stack coverage gaps, real but narrow
 
-An earlier reading of this point recorded no Microsoft AI gateway and an unavoidable off-stack egress plane. Verification against current Microsoft documentation narrows that gap rather than confirming it. **Azure API Management's AI Gateway is GA** and is a genuine agent-aware LLM gateway (token-limit and token-metric policies, semantic caching, inline Azure AI Content Safety, backend load-balancing), and it **brokers MCP servers with Entra / OAuth 2.0 / JWT authorization at GA**; [[microsoft-entra-agent-id|Entra Internet Access]] adds network-layer prompt-injection and Shadow-AI egress filtering. So the LLM-traffic gateway and MCP authorization are covered natively. The genuine residual gaps an all-Microsoft buyer fills off-stack are narrow: (a) **MCP tool-integrity / rug-pull defense** — Microsoft's own OWASP-MCP-for-Azure guidance states "there is no single Azure service dedicated to MCP-specific protection"; (b) **per-task capability tokens** — Entra Agent ID issues per-*agent-identity* scoped tokens (OBO), not per-*task* holder-bound Warrant-style grants ([[tenuo-warrant|Tenuo Warrant]]-class); (c) **agent-to-agent (A2A) authorization beyond identity** (message signing, cross-agent ACLs, content-scanning rule packs) is thin. The RA's Egress row also omits APIM AI Gateway entirely and should add it. The correction sets the rule the rest of this review follows, which is to confirm a platform capability against current documentation before asserting its absence.
+An earlier reading of this point recorded no Microsoft AI gateway and an unavoidable off-stack egress plane. Verification against current Microsoft documentation narrows that gap rather than confirming it. **Azure API Management's AI Gateway is GA** and is a genuine agent-aware LLM gateway (token-limit and token-metric policies, semantic caching, inline Azure AI Content Safety, backend load-balancing), and it **brokers MCP servers with Entra / OAuth 2.0 / JWT authorization at GA**. [[microsoft-entra-agent-id|Entra Internet Access]] adds network-layer prompt-injection and Shadow-AI egress filtering. So the LLM-traffic gateway and MCP authorization are covered natively. The residual gaps an all-Microsoft buyer fills off-stack are narrow:
+
+- **MCP tool-integrity / rug-pull defense:** Microsoft's own OWASP-MCP-for-Azure guidance states "there is no single Azure service dedicated to MCP-specific protection".
+- **Per-task capability tokens:** Entra Agent ID issues per-*agent-identity* scoped tokens (OBO), not per-*task* holder-bound Warrant-style grants ([[tenuo-warrant|Tenuo Warrant]]-class).
+- **Agent-to-agent (A2A) authorization beyond identity:** Message signing, cross-agent ACLs, and content-scanning rule packs are thin.
+
+The RA's Egress row also omits APIM AI Gateway entirely and should add it. The correction sets the rule the rest of this review follows, which is to confirm a platform capability against current documentation before asserting its absence.
 
 ### 3. An L5 cadence regulated FIs cannot follow
 
@@ -93,7 +99,13 @@ The CMM is a synthesis (`attributed_to: Anton Goncharov + Claude`), not a recogn
 
 ### 6. A cost model that under-tells the dominant costs
 
-The implementation roadmap is framed around control coverage and tooling. For a fully-licensed Microsoft shop the licensing delta is near zero; the dominant costs are elsewhere and largely unaddressed: (a) the **data-governance project** — classifying member data and remediating oversharing in Purview is a multi-quarter, people-owned effort and the true bottleneck (see [[inference-exposure|Inference / Retrieval Exposure]]); (b) **log-ingestion spend** — the RA's own note that agents emit 10–20× human log volume is a recurring Sentinel/Security-Copilot bill that scales with every agent; (c) **headcount** to operationalize one application's governance, logging, and red-team. The expensive, slow work is data governance and labor, not tool purchase.
+The implementation roadmap is framed around control coverage and tooling. For a fully-licensed Microsoft shop the licensing delta is near zero; the dominant costs are elsewhere and largely unaddressed:
+
+- **Data-governance project:** Classifying member data and remediating oversharing in Purview is a multi-quarter, people-owned effort and the true bottleneck (see [[inference-exposure|Inference / Retrieval Exposure]]).
+- **Log-ingestion spend:** The RA's own note that agents emit 10–20× human log volume is a recurring Sentinel/Security-Copilot bill that scales with every agent.
+- **Headcount:** Staff must operationalize one application's governance, logging, and red-team.
+
+The expensive, slow work is data governance and labor, not tool purchase.
 
 ## Well-calibrated areas
 
@@ -112,6 +124,6 @@ Filed 2026-05-23 from a customer-persona stress test of the CMM and RA. Gaps 1 a
 
 Downstream resolution: gap 6's D6 finding was acted on in [[agentic-ai-security-cmm-d6-data-rag|the D6 Data, Memory and RAG deep dive]], which reframed the domain around answer-time oversharing and inference exposure, made entitlement enforcement the L3 capability, and stated the Purview data-governance project as a multi-quarter labor cost. The findings above stand as filed; this note records where they landed.
 
-The single-stack closure condition is answered on one platform of the three. [[google-cloud-agentic-security-profile|The Google Cloud agentic security profile]] reads the reference architecture and the CMM against Google Cloud alone, plane by plane and domain by domain, and names the planes where Google ships no native control and an off-stack component is unavoidable. No equivalent platform-wide reading exists for Microsoft or AWS; [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]] is a Microsoft reading of one deployment shape rather than of the platform.
+The single-stack closure condition was answered on one platform of the three. [[google-cloud-agentic-security-profile|The Google Cloud Agentic Security Profile]] originally read the reference architecture and the CMM against Google Cloud alone, plane by plane and domain by domain. It has since been narrowed to a customer-built Agent Platform playbook. For in-suite assistant controls, see [[gemini-workspace-control-sheet|Gemini Workspace Control Sheet]]. The original platform-wide closure condition is therefore open again. No equivalent platform-wide reading exists for Microsoft or AWS; [[azure-rag-chatbot-security-profile|the Azure RAG chatbot profile]] is a Microsoft reading of one deployment shape rather than of the platform.
 
 Gap 3 dates the general availability of Okta for AI Agents to 30 April. Okta announced it on 2026-04-29 ([Okta — Okta for AI Agents is Now Generally Available](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/)), a day before the 30 April date its release of 16 March 2026 had given ([Okta — Okta announces new blueprint for the secure agentic enterprise](https://www.okta.com/newsroom/press-releases/showcase-2026/)), and [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]] carries the announcement date. The finding stands on either date.

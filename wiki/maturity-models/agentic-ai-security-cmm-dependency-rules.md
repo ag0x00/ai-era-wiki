@@ -88,6 +88,8 @@ From 2026-05-04 until the September redesign, this page defined a formula that t
 
 The [[cmm-calibration-stress-test-2026|May calibration stress test]] compared five deployment archetypes under a single floor and then under dependency-resolved aggregation. Its conclusions about which controls interact remain useful. Its arithmetic and three-number comparisons do not describe the current assessment method. An architectural-containment choice, such as removing write tools or external communication, is recorded in the deployment boundary and applicable criteria. It is not converted into a bonus or a penalty elsewhere in the matrix.
 
+The [[agentic-cmm-regulated-fi-stress-test|Agentic AI CMM: Regulated-FI Stress Test]] applied the former caps and three-number summary to a customer-service RAG bot. Its historical scores do not transfer to the current nine-domain evidence method.
+
 ## Revision and reporting
 
 When new evidence reveals a dependency, name the affected action, the upstream record or control, the bypass or failure path, and the criterion whose outcome changes. Test the path in the deployment shape at issue. A paper or product diagram may motivate the test; a level claim requires assessable evidence from the implemented path. Add a prerequisite to this page only when it helps an assessor locate a real cross-domain record. The domain page remains the owner of its criterion and pass/fail rule.

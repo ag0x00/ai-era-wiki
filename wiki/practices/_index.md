@@ -2,7 +2,7 @@
 type: domain
 title: "Emerging Best Practices"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags: [domain, practices]
 status: seed
 subdomain_of: ""
@@ -32,7 +32,7 @@ Controls, playbooks, and patterns that are converging across vendors but not yet
 - [[guardian-agent-metagovernance|Guardian Agent Metagovernance (Guards for the Guardians)]]
 - [[multi-agent-runtime-security|Multi-Agent Runtime Security: Cascade Detection and IR]] — The depth-companion to the wiki's single-agent observability page, focused on what's specific to multi-agent meshes: cascade-failure dete...
 - [[nhi-governance-for-agents|NHI Governance for AI Agents]] — Non-Human Identity (NHI) governance for AI agents manages the lifecycle of agent identities and credentials: inventory, ownership, grants...
-- [[oversharing-controls|Oversharing Controls for AI Search]] — AI oversharing is the failure mode where an AI search tool retrieves and combines content that is technically RBAC-permitted but contextu...
+- [[oversharing-controls|Oversharing Controls for AI Search]] — AI oversharing includes the failure mode where an AI search tool retrieves and combines content that is technically RBAC-permitted but co...
 - [[plan-validate-execute|Plan-Validate-Execute Pattern]]
 - [[prompt-injection-containment|Prompt Injection Containment for Agentic Systems]]
 - [[rag-hardening|RAG Hardening]]

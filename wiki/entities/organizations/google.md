@@ -2,7 +2,7 @@
 type: entity
 title: "Google"
 created: 2026-04-30
-updated: 2026-09-22
+updated: 2026-09-30
 tags:
   - entities
   - organizations
@@ -28,6 +28,10 @@ related:
   - "[[google-big-sleep-projectzero]]"
   - "[[google-codemender-deepmind]]"
   - "[[gemini-cli]]"
+  - "[[model-armor]]"
+  - "[[gemini-workspace-control-sheet]]"
+  - "[[gemini-enterprise-control-sheet]]"
+  - "[[google-cloud-agentic-security-profile]]"
   - "[[gemini-cli-workspace-trust-rce]]"
   - "[[autonomous-code-security-google-talk]]"
   - "[[heather-adkins]]"
@@ -46,6 +50,13 @@ sources:
   - "https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html"
   - "https://www.implicator.ai/google-says-gemini-hacked-three-companies-during-irregular-security-test-in-may/"
   - "https://www.cnn.com/2026/09/19/business/gemini-ai-hack-internet"
+  - "https://knowledge.workspace.google.com/admin/generative-ai/workspace-with-gemini/google-workspace-with-gemini"
+  - "https://docs.cloud.google.com/gemini/enterprise/docs/security-overview"
+  - "https://knowledge.workspace.google.com/admin/studio/get-started-workspace-studio-set-up-guide-for-admins"
+  - "https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio"
+  - "https://ai.google.dev/aistudio"
+  - "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/overview"
+  - "https://docs.cloud.google.com/model-armor/integrations"
   - "[[.raw/articles/cnbc-gemini-latest-ai-model-to-break-out-2026-09-22.md]]"
   - "[[.raw/articles/implicator-google-says-gemini-hacked-three-companies-2026-09-22.md]]"
   - "[[.raw/articles/reuters-gemini-hacked-three-companies-2026-09-22.md]]"
@@ -67,7 +78,7 @@ verified_note: "0 findings. Read scoped to the model-conduct-under-evaluation se
 ## AI Security Contributions (from ai-security-standards-in-q1-2026)
 
 - **[[google-saif|SAIF]]** — AI security framework; SAIF Risk Map and Risk Assessment donated to [[cosai|CoSAI]] in July 2024
-- **[[a2a-protocol|A2A Protocol]]** (v1.0.0, released 2026-03-12) — Agent-to-Agent protocol with signed Agent Cards (§8.4) and opacity principle; donated to Linux Foundation 2025-06-23; hosted under LF's Agentic AI Foundation
+- **[[a2a-protocol|A2A Protocol]]** (v1.0.0, released 2026-03-12) — Agent-to-Agent protocol with signed Agent Cards (§8.4) and opacity principle. Donated to Linux Foundation 2025-06-23 and hosted under LF's Agentic AI Foundation.
 - **Google ADK Go 1.0** (March 31, 2026) — ships with `before_model_callback` hooks, OpenTelemetry integration, and Model Armor integration — reference implementation of platform-level enforcement
 - **CoSAI Premier Sponsor** — key contributor to MCP Security White Paper
 
@@ -82,6 +93,20 @@ In May 2026 a Gemini model under a cybersecurity evaluation run by [[irregular|I
 ## Workspace Security
 
 [[nicolas-lidzborski|Nicolas Lidzborski]] (Principal Software Engineer, Google Workspace security; ~3 years on GenAI security) presented a three-year retrospective at [[unprompted-conference-march-2026|Unprompted March 2026]]: [[securing-workspace-genai-at-google-talk|Securing Workspace GenAI at Google]]. The talk introduces the wiki's [[prompt-as-code|Prompt as Code]] structural framing, names [[agency-gap|Agency Gap]] / [[orchestration-hijacking|Orchestration Hijacking]] / [[recursive-prompt-injection|Recursive Prompt Injection (and Semantic Gaslighting)]] as threat sub-classes, and documents the "Architecting the Fortress" four-layer structural blueprint paired with [[plan-validate-execute|Plan-Validate-Execute]] as Google's canonical HITL pattern for high-stakes irreversible actions. Cross-validates the [[lethal-trifecta|Lethal Trifecta]] framing from the productivity-environment angle (calendar invites + email + smart-home control as concrete real-world impact surface).
+
+## Gemini service boundaries
+
+Google sells several Gemini-enabled services with different administrative and data paths. A control documented for one service needs a separate test before it is credited to another.
+
+- **Google Workspace with Gemini** places assistance in Gmail, Docs, Meet, and other Workspace surfaces and includes the Gemini app under Workspace plans. The [[gemini-workspace-control-sheet|Gemini Workspace Control Sheet]] covers its administrative and in-suite action boundaries. [Workspace product scope](https://knowledge.workspace.google.com/admin/generative-ai/workspace-with-gemini/google-workspace-with-gemini).
+- **Gemini Enterprise app** is a Google Cloud employee assistant with its own apps, connected data stores, agents, IAM, and security settings. The [[gemini-enterprise-control-sheet|Gemini Enterprise Control Sheet]] covers that route. Its [security overview](https://docs.cloud.google.com/gemini/enterprise/docs/security-overview) identifies VPC Service Controls, encryption, audit logging, and identity controls. It is distinct from the Agent Platform used to build and host customer agents.
+- **Workspace Studio** lets employees create flows across Workspace and third-party services, including AI steps. Administrators control its service and step access separately. The Workspace control sheet covers the resulting action path. [Administrator setup guide](https://knowledge.workspace.google.com/admin/studio/get-started-workspace-studio-set-up-guide-for-admins).
+- **Agent Studio** is a collaborative development workspace within Gemini Enterprise Agent Platform for choosing models, refining instructions and prompts, grounding, and preparing deployable agent applications. It is part of the customer-built-agent route, not the Gemini Enterprise employee app. [Agent Studio overview](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agent-studio).
+- **Google AI Studio** is a developer environment for trying Gemini models, prompts, and Gemini API features; its API-key and application path is separate from an employee assistant rollout. [Google AI Studio](https://ai.google.dev/aistudio).
+- **Gemini Notebook / NotebookLM** provides source-grounded notebooks under Google-account or Workspace access. **Gemini Notebook Enterprise**, formerly NotebookLM Enterprise, uses a Google Cloud project, separate user roles, and enterprise security features; Google documents it as available standalone or within Gemini Enterprise. The names and controls should be recorded against the actual edition. [Enterprise notebook overview](https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/overview).
+- **Gemini Enterprise Agent Platform** supplies model, runtime, gateway, and agent-governance services for customer-built agents. Its Google Cloud control route is profiled in [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]. [Agent Platform security findings](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/view-security-findings).
+
+[[model-armor|Model Armor]] is a separate Google Cloud screening service. Its [integration matrix](https://docs.cloud.google.com/model-armor/integrations) includes a direct Gemini Enterprise app integration and specific Agent Platform routes. A product's presence in this list does not establish coverage for every source, tool, or response in that product.
 
 ## Project Glasswing partnership (May 2026)
 
@@ -104,7 +129,7 @@ The two agents are designed as a discovery-to-patching pair, and Google describe
 
 Both programmes carried operating figures at [[unprompted-conference-march-2026|Unprompted Conference I]], where [[heather-adkins|Heather Adkins]] and [[four-flynn|Four Flynn]] presented them together. Big Sleep reports a false-positive rate of zero, end-to-end and without human involvement, on deep memory-safety bugs, bought by building a working exploit as proof of vulnerability before a finding is reported. CodeMender's open-source output stands at 178 autonomously generated fixes, which the deck splits 48 patched and 130 hardening. Both figures are first-party and neither is a benchmark result.[^google-talk] Google states the goal as eliminating every software vulnerability on Earth, and Flynn's name for the volume problem driving it is the vulnpocalypse.
 
-Their availability has since diverged. Big Sleep remains vendor-internal. CodeMender entered preview as a managed Google Cloud product on 2026-07-21 ([[google-cloud-codemender-preview|source summary]]), sold through the Gemini Enterprise Agent Platform; through AI Threat Defense, with [[wiz|Wiz]] orchestrating; and paired with a cyber-specialized Gemini 3.5 Flash Cyber model restricted to a small set of governments and trusted partners. The preview post does not mention Big Sleep, so the discovery-to-patching handoff remains undocumented on the product side.
+Their availability has since diverged. Big Sleep remains vendor-internal. CodeMender entered preview as a managed Google Cloud product on 2026-07-21 ([[google-cloud-codemender-preview|source summary]]). It is sold through the Gemini Enterprise Agent Platform and through AI Threat Defense, with [[wiz|Wiz]] orchestrating. Google also announced a planned CodeMender variant using Gemini 3.5 Flash Cyber for a small set of governments and trusted partners. The preview post does not mention Big Sleep, so the discovery-to-patching handoff remains undocumented on the product side.
 
 ### Agentic SDLC and Mantis
 

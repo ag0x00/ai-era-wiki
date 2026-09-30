@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -40,7 +40,7 @@ It synthesizes primary sources (frameworks, standards, peer-reviewed papers, ven
 **Structural anchors, application security.** A reference deployment with tested trust boundaries and a nine-domain assessment model.
 
 - [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]: trust boundaries, control points, and evidence paths for a defined deployment shape, with threat mappings in the [[threat-taxonomy-reconciliation|reconciliation matrix]]. Satellites: [[agent-identity-architecture|Agent Identity Architecture]] and [[system-prompt-architecture|System Prompt Architecture]] for the residual-risk prompt layer.
-- [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: five cumulative levels across nine domains, scored for a defined deployment. The result is a domain profile with evidence confidence and explicit prerequisites. It has no aggregate score or numeric dependency caps. The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] and [[agentic-ai-security-cmm-dependency-rules|evidence prerequisites]] support the assessment. The former [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] and [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]] are archives. The [[agentic-ai-security-cmm-crosswalk-us-fi|US]] and [[agentic-ai-security-cmm-crosswalk-canada-fi|Canadian]] financial-sector crosswalks are dated jurisdictional references.
+- [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]]: five cumulative levels across nine domains, scored for a defined deployment. The result is a domain profile with evidence confidence and explicit prerequisites. It has no aggregate score or numeric dependency caps. For grading procedure, see [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]]. For evidence prerequisites, see [[agentic-ai-security-cmm-dependency-rules|CMM: Evidence Prerequisites and Dependencies]]. The former [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] and [[agentic-ai-security-cmm-recalibration-method-2026|recalibration method]] are archives. The [[agentic-ai-security-cmm-crosswalk-us-fi|US]] and [[agentic-ai-security-cmm-crosswalk-canada-fi|Canadian]] financial-sector crosswalks are dated jurisdictional references.
 
 **Structural anchors, security operations.** A parallel pair for the agentic SOC, distinct from the application-security pair and overlapping only where the SOC's own agents need to be secured.
 
@@ -54,6 +54,7 @@ It synthesizes primary sources (frameworks, standards, peer-reviewed papers, ven
 - [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]]: offense.
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: defending against AI-driven attacks.
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]: securing AI.
+- [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]]: threat paths and boundary choices for in-suite, enterprise-app, and desktop employee assistants.
 - [[security-controls-for-ai-stacks|Security Controls for AI Stacks]]: securing AI — the six-layer control inventory (identity, observability, containment, network, model, data) against what has shipping tooling and what has published guidance alone.
 
 **Playbooks.** Operational deliverables a named audience executes directly.
@@ -66,7 +67,9 @@ It synthesizes primary sources (frameworks, standards, peer-reviewed papers, ven
 - [[agent-sandbox-isolation-landscape|Agent Sandbox Isolation Landscape]]: technology choices for the RA's agent-runtime confinement boundary, scored by isolation mechanism and delivery model.
 - [[agentic-soc-autonomy-ladders|Agentic SOC Autonomy Ladders]]: the prior art behind "maturity gates autonomy" above, and where it stopped short of a full gating rule.
 - [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile]]: a dated profile of a closed-corpus RAG chatbot on Microsoft Copilot Studio against the earlier plane model and CMM.
-- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]: the Google-Cloud-only single-stack reading, projected onto the whole-tenant Gemini-for-Workspace productivity assistant.
+- [[gemini-workspace-control-sheet|Gemini Workspace Control Sheet]]: controls and investment decisions for the in-suite employee assistant.
+- [[gemini-enterprise-control-sheet|Gemini Enterprise Control Sheet]]: a separate control route for the Google Cloud employee app, its data stores, and its agents.
+- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]: control and evidence decisions for customer-built agents on Gemini Enterprise Agent Platform.
 
 ## State of the field, mid-2026
 
@@ -106,7 +109,9 @@ The four sections below take one axis each.
 
 This axis covers how to deploy AI agents safely in production, and how to red-team and pentest the AI applications an organization builds. The surface spans the framework layer ([[nist-ai-rmf|NIST AI RMF]], [[iso-iec-42001|ISO/IEC 42001]], [[owasp-llm-top-10|OWASP LLM Top 10]], [[owasp-agentic-ai-top-10|OWASP Agentic Top 10]], [[owasp-ai-exchange|OWASP AI Exchange]]), enterprise control-plane products ([[microsoft-zt4ai|Microsoft ZT4AI]] and Agent 365, [[google-saif|Google SAIF]], Okta for AI Agents), the per-agent identity primitives that govern an agent's authority, and the red-team tooling that probes the result. The wiki has completed clause-level reviews of 10 of its 11 priority standards; the ISO/IEC 42001 and ISO/IEC 27090 review is citation-only, bounded by a paywall. One question-scoped review stays open — whether any SDLC framework governs the coding agent as an actor — and [[secure-sdlc-framework-stack-2026|the framework-stack recommendation]] treats that as an open position rather than a finding until it lands. Each gap claim against a named standard rests on bounded, primary-source-cited absence claims rather than a wiki summary.
 
-The reviews show a consistent split: governance standards specify duties without agentic controls, and agentic-control taxonomies specify threats without graded, auditable maturity criteria for a program. The [[owasp-ai-exchange|OWASP AI Exchange]] reverses the grader and the graded. Against several of the standards it names, the Exchange records a verdict of its own: the standard covers the control fully, or covers it minimally. The judgement lands on the standard rather than on the organization operating it, so the Exchange supplies no maturity criteria either. The wiki's own coverage of the Exchange is partial: four of its six deep-dive documents are ingested, with testing and privacy unread. A third shape arrived in 2026: a mapping layer that grades nothing and asserts nothing. The [[owasp-genai-crosswalk|GenAI Crosswalk]] maps 51 OWASP risk entries to 26 frameworks as machine-readable data, and marks all 3,781 of its mappings unreviewed with no named reviewer ([dataset](https://genai-security-project.github.io/crosswalk/)). A classifier proposes the candidates and a pull request carries them to a reviewer who has not yet signed one. Breadth is now cheap to publish, so the question a reader brings to any crosswalk is which cells somebody read.
+The reviews show a consistent split: governance standards specify duties without agentic controls, and agentic-control taxonomies specify threats without graded, auditable maturity criteria for a program. The [[owasp-ai-exchange|OWASP AI Exchange]] reverses the grader and the graded. Against several of the standards it names, the Exchange records a verdict of its own: the standard covers the control fully, or covers it minimally. The judgement lands on the standard rather than on the organization operating it, so the Exchange supplies no maturity criteria either. The wiki's own coverage of the Exchange is partial: four of its six deep-dive documents are ingested, with testing and privacy unread. A third shape arrived in 2026: a mapping layer that grades nothing and asserts nothing. The dataset maps 51 OWASP risk entries to 26 frameworks as machine-readable data and marks all 3,781 mappings unreviewed with no named reviewer ([dataset](https://genai-security-project.github.io/crosswalk/)). A classifier proposes the candidates, and a pull request carries them to a reviewer who has not yet signed one. Breadth is now cheap to publish, so the question a reader brings to any crosswalk is which cells somebody read.
+
+See [[owasp-genai-crosswalk|GenAI Crosswalk]] for the source reading.
 
 The recurring failure mode is prompt injection that reaches a privileged action. [[lethal-trifecta|The lethal trifecta]] (untrusted input, private data, and external tools combined in one agent) names the structural test for it. [[threat-modeling-for-ai|Threat modeling for AI]] is the method that ties together seven complementary taxonomies, among them OWASP's Agentic Security Initiative (ASI), the T-code reference model, MITRE ATLAS, [[csa-maestro|CSA MAESTRO]], [[stride-ai-2026|STRIDE-AI]], and the [[owasp-ai-exchange|OWASP AI Exchange]] AI Security Matrix. A single [[threat-taxonomy-reconciliation|reconciliation matrix]] maps each one to a reference-architecture boundary and a maturity-model domain.
 

@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Claude Cowork"
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-09-30
 tags:
   - entities
   - products
@@ -17,12 +17,12 @@ scope_axis:
 origin: aggregated
 vendor: "Anthropic"
 parent_org: "[[anthropic]]"
-role: "Anthropic's agentic knowledge-work assistant in Claude Desktop, holding connected local folders, connectors over MCP, a built-in browser and scheduled cloud tasks; governed through organization settings, Enterprise custom roles and managed desktop configuration"
+role: "Anthropic's agentic knowledge-work assistant in Claude Desktop, holding connected local folders, connectors over MCP, a built-in browser and scheduled tasks; governed through organization settings, Enterprise custom roles and managed desktop configuration"
 homepage: "https://claude.com/docs/cowork/overview"
 related:
   - "[[anthropic|Anthropic]]"
   - "[[claude-code|Claude Code]]"
-  - "[[cmm-known-limitations|CMM Known Limitations]]"
+  - "[[productivity-assistant-deployment-shape]]"
   - "[[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]"
   - "[[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol]]"
   - "[[lethal-trifecta|Lethal Trifecta]]"
@@ -51,10 +51,10 @@ sources:
   - "https://claude.com/docs/third-party/claude-desktop/local-access"
   - "https://claude.com/docs/third-party/claude-desktop/mdm"
   - "https://claude.com/blog/compliance-api-cowork-and-claude-code"
-verified: 2026-09-18
+verified: 2026-09-30
 verified_against: []
-verified_findings: 2
-verified_note: "Fresh-eyes and source read of the desktop-agent productivity-assistant row against Anthropic's live Cowork documentation: the Team/Enterprise, architecture, OTel and enterprise-administrator articles, the Cowork overview and monitoring reference, and the Compliance API announcement. Nothing archived to .raw/. Two vendor conflicts stay open and are recorded on the page: OTel content capture by default, and Compliance API availability stated as GA on the announcement and beta on the administrator guide."
+verified_findings: 0
+verified_note: "Whole-page source read against live Anthropic documentation, including local and remote scheduled-task variants."
 ---
 
 # Claude Cowork
@@ -63,7 +63,7 @@ verified_note: "Fresh-eyes and source read of the desktop-agent productivity-ass
 
 Cowork is [[anthropic|Anthropic]]'s agentic assistant for knowledge work. [Anthropic's documentation](https://claude.com/docs/cowork/overview) states that it runs the same agentic architecture as [[claude-code|Claude Code]] inside Claude Desktop without a terminal, reads and writes local files, divides work across sub-agents, and produces spreadsheets, presentations and formatted documents. [The getting-started article](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork) puts it on the paid Pro, Max, Team and Enterprise plans, on macOS and Windows desktop, on the web, on iOS and Android, and in a Chrome side panel, with Enterprise availability on each surface gated on an administrator enabling it.
 
-Four reaches define the surface: files in folders the user connects, connectors that call tools over MCP, a browser that can open sites and fill forms, and tasks that run on a schedule in Anthropic's cloud. Those four hold all three legs of [[lethal-trifecta|the lethal trifecta]] at once — private data, untrusted content, and a channel that leaves the trust boundary — which is the property that separates this deployment from an in-suite assistant whose writes stay inside a tenant.
+Four reaches define the surface: files in folders the user connects, connectors that call tools over MCP, a browser that can open sites and fill forms, and scheduled tasks that run remotely or locally according to the selected route. Those four hold all three legs of [[lethal-trifecta|the lethal trifecta]] at once — private data, untrusted content, and a channel that leaves the trust boundary. The desktop placement adds local files and browser paths to the employee's connected work systems.
 
 ## Execution model
 
@@ -117,7 +117,7 @@ An administrator-side path restriction exists in the third-party deployment mode
 
 ### Scheduled tasks and background delegation
 
-A member creates a scheduled task in conversation or by hand, choosing name, prompt, approval mode, cadence of hourly, daily, weekly, weekdays or manual, an optional model and an optional folder. [Scheduled tasks run remotely](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-cowork), so they fire on their cadence while the member's computer is asleep and the desktop app is closed, and they carry the same capabilities as an interactive task, including connected tools, skills and installed plugins. They reach connectors and files saved to the Claude account rather than local folders. The same article states that Team and Enterprise administrators govern them only through the Cowork toggle, and the articles cited here name no per-task approval workflow, quota or rate limit.
+A member creates a scheduled task in conversation or by hand, choosing name, prompt, approval mode, cadence of hourly, daily, weekly, weekdays or manual, an optional model and an optional folder. [Anthropic's scheduled-task guide](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-cowork) describes remote tasks that fire while the member's computer is asleep and the desktop app is closed, using connectors and files saved to the Claude account. The same guide's manual setup permits an optional local folder and says a task requiring local files or apps runs only locally. Its general statement that scheduled tasks cannot be tied to a computer folder conflicts with that manual option, so an assessor records and tests the actual placement before relying on remote execution or local file access. The article states that Team and Enterprise administrators govern scheduled-task access through the Cowork toggle; the articles cited here name no separate per-task approval workflow, quota or rate limit.
 
 Dispatch is the second unattended path. [The Dispatch reference](https://claude.com/docs/cowork/guide/dispatch) describes a long-running agent that splits an instruction into child tasks, each running as its own Cowork or Code session, and states that a permission prompt a child task raises is forwarded to the member and **automatically denied after ten minutes**, with the task continuing without that action. Dispatch also registers the desktop as a host for tasks started from the Claude mobile app.
 
@@ -149,8 +149,8 @@ Discovery of unsanctioned installations sits with the endpoint rather than with 
 
 ## Placement in the deployment-shape taxonomy
 
-[[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] records deployment shape on each Agent Card and splits the productivity assistant into two variants: an in-suite assistant holding tools over a tenant's mail, files and calendar, and a desktop agent with local file access and connectors, for which it names the Cowork class. [[agentic-ai-security-cmm-2026|The capability maturity model]] carries a row for each variant, and the desktop-agent row is scored against the control surface above.
+The [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]] treats Cowork as the desktop-agent placement of an employee productivity assistant, alongside in-suite and enterprise-app placements. Its threat model locates the crossings that matter for this placement. The [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]] records the actual deployment shape in the assessment scope and specifies evidence and applicability rules. The [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] grades the defined deployment by domain; it assigns no fixed score to Cowork or another product class.
 
-The variants split on where enforcement lives. An in-suite assistant is bounded by the tenant ACL and the DLP rule that already govern the data it reads. Cowork adds a connected local filesystem, connectors the member authorizes individually, a browser and scheduled cloud tasks, so an action can land outside the tenant that granted the data, and the controls above sit across four planes rather than one: the organization console, the Enterprise role model, the connector's own authorization scope and, in third-party deployments, the managed profile on the device. That surface is administrative rather than in-path, so the desktop-agent row reads L3 across most domains: [[agentic-ai-security-cmm-d8-supply-chain|D8]] rises to L3 on the connector, skill, plugin and extension acquisition channel, and [[agentic-ai-security-cmm-d5-egress-network|D5]] opens at L2 on the egress exclusion recorded above. [[cmm-known-limitations|CMM Known Limitations]] item 7 records the scoring.
+The placements differ in where enforcement lives. An in-suite assistant draws on source permissions and tenant policy where those controls cover its actual retrieval and action routes. Cowork adds a connected local filesystem, connectors the member authorizes individually, a browser, and scheduled tasks on remote or local routes. An action can therefore land outside the tenant that granted the data. The organization console, Enterprise role model, connector authorization, and, in third-party deployments, device profile each control part of that path. An assessor tests the effective routes and grades supply controls under [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]] and egress criteria under [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]] against their own evidence.
 
-Cowork holds no principal of its own, on either placement. It acts as the member, and a connector inherits that member's permissions in the source system, so [[agentic-ai-security-cmm-d2-identity|D2]] records the per-agent-identity and non-human-identity criteria not applicable and grades human traceability from the session and user identifiers the telemetry carries. [[agentic-ai-security-reference-architecture|The reference architecture]] reads the same absence on its Identity plane and carries the rest of the shape across its other five.
+Cowork acts through the member and inherits that member's source-system permissions on connected paths. For [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]], the assessor checks the documented vendor-held identity condition before recording any identity criterion as not applicable. Human delegation, ownership, and downstream trace remain assessable under the protocol. The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] locates those decisions at the identity and action boundaries.

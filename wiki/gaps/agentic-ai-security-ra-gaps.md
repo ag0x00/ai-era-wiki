@@ -58,7 +58,7 @@ verified_note: "Revised RA/D8 placement, development controls, and Entra success
 
 # Agentic AI Security RA Gaps
 
-This register follows twelve implementation and scope questions raised by the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]. The revised architecture now states a concrete trust-boundary design for a single agent, including startup confinement, separated policy and credential roles, independent audit, and release admission. Some items below therefore identify missing implementation evidence rather than an omitted architectural decision. The [[google-cloud-agentic-security-profile|Google Cloud agentic security profile]] is a dated platform reading of the earlier plane design.
+This register follows twelve implementation and scope questions raised by the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]. The revised architecture now states a concrete trust-boundary design for a single agent, including startup confinement, separated policy and credential roles, independent audit, and release admission. Some items below therefore identify missing implementation evidence rather than an omitted architectural decision. The [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] now provides an Agent Platform control procedure; it does not replace the reference architecture.
 
 Items 1 to 11 compare a boundary outcome with shipped controls as of September 2026. Item 12 places development-time security in the architecture's admission and release path. Product status and scope claims retain their dated sources; the current architecture is the source for the logical component names.
 

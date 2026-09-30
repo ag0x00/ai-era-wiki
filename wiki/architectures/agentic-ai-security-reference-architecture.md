@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags:
   - architectures
   - reference-architecture
@@ -36,6 +36,7 @@ related:
   - "[[google-cloud-agentic-security-profile]]"
   - "[[azure-rag-chatbot-security-profile]]"
   - "[[generative-coding-deployment-shape-2026]]"
+  - "[[productivity-assistant-deployment-shape]]"
 sources:
   - "https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final"
   - "https://csrc.nist.gov/pubs/sp/1800/35/final"
@@ -69,7 +70,7 @@ This worked example uses a customer-refund agent. A support analyst who holds re
 
 The protected assets are the customer's record, internal policy, refund authority, service credentials, and the action trail. The human initiator is authenticated, but their request does not confer every permission they hold on the agent. The organization sets a narrower task scope and a refund limit. The model returns text and proposed actions; it does not decide its own authority. Retrieved records, model output, and refund API responses may contain instructions or malformed fields and enter the agent as data.
 
-The architecture is a logical design for this deployment, not a prescribed product stack. [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] and [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] hold dated platform readings. The [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] page tracks unresolved implementation properties. The contracts below remain useful when products or provider interfaces change.
+The architecture is a logical design for this deployment, not a prescribed product stack. [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] and [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] apply its boundaries to named deployment routes. The [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] page tracks unresolved implementation properties. The contracts below remain useful when products or provider interfaces change.
 
 ## Protection objectives and trust assumptions
 
@@ -176,7 +177,7 @@ These shapes change the topology and evidence owner. They do not inherit the exa
 | Vendor-managed suite | The vendor may hold model, runtime, policy, and tool path. Customer configuration bounds reach but may not be an in-path enforcement point. | Customer obtains vendor boundary and audit evidence, tests tenant settings, and records unavailable evidence as an assessment limit. |
 | Multi-agent system | Give each agent a separate identity and scope. Route messages through an authenticated broker; validate schema and delegation without expanding authority. | Broker owner retains per-hop decisions and correlation. Incident response must reconstruct the chain across agents. |
 
-The [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] page details coding-agent placement and approval differences. In a vendor-managed suite, an assessor should distinguish controls the customer can test from provider assertions or contractual commitments. A missing provider trace cannot be replaced by a customer diagram.
+The [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] page details coding-agent placement and approval differences. The [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]] traces the read, synthesis, and action threats of employee assistants across in-suite, enterprise-app, and desktop placements; the Gemini control sheets specify customer-operated controls on two of those routes. In a vendor-managed suite, an assessor should distinguish controls the customer can test from provider assertions or contractual commitments. A missing provider trace cannot be replaced by a customer diagram.
 
 Where a multi-agent broker uses [[a2a-protocol|A2A Protocol (Agent-to-Agent)]], its task and message interfaces carry the exchange; broker authentication, per-hop authorization, and correlation records remain deployment controls.
 

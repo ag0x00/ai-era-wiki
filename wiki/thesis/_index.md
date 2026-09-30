@@ -2,11 +2,11 @@
 type: domain
 title: "Thesis Pages"
 created: 2026-04-30
-updated: 2026-04-30
+updated: 2026-09-30
 tags: [domain, thesis]
 status: seed
 subdomain_of: ""
-page_count: 8
+page_count: 9
 ---
 
 # Thesis Index
@@ -20,6 +20,7 @@ Evolving synthesis pages — the rolling "where is the field?" stories. These ar
 - [[frontier-ai-for-vuln-discovery|Frontier AI for Vulnerability Discovery]]
 - [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]
 - [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]]
+- [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]]
 - [[red-teaming-for-ai-synthesis|Red Teaming for AI: Synthesis]]
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]
 - [[secure-sdlc-framework-stack-2026|Secure-SDLC Framework Stack]]

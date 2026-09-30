@@ -80,7 +80,7 @@ The September stress test re-runs the May 2026 recalibration stress test ([[cmm-
 
 **The May verdict that regulated financial services score a floor of L3 and that the model treats them fairly holds only while the incumbency is Microsoft; on Google Cloud both September shapes land at L2 typical, and the cause is a product-and-cost layer that prices nine domains against an E5, Azure, AWS or GitHub estate and carries no Google licensing column in any of the nine.** The ladders survive the swap. The mapping underneath them does not, and one of the two shapes has no row in any of the model's three shape taxonomies.
 
-[[#Status since the review|Status since the review]] lists the decisions taken after 2026-09-15; [[claude-code-control-sheet|Claude Code Control Sheet]] and [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] carry each shape's current controls.
+[[#Status since the review|Status since the review]] lists the decisions taken after 2026-09-15; [[claude-code-control-sheet|Claude Code Control Sheet]] and [[gemini-workspace-control-sheet|Gemini Workspace Control Sheet]] carry each shape's current controls.
 
 ## Part 1 — Scope and method
 
@@ -230,7 +230,7 @@ The only Gemini product page, [[gemini-cli|Gemini CLI]], covers a developer comm
 - the same structural flaw in another vendor's assistant through one crafted mail, chaining four bypasses including an allowlisted link-preview proxy ([[echoleak-copilot-zero-click|EchoLeak Zero-Click Copilot Exfiltration]])
 - an auto-run prompt parameter reaching connected mail, drive and calendar, with memory poisoning that survives a password change, a session revocation and device re-enrollment ([[cosnitch-copilot-personal-exfiltration|CoSnitch: Copilot Personal Data Exfiltration]])
 
-The vendor's own account names indirect prompt injection as the class's main risk and describes four layers against it ([[securing-workspace-genai-at-google-talk|Securing Workspace GenAI at Google]]), listed on [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]. Three of the four are unevidenceable from the customer's side, which holds D3, D4 and D5 at L1 to L2, and [[google-saif|Google SAIF: Secure AI Framework]] closes nothing, because it names control categories without controls, thresholds or test procedures. What the customer holds is real and narrow: per-organizational-unit enablement, data-loss-prevention rules bounding what the assistant reaches, an administrative control centre with a usage review, and a stated training restriction over customer data.[^gemini-ou][^gemini-dlp][^gemini-aicc][^gemini-privacy] Model Armor is outside that set: its overview names no Gmail, Docs or Drive integration among its eight integration points and states no launch stage for the core service.[^armor]
+The vendor's own account names indirect prompt injection as the class's main risk and describes four layers against it ([[securing-workspace-genai-at-google-talk|Securing Workspace GenAI at Google]]). Three of the four are unevidenceable from the customer's side, which holds D3, D4 and D5 at L1 to L2, and [[google-saif|Google SAIF: Secure AI Framework]] closes nothing, because it names control categories without controls, thresholds or test procedures. What the customer holds is real and narrow: per-organizational-unit enablement, data-loss-prevention rules bounding what the assistant reaches, an administrative control centre with a usage review, and a stated training restriction over customer data.[^gemini-ou][^gemini-dlp][^gemini-aicc][^gemini-privacy] Model Armor is outside that set: its overview names no Gmail, Docs or Drive integration among its eight integration points and states no launch stage for the core service.[^armor]
 
 ### The trifecta reading, and the profile that excludes this shape
 
@@ -250,13 +250,13 @@ Line references are to the revision read on 2026-09-15, before the Part 7 change
 
 | No. | May item | Disposition | Evidence |
 |---|---|---|---|
-| 1 | Change 1, adopt the L5 and L5+ split | ADOPTED | agentic-ai-security-cmm-2026.md:119-120,140-142; an L5+ bullet on all nine deep dives; …-measurement-protocol.md:193,232 |
+| 1 | Change 1, adopt the L5 and L5+ split | ADOPTED | agentic-ai-security-cmm-2026.md:119-120,140-142, an L5+ bullet on all nine deep dives, and …-measurement-protocol.md:193,232 |
 | 2 | Change 2, matrix primary with the floor as headline | PARTIAL, adopted past the recommendation | Matrix primary at agentic-ai-security-cmm-2026.md:126; the other three limbs sit below the table |
 | 3 | Change 3, document the five archetypes | PARTIAL | A scoring comparison at …-dependency-rules.md:188-194, no profiles anywhere; agentic-ai-security-cmm-2026.md:550 tracks the deployment archetypes, a different taxonomy |
-| 4 | Change 4, D7 acknowledges architectural containment | ADOPTED | agentic-ai-security-cmm-2026.md:364; …-d7-observability.md:163; the field at …-dependency-rules.md:85, filled at :166. The precondition is encoded nowhere, and :212 records that rules can only cap |
-| 5 | Change 5, the L4 to L5 prerequisite gate | ADOPTED, one condition altered and one dropped | agentic-ai-security-cmm-2026.md:196-198; …-measurement-protocol.md:236-243,231; the three condition changes sit below the table |
+| 4 | Change 4, D7 acknowledges architectural containment | ADOPTED | agentic-ai-security-cmm-2026.md:364, …-d7-observability.md:163, and the field at …-dependency-rules.md:85, filled at :166. The precondition is encoded nowhere, and :212 records that rules can only cap |
+| 5 | Change 5, the L4 to L5 prerequisite gate | ADOPTED, one condition altered and one dropped | agentic-ai-security-cmm-2026.md:196-198 and …-measurement-protocol.md:236-243,231. The three condition changes sit below the table |
 | 6 | Open issue 1, track the first L5+ claimant | NOT ADOPTED | agentic-ai-security-cmm-2026.md:419 names who L5+ suits and no claimant; :552 reframes the question |
-| 7 | Open issue 2, define stable L4 for two quarters | PARTIAL | The matrix-regression limb stated at agentic-ai-security-cmm-2026.md:198, …-measurement-protocol.md:238; the incident and drift limbs undefined; the look-back window has no independent length |
+| 7 | Open issue 2, define stable L4 for two quarters | PARTIAL | The matrix-regression limb is stated at agentic-ai-security-cmm-2026.md:198 and …-measurement-protocol.md:238. The incident and drift limbs remain undefined; the look-back window has no independent length |
 | 8 | Open issue 3, archetype accuracy against audit data | NOT ADOPTED | …-dependency-rules.md:188-194 re-runs the same first-principles scores; no real assessment is recorded |
 | 9 | Open issue 4, the multi-cloud archetype's L5 path | NOT ADOPTED | …-dependency-rules.md:194 records the archetype's headline with no L5 in it and no path to one; the nearest text is an L5+ item at …-d5-egress-network.md:94 |
 | 10 | Open issue 5, pre-empt L5+ aspirational drift | ADOPTED | agentic-ai-security-cmm-2026.md:417,119; …-measurement-protocol.md:245 |
@@ -522,7 +522,7 @@ Later decisions and corrections supersede the passages named in the second colum
 | 2026-09-23 | Part 3's D2 row | A vendor-held identity condition makes four D2 identity criteria not applicable where the vendor offers no agent principal in general availability | [#300](https://github.com/ag0x00/ai-era/issues/300) |
 | 2026-09-24 | Part 2's D2 attribution absence | Claude Code's contribution metrics, a public beta, label merged pull requests with Claude Code-assisted lines and exclude cloud-provider usage; no first-party feature spans harness vendors | [[securing-agentic-coding\|Securing Agentic Coding]] |
 | 2026-09-25 | Part 3's D9 objection, the in-suite involvement measure | D9-OVERSIGHT-INVOLVE rests on a method the customer states; the override rate counts rejections, and the Reports API logs each side-panel confirmation | [[agentic-ai-security-cmm-d9-operations\|CMM D9: Operations and Human Factors]] |
-| 2026-09-25 | Part 3's D8 row, the evidenceable L2 | Until the vendor names each model and version and publishes a card for it, D8-VERSION and D8-MODEL-CARD stay unanswerable and the in-suite shape reads L1; the [[google-cloud-agentic-security-profile\|Google Cloud Agentic Security Profile]] reads L1 on the evidence of Google's Workspace pages | [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Supply Chain and AI-BOM]] |
+| 2026-09-25 | Part 3's D8 row, the evidenceable L2 | Until the vendor names each model and version and publishes a card for it, D8-VERSION and D8-MODEL-CARD stay unanswerable and the in-suite shape reads L1; the [[gemini-workspace-control-sheet\|Gemini Workspace Control Sheet]] records the customer's supplier-evidence request | [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Supply Chain and AI-BOM]] |
 
 R22 to R25 and R27 are tracked as items 10, 11 and 13 to 15 of [[cmm-known-limitations|CMM Known Limitations (current state)]].
 

@@ -2,7 +2,7 @@
 type: practice
 title: "Oversharing Controls for AI Search"
 created: 2026-05-01
-updated: 2026-09-18
+updated: 2026-09-30
 tags:
   - practices
   - oversharing
@@ -11,11 +11,16 @@ tags:
   - copilot
   - glean
 status: developing
+scope_axis:
+  - sec-of-ai
 maturity: emerging
 addresses_threat: "AI search tools (Microsoft Copilot, Glean, Gemini, custom LLMs) retrieving and combining content that is RBAC-permitted but contextually inappropriate"
 related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol]]"
+  - "[[productivity-assistant-deployment-shape]]"
+  - "[[gemini-enterprise-control-sheet]]"
   - "[[ai-data-security]]"
   - "[[inference-exposure]]"
   - "[[ai-usage-control]]"
@@ -26,17 +31,21 @@ related:
   - "[[cyera-agent-guardian-release]]"
 sources:
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
-verified: 2026-09-18
-verified_against: []
+  - "[[.raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md]]"
+  - "https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-controls/security-governance"
+verified: 2026-09-30
+verified_against:
+  - ".raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md"
+  - ".raw/articles/knostic-ai-data-security-2026-05-01.md"
 verified_findings: 0
-verified_note: "Read against the CMM core row and the September Google stress test; dropped an unsourced superlative about shape breadth."
+verified_note: "Whole-page source read against Knostic and Cyera archived articles and live Microsoft guidance; Cyera scope remains a qualified vendor claim."
 ---
 
 # Oversharing Controls for AI Search
 
-**AI oversharing** is the failure mode where an AI search tool retrieves and combines content that is *technically RBAC-permitted but contextually inappropriate*. The user can open each retrieved fragment individually; the synthesized answer crosses a need-to-know boundary.
+**AI oversharing** includes the failure mode where an AI search tool retrieves and combines content that is *technically RBAC-permitted but contextually inappropriate*. The user can open each retrieved fragment individually; the synthesized answer crosses a specified need-to-know boundary. [Microsoft's Copilot security guidance](https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-controls/security-governance) treats broadly shared source content as a deployment risk, while [Knostic's AI data security article](https://www.knostic.ai/blog/ai-data-security) argues for answer-time checks on sensitive combinations.
 
-This is the single most common AI security failure mode reported in 2026 enterprise Microsoft Copilot, Glean, and Gemini deployments. It is also the primary commercial driver behind a new vendor category that operates at the **knowledge layer** between data and AI answers.
+The risk occurs when source permissions admit content beyond the intended audience or when individually permitted records yield a prohibited inference. A knowledge-layer product may test or constrain that synthesis where it sees the retrieval and response path. Its presence alone does not establish enforcement inside a vendor-managed assistant.
 
 ## Drivers of oversharing
 
@@ -48,9 +57,9 @@ This is the single most common AI security failure mode reported in 2026 enterpr
 | **Stale embeddings** | A document permission was tightened; the vector store still holds an embedding of the original content. |
 | **Cross-source aggregation** | Copilot pulls from M365, plus a third-party connector, plus user history; the assembly exceeds any single corpus's permission scope. |
 
-## Mitigation Stack
+## Mitigation stack
 
-The Knostic article and other 2026 vendor playbooks converge on a multi-layer mitigation:
+The Knostic article proposes several controls. A deployment can credit each one only where its enforcement point sees the actual retrieval or output route:
 
 ### 1. Need-to-know enforcement at the knowledge layer
 
@@ -72,20 +81,19 @@ Static labels are insufficient because sensitivity is contextual. The Knostic fr
 
 ### 5. Prompt simulation testing
 
-Run synthetic but realistic employee prompts against the production AI search to surface oversharing paths *before* a real user finds them. This is now a productized capability (Knostic's "prompt simulation" is the canonical commercial example).
+Run synthetic but realistic employee prompts against the production AI search to surface oversharing paths *before* a real user finds them. Knostic describes this as prompt simulation; the test still needs representative principals, corpora, and both prohibited and permitted answers.
 
 ### 6. Provenance and audit trail
 
 Every disclosure decision logged: who asked, what was retrieved, why it was allowed, what was returned. Enables post-incident reconstruction (see [[ai-bom|AI-BOM: AI Bill of Materials]] §Audit and [[agent-observability|Agent Observability]]).
 
-## Vendor / Tool Landscape (Q2 2026)
+## Product surfaces (Q2 2026)
 
-- **Knostic** — pure-play knowledge-layer governance for Microsoft Copilot, Glean, Gemini. See [[knostic|Knostic]].
-- **Microsoft Purview + Sensitivity Labels** — built-in for the M365 ecosystem; less effective on cross-source aggregation than dedicated knowledge-layer tooling.
-- **Glean's own permissioning** — vendor-internal RBAC enforcement; limited to Glean's own retrieval scope.
-- **DSPM vendors with AI extensions** — [[cyera|Cyera]], [[varonis|Varonis]], BigID, others moving into the AI-feed-DSPM space; Cyera's [[cyera-agent-guardian-release|Agent Guardian release]], fetched 2026-08-31, is a dated instance of that movement.
+- **Knostic** describes knowledge-layer assessment and response controls for Microsoft Copilot, Glean, Gemini, and custom assistants. See [[knostic|Knostic]] for the vendor claim and integration scope.
+- **Microsoft Purview and sensitivity labels** govern data in the Microsoft 365 ecosystem. The [Copilot security guidance](https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-controls/security-governance) calls for source-permission review alongside those controls.
+- **DSPM vendors with AI extensions** can help identify sensitive or broadly shared sources. [[cyera-agent-guardian-release|Cyera Agent Guardian Release]] is a dated example; a deployed integration must be tested for the corpus and answer path at issue.
 
-The category is fragmenting. As of Q2 2026 it is not a single market but at least three: knowledge-layer governance, sensitivity-label-management, DSPM-with-AI-extensions.
+These surfaces answer different questions: source exposure, permitted retrieval, and answer disclosure. A product that inventories source exposure does not necessarily enforce a decision before an answer is shown.
 
 ## CMM Mapping
 
@@ -96,7 +104,9 @@ Oversharing controls span [[agentic-ai-security-cmm-2026|Agentic AI Security CMM
 
 The mature implementation requires all three.
 
-The deployment shape carrying this failure mode across a whole tenant is the in-suite productivity assistant, whose retrieval spans every corpus an employee can reach. The CMM's shape table carries a row for it, and answer-time entitlement over the whole tenant is what D6 grades for that shape.
+The [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]] treats cross-corpus retrieval and synthesized disclosure as threats to assess for each enabled route. [[agentic-ai-security-cmm-d6-data-rag|CMM D6: Data, Memory and RAG]] grades the deployed route's corpus reach, current source entitlements, and material inference combinations. The [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]] sets the evidence and coverage rules; the CMM assigns no preset score to the productivity-assistant shape.
+
+The [[gemini-enterprise-control-sheet|Gemini Enterprise Control Sheet]] tests source entitlement separately from a prohibited inference made from individually readable records. Its route decision requires a named restriction, paired test, and an effective gate or Hold.
 
 ## Open Issues
 
