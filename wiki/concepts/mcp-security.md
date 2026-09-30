@@ -129,7 +129,10 @@ The last two threat rows read differently against such a server. Unauthenticated
 ## Occurrences
 
 - [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safety, and Reliability of Agentic AI]] — primary source; introduces MCP proxy, AATO, and governance requirements
-- [[adr-agentic-detection-system|ADR — Agentic Detection for Enterprise AI]] — production MCP detection-and-response at Uber; sensor-over-gateway observability; [[adr-bench|ADR-Bench]] MCP-native benchmark
+- [[adr-agentic-detection-system|ADR — Agentic Detection for Enterprise AI]]:
+  - Production MCP detection and response at Uber.
+  - Sensor-over-gateway observability.
+  - [[adr-bench|ADR-Bench]], an MCP-native benchmark.
 - [[mcp-exposure-measurements|MCP Exposure Measurements]] — the four published measurements of MCP risk, what each supports, and which to cite
 - [[agent-identity-architecture|AI Agent Identity Architecture]] — agent identity is exercised at the MCP boundary
 - [[agent-observability|Agent Observability]] — MCP traffic is part of the full-stack observability requirement

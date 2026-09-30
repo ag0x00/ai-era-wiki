@@ -2,7 +2,7 @@
 type: concept
 title: "Memory Poisoning (Agentic AI)"
 created: 2026-05-03
-updated: 2026-09-25
+updated: 2026-09-29
 tags:
   - concepts
   - memory-poisoning
@@ -30,111 +30,57 @@ related:
   - "[[agent-escape]]"
   - "[[precize-agentic-ai-top10]]"
   - "[[cosnitch-copilot-personal-exfiltration]]"
+sources:
+  - "https://owaspai.org/docs/4_runtime_application_security_threats/#47-augmentation-data-manipulation"
+  - "https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/"
+  - "https://www.varonis.com/blog/cosnitch"
+  - "https://arxiv.org/abs/2604.00387v2"
+  - "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf"
+verified: 2026-09-29
+verified_against: []
+verified_findings: 0
+verified_note: "Current OWASP, NIST, Microsoft, Varonis, MITRE, and cited research checked 2026-09-29."
 ---
 
 # Memory Poisoning (Agentic AI)
 
-Memory poisoning is the injection of adversarial content into an agent's persistent memory stores — conversation history, episodic memory, semantic memory (vector database), or scratchpad — with the goal of causing the agent to behave maliciously or incorrectly in future interactions. Unlike [[prompt-injection|prompt injection]], which attacks a single inference step, memory poisoning creates a **persistent, durable** attack surface: once poisoned content enters memory, it influences every subsequent retrieval and reasoning step that accesses it.
+Memory poisoning occurs when attacker-influenced content enters state that an agent later retrieves and treats as evidence, context, or instruction. The decisive path is **writer → store → retrieval → context → answer or action**. The entry may be a false fact, a forged instruction, or an altered plan. Persistence and reuse across tasks or agents distinguish it from a one-turn injection.
 
-## Memory types and attack surfaces
+## Attack path
 
-| Memory type | Examples | Attack vector |
-|---|---|---|
-| **Conversation / session history** | Message history passed as prior context in subsequent turns | Inject malicious "prior" messages that appear to be legitimate user or assistant turns |
-| **Episodic memory** | Long-term conversation logs stored externally and retrieved by agents | Inject adversarial episodes that instruct the agent to bypass controls on future invocations |
-| **Semantic memory (vector store)** | RAG corpus; knowledge base used for retrieval | Embed adversarial documents that score highly in retrieval for target queries and carry malicious instructions |
-| **Working memory / scratchpad** | Agent's intermediate reasoning or plan stored between tool calls | Overwrite or append to plan artifacts mid-execution via a compromised tool call |
-| **Agent state / checkpoint** | Serialized agent state for long-running tasks | Modify checkpoint state to implant false beliefs or change task objectives |
+The assessor should identify every store the agent can write or read, including conversation summaries, durable preferences, vector indexes, plan files, and checkpoints. For each store, determine who can write, what source a write can claim, which agents can retrieve it, and whether retrieval crosses a principal or task boundary. A poisoned entry matters when it reaches a consequential answer or action; an untrusted document sitting unread in a corpus has not yet done so. The [OWASP AI Exchange](https://owaspai.org/docs/4_runtime_application_security_threats/#47-augmentation-data-manipulation) describes persistent memory poisoning as a future read attack and gives a shared-store example in which one request plants a false policy later served to other customers.
 
-## Semantic memory poisoning (RAG poisoning)
+There are two useful variants. **Corpus poisoning** alters retrieved reference material, including a RAG index. **Agent-memory poisoning** alters state the system writes for later use. Both can carry indirect [[indirect-prompt-injection|Indirect Prompt Injection]], but false factual content may redirect an answer without an explicit instruction. [PoisonedRAG](https://arxiv.org/abs/2402.07867) demonstrates answer corruption from attacker-controlled retrieval passages.
 
-The most studied variant. An attacker plants adversarial documents in the RAG corpus — either directly (if they have write access to the knowledge base) or indirectly (by causing the agent to ingest attacker-controlled content, e.g., via web retrieval). The adversarial document is constructed to:
+## Evidence and examples
 
-1. **Score high on retrieval** for target queries (high cosine similarity to likely user prompts)
-2. **Carry prompt injection instructions** embedded within otherwise legitimate-looking content
+[Microsoft's February 2026 report](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/) found attempts to induce assistants to remember a commercial preference through prefilled links. It reports attempted planting and variable effectiveness, not a general success rate for production memory defenses. [Varonis's CoSnitch disclosure](https://www.varonis.com/blog/cosnitch) describes a tested Copilot Personal path from a crafted page to persistent memory; Varonis states it had no evidence of exploitation in the wild and that a fix shipped in August 2026. Both cases identify a write path that a password or session reset alone would not necessarily clear.
 
-The PoisonedRAG attack (published 2024) demonstrated that carefully crafted adversarial passages could cause retrieval-augmented generation systems to produce attacker-specified outputs with high reliability. The [[lethal-trifecta|Lethal Trifecta]] framing makes RAG applications unconditionally vulnerable by default: they combine private data access + untrusted content ingestion (the web, user uploads) + generation of outputs potentially read by other agents.
+Research prototypes answer narrower questions. The current [RAGShield v2](https://arxiv.org/abs/2604.00387v2) evaluates numerical-claim manipulation in government RAG passages with value extraction and cross-source comparison. Its results do not establish general memory-poison detection or cryptographic provenance enforcement. The earlier [v1](https://arxiv.org/abs/2604.00387v1) described a different provenance-oriented design; the current version is the relevant source for a RAGShield claim.
 
-## Episodic / long-term memory poisoning
+## Controls and tests
 
-Long-running agents that store and retrieve memories across sessions face a compounding risk: any content that enters memory through an injection attack in session N becomes part of the retrieved context for session N+1 through N+∞.
+[[agentic-ai-security-cmm-d6-data-rag|CMM D6: Data, Memory and RAG]] defines the applicable assessment outcomes. For a deployment with persistent memory, test the complete path:
 
-Microsoft's Defender Security Research Team reviewed 60 days of AI-related URLs in email traffic and found 50 distinct attempts, from 31 companies in more than a dozen industries, to plant instructions in AI assistants' memory through links whose pre-filled prompts tell the assistant to remember a company as a trusted source or to recommend it first.[^mspoison] The effectiveness and persistence of the attempts varied by assistant and over time, and their aim was to bias the assistant's later recommendations.
+- **Partition and authorize:** Bind entries to a principal, agent, session, or approved shared scope. Test a denied cross-partition read and write, including through caches or service identities.
+- **Record provenance:** Bind each write to its source, distinct writer, time, and partition outside model control. A generic service-account name cannot identify the agent that wrote an entry.
+- **Verify integrity at retrieval:** Compare the returned entry with a protected write-time record and refuse a tampered entry before it enters context. Source labels generated by the model are not evidence.
+- **Inspect and detect:** Plant both a targeted instruction and a false fact through the actual write path; verify that the configured hold or alert reaches triage. Test benign writes to expose wrongful rejection. A detector's product label is not route evidence.
+- **Reset and recover:** Show that an unauthorized carried memory is removed between tasks and that an earlier store state can be restored. Retaining a snapshot without a successful restore test leaves the recovery claim unproved.
 
-This is the self-propagating variant of indirect prompt injection: the attack scales across all future agent interactions without further attacker involvement. [[cosnitch-copilot-personal-exfiltration|CoSnitch]] (Varonis, disclosed against Microsoft Copilot Personal in August 2026) is a sourced case with a stronger persistence claim than the Microsoft count above: the vendor states its planted memory entries survive a password change, a session revocation, and device re-enrollment, and leave no forensic footprint a conventional security tool would flag. If accurate, none of the identity-layer controls a defender would reach for first — credential rotation, session termination — reach a poisoned entry; only a control that operates on the memory store itself does. The [[owasp-ai-exchange|OWASP AI Exchange]] names the mechanism **stored injection** and files it as a subclass of indirect prompt injection, an input threat, where the payload persists in a retrieval index, a shared document, or a database and is retrieved in later sessions.[^aix-pi] The same mechanism appears elsewhere in the Exchange as persistent memory poisoning, a surface of augmentation data manipulation and therefore a runtime threat.[^aix-augmanip] One store and one entry sit under two threat headings, which means a prompt-injection defense program and a memory-integrity program are working the same surface from opposite ends.
+[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime and Guardrails]] tests applicable indirect-injection screening before untrusted content enters the model. D6 remains the owner of store integrity, memory access, and rollback. If a poisoned entry causes an unauthorized tool call, the action gate also needs its own test.
 
-The cross-agent path is the sharper version. Where several agents share a store, content written by one may be retrieved by another, so a compromised write is a future read attack against a different agent.[^aix-augmanip] The [[owasp-ai-exchange|OWASP AI Exchange]]'s worked case is a multi-agent customer-support system on a shared vector store: an adversary submits a request containing a fabricated return policy, an agent summarises it into the shared store, and subsequent agents serve the fabricated policy to other customers until the entry is found and removed.[^aix-augmanip] Detection and removal, rather than prevention, bound the damage window in that scenario.
+## Framework scope
 
-## Defenses
-
-### Source provenance and attestation
-
-Each document or memory entry should carry a cryptographic provenance record: who wrote it, when, and from what source. Memory entries derived from external (untrusted) content should be tagged as untrusted and subjected to higher scrutiny on retrieval. RAGShield implements cryptographic document attestation for this purpose (Exploratory-tier as of Q1 2026).
-
-### Retrieval-side content filtering
-
-Retrieved content should be inspected for embedded instructions before being passed to the model's context. [[llamafirewall|LlamaFirewall]] PromptGuard 2 operates on the input side and can be applied to retrieved context, not just user messages. This is a probabilistic defense, measured at 97.5% recall and a 1% false-positive rate on Meta's direct-jailbreak benchmark rather than on retrieved content.[^lf-pg2]
-
-### Memory integrity monitoring
-
-For agent scratchpads and state checkpoints, integrity monitoring (hash comparison against a known-good baseline) detects unauthorized modification. The [[agentic-ai-security-reference-architecture|RA]] data plane references SHA-256 monitoring of cognitive files (SOUL.md, IDENTITY.md) as an Exploratory implementation of this pattern.
-
-### Sandboxed memory namespacing
-
-Agents should not share a single memory namespace across trust domains. A multi-tenant deployment where agents for different principals share a vector store creates a path for cross-tenant memory poisoning: a malicious actor in tenant A injects content that is retrieved in tenant B's session.
-
-### State rollback
-
-For long-running agents, maintaining a git-like checkpoint history (Brain Git pattern, Exploratory tier) enables rollback to a pre-poisoned state when an injection is detected. Paired with behavioral drift detection, this allows incident response: detect anomaly → identify injection point → roll back to last clean checkpoint.
-
-### Partitioned memory with write authorization
-
-Partition memory per agent and per session, and authorize reads and writes against the partition rather than against the store. The [[owasp-ai-exchange|OWASP AI Exchange]] describes cross-agent memory access without explicit authorisation as lateral movement through shared state, which places the control in the same family as network segmentation rather than in content inspection.[^aix-augintegrity] Every write carries provenance — source, writer identity, timestamp, and partition — so a poisoned entry can be traced to its writer after the fact.[^aix-augintegrity]
-
-This is the control that bounds damage when detection fails, and the Exchange is explicit that detection does fail: separating legitimate memory updates from adversarial poisoning at scale remains difficult, and structural authorization is named as the compensating approach.[^aix-augintegrity]
-
-### Integrity verification at the read boundary
-
-Verify an entry's integrity before it enters an agent's active context, and quarantine or reject entries that fail. This gates a read, where the integrity monitoring above watches a store, and it is the point at which a poisoned entry stops being data and starts being context. Sanitise the session boundary as well: review and, where appropriate, reset agent context between tasks.[^aix-augintegrity] The Exchange notes that provenance and integrity checks add storage and latency.[^aix-augintegrity]
-
-### Planning-artefact protection
-
-Plan libraries, templates, and heuristics are memory that executes. Hold them under integrity verification and access control, and validate a plan against policy before execution rather than trusting the store it came from.[^aix-augintegrity] An agent that retrieves a poisoned plan has been redirected without any adversarial content appearing in its context window.
-
-## Mapping to frameworks
-
-Memory poisoning is [[owasp-agentic-ai-top-10|OWASP ASI06]] (Memory & Context Poisoning) and threat **T1** in the OWASP [[owasp-agentic-ai-threats-mitigations|Agentic AI Threats and Mitigations]] guide. [[precize-agentic-ai-top10|The Precize Top 10 for Agentic AI Vulnerability]], which states it precedes the ASI Top 10, names the same surface as AAI006 (Agent Memory and Context Manipulation), with context-amnesia exploitation, cross-session data leakage, and memory poisoning as its three sub-mechanisms. That taxonomy's own May 2025 revision deprecates AAI010 (Agent Knowledge Base Poisoning), the RAG-corpus-specific variant, into AAI006 — the same consolidation this page already reflects by treating semantic-memory and episodic-memory poisoning as one concept. [[mitre-atlas|MITRE ATLAS]] catalogs the corresponding poisoning techniques against agent memory and retrieval corpora as confirmed-in-wild adversarial techniques — `AML.T0080` (AI Agent Context Poisoning, with `AML.T0080.001` Thread) for runtime/session memory and `AML.T0070` (RAG Poisoning) for the retrieval corpus — and the [[nist-ai-600-1|NIST AI 600-1]] GenAI Profile places corpus and memory corruption under its information-integrity risk category, where its Suggested Action `MS-2.7-007` directs deployers to red-team poisoning resilience. That guide's Playbook 2 (Preventing Memory Poisoning and AI Knowledge Corruption) supplies the matching control set: session isolation, source attribution on memory writes, pre-commit validation before cross-session persistence, and AI-generated memory snapshots for forensic rollback.
-
-This is the failure mode that escapes a per-session security rule. [[agents-rule-of-two|The Agents Rule of Two]] bounds the properties an agent may hold *within a session*, and says nothing about a property acquired across sessions through persistent memory or a written instruction file. For coding agents the vector is concrete: an injected hook or an edited `CLAUDE.md` survives the session that wrote it, which is what made CVE-2026-25725 a sandbox escape rather than a contained session compromise.
-
-## Relation to the Data plane
-
-In the [[agentic-ai-security-reference-architecture|RA]], memory poisoning defense is the primary motivation for the **Data plane** (RAG provenance/attestation, memory poisoning defense row, state rollback). The enforcement pattern is:
-
-```
-[External content] → source tagging → [Memory store]
-                                           ↓
-                              retrieval + provenance check
-                                           ↓
-                              [Retrieved context] → input filter → [Model]
-```
-
-Microsoft's Defender AI-agent detection, in preview, names indirect prompt injection among its detections and names no memory poisoning, and Microsoft covers memory poisoning with advanced-hunting queries for the links that plant it.[^defxdr][^mspoison] The plane's other implementations (RAGShield, Brain Git, SHA-256 monitoring) are Exploratory, so the RA names no generally available detection of memory poisoning.
-
-## Notes
-
-[^aix-augmanip]: [OWASP AI Exchange — Augmentation data manipulation](https://owaspai.org/go/augmentationdatamanipulation/), retrieved 2026-08-18.
-[^aix-augintegrity]: [OWASP AI Exchange — AUGMENTATION DATA INTEGRITY](https://owaspai.org/go/augmentationdataintegrity/), retrieved 2026-08-18.
-[^mspoison]: [Microsoft Security Blog — Manipulating AI memory for profit: The rise of AI Recommendation Poisoning](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/), Microsoft Defender Security Research Team and Noam Kochavi, 2026-02-10, read 2026-09-25. The 60-day review of AI-related URLs in email traffic, the 50 attempts from 31 companies, the varying effectiveness and persistence, and the advanced-hunting queries over Defender for Office 365 email and Teams messages for links whose pre-filled prompts carry memory-manipulation keywords.
-[^defxdr]: [Microsoft Learn — Detect and investigate threats to AI agents using Microsoft Defender (Preview)](https://learn.microsoft.com/en-us/defender-xdr/security-for-ai/ai-agent-detection-protection), updated 2026-09-03, read 2026-09-25. "This feature is currently in public preview." The detection list names jailbreak attempts, indirect prompt injection (XPIA) attempts, malicious content propagation, secret and credential leakage, evasion techniques, LLM reconnaissance, and suspicious user or IP access.
-[^lf-pg2]: [Meta — LlamaFirewall: An open source guardrail system for building secure AI agents, §4.1 PromptGuard 2](https://arxiv.org/html/2505.03574#S4.SS1), arXiv:2505.03574, 2025, read 2026-09-25. The 86M model's recall of 97.5% at a 1% false-positive rate, on Meta's in-house direct jailbreak evaluation set in English.
-[^aix-pi]: [OWASP AI Exchange — Prompt injection](https://owaspai.org/go/promptinjection/), retrieved 2026-08-18. Stored injection as a subclass of indirect prompt injection, with the payload persisting in a retrieval index, shared documents, or a database for retrieval in later sessions.
-
-> [!gap]
-> Memory poisoning lacks a standardized detection taxonomy. Unlike network-layer attacks with well-defined IOCs, there is no established rubric for what a poisoned memory entry looks like in a vector store, and behavioral anomaly detection triggers after the attack has influenced behavior. The [[owasp-ai-exchange|OWASP AI Exchange]] reaches the same conclusion and states the consequence: distinguishing legitimate memory updates from adversarial poisoning at scale remains difficult, so partition access control and write authorization carry the blast-radius work that detection cannot.[^aix-augintegrity] Pre-retrieval content classification for memory stores stays an open research problem; the structural controls above are what ships in the meantime.
+[[mitre-atlas|MITRE ATLAS]] distinguishes AI agent context poisoning (AML.T0080) from RAG poisoning (AML.T0070). [NIST AI 600-1, MS-2.7-007](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) recommends red teaming against data poisoning and other AI attacks. It does not prescribe agent-memory partitions, memory snapshots, or the D6 tests above. Applying its broad red-team recommendation to persistent agent memory is this wiki's assessment choice.
 
 <!-- sources:auto -->
 ## Sources
 
-- [Memory Poisoning (Agentic AI)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [OWASP augmentation data manipulation](https://owaspai.org/docs/4_runtime_application_security_threats/#47-augmentation-data-manipulation)
+- [Microsoft AI recommendation poisoning report](https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/)
+- [Varonis CoSnitch disclosure](https://www.varonis.com/blog/cosnitch)
+- [RAGShield v2](https://arxiv.org/abs/2604.00387v2)
+- [NIST AI 600-1](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf)
 <!-- /sources -->

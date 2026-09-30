@@ -1,22 +1,20 @@
 ---
 type: maturity-model-companion
-title: "CMM: Effective-Score Dependency Rules"
+title: "CMM: Evidence Prerequisites and Dependencies"
 address: c-000158
 created: 2026-05-04
-updated: 2026-09-24
+updated: 2026-09-29
 tags:
   - maturity-models
   - cmm
   - dependency-rules
-  - effective-score
-  - scaffolding
   - 2026-proposal
 status: developing
 origin: produced
 scope_axis:
   - sec-of-ai
 target: "[[agentic-ai-security-cmm-2026]]"
-rule_set_version: "v1 (2026-05-04, 3 active rules)"
+rule_set_version: "2026-09-29 evidence prerequisites; numeric caps retired"
 related:
   - "[[agentic-cmm-regulated-fi-stress-test|Regulated-FI Stress Test]]"
   - "[[agentic-ai-security-cmm-2026]]"
@@ -28,213 +26,76 @@ related:
   - "[[anti-patterns-and-failure-modes]]"
   - "[[wiki-novelty-and-counterarguments-2026]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
+  - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[agentic-ai-security-cmm-d3-control-least-agency]]"
+  - "[[agentic-ai-security-cmm-d4-runtime-guardrails]]"
+  - "[[agentic-ai-security-cmm-d5-egress-network]]"
   - "[[agentic-ai-security-cmm-d6-data-rag]]"
+  - "[[agentic-ai-security-cmm-d7-observability]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
+  - "[[agent-identity-architecture]]"
   - "[[owasp-ai-exchange]]"
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[cmm-vocabulary-and-notation]]"
   - "[[cmm-known-limitations]]"
 sources:
   - "[[cmm-calibration-stress-test-2026]] §Part 2 (cumulative-floor stress test)"
-verified: 2026-09-19
+verified: 2026-09-29
 verified_against: []
 verified_findings: 0
-verified_note: "Internal-consistency read of the L4→L5 gate split (issue #173) across the core page, protocol, dependency rules, D9 deep dive, crosswalk, vocabulary and the gaps register; no .raw document opened. Fixed: the gate restatement named AIUC-1 as the assurance scheme and ISO/IEC 42001 as an equivalent, reversing the protocol's stated preference."
+verified_note: "Whole-page read against current core, Handbook, D2/D3/D5/D7/D8/D9 criteria and historical calibration text; repaired applicability and unanswerable/not-met distinction. No archived raw source opened; OWASP supply-chain guidance checked live."
 ---
 
-# Agentic AI Security CMM — Effective-Score Dependency Rules
+# CMM: Evidence Prerequisites and Dependencies
 
-This page defines the **dependency-resolved effective-score** mechanism that replaces the single cumulative floor as the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]]'s headline aggregation rule. The page is intentionally scaffolded: a **small, conservative active rule set** (v1 = 3 rules) plus a **candidate-rules registry** populated as the wiki gains new attack-path evidence and practitioner architectures.
+The [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] assesses nine domains at five cumulative levels. A domain reaches a level when its applicable criteria at that level and below are met under the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]. The report shows the nine domain results and the evidence gaps. It does not calculate a raw score, an effective score, a dependency cap, or a program-wide rating.
 
-## On this page
+Cross-domain relationships still matter. A claimed control may depend on an identity, policy decision, or record produced elsewhere. The assessor checks that prerequisite in the action path being graded. A weak neighboring domain is a reason to inspect the path, not an arithmetic instruction to lower the first domain. This page records the principal checks and the history of the former cap rules.
 
-- [The effective-score formula](#the-effective-score-formula)
-- [Active rules — v1](#active-rules--v1-2026-05-04-3-rules)
-- [Candidate rules registry](#candidate-rules-registry)
-- [Promotion criteria](#promotion-criteria)
-- [Deprecation criteria](#deprecation-criteria)
-- [Revision protocol](#revision-protocol)
-- [Reporting impact](#reporting-impact)
-- [Worked examples](#worked-examples--re-running-the-stress-test-archetypes)
-- [Limitations](#limitations)
-- [Open questions & caveats](#open-questions--caveats)
-- [Revision history](#revision-history)
-- [Relations](#relations)
+## Evidence prerequisites
 
-**The prior single-floor rule misreported most archetypes it was tested against.** That rule (imported from CMMC 2.0) misgraded **3 of 5 realistic archetypes** in the [[cmm-calibration-stress-test-2026|2026-05-02 stress test]] — Stripe-style architectural-containment, Microsoft Agent 365-driven, and resource-constrained startup all received headline ratings that materially under-reported the program. The L5/L5+ split adopted on 2026-05-04 also broke the floor rule's premise that domains are interchangeable units. Dependency-resolved scoring replaces the blunt min() with **substantive cross-domain caps anchored to documented attack paths**, and it records separately which caps rest on documented evidence and which remain candidates.
+| Claim under examination | Prerequisite to inspect | Failure that defeats the claim |
+|---|---|---|
+| [[agentic-ai-security-cmm-d5-egress-network\|D5]] per-agent or per-task egress | [[agentic-ai-security-cmm-d2-identity\|D2]] identifies the caller at the gateway; [[agentic-ai-security-cmm-d3-control-least-agency\|D3]] binds the action to a task and permitted destination where the criterion requires it. | A shared credential or unbound route lets another agent use the same path without the claimed decision. |
+| D5-TASK-EGRESS at L5 | D2-TASKBIND and D3-TASKSCOPE evidence names the same task and action. | A task label in a log without an enforced, scoped decision does not establish task-limited egress. |
+| [[agentic-ai-security-cmm-d7-observability\|D7]] per-agent attribution and behavioral detection | D2 supplies a stable, distinct agent identity and the trace carries it through the relevant calls. | Fleet-only attribution cannot support a per-agent baseline. |
+| [[agentic-ai-security-cmm-d4-runtime-guardrails\|D4]] action guardrail | D3 defines the authority decision; the runtime or gateway enforces it on every applicable route. | A guardrail can fire while a direct call bypasses the decision. |
+| [[agentic-ai-security-cmm-d6-data-rag\|D6]] trusted retrieval or memory evidence | Source entitlement and write-provenance records identify the source, principal, task, and current decision where relevant. | A response trace alone cannot prove that the retrieved record was authorized or that a memory write was admitted. |
+| [[agentic-ai-security-cmm-d8-supply-chain\|D8]] release assurance | D1 supplies risk authority for exceptions; D8 binds design, implementation, test, supplier evidence, and the release decision to the deployed version. | A passing component test or signed artifact without a release decision does not establish the assembled system's approval. |
+| [[agentic-ai-security-cmm-d9-operations\|D9]] incident reconstruction | D7 preserves the execution and policy records; D9 runs the response, reconciliation, and continuity procedure against them. | A playbook cannot reconstruct an action when the required independent records are absent. |
 
-**Validated by the D1–D9 recalibration (2026-05-25).** The three active caps held up under the [[agentic-ai-security-cmm-recalibration-method-2026|recalibration]] and became load-bearing in the per-domain deep dives. **DR-001 (D2→D5)** and **DR-002 (D2→D7)** are the basis for the recalibration's identity-first sequencing finding — per-agent identity (D2-L3) is the highest-leverage level because it lifts the egress and observability ceilings (see [[agentic-ai-security-cmm-d2-identity|D2]], [[agentic-ai-security-cmm-d5-egress-network|D5]], [[agentic-ai-security-cmm-d7-observability|D7]]). **DR-003 (D3→D4)** is why the [[agentic-ai-security-cmm-d4-runtime-guardrails|D4 deep dive]] reports raw + effective and tells a buyer to firm up the PDP before buying more guardrails. Candidate **DR-C001 (D8→D6)** is noted in the [[agentic-ai-security-cmm-d8-supply-chain|D8 deep dive]] (a poisoned skill/MCP/model can corrupt the RAG corpus); still candidate, still gated on a second incident. No rule changed; the recalibration applied them.
+The checks are criterion-specific. An assistant with no outbound tool or inter-agent path has no task egress to grade. A vendor-managed suite may hold a prerequisite inside the supplier boundary. In the latter case, inspect the supplier's versioned evidence and the customer-visible crossing. A supplier-operated fact that cannot be inspected, tested, or attested is **unanswerable**. A required record known never to have been made is **not met**. A compensating design can satisfy an outcome when the criterion permits it and a rejection test demonstrates the boundary. The assessor records that design and its limits.
 
-## The effective-score formula
+### Attack-path basis
 
-Each domain `D` has two scores:
+The original dependency study identified three useful paths. A network gateway needs caller identity to apply a per-agent rule. A behavioral detector needs that identity to attribute actions. A runtime enforcement hook needs a decision rule and a route that cannot bypass it. [[agent-identity-architecture|AI Agent Identity Architecture]] traces the first two paths across identity and action layers. The [[lethal-trifecta|Lethal Trifecta]] explains the egress risk; the [[hooking-coding-agents-with-cedar-talk|Sondera Cedar harness]], [[agentcordon|AgentCordon]], and [[1-8m-prompts-30-alerts-talk|Salesforce Rittinghouse]] illustrate the others. These examples justify inspecting the linked evidence. They do not justify assigning the same maturity level to different domains.
 
-- **Raw score** — the assessor's per-domain rating against the L1–L5 (and optionally L5+) criteria in the [[agentic-ai-security-cmm-2026|CMM]]
-- **Effective score** — `min(raw_score(D), min over deps in dependencies(D) of raw_score(dep))`
+Another path runs from acquired components to data integrity. A poisoned skill, model, or tool can change what a retrieval or memory system writes. The [[owasp-ai-exchange|OWASP AI Exchange]] separates the supplier's controls from the receiver's remaining data-poisoning and supply-chain controls ([supply-chain management](https://owaspai.org/go/supplychainmanage/)). A weak D8 finding therefore triggers a test of the affected D6 path. It does not automatically erase D6 controls the receiver can demonstrate. The [[clawhavoc|ClawHavoc]] incident remains a case to test, not a numeric cap.
 
-In pseudocode:
+## Historical rule register
 
-```python
-def effective_score(domain, raw_scores, active_rules):
-    deps = [rule.upstream for rule in active_rules if rule.downstream == domain]
-    if not deps:
-        return raw_scores[domain]
-    cap = min(raw_scores[d] for d in deps)
-    return min(raw_scores[domain], cap)
-```
+From 2026-05-04 until the September redesign, this page defined a formula that took the minimum of a domain's raw level and upstream domains' raw levels. It reported median effective, weakest, and strongest levels. That formula, its three-number headline, and its program rating are **retired**. Dated stress tests and reviews that quote them describe the model in force when written; new assessments use the criterion evidence and nine-domain matrix.
 
-The **headline** is no longer a single number. It is a three-number summary:
+[[cmm-known-limitations|CMM Known Limitations]] archives the former L5 gate and per-task-token level split, with their September resolution. Its historical paragraphs are not instructions for new assessments.
 
-- **Typical** = median of effective scores across all 9 domains
-- **Weakest** = min of effective scores (with the domain that set it labeled, plus any cap that fired)
-- **Strongest** = max of raw scores (labeled with the domain)
+| Historical ID | Former numeric rule | Current use |
+|---|---|---|
+| DR-001 | D2 capped D5. | Inspect caller and task identity for the D5 criterion actually claimed. |
+| DR-002 | D2 capped D7. | Inspect attribution for the D7 signal actually claimed. |
+| DR-003 | D3 capped D4. | Inspect the decision and enforcement path for the D4 guardrail actually claimed. |
+| DR-C001 to DR-C006 | Candidate caps joining D8→D6, D5→D7, D4→D5, D6→D4, D9→D2, and D1→all domains. | Retired as candidate score rules. Use their threat hypotheses to select tests where the deployment exposes those paths. |
 
-Plus the full per-domain matrix (raw + effective + which caps fired). Plus an optional **strategic rationale** field for any domain whose raw score is intentionally below its peers (Stripe-style architectural-containment trade-offs).
+The [[cmm-calibration-stress-test-2026|May calibration stress test]] compared five deployment archetypes under a single floor and then under dependency-resolved aggregation. Its conclusions about which controls interact remain useful. Its arithmetic and three-number comparisons do not describe the current assessment method. An architectural-containment choice, such as removing write tools or external communication, is recorded in the deployment boundary and applicable criteria. It is not converted into a bonus or a penalty elsewhere in the matrix.
 
-## Active rules — v1 (2026-05-04, 3 rules)
+## Revision and reporting
 
-These are the rules currently in force. The set is conservative on purpose: every active rule carries a **cross-domain attack path documented in the wiki** and a **directional rationale** stating why the cap runs from the upstream domain to the downstream one.
+When new evidence reveals a dependency, name the affected action, the upstream record or control, the bypass or failure path, and the criterion whose outcome changes. Test the path in the deployment shape at issue. A paper or product diagram may motivate the test; a level claim requires assessable evidence from the implemented path. Add a prerequisite to this page only when it helps an assessor locate a real cross-domain record. The domain page remains the owner of its criterion and pass/fail rule.
 
-| ID | Rule | Direction | Adopted |
-|---|---|---|---|
-| **DR-001** | D2 caps D5 | `effective(D5) ≤ raw(D2)` | 2026-05-04 |
-| **DR-002** | D2 caps D7 | `effective(D7) ≤ raw(D2)` | 2026-05-04 |
-| **DR-003** | D3 caps D4 | `effective(D4) ≤ raw(D3)` | 2026-05-04 |
-
-**DR-001 — per-agent egress policy (D5) cannot be enforced below D2, because network gateways have no individual agent visibility.** Per the [[lethal-trifecta|lethal trifecta]], any agent can impersonate any other at the network boundary. Stripe and Salesforce both treat D2 as the precondition for D5 enforcement.
-
-**DR-002 — per-agent identity controls are mandatory for full behavioral anomaly detection.** Below D2, a detector attributes an anomaly to the fleet and not to an agent. The Salesforce Rittinghouse pipeline reduces 1.8M prompts to 30 alerts, and per-agent identity is what makes those 30 actionable. DR-001 governs enforcement in D5; DR-002 governs attribution in D7, which identity gates independently.
-
-**DR-003 — a policy decision is a prerequisite for a runtime guardrail.** D4 is the enforcement point and D3 is the decision point, so D4 is structurally downstream. A lifecycle hook enforces a D3 decision, so a hook firing where no decision exists has no effect. The [[hooking-coding-agents-with-cedar-talk|Sondera Cedar harness]] makes the ordering explicit. The reverse cap holds weakly, so the model adopts only the stronger direction.
-
-**Promotion threshold met for DR-001/002/003**: each has ≥2 wiki-documented practitioner architectures (Stripe + Salesforce + AgentCordon for DR-001/002; Sondera + AgentCordon for DR-003) and a clear lethal-trifecta-class attack path.
-
-## Candidate rules registry
-
-Proposed rules whose evidence is suggestive but not yet sufficient for active promotion. **Add new candidates here freely.** Promotion to active happens at quarterly CMM revisions (or sooner with explicit wiki ingest evidence).
-
-| ID | Proposed rule | Direction | Evidence required for promotion | Status | Notes |
-|---|---|---|---|---|---|
-| DR-C001 | D8 caps D6 | `effective(D6) ≤ raw(D8)` | ≥2 documented incidents where supply-chain compromise (D8 weak) corrupted data integrity (D6) — e.g. ClawHavoc-class skill swap poisoning a downstream RAG corpus | candidate | Likely promotion in 2026-Q4 once 2+ cross-domain incidents are catalogued; currently 1 ([[clawhavoc\|ClawHavoc]]). The Exchange's §3.1 bears on the cap's shape, not on the count; see below |
-| DR-C002 | D5 caps D7 | `effective(D7) ≤ raw(D5)` | Production cases where egress is the only signal source for detection — when D5 is L1, D7 has no telemetry to monitor | candidate | Stripe is the **counter-example**; held pending evidence that the pattern generalizes |
-| DR-C003 | D4 caps D5 | `effective(D5) ≤ raw(D4)` | Runtime guardrail bypass enabling egress bypass; or runtime hook gap allowing direct OS-level egress | candidate — weak directionality | Runtime and egress are co-load-bearing in most architectures; directionality is unclear. Park until a clear asymmetric attack path is documented |
-| DR-C004 | D6 caps D4 | `effective(D4) ≤ raw(D6)` | Poisoned RAG (PoisonedRAG, ConfusedPilot — see [[memory-poisoning\|memory-poisoning]] concept) corrupting runtime decisions | candidate — needs production evidence | The dependency exists conceptually; production-evidence is still research-stage. Re-check when AgentDojo / equivalent benchmarks publish cross-domain bypass results |
-| DR-C005 | D9 caps D2 | `effective(D2) ≤ raw(D9)` | Operational decommission failures leaving identity-bound credentials live after agent retirement | candidate — operational-vs-technical boundary | Likely belongs as a **soft cap** (rate-of-decay rather than hard min), not a hard cap. Defer until soft-cap semantics are designed |
-| DR-C006 | D1 caps everything | `effective(D*) ≤ raw(D1)` | Programs with L1 governance that nonetheless ship strong technical controls — does the governance gap actually undermine the technical controls? | candidate — likely **rejected** | Technical controls appear to operate independently of governance maturity at enforcement time; parked as a likely *non-rule* |
-
-DR-C001's evidence count is unchanged by the [[owasp-ai-exchange|OWASP AI Exchange]]'s development-time poisoning section. §3.1 states the mechanism normatively — a supplied dataset or a supplied model can arrive poisoned and reach the deployed model, and §3.1.3 treats the supplied-model case on its own — and it documents no incident in which a weak D8 was observed to cap an achieved D6. What it does supply is the first sourced argument about the cap's *shape*, which is recorded under open question 1 below.
-
-## Promotion criteria
-
-A candidate rule is promoted to active when **at least one** of the following is met, AND the rule is reviewed at the next quarterly CMM revision:
-
-1. **≥2 documented incidents** in the wiki where the dependency manifests as a real attack path (incident pages with cross-domain causation noted)
-2. **≥1 peer-reviewed paper or vendor-published threat-model** establishing the dependency as substantive (not theoretical)
-3. **≥2 practitioner architectures** documented in the wiki (talks, deployments, vendor whitepapers) where the dependency is treated as load-bearing
-4. **Synthetic-incident library coverage** — if the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s synthetic-incident library (currently a known gap) covers the cross-domain attack path with a documented test case
-
-Any of (1)–(4) is sufficient. The rule's evidence anchor in the active table MUST cite the qualifying source(s).
-
-## Deprecation criteria
-
-An active rule is deprecated when:
-
-1. **Counter-evidence accumulates** — ≥2 documented practitioner architectures where the dependency is *not* load-bearing (e.g. Stripe-style architectural patterns where the upstream domain is structurally bypassed without compromising the downstream domain)
-2. **Quarterly revision finds the rule no longer reflects practice** (consensus call, documented in the revision log)
-3. **A more precise rule replaces it** (e.g. soft caps, conditional caps, archetype-specific caps)
-
-Deprecated rules stay in the registry with `status: deprecated` and a deprecation rationale. They do not affect new assessments but historical reports can be reproduced.
-
-## Revision protocol
-
-| When | What |
-|---|---|
-| **Any time** | New candidates can be added to the candidate-rules table by anyone editing this page. Add `id`, proposed rule, direction, evidence required for promotion, status: candidate, notes. |
-| **Each wiki ingest of an incident** | Check whether the new incident provides cross-domain evidence relevant to an existing candidate. If so, add the citation to that candidate's notes column. |
-| **Quarterly (Q1 / Q2 / Q3 / Q4)** | Review all candidates. Promote, hold, or reject; increment the rule-set version on any promotion or deprecation, and log the revision. |
-| **CMM major revision** | Re-validate active rules against the latest evidence; deprecate rules that no longer reflect practice. |
-
-## Reporting impact
-
-The [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]]'s gap report changes shape. Old format:
-
-```
-Headline: L1 (floor — D9 set the floor)
-Matrix: D1=L3 D2=L4 D3=L4 D4=L3 D5=L4 D6=L3 D7=L2 D8=L3 D9=L1
-```
-
-New format (Stripe-style architectural-containment archetype example, under v1 rules):
-
-```
-Headline:
-  Typical (median effective): L4
-  Weakest: D7 effective L2 (raw L2; no upstream cap fired)
-  Strongest: D5 raw L4-L5 (effective L4 — capped by DR-001 from D2)
-  Strategic rationale: D7 light by deliberate trade-off — D3+D5 architectural containment per Stripe Bullen talk
-
-Per-domain matrix (raw / effective / cap source):
-  D1: L3 / L3 / —
-  D2: L4 / L4 / —
-  D3: L4 / L4 / —
-  D4: L3 / L3 / capped by DR-003 to raw(D3)=L4 (no effect — raw already L3)
-  D5: L4-L5 / L4 / capped by DR-001 to raw(D2)=L4
-  D6: L3 / L3 / —
-  D7: L2 / L2 / capped by DR-002 to raw(D2)=L4 (no effect — raw already L2)
-  D8: L3 / L3 / —
-  D9: L3 / L3 / —
-
-Active rule set: v1 (DR-001, DR-002, DR-003)
-```
-
-The headline now shows the program's shape rather than collapsing it to a single number.
-
-## Worked examples — re-running the stress-test archetypes
-
-Comparison of the 5 archetypes from the [[cmm-calibration-stress-test-2026|stress test]] under the old floor vs. v1 effective-score:
-
-| Archetype | Old floor (single number) | v1 effective-score headline (typical / weakest / strongest) | Improvement vs old? |
-|---|---|---|---|
-| Stripe-style architectural-containment | L2 | L4 typical / L2 D7 (intentional trade-off) / L4 D5 (capped by DR-001 from D2) | **Yes** — typical L4 reflects the program; D7 recorded as weakest with rationale |
-| Microsoft Agent 365-driven | L2 | L3 typical / L2 D9 (no upstream cap) / L5 D2 | **Yes** — D9 ops lag does not drag D2 down (no D9→D2 rule in v1; DR-C005 is a candidate rather than an active rule) |
-| Startup with bus-factor 1 | L1 | L3 typical / L1 D9 (bus factor) / L3 D2/D3/D4/D5 | **Yes** — technical maturity is not dragged down |
-| Regulated FS (balanced L3-L4) | L3 | L3-L4 typical / L3 weakest / L4 strongest | Equivalent — fair under both rules |
-| Multi-cloud (balanced L3-L4) | L3 | L3-L4 typical / L3 weakest / L4 strongest | Equivalent — fair under both rules |
-
-**Net effect of v1 rules**: the 3 archetypes the floor misreported are now reported fairly; the 2 archetypes the floor reported fairly are still reported fairly. **Mandatory matrix disclosure** and the **strategic-rationale field** now prevent cherry-picking, in place of mathematical aggregation.
-
-## Limitations
-
-- **Does not eliminate the cross-domain attack-path concern.** DR-001/002/003 capture the strongest known cases. Future incidents and architectures will surface more (the candidates are the parking lot).
-- **Does not allow cherry-picking.** Reports MUST publish the full matrix; reports that cite a single domain's score without the matrix are non-compliant with the [[agentic-ai-security-cmm-measurement-protocol|measurement protocol]] (anti-pattern B2 reframed accordingly).
-- **Does not replace the prerequisite gate into L5** (≥2 quarters stable L4 in the domain being scored L5, third-party assurance scheduled or current against a recognized scheme, [[aiuc-1|AIUC-1]] among them, bus-factor ≥2, continuity test). Effective-score is *aggregation*; the prerequisite gate is *eligibility for L5 claims*. Both apply. The gate's stable-L4 condition grades the claiming domain alone, and these rules carry the cross-domain half of the question: a raw L5 whose upstream dependency sits lower reports at the capped effective score.
-- **Does not address weighted scoring.** All 9 domains are still treated as equally important when computing typical/weakest/strongest. Domain weighting (e.g. for high-risk-tier applications) is a separate question parked under the **agent-archetype tailoring** open gap on the CMM page.
-- **Does not list every CMM limitation.** The four above are this rule set's own. [[cmm-known-limitations|CMM Known Limitations]] is the register for the model as a whole, and it records the 2026-09-19 split of the L5 gate whose cross-domain half these rules carry.
-
-## Open questions & caveats
-
-> [!gap] Things this scaffolding doesn't yet handle
-> 1. **Soft caps vs hard caps.** DR-C005 (D9 caps D2) is a strong candidate for *soft* capping (operational lag degrades technical controls over time, not in the moment). DR-C001 (D8 caps D6) now has a sourced argument for the same treatment. The [[owasp-ai-exchange|OWASP AI Exchange]] §3.1.3 states that where a supplied model was manipulated at the supplier, parameter protection is outside the receiver's hands, and names what the receiver still holds: the data-poisoning controls, the broad-poisoning controls, and supply chain management. `POISON ROBUST MODEL` applies to an already-acquired model, `TRAIN DATA DISTORTION` is scoped by the Exchange to poisoning that arrived through the supply chain, and `MODEL ENSEMBLE` contains a poisoned member at a stated and falling effectiveness. A receiver with a weak upstream can therefore raise its own integrity by a bounded amount, which is degradation and not a ceiling. The current schema only supports hard caps. Soft-cap semantics are a v2+ design problem.
-> 2. **Conditional caps.** Some caps may only apply for specific application archetypes (e.g. D4 caps D5 may apply for consumer-facing chatbots but not for internal agent platforms). The current schema doesn't support conditions.
-> 3. **Multi-hop transitive caps.** If D2 caps D5 and D5 caps D7 (DR-C002 candidate), should D2 transitively cap D7 via D5? Currently each rule is independent. Worth re-examining if DR-C002 is promoted.
-> 4. **Rule interactions.** Two rules pointing at the same downstream domain currently take min() of their upstream caps. This is the conservative choice but may be wrong in cases where the caps are partially redundant (capture the same attack path). No counter-evidence yet but flag.
-> 5. **Negative rules / floor-relaxation.** Should there be rules that *raise* an effective score (e.g. D3+D5 both at L4 raises the effective ceiling on D7 for the Stripe-archetype case, since architectural containment substitutes for behavioral observability)? Currently rules can only cap, not relax. v2+ design problem.
-> 6. **Clause-level prerequisites are not caps and have no representation here.** A level can require an artifact another domain produces without the upstream domain capping the downstream score. Two are on the record. [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L4 validates a delegation chain that [[agentic-ai-security-cmm-d2-identity|D2]] L4 requires the credential to carry, and [[agentic-ai-security-cmm-d1-governance|D1]] L3 bounds a publication review by the disclosure [[agentic-ai-security-cmm-d9-operations|D9]] L3 requires. Each is recorded on at least one of the two domain pages it joins, and a reader of this page sees none of them. [[agentic-ai-security-cmm-d7-observability|D7]]'s memory-write telemetry at L3 and the per-write provenance [[agentic-ai-security-cmm-d6-data-rag|D6]] grades at L4 are separable records, so no prerequisite joins those two levels. Whether the schema gains a prerequisite edge distinct from a cap is a v2 design question.
-> 7. **Scoring stability across rule-set versions.** When v1 → v2 promotes a new active rule, prior assessments' headlines may shift. The protocol should specify which rule set a published rating was computed under (annotate as "v1 effective-score" or similar).
-
-## Revision history
-
-| Version | Date | Changes | Active rule count |
-|---|---|---|---|
-| **v1** | 2026-05-04 | Initial scaffolding. 3 active rules (DR-001 D2→D5, DR-002 D2→D7, DR-003 D3→D4) anchored to lethal-trifecta + Sondera/AgentCordon evidence. 6 candidate rules parked. | 3 |
+The assessment report lists each domain result, unmet and unanswerable criteria, applicable exceptions, assurance class, and the evidence path for a cross-domain prerequisite. It may explain an intentional design trade-off, but does not calculate a median, minimum, maximum, or cap. See [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] for the current terms.
 
 ## Relations
 
-- Summarized in: [[cmm-vocabulary-and-notation|CMM Vocabulary and Notation]] — raw score, effective score and cap in one line each, with `floor` recorded as retired vocabulary
-- Replaces: the single cumulative-floor rule in [[agentic-ai-security-cmm-2026|CMM 2026]] (imported from CMMC 2.0)
-- Operationalized by: [[agentic-ai-security-cmm-measurement-protocol|Measurement Protocol]] §Floor rule (rewritten 2026-05-04 to point here)
-- Resolves: [[cmm-calibration-stress-test-2026|stress test §Change 2]] (matrix-as-primary view) and §Change 4 (D7 contradiction recommendation) — both adopted via the new effective-score headline format
-- Reframes: [[anti-patterns-and-failure-modes|Anti-Pattern B1]] (cumulative-floor demoralizes — mostly resolved) and [[anti-patterns-and-failure-modes|Anti-Pattern B2]] (cherry-picking — reframed as disclosure-discipline failure)
-- Updates: [[wiki-novelty-and-counterarguments-2026|Counter-Arguments Thesis 4]] — wiki's stated position changes from "keep floor" to "replace floor with dependency-resolved effective scores"
-- Anchored to: [[lethal-trifecta|Lethal Trifecta]] (DR-001, DR-002 directional rationale); [[hooking-coding-agents-with-cedar-talk|Sondera Cedar harness]] (DR-003 directional rationale); [[1-8m-prompts-30-alerts-talk|Salesforce Rittinghouse]] (DR-002 production evidence); [[breaking-the-lethal-trifecta-talk|Stripe Bullen]] (Stripe archetype worked example); [[agentcordon|AgentCordon]] (DR-001/003 OSS reference architecture)
-- Exercised by: [[agentic-cmm-regulated-fi-stress-test|Regulated-FI stress test]] — runs the D2→D5, D2→D7, and D3→D4 caps against a worked archetype and reports that weak per-agent identity and control pull egress, observability, and runtime down, which the stress test judges a fair reflection of reality rather than an artifact of the rules.
-- Credited by: [[agentic-cmm-vs-standards-validation|the CMM-vs-standards validation]] §4 as a CMM contribution with no standards analogue — CMMC 2.0 caps on a single cumulative floor, not on dependency-resolved, evidence-anchored cross-domain rules.
+- Historical basis: [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test]] and [[agentic-cmm-vs-standards-validation|the standards validation]].
+- Assessment method: [[agentic-ai-security-cmm-measurement-protocol|CMM Measurement Protocol]].
+- Architectural boundary: [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]].

@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-09-24
+updated: 2026-09-29
 tags:
   - architectures
   - identity
@@ -30,6 +30,7 @@ related:
   - "[[credential-proxy-pattern]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[agentic-ai-security-cmm-dependency-rules]]"
   - "[[capability-based-authorization]]"
   - "[[ambient-vs-derived-authority]]"
   - "[[tenuo-warrant]]"
@@ -51,18 +52,19 @@ sources:
   - "[[openai-hugging-face-agent-incident]]"
 coined_by:
   - "[[insight-partners]]"
-verified: 2026-09-18
+verified: 2026-09-29
 verified_against:
   - ".raw/articles/microsoft-entra-agent-id-owners-sponsors-managers-2026-09-18.md"
   - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
   - ".raw/articles/microsoft-entra-conditional-access-for-agents-2026-09-18.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
 verified_findings: 0
-verified_note: "Read at the two repointed passages only: the access-pattern-versus-type correction and the sponsor-succession rewrite both hold against the Entra clips. Rest of the page carries its 2026-08-22 read."
+verified_note: "Identity model, sponsorship, agent Conditional Access, and revised CMM/RA placement checked; product landscape claims outside these sources remain dated."
 ---
 
 # AI Agent Identity Architecture
 
-The conceptual identity architecture for AI agents comprises three elements: the identity models available, the layers that authenticate and authorize an agent, and the trace that binds each action to a human. The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] realizes it as the **Identity plane**, and the [[agentic-ai-security-cmm-d2-identity|CMM D2 Identity & Authorization]] deep dive measures organizational maturity against it.
+The conceptual identity architecture for AI agents comprises three elements: the identity models available, the layers that authenticate and authorize an agent, and the trace that binds each action to a human. The [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] places these functions in the identity and session service, credential broker, policy service, action gateway, and evidence store. The [[agentic-ai-security-cmm-d2-identity|CMM D2 Identity and Authorization]] deep dive grades the identity outcomes.
 
 ## On this page
 
@@ -79,7 +81,7 @@ The conceptual identity architecture for AI agents comprises three elements: the
 
 AI agents must authenticate to and be authorized for services inside and outside the enterprise. They differ from human users in three ways: they may be ephemeral, they arrive in large numbers, and they act either on behalf of a human (delegated) or under their own identity (autonomous). Incumbent identity governance, vaulting and PAM capabilities cover the credential half of this, and how far they stretch to an agent population this large and this short-lived is unsettled. Existing protocols such as OAuth 2.0 do not model *who directed an action* — the agent or a human (per [[securing-the-autonomous-future|Securing the Autonomous Future]]).
 
-Two design problems sit underneath: a **principal problem** (every agent needs a verifiable identity that traces to a human) and an **authority problem** (a verified identity still carries workload-wide ambient authority, far wider than any one task needs). The layers below address the first; the [[#Layers|capability-token layer]] addresses the second.
+Two design problems sit underneath: a **principal problem** (every agent needs a verifiable identity and accountable owner) and an **authority problem** (a verified identity can carry workload-wide ambient authority, wider than a task needs). Identity and credential layers address the first; a task-scoped authorization decision addresses the second. A capability token is one way to carry that decision.
 
 [[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] frames this as the policy anchor for the architecture: [[non-human-identity|NHI]] is the authentication primitive (a valid credential at session start), while Agent Identity is the governance layer that attests provenance, intent, and authority continuously and governs behavior at each action. The architecture defends against the corresponding threats in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]]: Privilege Compromise (T3), Identity Spoofing and Impersonation (T9), and Insecure Inter-Agent Protocol Abuse (T16), the last exercised at the MCP and A2A boundaries where agent identity is presented to other parties.
 
@@ -101,7 +103,7 @@ Enterprises today lean toward delegated access for productivity use cases. The b
 
 [[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. Enterprises already run SPIFFE/SPIRE for machine-to-machine workload identity, and the platform-native agent identities build on it: GCP Agent Identity issues SPIFFE-based IDs directly. SPIFFE also closes the **Credential Zero** problem. An agent must authenticate *to* a vault or IdP before it can retrieve any further credential, and a SPIFFE Verifiable Identity Document (SVID) provisioned at deploy time carries that first authentication without a pre-stored secret.
 
-SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) must be added to define *what* an authenticated agent may do, and a [[#Capability-token layer]] to bound *which task* a given grant covers.
+SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) defines *what* an authenticated agent may do. A task binding, held in a token, session or trusted gateway, bounds *which task* the grant covers.
 
 ### Secrets vault and PAM layer
 
@@ -109,11 +111,11 @@ For external service access (API keys, JWTs, OAuth tokens), agents retrieve shor
 
 ### Authorization policy layer
 
-After authentication, a [[oversight-layer|Policy Decision Point]] enforces scoped permissions. [[cedar|Cedar]] and [[opa|OPA]]/Rego are the common policy engines; platform-native PDPs now ship (AWS Bedrock AgentCore Policy on Cedar; Microsoft Agent Governance Toolkit). The PDP answers a binary question against the agent's identity and the requested action.
+After authentication, a [[oversight-layer|Policy Decision Point]] enforces scoped permissions. [[cedar|Cedar]] and [[opa|OPA]]/Rego are the common policy engines. Platform-native PDPs now ship, including AWS Bedrock AgentCore Policy on Cedar and Microsoft Agent Governance Toolkit. The PDP answers a binary question against the agent's identity and the requested action.
 
 ### Capability-token layer
 
-Identity-based authorization is **ambient**: a verified agent carries its workload's full standing authority on every call, far wider than any single task requires (see [[ambient-vs-derived-authority|Ambient vs Derived Authority]]). The capability-token layer makes authority **derived**. It mints a task-scoped, signed, short-lived artifact that *carries its own policy*, so a compromised agent cannot exceed the scope minted for that task. The [[tenuo-warrant|Tenuo Warrant]] implements the layer vendor-neutrally, through [[capability-based-authorization|capability-based authorization]] with [[monotonic-attenuation|monotonic attenuation]], where a delegated child grant can only shrink, never widen. Platform identity products issue per-*resource* (audience) tokens, and no hyperscaler yet ships a per-*task* holder-bound token, which leaves this layer ahead of the shipping landscape.
+Identity-based authorization can be **ambient**: a verified agent carries its workload's standing authority on every call, wider than a single task requires (see [[ambient-vs-derived-authority|Ambient vs Derived Authority]]). A capability token is one implementation of **derived** authority. It carries a signed, short-lived, task-scoped grant that an independent enforcement point checks before action. A compromised agent can still misuse actions inside that grant, so task scope limits its authority rather than making the task safe. The [[tenuo-warrant|Tenuo Warrant]] is a published implementation using [[capability-based-authorization|capability-based authorization]] and [[monotonic-attenuation|monotonic attenuation]]: a delegated grant can narrow but cannot widen its parent authorization. For outbound action decisions, D5 also accepts trusted session or gateway state bound to the current task; the CMM does not require a holder-bound token.
 
 ### Action-to-identity trace
 
@@ -125,16 +127,23 @@ Per-agent identity moved from emerging to **GA platform-native on all three hype
 
 | Capability | Status (mid-2026) | Reference implementations |
 |---|---|---|
-| Per-agent identity | GA platform-native; also the security-platform row below | [[microsoft-entra-agent-id\|Entra Agent ID]] (GA Apr 2026); AWS Bedrock AgentCore identities; GCP Agent Identity (SPIFFE-based); [[spiffe\|SPIFFE/SPIRE]] (OSS); [[okta-for-ai-agents\|Okta for AI Agents]] (GA 2026-04-29) |
-| Credential-less / vault | GA platform-native | Azure Managed Identities; AgentCore token vault; GCP auth-manager; [[credential-proxy-pattern\|credential proxy]] (OSS/COTS) |
+| Per-agent identity | GA platform-native; also the security-platform row below | [[microsoft-entra-agent-id\|Entra Agent ID]] (GA Apr 2026) |
+| Per-agent identity | GA platform-native | AWS Bedrock AgentCore identities |
+| Per-agent identity | GA platform-native | GCP Agent Identity (SPIFFE-based) |
+| Per-agent identity | Open source | [[spiffe\|SPIFFE/SPIRE]] |
+| Per-agent identity | GA security platform | [[okta-for-ai-agents\|Okta for AI Agents]] (GA 2026-04-29) |
+| Credential-less / vault | GA platform-native | Azure Managed Identities |
+| Credential-less / vault | GA platform-native | AgentCore token vault |
+| Credential-less / vault | GA platform-native | GCP auth-manager |
+| Credential-less / vault | OSS/COTS | [[credential-proxy-pattern\|Credential Proxy Pattern]] |
 | NHI governance (discovery, lifecycle, posture) | Developing COTS | [[oasis-security\|Oasis Security]], Aembit, Astrix, [[cyberark-conjur\|CyberArk Conjur]], Okta NHI |
-| Conditional / risk-based access for agents | MS GA; no AWS/GCP equivalent | Conditional Access for Agent Identities (Entra ID P1); ID Protection for agents |
-| Per-task capability tokens | Leading-edge, OSS-only | [[tenuo-warrant\|Tenuo Warrant]] (Ed25519, monotonic attenuation) |
+| Conditional / risk-based access for agents | Documented for Microsoft Entra Agent ID; other platforms not compared here | Conditional Access for Agent Identities (Entra ID P1/P2 plus Agent 365 per user); ID Protection for agents |
+| Per-task capability tokens | Published implementation; supplier coverage not established here | [[tenuo-warrant\|Tenuo Warrant]] (Ed25519, monotonic attenuation) |
 | Per-agent identity from security-platform vendors (non-IdP incumbents) | Announced; one available, one in development | [[crowdstrike-agentic-identity-provider\|CrowdStrike Agentic IdP]] (in development); [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] (available) |
 
-Two security-platform vendors entered the per-agent identity market in the first week of September 2026, from outside the IdP incumbency the table's first row records. [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]] issues a cryptographically verifiable identity at the point [[falcon-guardian|Falcon Guardian]] discovers an agent, brokers short-lived tokens in place of standing credentials, and binds each action to the delegating human or workload. CrowdStrike announced it on 2026-09-02, states the product is in development, and gives no general-availability date. [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]], announced 2026-09-01, delivers agent discovery, secretless just-in-time privileged access and runtime action control through PingOne Privilege; Ping states it is available now. CrowdStrike scopes a token to a task rather than to a workload; Ping scopes access to the resource an agent reaches and the action it takes, and states no task boundary. Neither publishes a holder-binding or attenuation mechanism, so neither reaches the capability-token layer above.
+Two security-platform vendors entered the per-agent identity market in the first week of September 2026, from outside the IdP incumbency the table's first row records. [[crowdstrike-agentic-identity-provider|CrowdStrike's Agentic Identity Provider]] issues a cryptographically verifiable identity at the point [[falcon-guardian|Falcon Guardian]] discovers an agent, brokers short-lived tokens in place of standing credentials, and binds each action to the delegating human or workload. CrowdStrike announced it on 2026-09-02, states the product is in development, and gives no general-availability date. [[ping-enterprise-personal-agent-access|Ping's Enterprise Personal Agent Access]], announced 2026-09-01, delivers agent discovery, secretless just-in-time privileged access and runtime action control through PingOne Privilege. Ping states it is available now. CrowdStrike describes a task-scoped token. Ping describes per-resource and per-action access. The published descriptions reviewed here do not specify holder binding or attenuating delegation, so neither establishes the token mechanism in this design.
 
-A verifiable per-agent identity is the prerequisite for per-agent egress policy and per-agent behavioral baselining, so the identity layer is built first (the [[agentic-ai-security-cmm-d2-identity|D2→D5 and D2→D7 dependency caps]]).
+A verifiable per-agent identity is a prerequisite for an egress decision or behavioral baseline that claims to distinguish agents. The assessor checks identity binding on the applicable D5 and D7 paths ([[agentic-ai-security-cmm-dependency-rules|evidence prerequisites]]). A weak D2 result does not arithmetically cap another domain.
 
 ## Data and control flow
 
@@ -145,7 +154,7 @@ Human User
 Agent Identity (delegated token OR own SPIFFE SVID / platform agent identity)
     │
     ├─► Authorization: PDP (Cedar/OPA) — may a grant of this shape proceed?
-    │       └─► Capability token (Tenuo Warrant) — scoped to THIS task, attenuating
+    │       └─► Task authorization — held in token, session, or trusted gateway
     │
     ├─► Internal services (LLM, vector store, orchestrator)
     │       └─ SPIFFE/SPIRE mTLS
@@ -162,18 +171,18 @@ All actions → Action-to-Identity Trace (delegation chain, sponsor-attributed)
 | Aspect | Delegated Access | Autonomous Agent |
 |---|---|---|
 | Governance complexity | Lower (human remains principal) | Higher (own identity, ephemeral) |
-| Blast radius if compromised | Limited to that user's scope | Broad if over-provisioned; frozen at grant scope if capability-token-bounded |
+| Blast radius if compromised | Bounded by user and task grants actually enforced | Bounded by agent and task grants actually enforced; broad if over-provisioned |
 | Suitable for | Copilots, coding assistants | Infrastructure agents, AI employees |
 | IAM tooling maturity | High (existing IAM/PAM + GA agent identity) | Medium (GA agent identity; NHI governance and per-task tokens still maturing) |
 
-Ambient pod-level identity broadened the autonomous-agent blast radius in the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]]. On OpenAI's own infrastructure, lateral movement ran on IAM credentials read from the instance metadata service (IMDS) and on over-permissioned Kubernetes service accounts, reaching cluster admin on that cluster. At [[hugging-face|Hugging Face]], concurrently, a single dataset-worker pod reached cluster admin across multiple clusters in under 13 hours (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Pod-level identity is ambient by construction, because the service account attaches to the workload and every job in that pod therefore carries the union of authority any job might need. A single compromise inherits all of it. That is the concrete case for the capability-token layer above — a per-task grant that only attenuates does not widen when the holder is taken — and for treating service-account scope as an identity-plane control rather than a Kubernetes deployment detail.
+Ambient pod-level identity broadened the autonomous-agent blast radius in the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face incident]]. On OpenAI's own infrastructure, lateral movement ran on IAM credentials read from the instance metadata service (IMDS) and on over-permissioned Kubernetes service accounts, reaching cluster admin on that cluster. At [[hugging-face|Hugging Face]], concurrently, a single dataset-worker pod reached cluster admin across multiple clusters in under 13 hours (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Pod-level identity is ambient by construction, because the service account attaches to the workload and every job in that pod therefore carries the union of authority any job might need. A single compromise inherits all of it. The case supports an independent task-scope check at action time and treating service-account scope as an identity control rather than a Kubernetes deployment detail.
 
 Ambient federation trust produces the same structural failure on the identity plane's other axis. In the [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]], a multi-agent attacker framework cracked 85 personnel credentials and pivoted 84 of them (98.8%) laterally via SSO, because no per-resource step-up sat between the federated session and the resources it reached (Dream Security, ["Inside a Multi-Agent AI Framework Used to Compromise Government Entities in Asia"](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12).
 
 ## Placement in the RA and CMM
 
-- **Reference architecture.** The [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] **Identity plane** is the implementation surface of this page: workload identity, agent/NHI lifecycle governance, the credential proxy, action-to-identity tracing, and OAuth 2.1/OIDC delegation, with the capability-token layer split across Identity and Control.
-- **Maturity model.** The [[agentic-ai-security-cmm-d2-identity|CMM D2 deep dive]] turns these layers into graded levels: per-agent identity + human owner + deploy-pipeline lifecycle at L3, zero-credentials-in-context + automated rotation at L4, a unified governance program with shadow-agent discovery at L5, and per-task holder-bound capability tokens at L5+. Egress and observability cannot exceed D2-L3, which is why that level is built first.
+- **Reference architecture.** The [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] assigns authentication and task binding to the identity and session service, credential custody to the broker, authorization decisions to the policy service, action enforcement to the gateway, and correlated records to the evidence store. The [[agentic-ai-security-reference-architecture#boundary-contracts-and-verification|boundary tests]] probe each crossing.
+- **Maturity model.** The [[agentic-ai-security-cmm-d2-identity|CMM D2 deep dive]] grades per-agent identity and lifecycle at L3, credential isolation, rotation and task-bound sessions and tokens at L4, then registry completeness, discovery and scoped administration at L5. D2-TASKBIND is a prerequisite for D5-TASK-EGRESS when that L5 egress criterion applies. D5 accepts a token, session or gateway-held state for the outbound decision, but D2 still grades the task binding of sessions and tokens an agent receives. A holder-bound token is one implementation, not a separate scored tier.
 
 ## See also
 

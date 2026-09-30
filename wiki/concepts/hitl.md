@@ -2,7 +2,7 @@
 type: concept
 title: "Human-in-the-Loop (HITL) for Agentic AI"
 created: 2026-05-03
-updated: 2026-09-25
+updated: 2026-09-29
 tags:
   - concepts
   - hitl
@@ -12,10 +12,10 @@ tags:
 status: developing
 scope_axis:
   - sec-of-ai
-source_url: "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+source_url: "https://owaspai.org/go/oversight/"
 sources:
-  - "[[breaking-the-lethal-trifecta-talk]]"
-  - "[[securing-workspace-genai-at-google-talk]]"
+  - "https://owaspai.org/go/oversight/"
+  - "https://cloudsecurityalliance.org/blog/2026/02/02/the-agentic-trust-framework-zero-trust-governance-for-ai-agents"
 related:
   - "[[least-agency-principle]]"
   - "[[agency-gap]]"
@@ -31,123 +31,66 @@ related:
   - "[[agents-rule-of-two]]"
   - "[[generative-coding-deployment-shape-2026]]"
   - "[[precize-agentic-ai-top10]]"
-verified: 2026-09-19
+verified: 2026-09-29
 verified_against: []
 verified_findings: 0
-verified_note: "Swept for surviving L5 claims on per-task capability tokens after the #169 rung move; read the CMM section against the D3 ladder; no .raw document opened. Fixed: the page graded per-task capability tokens at D3 L5 alongside approval tokens."
+verified_note: "Current OWASP oversight control and CSA-hosted Agentic Trust Framework checked 2026-09-29."
 ---
 
 # Human-in-the-Loop (HITL) for Agentic AI
 
-Human-in-the-loop (HITL) is the architectural requirement that an agent pause execution and obtain explicit human approval before taking certain high-impact or irreversible actions. In the context of agentic AI security, HITL is a **control-plane primitive** — a deterministic enforcement gate that runs below the model and cannot be bypassed by prompt injection or model misbehavior, provided it is implemented at the platform layer rather than as a prompt instruction.
+Human-in-the-loop approval is a decision by an authorized person on a proposed agent action before that action executes. It is effective only where the action waits at an enforcement point outside the model's instructions. A person sending an agent-prepared draft can be the gate if the agent cannot send it first.
 
-The absence of this control is named directly in the [[precize-agentic-ai-top10|Precize Top 10 for Agentic AI Vulnerability]] as AAI012, Checker-out-of-the-Loop Vulnerability: no human operator or automated checker is alerted when an agent operates outside its system limits. AAI012's framing complements the gate model above — it names the *monitoring/alerting* failure (nobody is watching for drift), where the confirm tier below names the *authorization* failure (nobody signed off before the action). AAI012's own analogy is aviation autopilot incidents where pilots were not alerted in time to correct a dangerous flight condition. This page's D9 fatigue discussion makes the same detection-latency argument from the opposite direction: a gate that exists but nobody is monitoring degrades to the same outcome as no gate at all.
+## Action tiers and approval
 
-## The action-risk tiers
+[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] records each callable action in one of four tiers. The deployment's risk decision assigns the tier; the examples below do not impose a universal classification.
 
-The wiki's action-risk tiers classify actions into four tiers that determine when HITL is required. The tiers are stated in [[least-agency-principle|Least Agency Principle]], which carries their provenance: the OWASP Agentic AI Top 10 introduces least agency as a principle and supplies no tier scheme, and the tier scheme comes from [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] §3.2.
-
-| Tier | Behavior | When used |
+| Tier | Execution behavior | Example |
 |---|---|---|
-| **Auto** | Agent acts without notification | Read-only, low-risk, reversible actions |
-| **Notify** | Agent acts, then informs the human | Low-risk writes; audit trail sufficient |
-| **Confirm** | Agent proposes action; human must approve before execution | High-impact, partially reversible, or out-of-scope actions |
-| **Block** | Action is refused regardless of instruction | Unconditionally prohibited action classes |
+| Auto | Runs under standing authorization. | Bounded read of an approved source. |
+| Notify | Runs and informs a named person. | Reversible low-impact write. |
+| Confirm | Waits for an authorized person's decision. | Production change or external send where policy requires review. |
+| Block | Does not run. | Action outside the permitted task or destination. |
 
-The confirm tier is the operative HITL gate. An agent reaching a confirm-tier action must halt, surface a structured proposal to the human principal, and wait. Only after explicit approval (not a default timeout) does it proceed.
+For a confirm action, the review interface should show:
 
-The tiers classify actions. A second axis, stated by the [[owasp-ai-exchange|OWASP AI Exchange]] under `OVERSIGHT`, classifies the oversight a tiered action receives — fully autonomous execution, soft confirmation, hard confirmation, or mandatory human initiation — and is set out with the tier table in [[least-agency-principle|Least Agency Principle]].[^aix-oversight] The confirm tier above is the wiki's name for the action class; hard confirmation is the mechanism it demands.
+- The actual target and proposed parameters.
+- The expected impact and reversibility.
+- Prior steps that affect the decision.
 
-## Case for platform enforcement
+The enforcement point must use the parameters the person reviewed. A refusal, expiry, or unavailable approval route leaves the action unrun. [OWASP AI Exchange's oversight control](https://owaspai.org/go/oversight/) recommends infrastructure gates, informed review, and risk-selected human involvement. A model instruction to “ask first” cannot enforce a held action.
 
-A common failure mode is implementing HITL as a **prompt instruction** — telling the model "always ask before deleting files." This is bypassable:
+## Operational evidence
 
-- A [[prompt-injection|prompt injection]] in external content can instruct the model to skip the confirmation step
-- A jailbreak or goal-drift can cause the model to rationalize that the action is safe
-- The model's in-context reasoning can construct a "the user implicitly approved" justification
+The assessor traces a proposed action from classification through approval to execution, then tests:
 
-The [[breaking-the-lethal-trifecta-talk|VS Code CVE-2025-62453 case]] illustrates the failure directly: VS Code's confirmation gates were implemented as UI conventions rather than as platform constraints. Certain tool calls (e.g., `editFile`) auto-saved to disk before the user could approve or reject, creating a TOCTOU window that bypassed the gate entirely.
+- A direct tool or alternate autonomy route cannot execute before approval.
+- An expired or refused request does not execute.
+- Changed target or parameters require a new decision.
+- Queue outage does not silently turn confirm into notify or auto.
+- Approval volume, queue age, and reviewer behavior remain visible enough to detect fatigue or bypass.
 
-Platform-enforced HITL means the runtime **does not call the tool** until a cryptographically-linked approval token is received. The model can propose; only the platform can act.
+[[agentic-ai-security-cmm-d3-control-least-agency|D3]] requires a stronger request-specific, cryptographically bound approval token at its highest level. That token is a CMM criterion, not the definition of every working human approval gate. [[agentic-ai-security-cmm-d9-operations|D9]] grades queue operation and approval records. A screen that displays a confirmation while the write has already occurred fails the gate regardless of the approver's diligence.
 
-### Approval-token binding
+## Source distinctions
 
-**A token bound to the action's specific parameters, rather than to the approver's intent, closes the gap between what the human saw and what the runtime performs.** The [[owasp-ai-exchange|OWASP AI Exchange]] specifies a unique approval token per request, cryptographically binding the approver's identity, the specific action parameters, and an expiry, with execution rejected where a parameter deviates from the approved value or the token has expired.[^aix-oversight] An approval for a transfer of one amount does not authorize the same call with another. The same entry requires explicit confirmation of key parameters in plain language, logs the approver's understanding alongside the approval signal, applies a mandatory minimum delay before execution for the highest-risk actions, and requires segregation of duties for critical actions — multiple approvers from different roles, assigned by policy rather than by the agent.[^aix-oversight] The audit trail is tamper-evident and records the request, the parameters presented, the approver's identity and authentication method, the decision, and the outcome.[^aix-oversight] High-risk categories are defined in advance along four dimensions the Exchange names: irreversibility, data classification, external parties, and financial thresholds.[^aix-oversight]
+The [Agentic Trust Framework article hosted by the Cloud Security Alliance](https://cloudsecurityalliance.org/blog/2026/02/02/the-agentic-trust-framework-zero-trust-governance-for-ai-agents) is written by **Josh Woodruff of MassiveScale.AI**. Its five gates govern promotion to a broader autonomy level:
 
-The disclosure surface is specified alongside the gate. Agent identity is disclosed at interaction start, and the authorised action scope is presented from a static capability manifest rather than from consent text the agent composes, since an agent must not frame its own consent request.[^aix-oversight] Consent for high-impact actions is granular and task-specific, and the user holds an accessible action log and a genuine mid-task opt-out.[^aix-oversight] The Exchange routes regulatory disclosure obligations away from this control to `CHECK COMPLIANCE` and `AI TRANSPARENCY`.[^aix-oversight] The review interface itself is constrained: it presents the action requested, the stated rationale, relevant prior actions in the session, estimated impact, and a reversibility classification, and it does not pass through agent-generated urgency framing without sanitisation.[^aix-oversight]
+- Performance
+- Security Validation
+- Business Value
+- Incident Record
+- Governance Sign-off
 
-## Scope: which actions require confirm-tier HITL
+Those are promotion checks, not five steps in each action approval. The article's Intern-to-Principal labels and example thresholds are its own framework; they are not CMM maturity levels or general requirements for a deployment.
 
-Actions that typically require the confirm tier include any combination of:
+## CMM use
 
-- **Irreversibility**: deletes, overwrites, sends (email, message, payment)
-- **Scope breach**: acting outside the agent's declared workspace or data scope
-- **Cross-system writes**: pushing to production, committing to main, writing configuration
-- **Credential use**: any tool call that uses a non-proxied credential
-- **Lethal Trifecta trigger**: actions combining private data access + untrusted content provenance + external comms reach
-
-The tier is assigned per action class (not per agent), via policy in the [[agentic-ai-security-reference-architecture|Control plane]] (Cedar or OPA policy). The same agent may auto-execute reads but require confirm for writes.
-
-The [[agency-gap|agency gap]] is why the list holds irreversibility and scope breach rather than a malice test. An agent whose reasoning is internally coherent can still commit to the wrong reading of an ambiguous instruction, so the confirm gate routes the interpretation back to a human at the point where a wrong reading cannot be withdrawn.
-
-## CSA Agentic Trust Framework gates
-
-The [[csa-maestro|CSA Agentic Trust Framework (ATF)]] formalizes HITL into five progressive autonomy promotion gates — preconditions that must be met before an agent can operate at higher autonomy tiers. The gates encode:
-
-1. Task scope definition (what is the agent allowed to do?)
-2. Resource access justification (why does it need these tools?)
-3. Human oversight checkpoints per interaction class
-4. Risk-based step-up (higher-risk actions trigger re-confirmation even mid-task)
-5. Revocation capability (can you pull the agent back at any point?)
-
-## Production HITL implementations
-
-### Stripe — human review of sensitive actions
-
-[[breaking-the-lethal-trifecta-talk|Andrew Bullen's talk]] describes two architectural guardrails at Stripe, and HITL is the second: egress removal closes the exfiltration path, and human review governs the write path. Stripe gates sensitive actions because model-layer resistance leaves a failure rate Bullen judges too high to accept: the public competition cited on slide 3 of Bullen's deck measured attack success between 6.7% and 1.5% across 18 undefended frontier models, with no architectural control in the measured system.[^asr-competition] Key implementation details:
-
-- The framework decides, not the model: the agent never declares its own HITL requirement
-- Tool annotations carry the decision inputs: every tool authored inline in an agent framework or exposed through [[toolshed|Toolshed (Stripe)]] declares human-readable properties such as `production_impacting_write` and `broadcasts_data_internally`, and the framework routes the call on those properties
-- Bullen scopes the sensitive class by rule of thumb — a production write, a broad communication, or sending a message — and treats the review experience as the adoption constraint: confirmations are queued and batched so the agent keeps working, reversible writes execute with an offered revert, and an LLM second reviewer is proposed against rubber-stamping
-
-### Google Workspace — Plan-Validate-Execute
-
-[[securing-workspace-genai-at-google-talk|Nicolas Lidzborski's Workspace talk]] describes Google's canonical HITL implementation as the **[[plan-validate-execute|Plan-Validate-Execute]]** pattern: the agent enumerates a structured plan; a non-LLM gatekeeper validates the plan against dynamically generated policy and against user intent; only after the gate passes does the agent execute. The pattern explicitly addresses the [[recursive-prompt-injection|recursive-injection]] failure mode by making validation deterministic rather than LLM-based. Lidzborski is also explicit about the **review fatigue / rubber-stamping** UX gap as an unsolved problem.
-
-The oversight interface is itself a threat surface. [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] names Overwhelming Human-in-the-Loop (T10): inducing decision fatigue or compromising the approval interface so a human rubber-stamps a malicious action. Its Playbook 5 (protecting HITL and preventing decision-fatigue exploits) treats approval-volume throttling, structured high-signal proposals, and tamper-evident approval channels as controls, not UX polish.
-
-The two implementations cover complementary surfaces: Stripe emphasizes egress + tool-policy enforcement (the *data leaving* side); Google Workspace emphasizes the planning + validation interlock (the *deciding to act* side). Real production agentic systems will need both.
-
-**Neither publishes a measurement of the gate's own effect.** Bullen states that prevalence in the wild is unknown, and Lidzborski names review fatigue and rubber-stamping as unsolved without naming a rate. What a deployed confirm-tier gate achieves against real attack volume has no published source here; the model-layer figures above describe the risk the gate exists to address, not evidence of how well it addresses it.
-
-## HITL in the CMM
-
-In the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]], HITL is graded across [[agentic-ai-security-cmm-d3-control-least-agency|D3 Control & Least-Agency]], which holds the policy decision point and the per-action-class approval coverage, and [[agentic-ai-security-cmm-d9-operations|D9 Operations & Human Factors]], which holds the approval measures: D9-QUEUE-RATE and D9-QUEUE-AGE at L3, and D9-QUEUE-STAMP, D9-QUEUE-P95 and D9-OVERSIGHT-INVOLVE at L4. D9 L3 also grades the high-risk approval itself. D9-HIGHRISK defines the categories along the Exchange's four dimensions, D9-HIGHRISK-RECORD keeps a tamper-evident record of each high-risk approval, D9-HIGHRISK-DELAY holds the highest-risk actions for a minimum delay, and D9-HIGHRISK-SOD requires segregation of duties on critical actions. Cryptographic approval tokens are graded at D3 L5, and per-task capability tokens a level higher at D3 L5+, where the production-maturity qualifier holds a capability with no platform-native implementation in D3's dated control landscape; the approval token binds the approval to its parameters, while D9-HIGHRISK-RECORD carries what was approved, by whom, and on what understanding. Read the criteria from those two deep dives rather than from this page.
-
-The D9 fatigue criteria — behavioral evidence that gates fire and are not circumvented — have a specific failure mode in agentic coding. Approval fatigue does not usually announce itself as circumvention; it presents as a defensible sequence of allowlisting, then autonomous modes, then suppressed prompts, at the end of which the deployment has changed shape and the gate no longer exists to be bypassed. Measuring approval volume and disposition over time, rather than gate existence, is what [[agentic-ai-security-cmm-d9-operations|D9]] grades. See [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] and [[agents-rule-of-two|Agents Rule of Two]], whose supervision fallback carries the same unstated assumption that the supervising human is present.
-
-## Relation to capability tokens
-
-[[tenuo-warrant|Tenuo Warrants]] and [[capability-based-authorization|capability-based authorization]] provide a complementary control: rather than pausing for approval at execution time, they restrict what the agent can request in the first place. HITL and capability tokens are not alternatives — they are complementary layers:
-
-- Capability tokens: pre-authorize the *scope* of possible actions
-- HITL: enforce human approval for high-impact actions *within* that authorized scope
-
-Together they implement defense in depth: an agent that cannot request unauthorized actions (capability tokens) and must obtain approval before taking high-impact authorized ones (HITL).
-
-> [!gap]
-> No vendor-neutral, open-source HITL primitive exists with documented integration patterns for common agent frameworks (LangGraph, Google ADK, Anthropic SDK). The Control plane in the RA lists HITL as "Concept — Developing." Stripe's implementation is closed-source. This is an open gap in the reference implementation landscape.
-
-[[red-teaming-capability-framework|The Red Teaming Capability Framework]] states human-in-the-loop review as a required capability at its upper tiers, alongside continuous automated red teaming and behavioral baseline monitoring — the gate is what keeps an automated red-team pipeline from acting on its own findings.
-
-## Notes
-
-[^aix-oversight]: [OWASP AI Exchange — OVERSIGHT](https://owaspai.org/go/oversight/), retrieved 2026-08-19. The oversight-requirement axis, the approval-token specification, the user-facing disclosure requirements, and the review-interface constraints.
-
-[^asr-competition]: *Security Challenges in AI Agent Deployment: Insights from a Large Scale Public Competition* (arXiv), cited on slide 3 of Andrew Bullen, "Breaking the Lethal Trifecta (Without Ruining Your Agents)", Unprompted Conference, March 4, 2026. The competition scored attack success against undefended frontier models, with no architectural control in the measured system; the per-model table is reproduced at [[breaking-the-lethal-trifecta-talk|Breaking the Lethal Trifecta]].
+[[agentic-ai-security-cmm-d3-control-least-agency|D3]] tests the action policy and before-execution approval gate, including binding at its highest level. [[agentic-ai-security-cmm-d9-operations|D9]] tests whether the human queue and review process work over time. [[agentic-ai-security-cmm-d2-identity|D2]] identifies the agent and human whose authority the decision uses. The [[agentic-ai-security-reference-architecture|Reference Architecture]] locates the enforcement point; a user interface alone does not establish its coverage.
 
 <!-- sources:auto -->
 ## Sources
 
-- [Human-in-the-Loop (HITL) for Agentic AI](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [Human-in-the-Loop (HITL) for Agentic AI](https://owaspai.org/go/oversight/)
+- [cloudsecurityalliance.org](https://cloudsecurityalliance.org/blog/2026/02/02/the-agentic-trust-framework-zero-trust-governance-for-ai-agents)
 <!-- /sources -->

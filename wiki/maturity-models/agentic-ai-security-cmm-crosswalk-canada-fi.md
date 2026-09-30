@@ -3,7 +3,7 @@ type: maturity-model-companion
 title: "CMM: Canadian Regulated-Finance Crosswalk"
 address: c-000133
 created: 2026-05-26
-updated: 2026-09-24
+updated: 2026-09-29
 tags:
   - maturity-models
   - crosswalk
@@ -18,111 +18,99 @@ scope_axis:
   - sec-of-ai
 related:
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[agentic-ai-security-cmm-measurement-protocol]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[agentic-ai-security-cmm-crosswalk-us-fi]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[osfi-b-13]]"
   - "[[osfi-e-23-2027]]"
-  - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
-  - "[[cmm-known-limitations]]"
-  - "[[securing-agentic-coding]]"
   - "[[google-cloud-agentic-security-profile]]"
 sources:
-  - "[[osfi-b-13]]"
-  - "[[osfi-e-23-2027]]"
-verified: 2026-09-24
+  - "https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cyber-risk-management"
+  - "https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/third-party-risk-management-guideline"
+  - "https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/guideline-e-23-model-risk-management-2027"
+  - "https://laws-lois.justice.gc.ca/eng/acts/P-8.6/FullText.html"
+  - "https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1"
+  - "https://www.canada.ca/en/financial-consumer-agency/services/banking/rights-new-protections.html"
+verified: 2026-09-29
 verified_against: []
 verified_findings: 0
-verified_note: "Diff-scoped read of the residency bullets and the R25 pointer against the Model Armor region and residency pages, the profile and the review; filter count and attack attribution fixed; none open."
+verified_note: "Read current official OSFI B-13, B-10 and E-23 guidance, branch amendment, PIPEDA, Québec Act, OPC, FCAC and Google locations; no archived source reached. Corrected B-10 branch date and FCAC citation."
 ---
 
-# Agentic AI Security CMM — Canadian Regulated-Finance Crosswalk
+# CMM: Canadian Regulated-Finance Crosswalk
 
-This crosswalk maps the jurisdiction-neutral [[agentic-ai-security-cmm-2026|CMM]] and [[agentic-ai-security-reference-architecture|RA]] to the expectations a **Canadian federally regulated financial institution (FRFI)** is examined against. It re-presents existing CMM evidence through one jurisdiction's lens and adds no requirement of its own.
+A security architect at a Canadian federally regulated financial institution (FRFI) can use this crosswalk to reuse evidence from one agentic deployment assessment in the institution's technology, third-party, model-risk and privacy files. The [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] is an internal evidence method. Its domain levels are not regulatory findings, certifications or substitutes for the institution's interpretation of an applicable requirement. The [[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]] defines the deployment boundary and evidence verdicts.
 
-**The CMM is jurisdiction-neutral; this is a Canadian lens.** The CMM and RA prescribe no jurisdiction's standards. Regulatory anchors are *options for re-presenting evidence*, applicable when a given regulator examines the institution. A Canadian FRFI is examined by **OSFI** (prudential, technology/cyber, model risk), **FCAC** (market conduct), and **OPC and provincial privacy regulators**, **not** by US bodies. Nothing in the CMM, and nothing here, imports FFIEC, GLBA, or NIST as a Canadian mandate. Those belong to the separate [[agentic-ai-security-cmm-crosswalk-us-fi|US crosswalk]] and bind only US-regulated entities. A multinational maps to each home regulator on its own terms.
+## Applicability
 
-**Two facts that frame the Canadian picture (2026).** First, **OSFI E-23 (Model Risk Management) is the load-bearing AI anchor**. It was finalized September 2025, takes effect **1 May 2027**, and explicitly covers AI/ML and generative-AI models and third-party/vendor models across the full lifecycle.[^e23] Second, **there is no in-force federal AI statute.** AIDA died with Bill C-27 at prorogation in January 2025 and is not returning in its old form, so it must not be cited as a mandate.[^aida] The Canadian regime governs the *frame* (governance, model risk, privacy, consumer protection) and is silent on agentic-AI-specific technical controls.
+Select the obligations before mapping evidence. The institution's charter, business activity, supplier arrangement, personal information and decision workflow determine which anchors below matter.
 
-## The Canadian regulatory landscape (2026)
+- **OSFI supervision.** Guidelines B-13 and B-10 address technology and third-party risk at FRFIs, including branches subject to the qualifications in each guideline. E-23 applies from 1 May 2027. It defines models broadly, including AI/ML, but calls for full model inventory and lifecycle governance for models the institution identifies as carrying non-negligible inherent model risk.[^b13][^b10][^e23]
+- **Federal privacy.** The Personal Information Protection and Electronic Documents Act (PIPEDA) section 4 covers personal information used in commercial activity and employee information connected to a federal work, undertaking or business. Federally regulated businesses remain subject to PIPEDA in provinces with substantially similar private-sector laws.[^pipeda][^opc-scope]
+- **Québec privacy.** The Québec private-sector Act section 1 concerns personal information handled in carrying on an enterprise. Section 12.1 adds duties when the enterprise uses personal information to render a decision **based exclusively on automated processing**: notice by the time the decision is communicated, specified information on request, and an opportunity to present observations to staff able to review the decision. A recommendation followed by a substantive human decision needs a different trigger analysis. Customer residence alone does not decide the Act's territorial reach or its application to a federally regulated institution; the institution records counsel's analysis of the actual activity and workflow.[^qc]
+- **Market conduct.** The Financial Consumer Protection Framework applies to banks, authorized foreign banks and federal credit unions. Other FRFIs must select their own applicable consumer provisions. Where the framework applies, customer communications and complaint handling need evidence distinct from the CMM score.[^fcac]
 
-| Instrument | Regulator | Status | What it expects |
-|---|---|---|---|
-| **[[osfi-b-13\|Guideline B-13]]** — Technology & Cyber Risk Management | OSFI | in force Jan 1 2024[^b13] | Board/senior accountability for tech & cyber risk; tech risk framework; asset/config management; secure SDLC; operational resilience and recovery; cyber defense; third-party/cloud technology risk |
-| **Guideline B-10** — Third-Party Risk Management | OSFI | effective May 1 2024[^b10] | Governance of third-party arrangements including cloud: due diligence, concentration risk, audit and data rights, exit planning. The instrument a cloud or AI-vendor relationship is examined against |
-| **[[osfi-e-23-2027\|Guideline E-23]]** — Model Risk Management | OSFI | final Sep 2025; **effective 1 May 2027**[^e23] | Enterprise model-risk management for **all models including AI/ML and generative AI, internal or third-party**; risk-proportional lifecycle (design → independent review → deployment → monitoring → decommission); explainability and alternative controls for black-box methods |
-| **Integrity and Security Guideline** | OSFI | in force Jan 31 2025[^intsec] | Protection against foreign interference, undue influence, and malicious activity; personnel background-check expectations; incident reporting to OSFI and law enforcement |
-| **FIFAI / EDGE / AGILE; OSFI–FCAC AI Risk Report** | OSFI + FCAC | reports / principles (non-binding)[^fifai] | Responsible-AI principles (Explainability, Data, Governance, Ethics); catalogue of AI risks at FRFIs incl. generative AI, third-party concentration, and AI-enabled fraud |
-| **PIPEDA** + OPC generative-AI principles | OPC | in force; OPC guidance[^pipeda] | Meaningful consent, accountability, transparency, limiting collection/use, safeguards over personal data used in AI |
-| **Law 25** (Quebec) | CAI (Quebec) | ADM obligations in force since Sep 22 2023[^law25] | For decisions based *exclusively* on automated processing: inform the individual, disclose the personal information and principal factors used, and provide a right to human review |
-| **Financial Consumer Protection Framework** | FCAC | in force[^fcac] | Fair treatment of consumers; prohibition of unfair/deceptive/abusive practices; complaint handling; appropriateness — the hook for consumer-facing AI |
-| **CPCSC** (ITSP.10.171) | Cyber Centre / PSPC | phasing into defence procurement from 2026[^cpcsc] | NIST SP 800-171-based organizational cyber controls — **a defence-procurement certification, not an FRFI requirement** (relevant only if the entity is also a DND supplier) |
+## Primary regulatory anchors
 
-## Domain crosswalk, CMM domain to Canadian anchor
-
-| CMM Domain | Primary Canadian anchor(s) | Note |
+| Instrument | Applicable source and date | Evidence decision |
 |---|---|---|
-| **D1 Governance** | E-23 (model-risk governance, board accountability); B-13 (tech-risk governance); FIFAI EDGE-Governance; FCAC (market-conduct accountability) | E-23 + B-13 are the load-bearing governance anchors |
-| **D2 Identity & Authorization** | Integrity & Security Guideline (personnel vetting — **human-level only**) | **No per-agent / non-human identity anchor exists** — the closest hook is human background checks |
-| **D3 Control & Least-Agency** | (no clean anchor) | E-23 gestures at "autonomous decision-making" as a risk but sets no agent-action-scoping control |
-| **D4 Runtime & Guardrails** | B-13 (cyber defense — infrastructure-level) | No regulator names [[prompt-injection\|prompt injection]], jailbreak, or runtime LLM guardrails |
-| **D5 Egress & Network** | B-13 (network/cyber defense, generic) | Nothing addresses agent egress, tool-call traffic, or MCP |
-| **D6 Data, Memory & RAG** | PIPEDA + OPC generative-AI principles; Quebec Law 25 (ADM disclosure); E-23 (data standards at design) | Privacy law governs consent and ADM disclosure, not RAG oversharing or memory poisoning |
-| **D7 Observability & Detection** | E-23 (ongoing monitoring, drift detection, explainability); B-13 (incident detection) | E-23's monitoring + explainability expectations map cleanly here |
-| **D8 Supply Chain & AI-BOM** | E-23 (third-party/vendor model governance); **B-10 (third-party arrangements, cloud concentration, audit and exit rights)**; B-13 (third-party technology risk); CPCSC (defence only) | E-23's third-party-model governance is the closest AI-BOM-adjacent hook, no AI-BOM mandate exists. B-10 is the vendor instrument, where single-vendor AI control becomes a concentration finding |
-| **D9 Operations & Human Factors** | E-23 (change management, decommission, human oversight); FCAC (complaint handling, human recourse); Law 25 (right to human review) | The human-review and decommission expectations land here |
+| OSFI B-13, Technology and Cyber Risk Management | Guideline, effective 1 January 2024[^b13] | Govern assets, secure development and change, identity, defence, logging and response under the institution's risk-based framework. |
+| OSFI B-10, Third-Party Risk Management | Guideline, effective 1 May 2024; branches to adhere by 31 March 2025[^b10] | Assess each supplier arrangement, data location and subcontracting risk; retain the institution's accountability for outsourced activity. |
+| OSFI E-23, Model Risk Management | Final guideline, effective 1 May 2027[^e23] | Identify and risk-rate models, then apply inventory, independent review, deployment and monitoring requirements in proportion to non-negligible model risk. |
+| PIPEDA | Act, section 4 and Schedule 1[^pipeda] | Establish the purposes, permitted use and safeguards for personal information on the assessed data paths. |
+| Québec private-sector Act | Sections 1 and 12.1, with section 12.1 in force since 22 September 2023[^qc] | Decide whether the enterprise and exclusively automated decision trigger are in scope; preserve notice and review evidence if they are. |
+| FCAC Financial Consumer Protection Framework | In force since 30 June 2022 for the named banking entities[^fcac] | Map product communications and complaints to the institution's applicable market-conduct duties. |
 
-## Canadian regulatory omissions the CMM fills
+B-13 and B-10 are supervisory guidelines, not agent-specific control catalogues. B-13 section 3.2.7 explicitly covers secure authentication, management and monitoring of system and service accounts; it does not prescribe a separate identity for each AI agent. B-10 section 2.2.2.3 calls for review of out-of-Canada arrangements and section 2.3.2 addresses data protection and location. It does not, by itself, impose a Canada-only processing rule.[^b13][^b10]
 
-> [!gap] No Canadian FI regulator prescribes agentic-AI-specific technical controls
-> The regime governs the frame (governance, model risk, privacy, consumer protection), not the agent internals. As of 2026 it is silent on **per-agent / non-human identity (D2)**, **least-agency and tool-permission scoping (D3)**, **runtime guardrails and prompt-injection defense (D4)**, **agent egress and MCP traffic control (D5)**, **RAG oversharing, context-window leakage, and memory poisoning (D6 specifics)**, and **AI-BOM / model-and-tool provenance (D8)**. E-23 is the nearest hook for third-party-model governance, but it addresses model risk, not an agent control plane. For these gaps the CMM and RA are the de-facto control layer; the regulators set the surrounding governance, model-risk, privacy, and consumer obligations.
+## Nine-domain evidence map
 
-## Practical guidance for a Canadian FRFI
+Each row identifies evidence that may support an external review. The cited CMM criterion remains governed by its deep dive; the external source does not adopt its pass threshold.
 
-- **Treat E-23 as the primary framework, and start now.** It takes effect 1 May 2027 and covers AI/ML, generative AI, and third-party models. Its lifecycle runs design, independent review, deployment, monitoring and decommission, and maps onto CMM D1/D6/D7/D9 and D8. Building the CMM evidence now produces the E-23 documentation later.
-- **Map B-13 to the technical planes.** B-13's tech-risk, resilience, and cyber-defense expectations re-present cleanly as CMM D1/D4/D5/D7/D8/D9 evidence.
-- **If any member is a Quebec resident, Law 25's ADM disclosure applies.** A member-facing bot that makes or materially drives a decision based exclusively on automated processing must inform the member and offer human review. This is a D6/D1/D9 obligation regardless of where the FRFI is headquartered.
-- **Consumer-facing AI is FCAC territory.** Fair treatment, non-deceptive behaviour, and accessible complaint handling are market-conduct expectations (D1/D9).
-- **Do not adopt US frameworks as Canadian requirements.** FFIEC/GLBA/NIST are not Canadian mandates; cite them only if the entity is *also* US-regulated. CPCSC applies only to DND suppliers, not to FRFIs as such.
-- **AIDA is not law.** Plan against OSFI, OPC, and provincial expectations, not the lapsed bill.
-- **Data residency on Google's stack is a B-10 vendor fact, and it resolves differently for each deployment shape.** B-10 governs third-party arrangements and expects the institution to know where a provider processes its data. It names no jurisdiction, so a processing location outside Canada is a fact the third-party file records and justifies. [[#Google Cloud data residency]] below states the position for each shape.
+| CMM domain | External hook | Evidence to reuse and boundary of the match |
+|---|---|---|
+| [[agentic-ai-security-cmm-d1-governance\|CMM D1: Governance and Accountability]] | B-13 domain 1[^b13] | Use D1-REGISTER and D1-GATE records to locate ownership and approvals. |
+| [[agentic-ai-security-cmm-d1-governance\|CMM D1: Governance and Accountability]] | B-10 principles 1–2[^b10] | Map supplier decisions into the institution's third-party risk framework. |
+| [[agentic-ai-security-cmm-d1-governance\|CMM D1: Governance and Accountability]] | E-23 principles 1.1–1.2[^e23] | Map model decisions into the institution's model risk framework. |
+| [[agentic-ai-security-cmm-d2-identity\|CMM D2: Identity and Authorization]] | B-13 section 3.2.7[^b13] | Use D2-IDENTITY and D2-TRACE to test agent and human attribution. B-13 names system and service accounts, but does not itself require the CMM's per-agent identity design. |
+| [[agentic-ai-security-cmm-d3-control-least-agency\|CMM D3: Control and Least-Agency]] | B-13 sections 3.2.1 and 3.2.7; E-23 principle 2.3 for model-use constraints[^b13][^e23] | Use D3-ALLOW and D3-MEDIATE evidence for the deployed action path. The cited clauses do not define a tool-call approval protocol. |
+| [[agentic-ai-security-cmm-d4-runtime-guardrails\|CMM D4: Runtime and Guardrails]] | B-13 sections 3.1.6, 3.2.1 and 3.2.9; E-23 principle 3.4 where model risk is in scope[^b13][^e23] | Use D4-INJECT-INDIRECT and D4-SANDBOX tests as deployment-specific cyber evidence. A model review alone does not prove a runtime refusal. |
+| [[agentic-ai-security-cmm-d5-egress-network\|CMM D5: Egress and Network]] | B-13 principle 15; B-10 principle 7 for supplier-held data paths[^b13][^b10] | Use D5-ALLOW and D5-REACH tests to show reachable destinations. Supplier contracts and network tests address different parts of the route. |
+| [[agentic-ai-security-cmm-d6-data-rag\|CMM D6: Data, Memory and RAG]] | PIPEDA Schedule 1 and B-13 section 3.2.5[^pipeda][^b13] | Use D6-ENTITLE and D6-STORE-ACCESS evidence for personal-data reach. E-23 model-data records and Québec automated-decision records require separate applicability decisions.[^e23][^qc] |
+| [[agentic-ai-security-cmm-d7-observability\|CMM D7: Observability and Detection]] | B-13 principle 16; E-23 principle 3.6 where applicable[^b13][^e23] | Use D7-LOG and D7-SPANS to reconstruct actions. Model-performance monitoring and security-event detection need distinct tests. |
+| [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Engineering and Supply Assurance]] | B-13 principles 7–8 and section 3.2.9[^b13] | Use D8-DESIGN, D8-TEST and D8-RELEASE records for the released system. |
+| [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Engineering and Supply Assurance]] | B-10 principles 3–4[^b10] | Use the supplier review record, with its risk basis. |
+| [[agentic-ai-security-cmm-d8-supply-chain\|CMM D8: Engineering and Supply Assurance]] | E-23 principles 3.4–3.5 where applicable[^e23] | Use the model validation record, with its risk basis. |
+| [[agentic-ai-security-cmm-d9-operations\|CMM D9: Operations and Human Factors]] | B-13 principle 17 and B-10 principles 10–11[^b13][^b10] | Use D9-IR and D9-QUEUE-RUNBOOK evidence for response and human work. E-23 monitoring, Québec decision review and FCAC complaints retain their own tests.[^e23][^qc][^fcac] |
 
-## Google Cloud data residency
+The D8 hooks do not mandate an AI bill of materials.[^b13][^b10][^e23]
 
-Google Cloud operates two Canadian regions, Montréal `northamerica-northeast1` and Toronto `northamerica-northeast2`,[^gcpregions] and the residency position differs by deployment shape:
+## Assessment use
 
-- **The whole-tenant assistant cannot meet a Canadian requirement.** Workspace data regions cover Gemini prompts and responses both at rest and during processing, and the locations they offer are the United States or Europe.[^wsdatareg]
-- **A Gemini deployment on Google Cloud can, across both regions and on part of the model line.** Seven of the twenty-seven Google-model rows on the Agent Platform residency table carry a Montréal commitment, and a Canadian model call resolves to Montréal.[^gcpmodels] Model Armor screens in Toronto and not in Montréal, so a Canadian-resident deployment runs the agent runtime and Agent Gateway in Toronto beside Model Armor and calls a model served from Montréal.[^maregion][^agentloc] A Toronto template with data-residency compliance enabled drops the malicious-URL filter and four other features, and floor settings restore all five and stop enforcing residency for data in use and in transit; at-rest residency in Toronto holds under both.[^maregion]
-- **The coding harness has no Canadian option to configure.** Partner models sit on a separate residency table with no Canada column, so no Anthropic model carries a Canadian ML-processing commitment, and `us-east5` is Claude Code's documented default region, as [[securing-agentic-coding|Securing Agentic Coding]] records.[^gcpmodels][^ccvertex]
+The architect records the applicability decision alongside the CMM report:
 
-[[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] carries the region-by-region detail, the guardrail trade over the exfiltration route that recorded attacks on in-suite assistants used, and the Assured Workloads coverage.
+- Name the institution, deployment shape, business purpose, decision owner, data flows, suppliers and jurisdictions.
+- Decide which external instruments and clauses apply. For E-23, record model identification, inherent risk rating and the resulting governance intensity. For Québec section 12.1, record whether personal information renders an exclusively automated decision and counsel's jurisdiction analysis.
+- Index each reused artifact to the external clause and the CMM criterion. Mark missing supplier evidence, untested routes and obligations with no CMM match. An unanswerable CMM criterion remains unanswerable even if a supplier contract promises a control.
+- Report domain current and target levels, confidence, gaps and a risk-and-effort case under the Handbook. Report regulatory conclusions in the institution's own compliance process; a domain level neither proves nor disproves compliance.
 
-## Open questions and watch items
+For a cloud deployment, B-10 requires an arrangement-level account of supplier operations, subcontractors, access, data location and exit. Check the actual model, runtime, guardrail and memory routes before asserting a processing location. The dated [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] owns product details; Google's current agent-locations page marks Toronto Agent Platform Memory Bank unsupported even though runtime and gateway are listed there.[^google-locations]
 
-- E-23's examination expectations for *generative and agentic* AI specifically are not yet detailed in supervisory practice. The guideline names AI/ML, but the agent-control specifics remain CMM-filled.
-- FIFAI II's AGILE framework and any successor OSFI guidance may add agentic-AI expectations. Watch for an OSFI AI-specific guideline or letter.
-- The OPC's PIPEDA-reform proposals (right to explanation, algorithmic impact assessments) lapsed with C-27. A future privacy reform could reintroduce them.
-- Provincial privacy regimes beyond Quebec (for example, forthcoming Alberta and BC updates) may add ADM obligations.
-- B-13's in-force date is unconfirmed against the sources this crosswalk cites; see recommendation 25 of [[cmm-stress-test-canadian-fi-google-2026-09|CMM Stress Test: Canadian FI on Google Cloud]] and item 11 of [[cmm-known-limitations|CMM Known Limitations (current state)]].
-- B-10's effective date carries the same gap: the cited guideline page states a publication date and no effective or in-force date, so 2024-05-01 above is unconfirmed against the source and held as a watch item.
-- Two facts behind the residency position above stay unresolved at source. Google gates Workspace data-regions coverage *during processing* by Workspace edition and points at a comparison table this crosswalk has not read, so which editions carry the processing half of that coverage is unconfirmed.[^wsdatareg] Model Armor is in scope for the Canada Data Boundary and Canada Data Boundary and Support control packages and absent from Data Boundary for Canada Protected B, which leaves open whether a Protected B workload runs an agent with no guardrail plane or places that plane outside the boundary.[^awcanada] The residency position names B-10 as the instrument that examines this evidence and asserts no date for it, since B-10's own effective date stays unconfirmed against its source.
+## Open questions
+
+- **Québec application.** Sections 1 and 12.1 state the activity and decision triggers, but the sources reviewed here do not settle every territorial or federal-provincial overlap for an FRFI. Counsel must record the institution-specific conclusion and the role of any human intervention.
+- **Opaque supplier model.** E-23 asks the institution to identify and risk-rate models, including third-party models, while OSFI's final-guideline response offers no general exception for a vendor that withholds documentation. The institution must decide what evidence, constraints or documented exception can support its chosen use.[^e23-letter]
+- **Supplier location.** A Canada-only requirement must be traced to the institution's actual law, contract or policy. B-10 requires geographic risk assessment; a Canadian runtime region alone does not establish where every model, memory or security service processes data.[^b10][^google-locations]
 
 ## Notes
 
-[^b13]: [OSFI — Guideline B-13: Technology and Cyber Risk Management](https://www.osfi-bsif.gc.ca/en/risks/technology-cyber-risk-management), in force 2024-01-01. OSFI's [guidance-library entry](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cyber-risk-management) and this technology-and-cyber-risk page, both fetched 2026-09-15, state the publication date of 2022-07-31 and no in-force date, so the in-force date above is held as a watch item rather than a settled fact.
-[^b10]: [OSFI — Guideline B-10: Third-Party Risk Management](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/third-party-risk-management-guideline), effective 2024-05-01 per [[osfi|the OSFI page]] and [[canadian-bank-secure-sdlc-ai-assessor-scorecard|the scorecard's]] regulatory anchors. Fetched 2026-09-15: the guideline URL itself states only "Date: April 30, 2023" and no effective or in-force date, so the 2024-05-01 figure is held as a watch item rather than a settled fact, the same status as B-13's in-force date below.
-[^e23]: [OSFI — Guideline E-23: Model Risk Management (2027)](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/guideline-e-23-model-risk-management-2027), final Sep 2025, effective 2027-05-01. Defines "model" to include AI/ML; covers third-party models and the full lifecycle.
-[^intsec]: [OSFI — Integrity and Security Guideline](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/integrity-security-guideline), in force 2025-01-31. Foreign-interference/insider protection; personnel background checks.
-[^fifai]: [OSFI–FCAC Risk Report — AI Uses and Risks at FRFIs](https://www.osfi-bsif.gc.ca/en/about-osfi/reports-publications/osfi-fcac-risk-report-ai-uses-risks-federally-regulated-financial-institutions), 2024-09-24; and [FIFAI — A Canadian Perspective on Responsible AI (EDGE principles)](https://www.osfi-bsif.gc.ca/en/about-osfi/reports-publications/financial-industry-forum-artificial-intelligence-canadian-perspective-responsible-ai). Reports and principles, not binding guidance.
-[^pipeda]: [OPC — Principles for responsible, trustworthy and privacy-protective generative AI](https://www.priv.gc.ca/en/privacy-topics/technology/artificial-intelligence/gd_principles_ai/), Dec 2023. Applies existing PIPEDA obligations to generative AI.
-[^law25]: [Act respecting the protection of personal information in the private sector (Quebec, P-39.1)](https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1) — Law 25 automated-decision obligations in force since 2023-09-22 (inform, disclose principal factors, right to human review).
-[^fcac]: [FCAC — protecting financial consumers](https://www.canada.ca/en/financial-consumer-agency/corporate/about/protect.html). Financial Consumer Protection Framework; fair treatment, complaint handling.
-[^cpcsc]: [Canadian Program for Cyber Security Certification (CPCSC)](https://www.canada.ca/en/public-services-procurement/services/industrial-security/security-requirements-contracting/cyber-security-certification-defence-suppliers-canada.html). NIST SP 800-171-based; defence-procurement certification, not an FRFI requirement.
-[^aida]: AIDA (Part 3 of Bill C-27) died at prorogation in January 2025 and is not in force; the responsible minister confirmed in 2025 it will not return in its old form. No federal AI statute is currently in force in Canada.
-[^gcpregions]: [Locations for machine learning services](https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/general/locations), fetched 2026-09-16. Lists both Canadian regions under Canada: Montréal (`northamerica-northeast1`) and Toronto (`northamerica-northeast2`). Google locates three different things per region on three different pages, and those pages disagree about Toronto, so each residency claim on this page names the page that governs it: model serving on the deployments-and-endpoints page, platform features here, agent runtime and Agent Gateway on the agent-locations page.
-[^gcpmodels]: [Gemini Enterprise Agent Platform — Data residency](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency) and [Deployments and endpoints](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations), both fetched 2026-09-16. The residency page's per-model ML-processing table carries one Canadian column, `Canada (northamerica-northeast1)`, marked Supported on seven of its twenty-seven Google-model rows. Partner models sit on a separate table whose columns are US multi-region, EU multi-region, Belgium, Netherlands, Singapore, Taiwan and Global, so the page states no Canadian commitment for any Anthropic model. The deployments-and-endpoints page lists Montréal under Americas and does not mention Toronto or `northamerica-northeast2`; that is an absence of a published model-serving location on that page, not a statement that Toronto is excluded from other Agent Platform services. The same page states that "Endpoints don't guarantee data residency or in-region ML processing" and that a global endpoint gives no control over which region processes a request.
-[^maregion]: [Model Armor — Data residency and endpoints](https://docs.cloud.google.com/model-armor/data-residency) and [Feature availability for templates by region](https://docs.cloud.google.com/model-armor/feature-availability-by-region), both fetched 2026-09-16. Canada's residency row is `northamerica-northeast2 | Canada | Yes | Yes | Yes | Limited support`, and `northamerica-northeast1` appears on neither page. With data-residency compliance enabled, the Toronto row's supported-filters cell names Responsible AI, Sensitive Data Protection, and prompt injection and jailbreak, omits the malicious-URL filter the `us` multi-region row carries, and reads No against multi-language detection, CSAM support, image support and antivirus scanning, "because they rely on services that might process data outside the jurisdiction of your chosen Model Armor region". Under floor settings every feature is available and Canada's row reads `Yes | No | No` for data at rest, in use and in transit.
-[^agentloc]: [Supported locations for agents in Agent Platform](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/agent-locations), fetched 2026-09-16. Both Canadian rows read "v1 is supported for GA features. v1beta1 is supported for Preview features." The page marks Agent Gateway unsupported in asia-east2, asia-northeast3 and asia-southeast2 and in no other region, so Agent Gateway is available in both Canadian regions.
-[^wsdatareg]: [Data covered by data regions](https://support.google.com/a/answer/9223653), fetched 2026-09-16. "With data regions, you can choose to store your covered data in a specific geographic location (the United States or Europe)." The covered-data table marks Gemini App and Google Workspace with Gemini, both for prompts and responses, covered at rest and during processing, and footnotes the processing column "Data covered during processing varies by Google Workspace edition." The string "Canada" occurs zero times in the page's raw HTML, so the policy states no Canadian location.
-[^ccvertex]: [Claude Code on Google Cloud's Agent Platform](https://code.claude.com/docs/en/google-vertex-ai), fetched 2026-09-16. `CLOUD_ML_REGION` falls back to `us-east5` when unset, and the setup instructions export `CLOUD_ML_REGION=global`. The page names no Canadian region and states no retention, logging or training position.
-[^awcanada]: [Supported products by control package](https://docs.cloud.google.com/assured-workloads/docs/supported-products), fetched 2026-09-16. Model Armor is listed in scope for the Canada Data Boundary and Canada Data Boundary and Support packages and is absent from the product set of Data Boundary for Canada Protected B.
+[^b13]: [OSFI, B-13 guideline](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/technology-cyber-risk-management), sections 2.4–2.5 and 3.1–3.4; [OSFI's final-guideline letter](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/osfi-releases-final-guideline-b-13-technology-cyber-risk-management-letter-2022) states the 1 January 2024 effective date. Read 2026-09-29.
+[^b10]: [OSFI, B-10 guideline](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/third-party-risk-management-guideline), sections 1–3, especially 2.2.2.3 and 2.3.2; [OSFI's consultation response](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/osfi-response-draft-guideline-b-10-consultation-feedback-third-party-risk-management) states the 1 May 2024 effective date; its [foreign-branch amendment](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/consequential-amendments-guidelines-b-10-b-13-related-foreign-branches) sets the later branch date. Read 2026-09-29.
+[^e23]: [OSFI, final E-23 guideline](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/guideline-e-23-model-risk-management-2027), overview, principles 2.1–2.3 and 3.1–3.6, published 2025-09-11 and effective 2027-05-01. The model inventory covers non-negligible inherent risk. Read 2026-09-29.
+[^e23-letter]: [OSFI, final E-23 letter and consultation response](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/guideline-e-23-model-risk-management-2027-letter), "Model definition and scope" and "Third-party vendors." Read 2026-09-29.
+[^pipeda]: [Personal Information Protection and Electronic Documents Act](https://laws-lois.justice.gc.ca/eng/acts/P-8.6/FullText.html), section 4 and Schedule 1, especially principles 4.1, 4.5 and 4.7. Official consolidation current to 2026-09-21.
+[^opc-scope]: [Office of the Privacy Commissioner, PIPEDA requirements in brief](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/pipeda_brief/), "Who is subject to PIPEDA?" Read 2026-09-29.
+[^qc]: [Québec, Act respecting the protection of personal information in the private sector](https://www.legisquebec.gouv.qc.ca/en/document/cs/P-39.1), sections 1 and 12.1; [section 12.1 version history](https://www.legisquebec.gouv.qc.ca/fr/version/lc/P-39.1?code=se%3A12_1&history=20250414&langCont=en) gives 2023-09-22 as its effective date. Read 2026-09-29.
+[^fcac]: [FCAC, Your banking rights and new protections](https://www.canada.ca/en/financial-consumer-agency/services/banking/rights-new-protections.html), framework scope and 2022-06-30 commencement; [FCAC, complaint-handling guideline](https://www.canada.ca/en/financial-consumer-agency/services/industry/commissioner-guidance/complaint-handling-procedures-banks/versions/2022-06-30-complaint-handling-procedures-banks.html), application to banks, authorized foreign banks and federal credit unions. Read 2026-09-29.
+[^google-locations]: [Google Cloud, Supported locations for agents in Agent Platform](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/agent-locations), read 2026-09-29. The Toronto row has a superscript whose note states that Memory Bank is not supported in that region; the table lists Agent Runtime and Agent Gateway among the services available in its region rows.

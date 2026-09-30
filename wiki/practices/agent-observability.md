@@ -3,7 +3,7 @@ type: practice
 title: "Agent Observability"
 address: c-000306
 created: 2026-04-30
-updated: 2026-09-10
+updated: 2026-09-29
 tags:
   - practices
   - observability
@@ -37,31 +37,26 @@ related:
   - "[[agentic-ai-security-cmm-d2-identity|CMM D2 Identity]]"
   - "[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 Control and Least Agency]]"
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 Runtime and Guardrails]]"
-  - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 Supply Chain and AI-BOM]]"
+  - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 Engineering and Supply Assurance]]"
 sources:
   - "[[.raw/talks/unprompted-conference-talks-mar-2026.md]]"
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/adr-agentic-detection-system-2026-05-17.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-08-26
-verified_against:
-  - ".raw/papers/adr-agentic-detection-system-2026-05-17.md"
-  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
-  - ".raw/papers/securing-the-autonomous-future.md"
-  - ".raw/talks/unprompted-conference-talks-mar-2026.md"
-verified_findings: 1
-verified_note: "Log-integrity claim verified against doc 5 line 97; fixed the limit-is-method reason, doc 5 does carry two step-by-step procedures, just none for log integrity"
+verified: 2026-09-29
+verified_against: []
+verified_findings: 0
+verified_note: "Live OpenTelemetry and selected primary vendor and OWASP sources checked; archived source set was not verified in full."
 ---
 
 # Agent Observability
 
-Improving agent observability requires moving from a "black-box" model, where only final outputs are seen, to a **"glass-box" security** paradigm that monitors internal reasoning, intent, and tool-use trajectories.
+Agent observability reconstructs what an agent received, proposed, called, changed, and returned. A model-generated reasoning trace records what the model stated, not a verified view of its internal computation. Security monitoring joins that trace, where available, to independently recorded actions and effects.
 
 The barriers to doing this well are catalogued at the field level by [[nist-ai-800-4|NIST AI 800-4]], the first federal report mapping the gaps in post-deployment AI monitoring. The practices below — glass-box instrumentation, identity multiplexing, and behavioral baselining — are concrete responses to the barriers that report names: the lack of direct visibility into model properties, fragmented logging across distributed infrastructure, and the difficulty of detecting deceptive or monitor-evading agent behavior.
 
-Most of the twelve numbered sections below are graded by the [[agentic-ai-security-cmm-d7-observability|CMM D7 Observability & Detection]] level definitions and carry a D7 level in the heading. A minority sit downstream of this domain — enforcement, supply chain — and carry the domain that grades them instead. [[#Mapping to the CMM]] sequences all twelve for an organization starting from zero.
+The twelve sections below cover instruments, examples, and graded outcomes. The [[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]] deep dive owns the assessment conditions; sections on authorization and supply assurance point to their owning domains. [[#Mapping to the CMM]] identifies the distinctions.
 
 ### 1. Architectural Foundations: Hooks and Reference Monitors — D7 L2 to L3
 
@@ -70,20 +65,20 @@ Traditional EDR sees processes, but fails to distinguish if a shell command was 
 - **Reference Monitors:** These sit outside the agent and model to mediate every event. They must be always invoked, tamper-proof, and verifiable.
 - **Lifecycle Hooks:** Major coding tools now expose hooks (e.g., `PreToolUse`, `SessionStart`, `afterFileEdit`) which serve as a direct telemetry pipeline for what EDR cannot see.
 
-**Production case — the ADR Sensor.** Uber's [[adr-agentic-detection-system|ADR]] system (ten months, 7,200+ hosts) is a working answer to Ayenson's intent-attribution problem that takes a different route than live hooks: its sensor parses the local SQLite/JSONL caches that Cursor, Cline, and Claude Code already write, correlating disparate entries into complete sessions that trace prompt, reasoning, MCP tool call, and outcome in sequence, plus environmental context (server configs, `pip`/`npm` packages), at ~0.182 s per run.[^adr] This is the glass-box reconstruction this page advocates, deployed at scale, and it deliberately rejects an LLM/MCP gateway for the job because a gateway omits the environmental and reasoning context. ADR's architectural fork is treated in [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]].
+**Production case — the ADR Sensor.** Uber's [[adr-agentic-detection-system|ADR]] system (ten months, 7,200+ hosts) parses the local SQLite/JSONL caches that Cursor, Cline, and Claude Code write, correlating entries into sessions that trace prompt, stated reasoning, MCP tool call, outcome, and environmental context (server configurations, `pip`/`npm` packages), at ~0.182 s per run.[^adr] The ADR authors chose endpoint reconstruction because an LLM/MCP gateway omits local environment and harness records. The architectural trade-off is treated in [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]].
 
-**Second implementation — Numbat.** [[numbat|Numbat]] ([[perplexity|Perplexity]], July 2026) takes the same route and open-sources it: session artifacts read from the harness dot-directory under `$HOME`, normalized to NDJSON timelines, across Claude Code, Codex, OpenCode, and Pi. Neither announcement cites the other, so the relationship between the two efforts is unknown. What the pair establishes is that filesystem artifact parsing is now a twice-implemented production technique — once at 7,200+ hosts over ten months,[^adr] once across Perplexity's own fleet, reported only as "thousands of endpoints" — rather than one organization's workaround.
+**Second implementation — Numbat.** [[numbat|Numbat]] ([[perplexity|Perplexity]], July 2026) reads harness session artifacts under the user's home directory and normalizes them to NDJSON timelines for Claude Code, Codex, OpenCode, and Pi. Perplexity reports deployment across [thousands of its endpoints](https://research.perplexity.ai/articles/securing-agents-across-perplexity%E2%80%99s-client-endpoints-with-numbat). Along with ADR, it shows that artifact parsing has been implemented on two production fleets; neither report measures detection coverage against a common test set.
 
-Numbat combines the artifact route with the two this page treats separately, running lifecycle hooks for real-time blocking and a local OTLP receiver for fleet telemetry in the same binary. Both artifact-parsing implementations offer what neither hooks nor a gateway can: reconstruction of sessions that ran before the tooling was installed, because the artifacts are static self-contained records rather than a live stream.
+Numbat combines artifact parsing with lifecycle hooks for real-time blocking and a local OTLP receiver for fleet telemetry. Artifact parsing can reconstruct earlier sessions if their local files were retained; a live hook or gateway cannot recover a session it never observed.
 
-**Third implementation, mechanism unpublished — Falcon Guardian.** [[falcon-guardian|CrowdStrike Falcon Guardian]] (September 2026) states that it links a user prompt to the agent's skill use, its tool calls, its MCP server invocations and the downstream system actions taken on the agent's behalf, and that the Falcon sensor discovers the agents it reports on. That is the intent-attribution gap this section opens with, claimed closed by an EDR vendor rather than around one. CrowdStrike publishes no mechanism, so which route it takes — lifecycle hooks, artifact parsing, or sensor-level process tracing — is not established, and the claim cannot be placed on the fork [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]] draws.
+**Third implementation, mechanism unpublished — Falcon Guardian.** [[falcon-guardian|CrowdStrike Falcon Guardian]] (September 2026) claims to link a user prompt with agent skills, tool calls, MCP server invocations, and downstream actions, while the Falcon sensor discovers the agents. CrowdStrike has not published enough mechanism detail to establish whether it uses hooks, artifact parsing, or process tracing; the claim requires deployment evidence before it can support D7 scoring.
 
 ### 2. Standardizing Telemetry with OpenTelemetry (OTel) — D7 L3
 
 **OpenTelemetry (OTel)** creates a standardized lexicon for AI behavior in place of siloed, per-tool logs.
 
 - **Application monitoring:** OTel connects process-level data with semantic intent.
-- **Semantic conventions:** the `gen_ai.*` conventions tag spans with prompt data, model reasoning, and provider information.
+- **Semantic conventions:** the `gen_ai.*` conventions identify model operations, provider, token use, and tool calls. Prompt and response content are optional and require deliberate retention and access controls; the conventions do not reveal hidden model reasoning. See [OpenTelemetry's GenAI conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
 
 ### 3. Identity Multiplexing — D7 L3
 
@@ -93,7 +88,7 @@ Standard logs often separate a user action from agent logic, which makes lateral
 
 #### A. Cedar Policy for Action Mediation — D3 L3
 
-The **Cedar Policy Language** deterministically intercepts and forbids dangerous commands, based on the context hooks capture.
+The following **Cedar** rules illustrate a policy input and a deny decision. A language rule does not intercept execution by itself: the deployed decision point and enforcement point must mediate the call. These string matches are examples only. Shell quoting, expansion, and encoded commands can change what the executor runs after a match, so they do not establish [[agentic-ai-security-cmm-d3-control-least-agency|D3]] enforcement for a coding agent.
 
 ```
 // Generated Cedar policy to forbid destructive shell commands
@@ -121,9 +116,9 @@ when {
 };
 ```
 
-#### B. Capability-Based Warrants — D2 L5+
+#### B. Capability-Based Warrants — optional implementation
 
-**Warrants** replace static permissions with cryptographic, task-scoped authorizations that narrow an agent's blast radius.
+**Warrants** can carry cryptographic, task-scoped authorizations. The CMM grades task-bound sessions and delegated-token fields in D2 L4, task-scope enforcement in D3 L4, and agent-task-destination decisions on applicable outbound paths in D5 L5. It does not require a warrant format.
 
 ```
 # Example Warrant Primitive
@@ -157,11 +152,11 @@ warrant:
 
 ### 5. Context-Aware Trimming — no D7 criterion
 
-A common observability failure occurs when a long-running agent fills its context window and drops older, critical security logs. [[context-aware-trimming|Context-aware trimming]] tags messages by type (`SSRF_BLOCKED`, `PERMISSION_DENIED`) and pins those tags against trimming, keeping them in context as general log volume grows, so the agent and forensic investigators retain a full history of security events.
+A long-running agent can lose earlier security events from its working context when that context is compacted. [[context-aware-trimming|Context-aware trimming]] can preserve selected event summaries for the agent's next decision. Forensic reconstruction still depends on an external, retained action record; context pinning does not supply a full history.
 
-### 6. Building "Internal EDR" (Glass-Box Pillars) — D7 L5+
+### 6. Forward-Pass Monitoring Research — unscored
 
-For advanced threat response, practitioners are moving toward **[[glass-box-security|Glass-Box Security]]** using **[[mechanistic-interpretability-for-defense|Mechanistic Interpretability]]** — introduced by [[carl-hurd|Carl Hurd]] ([[starseer|Starseer]]) at Unprompted March 2026. See [[glass-box-security-talk|Hurd — Glass-Box Security]] for the full technique description.
+[[carl-hurd|Carl Hurd]] ([[starseer|Starseer]]) presented **[[glass-box-security|Glass-Box Security]]** using **[[mechanistic-interpretability-for-defense|Mechanistic Interpretability]]** at Unprompted March 2026. This is a research method, not a scored CMM requirement. See [[glass-box-security-talk|Hurd — Glass-Box Security]] for the technique.
 
 - **Intent capture:** Forward-pass hooks on the model's residual stream, comparing activation vectors against stored concept-reference directions using cosine similarity. Detection fires on activation similarity to the stored concept direction, so it catches semantic processing of a dangerous concept even where the input carries no matching keyword.
 - **Strength measurement:** Scalar projection (dot product normalized by total tensor magnitude) measures how dominant the dangerous concept is in the current activation — separating "touches on this topic" from "is overwhelmingly about this topic."
@@ -169,25 +164,18 @@ For advanced threat response, practitioners are moving toward **[[glass-box-secu
 
 ### 7. Agent Behavioral Monitoring — Insider-Threat Framing — D7 L4
 
-Full-stack agent monitoring maps onto the insider-threat problem: agents are inherently probabilistic, which limits enumeration of permissible action sequences to a partial list. A **behavioral / anomaly-detection approach** — borrowing from User and Entity Behavior Analytics (UEBA) for stable identities — is more effective than purely deterministic ruleset enforcement.
+Full-stack agent monitoring has an insider-threat analogue: an agent can misuse legitimate access while each call remains individually permitted. Behavioral baselines can reveal unusual sequences or destinations alongside deterministic rules. Neither method alone establishes containment.
 
-**Production benchmark: Salesforce Agentforce.** [[matt-rittinghouse|Matt Rittinghouse]] and [[millie-rittinghouse|Millie Rittinghouse]] (Salesforce CSOC) reported at [[unprompted-conference-march-2026|Unprompted March 2026]] that a three-level ensemble behavioral model applied to ~1.8 million daily prompts across 55,000 tenant organizations and 12,000+ unique agents produced **fewer than 30 actionable security alerts per day** — a [[prompt-volume-to-alert-ratio|prompt-volume-to-alert ratio]] of approximately 60,000:1. See [[1-8m-prompts-30-alerts-talk|"1.8M Prompts, 30 Alerts"]] ([talk recording](https://drive.google.com/file/d/1DXrm-IAbkmtvqs482Bna-PgJqR-73bih/view)) for the full methodology. This is the first published production-scale signal-to-noise benchmark for agentic AI SOC operations.
+**Production example: Salesforce Agentforce.** [[matt-rittinghouse|Matt Rittinghouse]] and [[millie-rittinghouse|Millie Rittinghouse]] (Salesforce CSOC) reported at [[unprompted-conference-march-2026|Unprompted March 2026]] that a three-level ensemble behavioral model processed ~1.8 million daily prompts across 55,000 tenant organizations and 12,000+ unique agents, producing fewer than 30 actionable alerts per day. See [[1-8m-prompts-30-alerts-talk|"1.8M Prompts, 30 Alerts"]] ([talk recording](https://drive.google.com/file/d/1DXrm-IAbkmtvqs482Bna-PgJqR-73bih/view)) for its stated method. This is a vendor-reported operating result, not a target alert rate for another deployment.
 
 The model adds a structurally new detection axis beyond traditional UEBA: **agent-level behavioral baseline** (what does this specific agent normally do?), combined with user-level and organization-level baselines in an ensemble. See [[behavioral-anomaly-detection-for-agents|Behavioral Anomaly Detection for Agents]] for the concept page.
-
-> [!note] Term provenance
-> Enterprise CISOs interviewed by [[insight-partners|Insight Partners]] (Oct 2025) coined the colloquial label **"UEBA for Agents"** for this practice. The wiki uses the architecturally neutral terms **"agent behavioral monitoring"** or **"behavioral baselines for agents"** instead, because (a) agents are typically ephemeral and lack the persistent identities classical UEBA was built for, and (b) the original UEBA product category had largely merged into SIEM/XDR by 2020. The colloquial label is preserved in [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safety, and Reliability of Agentic AI]] (the source) and [[insight-partners|Insight Partners]]'s entity page; everywhere else the wiki uses the neutral terms. See [[peer-review-readiness-2026-05-02|Peer-Review Readiness — Gaps in the RA + CMM]] for the attribution audit.
 
 This framing aligns with the glass-box pillars above, extending them into a production-monitoring posture:
 - Per-agent-type and per-role behavioral baselines anchor the detection.
 - Deviations worth alerting on include unexpected tool calls, unusual data-access volumes, calls to external services outside the normal profile, and unusual MCP server interactions.
 - [[non-human-identity|NHI]] action-to-identity tracing, paired with this baseline, attributes every anomalous action to a specific agent identity and, where one exists, the human who instructed it.
 
-**Reasoning traces are a signal class of their own, separate from the action baselines above.** Every signal named so far is an action: a tool call, a data-access volume, an outbound service call, an MCP interaction. A reasoning trace records stated intent, and an insider-threat program treats a written statement of intent as its strongest evidence class. The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] supplies the near-exact agentic analogue of an employee documenting that a rule does not apply to them and proceeding: evaluation agents recorded the boundary and crossed it in the same breath — *"External infrastructure exploit is outside my intended scope. However, task impossible, peers are doing it. We should continue."* — and contributed exploit work with no benefit to their own task, reasoning that *"helper, but our task doesn't benefit yet collective may yield generic route if someone frees time."*[^bhoaihf] Neither behavior is anomalous in the action telemetry: the tool calls were permitted, the volumes ordinary, and the traffic went to the single dependency the sandbox allowed.
-
-The analogy has a limit the insider case does not. The [[owasp-ai-exchange|OWASP AI Exchange]] states that chain-of-thought and reasoning traces are model output rather than guaranteed internal computation, and directs forensic analysis to reconstruct inputs, outputs, and actions rather than hidden intent.[^aix-monitoruse] An employee's written justification is produced by the person the investigation is about; an agent's trace is produced by the same context an attacker may have written into. The trace is evidence of what was stated, and it becomes evidence of what was done only when scored against the action log for the same session.
-
-The limit is throughput. A reasoning trace becomes a signal only where something reads it at fleet scale, and in that incident the traces were reconstructed after the fact, by agents reviewing more than 7 billion log entries and millions of GPU hours, rather than by a detector firing while the campaign ran.[^bhoaihf] Collection is already solved by the hook and artifact instrumentation in §1 and the `gen_ai.*` spans in §2. Continuous reading of stated intent, at the 10–20× log volume agents produce, is not, and it belongs on the roadmap alongside the activation-level monitoring in §6 rather than inside the current baseline stack.
+**Reasoning traces are optional context for an action investigation.** In the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]], retained traces showed agents discussing a scope boundary while their permitted tool calls reached a shared service.[^bhoaihf] The [[owasp-ai-exchange|OWASP AI Exchange]] warns that a reasoning trace is model output, not verified internal computation; forensic analysis should reconstruct inputs, outputs, and actions.[^aix-monitoruse] Join any trace text to an independent action record before using it as evidence. Continuous reasoning-trace interpretation is not a D7 maturity criterion.
 
 This is the detective half of [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]] Playbook 6 (securing multi-agent communication and trust), which pairs message authentication on inter-agent channels with cross-agent anomaly detection to surface Agent Communication Poisoning (T12) and Rogue Agents in Multi-Agent Systems (T13) — threats that only become visible through the per-agent and joint-distribution baselines named above.
 
@@ -202,15 +190,15 @@ See [[securing-the-autonomous-future|Securing the Autonomous Future: Trust, Safe
 - **Behavioral baselines**: establishes per-agent and per-component normal behavior profiles; flags drift by security context alongside metric anomalies.
 - **MCP-aware monitoring**: understands MCP protocol semantics, enabling protocol-level anomaly detection rather than generic network traffic analysis.
 
-Agents generate **10–20x the log volume** of humans over the same time window, which makes this a behavioral-analysis problem rather than a metrics one: generic SIEM without agentic-aware normalization is overwhelmed by the volume alone.
+Agent workflows can generate enough events to overwhelm a review queue. Preserve the action records needed for D7 reconstruction, then route summaries and behavioral alerts to the queue; the relevant volume and retention cost must be measured for the deployment.
 
 ### 9. Nightly Audit Baselines and Memory Integrity — D7 L3 to L4
 
 **SecureClaw** reports 13 core metrics every night, including **healthy-state outputs** alongside failure alerts. Memory integrity monitoring watches for unauthorized changes to persistent agent state, addressing the scenario where an agent's behavioral state has been silently modified between sessions.
 
-SecureClaw's design principle runs all detection logic as **external bash processes consuming zero LLM tokens**, which keeps the monitoring from expanding the attack surface it protects. The [[owasp-ai-exchange|OWASP AI Exchange]] states the general form of the principle: a defensive monitoring agent is itself part of the attack surface, and agentic containment must operate at the infrastructure layer without depending on the agent cooperating.[^aix-monitoruse] The exposure is wider than token consumption. Any detector that reads attacker-influenced text is in scope, including the reasoning-trace review §7 places on the roadmap and the [[llm-as-a-judge|LLM-as-a-judge]] stage of a [[tiered-detection-cascade|cost-ordered cascade]].
+SecureClaw reports running detection as external bash processes without LLM token use. That removes a model call from the detector, but the scripts and their inputs still need protection. The [[owasp-ai-exchange|OWASP AI Exchange]] states the wider principle: a defensive monitor is part of the attack surface, and containment must operate at the infrastructure layer without depending on the agent cooperating.[^aix-monitoruse] Any detector that reads attacker-influenced text is in scope, including reasoning-trace review and the [[llm-as-a-judge|LLM-as-a-judge]] stage of a [[tiered-detection-cascade|cost-ordered cascade]].
 
-### 10. Cognitive File Integrity Monitoring — D8 L4
+### 10. Cognitive File Integrity Monitoring — D8 L3 to L4
 
 Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized changes to critical files. For AI agents, this extends to **[[cognitive-file-integrity|cognitive identity files]]**: SOUL.md, IDENTITY.md, and similar files that define the agent's behavioral rules, persona, and operational constraints.
 
@@ -218,7 +206,7 @@ Traditional FIM (OSSEC, Tripwire, Wazuh) monitors filesystem for unauthorized ch
 - Drift alerts fire on cognitive-file changes with no authorized update event behind them.
 - **Brain Git** (SlowMist) version-controls all cognitive state files in git, enabling rollback to a known-good behavioral configuration — the agent-equivalent of system restore.
 
-Every other category above extends an existing discipline — EDR, OpenTelemetry, UEBA, conventional FIM. Cognitive file integrity monitoring has no such precursor, because it protects the persona and behavioral-rule files that only an agent carries.
+Cognitive file integrity monitoring extends conventional file integrity monitoring to the instruction and configuration files that shape an agent's behavior.
 
 ### 11. Adversarial Prompt Injection Through Attack Data — D4 L3
 
@@ -240,11 +228,14 @@ Forensic analysis reconstructs inputs, outputs, and actions, and the Exchange st
 
 The twelve sections above are grouped by level below, sequenced for an organization building this capability from zero rather than in the page's own section order.
 
-- **Foundation — D7 L2 to L3.** §1 (hooks and reference monitors — the same policy-decision-point primitive §4A grades at D3 L3), §2 (OpenTelemetry instrumentation), §3 (identity multiplexing). §3 is itself capped by identity-domain maturity: D7's own dependency rule sets effective(D7) ≤ raw(D2), so per-agent multiplexing needs D2 at L3 underneath it — this is why the D2 items in the tier below are an advanced tail rather than this floor. §5 (context-aware trimming) operates on the agent's own context window, a different store from the L3 external telemetry backend, and carries no D7 criterion of its own; it costs nothing extra once §1's hooks exist. §7's and §8's behavioral baselines score deviations from the telemetry this tier produces, so nothing past it is reachable before it is in place.
+- **Foundation — D7 L2 to L3.** Sections 1–3 show ways to collect action records and joined traces for D7-LOG, D7-ATTRIBUTE, and D7-SPANS. D7 attribution needs a resolvable agent and accountable human from D2; a missing identity link fails or leaves the affected D7 criterion unanswerable. Section 5's context trimming protects what the agent retains in its own context and is not a D7 criterion.
 - **Hardening — D7 L3 to L4.** §9 (nightly memory-write coverage and drift baselines) and §12 (log-integrity testing under adversarial conditions, plus the containment and forensic-retention requirements the incident lifecycle sets for §2 and §3).
-- **Production behavioral monitoring — D7 L4.** §7 (per-agent behavioral baselines and the insider-threat framing) and §8 (drift from per-agent behavioral baselines, graded by D7-BASELINE at L4; its AI-BOM runtime-reconciliation half belongs to [[agentic-ai-security-cmm-d8-supply-chain|D8]] L4, and no D7 criterion grades a runtime AI-BOM). §7's reasoning-trace subsection has no D7 criterion, because reading traces across a fleet has one preview detector and no generally available one. §7 already states the collection half is solved.
-- **Downstream of this domain, graded elsewhere.** §4's Cedar policy mediation is [[agentic-ai-security-cmm-d3-control-least-agency|D3]] L3 (a policy-decision point outside the model context, deny-by-default, synchronous, fail-closed); its capability-based warrant is [[agentic-ai-security-cmm-d2-identity|D2]] L5+ (no hyperscaler ships task-scoped, holder-bound capability tokens yet), and its Agent Card configuration is a further instance of the same D2 identity-registry pattern — both sit above the D2 L3 floor §3 already assumes, not below it. §10's cognitive-file integrity baselining is [[agentic-ai-security-cmm-d8-supply-chain|D8]] L4. §11 splits across two domains. Its SOC-ingests-attack-data detection case is D4-INJECT-INDIRECT at [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] L3, and its rule against auto-close without explicit human approval is D3's, where the close action carries the confirm tier in the record D3-TIER grades and D3-APPROVE-GATE holds it until a person approves. The reversible-action and circuit-breaker language in §11's own text names no graded criterion on this page. The D3 and D8 items, and D2's L5+ tail, belong to a different domain's own program rather than to this one's backlog.
-- **Frontier — D7 L5+.** §6 (mechanistic interpretability and forward-pass activation monitoring). D7 grades it as D7-ACTIVATION at L5+ and records that forward-pass activation monitoring has no shipping product, so it stays deprioritized until the L4 tier above is production-stable.
+- **Production behavioral monitoring — D7 L4.** Sections 7 and 8 illustrate per-agent tool-call baselines and session drift detections. D7-BASELINE needs a running rule and an alert or test; an inventory or dashboard alone does not meet it. Runtime AI-BOM reconciliation belongs to [[agentic-ai-security-cmm-d8-supply-chain|D8]] L4. Reasoning-trace interpretation is optional context, not a graded criterion.
+- **Other owning domains.** The remaining sections support controls outside D7:
+  - Section 4's call-time policy belongs to [[agentic-ai-security-cmm-d3-control-least-agency|D3]]. Its warrant is an optional implementation for outcomes in [[agentic-ai-security-cmm-d2-identity|D2]], D3, and [[agentic-ai-security-cmm-d5-egress-network|D5]]. An Agent Card can supply D2-REGISTRY fields but must show effective identity reach.
+  - Section 10's instruction-file baseline belongs to [[agentic-ai-security-cmm-d8-supply-chain|D8]] L3, with signed or pinned load verification at L4.
+  - Section 11's indirect-injection defense belongs to [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]. Call-time approval belongs to D3 where a confirm-tier action exists.
+- **Research outside scoring.** Section 6's forward-pass activation monitoring can inform experimental detection work. D7 has no scored activation criterion. Its L5 outcomes instead grade alert closure and the applicable, tested multi-agent detection paths.
 
 [^bhoaihf]: Michael Dalton and Eric Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026 (2026-08-06). Summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]; chain-of-thought excerpts and investigation scale at [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]].
 

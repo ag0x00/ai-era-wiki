@@ -2,7 +2,7 @@
 type: domain
 title: "Gaps and Open Questions"
 created: 2026-04-30
-updated: 2026-09-22
+updated: 2026-09-29
 tags: [domain, gaps]
 status: seed
 subdomain_of: ""
@@ -16,9 +16,9 @@ Open questions, unresolved contradictions, research that's been flagged but not 
 ## Pages
 
 
-- [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — Twelve gaps run through the Agentic AI Security Reference Architecture.
+- [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — This register follows twelve implementation and scope questions raised by the Agentic AI Security Reference Architecture.
 - [[agentic-ra-open-design-questions|Agentic AI Security RA: Open Implementation Questions]] — Six implementation questions that the Agentic AI Security Reference Architecture does not prescribe.
-- [[cmm-known-limitations|CMM Known Limitations (current state)]] — Current-state limitations of Agentic AI Security CMM 2026, restated 2026-05-06 and extended 2026-09-15.
+- [[cmm-known-limitations|CMM Known Limitations (current state)]] — The Agentic AI Security Capability Maturity Model defines the domain criteria, and the CMM: Measurement Protocol (Assessor's Handbook) de...
 - [[comprehensive-agentic-ai-security-landscape-2026|Agentic AI Security Startup Landscape]]
 - [[d3fend-ai-defense-technique-gap|D3FEND AI-Defense Technique Gap]] — MITRE D3FEND encodes a countermeasure knowledge base as a knowledge graph whose types and relations define the cybersecurity countermeasu...
 - [[evaluation-containment-open-questions|Evaluation Containment Open Questions]] — The public record of the 2026 evaluation containment cases leaves open several facts that decide what the cases can support.

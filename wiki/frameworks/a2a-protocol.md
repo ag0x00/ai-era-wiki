@@ -2,7 +2,7 @@
 type: framework
 title: "A2A Protocol (Agent-to-Agent)"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-29
 tags:
   - frameworks
   - protocols
@@ -13,13 +13,13 @@ status: developing
 scope_axis:
   - sec-of-ai
 adoption_signal: active
-last_substantive_update: 2026-03-12
+last_substantive_update: 2026-05-26
 governance: "Linux Foundation (Agentic AI Foundation)"
 contributed_by: "[[google|Google]]"
-current_version: "v1.0.0 (released 2026-03-12)"
+current_version: "Repository release v1.0.1; published specification labels v1.0.0 (checked 2026-09-29)"
 canonical_spec: "https://a2a-protocol.org/latest/specification/"
 canonical_repo: "https://github.com/a2aproject/A2A"
-scope: "Open protocol for agent-to-agent communication; signed Agent Cards; opacity principle"
+scope: "Open protocol for agent discovery, task exchange, and agent-to-agent communication"
 audience: "AI platform builders, agent framework authors, security architects"
 aliases:
   - "A2A"
@@ -35,140 +35,60 @@ related:
   - "[[standards-review-saif-cosai-2026-Q2]]"
   - "[[agentic-ai-security-ra-gaps]]"
 sources:
-  - "https://a2a-protocol.org/latest/specification/"
-  - "https://github.com/a2aproject/A2A"
   - "https://github.com/a2aproject/A2A/releases"
-  - "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents"
-  - "https://developers.googleblog.com/en/google-cloud-donates-a2a-to-linux-foundation/"
-  - "https://cloudsecurityalliance.org/blog/2025/04/30/threat-modeling-google-s-a2a-protocol-with-the-maestro-framework"
-  - "https://github.com/a2aproject/A2A/issues/1575"
-verified: 2026-09-18
+  - "https://a2a-protocol.org/latest/specification/"
+  - "https://a2a-protocol.org/latest/topics/agent-discovery/"
+verified: 2026-09-29
 verified_against: []
 verified_findings: 0
-verified_note: "Read whole 2026-09-18 to confirm the two deleted wiki-correction callouts lost no fact: v1.0.0 and Linux Foundation governance survive in the frontmatter, lead and spec table, and Oktsec's 268 rules at v0.15.2 in the vendor-enforcement table. No .raw/ document opened"
+verified_note: "Current official A2A specification, release list, and Agent Card documentation checked 2026-09-29."
 ---
 
-# A2A Protocol — Agent-to-Agent
+# A2A Protocol (Agent-to-Agent)
 
-The **Agent-to-Agent (A2A) Protocol** is an open standard for communication between AI agents across organizational and platform boundaries. Originally contributed by [[google|Google]] in April 2025, **donated to the Linux Foundation on June 23, 2025**, and now hosted under the LF's Agentic AI Foundation umbrella. **Spec v1.0.0 shipped 2026-03-12.**
+The Agent-to-Agent (A2A) Protocol defines how an agent discovers and exchanges work with another agent. It supplies message and task formats and protocol bindings. The receiving service still decides who may invoke each operation and what the caller may see.
 
-## Spec at a glance
+## Version and scope
 
-| Property | Value |
+As checked on 2026-09-29, the [A2A repository release list](https://github.com/a2aproject/A2A/releases) identifies **v1.0.1** as its latest release. The [published specification](https://a2a-protocol.org/latest/specification/) still labels its latest released version **1.0.0**. An assessment records the version and binding implemented by each peer; the repository tag alone does not establish the deployed wire profile.
+
+A2A covers agent-to-agent exchange. [[mcp-security|Model Context Protocol security]] covers an agent's use of MCP tools. An agent may use both, with separate trust and authorization decisions at each boundary.
+
+## Discovery and communication
+
+Each server makes an [Agent Card](https://a2a-protocol.org/latest/topics/agent-discovery/) available. It describes the service's interface, advertised abilities, and authentication requirements. Discovery may use a well-known URL, a registry, or configured information. A Card's name and capability claims are metadata; they do not by themselves authenticate a principal or grant access.
+
+The specification supports task and message exchange through these core bindings:
+
+- JSON-RPC
+- gRPC
+- HTTP+JSON
+
+The selected binding and task operations determine the exposed request and callback routes. Where the Card declares an authentication scheme, such as OAuth 2.0 or mutual TLS, the implementation must enforce it.
+
+## Security boundary
+
+The [specification's §13 security considerations](https://a2a-protocol.org/latest/specification/#13-security-considerations) require an A2A server to authorize every protocol-operation request and scope returned resources to the caller, including requests without a context identifier. Production transport uses encryption. The specification recommends TLS 1.3; the CMM's D5-A2A-TLS separately requires an older-version handshake to fail. Authentication of a connection does not replace authorization of a task operation or a downstream tool call.
+
+[§8.4](https://a2a-protocol.org/latest/specification/#84-agent-card-signing) defines optional Agent Card signatures. A signature can authenticate Card content only when the client verifies it against an accepted signer and binds that signer to the expected peer. The specification does not make every Card signed. Where discovery relies on a registry or direct configuration instead, the assessor records how peer identity and Card changes are checked.
+
+A2A task and context identifiers do not establish the represented human's delegated authority. A deployment that delegates work must bind the receiving agent's effective permission to the original task and caller. It must also define how it refuses duplicate or stale requests on consequential operations. Push notifications add a callback boundary; [§13](https://a2a-protocol.org/latest/specification/#13-security-considerations) addresses callback authentication and server-side request forgery. These deployment controls require evidence beyond protocol conformance.
+
+## Assessment use
+
+| CMM owner | Evidence to inspect |
 |---|---|
-| Current version | **v1.0.0** (2026-03-12) |
-| Governance | **Linux Foundation** (since 2025-06-23) |
-| Canonical spec | [a2a-protocol.org/latest/specification](https://a2a-protocol.org/latest/specification/) |
-| Canonical repo | [github.com/a2aproject/A2A](https://github.com/a2aproject/A2A) (the `google-a2a/A2A` mirror is superseded) |
-| Wire transports | JSON-RPC 2.0 over HTTP(S); Server-Sent Events; gRPC |
-| Discovery | `https://<base_url>/.well-known/agent-card.json` |
-| Complementary to | [[mcp-security\|MCP]] (agent ↔ tool); A2A is agent ↔ agent |
+| [[agentic-ai-security-cmm-d2-identity\|D2 — identity]] | Binding of peer identity to the original caller's task authority. |
+| [[agentic-ai-security-cmm-d5-egress-network\|D5 — network reach]] | Enforcement of the selected inter-agent trust profile. |
+| [[agentic-ai-security-cmm-d7-observability\|D7 — observability]] | Attributed trail from task receipt to downstream action. |
+| [[agentic-ai-security-cmm-d8-supply-chain\|D8 — release assurance]] | Release-linked test of the approved Card signing profile. |
 
-## Security model — what's in the spec
-
-The v1.0 spec covers transport security and Agent Card signing. There is no separate `security.md` in the spec; security is woven through §7 (transport/auth) and §8.4 (Card signing) plus the [Enterprise-Ready topic page](https://a2a-protocol.org/latest/topics/enterprise-ready/).
-
-| Layer | What v1.0 specifies |
-|---|---|
-| **Transport** | *"Production deployments MUST use HTTPS"* with TLS 1.3 recommended; clients SHOULD validate server certs |
-| **Authentication** | Delegates to OpenAPI-style schemes — API keys, HTTP auth, OAuth 2.0/OIDC, mTLS. *"A2A Servers MUST authenticate every incoming request based on the provided HTTP credentials and its declared authentication requirements from its Agent Card."* Credentials live in HTTP headers, not protocol payloads |
-| **Authorization** | Per-skill access control, advertised via Agent Card; least-privilege enforcement is the **server's** responsibility |
-| **Agent Card signing** | §8.4 specifies the framework — Canonicalization Requirements, Signature Format, Signature Verification — but **algorithm choice is implementation-defined** |
-| **Opacity principle** | *"Agents collaborate based on declared capabilities and exchanged information, without needing to share their internal thoughts, plans, or tool implementations."* Agents MAY use `contextId` for internal state, *"this internal state is not exposed to other agents."* |
-
-## Omissions in v1.0
-
-A peer reviewer should know exactly what is missing:
-
-- **No replay-protection section.** Implementations must layer it themselves (timestamps + nonces).
-- **No mandatory cryptographic algorithm for Agent Card signing.** Ed25519 is the *de facto* vendor pick (see Oktsec below) but spec is algorithm-agnostic.
-- **No multi-hop trust chain or cross-agent delegation primitive.** Delegation is the open work.
-- **No formal-methods review** of v1.0 has been published as of mid-2026.
-- **No CVEs** assigned to A2A in NVD as of 2026-05.
-- **No coverage of a channel that is not a channel.** The protocol secures an explicit link between two agents. Two agent runs that reach the same writable medium — a shared bucket, a wiki, a message board — pass data to each other without opening one, so signed Agent Cards and message authentication do not apply. [[owasp-agentic-ai-top-10|OWASP's ASI07]] classes that medium as inter-agent communication and reaches the same limit.
-
-An L3+ CMM claim resting on A2A security must therefore specify the organization's own enforcement profile: [[agentic-ai-security-cmm-d5-egress-network|D5]]'s D5-A2A-REPLAY requires the profile to state the replay check at L3, and D5-A2A-SIGN requires a published signing profile at L5.
-
-## Agent Cards
-
-The Agent Card is A2A's identity-and-capability metadata document, served from `/.well-known/agent-card.json`. It carries:
-
-- Identity (agent name, owner, contact)
-- Capabilities and skills (what the agent can be asked to do)
-- Endpoints (where to talk to it)
-- Supported transports
-- `securitySchemes` (auth schemes the server expects)
-- Optional signature block per §8.4
-
-Cards are how peer agents discover what this agent does and how to authenticate to it. Mandatory vs optional field details should be pulled directly from the live spec (`a2a-protocol.org/latest/specification/#agent-card-object`) since these evolve faster than the wiki refresh cadence.
-
-Signed Agent Cards (§8.4) anchor the CMM's [[agentic-ai-security-cmm-2026|D2 Identity & Authorization]] domain alongside CoSAI's Agentic Identity and Access Management (2026-04-17), per [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI standards review]], which found this the strongest single identity-content area of the SAIF/CoSAI pair.
-
-## Vendor-side and proposal-side enforcement
-
-The spec is intentionally minimal. Production hardening lives in vendor implementations and active proposals:
-
-| Source | What it adds |
-|---|---|
-| **Oktsec** ([github.com/oktsec/oktsec](https://github.com/oktsec/oktsec), v0.15.2 / 2026-04-24) | Per-agent **Ed25519 keypairs** issued at init; signatures over `from + to + content + timestamp`; **default-deny ACLs**; per-agent sliding-window rate limit; tamper-evident audit chain v2; OpenTelemetry tracing; **268 detection rules** across categories like prompt-injection, credential-leak, exfiltration, command-execution, MCP-attack, MCP-config, supply-chain, SSRF/cloud, indirect-injection, unicode-attack, third-party-content, external-download, inter-agent communication, container escape, tool-call, memory poisoning, openclaw-config |
-| **A2A repo Issue [#1575 — "Agent Passport System"](https://github.com/a2aproject/A2A/issues/1575)** | Open proposal: Ed25519 keypairs for agents, scoped delegation with cascade revocation, 3-signature execution chain (intent → policy eval → signed receipt), and a "values floor" (traceability, honest identity, scoped authority, revocability, auditability, non-deception, proportionality). Working TS implementation, **not merged** as of mid-2026 |
-| **Red Hat A2A hardening guide** ([developers.redhat.com](https://developers.redhat.com/articles/2025/08/19/how-enhance-agent2agent-security)) | Platform-side hardening recipes (mTLS-everywhere, gateway-side scanning, identity-bridging) |
-| **IETF Agent Identity Protocol (AIP)** ([draft-prakash-aip-00](https://www.ietf.org/archive/id/draft-prakash-aip-00.html)) | Verifiable delegation primitives across MCP and A2A. Adjacent IETF work, not part of A2A |
-
-## Threat model — independent reviews
-
-- **CSA "Threat Modeling Google's A2A Protocol with the MAESTRO Framework"** (April 2025) — pre-LF, pre-v1.0; identifies message-injection, agent-impersonation, and foundation-model-level risks. [CSA blog](https://cloudsecurityalliance.org/blog/2025/04/30/threat-modeling-google-s-a2a-protocol-with-the-maestro-framework). The MAESTRO 7-layer mapping is the canonical starting point.
-- The wiki's [[agentic-ai-threat-classes-2026|Threat Classes 2026]] page covers A2A-relevant classes (multi-agent collusion, insider amplifier, jurisdictional adversaries) at the architecture level.
-
-## Use in this wiki
-
-| Use | Where |
-|---|---|
-| Egress-plane PEP between agents | [[agentic-ai-security-reference-architecture\|RA]] §Egress + §Multi-agent mesh deployment shape |
-| D5 L3 evidence: D5-A2A-TLS and D5-A2A-AUTH, TLS 1.3 and mutual authentication on the inter-agent leg | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
-| D5 L3 evidence: D5-A2A-REPLAY, the org-authored enforcement profile's replay check | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
-| D5 L4 evidence: D5-A2A-SCREEN, content screening on the inter-agent path | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
-| D5 L5 evidence: D5-A2A-SIGN, signed messages and signed Agent Cards under a published profile | [[agentic-ai-security-cmm-d5-egress-network\|D5]] |
-| Multi-agent runtime threats | [[multi-agent-runtime-security\|Multi-Agent Runtime Security]] — cascade detection, behavioral baselines, inter-agent IR |
-| ASI07 (Insecure Inter-Agent Comms) anchor | [[agentic-ai-security-reference-architecture\|RA]] threat-control matrix |
-| Absence claim against the spec | [[agentic-ai-security-ra-gaps\|RA Gaps]] gap 9 — v1.0.0 establishes identity at the transport layer and defines no delegation token and no chain validation |
-
-## Maturity ladder for A2A enforcement
-
-A practical layering for orgs adopting A2A:
-
-| Tier | What's in place |
-|---|---|
-| L1 — Spec minimum | HTTPS + OAuth2 / API key per §7; no signed Cards, no rate limits |
-| L2 — Card discipline | Signed Agent Cards (any algorithm) + per-skill authorization advertised; `securitySchemes` enforced server-side |
-| L3 — Vendor-grade | Ed25519 message signing (Oktsec-class) + scoped per-agent rate limits + content scanning + tamper-evident audit chain |
-| L4 — Trust framework | Issue #1575 / AIP-class scoped delegation with cascade revocation + 3-signature execution chain + policy-engine enforcement |
-| L5 — Formal | Formally specified mesh invariants + automated containment doctrine — **does not exist in production as of mid-2026** |
-
-The tiers order adoption, and their numbers are independent of the CMM's levels. [[agentic-ai-security-cmm-d5-egress-network|D5]] grades the A2A controls at these levels:
-
-- L3: TLS 1.3, mutual authentication, replay protection and a delegation reference on each delegated message, as D5-A2A-TLS, D5-A2A-AUTH, D5-A2A-REPLAY and D5-A2A-CHAIN.
-- L4: content screening on the inter-agent path and a broker as the only channel between agents, as D5-A2A-SCREEN and D5-A2A-BROKER.
-- L5: signed messages and signed Agent Cards under a published profile audited per release, as D5-A2A-SIGN and D5-A2A-SIGN-AUDIT.
-- L5+: a behavioral baseline over each agent's inter-agent messages, as D5-A2A-BASELINE.
-
-## See Also
-
-- [[mcp-security|MCP Security]] — the agent-to-tool counterpart
-- [[multi-agent-runtime-security|Multi-Agent Runtime Security]] — cascade detection, behavioral baselines, inter-agent IR
-- [[csa-maestro|CSA MAESTRO]] — primary independent threat model
-- [[cosai|CoSAI]] — broader agentic-AI security ecosystem context
-- [[agent-identity-architecture|AI Agent Identity Architecture]] — identity primitives consumed by A2A
-- [[agentic-ai-threat-classes-2026|Agentic AI Threat Classes 2026]] — collusion, insider amplifier, jurisdictional adversary classes
+The [[agentic-ai-security-reference-architecture|Reference Architecture]] locates the inter-agent boundary. D5-A2A-REPLAY requires a receiver refusal test. D5-A2A-SIGN tests Card verification at runtime. D8-A2A-SIGN-TEST checks it before release. Those outcomes are CMM choices; A2A supplies mechanisms and interfaces, not a maturity score.
 
 <!-- sources:auto -->
 ## Sources
 
-- [a2a-protocol.org](https://a2a-protocol.org/latest/specification/)
-- [github.com](https://github.com/a2aproject/A2A)
 - [github.com](https://github.com/a2aproject/A2A/releases)
-- [linuxfoundation.org](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents)
-- [developers.googleblog.com](https://developers.googleblog.com/en/google-cloud-donates-a2a-to-linux-foundation/)
-- [cloudsecurityalliance.org](https://cloudsecurityalliance.org/blog/2025/04/30/threat-modeling-google-s-a2a-protocol-with-the-maestro-framework)
-- [github.com](https://github.com/a2aproject/A2A/issues/1575)
+- [a2a-protocol.org](https://a2a-protocol.org/latest/specification/)
+- [a2a-protocol.org](https://a2a-protocol.org/latest/topics/agent-discovery/)
 <!-- /sources -->

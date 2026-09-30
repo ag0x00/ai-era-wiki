@@ -2,7 +2,7 @@
 type: framework
 title: "OpenTelemetry gen_ai.* Semantic Conventions"
 created: 2026-05-03
-updated: 2026-09-25
+updated: 2026-09-29
 tags:
   - frameworks
   - observability
@@ -23,10 +23,10 @@ related:
   - "[[nist-ai-800-4]]"
   - "[[agentic-ai-security-cmm-d7-observability]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
-verified: 2026-09-25
+verified: 2026-09-29
 verified_against: []
-verified_findings: 1
-verified_note: "#283 D7 satellite verify: whole page read against the live GenAI repository READMEs, model and agent span docs, the semconv CHANGELOG and both tag lists (2026-09-24); A7-A13 and B26 confirmed; open: the 10-20x log-volume line (l.48) has no traceable source (#315, which does not list this page); SIG contributor list and backends table unsourced"
+verified_findings: 0
+verified_note: "Reviewed current OpenTelemetry GenAI repository docs, semantic conventions changelog and current CMM criteria; no archived source opened."
 ---
 
 # OpenTelemetry gen_ai.* Semantic Conventions
@@ -41,55 +41,40 @@ The conventions are in Development status. Since semantic conventions v1.42.0 th
 - **Standard attributes** — `gen_ai.provider.name` (formerly `gen_ai.system`), `gen_ai.request.model`, `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`, `gen_ai.tool.name`, `gen_ai.tool.call.id`
 - **Agent spans** — create-agent, invoke-agent, invoke-workflow and plan spans for multi-step agent traces
 
-SIG contributors as of May 2026: Amazon, Elastic, Google, IBM, Langtrace, Microsoft, OpenLIT, Scorecard, Traceloop. The multi-stakeholder SIG is the primary signal of standard status — no single vendor can capture it.
-
-The `gen_ai.*` conventions are a direct response to the logging-standardization gap [[nist-ai-800-4|NIST AI 800-4]] documents: the report finds the field monitoring deployed AI lacks common terminology and standardized agent identifiers, with logging fragmented across distributed infrastructure. A shared span and attribute vocabulary is the interchange layer that lets a detection rule travel across tools rather than being rewritten per vendor.
+The `gen_ai.*` conventions address part of the logging-standardization gap [[nist-ai-800-4|NIST AI 800-4]] describes: monitoring of deployed AI lacks common terminology and standardized agent identifiers, with logging fragmented across distributed infrastructure. A shared span and attribute vocabulary can let a detection rule travel across tools where those fields are preserved.
 
 ## Basis for OTel as the foundational choice
 
 - **Vendor-neutral:** OTel traces can be sent to any backend (Datadog, Grafana, Splunk, Jaeger, Honeycomb, etc.) without changing instrumentation code. Lock-in is at the backend level, not the collection level.
-- **Already in the stack:** most organizations already instrument microservices with OTel; adding `gen_ai.*` spans extends existing infrastructure rather than creating a parallel observability silo.
-- **No license cost:** the OTel SDKs (Python, JS, Go, Java, etc.) are Apache 2.0. The `gen_ai.*` SemConv is a specification, not software, so adopting it has zero cost.
-- **CNCF graduation:** OTel is a CNCF Graduated project, the highest maturity level. It has production adoption at Google, Microsoft, AWS, Meta, Netflix, and others.
-- **Agent-specific volume:** agents generate 10–20× the log volume of human users over the same window. OTel's pre-aggregation-at-hook model (span batching, tail sampling) is the right architecture for this volume.
+- **Existing instrumentation:** an organization already using OTel can add GenAI spans to its collection path rather than create a separate trace system.
+- **Licensing:** OTel SDKs are Apache 2.0 and the conventions are a specification. Collection, storage, retention and analysis still have operating cost.
+- **CNCF graduation:** OTel is a CNCF Graduated project; the GenAI conventions have their own development status.
+- **Volume control:** batching and collector-side sampling let operators budget trace volume while retaining the security events needed to reconstruct a run. A sampling rule must not discard a path that D7-SPANS requires.
 
 ## Agent observability use pattern
 
-In an agentic-AI system, OTel `gen_ai.*` spans flow through the six planes of the [[agentic-ai-security-reference-architecture|RA]]:
+In an agentic-AI system, OTel `gen_ai.*` spans record operations across the [[agentic-ai-security-reference-architecture|RA]]'s trust boundaries:
 
 ```
 Agent process
   ├── inference span (chat) → model call
-  ├── execute_tool span → tool invocation (→ Egress plane)
-  ├── retrieval span → RAG retrieval (→ Data plane)
-  └── invoke_agent span → agent invocation (→ Observability plane)
+  ├── execute_tool span → action gateway
+  ├── retrieval span → retrieval mediator
+  └── invoke_agent span → delegated agent
 ```
 
-Each span carries `agent_id`, `user_id`, `session_id` attributes (via the [[agent-observability|Agent Observability §3 identity-multiplexing pattern]]), making every action traceable to a human principal.
+The application must add and preserve a resolvable agent, session and accountable-human reference across the trace (the [[agent-observability|identity-multiplexing pattern]]). The conventions alone do not supply or verify those identities.
 
 ## In the RA / CMM
 
-- **RA Observability Plane:** OTel `gen_ai.*` SemConv is the primary reference implementation for the Observability Plane — classified as `Std` (CNCF standard).
-- **CMM [[agentic-ai-security-cmm-d7-observability|D7]] L3:** D7-SPANS asks for a `gen_ai.*` span for each inference, tool execution, agent invocation and retrieval an agent performs, and D7-SPANS-PIN for a named convention version with the instrumentation pinned to exact versions.
-- **CMM [[agentic-ai-security-cmm-d9-operations|D9]] L3:** OTel span durations and token-usage attributes can supply the series D9-GUARD-LATENCY and D9-GUARD-COST track for each guardrail and agent, the cost series priced from the token counts.
-- **FOSS/small-team stack:** OTel is the recommended zero-cost observability foundation; backend can be Langtrace/Traceloop (OSS) or any OTel-compatible SaaS.
-- **Enterprise stack:** OTel spans feed into existing SIEM (Splunk, Datadog, Dynatrace, etc.) without replatforming.
-
-## Implementations / backends
-
-| Tool | Type | Role |
-|---|---|---|
-| Langtrace | OSS | Agent-aware OTel tracing with LLM-specific UI |
-| Traceloop | OSS | OpenLLMetry SDK (OTel-native) |
-| Helicone | OSS / SaaS | LLM observability gateway; OTel-compatible |
-| LangSmith | SaaS | LangChain-native; exports OTel |
-| DataDog AI Monitoring | SaaS | OTel-native ingestion; AI-specific dashboards |
-| New Relic AI Monitoring | SaaS | OTel-native; gen_ai.* support |
+- **RA evidence path:** Correlated traces from the model, retrieval mediator, action gateway, and agent runtime reach an evidence store outside the agent's write authority. OTel is one transport and schema choice.
+- **CMM D7 L3:** See [[agentic-ai-security-cmm-d7-observability|D7]] for D7-SPANS, which requires correlated traces on applicable paths. OTel GenAI spans are one implementation. D7-SPANS-HELD requires searchable or exportable records; D7-SPANS-PIN requires version records or a compatibility contract with a field-compatibility test.
+- **CMM [[agentic-ai-security-cmm-d9-operations|D9]] L3:** Instrumented guardrail spans can contribute to D9-GUARD-LATENCY and D9-GUARD-COST series for each agent. Token counts alone do not establish guardrail cost without a pricing method and attribution.
 
 ## See also
 
 - [[agent-observability|Agent Observability]] — the wiki's observability practice page, which uses OTel as its foundation
-- [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] §Observability plane
+- [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] — trust boundaries and the independent evidence store
 - [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] D7 + D9
 - [[genai-endpoint-observability-talk|GenAI Endpoint Observability]] — the practitioner case for extending these conventions to endpoint tool activity via agent hooks routed to the SIEM
 

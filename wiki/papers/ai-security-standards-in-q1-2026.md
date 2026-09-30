@@ -2,7 +2,7 @@
 type: paper
 title: "AI Security Standards: Agentic Threats Outpace Frameworks"
 created: 2026-04-30
-updated: 2026-09-25
+updated: 2026-09-29
 tags:
   - papers
   - ai-security
@@ -72,7 +72,9 @@ Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MIT
 - **OWASP** published the [[owasp-agentic-ai-top-10|Agentic Applications Top 10]] (ASI Top 10, December 2025), AIVSS v0.8 (March 19, 2026 — extends CVSS 4.0 with agentic amplification factors), and a Practical Guide for Secure MCP Server Development.
 - **CoSAI** published Model Context Protocol (MCP) Security (2026-01-20), Agentic Identity and Access Management (2026-04-17), Principles for Secure-by-Design Agentic Systems, and onboarded Meta as a Premier Sponsor. Now 40+ industry partners. The deliverable dates and titles were reconciled in [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI standards review]], which also flagged the "40 threats / 12 categories" MCP figure as not re-verifiable.
 - **Microsoft** announced Zero Trust for AI (ZT4AI, 700+ controls), Agent 365 unified governance control plane (\$15/user/month), and direct OWASP ASI Top 10 mapping to Copilot Studio.
-- **ISO/IEC 42001** unchanged; companion **ISO/IEC 42006:2025** (audit body requirements), which the paper counts as finalized in the quarter and [ISO lists as published on 2025-07-07](https://www.iso.org/standard/44546.html); **ISO/IEC 27090** (AI cybersecurity guidance) entered FDIS ballot March 2026 — still unpublished and guidance-only as of June 2026, per [[standards-review-iso-42001-27090-2026-Q2|the 2026-Q2 ISO/IEC 42001 + 27090 review]].
+- **ISO/IEC 42001** was unchanged.
+- **ISO/IEC 42006:2025** sets audit body requirements. The paper counts it as finalized in the quarter, while [ISO lists it as published on 2025-07-07](https://www.iso.org/standard/44546.html).
+- **ISO/IEC 27090** gives AI cybersecurity guidance. It entered FDIS ballot in March 2026 and was still unpublished and guidance-only as of June 2026, per [[standards-review-iso-42001-27090-2026-Q2|the 2026-Q2 ISO/IEC 42001 + 27090 review]].
 - **CSA** launched the Agentic Trust Framework (February 2, 2026) with five progressive autonomy promotion gates.
 
 ### Threat landscape (Q1 2026)

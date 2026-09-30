@@ -118,7 +118,11 @@ Succession runs through Entra ID Governance, and the successor is named. The ide
 
 Identity Protection scores agent risk through eight detections, among them early-life malicious activity, suspicious credential usage and directory reconnaissance; at the time of the page read all agent risk detections were offline rather than real-time.[^id-protection] Attribution has a documented gap: "in on-behalf-of (OBO) flows, where an agent acts using a user's delegated permissions, risky activity is attributed to the user rather than the agent".[^id-protection]
 
-Blocking a risky agent is an administrator's deployment, not a default. Microsoft ships it as a Conditional Access template, "Block access for high-risk agent identities", which blocks sign-ins from risky agent identities once an administrator creates the policy from it.[^whats-new] Three further blind spots are documented on the Conditional Access page: policies do not apply where an agent uses an API key, because that path bypasses Entra token issuance; "policies targeting all users don't include agent's user accounts"; and a policy targeting agent identities "won't apply to the agent's user account".[^cond-access]
+Blocking a risky agent is an administrator's deployment, not a default. Microsoft ships it as a Conditional Access template, "Block access for high-risk agent identities", which blocks sign-ins from risky agent identities once an administrator creates the policy from it.[^whats-new] The Conditional Access page documents three further blind spots:[^cond-access]
+
+- Policies do not apply where an agent uses an API key, because that path bypasses Entra token issuance.
+- "Policies targeting all users don't include agent's user accounts".
+- A policy targeting agent identities "won't apply to the agent's user account".
 
 ## Reach over agents built elsewhere
 
@@ -139,9 +143,9 @@ Two more vendors entered the category in September 2026: [[crowdstrike-agentic-i
 
 ## CMM positioning
 
-Organizations adopting Entra Agent ID reach **L3** on the [[agentic-ai-security-cmm-d2-identity|D2 identity and authorization track]], on the same footing as [[okta-for-ai-agents|Okta for AI Agents]]: a verifiable per-agent directory identity, minted from a blueprint and governed by policy at the class level.
+Entra Agent ID can supply evidence for the [[agentic-ai-security-cmm-d2-identity|D2 identity and authorization]] inventory and issuance criteria: it gives an agent a directory identity minted from a blueprint and governed by policy at the class level. A product capability does not establish a D2 level. The assessor also checks the deployment's owners, credential classes, lifecycle, authorization path, and other applicable criteria.
 
-Token scope bounds what that rung buys. [[agentic-cmm-regulated-fi-stress-test|The regulated-FI CMM stress test]] records that Agent ID issues tokens scoped to an agent identity or its blueprint rather than to a task, which leaves per-task holder-bound capability grants of the [[tenuo-warrant|Tenuo Warrant]] class as an off-stack fill for an all-Microsoft buyer. The [[agentic-ai-security-cmm-d7-observability|D7 observability]] rung a buyer can reach depends on Purview action tracing, which is an [[microsoft-agent-365|Agent 365]] entitlement rather than an Entra Agent ID one, so the identity layer alone does not carry it. Sponsor accountability and the orphaned-agent workflows are the mechanism behind [[agentic-ai-security-cmm-d9-operations|D9]] decommission evidence, weakened where sponsorship sits on a group.
+Token scope bounds what the identity feature supplies. [[agentic-cmm-regulated-fi-stress-test|The regulated-FI CMM stress test]] records that Agent ID issues tokens scoped to an agent identity or its blueprint rather than to a task. Per-task authorization therefore needs a separate enforcement path. A [[tenuo-warrant|Tenuo Warrant]] is one possible implementation. [[agentic-ai-security-cmm-d7-observability|D7 observability]] requires event coverage and export on the assessed paths. Purview action tracing is an [[microsoft-agent-365|Agent 365]] entitlement rather than an Entra Agent ID one, so identity issuance alone cannot establish D7 evidence. Sponsor accountability and orphaned-agent workflows can support [[agentic-ai-security-cmm-d9-operations|D9]] decommission evidence. Group sponsorship needs a named accountable person in the assessment record.
 
 ## Notes
 

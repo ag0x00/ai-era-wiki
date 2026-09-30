@@ -27,6 +27,6 @@ The folder is deliberately bounded to engagement-shaped artifacts and is not a c
 ## Pages
 
 
-- [[canadian-bank-secure-sdlc-ai-assessor-scorecard|Assessor's Quick Scorecard: Secure-SDLC and AI]] — A condensed two-party-advisor assessment instrument for evaluating a large Ontario-based federally-regulated bank's secure-SDLC practices...
+- [[canadian-bank-secure-sdlc-ai-assessor-scorecard|Assessor's Quick Scorecard: Secure-SDLC and AI]] — This scorecard screens a bank's named release pipeline and AI deployment for consequential security gaps.
 - [[claude-code-control-sheet|Claude Code Control Sheet]] — This control sheet pairs requirements with enforcers and evidence tests for Claude Code across five enterprise deployment shapes.
 - [[mythos-ready-security-program|Mythos-ready Security Program]] — Operational instrument from The "AI Vulnerability Storm": Building a "Mythos-ready" Security Program (CSA + SANS + Unprompted + OWASP Gen...

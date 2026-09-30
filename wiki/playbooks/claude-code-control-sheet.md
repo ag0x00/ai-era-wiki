@@ -237,16 +237,16 @@ Assign a disposition to each shape and provider route:
 
 ## CMM traceability and sources
 
-Selected controls trace to directly testable criteria in the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]. A maturity score for a vendor or tenant requires the model's own unit of assessment and evidence rules:
+Selected controls trace to directly testable criteria in the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]. A domain result applies to the defined deployment shape and requires the model's evidence rules:
 
-- [[agentic-ai-security-cmm-d1-governance|CMM D1: Governance and Accountability]]: C02's resolved source, locks and restoration bear on D1-HARNESS, D1-HARNESS-LOCK and D1-HARNESS-RESTORE.
+- [[agentic-ai-security-cmm-d1-governance|CMM D1: Governance and Accountability]]: the release decision and conditional exception support D1-GATE and D1-ALLOCATE only when tied to the deployment's risk tier and accountable owner.
 - [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]]: C01, C06 and L05 bear on D2-INVENTORY, D2-OWNER and D2-TRACE; a session label is not a downstream service identity.
 - [[agentic-ai-security-cmm-d3-control-least-agency|CMM D3: Control and Least-Agency]]: C03 and the negative mode test bear on D3-ALLOW and D3-APPROVE.
 - [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime and Guardrails]]: C04, L02 and L04 bear on D4-SANDBOX and D4-SANDBOX-FIRST; the built-in shell sandbox alone cannot establish whole-run coverage.
 - [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]]: C04 and L03 bear on D5-ALLOW and D5-REACH across actual model, proxy and connector paths.
 - [[agentic-ai-security-cmm-d6-data-rag|CMM D6: Data, Memory and RAG]]: C05 and C06 bear on D6-EXTEND and D6-CLASSIFY.
 - [[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]]: C07 and L05 bear on D7-LOG and D7-ATTRIBUTE only where the organization holds joined records.
-- [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Supply Chain and AI-BOM]]: C05 and L04 bear on D8-INVENTORY and D8-VERSION.
+- [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]]: C02's resolved source, locks, and restoration bear on D8-HARNESS, D8-HARNESS-LOCK, and D8-HARNESS-RESTORE; C05 and L04 bear on D8-INVENTORY and D8-VERSION.
 - [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]: C07's timeout path bears on D9-GUARD-RUNBOOK.
 
 Anthropic's [feature-availability matrix](https://code.claude.com/docs/en/feature-availability) and the cited settings, permissions, sandbox, cloud, CI, monitoring, and data-usage pages are capability references, not deployment attestations. Version-specific behavior reflects the linked documentation on 2026-09-29; the installed build and provider route govern the final test.

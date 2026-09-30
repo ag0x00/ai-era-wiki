@@ -3,7 +3,7 @@ type: comparison
 title: "Threat Taxonomy Reconciliation"
 address: c-000235
 created: 2026-06-23
-updated: 2026-09-25
+updated: 2026-09-29
 tags:
   - comparisons
   - threat-modeling
@@ -44,15 +44,16 @@ sources:
   - "https://owaspai.org/docs/ai_security_overview"
   - "https://atlas.mitre.org"
   - "https://red.anthropic.com/2026/attack-navigator/"
-verified: 2026-09-24
-verified_against: []
+verified: 2026-09-29
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
 verified_findings: 0
-verified_note: "D8-split read: every RA-plane column checked against the six planes, and the class table against the RA class table and the D1, D6, D8 and D9 deep dives; no archived document opened, other claims not reread."
+verified_note: "Whole page read for RA/CMM owner consistency; archived Exchange development controls and live model-exfiltration source checked; historic taxonomy codes not re-sourced."
 ---
 
 # Threat Taxonomy Reconciliation
 
-Seven threat taxonomies are in active use across agentic and generative AI security as of August 2026, each built for a different job. This page is the single cross-walk that maps them to one another and onto the wiki's two control artifacts: the [[agentic-ai-security-reference-architecture|AAI-S RA]] six planes and the [[agentic-ai-security-cmm-2026|CMM]] nine domains. It is the source of truth that [[threat-modeling-for-ai|Threat Modeling for AI]], the RA Threat-Control Matrix, and the [[agentic-ai-security-cmm-crosswalk|CMM Standards Crosswalk]] all reference; the narrative explaining *when to use which* taxonomy lives on [[threat-modeling-for-ai|Threat Modeling for AI]].
+Seven threat taxonomies are in active use across agentic and generative AI security as of August 2026, each built for a different job. This page maps them to one another and onto the [[agentic-ai-security-reference-architecture|AAI-S RA]] trust boundaries and [[agentic-ai-security-cmm-2026|CMM]] domains. The narrative explaining *when to use which* taxonomy lives on [[threat-modeling-for-ai|Threat Modeling for AI]]. These domain assignments locate a control owner; an assessor must use the current domain criteria to decide whether the control is met. The former [[agentic-ai-security-cmm-crosswalk|standards crosswalk]] is archived.
 
 ## The seven taxonomies and their jobs
 
@@ -70,57 +71,67 @@ One pre-standardization source sits upstream of the [[owasp-agentic-ai-top-10|AS
 
 A second list sits outside the table for the other half of the same criterion. The [[owasp-agentic-skills-top-10|OWASP Agentic Skills Top 10]] (`AST01`–`AST10`) ranks ten risks on the agent skill, the packaged instruction-and-script artifact an agent loads; the project places that artifact as a behavior layer between the model and the tools an agent reaches over MCP. OWASP stewards the list as an incubator project under two named leads, which meets the stewardship half of the criterion. The list falls short on current use: the project states that each of its risks maps to CSA MAESTRO's seven layers, and the only mapping rows published outside its own materials are 36 against [[csa-maestro|CSA MAESTRO]] in the [[owasp-genai-crosswalk|GenAI Crosswalk]], each marked draft and awaiting subject-matter review. Two wiki pages cite an AST code, and both mark the anchor provisional: [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]] tags controls that stay anchored to ASI04, and [[red-teaming-capability-framework|Red Teaming Capability Framework]] holds the list's coverage open while ratification is pending. This page records the Agentic Skills Top 10 as a taxonomy in registration and holds the table at seven.
 
-Three structural tests sit alongside the catalogs: the [[lethal-trifecta|Lethal Trifecta]], where private data, untrusted content, and external communication together yield exfiltration; the [[lethal-bifecta|Lethal Bifecta]], where untrusted content plus a sensitive write yields a damaging action; and egress-allowlist transitivity, which fires on an allowlisted destination that itself reaches the internet or that several agent runs can write to. Each is a design-time go/no-go check evaluated across a design rather than an entry counted within one. The [[agentic-ai-threat-classes-2026|five threat classes]] are the wiki's expansion beyond the published lists, covering gaps a peer reviewer surfaces (insider, APT, collusion, model-version regression, jurisdictional).
+Three structural tests sit alongside the catalogs:
+
+- The [[lethal-trifecta|Lethal Trifecta]] identifies exfiltration when private data, untrusted content, and external communication occur together.
+- The [[lethal-bifecta|Lethal Bifecta]] identifies a damaging action when untrusted content meets a sensitive write.
+- Egress-allowlist transitivity applies when an allowlisted destination itself reaches the internet or several agent runs can write to it.
+
+Each is a design-time go/no-go check evaluated across a design rather than an entry counted within one. The [[agentic-ai-threat-classes-2026|five threat classes]] are the wiki's expansion beyond the published lists, covering gaps a peer reviewer surfaces (insider, APT, collusion, model-version regression, jurisdictional).
 
 ## Primary reconciliation — by OWASP ASI category
 
-The ASI Top 10 organizes the table. Each row gives the cross-taxonomy anchors plus the RA plane and CMM domain where the wiki places the primary control. Secondary planes/domains are in parentheses. Codes verified against the published ASI 2026 PDF, the T1–T17 reference model, and ATLAS v5.6.0 per the [[standards-review-owasp-agentic-aivss-2026-Q2|2026-Q2 standards review]].
+The ASI Top 10 organizes the table. Each row gives the cross-taxonomy anchors plus the RA component or boundary and CMM domain where the wiki places the primary control. Sibling rows repeat a category when it has several example controls. Secondary components and domains follow the primary in parentheses. Codes verified against the published ASI 2026 PDF, the T1–T17 reference model, and ATLAS v5.6.0 per the [[standards-review-owasp-agentic-aivss-2026-Q2|2026-Q2 standards review]].
 
-| ASI | Threat | T-codes | LLM Top 10 | MITRE ATLAS | MAESTRO | RA plane | CMM domain | Example control |
+| ASI | Threat | T-codes | LLM Top 10 | MITRE ATLAS | MAESTRO | RA component or boundary | CMM domain | Example control |
 |---|---|---|---|---|---|---|---|---|
-| **ASI01** | Agent Goal Hijack | T6 | `LLM01` | `AML.T0051` | L1, L3 | Runtime (Control) | D4 (D3, D9) | [[llamafirewall\|AlignmentCheck]] CoT audit; HITL on goal change |
-| **ASI02** | Tool Misuse | T2 | `LLM06` | `AML.T0053` | L3, L7 | Control (Egress) | D3 (D4, D5) | Cedar/OPA tool-call policy; [[agentgateway\|AgentGateway]] runtime authz |
-| **ASI03** | Identity & Privilege Abuse | T3, T9 | — | `AML.T0055` | L4 | Identity | D2 (D1) | [[non-human-identity\|Agent ID]] + [[credential-proxy-pattern\|credential proxy]] |
-| **ASI04** | Agentic Supply Chain | T17 | `LLM03` | `AML.T0010` | L3, L7 | Data (Egress) | D8 (D5, D6) | [[ai-bom\|AI-BOM]]; sigstore; pre-install scan |
-| **ASI05** | Unexpected Code Execution | T11 | `LLM05` | — | L4 | Runtime (Control) | D4 (D3) | [[agent-sandboxing\|Sandboxing]]; code-gen/exec separation |
-| **ASI06** | Memory & Context Poisoning | T1 | `LLM04`, `LLM08` | `AML.T0070`, `AML.T0080` | L2 | Data (Observability) | D6 (D7) | [[cognitive-file-integrity\|Cognitive file integrity]]; trust-weighted retrieval; memory partition authorization + per-write provenance[^aix-augintegrity] |
-| **ASI07** | Insecure Inter-Agent Comms | T12, T16 | — | — | L7 | Egress | D5 (D7) | [[a2a-protocol\|A2A]] over TLS + signed Agent Cards |
-| **ASI08** | Cascading Failures | T5 | — | — | cross-layer | Control (Observability) | D3 (D7) | Step-up gates; graph-walk anomaly detection |
-| **ASI09** | Human-Agent Trust Exploitation | T10, T15 | — | — | L7 | Observability (Control) | D7 (D3, D9) | Plan-divergence detection; HITL on sensitive actions |
-| **ASI10** | Rogue Agents | T13 | — | — | L7 | Identity (Observability) | D2 (D7) | Behavioral drift; [[distributed-kill-switch\|distributed kill switch]] |
+| **ASI01** | Agent Goal Hijack | T6 | `LLM01` | `AML.T0051` | L1, L3 | Model gateway; action gateway (policy service) | D4 (D3, D9) | [[llamafirewall\|AlignmentCheck]] CoT audit; HITL on goal change |
+| **ASI02** | Tool Misuse | T2 | `LLM06` | `AML.T0053` | L3, L7 | Policy service; action gateway | D3 (D4, D5) | Cedar/OPA tool-call policy; [[agentgateway\|AgentGateway]] runtime authz |
+| **ASI03** | Identity & Privilege Abuse | T3, T9 | — | `AML.T0055` | L4 | Identity/session service; credential broker | D2 (D1) | [[non-human-identity\|Agent ID]] + [[credential-proxy-pattern\|credential proxy]] |
+| **ASI04** | Agentic Supply Chain | T17 | `LLM03` | `AML.T0010` | L3, L7 | Release admission (retrieval mediator) | D8 (D5, D6) | [[ai-bom\|AI-BOM]] |
+| **ASI04** | Agentic Supply Chain | T17 | `LLM03` | `AML.T0010` | L3, L7 | Release admission (retrieval mediator) | D8 (D5, D6) | sigstore |
+| **ASI04** | Agentic Supply Chain | T17 | `LLM03` | `AML.T0010` | L3, L7 | Release admission (retrieval mediator) | D8 (D5, D6) | Pre-install scan |
+| **ASI05** | Unexpected Code Execution | T11 | `LLM05` | — | L4 | Agent runtime (action gateway) | D4 (D3) | [[agent-sandboxing\|Sandboxing]]; code-gen/exec separation |
+| **ASI06** | Memory & Context Poisoning | T1 | `LLM04`, `LLM08` | `AML.T0070`, `AML.T0080` | L2 | Retrieval mediator; evidence store | D6 (D7) | [[cognitive-file-integrity\|Cognitive file integrity]] |
+| **ASI06** | Memory & Context Poisoning | T1 | `LLM04`, `LLM08` | `AML.T0070`, `AML.T0080` | L2 | Retrieval mediator; evidence store | D6 (D7) | Trust-weighted retrieval |
+| **ASI06** | Memory & Context Poisoning | T1 | `LLM04`, `LLM08` | `AML.T0070`, `AML.T0080` | L2 | Retrieval mediator; evidence store | D6 (D7) | Memory partition authorization + per-write provenance[^aix-augintegrity] |
+| **ASI07** | Insecure Inter-Agent Comms | T12, T16 | — | — | L7 | Authenticated broker in multi-agent adaptation | D5 (D7) | [[a2a-protocol\|A2A]] over TLS + signed Agent Cards |
+| **ASI08** | Cascading Failures | T5 | — | — | cross-layer | Policy service; evidence store | D3 (D7) | Step-up gates; graph-walk anomaly detection |
+| **ASI09** | Human-Agent Trust Exploitation | T10, T15 | — | — | L7 | Approval service; evidence store | D7 (D3, D9) | Plan-divergence detection; HITL on sensitive actions |
+| **ASI10** | Rogue Agents | T13 | — | — | L7 | Identity/session service; evidence store | D2 (D7) | Behavioral drift; [[distributed-kill-switch\|distributed kill switch]] |
 
-Three ASI categories (ASI07, ASI08, ASI10) are new risk classes carrying no LLM Top 10 anchor and no MITRE ATLAS technique as of v5.6.0, which is why the wiki's multi-agent controls lean on the RA Egress and Observability planes rather than an external catalog.
+Three ASI categories (ASI07, ASI08, ASI10) are new risk classes carrying no LLM Top 10 anchor and no MITRE ATLAS technique as of v5.6.0, which is why the multi-agent adaptation and its broker, audit and detection evidence matter beyond the external catalogs.
 
 ## Coverage outside the ASI Top 10
 
 The ASI Top 10 enumerates risks reachable through model use at runtime, so the primary reconciliation above inherits that boundary. The [[owasp-ai-exchange|AI Exchange]] matrix sorts on asset and impact first and carries a lifecycle key on the attack surface, which puts fourteen threat categories in scope that no row above anchors ([permalink](https://owaspai.org/go/aisecuritymatrix/)). Thirteen are rows of the eighteen-row matrix. The fourteenth, direct augmentation data leak, carries a permalink and a control set in the runtime application security threats deep dive with no matrix row of its own.
 
-| Exchange threat category | Asset and impact | Attack surface (lifecycle) | RA plane | CMM domain |
+| Exchange threat category | Asset and impact | Attack surface (lifecycle) | RA component or boundary | CMM domain |
 |---|---|---|---|---|
-| Direct development-environment model poisoning | Model behaviour integrity | Development — engineering environment | Data | D8 (D6) |
-| Data poisoning of train/finetune data | Model behaviour integrity | Development — engineering environment | Data | D6 (D8) |
-| Supply-chain model poisoning | Model behaviour integrity | Development — supply chain | Data | D8 (D6) |
-| Development-time data leak | Training data confidentiality | Development — engineering environment | Data | D6 |
-| Direct development-time model leak | Model confidentiality | Development — engineering environment | Data | D8 |
-| Direct runtime model leak | Model confidentiality | Runtime — break into deployed model | Runtime | D4 |
-| Model exfiltration (input-output harvesting) | Model confidentiality | Runtime — model use | Egress | D5 (D2, D4, D7) |
-| Disclosure of sensitive data in model output | Training data confidentiality | Runtime — model use | Runtime (Data) | D4 (D6) |
-| Model inversion / membership inference | Training data confidentiality | Runtime — model use | Data | D6 |
-| AI resource exhaustion | Model behaviour availability | Runtime — model use | Runtime (Egress) | D4 (D5, D7) |
-| Direct runtime model poisoning | Model behaviour integrity | Runtime — break into deployed model | Runtime | D4 (D8) |
-| Input data leak | Input data confidentiality | Runtime — all IT | Data (Egress) | D6 |
-| Direct augmentation data leak | Augmentation data confidentiality | Runtime — all IT | Data | D6 |
-| Output contains conventional injection | Any asset, CIA | Runtime — all IT | Runtime | D4 |
+| Direct development-environment model poisoning | Model behaviour integrity | Development — engineering environment | Release admission; engineering runner | D8 (D6) |
+| Data poisoning of train/finetune data | Model behaviour integrity | Development — engineering environment | Release admission; development-data access | D6 (D8) |
+| Supply-chain model poisoning | Model behaviour integrity | Development — supply chain | Release admission | D8 (D6) |
+| Development-time data leak | Training data confidentiality | Development — engineering environment | Development-data access; model gateway | D6 |
+| Direct development-time model leak | Model confidentiality | Development — engineering environment | Release admission; model storage | D8 |
+| Direct runtime model leak | Model confidentiality | Runtime — break into deployed model | Agent runtime; model gateway | D4 |
+| Model exfiltration (input-output harvesting) | Model confidentiality | Runtime — model use | Model gateway (identity; evidence store) | D5 (D2, D4, D7) |
+| Disclosure of sensitive data in model output | Training data confidentiality | Runtime — model use | Model gateway; retrieval mediator | D4 (D6) |
+| Model inversion / membership inference | Training data confidentiality | Runtime — model use | Model gateway; data minimization | D6 |
+| AI resource exhaustion | Model behaviour availability | Runtime — model use | Agent runtime; model gateway | D4 (D5, D7) |
+| Direct runtime model poisoning | Model behaviour integrity | Runtime — break into deployed model | Agent runtime; release admission | D4 (D8) |
+| Input data leak | Input data confidentiality | Runtime — all IT | Retrieval mediator; model gateway | D6 |
+| Direct augmentation data leak | Augmentation data confidentiality | Runtime — all IT | Retrieval mediator | D6 |
+| Output contains conventional injection | Any asset, CIA | Runtime — all IT | Action gateway; output consumer | D4 |
 
 The three poisoning rows differ by where the manipulation happened and agree on what it produces, which is why they carry the same asset and impact and split across two domains. Data poisoning and development-environment model poisoning both occur inside the organization's own engineering environment; supply-chain model poisoning arrives with an artifact obtained from elsewhere, which places it primarily at [[agentic-ai-security-cmm-d8-supply-chain|D8]] where acquired artifacts are graded. The Exchange states the receiver's position plainly: protection of model parameters at the moment of manipulation is not in the hands of the party that obtained the model, so what remains to that party is the data-poisoning control set, the broad-poisoning controls, and supply chain management, with the rest owed by the supplier (§3.1.3).[^aix-supplymodelpoison] The D6 secondary reflects the routes through which a poisoned artifact reaches the graded corpus. Where the supplied model is used for further training, the Exchange names the result a transfer learning attack.[^aix-supplymodelpoison]
 
 The D6 assignment on the inversion and membership-inference row names the domain that owns the data. The Exchange lists sensitive data limitation first among the controls against both threats,[^aix-inversion-ttr] and [[agentic-ai-security-cmm-d6-data-rag|D6]] grades three controls of that group at L3 and L4: data minimization, short retention and training-data obfuscation. D6 grades no control specific to either threat. Its entitlement thread consults an access model held beside the data, and a model's weights carry none, so the one control the Exchange names for these two threats alone, a model kept too small to store individual training records, sits at training time and outside what this CMM assesses.
 
-The same reading applies to the two development-time leak rows, with one exception. [[agentic-ai-security-cmm-d6-data-rag|D6]] grades the corpus, the augmentation store, agent memory and the validation corpus, and [[agentic-ai-security-cmm-d8-supply-chain|D8]] grades acquisition and provenance; neither grades a boundary around the engineering environment, and [[agentic-ai-security-cmm-crosswalk|the crosswalk]] records that absence for `DEV SECURITY`, `SEGREGATE DATA` and `CONF COMPUTE` alike. Neither cell claims a graded environment boundary; D6's validation-corpus criterion reaches the test-data half of §3.2.1 and no further — it grades the corpus being held apart, not who inside the environment can reach it.
+The development-time leak rows require evidence from several owners. [[agentic-ai-security-cmm-d6-data-rag|D6]] grades the corpus, augmentation store, memory and validation corpus; [[agentic-ai-security-cmm-d8-supply-chain|D8]] grades engineering review, acquired parts, implementation checks, tests and release admission. Neither domain alone proves who can reach every development asset. The [[agentic-ai-security-ra-gaps|RA gaps register]] places `DEV SECURITY` access decisions at the identity service and a development-data mediator, with `SEGREGATE DATA` and `CONF COMPUTE` treated as deployment-specific designs. An assessor should test the actual development boundary and supplier-held steps before claiming those controls.
 
-The model-exfiltration row carries three secondary domains and the [[agentic-ai-security-cmm-2026|CMM]]'s dimension-3 row carries four domains with no primary. Both readings derive from one control set: the Exchange routes the query-based route to a replica through five general input controls, which the [[agentic-ai-security-cmm-crosswalk|crosswalk]] anchors at D2 (`MODEL ACCESS CONTROL`), D4 (`ANOMALOUS INPUT HANDLING`, `UNWANTED INPUT SERIES HANDLING`), D5 (`RATE LIMIT`), and D7 (`MONITOR USE`). D5 is primary here because the threat's mechanism is query volume through a permitted interface, and `RATE LIMIT` is the control aimed at that volume. The CMM's appendix states the spread with no primary because it maps an anchor threat to every domain a control lands in. Neither cell measures coverage: the Exchange states that where an attacker can reach the model and the model allows intensive use, the threat is typically hard to protect against.[^aix-exfil-ttr]
+The model-exfiltration row places D5 first because query volume through a permitted model interface is the attack path and rate limiting is the nearest control. D2 contributes model-access authorization, D4 input handling, and D7 use monitoring. These are control-owner assignments, not a claim that the CMM grades model-exfiltration resistance as one outcome. The Exchange states that the threat is typically hard to prevent where an attacker can reach a model that permits intensive use.[^aix-exfil-ttr]
 
-The resource-exhaustion row is the one entry in this table keyed to an availability impact; every other row is keyed to confidentiality or integrity. The Exchange names two threat-specific controls for it and they anchor in two domains: `DOS INPUT VALIDATION` at [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and `LIMIT RESOURCES` at [[agentic-ai-security-cmm-d5-egress-network|D5]].[^aix-resourceexhaustion-ttr] D4 is primary because validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries the fleet-wide consumption correlation the Exchange names; the nearest graded capability is [[agentic-ai-security-cmm-d7-observability|D7]]'s L5+ cross-agent joint-distribution baseline, which that domain marks research-stage, and no level grades consumption as a signal.
+The resource-exhaustion row is the one entry in this table keyed to an availability impact. Every other row is keyed to confidentiality or integrity. The Exchange names two threat-specific controls for it and they anchor in two domains: `DOS INPUT VALIDATION` at [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]] and `LIMIT RESOURCES` at [[agentic-ai-security-cmm-d5-egress-network|D5]].[^aix-resourceexhaustion-ttr] D4 is primary because validation acts before the cost is incurred, and D5 grades the gateway ceilings that bound cost already being incurred. D7 is secondary and carries the fleet-wide consumption correlation the Exchange names. [[agentic-ai-security-cmm-d7-observability|D7-JOINT]] at L5 grades joint behavior on interacting paths, while no criterion specifically requires fleet-wide cost-per-task detection.
 
 > [!gap] Evasion has no row in this table
 > Evasion is a matrix row that no ASI category anchors, on the same footing as the AI resource exhaustion row added above, and it is absent here. This table also does not state which of the eighteen matrix rows it treats as already anchored, so its count cannot be checked from the page. Resolving both means re-deriving the anchored set row by row.
@@ -129,7 +140,7 @@ The bottom four rows entered this table from the runtime deep dive and carry the
 
 Two further rows now carry permalinks from the development-time deep dive: development-time data leak ([permalink](https://owaspai.org/go/devdataleak/)) and direct development-time model leak ([permalink](https://owaspai.org/go/devmodelleak/)). Both hold matrix rows under the matrix's own names, so the permalink adds a control set to a row that already existed rather than a row to the table.
 
-Disclosure of sensitive data in model output is the one row in this table that carries anchors in two other taxonomies without holding an ASI row: the Exchange cites OWASP LLM Top 10 `LLM02:2025` Sensitive Information Disclosure and the MITRE ATLAS LLM Data Leakage technique (`AML.T0057`) for it.[^aix-disclosureoutput] The ASI Top 10 ranks agentic risks reachable through the agent's actions, and disclosure through ordinary model output is a generative-AI risk the agentic list inherits rather than ranks, which is the same boundary the introduction to this section states. Its domain assignment follows the control rather than the asset: `SENSITIVE OUTPUT HANDLING` is a runtime output-side control anchored to D4 in the [[agentic-ai-security-cmm-crosswalk|crosswalk]], with D6 secondary because the augmentation-data supply route is graded there.
+Disclosure of sensitive data in model output is the one row in this table that carries anchors in two other taxonomies without holding an ASI row: the Exchange cites OWASP LLM Top 10 `LLM02:2025` Sensitive Information Disclosure and the MITRE ATLAS LLM Data Leakage technique (`AML.T0057`) for it.[^aix-disclosureoutput] The ASI Top 10 ranks agentic risks reachable through the agent's actions, and disclosure through ordinary model output is a generative-AI risk the agentic list inherits rather than ranks, which is the same boundary the introduction to this section states. Its domain assignment follows the control rather than the asset: runtime output handling belongs to D4, with D6 secondary because the augmentation-data supply route is graded there.
 
 The direction reverses for four ASI categories. ASI07, ASI08, ASI09, and ASI10 have no Exchange row: the Exchange covers multi-agent behaviour in prose under the general matrix rather than as threat categories ([permalink](https://owaspai.org/go/agenticaioverview/)). That boundary is specific to the multi-agent categories. The Exchange does publish agentic threat entries where the failure is single-agent — [[agent-escape|agent escape]] carries its own permalink, control set, and worked example, and agent sandboxing carries its own control permalink.[^aix-escape][^aix-sandbox] Agent escape cross-cuts ASI02, ASI03, and ASI05, so it sits outside the ASI Top 10 table above; augmentation data manipulation is anchored inside it at ASI06.[^aix-augmanip] The two artifacts partition the space on different axes, and each reaches material the other leaves out.
 
@@ -137,15 +148,15 @@ One qualification applies to every use of the matrix on this page. The eighteen 
 
 ## The five threat classes — gaps beyond the published lists
 
-The [[agentic-ai-threat-classes-2026|five threat classes]] do not map one-to-one onto ASI categories; they are cross-cutting adversary models that a CISO raises and the standard lists under-serve. Each lands in two or more CMM domains, and every class but Class 5 in two or more planes.
+The [[agentic-ai-threat-classes-2026|five threat classes]] do not map one-to-one onto ASI categories; they are cross-cutting adversary models that a CISO raises and the standard lists under-serve. Each lands in two or more CMM domains, and every class but Class 5 in two or more component boundaries.
 
-| Class | Threat | RA planes | CMM domains | Single highest-leverage control |
+| Class | Threat | RA components or boundaries | CMM domains | Single highest-leverage control |
 |---|---|---|---|---|
-| **1** | AI-aware insider | Identity, Control, Data, Observability | D2, D3, D6, D8, D9 | Customer-owned, version-pinned eval harness over every artifact ([[ai-bom\|AI-BOM]] + always-on eval) |
-| **2** | Long-running APT campaign | Runtime, Egress, Observability | D4, D5, D7, D9 | Cross-version eval continuity + sustained AI-workload threat hunting |
-| **3** | Collusion (agent–agent / insider–agent / agent–human) | Control, Runtime, Observability | D3, D4, D7, D9 | Mutually-blind monitor isolation + output canonicalization + deception probes |
-| **4** | Model-version degradation | Runtime, Data | D4, D6, D8, D9 | Customer eval suite versioned independently of the vendor; pin-by-hash |
-| **5** | Jurisdictional adversary | None | D1, D9 | Multi-vendor model abstraction; jurisdiction tagging; vendor-cutoff playbook |
+| **1** | AI-aware insider | Identity, policy, retrieval and evidence | D2, D3, D6, D8, D9 | Customer-owned, version-pinned eval harness over every artifact ([[ai-bom\|AI-BOM]] + always-on eval) |
+| **2** | Long-running APT campaign | Agent runtime, model gateway and evidence | D4, D5, D7, D9 | Cross-version eval continuity + sustained AI-workload threat hunting |
+| **3** | Collusion (agent–agent / insider–agent / agent–human) | Policy, action gateway and evidence | D3, D4, D7, D9 | Mutually-blind monitor isolation + output canonicalization + deception probes |
+| **4** | Model-version degradation | Model gateway, retrieval and release admission | D4, D6, D8, D9 | Customer eval suite versioned independently of the vendor; pin-by-hash |
+| **5** | Jurisdictional adversary | Provider and organizational boundary | D1, D9 | Multi-vendor model abstraction, jurisdiction tagging and vendor-cutoff playbook |
 
 Class 3 is no longer forward-looking on its agent–agent leg. The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] is a primary-source production instance: evaluation agents in network-isolated sandboxes used write access to a shared internal package manager as a message board, propagated each exploit to every concurrent run, delegated subtasks to one another, and escalated past a scope boundary they had stated, on the evidence that peers had already crossed it (Dalton and Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]). Two properties matter for the control set. The coordination ran in plaintext on infrastructure nobody was monitoring for messages, so monitor isolation and output canonicalization, the controls Class 3 leans on, address a different mechanism than the one observed. The technique also survived remediation inside model weights, which no control on the compromised estate reaches. The insider–agent and agent–human legs of the class remain forward-looking. The generalized pattern is [[offensive-agent-collective|Offensive Agent Collective]].
 
@@ -153,15 +164,17 @@ Classes 1, 2, and 4 collapse to one observable signal — a delta against a trus
 
 ## Structural tests — design-time go/no-go
 
-Each of the three is a necessary-condition test applied at design time, before enumeration, and none is a catalog entry. They map to the planes that break the condition rather than to a single threat.
+Each of the three is a necessary-condition test applied at design time, before enumeration, and none is a catalog entry. Sibling rows repeat a test when several components can break its condition. The repeated Lethal Trifecta rows map each breaker to its owning domain. The other rows describe combined control paths.
 
-| Test | Condition | What it predicts | RA plane (breaker) | CMM domain |
+| Test | Condition | What it predicts | RA enforcement point (breaker) | CMM domain |
 |---|---|---|---|---|
-| [[lethal-trifecta\|Lethal Trifecta]] | private data + untrusted content + external comms | Exfiltration at scale | Control (downgrade) + Egress (remove comms) | D3, D5 |
-| [[lethal-bifecta\|Lethal Bifecta]] | untrusted content + sensitive write | Damaging action | Control (tool annotation) + Runtime (review gate) | D3, D4 |
-| Egress-allowlist transitivity | An allowlisted destination itself reaches the internet, or is writable by more than one agent run | Indirect egress and an inter-run channel while the network policy is correctly enforced | Egress (allowlist the reachable set, not the hostname) | D5, D3, D8 |
+| [[lethal-trifecta\|Lethal Trifecta]] | private data + untrusted content + external comms | Exfiltration at scale | Retrieval mediator | D6 |
+| [[lethal-trifecta\|Lethal Trifecta]] | private data + untrusted content + external comms | Exfiltration at scale | Model gateway | D5, D6 |
+| [[lethal-trifecta\|Lethal Trifecta]] | private data + untrusted content + external comms | Exfiltration at scale | Action gateway | D3, D5 |
+| [[lethal-bifecta\|Lethal Bifecta]] | untrusted content + sensitive write | Damaging action | Policy service; approval and action gateways | D3, D4 |
+| Egress-allowlist transitivity | An allowlisted destination itself reaches the internet, or is writable by more than one agent run | Indirect egress and an inter-run channel while the network policy is correctly enforced | Network route; allowlisted service | D5, D3, D8 |
 
-Removing any one leg of the trifecta, or interposing a deterministic gate on the bifecta's write leg, collapses the structural risk regardless of which catalog threat is in play. This is why the [[agentic-ai-security-reference-architecture|RA]] treats the trifecta as a Design Principle rather than a Threat-Control Matrix row.
+Removing any one leg of the trifecta, or interposing a deterministic gate on the bifecta's write leg, collapses the structural risk regardless of which catalog threat is in play. The [[agentic-ai-security-reference-architecture|RA]] instead tests the relevant retrieval, action, and external-route boundaries.
 
 The transitivity test asks two questions of every allowlisted destination: what it can reach, and who else can write to it. An egress policy is enforced against the destinations the agent names and leaves the destinations those destinations name outside its scope, so a single permitted internal service with broad outbound access re-opens the external-communication leg of the trifecta while the policy holds. The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] is the worked case: sandboxes with the internet disabled were permitted one dependency, an internal package-manager and caching proxy that had broad internet access of its own, and the same service supplied both the egress path and the shared writable medium the agents used to reach each other. Apply the test at design time to caching proxies, package managers, artifact stores, CI runners, and internal API gateways — anything reachable by many workloads and by the outside — and record fleet-wide write access to such a service as a finding rather than a configuration detail. The paired control is per-run write scoping, since a service every workload can write to is an inter-agent channel whether or not one was intended.
 
@@ -175,7 +188,7 @@ Three consequences for the crosswalk above.
 
 **A structural test earns its place by resisting enumeration, and this one qualifies.** The three tests in the section above — trifecta, bifecta, egress-allowlist transitivity — are conditions evaluated across a design rather than entries counted within it, which is why they sit outside the ASI table. Autonomous orchestration has the same property: it is a relation between techniques rather than a technique of its own, and Anthropic's dataset demonstrates the point by mapping all 13,873 of its observations successfully while still failing to describe what distinguished the top of its distribution.[^nav-gap]
 
-**Actor sophistication is no longer usable as a triage input to this crosswalk.** Anthropic finds assessed technical sophistication correlating with the rest of the composite risk score at r = 0.28 and technique breadth at r = 0.27 across the 832 accounts, with interface choice carrying no signal at all.[^nav-predictors] Any reading of the tables here that begins by estimating adversary capability and selecting a threat set accordingly has lost its first step. Select on reachable structure — which planes an attacker can touch — rather than on who is assumed to be attacking. The concept page is [[capability-floor-collapse|Capability Floor Collapse]].
+**Actor sophistication is no longer usable as a triage input to this crosswalk.** Anthropic finds assessed technical sophistication correlating with the rest of the composite risk score at r = 0.28 and technique breadth at r = 0.27 across the 832 accounts, with interface choice carrying no signal at all.[^nav-predictors] Any reading of the tables here that begins by estimating adversary capability and selecting a threat set accordingly has lost its first step. Select on reachable structure — which boundaries an attacker can cross — rather than on who is assumed to be attacking. The concept page is [[capability-floor-collapse|Capability Floor Collapse]].
 
 ## STRIDE-AI as the elicitation overlay
 
@@ -192,7 +205,7 @@ Three consequences for the crosswalk above.
 
 ## Reading guide
 
-For a design-time assessment, start with the structural tests, run [[stride-ai-2026|STRIDE-AI]] elicitation against the architecture, name the results with the ASI/T-code rows above, check the five classes for what the standard lists miss, then follow each row's RA plane and CMM domain to the control. The full method and a worked example over a multi-agent RAG system with MCP servers are on [[threat-modeling-for-ai|Threat Modeling for AI]]. Where the question is alignment to a normative standard rather than agentic risk ranking, start from the [[owasp-ai-exchange|AI Exchange]]: it is the only entry above that states an official liaison contribution to prEN 18282 and ISO/IEC 27090.[^aix-liaison]
+For a design-time assessment, start with the structural tests, run [[stride-ai-2026|STRIDE-AI]] elicitation against the architecture, name the results with the ASI/T-code rows above, check the five classes for what the standard lists miss, then follow each row's RA boundary and CMM domain to the control. The full method and a worked example over a multi-agent RAG system with MCP servers are on [[threat-modeling-for-ai|Threat Modeling for AI]]. Where the question is alignment to a normative standard rather than agentic risk ranking, start from the [[owasp-ai-exchange|AI Exchange]]: it is the only entry above that states an official liaison contribution to prEN 18282 and ISO/IEC 27090.[^aix-liaison]
 
 ## See also
 

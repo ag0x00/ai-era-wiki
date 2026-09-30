@@ -40,7 +40,7 @@ The prompt-volume-to-alert ratio is a signal-to-noise metric for agentic AI secu
 prompt_volume_to_alert_ratio = total_prompts_processed / actionable_alerts_generated
 ```
 
-A high ratio indicates an effective behavioral detection layer — one that can process large volumes of agent activity and surface only the anomalies that require human attention. A low ratio indicates either insufficient detection (many anomalies missed) or, more commonly, excessive noise (analysts reviewing low-confidence alerts and burning out).
+A high ratio means few actionable alerts relative to prompt volume; a low ratio means more. Neither value alone measures detection quality, because attack prevalence, missed attacks, and alert-triage rules also change the result.
 
 The ratio counts alerts raised rather than attacks present, so a high reading is consistent with two different states. The [[owasp-ai-exchange|OWASP AI Exchange]] names the evasion path that separates them: an attacker can distribute inputs across multiple identities or sources specifically to reduce detectability.[^aix-unwanted] Activity spread beneath an identity-keyed baseline adds prompts to the numerator and no alerts to the denominator, which raises the ratio. A rising ratio therefore reports either improving precision or successful evasion, and the metric alone does not separate them. Read it alongside a recall measure — red-team injections that the detection layer was expected to raise, and did — rather than as an efficacy figure on its own.
 
@@ -66,7 +66,7 @@ Without purpose-built behavioral detection, a naive alerting policy on 1.8M dail
 
 ## Relationship to maturity levels
 
-In the [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]], the ratio is graded in one place. [[agentic-ai-security-cmm-d7-observability|D7 Observability and Detection]]'s D7-ALERT-RATIO, at L5, requires each agent's ratio to hold within a range the organization documents for at least a quarter, beside D7-ALERT-ACTIONABLE, which compares the analyst-actionable alert rate with a target the organization documents. The alerts the ratio counts arrive one level earlier, from the L4 detections: D7-BASELINE, for one, runs a detection over each agent's baseline of tool calls in production and raises its alerts into the security monitoring queue. A program below L4 raises none of the alerts the ratio counts, and a program at L4 can measure the ratio without yet holding it to a documented range across a quarter.
+The current [[agentic-ai-security-cmm-2026|Agentic AI Security CMM]] treats this ratio as contextual operating data, not a scored criterion. [[agentic-ai-security-cmm-d7-observability|D7 Observability and Detection]] grades production detections such as D7-BASELINE at L4. D7-ALERT-ACTIONABLE at L5 measures the share of those alerts analysts find actionable against a documented target and records tuning when the result falls short. The prompt-volume-to-alert ratio can help explain workload and noise, but its numerator and denominator cannot establish recall.
 
 Hot-path inline scoring and automatic containment above a threshold are the Salesforce deployment's stated roadmap. No D7 criterion requires either, and automatic suspension of the session is one of the two dispositions D7-DRIFT-ROUTE admits for a session drift alert, beside review by a person in a named role. Reading the roadmap as maturity levels reverses the direction of evidence, since the CMM grades capabilities that operate in production.
 

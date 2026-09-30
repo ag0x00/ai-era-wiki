@@ -3,7 +3,7 @@ type: framework
 title: "AWS Agentic AI Security Scoping Matrix"
 address: c-000001
 created: 2026-05-07
-updated: 2026-08-21
+updated: 2026-09-29
 tags:
   - frameworks
   - aws
@@ -31,6 +31,11 @@ sources:
   - "[[.raw/articles/aws-agentic-ai-security-scoping-matrix-2026-05-07.md]]"
 coined_by:
   - "[[aws]]"
+verified: 2026-09-29
+verified_against:
+  - ".raw/articles/aws-agentic-ai-security-scoping-matrix-2026-05-07.md"
+verified_findings: 0
+verified_note: "Archived AWS summary and original AWS Security Blog read; source and CMM-scope claims corrected."
 ---
 
 # AWS Agentic AI Security Scoping Matrix
@@ -57,7 +62,7 @@ Agency = what is allowed; autonomy = how independently the agent decides. The di
 
 **Scope 1** — agents are essentially read-only, following predefined execution paths. Generative AI processes data within individual workflow nodes; conditional branching only where explicitly designed. Tool access restricted to predefined workflow steps.
 
-**Scope 2** — bidirectional human interaction for context clarification; agent-initiated requests for additional information; cryptographically signed approval decisions are the canonical implementation pattern.
+**Scope 2** — bidirectional human interaction for context clarification and agent-initiated requests for information; AWS lists cryptographically signed approval decisions among its implementation considerations.
 
 **Scope 3** — dynamic planning and tool selection during execution. Agents have direct access to external APIs and persistent memory across sessions. Optional human intervention points for trajectory optimization but no per-action approval.
 
@@ -80,52 +85,40 @@ The progression across the six dimensions is the matrix's primary content. Imple
 
 The matrix names five patterns that apply across scopes:
 
-- **Progressive autonomy deployment** — start at Scope 1 or 2; advance as confidence and security capabilities mature. Echoes the wiki's [[agentic-ai-security-cmm-2026|CMM]] level-based progression discipline.
+- **Progressive autonomy deployment** — start at Scope 1 or 2; advance when the deployment's authority, oversight, and evidence support the changed scope. The [[agentic-ai-security-cmm-2026|CMM]] provides a separate security-capability profile for each deployment shape.
 - **Layered security architecture** — defense-in-depth across network, application, agent, and data layers. Cites the **confused deputy problem** as a load-bearing reason that machine and human identity must both be addressed (a service or human with lesser permissions elevates permissions through an agent that has more).
 - **Continuous validation loops** — automated systems that continuously verify agent behavior against expected patterns with escalation procedures for detected deviations.
 - **Human oversight integration** — meaningful oversight through strategic checkpoints. The matrix makes an explicit point that human requirements **shift focus rather than diminish** as scope advances: instantiation and approval demands decrease, but audit, assessment, validation, and complex-control requirements increase.
 - **Graceful degradation** — automatic autonomy reduction on security events. If agents act beyond intended bounds, detective controls inject tighter restrictions (more HITL, reduced available actions, or full disable). Maps onto the wiki's [[distributed-kill-switch|Distributed Kill Switch]] and [[behavioral-anomaly-detection-for-agents|Behavioral Anomaly Detection]].
 
-## Cross-walk to wiki ladders
+## Relationship to the CMM and action tiers
 
-Several existing ladders sit in this conceptual space. Mapping the AWS scopes against them:
+AWS scope describes the authority granted to a deployment and how independently it acts. The [[agentic-ai-security-cmm-2026|AAI-S CMM]] grades the security outcomes evidenced for that deployment across nine domains. No AWS scope implies a CMM level: a full-agency system can have weak controls, while a read-only system can show mature controls for the criteria that apply to it. The assessor records current and risk-selected target levels by domain, with confidence and blockers.
 
-| AWS Scope | Wiki [[agentic-ai-security-cmm-2026\|CMM]] level | [[csa-maestro\|CSA ATF]] stage | Gating tier for consequential actions ([[least-agency-principle\|Least Agency]]) |
-|---|---|---|---|
-| **1** No agency | L1–L2 (Initial / Repeatable) | **Intern** (Observe + Report) | **Block** on every consequential action; reads run at auto |
-| **2** Prescribed agency | L2–L3 (Repeatable / Defined) | **Junior** (Recommend + Approve) | **Confirm** (HITL on consequential actions) |
-| **3** Supervised agency | L3–L4 (Defined / Managed) | **Senior** (Act + Notify) | **Notify** (autonomous with notification) |
-| **4** Full agency | L4–L5+ (Managed / Optimizing / Leading-edge) | **Principal** (Autonomous) | **Auto** (autonomous within agency bounds) |
+[[least-agency-principle|Action-risk tiers]] describe individual actions. A supervised-agency deployment can permit routine reads automatically, require confirmation for a consequential write, and block another action outright. Scope classification informs the threat model and target selection; the action policy and observed evidence establish whether the selected controls work. [[csa-maestro|CSA ATF]] stages provide a separate autonomy vocabulary and are not CMM score conversions.
 
-**AWS scopes and CMM levels measure different things.** The AWS matrix axes are **agency + autonomy** (what the agent is allowed and how independently it decides). The wiki's [[agentic-ai-security-cmm-2026|CMM]] axis is **organizational maturity** (how systematically the security program is designed, measured, and improved). They are orthogonal — a Scope-4 deployment can be at CMM L1 if its security program is ad-hoc, and a Scope-1 deployment can be at CMM L5 if the organization has implemented the full nine-domain control set even though it never lets agents act. The crosswalk above gives the *typical* CMM levels at which each scope is responsibly deployable, not an equivalence. The action-risk tier column is a third kind of object again: a scope describes a deployment, while a tier describes one action, so a Scope-3 deployment still holds auto-tier reads and block-tier prohibitions alongside the notify-tier default the row names.
+## Terminology and boundaries
 
-## Stickiness assessment (2026-05-07, ~6 months post-publication)
+Agency and autonomy answer different questions: what the agent may do, and how independently it may decide. [[csa-maestro|CSA ATF]] also discusses scope of action and autonomy, but its stages are not conversions of AWS scopes. The CMM's five levels grade security capability, not either of those properties.
 
-The user flagged the matrix's nomenclature as potentially "sticky." Survey of adjacent literature six months out:
-
-- **Agency vs autonomy distinction**: **sticky**. The two-axis framing (what the agent may do vs how independently it decides) appears in CSA ATF (which separates "scope of action" gating from "stage of autonomy"), in [[breaking-the-lethal-trifecta-talk|Bullen's Stripe talk]] (where "agency" implicitly means action-side capability separate from autonomy), and in OWASP's Least Agency framing. AWS's contribution is naming the distinction explicitly and giving it formal definitions.
-- **The four-scope ladder structure**: **moderately sticky**. The 4-tier structure is convergent — every major framework now ships a 3–5 tier autonomy ladder (CSA ATF: 4 tiers; the least-agency action-risk tiers: 4; the wiki's CMM: 5 tiers). The *shape* is sticky; AWS's specific *names* (No / Prescribed / Supervised / Full Agency) less so — CSA ATF's Intern/Junior/Senior/Principal naming has gained more practitioner traction.
-- **"Scoping Matrix" framing**: **AWS-specific**. The framing is inherited from the GenAI Scoping Matrix and is unlikely to be adopted by competing frameworks who have their own terminology. Wiki should use "AWS Agentic AI Security Scoping Matrix" as the full name when citing.
-- **The six security dimensions**: **moderate**. The dimension names (especially "Agency perimeters and policies" and "Identity context") are AWS-flavored; the *content* of each dimension overlaps heavily with the wiki's [[agentic-ai-security-cmm-2026|CMM]] D2–D6 per-plane domains and OWASP control families. Watch whether the names propagate.
-- **"Confused deputy problem"**: **established**. Not novel to AWS — this is 1980s computer-security terminology (Hardy, 1988) that the matrix references rather than coins.
-- **"Graceful degradation"**: **established**. Standard reliability-engineering term; the matrix's contribution is its application to autonomy reduction on security events.
+The matrix applies established security ideas, including the confused-deputy problem and graceful degradation, to agents. Its distinctive contribution is a four-scope description of permitted action and human oversight, with control considerations for each scope. Use the full AWS framework name when attributing its scope labels.
 
 ## Limitations
 
-- **Maturity ≠ scope**: see the key-insight callout above. The matrix does not prescribe organizational maturity; it characterizes deployment scope.
-- **No threat model**: the matrix names *security focus* per scope but does not enumerate threats systematically. For threat coverage, pair with [[mitre-atlas|MITRE ATLAS]] (`AML.T####` techniques) and [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]] (ASI01–ASI10).
-- **No compliance mapping**: the matrix is not mapped to NIST AI RMF, ISO 42001, EU AI Act, or other compliance frameworks. Users who need a compliance crosswalk must do their own.
-- **AWS-centric examples**: implementation guidance assumes AWS infrastructure. Cross-cloud or on-prem implementations need translation.
+- **Maturity and scope differ**: the matrix characterizes deployment authority and autonomy. It does not establish a CMM domain level.
+- **Threat coverage**: the AWS article's scope descriptions name security concerns but provide no systematic threat inventory. For threat coverage, pair the matrix with [[mitre-atlas|MITRE ATLAS]] (`AML.T####` techniques) and [[owasp-agentic-ai-top-10|OWASP Agentic AI Top 10]] (ASI01–ASI10).
+- **Compliance mapping**: the article's matrix does not map its scopes to NIST AI RMF, ISO 42001, or the EU AI Act. A compliance claim needs a separate clause-to-control crosswalk.
+- **Implementation examples**: the article uses a calendaring workflow and names control properties, but leaves concrete product selection, deployment topology, and evidence tests to the implementer.
 
 ## Use cases
 
 - **Scope assessment** — useful as a first-pass classifier when intake-reviewing an agentic deployment. Answers "what scope are we in?" before deeper threat-modeling.
 - **Progressive-deployment roadmaps** — anchor the discipline of starting at Scope 1 or 2 and earning advancement to Scope 3 or 4.
-- **Cross-vendor terminology** — pair with the crosswalk above when reading vendor documentation that uses different ladder names for adjacent concepts.
+- **Cross-vendor terminology** — use the scope and action-tier distinction above when reading vendor documentation that uses different ladder names for adjacent concepts.
 
 ## Provenance
 
-Authored by [[aaron-brown|Aaron Brown]] and [[matt-saner|Matt Saner]], AWS Security; published on the AWS Security Blog 2025-11-21. Source captured at [[aws-agentic-ai-security-scoping-matrix-blog|the source-summary page]]; original article URL recorded in `sources:` frontmatter.
+Authored by [[aaron-brown|Aaron Brown]] and [[matt-saner|Matt Saner]] of AWS Security and published on the AWS Security Blog on 2025-11-21. The archived summary is [[aws-agentic-ai-security-scoping-matrix-blog|the source-summary page]]. The original article is linked below.
 
 <!-- sources:auto -->
 ## Sources

@@ -55,7 +55,7 @@ verified_against:
   - ".raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md"
   - ".raw/talks/scaling-agentic-ai-cios-2026-05-01.md"
 verified_findings: 0
-verified_note: "Six findings fixed on the page. Also opened NIST AI 100-1 (GOVERN 1.6/2.1, PDF p.28) and the Agent 365 Learn clip, which the page reaches only by URL; Falcon, Ping, agentdesktop, Wiz and Prisma rows checked against live URLs, Okta against its vault page only."
+verified_note: "Gartner guide, CIO talk, Cyera archive, NIST AI 100-1 and live product pages checked in the agent-catalog review; D2 coordinate summary reconciled with the 2026-09-29 CMM redesign. Okta checked against its vault page only."
 ---
 
 # AI Agent Catalog
@@ -92,22 +92,22 @@ The Market Guide's catalog definition names identity, capabilities, interaction 
 | **Interaction endpoints** | APIs, gateways, MCP servers it consumes or exposes |
 | **Authentication requirements** | What credentials, scopes, or tokens it needs to operate |
 | **Lineage** | Who created it, when, from what template; deployment history |
-| **Risk score** | Computed from capabilities × data access × autonomy × usage history |
+| **Risk score** | Assessed from capabilities, data access, autonomy, and observed use; the scoring method is deployment-specific |
 | **Owner mapping** | Human owner (responsible party) + machine owner (parent agent or platform) |
 | **Status** | Active, deprecated, sandboxed, blocked, decommissioned |
 
 Gartner calls this metadata bundle an **agent card**. It is analogous to a SaaS app's profile in a CASB inventory, applied to agents.
 
-## Discovery: registered + unregistered + shadow + rogue
+## Discovery states and risk labels
 
-The catalog must enumerate four populations.
+Gartner names registered, unregistered, shadow, and rogue agents as catalog concerns. These labels overlap: an unregistered agent may be shadow, and a registered agent may become rogue. Record discovery source and current status separately.
 
-| Population | How each is discovered |
+| Label | How to identify it |
 |---|---|
-| **Registered** | The agent self-registers with the IAM / agent platform on creation |
-| **Unregistered** | Discovered via network telemetry, identity provider observation, or platform-API enumeration; backfilled into the catalog |
-| **Shadow** | [[shadow-ai\|Shadow AI]] / [[shadow-automation\|Shadow Automation]]: agents created outside sanctioned platforms (developer-side, BYOAI, ungoverned IDE extensions and desktop agent harnesses) |
-| **Rogue** | Agents whose behavior diverges from declared intent or whose identity has been compromised |
+| **Registered** | Compare the platform or identity-provider registry with the deployment inventory. |
+| **Unregistered** | Find an agent in endpoint, network, or platform telemetry that the registry omits. |
+| **Shadow** | Find an unsanctioned agent in developer configurations, endpoints, or procurement records; see [[shadow-ai\|Shadow AI]] and [[shadow-automation\|shadow automation]]. |
+| **Rogue** | Investigate behavior that diverges from declared intent or evidence that its identity was compromised. |
 
 The Market Guide lists the catalog as a mandatory feature, so a program without one lacks the enumeration the other guardian-agent functions depend on.[^mg-def]
 
@@ -150,7 +150,7 @@ The Market Guide expects enterprise-owned, independent guardian agents to provid
 - Identity: Ping Identity's [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]].[^ping]
 - Infrastructure: Solo.io's open-source [[agentdesktop|agentdesktop]].[^agentdesktop]
 
-The last three arrived in the first week of September 2026, and each discovers agents on one surface. The Cyera release is a vendor self-report that states no coverage figure and cites no third-party evaluation, and none of the four releases gives a coverage figure across the four populations, so whether any tool has closed the four-population gap remains open.
+The last three arrived in the first week of September 2026, and each discovers agents on one surface. The Cyera release is a vendor self-report that states no coverage figure and cites no third-party evaluation. None of the four releases gives comparable coverage across identity platforms, endpoints, and agent hosts. An assessor must compare each discovery source with the deployment's actual surfaces rather than infer completeness from a product claim.
 
 ## Placement in this wiki
 
@@ -168,19 +168,19 @@ The catalog is the inventory layer for the identity pages and a mandatory featur
 
 [[agentic-ai-security-cmm-d2-identity|CMM D2: Identity and Authorization]], the identity domain of the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]], grades one deployment at a time, and the catalog is the artifact behind the following D2 criteria:
 
-- D2-INVENTORY, at L2: an inventory records each agent in the deployment and every non-human identity it holds, and each identity's entry names its agent. An inventory kept by hand meets it.
-- D2-OWNER, at L3: every agent and every non-human identity in the deployment names a human owner whom the personnel record shows as current. The bar is every one, with no percentage threshold, because the deployment's own design enumerates its identities and one unowned identity inside it is the failure the criterion grades.
-- D2-COUPLING, at L3, and D2-BASELINE, at L4: the inventory classes each credential as coupled or decoupled, and each non-human identity carries a behavioral baseline with a detection.
-- D2-REGISTRY and D2-DISCOVER, at L5: a registry the deploy pipeline writes through an API holds each agent's identity graph, and scheduled discovery reports every agent the registry does not hold until each is registered or removed.
-- D2-FEDERATE and D2-FEDERATE-RECONCILE, at L5+: agent identities federate across identity platforms from different vendors and reconcile into one identity graph, the problem the first item under Open issues records as open.
+- **D2-INVENTORY, at L2.** An inventory records each agent in the deployment and every non-human identity it holds, and each identity's entry names its agent. An inventory kept by hand meets it.
+- **D2-OWNER, at L3.** Every agent and every non-human identity in the deployment names a human owner whom the personnel record shows as current. The bar is every one, with no percentage threshold, because the deployment's own design enumerates its identities and one unowned identity inside it is the failure the criterion grades.
+- **D2-COUPLING, at L3, and D7-IDENTITY-BASELINE, at L4.** The inventory classes each credential as coupled or decoupled. [[agentic-ai-security-cmm-d7-observability|D7 Observability and Detection]] separately grades a running detector against each identity's normal resource and origin activity.
+- **D2-REGISTRY and D2-DISCOVER, at L5.** A registry the deployment pipeline writes through a governed interface holds each agent's identity graph, and scheduled discovery reports every agent the registry does not hold until each is registered or removed.
+- **Cross-platform identity graph, at D2 L5 where applicable.** D2-REGISTRY includes the identities and grants from every identity platform the deployment actually uses. Federation and a separate automatic reconciliation service are implementation choices, not scored criteria.
 
-D2's levels grade neither a risk-score methodology nor coverage of all four populations. The [[guardian-agents-market-guide|Gartner Market Guide for Guardian Agents]] describes both as catalog capabilities.
+D2's levels grade neither a risk-score methodology nor discovery of agents outside the assessed deployment. The [[guardian-agents-market-guide|Market Guide]] describes broader catalog ambitions, while D2 tests the identities and discovery paths in the assessed deployment.
 
 ## Open issues
 
-1. **Cross-vendor agent identity reconciliation.** The Market Guide describes a field without a global agent registry,[^mg-iam] and the Q1 2026 standards survey records no published standard for minimum agent-identity requirements ([[ai-security-standards-in-q1-2026|AI Security Standards: Agentic Threats Outpace Frameworks]]). Neither source addresses whether the Microsoft Entra Agent ID for agent-X and the Okta agent ID for agent-X denote the same agent.
-2. **Shadow agent fingerprinting.** The Market Guide expects organizations to rely on metadata for fingerprinting where agents declare no identity.[^mg-iam] Useful metadata includes the model used, the tools called and the output style.
-3. **Skill / MCP-server inventory.** Catalog of skills and MCP servers the agents consume is a separate (but related) inventory problem. See [[mcp-security|MCP Security]].
+1. **Cross-platform discovery coverage.** A platform export can reveal an agent identity missing from the D2-REGISTRY graph. The catalog needs a comparison procedure for each identity platform the deployment uses; federation alone does not prove the graph is complete.
+2. **Shadow agent fingerprinting.** The Market Guide expects organizations to use metadata when agents declare no identity.[^mg-iam] Model, tool, and output metadata can support investigation, but a fingerprint is not a verified identity.
+3. **Skill and MCP-server inventory.** The components an agent consumes are a separate inventory problem. See [[mcp-security|MCP Security]].
 
 ## See Also
 

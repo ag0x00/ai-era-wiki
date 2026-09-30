@@ -84,7 +84,7 @@ One practitioner response treats the first of these as a context problem rather 
 
 - **[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 (Supply Chain & AI-BOM)]] L3+** — vibe-coded artifacts inherit dependency-graph risk; D8 controls (AI-BOM, dependency scanning) gate this.
 - **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3: Control and Least-Agency]] L4** — vibe coding sits on a spectrum from disposable prototypes to production deployment, and D3-SOD governs the transition: each change an agent proposes to a production system's code, configuration, infrastructure or access policy passes three distinct principals, the one who proposes it, the one who approves it and the one who deploys it.
-- **[[agentic-ai-security-cmm-d1-governance|CMM D1: Governance and Accountability]] L3** — D1-HARNESS-REVIEW puts each change to a coding agent's configuration tree through a documented review before it takes effect, so a vibe-coded edit to an instruction file the harness loads passes the same gate.
+- **[[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]] L3** — D8-HARNESS-REVIEW puts each change to a coding agent's configuration tree through a documented review before it takes effect, so a vibe-coded edit to an instruction file the harness loads passes the same gate.
 
 ## Provenance Note
 

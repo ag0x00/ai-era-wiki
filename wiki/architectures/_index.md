@@ -2,7 +2,7 @@
 type: domain
 title: "Reference Architectures"
 created: 2026-04-30
-updated: 2026-09-24
+updated: 2026-09-29
 tags: [domain, architectures]
 status: seed
 subdomain_of: ""
@@ -17,7 +17,7 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 
 
 - [[agent-identity-architecture|AI Agent Identity Architecture]] — The conceptual identity architecture for AI agents comprises three elements: the identity models available, the layers that authenticate...
-- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — The Agentic AI Security Reference Architecture (AAI-S RA) names the controls that hold an agentic AI application inside its permitted beh...
+- [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — This architecture places security decisions and enforcement around one agent run by the organization.
 - [[agentic-soc-ra-alert-triage|Agentic SOC Alert Triage Surface]] — Per-function deep-dive for the Alert triage surface of the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-detection-engineering|Agentic SOC Detection Engineering Surface]] — Per-function deep-dive for the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-exposure-vulnops|Agentic SOC Exposure and VulnOps Surface]] — The Exposure & VulnOps row of the Agentic SOC Reference Architecture runs continuous exposure and vulnerability discovery, plus remediati...
@@ -25,8 +25,8 @@ Concrete agent and control-plane designs. What goes here: orchestrator/child pat
 - [[agentic-soc-ra-investigation-case-management|Agentic SOC Investigation Surface]] — Per-function deep dive for the Investigation & case management function of the Agentic SOC Reference Architecture.
 - [[agentic-soc-ra-threat-hunting|Agentic SOC Threat Hunting Surface]] — Per-function deep dive on the threat hunting surface of the Agentic SOC Reference Architecture.
 - [[agentic-soc-reference-architecture|Agentic SOC Reference Architecture]] — This reference architecture is the structural counterpart to the Agentic SOC Capability Maturity Model.
-- [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] — This page projects the recalibrated six-plane RA and nine-domain CMM onto one common deployment: a closed-corpus, member- or customer-fac...
-- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] — Google Cloud, read alone against the six planes of the Agentic AI Security Reference Architecture and the nine domains of the Agentic AI...
+- [[azure-rag-chatbot-security-profile|Azure-Native RAG Chatbot Security Profile (Copilot Studio)]] — This page applies the trust boundaries in the Agentic AI Security Reference Architecture and the nine-domain CMM to one deployment shape:...
+- [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] — This profile helps an architect select evidence and control points for a defined Google deployment.
 - [[system-prompt-architecture|System Prompt Architecture (Boundary Markers + Trust Labels)]] — Boundary markers and trust labels reduce the success rate of indirect prompt injection and leave the Lethal Trifecta intact. This archite...
 
 > [!gap] More needed

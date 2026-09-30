@@ -75,7 +75,7 @@ Compared to trifecta-splitting strategies (e.g., separate agents per trifecta le
 
 CaMeL was published in March 2025 (arXiv 2503.12599) by Google DeepMind. As of September 2026:
 - **The mechanism ships in one vendor's framework and in no vendor-neutral form.** FIDES implements the design of Costa et al. rather than this pattern's interpreter, and ships in Microsoft Agent Framework's `agent-framework-core` from Python 1.3.0 under `agent_framework.security`, marked experimental and Python-only, carrying integrity and confidentiality labels on values, most-restrictive-wins propagation, a policy check before each sink, and a tool-free quarantined model behind variable indirection[^fides]
-- **CMM D3 L5+** holds the split at leading edge as D3-QUARANTINE and asks for production deployment evidence, and D4 grades no second instance of it. D3 scopes its warrant to its control landscape, which records one vendor implementation marked experimental
+- **The current CMM does not grade CaMeL as a separate criterion.** Its interpreter boundary remains a research pattern; an implemented deployment can still supply evidence for applicable D3 action authorization and D4 runtime controls.
 - The pattern requires significant prompt engineering and data-flow enforcement work; "just use two LLMs" is not sufficient. The structured output channel is the load-bearing control
 
 The Exchange lists the pattern among five structural mitigations it recommends against agentic prompt injection, alongside capping the concurrent risk factors an agent holds and separating instructions from data.[^aix-pi] One vendor now supplies the mechanism and none supplies it vendor-neutrally. FIDES enforces the labels in tool-call middleware, and this pattern's own enforcement point is an interpreter over a generated program, which the framework does not provide; the paper's code is published as a research artifact its authors disclaim as unmaintained and possibly insecure.[^fides][^camel-code]
@@ -92,8 +92,8 @@ The Exchange lists the pattern among five structural mitigations it recommends a
 
 ## In the RA / CMM
 
-- **RA Runtime Plane:** CaMeL is listed as "Compartmentalized LLMs (CaMeL pattern)," classified as `Research`.
-- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] L5+** holds the split at leading edge, warranted against that domain's control landscape, which carries one vendor implementation marked experimental and enforcing in tool-call middleware rather than over a generated program. [[agentic-ai-security-cmm-measurement-protocol|The measurement protocol]] asks for production deployment evidence in the D3 L5+ column. D3-QUARANTINE carries the criterion's wording.
+- **[[agentic-ai-security-reference-architecture|RA]]:** The relevant boundary is between untrusted retrieved content and authority to invoke tools; the architecture does not prescribe the CaMeL interpreter.
+- **[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3]] and [[agentic-ai-security-cmm-d4-runtime-guardrails|D4]]:** An implemented pattern contributes evidence for authorization and runtime containment, assessed against the current criteria. CaMeL itself is unscored research.
 
 ## See also
 
