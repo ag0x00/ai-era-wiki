@@ -2,11 +2,11 @@
 type: domain
 title: "Papers"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 95
+page_count: 96
 ---
 
 # Papers Index
@@ -109,6 +109,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[vulnerability-research-agentic-age-keynote|Vulnerability Research in the Agentic Age]] — Source: [Black Hat USA 2026 keynote](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) ·...
 - [[vulnops-l1-soc-extinction|From Threat Intel to VulnOps]] — Source:...
 - [[what-are-non-human-identities|Non-Human Identities]] — Source: [Oasis Security — What Are Non-Human Identities?](https://www.oasis.security/blog/what-are-non-human-identities) (2026).
+- [[wiz-ai-app-launch|Wiz AI-APP Launch]] — Source: [Wiz — Introducing Wiz AI Application Protection Platform](https://www.wiz.io/blog/introducing-wiz-ai-app) (2026-03-23).
 - [[xbow-mythos-evaluation|Mythos for Offensive Security]] — Source: [XBOW Blog — Mythos for Offensive Security: XBOW's Evaluation](https://xbow.com/blog/mythos-offensive-security-xbow-evaluation) (...
 - [[your-agent-works-for-me-now-talk|your-agent-works-for-me-now-talk]] — Source: Transcript via attendee [Google Drive share](https://drive.google.com/file/d/1RdI_JG_ZxagWYkd0rVp8ty_uw8FMvsNl/view) (conference-...
 

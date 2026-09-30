@@ -2,11 +2,11 @@
 type: domain
 title: "Products"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 69
+page_count: 70
 ---
 
 # Products Index
@@ -66,11 +66,11 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[mythos|Claude Mythos Preview (Anthropic)]] — Sources: [Anthropic Project Glasswing landing page](https://www.anthropic.com/glasswing) ·...
 - [[numbat|Numbat]] — Announcement:...
 - [[okta-for-ai-agents|Okta for AI Agents]] — Sources: [Okta (homepage)](https://www.okta.com) ·...
-- [[onyx-platform|Onyx Platform (Onyx AI Control Plane)]] — Sources: [Onyx Platform (homepage)](https://onyx.security/platform)
+- [[onyx-platform|Onyx Platform (Onyx AI Control Plane)]] — Onyx Security markets the Onyx Platform as a control plane for enterprise AI agents and applications.
 - [[opa|OPA / Rego (Open Policy Agent)]] — Open Policy Agent (OPA) is an open-source policy engine that decouples policy decision-making from enforcement.
 - [[openant|OpenAnt]] — Sources: [Project page — openant.knostic.ai](https://openant.knostic.ai/) ·...
 - [[openclaw|OpenClaw]] — Open-source, self-hostable agentic coding and task-execution platform with its own skill marketplace, ClawHub.
-- [[palo-alto-prisma-airs|Palo Alto Prisma AIRS (AI Runtime Security)]] — Prisma AIRS is Palo Alto Networks' end-to-end AI security platform protecting the full lifecycle of AI applications and agents — model se...
+- [[palo-alto-prisma-airs|Palo Alto Prisma AIRS (AI Runtime Security)]] — Prisma AIRS is Palo Alto Networks' platform for AI runtime security, model scanning, red teaming, agent protection, and posture views.
 - [[ping-enterprise-personal-agent-access|Ping Enterprise Personal Agent Access]] — Sources: [Press release](https://press.pingidentity.com/2026-09-01-Ping-Identity-Secures-Claude-Personal-Agents-From-Discovery-to-Action)...
 - [[promptfoo|Promptfoo]] — Open-source LLM evaluation and red-teaming framework that runs YAML-defined test suites in CI to catch prompt regressions, vulnerability...
 - [[purple-llama|Purple Llama]] — Meta's umbrella project for open trust-and-safety tooling around generative AI.
@@ -84,4 +84,5 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[toolshed|Toolshed (Stripe)]] — Stripe's central MCP proxy / tool registry. Internal product (not open source as of Unprompted March 2026).
 - [[trail-of-bits-skills|trailofbits/skills]] — Sources: [GitHub — trailofbits/skills](https://github.com/trailofbits/skills) · OSS AI Security Harness Comparison.
 - [[vvah|VVAH]] — Sources: [GitHub — visa/visa-vulnerability-agentic-harness](https://github.com/visa/visa-vulnerability-agentic-harness) · OSS AI Security...
-- [[wiz-ai-spm|Wiz AI-SPM]] — Sources: [Wiz AI-SPM (homepage)](https://www.wiz.io/solutions/ai-spm) ·...
+- [[wiz-ai-app|Wiz AI-APP]] — Sources: [Wiz AI-APP announcement](https://www.wiz.io/blog/introducing-wiz-ai-app) · Wiz AI-APP Launch.
+- [[wiz-ai-spm|Wiz AI-SPM]] — Sources: [Wiz AI-SPM](https://www.wiz.io/solutions/ai-spm) · [2023 AI-SPM launch](https://www.wiz.io/blog/ai-security-posture-management)...

@@ -2,7 +2,7 @@
 type: practice
 title: "AI Security Posture Management (AI-SPM)"
 created: 2026-05-01
-updated: 2026-09-16
+updated: 2026-09-30
 tags:
   - practices
   - posture-management
@@ -15,6 +15,10 @@ scope_axis:
 maturity: emerging
 addresses_threat: "Misconfigured AI infrastructure: open indexes, stale embeddings, weak allow-lists, missing audit logging, untracked models / prompts / connectors"
 related:
+  - "[[onyx-platform]]"
+  - "[[palo-alto-prisma-airs]]"
+  - "[[wiz-ai-app]]"
+  - "[[wiz-ai-app-launch]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[ai-data-security]]"
   - "[[ai-bom]]"
@@ -25,7 +29,20 @@ related:
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[standards-review-eu-ai-act-2026-Q2]]"
 sources:
+  - "[[.raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md]]"
+  - "https://onyx.security/platform"
+  - "https://docs.paloaltonetworks.com/prisma-airs/ai-inventory/agent-discovery/ai-agent-discovery-with-cortex-cloud"
+  - "https://www.wiz.io/blog/ai-security-posture-management"
+  - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
+  - "https://www.knostic.ai/blog/ai-data-security"
+verified: 2026-09-30
+verified_against:
+  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
+  - ".raw/articles/knostic-ai-data-security-2026-05-01.md"
+  - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
+verified_findings: 0
+verified_note: "Wiz, Knostic and Onyx archives reviewed in this pass; added PA posture linkage against live Cortex AI-SPM docs, including license and region limits."
 ---
 
 # AI Security Posture Management (AI-SPM)
@@ -58,7 +75,7 @@ CSPM checks whether your cloud resources are configured against published baseli
 
 ## Operations
 
-The Knostic article and CMM-aligned guidance converge on these AI-SPM operational primitives:
+The [Knostic article on AI data security](https://www.knostic.ai/blog/ai-data-security) and CMM-aligned guidance converge on these AI-SPM operational primitives:
 
 1. **Inventory everything.** Models, prompts, tools, connectors, datasets, indexes, caches, logs.
 2. **Map each asset to owners, environments, and policies.** No orphaned assets.
@@ -73,16 +90,16 @@ The Knostic article and CMM-aligned guidance converge on these AI-SPM operationa
 
 ## Relationship to AI-BOM
 
-[[ai-bom|AI-BOM]] is the static inventory artifact. AI-SPM is the dynamic posture discipline that consumes the AI-BOM and asserts continuous validity. The two are paired:
+An [[ai-bom|AI-BOM]] records components for a release or an observed runtime state. AI-SPM uses component records to check configuration and drift. The two are paired:
 
 - AI-BOM declares: "This system depends on model X v1.2.3, embedding model Y, MCP server Z, dataset D, prompt P version 14."
 - AI-SPM asserts: "Model X is reachable, embedding model Y is current, MCP server Z is running with policy P, dataset D's permissions match the AI's retrieval index, prompt P version 14 has no `LLM07:2025` system-prompt-leakage issues, and any of those changing fires an alert."
 
-The two are mutually dependent. AI-SPM keeps the AI-BOM current, and the AI-BOM supplies the reference state that AI-SPM measures drift against.
+The approved AI-BOM supplies a reference state; the posture process compares it with observed components and configurations.
 
 ## Relationship to DSPM
 
-[[dspm|DSPM]] (Data Security Posture Management) maps where sensitive data lives in the enterprise. AI-SPM extends posture into AI-specific assets that DSPM tools do not natively cover. The Knostic article's stack:
+[[dspm|DSPM]] (Data Security Posture Management) maps where sensitive data lives in the enterprise. AI-SPM links those data labels to AI models, indexes, and connectors. The Knostic article describes DSPM feeding risk signals to AI guardrails; the integration below adds AI-SPM's asset mapping between them:
 
 ```
 DSPM  ── feeds ──>  AI-SPM  ── feeds ──>  AI guardrails
@@ -103,15 +120,21 @@ AI-SPM is a [[agentic-ai-security-cmm-2026|Agentic AI Security CMM 2026]] **D7 O
 Three converging categories, plus a narrower harness-scoped fourth:
 
 1. **Pure-play AI-SPM vendors** (emerging): explicit AI inventory + posture checks
-2. **CSPM extensions**: CSPM products adding AI asset types (Wiz, Orca, Lacework signaling movement)
-3. **Microsoft Agent 365**: vertical integration (Defender + Entra + Purview); the first commercial unified agent governance control plane; see [[microsoft-rai|Microsoft Responsible AI Standard (RAI)]]
-4. **Harness-config scanners**: narrow, single-harness AI-SPM operating on the agent-configuration tree itself (hooks, MCP server manifests, subagents, slash commands, skill manifests, `CLAUDE.md`). Open-source: [[agentshield|AgentShield]] (Claude Code config; 102 rules across Secrets / Permissions / Hooks / MCP Servers / Agents with provenance-aware `runtimeConfidence` weighting).
+2. **Cloud posture extensions**: CNAPP products adding AI discovery and configuration checks, such as [[wiz-ai-spm|Wiz AI-SPM]] from [[wiz|Wiz]] ([2023 launch](https://www.wiz.io/blog/ai-security-posture-management))
+3. **[[microsoft-agent-365|Microsoft Agent 365]]**: agent governance across Defender, Entra, and Purview
+4. **Harness-config scanners**: narrow, single-harness AI-SPM operating on the agent-configuration tree itself (hooks, MCP server manifests, subagents, slash commands, skill manifests, `CLAUDE.md`). Open-source: [[agentshield|AgentShield]] (Claude Code config; rules for secrets, permissions, hooks, MCP servers, and agents with provenance-aware `runtimeConfidence` weighting).
+
+Wiz's [[wiz-ai-app|Wiz AI-APP]] announcement describes a CNAPP extension that joins inventory to attack-path analysis and runtime detection. The [[wiz-ai-app-launch|Wiz AI-APP Launch]] summarizes the vendor's claims and their evidence limits.[^wiz-ai-app]
+
+The [[onyx-platform|Onyx Platform (Onyx AI Control Plane)]] [advertises AI-SPM configuration hardening](https://onyx.security/platform) alongside agent and MCP supply-chain risk checks. Its product page also describes an inline MCP gateway; deployment evidence is needed to assess that control's behavior.
+
+[[palo-alto-prisma-airs|Palo Alto Prisma AIRS (AI Runtime Security)]] [displays posture findings from Cortex Cloud AI-SPM](https://docs.paloaltonetworks.com/prisma-airs/ai-inventory/agent-discovery/ai-agent-discovery-with-cortex-cloud) when its tenant is connected to Cortex Cloud with an active AI-SPM license. The [August 2026 feature](https://docs.paloaltonetworks.com/ai-runtime-security/new-features/by-date/prisma-airs/august-2026) is limited to Americas-region Strata Cloud Manager tenants.
 
 The category is not yet stable. Treat product comparisons as tentative.
 
 ## Open Issues
 
-- **Reference baselines.** No CIS-equivalent benchmark exists for AI infrastructure yet. CSA, OWASP, and NIST are all candidates.
+- **Reference baselines.** The sources cited here do not define a CIS-equivalent AI infrastructure benchmark. A deployment must document which CSA, OWASP, and NIST guidance informs each local baseline.
 - **Embedding-versus-source drift.** Detecting that an embedding still encodes content that the source has removed or tightened is non-trivial; it requires re-embedding-and-comparing or maintaining a content-hash trail.
 - **Tool / MCP inventory.** MCP servers can be installed at the user level without enterprise visibility; integrating with [[mcp-security|MCP Security]] discovery is required.
 
@@ -124,3 +147,5 @@ The category is not yet stable. Treat product comparisons as tentative.
 - [[agent-observability|Agent Observability]]: runtime telemetry that feeds posture checks
 - [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] §Observability layer
 - [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]: D7 Observability capability
+
+[^wiz-ai-app]: [Wiz — Introducing Wiz AI Application Protection Platform](https://www.wiz.io/blog/introducing-wiz-ai-app), 2026-03-23, platform overview and inventory/risk/runtime sections.

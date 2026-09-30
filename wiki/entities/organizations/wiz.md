@@ -5,7 +5,7 @@ org_type: vendor
 parent_org: "[[google]]"
 title: "Wiz"
 created: 2026-04-30
-updated: 2026-09-18
+updated: 2026-09-30
 tags:
   - entities
   - organizations
@@ -15,48 +15,60 @@ tags:
 status: developing
 scope_axis:
   - sec-of-ai
+  - ai-in-sec-defense
   - ai-in-sec-offense
   - sec-against-ai
-role: "Cloud-native application protection platform (CNAPP) vendor; first-CNAPP-to-ship-AI-SPM (2024); now part of Google Cloud Security; Red Agent Opus-powered continuous pentester (2026)"
+role: "Cloud-native application protection platform (CNAPP) vendor; AI-SPM launch (2023); now part of Google Cloud Security; Red Agent Opus-powered continuous pentester (2026)"
 related:
+  - "[[onyx-platform]]"
+  - "[[wiz-ai-app]]"
+  - "[[wiz-ai-app-launch]]"
   - "[[wiz-ai-spm]]"
   - "[[ai-spm]]"
   - "[[google]]"
   - "[[codemender]]"
   - "[[google-cloud-codemender-preview]]"
   - "[[claude-partners-opus-cybersecurity]]"
-  - "[[mythos]]"
   - "[[taming-shai-hulud-with-ai-talk]]"
   - "[[unprompted-conference-march-2026]]"
 sources:
+  - "[[.raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md]]"
+  - "https://onyx.security/platform"
+  - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
+  - "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/"
   - "https://www.wiz.io/"
+  - "https://www.wiz.io/blog/ai-security-posture-management"
+  - "https://www.wiz.io/blog/wizdom-product-launches-2025"
   - "https://www.wiz.io/blog/red-agent-claude-opus"
   - "[[.raw/articles/claude-partners-opus-cybersecurity-2026-05-23.md]]"
   - "[[.raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md]]"
-verified: 2026-09-18
+verified: 2026-09-30
 verified_against:
-  - ".raw/articles/find-and-fix-software-vulnerabilities-with-codemender-2026-09-18.md"
+  - ".raw/articles/claude-partners-opus-cybersecurity-2026-05-23.md"
+  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
+  - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
 verified_findings: 0
-verified_note: "Read whole against the CodeMender clip; Green Agent, command-center and coming-soon claims confirmed. sec-against-ai added as the mandatory counterpart to ai-in-sec-offense, with the AI-threat premise stated in the body."
+verified_note: "AI-APP, Red Agent and Onyx claims checked against archives and official pages; earlier CodeMender source not reopened."
 ---
 
 # Wiz
 
-Wiz is a cloud-native application protection platform (CNAPP) vendor founded in 2020. The company shipped what it claims as the first AI-SPM module integrated into a CNAPP in 2024, and expanded materially through 2025. Following Google's \$32B acquisition (closed 2025), Wiz operates as part of Google Cloud Security.
+Wiz is a cloud-native application protection platform (CNAPP) vendor founded in 2020. In [its 2023 AI-SPM launch](https://www.wiz.io/blog/ai-security-posture-management), the company claimed to be the first CNAPP with native AI security capabilities. Wiz expanded the offering to agent and MCP discovery in 2025. [Google completed its acquisition of Wiz in March 2026](https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/); Wiz now operates within Google Cloud Security.
 
 ## Core platform
 
-Wiz CNAPP combines: CSPM (cloud security posture), CWPP (cloud workload protection), CIEM (cloud entitlements), DSPM (data security posture), code/IaC scanning, and now AI-SPM. The differentiating architectural primitive is the **Wiz Security Graph** — a unified data model across all CNAPP modules enabling attack-path correlation across cloud, identity, data, and code domains.
+Wiz CNAPP combines: CSPM (cloud security posture), CWPP (cloud workload protection), CIEM (cloud entitlements), DSPM (data security posture), code/IaC scanning, and now AI-SPM. The **Wiz Security Graph** correlates cloud, identity, data, and code exposures; the [[wiz-ai-app|Wiz AI-APP]] announcement extends that graph to AI models, agents, tools, and runtime activity, as described in [[wiz-ai-app-launch|Wiz AI-APP Launch]].[^wiz-ai-app]
 
 ## AI-relevant offerings
 
 | Product | Role |
 |---|---|
 | **[[wiz-ai-spm\|Wiz AI-SPM]]** | AI Security Posture Management — model inventory, configuration risk, attack-path correlation to AI assets, AI-BOM, runtime monitoring of agent behavior |
+| **[[wiz-ai-app\|Wiz AI-APP]]** | Graph-powered AI application inventory, attack-path analysis, and runtime detection[^wiz-ai-app] |
 
 ## Red Agent — Opus-powered offensive testing (2026)
 
-[Wiz Red Agent](https://www.wiz.io/blog/red-agent-claude-opus) is an AI-powered attacker built on [[mythos|Claude Opus]] that reasons like a human pentester across production web applications and APIs — analyzing application logic, chaining steps, and adapting to live server responses to surface the logic-driven flaws traditional scanners miss. Running continuously across **150,000+ production assets per week**, it surfaces thousands of high- and critical-severity findings, each validated with proof of exploitability and business context from the Wiz Security Graph — reported at **zero false positives** in customer production (see [[claude-partners-opus-cybersecurity|the Opus partner ecosystem]]). VP AI & Threat Research Alon Schindel: *"Security teams are no longer limited by a lack of data, but by the ability to act on it."*
+[Wiz Red Agent](https://www.wiz.io/blog/red-agent-claude-opus) uses Claude Opus models to test production web applications and APIs. Wiz reports that it scans more than 150,000 production assets per week, surfaces thousands of high- and critical-severity findings, and achieved zero false positives after its testing period.[^red-agent] The stated method analyzes application logic, chains steps, and adapts to server responses. These are vendor-reported results; the [[claude-partners-opus-cybersecurity|Opus partner ecosystem]] repeats them without an independent evaluation. Wiz VP AI & Threat Research Alon Schindel said, *"Security teams are no longer limited by a lack of data, but by the ability to act on it."*[^opus-partners]
 
 ## Green Agent and AI Threat Defense (2026)
 
@@ -68,10 +80,10 @@ The premise Google states for the offering is the adversary's own use of AI: adv
 
 ## Notable 2025–2026 events
 
-- **Wizdom 2025** product launch event introduced runtime AI agent monitoring and the dedicated AI Security Dashboard
+- **Wizdom 2025** [expanded AI-SPM](https://www.wiz.io/blog/wizdom-product-launches-2025) to agent and MCP discovery, with agent posture and runtime risks connected in the Security Graph
 - **OpenAI Platform connector** added to AI-SPM
 - **NVIDIA Enterprise AI Factory integration**
-- **Google Cloud acquisition** (\$32B, 2025) — product roadmap integration with Google Cloud Security pending
+- **Google Cloud acquisition** — [completed in March 2026](https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/); the AI Threat Defense composition is described above
 
 ## At Unprompted (March 2026)
 
@@ -83,6 +95,12 @@ Rami McCarthy presented [[taming-shai-hulud-with-ai-talk|Zeal of the Convert: Ta
 - [[ai-spm|AI Security Posture Management]] practice page
 - [[agentic-ai-security-reference-architecture|RA]] Data plane (supply-chain scanning) and Observability plane (AI-SPM)
 
-## Position vs peers
+## AI-SPM positioning
 
-Primary competitors in the AI-SPM segment: [[palo-alto-prisma-airs|Palo Alto Prisma AIRS]] (with separate Prisma Cloud AI-SPM from Dig Security), Orca Security AI-SPM, Reco. Wiz's strongest differentiation is graph-based attack-path correlation across the broader CNAPP, not point AI capability depth.
+Wiz's [AI-SPM launch](https://www.wiz.io/blog/ai-security-posture-management) describes graph-based attack-path analysis across AI services, identities, data, and cloud exposures. The company presents this correlation within its broader CNAPP platform.
+
+The [[onyx-platform|Onyx Platform (Onyx AI Control Plane)]] [also advertises AI-SPM configuration hardening](https://onyx.security/platform), alongside an inline MCP gateway. These vendor descriptions establish product scope but do not compare coverage or effectiveness.
+
+[^wiz-ai-app]: [Wiz — Introducing Wiz AI Application Protection Platform](https://www.wiz.io/blog/introducing-wiz-ai-app), 2026-03-23, the graph-based AI-APP announcement.
+[^red-agent]: [Wiz — Red Agent and Claude Opus](https://www.wiz.io/blog/red-agent-claude-opus), 2026-04-30, vendor-reported weekly asset volume, severity counts, and zero-false-positive claim after its testing period.
+[^opus-partners]: [Anthropic — How our partners are putting Opus to work for cybersecurity](https://claude.com/blog/how-our-partners-are-putting-opus-to-work-for-cybersecurity), 2026-05-21, the quoted Wiz executive statement and repeated Red Agent results.

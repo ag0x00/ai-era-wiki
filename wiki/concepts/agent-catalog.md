@@ -2,7 +2,7 @@
 type: concept
 title: "AI Agent Catalog"
 created: 2026-05-01
-updated: 2026-09-29
+updated: 2026-09-30
 tags:
   - concepts
   - agent-catalog
@@ -22,6 +22,8 @@ aliases:
   - "Agent Registry"
   - "Agentic AI Catalog"
 related:
+  - "[[wiz-ai-app]]"
+  - "[[wiz-ai-app-launch]]"
   - "[[guardian-agents-market-guide]]"
   - "[[scaling-agentic-ai-cios-talk]]"
   - "[[guardian-agent]]"
@@ -37,6 +39,8 @@ related:
   - "[[agentdesktop]]"
   - "[[agentic-ai-security-cmm-d2-identity]]"
 sources:
+  - "https://www.wiz.io/blog/introducing-wiz-ai-app"
+  - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
   - "[[.raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md]]"
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
   - "https://www.gartner.com/doc/reprints?id=1-2N2436IJ&ct=260324&st=sb"
@@ -49,13 +53,11 @@ sources:
   - "https://www.wiz.io/blog/wiz-ai-spm-secures-ai-agents"
   - "https://www.paloaltonetworks.com/prisma/prisma-ai-runtime-security"
   - "https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store"
-verified: 2026-09-29
+verified: 2026-09-30
 verified_against:
-  - ".raw/articles/cyera-ai-security-every-agent-assistant-data-store-2026-08-31.md"
-  - ".raw/articles/gartner-market-guide-for-guardian-agents-2026-05-01.md"
-  - ".raw/talks/scaling-agentic-ai-cios-2026-05-01.md"
+  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
 verified_findings: 0
-verified_note: "Gartner guide, CIO talk, Cyera archive, NIST AI 100-1 and live product pages checked in the agent-catalog review; D2 coordinate summary reconciled with the 2026-09-29 CMM redesign. Okta checked against its vault page only."
+verified_note: "Wiz AI-APP row checked against the full launch article; inherited Gartner and other sources were not reread."
 ---
 
 # AI Agent Catalog
@@ -138,6 +140,7 @@ None of the tools below is documented, in its cited source, as covering all four
 | [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] | Personal-agent discovery including shadow AI, each session linked to the user and the device that started it[^ping] |
 | [[agentdesktop\|agentdesktop]] ([[solo-io\|Solo.io]], Apache 2.0) | Desktop inventory of agent harnesses and the MCP servers registered in each one's configuration[^agentdesktop] |
 | [[wiz-ai-spm\|Wiz AI-SPM]] | Agentless discovery of AI services, models and integrations across cloud environments[^wiz] |
+| [[wiz-ai-app\|Wiz AI-APP]] | Vendor-reported discovery across managed services, SaaS, and custom workloads, with agent tool-capability classification; see [[wiz-ai-app-launch\|Wiz AI-APP Launch]][^wiz-ai-app] |
 | [[palo-alto-prisma-airs\|Palo Alto Prisma AIRS (AI Runtime Security)]] | Visibility into AI agents, apps and models and how they connect[^prisma] |
 | [[cyera-agent-guardian-release\|Cyera Agent Guardian Release]] | Cloud, SaaS, endpoint and Shadow AI agent discovery (vendor-stated; the release gives no coverage figure)[^cyera] |
 
@@ -202,12 +205,14 @@ D2's levels grade neither a risk-score methodology nor discovery of agents outsi
 [^ping]: Ping Identity, [Ping Identity Secures Claude Personal Agents From Discovery to Action](https://press.pingidentity.com/2026-09-01-Ping-Identity-Secures-Claude-Personal-Agents-From-Discovery-to-Action), 2026-09-01.
 [^agentdesktop]: Solo.io, [Introducing agentdesktop](https://www.solo.io/blog/introducing-agentdesktop), 2026-09-03.
 [^wiz]: Wiz, [Securing AI Agents with Wiz AI-SPM](https://www.wiz.io/blog/wiz-ai-spm-secures-ai-agents), 2025-11-04.
+[^wiz-ai-app]: [Wiz — Introducing Wiz AI Application Protection Platform](https://www.wiz.io/blog/introducing-wiz-ai-app), 2026-03-23, inventory and risk sections.
 [^prisma]: Palo Alto Networks, [Prisma AIRS](https://www.paloaltonetworks.com/prisma/prisma-ai-runtime-security) product page.
 [^cyera]: Cyera, [New from Cyera: AI Security for Every Agent, Assistant, and Data Store](https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store), archived 2026-08-31; the post carries no publication date.
 
 <!-- sources:auto -->
 ## Sources
 
+- [wiz.io](https://www.wiz.io/blog/introducing-wiz-ai-app)
 - [Scaling Agentic AI: A Leadership Guide for CIOs](https://stream.stream-ext.bizzabo.com/U00liQQ00l2Th5l5Bkc302pY02k01IzHU8P3OqHaCDwYzvxw.m3u8)
 - [gartner.com](https://www.gartner.com/doc/reprints?id=1-2N2436IJ&ct=260324&st=sb)
 - [nvlpubs.nist.gov](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf)

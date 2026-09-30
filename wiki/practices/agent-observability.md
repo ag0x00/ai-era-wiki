@@ -3,7 +3,7 @@ type: practice
 title: "Agent Observability"
 address: c-000306
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-09-30
 tags:
   - practices
   - observability
@@ -16,6 +16,8 @@ scope_axis:
 maturity: emerging
 addresses_threat: "Black-box agent behavior, lateral movement, prompt injection abuse"
 related:
+  - "[[wiz-ai-app]]"
+  - "[[wiz-ai-app-launch]]"
   - "[[genai-endpoint-observability-talk|GenAI Endpoint Observability (Ayenson, Elastic)]]"
   - "[[beyond-the-chatbot-talk|Beyond the Chatbot (Smith & Sharma, Salesforce)]]"
   - "[[opentelemetry-gen-ai|OpenTelemetry gen_ai.* Semantic Conventions]]"
@@ -39,15 +41,17 @@ related:
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 Runtime and Guardrails]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 Engineering and Supply Assurance]]"
 sources:
+  - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
   - "[[.raw/talks/unprompted-conference-talks-mar-2026.md]]"
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/adr-agentic-detection-system-2026-05-17.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-29
-verified_against: []
+verified: 2026-09-30
+verified_against:
+  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
 verified_findings: 0
-verified_note: "Live OpenTelemetry and selected primary vendor and OWASP sources checked; archived source set was not verified in full."
+verified_note: "Wiz cross-layer correlation claim checked against full launch article; inherited source set remains partial."
 ---
 
 # Agent Observability
@@ -57,6 +61,8 @@ Agent observability reconstructs what an agent received, proposed, called, chang
 The barriers to doing this well are catalogued at the field level by [[nist-ai-800-4|NIST AI 800-4]], the first federal report mapping the gaps in post-deployment AI monitoring. The practices below — glass-box instrumentation, identity multiplexing, and behavioral baselining — are concrete responses to the barriers that report names: the lack of direct visibility into model properties, fragmented logging across distributed infrastructure, and the difficulty of detecting deceptive or monitor-evading agent behavior.
 
 The twelve sections below cover instruments, examples, and graded outcomes. The [[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]] deep dive owns the assessment conditions; sections on authorization and supply assurance point to their owning domains. [[#Mapping to the CMM]] identifies the distinctions.
+
+## Instruments and examples
 
 ### 1. Architectural Foundations: Hooks and Reference Monitors — D7 L2 to L3
 
@@ -72,6 +78,8 @@ Traditional EDR sees processes, but fails to distinguish if a shell command was 
 Numbat combines artifact parsing with lifecycle hooks for real-time blocking and a local OTLP receiver for fleet telemetry. Artifact parsing can reconstruct earlier sessions if their local files were retained; a live hook or gateway cannot recover a session it never observed.
 
 **Third implementation, mechanism unpublished — Falcon Guardian.** [[falcon-guardian|CrowdStrike Falcon Guardian]] (September 2026) claims to link a user prompt with agent skills, tool calls, MCP server invocations, and downstream actions, while the Falcon sensor discovers the agents. CrowdStrike has not published enough mechanism detail to establish whether it uses hooks, artifact parsing, or process tracing; the claim requires deployment evidence before it can support D7 scoring.
+
+**Cross-layer correlation claim — Wiz AI-APP.** [[wiz-ai-app|Wiz AI-APP]] says it joins model inputs and outputs, workload and tool execution, and cloud identity and API events so teams can examine exploitation and prioritize response by impact. The [[wiz-ai-app-launch|Wiz AI-APP Launch]] names those signal classes but gives no collection mechanism or detection test, so the claim supplies a product example rather than D7 scoring evidence.[^wiz-ai-app]
 
 ### 2. Standardizing Telemetry with OpenTelemetry (OTel) — D7 L3
 
@@ -243,3 +251,4 @@ The twelve sections above are grouped by level below, sequenced for an organizat
 
 [^aix-monitoruse]: [OWASP AI Exchange — MONITOR USE](https://owaspai.org/go/monitoruse/), retrieved 2026-08-18.
 [^aix-testing]: [OWASP AI Exchange — AI security testing](https://owaspai.org/docs/5_testing), retrieved 2026-08-19. The infrastructure layer of the four-layer agentic penetration-test model, naming `MONITOR USE` log integrity and stating the check as verifying that the agent cannot suppress or alter logs under adversarial conditions.
+[^wiz-ai-app]: [Wiz — Introducing Wiz AI Application Protection Platform](https://www.wiz.io/blog/introducing-wiz-ai-app), 2026-03-23, runtime section.
