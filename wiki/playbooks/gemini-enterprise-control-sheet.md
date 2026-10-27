@@ -2,7 +2,7 @@
 type: playbook
 title: "Gemini Enterprise Control Sheet"
 created: 2026-09-30
-updated: 2026-09-30
+updated: 2026-10-27
 tags:
   - playbooks
   - gemini-enterprise
@@ -12,7 +12,7 @@ scope_axis:
   - sec-of-ai
 origin: produced
 audience: "Gemini Enterprise app owners, security architects, data owners, and financial-sector assessors"
-length: "~5,000 words; 13 controls and route decisions"
+length: "~5,500 words; 13 controls and route decisions"
 related:
   - "[[google]]"
   - "[[productivity-assistant-deployment-shape]]"
@@ -47,6 +47,9 @@ sources:
   - "https://docs.cloud.google.com/gemini/enterprise/docs/manage-observability-settings"
   - "https://docs.cloud.google.com/gemini/enterprise/docs/correlate-model-armor-logs"
   - "https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/workflows"
+  - "https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/manage-agent-versions"
+  - "https://docs.cloud.google.com/gemini/enterprise/docs/core-assistant"
+  - "https://deepmind.google/models/model-cards/gemini-3-5-flash/"
   - "https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/use-connector-actions"
   - "https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/use-hitl-steps"
   - "https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/share-chat-agent"
@@ -61,10 +64,10 @@ sources:
   - "https://cloud.google.com/security/securing-ai"
   - "https://arxiv.org/html/2509.10540"
   - "https://noma.security/blog/geminijack-google-gemini-zero-click-vulnerability/"
-verified: 2026-09-30
+verified: 2026-10-27
 verified_against: []
 verified_findings: 0
-verified_note: "Whole-page adversarial source read against live official Google, Workspace, and Wiz documentation; no archived document opened."
+verified_note: "Whole-page D8 integration and current official Google documentation check; no archived source opened."
 ---
 
 # Gemini Enterprise Control Sheet
@@ -87,6 +90,8 @@ Make one record for each material change of app location, source, identity, mode
 - **Decision:** applicable control IDs, required outcomes, exact enforcing settings or target policies, owners, and supplier answers needed for a claim.
 - **Proof:** effective configuration, permitted and refused canary calls, observed source or target effect, timestamps, and retrievable logs or screening verdicts.
 - **Disposition:** Pass, Hold, Conditional exception, or Reject for this route. An exception names its independent gate, risk owner, expiry, and retest trigger.
+
+Maintain the customer component inventory against the effective app and workflow configuration, including the named model, hosting service, connectors, tools, and security-relevant settings. Keep the configuration-design record in an owner-controlled document store. For Google-held components and prompts, request product- and route-scoped development, test, version-change, and secret-absence evidence. A customer leak test can detect disclosure but cannot establish the contents of an inaccessible system prompt. For the actual processing route, retain terms for permitted data use, retention, deletion, and subcontracted processing. Assess any internal team supplying a connector or agent through its own control records. Supplier answers cite applicable records, gaps, and a reassessment date.
 
 ## Common controls
 
@@ -118,11 +123,13 @@ For other connectors, [federation queries the source and ingestion indexes a cop
 
 **Enforcer.** App location, web-app Feature Management, assistant grounding policy, and each agent node's model and tools control the selectable paths. The connector location gate in C02 is separate.
 
-**Mechanism and proof.** For Standard and Plus, Google's [location table](https://docs.cloud.google.com/gemini/enterprise/docs/locations) lists **ca** as GA on allowlist with in-country base-app at-rest and machine-learning processing. Record the allowlist grant. The table supports Gemini 3.5 Flash and 2.5 Pro in Canada. It does not list Canadian support for 3.1 Pro; 3.6, 3.7, and 3.8 Flash use global availability from a Canadian app. Inspect effective model and node settings rather than inferring them from the app location. [Feature Management](https://docs.cloud.google.com/gemini/enterprise/docs/manage-web-app-features) can disable optional model selection, image and video generation, and the Notebook entry. Keep them off for a Canada-only route until each has its own approved location record. The [Notebook product](https://docs.cloud.google.com/gemini/enterprise/docs/locations) has feature-specific guarantees.
+**Mechanism and proof.** For Standard and Plus, Google's [location table](https://docs.cloud.google.com/gemini/enterprise/docs/locations) lists **ca** as GA on allowlist with in-country base-app at-rest and machine-learning processing. Record the allowlist grant. The table supports Gemini 3.5 Flash in Canada. Gemini 2.5 Pro, 3.1 Pro, 3.6 Flash, 3.7 Flash, 3.8 Flash, and 4 Argon lack a Canadian processing route and are ineligible for a Canada-only route. The Gemini 4 Argon toggle defaults to on beginning October 27, 2026, so explicitly disable it on a Canada-only route. Inspect effective model and node settings rather than inferring them from the app location. [Feature Management](https://docs.cloud.google.com/gemini/enterprise/docs/manage-web-app-features) can disable optional model selection, image and video generation, and the Notebook entry. Keep them off for a Canada-only route until each has its own approved location record. The [Notebook product](https://docs.cloud.google.com/gemini/enterprise/docs/locations) has feature-specific guarantees.
+
+For each named model, keep a resolved version history for the periods it ran and a card that matches that version, such as Google DeepMind's [Gemini 3.5 Flash model card](https://deepmind.google/models/model-cards/gemini-3-5-flash/) when that model is in use. A node's selected model name alone does not establish the resolved version when Google can change its mapping. The [Core Assistant is Google-provided](https://docs.cloud.google.com/gemini/enterprise/docs/core-assistant); ask Google for the model identity, version and change assurance, and scoped development and test evidence for that app route. Mark D8-VERSION or D8-MODEL-CARD unanswerable for an undisclosed model rather than assigning a version or card by inference. A supplier-held model choice needs evidence that the route holds a fixed version or requires a customer decision before change to support D8-MODEL-PIN.
 
 Disable Grounding with Google Search and Web Grounding for Enterprise on this route. The former is global, may temporarily log customer data, and is excluded from DRZ, CMEK, VPC Service Controls, and Access Transparency in Google's [control matrix](https://docs.cloud.google.com/gemini/enterprise/docs/compliance-security-controls). Set the Core Assistant's [web grounding policy to disabled](https://docs.cloud.google.com/gemini/enterprise/docs/reference/rest/v1alpha/projects.locations.collections.engines.assistants). Record each [workflow node's model and tools](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/workflows); assess a registered custom agent at its own runtime.
 
-**Test.** In the live app, attempt an unapproved model, grounding, image, video, and Notebook path. Repeat for each permitted agent and inspect its effective node version. Keep settings and refusals. A feature without evidence of the required Canadian path remains Hold.
+**Test.** In the live app, attempt Gemini 2.5 Pro and 4 Argon, then other unapproved models, grounding, image, video, and Notebook paths. Repeat for each permitted agent and inspect its effective node version. Compare the configured model with the resolved version evidence and card; keep settings, supplier mapping, and refusals. A feature without evidence of the required Canadian path remains Hold.
 
 ### C04 — Govern retained and external content
 
@@ -186,17 +193,25 @@ Disable Grounding with Google Search and Web Grounding for Enterprise on this ro
 | --- | --- |
 | Search files | Enabled |
 | Read file content | Enabled |
+| Read document | Enabled if approved |
+| Read presentation | Enabled if approved |
+| Get cell values | Enabled if approved |
+| Get spreadsheet | Enabled if approved |
 | Get file metadata | Enabled |
 | Get file permissions | Enabled if approved |
 | List recent files | Enabled if approved |
+| List shared drives | Enabled if approved |
 | Download file content | Disabled unless approved |
 | Copy file | Disabled |
 | Create file | Disabled |
+| Insert dimension | Disabled |
 | Share file | Disabled |
 | Trash file | Disabled |
+| Update cell values | Disabled |
 | Update file | Disabled |
+| Update formulas | Disabled |
 
-**Test.** As an authorized user, search and read a canary. Ask Core Assistant and every available agent to copy, create, share, trash, and update it; attempt download when disabled. Confirm no source change in Drive audit, not just a verbal refusal. A **ca** + Drive route remains Hold under C02 even if this table passes in another location.
+**Test.** As an authorized user, search and read a canary. Ask Core Assistant and every available agent to copy, create, share, trash, and update it; attempt spreadsheet row insertion, cell-value and formula writes, and download when disabled. Confirm no source change in Drive audit, not just a verbal refusal. A **ca** + Drive route remains Hold under C02 even if this table passes in another location.
 
 ## Route overlays
 
@@ -206,9 +221,13 @@ Disable Grounding with Google Search and Web Grounding for Enterprise on this ro
 
 **Enforcer.** [Agent sharing settings](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/share-chat-agent), agent/resource IAM, node tool configuration, and a controlled workflow owner govern this boundary. Source ACLs govern linked files. Uploaded agent knowledge follows the agent's sharing boundary.
 
-**Mechanism and proof.** Record the exact audience, source or uploaded Knowledge, node model, tools, and enabled actions. Restrict Drive Knowledge selection and leave the full Drive tool off on that node when a subset is required. The [node guide](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/workflows) says the full tool can bypass restricted Knowledge. [Share and obtain admin approval while the workflow is a non-runnable draft](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/share-workflows). Before first activation, the app admin [transfers ownership](https://docs.cloud.google.com/gemini/enterprise/docs/share-custom-agents) to a controlled publisher, then verifies the former owner has agentUser access and cannot edit. The publisher checks the action and tool diff against an approved change record and turns on the first live version. Later live revisions automatically reach users, so only that publisher may activate them after the same review. Hold shared write workflows if a prior owner or other editor can publish around this gate. [Schedules run only in multi-region and use delegated author credentials that expire after 14 days](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/quotas-and-limits); record trigger owner, renewal, and failure alert for an unattended route.
+**Mechanism and proof.** Record the exact audience, source or uploaded Knowledge, node model, tools, and enabled actions. Restrict Drive Knowledge selection and leave the full Drive tool off on that node when a subset is required. The [node guide](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/workflows) says the full tool can bypass restricted Knowledge. [Share and obtain admin approval while the workflow is a non-runnable draft](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/share-workflows). Before first activation, the app admin [transfers ownership](https://docs.cloud.google.com/gemini/enterprise/docs/share-custom-agents) to a controlled publisher, then verifies the former owner has agentUser access and cannot edit. The publisher compares the action and tool diff with an approved change record before first activation. Later live revisions automatically reach users, so restrict activation to the controlled publisher while testing the release gate below. Hold shared write workflows if a prior owner or other editor can publish around this restriction. [Schedules run only in multi-region and use delegated author credentials that expire after 14 days](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/quotas-and-limits); record trigger owner, renewal, and failure alert for an unattended route.
 
-**Test.** Ask an out-of-audience user to open the draft and query uploaded and linked canaries. Confirm approved sharing leaves it non-runnable and inspect run history before transfer. Transfer ownership, attempt a prior-owner edit and first activation, then let the publisher approve and activate. Alter an action and try to publish a later version without publisher approval. Verify refusal or Hold and retest the released version. Any run during the handoff is a Hold.
+Before the publisher activates a candidate, the customer reviews changed data paths, tools, authority, and supplier boundaries. Customer-modifiable configuration gets risk-matched review; executable code also gets human review and blocking static analysis. Run assembled-route threat tests against the candidate. Save the configuration snapshot, risk treatment, test results, findings, and approver decision together. [Workflow Builder can save a version without activating it, while Turn on or Update creates a new live version](https://docs.cloud.google.com/gemini/enterprise/docs/workflow-builder/manage-agent-versions). Compare the live version's graph and settings with the tested snapshot and retest affected paths after activation.
+
+Obtain Google evidence for inaccessible platform implementation and tests; the customer tests its own connectors, knowledge, identity, actions, and target effects. A publisher's manual check or ownership transfer is not an enforceable security-decision gate. Hold the D8-RELEASE claim and any route requiring that gate until every publisher, administrator, manual, and emergency path refuses a missing approval or unapproved version before it becomes live.
+
+**Test.** Ask an out-of-audience user to open the draft and query uploaded and linked canaries. Confirm approved sharing leaves it non-runnable and inspect run history before transfer. Transfer ownership, attempt a prior-owner edit and first activation, then let the publisher approve and activate. Alter an action and try to publish a later version without a security decision bound to that candidate. Test every live-publishing path, retain the refusal and version history, and compare the live graph with the approved test snapshot. If the console accepts an unapproved update, Hold the prepublication-gate claim even when an audit later records it. Any run during the handoff is a Hold.
 
 ### C11 — Bind a Gmail write workflow to target approval
 
@@ -246,11 +265,12 @@ The [Gmail connector](https://docs.cloud.google.com/gemini/enterprise/docs/conne
 
 ## Validation and decision
 
-Test the actual route at its most permissive allowed setting. Save resource IDs, policy versions, identities, models, connector and action tables, canaries, results, audit joins, assessor, and date. Repeat affected tests after a change to region, source entitlement, model, agent version, connector, action, sharing, or target policy. The investment decision compares an enforceable baseline to a stronger option; extra monitoring never makes an unsupported connector available.
+Test the actual route at its most permissive allowed setting. Save resource IDs, policy versions, identities, resolved model evidence, connector and action tables, candidate and live workflow versions, canaries, results, audit joins, assessor, and date. For each material promotion, link the change-specific design review, customer implementation check, assembled-route test map, findings and retests, supplier limits, and D1-authorized exception to one exact-version security decision. Repeat affected tests after a change to region, source entitlement, model, agent version, connector, action, sharing, or target policy. Hold a route that requires prior release approval when no enforceable path prevents an unapproved vendor-console publication. The investment decision compares an enforceable baseline to a stronger option; extra monitoring never makes an unsupported connector available.
 
 | Route and risk trigger | Baseline and stronger mechanism | Setup and recurring burden | Exposure reduction and refusal test | Owner and disposition |
 | --- | --- | --- | --- | --- |
 | Canada-only Core Assistant over Drive: connector unavailable in **ca** | No supported **ca** Drive store; consider a separately assessed Canadian source/import only if Google documents that exact route | New source design, copy/sync, ACL mapping, rebuild and recurring revocation tests; broader copied-data blast radius | A Canadian app and action table cannot remove the connector limit; require documented Canadian connector or a distinct approved source and a successful ACL/action test | App and data owners: **Hold** for **ca** + Drive |
+| Shared workflow publication: Turn on or Update makes a version live | Controlled publisher and reviewed candidate; require a separate gate that refuses a missing exact-version security decision on every publication path | Publisher-access governance, version comparison, and recurring gate tests | Attempt an unapproved update through each publisher and administrator path; an audit after activation is not refusal | Agent and risk owners: **Hold** until a prepublication refusal is proved |
 | US/EU Gmail write agent: Send enabled also reaches Core Assistant; shared users have own OAuth | Workflow Approval plus narrow store Actions; stronger Workspace Restrict delivery and outgoing quarantine for every sender, with Groups prohibited or refused | Mail OU rules, reviewer staffing, quarantine delay, audit and version review; rule errors can block legitimate mail across that OU | Denied workflow, direct assistant send, self-send, Group, changed recipient, and changed version must produce no unreviewed delivery | Workflow, mail, and risk owners: **Hold** until every target refusal test passes; then assess Pass or bounded exception |
 | Material inference from individually readable sources | C12 records the prohibited combination and separates sources by app/store grant where feasible; a stronger session-aware output gate needs a specific supplier or downstream enforcement claim | App split reduces search utility; classification, audience review, and paired canary retests recur | Ask for each item and the prohibited combination, alongside a permitted combination. Hold if the combination remains answerable without an independent gate | Data and risk owners: **Hold** the affected audience and corpus until C12's denial is proved |
 | Untrusted content plus sensitive retrieval and rendered output | C07 screens covered prompts and responses; C13 tests the managed renderer and requires route-scoped supplier evidence where customer logs stop | Collector tests, client-version retests, supplier assurance, and narrower corpus grants add effort; source removal can reduce utility | Seed a canary-bearing image/link, inspect automatic requests, redirects, and the destination. A prohibited fetch is a Reject; unobservable required boundary is a Hold | App, data, and supplier-risk owners: **Hold** or **Reject** under C13 |
@@ -272,7 +292,7 @@ These controls and refusal tests provide selected evidence for the [[agentic-ai-
 - [[agentic-ai-security-cmm-d5-egress-network|CMM D5: Egress and Network]]: C02 connector recipients, C05 perimeter, C11 target denial, and C13 renderer test bear on **D5-REACH** with downstream forwarding evidence. They do not prove **D5-ALLOW** for every agent connection or managed render path. Obtain supplier route evidence or mark it unanswerable on the managed path.
 - [[agentic-ai-security-cmm-d6-data-rag|CMM D6: Data, Memory and RAG]]: the route's data-class record bears on **D6-CLASSIFY**; C01–C02 ACL/revocation tests bear on **D6-ENTITLE**. C04 copy tests expose retained content. C12's paired canaries identify a **D6-ENTITLE-INFER** target, but segmentation alone does not prove the criterion's session-aware withholding. Canary samples do not establish **D6-REACH** across every corpus or supplier-held index.
 - [[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]]: C08's joined records bear on **D7-LOG** and **D7-ATTRIBUTE** only with answer/tool coverage across agents. Optional Wiz testing bears on **D7-POSTURE** only with complete inventory, findings, and dispositions.
-- [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]]: C03 model records and C10 version diffs bear on **D8-INVENTORY** and **D8-VERSION**. Supplier components need provider evidence; current settings do not establish version history.
+- [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]]: the route inventory, C03, C10 and release packet bear on **D8-DOCS**, **D8-INVENTORY**, **D8-VERSION**, **D8-MODEL-CARD**, **D8-SUPPLIER**, **D8-DESIGN**, **D8-IMPLEMENT**, **D8-TEST**, and **D8-RELEASE** where their customer records and product-scoped supplier evidence exist. A configuration-only app promotion has no D8-AIBOM obligation. Core Assistant model facts may be unanswerable, and its inaccessible prompt needs a scoped supplier assertion for D8-PROMPT-SECRETS. Customer tests cannot establish Google's internal implementation; a console publication without a pre-use decision gate cannot satisfy D8-RELEASE.
 - [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]: C07 outage and C08 stop tests bear on **D9-GUARD-FAILMODE** and **D9-IR-CONTAIN**. C10 transfer and C11 review also need runbooks for **D9-OFFBOARD** and **D9-QUEUE-RUNBOOK**.
 
-Google's linked app, connector, and control guides and the cited Workspace mail pages are capability references as of **2026-09-30**, not deployment attestations. The installed edition, location, connector, policies, and observed behavior govern each route decision.
+Google's linked app, connector, and control guides and the cited Workspace mail pages are capability references as of **2026-10-27**, not deployment attestations. The installed edition, location, connector, policies, and observed behavior govern each route decision.

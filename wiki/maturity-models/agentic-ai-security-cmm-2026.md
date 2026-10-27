@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic AI Security Capability Maturity Model"
 address: c-000156
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-10-27
 tags:
   - maturity-models
   - agentic-ai
@@ -14,7 +14,7 @@ origin: produced
 scope_axis:
   - sec-of-ai
 adoption_signal: proposed
-last_substantive_update: 2026-09-29
+last_substantive_update: 2026-10-27
 tier_count: 5
 audience: "Enterprise security architects, AI platform owners, internal assessors, investment decision makers"
 related:
@@ -31,10 +31,10 @@ related:
   - "[[agentic-ai-security-cmm-d7-observability]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
-verified: 2026-09-29
+verified: 2026-10-27
 verified_against: []
 verified_findings: 0
-verified_note: "Targeted cross-instrument and live NIST, DOE, OWASP source check; no archived source opened. Archived source coverage remains incomplete."
+verified_note: "Targeted D8 level and criterion synchronization check; other domains outside this pass."
 ---
 # Agentic AI Security Capability Maturity Model
 
@@ -409,52 +409,52 @@ Each level sentence states the observable outcome. The nested identifiers are co
 
 ### D8. Engineering and Supply Assurance
 
-- **D8-L1 (Initial):** The deployment lacks a complete component and version record.
+- **D8-L1 (Initial):** A characterized deployment has a known gap in foundational engineering or supply records or controls.
 - **D8-L2 (Developing):** Sources, versions, model cards, acquired-data provenance, and sensitive engineering records are identified and controlled.
     - **Capability.**
         - **D8-DATASET.** Acquired datasets retain source and transformation provenance, including referenced-entry checksums.
-        - **D8-DOCS.** Asset records list agent design, development, model, and experiment documents.
+        - **D8-DOCS.** Asset records include customer-written configuration designs and agent, model, and experiment documents.
         - **D8-DOCS-ACCESS.** Document stores restrict readers to owner-approved people and roles.
         - **D8-INVENTORY.** A reconciled component inventory records source, version, maintainer, introduction date, and held digest.
         - **D8-MODEL-CARD.** Current supplier model or system cards are held for each model in use.
-        - **D8-VERSION.** Released component versions are reconstructable for every period they ran.
-        - **D8-PROMPT-SECRETS.** Effective system prompts are reviewed for secrets before use.
-- **D8-L3 (Defined):** Material designs and changes receive review, scans, supplier checks, assembly records, and a release-linked prompt or harness check.
+        - **D8-VERSION.** Resolved released-component versions are reconstructable for every period they ran; an alias alone is insufficient.
+        - **D8-PROMPT-SECRETS.** Effective prompts contain no credential or key, established by inspection or scoped supplier evidence.
+- **D8-L3 (Defined):** Repeatable engineering checks cover material designs, first-party changes, supplied components, and applicable prompt or harness changes before use.
     - **Capability.**
         - **D8-DESIGN.** Material releases receive deployment-specific threat and boundary review, with treatment for each material risk.
-        - **D8-HARNESS.** Managed settings govern every coding agent and runner without local override.
+        - **D8-HARNESS.** Managed settings govern every coding agent and runner without local override, checked across the fleet.
         - **D8-HARNESS-EXTEND.** Local extensions to managed list keys are inventoried and bounded.
         - **D8-HARNESS-LOCK.** Managed-only locks cover available permission, hook, MCP, and ability controls.
         - **D8-HARNESS-RESTORE.** Changed managed settings return to the published version or a clean image.
-        - **D8-HARNESS-REVIEW.** Every security-relevant harness configuration change receives prior documented review.
+        - **D8-HARNESS-REVIEW.** Every security-relevant harness configuration change follows an enforced prior review path.
         - **D8-IMPLEMENT.** Every first-party change, including generated code, receives risk-matched checks and holds blocking findings.
         - **D8-INSTRUCT-BASELINE.** Loaded instructions match reviewed baselines; changes require new reviewed versions.
-        - **D8-ABILITY-SCAN.** Installed abilities are scanned for hostile code and instructions at each version.
+        - **D8-ABILITY-SCAN.** Installed abilities are scanned at each version, with positive findings cleared or disposed before install.
         - **D8-ABILITY-SOURCE.** Each ability comes from a source approved for its publisher and identity.
-        - **D8-AIBOM.** Pipeline-generated machine-readable AI bills cover release components and versions.
-        - **D8-DEPS-INSTALL.** Organization-controlled registries check package name, publisher, and age before install.
+        - **D8-AIBOM.** Pipeline-generated machine-readable AI bills cover the assembled release's defined component set.
+        - **D8-DEPS-INSTALL.** Governed agent-initiated or agent-authored installs use registries that check package name, publisher, and age.
         - **D8-DEPS-LOCK.** Package installs use exact version and hash pins, refusing mismatches.
         - **D8-DEPS-SCAN.** Release pipelines scan all installed packages and images and hold blocking findings.
-        - **D8-MODEL-INSPECT.** Less-trusted model files receive pre-load architecture inspection for unknown execution.
-        - **D8-MODEL-PROBE.** Less-trusted model files run isolated probes with resource, call, and network monitoring.
-        - **D8-MODEL-SCAN.** Pre-load model-file checks cover format, signature, executable patterns, and corruption.
+        - **D8-MODEL-INSPECT.** Less-trusted model files receive pre-load architecture inspection and disposition of material findings.
+        - **D8-MODEL-PROBE.** Less-trusted model files receive monitored isolated probes and disposition of suspicious behavior.
+        - **D8-MODEL-SCAN.** Pre-load checks cover model-file format, signature, executable patterns, corruption, and finding disposition.
         - **D8-SIGN.** Every organization-built release artifact carries a signature.
-        - **D8-SUPPLIER.** Supplier assessment covers security, disclosure, notice, audit, and applicable provider data-use and retention terms.
-        - **D8-PROMPT-PROBE.** Material prompt or model changes receive pre-release sensitive-function leak probes.
+        - **D8-SUPPLIER.** External and internal component suppliers receive evidence-based security assessment; external processors have scoped data-use terms.
+        - **D8-PROMPT-PROBE.** Material prompt or model changes receive pre-release probes tied to protected information and unacceptable effects.
 - **D8-L4 (Managed):** The assembled deployment is tested before promotion; deployed components, build provenance, advisory response, and exact version admission are verified.
     - **Capability.**
-        - **D8-AIBOM-RUNTIME.** Observed runtime components are compared with approved release bills on a schedule.
-        - **D8-BUILD.** Build artifacts carry signed platform-generated SLSA Build L2 provenance.
-        - **D8-DISCLOSE.** Component advisories enter triage and meet severity-based remediation deadlines.
+        - **D8-AIBOM-RUNTIME.** Observed runtime components are compared with approved release bills across the defined population.
+        - **D8-BUILD.** Build artifacts carry authenticated platform-generated SLSA Build L2 provenance matched to their digests.
+        - **D8-DISCLOSE.** Component advisories enter triage and meet deadlines; provider fixes match the assessed route.
         - **D8-DISCLOSE-CONTAIN.** Overdue advisories have bounded compensating controls with owners and end conditions.
-        - **D8-LINEAGE.** Produced models have versioned lineage across bases, datasets, transformations, code, and build.
+        - **D8-LINEAGE.** Produced models have versioned lineage, a recorded scratch-trained state where applicable, a separate weight store, and least-privilege grants.
         - **D8-REPO-WRITE.** Agent-held identities can write only their own release locations in artifact repositories.
         - **D8-RETIRE.** Periodic component review retires, replaces, or excepts deprecated and unmaintained parts.
         - **D8-VERIFY.** External checks refuse components with missing or mismatched approved provenance or integrity.
-        - **D8-VERIFY-BUNDLE.** Loaded model verification covers weights, tokenizer, vocabulary, configuration, and inference code.
+        - **D8-VERIFY-BUNDLE.** Loaded model verification covers every file the actual loader can use, reconciled to its manifest.
         - **D8-VERIFY-INSTRUCT.** Every loaded instruction file passes origin-backed digest verification or is refused.
         - **D8-VEX.** Externally published components carry vulnerability exploitability statements in VEX format.
-        - **D8-MODEL-PIN.** Production agents select fixed model versions under release control.
+        - **D8-MODEL-PIN.** Production agents use fixed model versions whose changes follow the customer release decision.
         - **D8-TEST.** The assembled deployment receives risk-selected conventional and agent-specific tests, with findings retested.
         - **D8-RELEASE.** Every promotion has an exact-version security decision; blocking findings require D1-authorized exception.
 - **D8-L5 (Optimizing):** Reconciliation, verification gates, supplier-facing feeds where produced, and owned findings have sustained, time-bound outcomes.
@@ -462,11 +462,11 @@ Each level sentence states the observable outcome. The nested identifiers are co
         - **D8-A2A-SIGN-TEST.** Applicable A2A releases test signed Agent Card verification and refusal for missing, altered, or untrusted signatures.
         - **D8-AIBOM-DRIFT.** Runtime-to-release component drift has a tolerance and resolution period.
         - **D8-BUILD-HARDENED.** Built artifacts use isolated SLSA Build L3 provenance and protected signing material.
-        - **D8-LOOP.** Scheduled production reconciliation assigns owners to inventory, bill, and finding discrepancies.
+        - **D8-LOOP.** Scheduled reconciliation joins inventory and findings with applicable bills or effective configuration and supplier changes, then owns discrepancies.
         - **D8-LOOP-SLA.** Every D8 finding reaches a control change or decision within a published SLA.
         - **D8-VERIFY-GATE.** All promotion routes refuse failed verification or unapproved component sets.
         - **D8-VEX-FEED.** External component consumers receive timely machine-readable VEX updates.
-        - **D8-WEIGHTS.** Produced weights are separated, least-privileged, integrity-monitored, and hash-protected.
+        - **D8-WEIGHTS.** Produced weights receive continuous integrity monitoring and cryptographic change checks beyond L4 storage protection.
 
 ### D9. Operations and Human Factors
 
