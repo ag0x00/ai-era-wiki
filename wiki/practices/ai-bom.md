@@ -27,10 +27,12 @@ related:
 sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
-verified: 2026-09-29
-verified_against: []
+verified: 2026-10-28
+verified_against:
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+  - ".raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md"
 verified_findings: 0
-verified_note: "Live JFrog, SLSA and arXiv sources checked; CISA PDF access failed and archived source set was not verified in full."
+verified_note: "Both reachable archived sources read in this verification thread; NIST AI 600-1 MG-3.1-005 checked in its archived PDF. Other live references were not rechecked."
 ---
 
 # AI-BOM: AI Bill of Materials
@@ -50,7 +52,7 @@ JFrog's 2026 research identified **495 malicious Hugging Face models** carrying 
 
 An AI-BOM lets the team answer which model and skills were released, where each MCP server came from, and what provenance is available for data and build artifacts. The runtime record then tests whether production still matches that release.
 
-The component inventory an AI-BOM provides is the concrete answer to the [[nist-ai-600-1|NIST AI 600-1]] GenAI Profile's value-chain and component-integration risk category, which flags the opacity of third-party models, data, and software a GenAI system inherits. The Profile supplies the BOM ingredients in its Suggested Actions — provenance fields (`GV-1.6-003`), approved-provider lists (`GV-6.1-007`), and model/system cards (`MG-3.1-005`) — without assembling them into a single artifact; an AI-BOM makes that inherited chain enumerable rather than implicit.
+The [[nist-ai-600-1|NIST AI 600-1]] GenAI Profile treats third-party models, data, and software as value-chain risks. Its Suggested Actions name inventory provenance fields (`GV-1.6-003`) and approved-provider lists (`GV-6.1-007`). They also call for reviewing transparency documents for third-party models (`MG-3.1-005`), such as model and system cards: descriptions of a model or AI system's intended use and limits. The Profile does not assemble these records into one AI-BOM; the bill makes the inherited chain enumerable.
 
 ## Components to Track
 
@@ -58,7 +60,7 @@ An AI-BOM for an agentic deployment should cover:
 
 | Component Category        | What to Track                                          | Why It Matters                                  |
 |---------------------------|--------------------------------------------------------|-------------------------------------------------|
-| Model or hosted-model reference | Name, disclosed version, provider; digest for weights the organization holds | Model substitution, backdoored weights |
+| Model or hosted-model reference | Name, disclosed version, provider; cryptographic hash for model weight files the organization stores | Model substitution, backdoored weights |
 | Skills / plugins          | Name, version, publisher, install source, SHA-256, behavioral scope | ClawHavoc-class supply chain attacks       |
 | MCP servers               | Name, version, origin, transport security, allowed tools | Tool poisoning, unauthorized tool exposure     |
 | Cognitive identity files  | SOUL.md, IDENTITY.md — hash, change history           | Behavioral hijacking without code changes       |
@@ -96,7 +98,7 @@ The [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Ass
 
 | CMM level | Applicable AI-BOM outcome |
 |---|---|
-| L2 | D8-INVENTORY records each deployed component, its source and version, with a digest for held files or images. |
+| L2 | D8-INVENTORY records each deployed component, its source, maintainer, entry date, and available version, with a cryptographic hash if the component is stored as a file or container image. |
 | L3 | D8-AIBOM produces a machine-readable bill for each agent version the organization releases. D8-SIGN covers release artifacts the organization builds. |
 | L4 | D8-AIBOM-RUNTIME compares observed components with the approved release bill. D8-LINEAGE records the lineage of models the organization produces. |
 | L5 | D8-AIBOM-DRIFT closes or escalates differences within a stated tolerance; D8-VERIFY-GATE refuses unapproved component sets on every promotion path. |

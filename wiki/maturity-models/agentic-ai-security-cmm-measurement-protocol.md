@@ -51,10 +51,13 @@ sources:
   - "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53Ar5.pdf"
   - "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf"
   - "https://www.energy.gov/sites/default/files/2022-06/C2M2%20Version%202.1%20June%202022.pdf"
-verified: 2026-10-27
-verified_against: []
+verified: 2026-10-28
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
 verified_findings: 0
-verified_note: "Targeted D8 applicability, questions, and 49 artifact rows check; other domains outside this pass."
+verified_note: "D8 model-document evidence row checked; two other reachable archived sources and other domains remain outside this pass."
 ---
 
 # Agentic AI Security CMM — Assessor's Handbook
@@ -291,15 +294,15 @@ The questions locate and challenge evidence. Each ends with the criteria it addr
 
 **D8 Engineering and Supply Assurance**
 
-- Which running models, hosting services, harnesses, abilities, libraries, datasets, and configurations appear in the component inventory, with source and version? (D8-INVENTORY)
-- Before this release, which changed trust boundary or untrusted input did design review treat, and where is the linked risk decision? (D8-DESIGN)
-- Which first-party changes, agent-generated code included, passed human review and blocking analysis before the shipped revision? (D8-IMPLEMENT)
-- Which assembled-system test crossed the material threat paths, with exact versions, repeated model outcomes, findings, and retests? (D8-TEST)
-- Which security decision authorized the exact promoted version, and did manual, emergency, and vendor-console routes refuse a missing decision? (D8-RELEASE)
-- For a coding fleet, which complete device and runner population received managed settings, what resolved by configuration class, and how did every configuration-tree change pass review before taking effect? (D8-HARNESS, D8-HARNESS-REVIEW)
-- Which external or internal supplier reviews cover the deployed component and, where an external provider processes task data, its permitted use, retention, deletion, and subcontracted processing terms? (D8-SUPPLIER)
-- Which installed component with a bad or missing approved digest was refused by a check outside the agent? (D8-VERIFY)
-- Which externally published component has an affecting vulnerability, and where are its VEX statement and updateable consumer feed? (D8-VEX, D8-VEX-FEED)
+- For this agent, which running components are in the inventory? Where are their source, maintainer, entry date, available version, and applicable file or container-image hash recorded? (D8-INVENTORY)
+- Before this release, which changed trust boundary or untrusted input did the engineering owner review, and what decision treated its risk? (D8-DESIGN)
+- Which customer-controlled changes, including agent-generated code, passed human review and blocking analysis before the shipped revision? (D8-IMPLEMENT)
+- Which assembled-deployment tests covered the material threat paths, with exact versions, repeated model outcomes, findings, and retests? (D8-TEST)
+- Which security decision approved the exact promoted version, and do manual, emergency, and vendor-console routes refuse promotion without it? (D8-RELEASE)
+- For a coding fleet, which devices and runners received managed settings, what settings took effect in each configuration class, and which records show review before every configuration-tree change? (D8-HARNESS, D8-HARNESS-REVIEW)
+- Which supplier assessment covers each deployed component and, for an external provider that processes deployment data, where are its scoped use, retention, deletion, and subcontracting terms? (D8-SUPPLIER)
+- Which component with a missing or wrong approved hash or signature did a check outside the agent refuse to install or load? (D8-VERIFY)
+- For a component the organization publishes outside, where are the VEX statements for affecting vulnerabilities and the feed consumers can poll? (D8-VEX, D8-VEX-FEED)
 - Which advisory missed its fix deadline, and what dated compensating control reduced exposure before that deadline? (D8-DISCLOSE, D8-DISCLOSE-CONTAIN)
 
 
@@ -561,53 +564,53 @@ Each row below is one criterion's minimum evidence packet at its assigned level.
 | D7 |  |  |  | Path model, running rules, threshold tests, and alerts (D7-CASCADE) |
 | D7 |  |  |  | Joint statistics, running rule, and alert or test (D7-JOINT) |
 | D7 |  |  |  | The playbook for each alert class, with its run history for the period (D7-PLAYBOOK) |
-| D8 | The provenance record of each acquired dataset, set against the inventory's dataset entries, with the entry checksums of a dataset held by reference (D8-DATASET) |  |  |  |
-| D8 | The register entries, set against stores holding the deployment's design, configuration-design, development, model, and experiment records (D8-DOCS) |  |  |  |
+| D8 | Provider or original source and documented filtering, labelling, or augmentation for each imported or licensed dataset, with import-time hashes of referenced content (D8-DATASET) |  |  |  |
+| D8 | Asset register naming the owner and store of the organization's agent design and development documents, model design and experiment records, and hosted-assistant configuration designs (D8-DOCS) |  |  |  |
 | D8 | The access list of each store, set against the roles its owner names (D8-DOCS-ACCESS) |  |  |  |
-| D8 | The inventory, each entry read field by field and set against the running configuration, the lock files, the image digests or the device inventory (D8-INVENTORY) |  |  |  |
-| D8 | The saved card for each model, with its date or version, set against the version in use (D8-MODEL-CARD) |  |  |  |
-| D8 | Resolved component-version history by run or period, with supplier immutability evidence for any dateless pinned ID, excluding a requested mutable alias alone (D8-VERSION) |  |  |  |
-| D8 | Inspected customer prompts or supplier assertions scoped to secret absence and sensitivity treatment, with reviews, decisions, and any leak tests (D8-PROMPT-SECRETS) |  |  |  |
+| D8 | Component inventory and linked records matched to running configuration, lock files, file or container-image hashes, and device inventory (D8-INVENTORY) |  |  |  |
+| D8 | For each model in use, the supplier's or model team's document identifying the model, intended use, tested behavior, and known limits, dated or versioned to match that model (D8-MODEL-CARD) |  |  |  |
+| D8 | Exact-version history by run or period, dated supplier mappings for names such as `latest`, and proof that any model ID without a date always names one release (D8-VERSION) |  |  |  |
+| D8 | Inspected effective customer prompts or scoped supplier assertions, with secret and sensitivity reviews, decisions, and any leak tests (D8-PROMPT-SECRETS) |  |  |  |
 | D8 |  | Versioned architecture, change-linked threat model, security requirements, review, and treatment record (D8-DESIGN) |  |  |
-| D8 |  | Full device and runner frame, managed-source assignments, and effective settings reconciled by configuration class and exception (D8-HARNESS) |  |  |
-| D8 |  | The record, set against the harness's documentation of the keys that merge across scopes (D8-HARNESS-EXTEND) |  |  |
-| D8 |  | The lock values in the resolved managed settings, set against the locks the harness documents (D8-HARNESS-LOCK) |  |  |
+| D8 |  | Full coding-agent device and runner list, managed-settings source, and effective settings by configuration class and exception (D8-HARNESS) |  |  |
+| D8 |  | Allowed user and project additions to managed lists, checked against the harness's documented merge behavior (D8-HARNESS-EXTEND) |  |  |
+| D8 |  | Effective managed-lock settings compared with every lock the coding harness offers (D8-HARNESS-LOCK) |  |  |
 | D8 |  | The restore mechanism's configuration, with its log of a restore or a test of it (D8-HARNESS-RESTORE) |  |  |
-| D8 |  | Complete configuration-tree change history and enforced review path, with sampled review times and effective revisions across routes (D8-HARNESS-REVIEW) |  |  |
-| D8 |  | Change list, scanner and review results, held findings, dispositions, and checked-to-shipped revision link (D8-IMPLEMENT) |  |  |
-| D8 |  | The baseline for each instruction file, with the check that verifies it at load, and for a hash baseline its record of a mismatch or a test of it (D8-INSTRUCT-BASELINE) |  |  |
+| D8 |  | Full configuration-tree change history, enforced review path, and sampled review times before effective revisions on each route (D8-HARNESS-REVIEW) |  |  |
+| D8 |  | Customer change list, human and scanner results, held findings, dispositions, and the link from checked revision to shipped revision (D8-IMPLEMENT) |  |  |
+| D8 |  | Reviewed baseline and load check for each instruction file, using customer checks or scoped supplier records, plus a mismatch record or test for mutable files (D8-INSTRUCT-BASELINE) |  |  |
 | D8 |  | Each installed ability's versioned pre-install scan and any positive-finding disposition (D8-ABILITY-SCAN) |  |  |
 | D8 |  | The approval record or the enforced configuration, set against the abilities each agent uses (D8-ABILITY-SOURCE) |  |  |
-| D8 |  | Pipeline-generated release AI-BOM reconciled with the approved full component inventory and effective configuration, with supplier bills linked when available (D8-AIBOM) |  |  |
-| D8 |  | Governed build and runtime install paths, registry name/publisher/age policy, package-manager configuration, and a refused install test (D8-DEPS-INSTALL) |  |  |
-| D8 |  | The install command and the lock file of each install, with a run that failed on a mismatch or a test (D8-DEPS-LOCK) |  |  |
-| D8 |  | Each pipeline's scan configuration, blocking threshold, run results, held-run or D1 exception record, and queued findings against the full package/image set (D8-DEPS-SCAN) |  |  |
+| D8 |  | Pipeline-generated release AI-BOM with its standard format and version, matched to the component inventory and effective configuration, with available supplier bills linked (D8-AIBOM) |  |  |
+| D8 |  | Agent-authored and runtime install paths, registry name, publisher, and age policy, package-manager settings, and a refused install (D8-DEPS-INSTALL) |  |  |
+| D8 |  | Each agent package install command and exact-version/hash lock or requirements file, plus a mismatch refusal or test (D8-DEPS-LOCK) |  |  |
+| D8 |  | Pipeline scan settings and results for every release package and image, threshold, held run or D1 exception, and queued findings (D8-DEPS-SCAN) |  |  |
 | D8 |  | Each less-trusted model file's pre-load architecture inspection and disposition of material findings (D8-MODEL-INSPECT) |  |  |
-| D8 |  | Each less-trusted model file's probe outcomes and dispositions, with isolation and resource, call, and network monitoring settings (D8-MODEL-PROBE) |  |  |
-| D8 |  | Each model file's pre-load check and finding disposition, with any enforced non-executable-format load policy (D8-MODEL-SCAN) |  |  |
+| D8 |  | Each less-trusted model file's isolated probe results, dispositions, and resource, system-call, and network monitoring settings (D8-MODEL-PROBE) |  |  |
+| D8 |  | Each model file's pre-load format, signature, and checksum checks, executable-pattern results or a code-free format rule, and finding dispositions (D8-MODEL-SCAN) |  |  |
 | D8 |  | The signature or attestation of each artifact of the latest release, with the key or identity that verifies it (D8-SIGN) |  |  |
-| D8 |  | External assessments or internal-control reviews, cited records, applicable provider processing terms, and available bill-of-materials links (D8-SUPPLIER) |  |  |
+| D8 |  | External supplier assessments or internal-control reviews, cited evidence, scoped provider data-use terms, and available bills matched to supplied versions (D8-SUPPLIER) |  |  |
 | D8 |  | Sensitivity-linked probe-to-risk map, production-route versioned runs, expected and observed outcomes, and dispositions (D8-PROMPT-PROBE) |  |  |
-| D8 |  |  | Runtime component record, release AI-BOM, scoped supplier changes, reconciliation runs, and findings (D8-AIBOM-RUNTIME) |  |
-| D8 |  |  | Each release artifact's authenticated platform-generated provenance, matching subject digest, builder identity, and SLSA level (D8-BUILD) |  |
-| D8 |  |  | Intake source by component type, severity deadlines, and prior-year affecting advisories with scoped provider-fix evidence and closure dates (D8-DISCLOSE) |  |
-| D8 |  |  | Procedure, overdue advisory list, and each dated containment record (D8-DISCLOSE-CONTAIN) |  |
-| D8 |  |  | Each produced model's versioned lineage or scratch-trained status, weight-store location, access policy, and named read/write grants (D8-LINEAGE) |  |
-| D8 |  |  | Identities, endpoint ACLs, and promotion records or a denied write test (D8-REPO-WRITE) |  |
-| D8 |  |  | The review's cadence and rule, with its latest record listing the components it read and the action taken on each it found (D8-RETIRE) |  |
+| D8 |  |  | Running component list, approved release AI-BOM, scoped supplier changes, comparison runs, and differences found (D8-AIBOM-RUNTIME) |  |
+| D8 |  |  | Signed provenance from the build platform for each release artifact, verified signer, matching artifact hash, and SLSA Build level (D8-BUILD) |  |
+| D8 |  |  | Advisory sources by component type, severity deadlines, and prior-year affecting notices with route-specific fix evidence and closure dates (D8-DISCLOSE) |  |
+| D8 |  |  | Containment procedure, overdue advisories, and each dated compensating-control record (D8-DISCLOSE-CONTAIN) |  |
+| D8 |  |  | Each produced model's versioned lineage with base model or trained-from-scratch status, weight-store location and policy, and named grants (D8-LINEAGE) |  |
+| D8 |  |  | Agent identities, artifact-repository write permissions by endpoint, and promotion records or a denied-write test (D8-REPO-WRITE) |  |
+| D8 |  |  | Review schedule and inactivity rule, latest full component review, and action or end-dated exception for each affected component (D8-RETIRE) |  |
 | D8 |  |  | Admission settings, approval record, and refused-component test (D8-VERIFY) |  |
-| D8 |  |  | Actual model-loader file set reconciled to a signing manifest or pinned list, with verifier results for each file (D8-VERIFY-BUNDLE) |  |
-| D8 |  |  | The verification step with the signatures or digests it checks, set against each file an agent loads as instructions, and a refused load or a test (D8-VERIFY-INSTRUCT) |  |
+| D8 |  |  | Files the model loader can use, matched to a signing manifest or approved file-hash list, with verification results for every file (D8-VERIFY-BUNDLE) |  |
+| D8 |  |  | Loaded instruction-file list, supplier signatures or hashes recorded in the approved release, verifier settings, and a refused load or test (D8-VERIFY-INSTRUCT) |  |
 | D8 |  |  | The published statements, set against the vulnerabilities affecting each published component (D8-VEX) |  |
-| D8 |  |  | Production model configuration, provider assurance for the assessed route, and customer-controlled version-change records (D8-MODEL-PIN) |  |
-| D8 |  |  | Threat-to-test map, cases, raw results, manifest, and retests (D8-TEST) |  |
-| D8 |  |  | Decision, approver, version or digest, linked results, exception, and refusal test (D8-RELEASE) |  |
-| D8 |  |  |  | Release-linked audit record, signed Agent Cards, trust anchors, and receiver rejection results (D8-A2A-SIGN-TEST) |
-| D8 |  |  |  | For BOM-covered agents, drift tolerance, reconciliation history, and dated closures or findings (D8-AIBOM-DRIFT) |
+| D8 |  |  | Production model selection, supplier assurance for the assessed route, and customer release records for version changes (D8-MODEL-PIN) |  |
+| D8 |  |  | Material-risk-to-test map, test cases and raw outcomes, exact version list, findings, and retests (D8-TEST) |  |
+| D8 |  |  | Security decision and approver for the exact version, linked results and exceptions, plus a missing-decision refusal test (D8-RELEASE) |  |
+| D8 |  |  |  | Release test record, signed Agent Cards, trust anchors, and client rejection results (D8-A2A-SIGN-TEST) |
+| D8 |  |  |  | For agents with an AI-BOM, allowed runtime differences and time limits, comparison history, and dated closures or owned findings (D8-AIBOM-DRIFT) |
 | D8 |  |  |  | Signed provenance, builder assurance, and, where feasible, an independent matching rebuild (D8-BUILD-HARDENED) |
-| D8 |  |  |  | Scheduled reconciliation inputs and run history, including BOMs when applicable or effective configuration and supplier changes otherwise, with owned findings (D8-LOOP) |
-| D8 |  |  |  | The published SLA, with each finding of the quarter and the control change or decision that closed it, with its date (D8-LOOP-SLA) |
-| D8 |  |  |  | Each promotion route's admission policy for BOM-covered agents and a refused promotion test (D8-VERIFY-GATE) |
+| D8 |  |  |  | Reconciliation schedule and runs linking inventory, D8 findings, and applicable AI-BOMs or configuration and supplier changes, with owned discrepancies (D8-LOOP) |
+| D8 |  |  |  | Published deadline and every D8 finding from the prior quarter, each linked to its dated control change or decision (D8-LOOP-SLA) |
+| D8 |  |  |  | Admission rules on every promotion route for agents with an AI-BOM, plus a refused-promotion test (D8-VERIFY-GATE) |
 | D8 |  |  |  | Feed endpoint, statement match, publication dates, and deadline (D8-VEX-FEED) |
 | D8 |  |  |  | Produced-weight integrity monitoring and history, hash or signature verification configuration, and a detected-change test or incident (D8-WEIGHTS) |
 | D9 | The runbook's section for each guardrail, set against the deployment's guardrails (D9-GUARD-RUNBOOK) |  |  |  |
