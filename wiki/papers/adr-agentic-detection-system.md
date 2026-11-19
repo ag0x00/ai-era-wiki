@@ -3,7 +3,7 @@ type: paper
 title: "ADR: Agentic Detection for Enterprise AI"
 address: c-000212
 created: 2026-06-17
-updated: 2026-06-17
+updated: 2026-10-21
 tags:
   - papers
   - agentic-soc
@@ -40,9 +40,15 @@ related:
   - "[[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]]"
   - "[[agentic-soc-state-of-the-field|Agentic SOC: State of the Field]]"
   - "[[genai-endpoint-observability-talk|GenAI Endpoint Observability]]"
+  - "[[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]]"
 sources:
   - "[[.raw/papers/adr-agentic-detection-system-2026-05-17.md]]"
   - https://arxiv.org/abs/2605.17380
+verified: 2026-10-21
+verified_against:
+  - ".raw/papers/adr-agentic-detection-system-2026-05-17.md"
+verified_findings: 0
+verified_note: "pass-inserted Feeds bullet verified against the Sensor section (3.1); older sources not reopened"
 ---
 
 # ADR — Agentic Detection for Enterprise AI
@@ -98,7 +104,12 @@ Deployment labeling is honest about noise: of human-reviewed sessions, 34% were 
 
 ## Strengths and Weaknesses
 
-Strengths: a rare production-scale, longitudinal deployment story rather than a benchmark-only result; an honest cost/latency accounting (2x GuardAgent but 19x cheaper than LlamaFirewall on ADR-Bench); a released MCP-native benchmark and code; and a clean architectural argument for sensors over gateways grounded in real constraints.[^eval][^bench]
+The paper has four strengths:[^eval][^bench]
+
+- A rare production-scale, longitudinal deployment story rather than a benchmark-only result.
+- An honest cost/latency accounting: 2x GuardAgent but 19x cheaper than LlamaFirewall on ADR-Bench.
+- A released MCP-native benchmark and code.
+- A clean architectural argument for sensors over gateways, grounded in real constraints.
 
 Weaknesses and scope limits: recall is moderate (0.667 on ADR-Bench), so roughly a third of malicious tasks are missed, with Permission Abuse the weakest tactic (1/5 detected).[^eval] The benchmark is single-organization in provenance (Uber SOC telemetry, deployment on macOS coding agents), so external validity to other enterprise mixes is asserted, not measured. The detector depends on frontier models (GPT-4o triage, Claude Sonnet 4 reasoning) and inherits their drift and adversarial-adaptation risk, which the authors mitigate by pinning and regression suites rather than eliminate.[^detector]
 
@@ -106,6 +117,7 @@ Weaknesses and scope limits: recall is moderate (0.667 on ADR-Bench), so roughly
 
 - **Supports** [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]] — first large-scale production evidence for the runtime-instrumentation (sensor) camp, with an explicit rejection of the gateway approach.
 - **Supports** [[agent-observability|Agent Observability]] — the Sensor is a working glass-box telemetry layer reconstructing prompt → reasoning → tool-call → outcome.
+- **Feeds** [[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]] — the Sensor's cache parsing is one fallback for reconstructing a tool call when client telemetry was off.
 - **Extends** [[genai-endpoint-observability-talk|GenAI Endpoint Observability]] (Ayenson, Elastic) — answers the intent-attribution gap (EDR cannot tell a developer from an agent) with cache-parsing reconstruction rather than process heuristics.
 - **Sits alongside** [[1-8m-prompts-30-alerts-talk|1.8M Prompts, 30 Alerts]] (Salesforce) and [[syara-semantic-detection-talk|SYARA]] (Palo Alto) as production-scale, cost-tiered detection — see [[tiered-detection-cascade|Tiered Detection Cascade]].
 - **Adds a comparator** to [[adr-bench|ADR-Bench]] · [[agentdojo|AgentDojo]] · [[defensebench|DefenseBench]] in the agentic-security benchmark landscape.

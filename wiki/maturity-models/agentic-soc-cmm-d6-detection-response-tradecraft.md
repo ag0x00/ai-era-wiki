@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic SOC CMM D6 Detection and Response Tradecraft"
 address: c-000192
 created: 2026-06-03
-updated: 2026-06-23
+updated: 2026-10-21
 tags:
   - maturity-models
   - cmm
@@ -19,6 +19,7 @@ scope_axis:
 related:
   - "[[agentic-soc-cmm]]"
   - "[[agentic-soc-reference-architecture]]"
+  - "[[agentic-soc-ra-detection-engineering]]"
   - "[[d3fend-ai-defense-technique-gap]]"
   - "[[mitre-atlas]]"
   - "[[detection-deception-engineering-orbie-talk]]"
@@ -109,7 +110,7 @@ D6 is a detection-engineering and validation cost, not a tooling cost. The catal
 ## Relations
 
 - Companion deep-dive to [[agentic-soc-cmm#axis-2--the-eight-maturity-domains|the Agentic SOC CMM]]'s D6 domain, which classifies D6 as an efficacy gate alongside D2 Threat Intelligence & Knowledge. Because D6 is an efficacy gate, it does not appear in the [[agentic-soc-cmm#the-gating-rule|gating rule]] table that caps a function's autonomy.
-- Scores detection content and response playbooks on the [[agentic-soc-reference-architecture|reference architecture]]'s Data & Knowledge and Policy planes; its application runs through the detection-engineering, triage, hunting, and incident-response agent surfaces, and it carries the in-house AI-application monitored surface.
+- Scores detection content and response playbooks on the [[agentic-soc-reference-architecture|reference architecture]]'s Data & Knowledge and Policy planes; its application runs through the [[agentic-soc-ra-detection-engineering|Agentic SOC Detection Engineering Surface]] and the triage, hunting, and incident-response agent surfaces, and it carries the in-house AI-application monitored surface.
 - The contrasting efficacy gate is D2 Threat Intelligence & Knowledge — D2 grounds *what to look for*, D6 covers *how well the SOC looks and responds*. The sibling autonomy gates that *do* cap a function's autonomy are D1 Telemetry & Data Readiness, D3 Evaluation & Ground-Truth, D4 Agent Identity & Action-Authority, D5 Observability & Oversight, D7 Resilience & Agent Supply Chain, and D8 People & Governance.
 - The named contribution opportunity lives in [[d3fend-ai-defense-technique-gap|the D3FEND AI-Defense Technique Gap]]: D6 scores coverage against D3FEND, which under-counts AI-era defenses, so the D3FEND axis is a coverage floor until the gap closes.
 - Domain grounding: [[detection-deception-engineering-orbie-talk|GreyNoise Orbie]] (AI-authored detection content and deception from internet-scale honeypot data), [[syara-semantic-detection-talk|SYARA]] (semantic/intent detection with the pre-filter pattern), [[binaryshield-ai-fingerprints-talk|BinaryShield]] (privacy-preserving cross-org detection sharing), [[mitre-atlas|MITRE ATLAS]] (the in-house AI-application threat surface), and the [[mythos-ready-security-program|Mythos-ready Security Program]]'s PA 9 (deception capability) and PA 10 (automated response capability), which D6 scores the maturity of.

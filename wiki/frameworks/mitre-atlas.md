@@ -2,7 +2,7 @@
 type: framework
 title: "MITRE ATLAS"
 created: 2026-04-30
-updated: 2026-08-21
+updated: 2026-10-21
 tags:
   - frameworks
   - mitre
@@ -44,9 +44,16 @@ related:
   - "[[llm-attack-navigator]]"
   - "[[gtg-1002-ai-orchestrated-espionage]]"
   - "[[capability-floor-collapse]]"
+  - "[[ai-dfir-toolkit]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://red.anthropic.com/2026/attack-navigator/"
+verified: 2026-10-21
+verified_against:
+  - ".raw/articles/ai-dfir-toolkit-2026-10-21.md"
+  - ".raw/articles/ai-dfir-toolkit-artifact-catalog-2026-10-21.md"
+verified_findings: 0
+verified_note: "Pass-inserted toolkit text verified vs toolkit READMEs; CMM see-also bullet rewritten vs redesigned CMM pages and the ATLAS 2026-Q2 review; older sources not reopened"
 ---
 
 # MITRE ATLAS
@@ -97,7 +104,7 @@ Cross-mapping to OWASP ASI Top 10 now covers all 10 of 10 categories.
 - **Exclusively adversary-centric** — catalogs attack techniques but provides no defensive control specifications.
 - Mitigations (35) are descriptive rather than prescriptive; none include implementation details, evidence criteria, or testing procedures.
 - Does not address non-adversarial AI failures, safety issues, or governance.
-- No incident response playbooks, IoCs, or forensic guidance.
+- No incident response playbooks, IoCs, or forensic guidance. Community content supplies part of that from outside the framework: [[ai-dfir-toolkit|depalmar/ai-dfir-toolkit]] maps Sigma, YARA and Suricata rules and an endpoint artifact catalog to ATLAS technique IDs.
 - Arsenal CALDERA plugin shows no major 2026 updates; still relies on Microsoft Counterfit library.
 - No technique models agent-to-agent trust exploitation or cascading multi-agent failure (the closest, `AML.T0061` LLM Prompt Self-Replication, models prompt propagation through a data channel, not a trust chain).
 - A harmonization effort naming ATLAS as a target is announced and unpublished as of 2026-08-17: the [[owasp-ai-exchange|OWASP AI Exchange]]'s roadmap lists a workstream, led by Rob van der Veer and Yuvaraj, mapping the Exchange to ATLAS and other taxonomies before summer 2026 ([`/go/roadmap/`](https://owaspai.org/go/roadmap/)). No mapping is published, so this page asserts nothing about its content.
@@ -164,7 +171,10 @@ Three points bear on ATLAS specifically.
 
 - [[mitre|MITRE]] (publisher)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — cross-mapped to ATLAS; complementary risk taxonomy
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — ATLAS technique anchors (namespace-correct): `AML.T0051` (LLM Prompt Injection), `AML.T0054` (LLM Jailbreak), `AML.T0053` (AI Agent Tool Invocation) → **D4 Runtime**; `AML.T0080` (AI Agent Context Poisoning), `AML.T0070` (RAG Poisoning), `AML.T0020` (Poison Training Data) → **D6 Data**; `AML.T0104` (Publish Poisoned AI Agent Tool), `AML.T0010` (AI Supply Chain Compromise), `AML.T0109` (Rug Pull) → **D8 Supply Chain**; ID-tagged evidence required at L3+. Full crosswalk: [[standards-review-mitre-atlas-2026-Q2|the 2026-Q2 standards review]].
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — assesses one defined deployment shape and draws its threat cases from that deployment's own threat model. The [[standards-review-mitre-atlas-2026-Q2|2026-Q2 standards review]] mapped ATLAS techniques to the CMM domains in May 2026, before the CMM's 2026-09-29 redesign. The redesigned core page, its Assessor's Handbook and the D4, D6 and D8 deep dives cite no `AML.T` ID. The review's anchor techniques for three domains, under the review's domain names:
+  - **D4 Runtime & Guardrails** (now Runtime and Guardrails): `AML.T0051` (LLM Prompt Injection), `AML.T0054` (LLM Jailbreak), `AML.T0053` (AI Agent Tool Invocation)
+  - **D6 Data, Memory & RAG** (now Data, Memory and RAG): `AML.T0080` (AI Agent Context Poisoning), `AML.T0070` (RAG Poisoning), `AML.T0020` (Poison Training Data)
+  - **D8 Supply Chain & AI-BOM** (now Engineering and Supply Assurance): `AML.T0104` (Publish Poisoned AI Agent Tool), `AML.T0010` (AI Supply Chain Compromise), `AML.T0109` (AI Supply Chain Rug Pull)
 - [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]] — governance complement; ATLAS provides the threat intelligence NIST lacks
 - [[standards-review-mitre-atlas-2026-Q2|MITRE ATLAS — 2026-Q2 Standards Review]] — clause-level CMM crosswalk, ID corrections, and falsifiable absence claims.
 - [[threat-modeling-for-ai|Threat Modeling for AI]] — uses ATLAS as the adversary-technique catalog for detection and red-team planning; [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] maps the `AML.T####` techniques to ASI categories and CMM domains
@@ -185,4 +195,5 @@ Three points bear on ATLAS specifically.
 
 - [MITRE ATLAS](https://atlas.mitre.org/)
 - [MITRE ATLAS data (atlas-data)](https://github.com/mitre-atlas/atlas-data)
+- [red.anthropic.com](https://red.anthropic.com/2026/attack-navigator/)
 <!-- /sources -->

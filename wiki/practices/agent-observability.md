@@ -3,7 +3,7 @@ type: practice
 title: "Agent Observability"
 address: c-000306
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-10-21
 tags:
   - practices
   - observability
@@ -40,6 +40,7 @@ related:
   - "[[agentic-ai-security-cmm-d3-control-least-agency|CMM D3 Control and Least Agency]]"
   - "[[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4 Runtime and Guardrails]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8 Engineering and Supply Assurance]]"
+  - "[[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]"
 sources:
   - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
   - "[[.raw/talks/unprompted-conference-talks-mar-2026.md]]"
@@ -47,11 +48,11 @@ sources:
   - "[[.raw/papers/emerging-cybersecurity-practices-for-agentic-ai-applications.md]]"
   - "[[.raw/papers/adr-agentic-detection-system-2026-05-17.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-30
+verified: 2026-10-21
 verified_against:
-  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Wiz cross-layer correlation claim checked against full launch article; inherited source set remains partial."
+verified_note: "Pass-inserted Vendor client events bullet verified against the deck; Cursor's vendor-side export separated from client push; older sources not reopened."
 ---
 
 # Agent Observability
@@ -87,6 +88,7 @@ Numbat combines artifact parsing with lifecycle hooks for real-time blocking and
 
 - **Application monitoring:** OTel connects process-level data with semantic intent.
 - **Semantic conventions:** the `gen_ai.*` conventions identify model operations, provider, token use, and tool calls. Prompt and response content are optional and require deliberate retention and access controls; the conventions do not reveal hidden model reasoning. See [OpenTelemetry's GenAI conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
+- **Vendor client events:** coding-agent vendors export their own event schemas over OpenTelemetry, most pushed from the developer's machine and Cursor's sent from the vendor's side, and each logs differently. Claude Code emits a `tool_decision` and, when the tool runs, a `tool_result`, joined by `tool_use_id`. A rejected call leaves no result event, so a detection keyed only on results misses refused attempts. The client pushes events as they happen and does not backfill ([[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]).
 
 ### 3. Identity Multiplexing — D7 L3
 

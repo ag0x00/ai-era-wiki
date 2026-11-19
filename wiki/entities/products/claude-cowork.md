@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Claude Cowork"
 created: 2026-09-18
-updated: 2026-09-30
+updated: 2026-10-21
 tags:
   - entities
   - products
@@ -34,6 +34,8 @@ related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-d5-egress-network]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
+  - "[[following-the-ai-audit-trail-talk]]"
+  - "[[coding-agent-investigation-evidence]]"
 sources:
   - "https://claude.com/docs/cowork/overview"
   - "https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans"
@@ -51,10 +53,11 @@ sources:
   - "https://claude.com/docs/third-party/claude-desktop/local-access"
   - "https://claude.com/docs/third-party/claude-desktop/mdm"
   - "https://claude.com/blog/compliance-api-cowork-and-claude-code"
-verified: 2026-09-30
-verified_against: []
+verified: 2026-10-21
+verified_against:
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Whole-page source read against live Anthropic documentation, including local and remote scheduled-task variants."
+verified_note: "Pass-inserted text verified against slides A1, A7; live help-center 14477985, monitoring reference and Team/Enterprise article 13455879 read 2026-10-21; stale content-capture discrepancy and local-history export claim (Enterprise Compliance API retrieves it) corrected; other older sources not reopened."
 ---
 
 # Claude Cowork
@@ -127,13 +130,15 @@ Dispatch is the second unattended path. [The Dispatch reference](https://claude.
 
 [OpenTelemetry export](https://claude.com/docs/cowork/monitoring) is the event-level channel, available on Team and Enterprise plans and configured under Admin settings, Cowork with a collector endpoint, protocol and authentication headers. Settings load at session start, and nothing is exported until an administrator sets the endpoint. Six event types carry the session: `user_prompt`, `assistant_response`, `tool_result`, `api_request`, `api_error` and `tool_decision`. Every event carries the session, organization and user identifiers, the member's email address on first-party deployments, and `workspace.host_paths`, the host directories selected in the desktop app. The tool events are the ones an investigation needs, because each records the tool name, success, duration, the MCP server scope for an MCP tool, and both the decision and its source, which distinguishes a configured allow from a hook decision and from a human approval.
 
-Two Anthropic pages state different defaults for content capture. [The monitoring reference](https://claude.com/docs/cowork/monitoring) states that events carry metadata only by default and that prompt text, model response text and tool details arrive only when an administrator enables them through the `otlpContentCapture` setting. [The help-center article on the same feature](https://support.claude.com/en/articles/14477985-monitor-claude-cowork-activity-with-opentelemetry) states that user prompt content is included in events by default and advises filtering at the collector. An assessor should establish which holds for the app version in the fleet before routing events into a SIEM.
+The export depends on the Claude Desktop version and on where the session runs. [The help-center article on the feature](https://support.claude.com/en/articles/14477985-monitor-claude-cowork-activity-with-opentelemetry) requires Claude Desktop 1.22209.3 or later to monitor cloud sessions and 1.1.4173 or later for local sessions, and places the setting under Organization settings, Cowork, where the monitoring reference names Admin settings, Cowork. Darwin Salazar's [BSides NYC 2026 source comparison](https://github.com/DarwinSec/bsides-nyc-2026/blob/39be1d7fdb1a210203fe1ebf67b6c32533d49f1c/Following_the_AI_Audit_Trail_BSides_NYC_2026.pdf), rechecked on 10 October 2026, reports the same minimums, records the help-center path as a change from its authors' field guide, and states that local and cloud sessions differ and need separate verification ([[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]).
+
+Both Anthropic pages, read on 2026-10-21, state the same content-capture default. [The monitoring reference](https://claude.com/docs/cowork/monitoring) states that current versions of Claude Desktop send metadata only while the `otlpContentCapture` device key is unset, that some older versions on first-party deployments send prompt text, model response text and tool details, and that setting the key to an empty list forces metadata only on every version that supports it. [The help-center article](https://support.claude.com/en/articles/14477985-monitor-claude-cowork-activity-with-opentelemetry) states the same default and the same older-version exception. An assessor establishes the Desktop versions in the fleet, or sets the key to an empty list, before routing events into a SIEM.
 
 ### Compliance API and local storage
 
 [Anthropic's compliance announcement](https://claude.com/blog/compliance-api-cowork-and-claude-code) puts Cowork across the desktop app, web and mobile onto the Compliance API under an Enterprise organization's existing Compliance Access Key, returning transcript content — prompts and responses, tool call content for web and MCP, skills and artifact content — alongside verified user identity, organization, session and message identifiers and timestamps. The same announcement excludes Claude Code on the web, Claude Code through the Claude Platform, and sessions running on Amazon Bedrock, Google Cloud Vertex AI or Microsoft Foundry. Two Anthropic pages state different availability for that channel. The announcement calls the Cowork endpoints generally available; [the enterprise administrator guide](https://academy.claude.com/tutorials/claude-cowork-enterprise-administrator-guide) records Cowork session transcripts on the Compliance API as in beta for Enterprise organizations. An assessor establishes which holds for the organization's own key before relying on the channel.
 
-Two gaps in that record bear directly on retention and legal hold. [The Team and Enterprise article](https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans) states that a local session stores its conversation history on the member's own computer, that this history falls outside Anthropic's standard data-retention policies, and that an administrator can neither manage nor export it centrally; it also states that local session deletion endpoints are not yet available. Separately, [the enterprise administrator guide](https://academy.claude.com/tutorials/claude-cowork-enterprise-administrator-guide) states that Audit Logs do not yet cover Cowork, leaving the Compliance API and the telemetry export as the two session-activity channels those pages name.
+Two gaps in that record bear directly on retention and legal hold. [The Team and Enterprise article](https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans) states that a local session stores its conversation history on the member's own computer, that this history falls outside Anthropic's standard data-retention policies, and that administrators cannot centrally manage or delete it; it also states that local session deletion endpoints are not yet available. [The same article's local-storage section](https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans) states that Claude Enterprise administrators can retrieve that content through the Compliance API. Separately, [the enterprise administrator guide](https://academy.claude.com/tutorials/claude-cowork-enterprise-administrator-guide) states that Audit Logs do not yet cover Cowork, leaving the Compliance API and the telemetry export as the two session-activity channels those pages name. [[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]] therefore treats the endpoint copy of a local session's history as possibly the only copy outside Claude Enterprise, and collects it early.
 
 ## Managed configuration on third-party deployments
 

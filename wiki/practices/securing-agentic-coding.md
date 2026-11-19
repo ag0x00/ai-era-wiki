@@ -3,7 +3,7 @@ type: practice
 title: "Securing Agentic Coding"
 address: c-000238
 created: 2026-07-30
-updated: 2026-09-25
+updated: 2026-10-21
 tags:
   - practices
   - agentic-coding
@@ -56,6 +56,7 @@ related:
   - "[[claude-code|Claude Code]]"
   - "[[claude-code-control-sheet|Claude Code Control Sheet]]"
   - "[[gitspawn-coding-agent-git-config-rce|GitSpawn Coding-Agent Git-Config RCE]]"
+  - "[[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]"
 sources:
   - https://code.claude.com/docs/en/security
   - https://code.claude.com/docs/en/sandboxing
@@ -82,10 +83,11 @@ sources:
   - https://www.manifold.security/blog/ai-coding-agents-git-hijack
   - https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
-verified: 2026-09-24
-verified_against: []
-verified_findings: 1
-verified_note: "Diff-scoped 2026-09-24: D3 records, org pin and TLS grading cut to claims with sheet pointers, facts the sheet lacks moved to [^ccpin] and [^ccd3] (item 10); MCP admission scoped for Desktop-delivered connectors (item 14); GitSpawn timing scoped to Claude Code per the Manifold raw. Open: the no-RA-capability groups leave the TLS row ungrouped."
+verified: 2026-10-21
+verified_against:
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
+verified_findings: 0
+verified_note: "Pass-inserted observability text verified against the BSides NYC 2026 deck (rasterized and text layer); 'confirms' re-stated as 'supports' and the content-enabled scope fixed; older sources not reopened."
 ---
 
 # Securing Agentic Coding
@@ -238,7 +240,7 @@ D4 grades the untrusted-input row, because an issue or comment body that starts 
 | Pull-request security review as a gate | [`claude-code-security-review`](https://github.com/anthropics/claude-code-security-review) GitHub Action | FOSS, first-party | First-party implementation security → [[agentic-ai-security-cmm-d8-supply-chain\|D8]] (D8-IMPLEMENT) |
 | Cross-harness session telemetry and retrospective forensics | [[numbat\|Numbat]]: filesystem session artifacts normalized to NDJSON plus a localhost OTLP receiver, spanning Claude Code, Codex, OpenCode and Pi | FOSS from [[perplexity\|Perplexity]], vendor-announced, with the forensics half also implemented by [[adr-agentic-detection-system\|ADR: Agentic Detection for Enterprise AI]] | SIEM / SOAR with agent playbooks → [[agentic-ai-security-cmm-d7-observability\|D7]] |
 
-**Telemetry ships with content redaction on by default, so an organization that enables it and stops there holds the appearance of agent audit without its substance.** The default stream carries token counts, costs, durations, permission-mode transitions and MCP connection status, and no command strings, prompts or tool arguments, so it cannot answer what an agent ran until the organization decides to export that content, with its data-handling consequences.
+**Telemetry ships with content redaction on by default, so an organization that enables it and stops there holds the appearance of agent audit without its substance.** The default stream carries token counts, costs, durations, permission-mode transitions and MCP connection status, and no command strings, prompts or tool arguments, so it cannot answer what an agent ran until the organization decides to export that content, with its data-handling consequences. Even with content enabled, the stream records the approval and the outcome the tool reports, and the effect on the system needs endpoint, network or destination logs. A call the user rejects leaves a `tool_decision` with no `tool_result`, and a `tool_result` with `success` set to `"true"` is the tool's own report, which a matching endpoint file-write event can independently support. The client pushes events as they happen and does not backfill, so the record starts when telemetry is enabled ([[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]).
 
 Neither analytics API substitutes for that stream. Contribution metrics are Teams and Enterprise only, in public beta, dependent on the GitHub app, unavailable under [Zero Data Retention](https://code.claude.com/docs/en/zero-data-retention), and exclude Claude Console API usage and third-party integrations, and the Console dashboard shows Console-billed spend. Sessions routed through Bedrock, Google Cloud's Agent Platform, Foundry or a self-hosted gateway fall outside both, while OpenTelemetry export keeps working under the three cloud providers with only the `claude_code.internal_error` event suppressed. The [[agentic-ai-security-cmm-d7-observability|D7]] regression a gateway causes is the loss of the first-party dashboards, with OpenTelemetry as the rebuild path step 8 of the [Method](#method) depends on.
 

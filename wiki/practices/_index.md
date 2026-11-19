@@ -2,11 +2,11 @@
 type: domain
 title: "Emerging Best Practices"
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-10-21
 tags: [domain, practices]
 status: seed
 subdomain_of: ""
-page_count: 24
+page_count: 25
 ---
 
 # Emerging Best Practices Index
@@ -24,6 +24,7 @@ Controls, playbooks, and patterns that are converging across vendors but not yet
 - [[ai-era-supply-chain-hardening|AI-Era Software Supply Chain Hardening]]
 - [[ai-spm|AI Security Posture Management (AI-SPM)]] — AI-SPM is the AI analog to CSPM (Cloud Security Posture Management): a continuous discipline of inventorying AI assets, detecting misconf...
 - [[anti-patterns-and-failure-modes|RA and CMM Anti-Patterns and Failure Modes]] — This catalog describes failure paths that an architect or assessor can test while applying the Agentic AI Security Reference Architecture...
+- [[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]] — This practice tells an incident responder or SOC analyst which records establish what a coding agent did on a developer's machine, what t...
 - [[credential-proxy-pattern|Credential Proxy Pattern for AI Agents]] — The credential proxy pattern keeps real secrets out of an agent's reach: the agent holds only a short-lived proxy token, and a proxy reso...
 - [[distributed-kill-switch|Distributed Kill Switch]] — The distributed kill switch practice extends the authority to halt an agent or agentic workflow to every team member in the loop, beyond...
 - [[dspm|Data Security Posture Management (DSPM) for AI]] — DSPM maps where sensitive data lives across cloud repositories and SaaS, classifies it, and ties that map to AI usage.

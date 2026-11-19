@@ -3,7 +3,7 @@ type: architecture
 title: "Agentic SOC Detection Engineering Surface"
 address: c-000195
 created: 2026-06-03
-updated: 2026-08-21
+updated: 2026-10-21
 tags:
   - architectures
   - agentic-soc
@@ -31,11 +31,28 @@ related:
   - "[[openai-hugging-face-incident-blackhat-2026]]"
   - "[[offensive-agent-collective]]"
   - "[[artifactory]]"
+  - "[[ai-dfir-toolkit]]"
+  - "[[following-the-ai-audit-trail-talk]]"
 sources:
   - "[[agentic-soc-reference-architecture]]"
   - "[[agentic-soc-cmm]]"
   - "[[detection-deception-engineering-orbie-talk]]"
   - "[[cti-realm]]"
+  - "[[syara-semantic-detection-talk]]"
+  - "[[binaryshield-ai-fingerprints-talk]]"
+  - "[[openai-hugging-face-incident-blackhat-2026]]"
+  - "[[security-data-pipeline-architecture]]"
+  - "[[mitre-atlas]]"
+  - ".raw/articles/ai-dfir-toolkit-2026-10-21.md"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides-text.md"
+verified: 2026-10-21
+verified_against:
+  - ".raw/articles/ai-dfir-toolkit-2026-10-21.md"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides-text.md"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
+verified_findings: 0
+verified_note: "pass-inserted rows verified against toolkit README and the deck (slide text whole, A10 rasterized); older sources not reopened"
 ---
 
 # Agentic SOC Detection Engineering Surface
@@ -72,7 +89,7 @@ The first row is the cheapest and the highest-yield, and it is a [[agentic-soc-c
 
 ## Autonomy progression
 
-The ladder below applies the CMM's per-function autonomy levels to detection engineering. The load-bearing column is the third: a function may run at autonomy `L_k` only if its governing domains are mature enough to support it. For detection engineering the governing autonomy gates are **D1** and **D4** at the L2 step, **+ D3** and **D5** at L3, and **+ D7** and **D8** at L4 (the [[agentic-soc-cmm#the-gating-rule|gating rule]]). D1 and D3 are the function's distinctive gates: usable telemetry to author against, and the evaluation to know an authored detection is sound. Operating a rung above what those domains support is the model's defined failure mode — authoring delegated faster than it can be validated.
+The ladder below applies the CMM's per-function autonomy levels to detection engineering. The load-bearing column is the third: a function may run at autonomy `L_k` only if its governing domains are mature enough to support it. For detection engineering the governing autonomy gates are **D1** and **[[agentic-soc-cmm-d4-identity-action-authority|D4]]** at the L2 step, **+ D3** and **[[agentic-soc-cmm-d5-observability-oversight|D5]]** at L3, and **+ [[agentic-soc-cmm-d7-resilience-agent-supply-chain|D7]]** and **[[agentic-soc-cmm-d8-people-governance|D8]]** at L4 (the [[agentic-soc-cmm#the-gating-rule|gating rule]]). D1 and D3 are the function's distinctive gates: usable telemetry to author against, and the evaluation to know an authored detection is sound. Operating a rung above what those domains support is the model's defined failure mode — authoring delegated faster than it can be validated.
 
 | Level | What it looks like for detection engineering | Gating domains |
 |---|---|---|
@@ -99,9 +116,13 @@ Detection engineering has a mature content, format, and testing core; the new la
 | CTI-to-detection benchmark | [[cti-realm\|CTI-REALM]] (Microsoft), measuring end-to-end CTI→validated Sigma/KQL generation with checkpoint scoring on ATT&CK mapping and query refinement | Open-source research benchmark (published March 2026); per-model leaderboard partly unpublished |
 | Semantic / intent detection | Rules that match attacker intent across paraphrases for natural-language threats, cheap pre-filter gating an expensive LLM verdict — [[syara-semantic-detection-talk\|SYARA]], open-source | OSS and installable (`pip install syara`); benchmark figures are the project's own, not independently reproduced |
 | Cross-org detection sharing | Privacy-preserving fingerprints that let siloed LLM services share prompt-injection intelligence across compliance boundaries — [[binaryshield-ai-fingerprints-talk\|BinaryShield]] (Microsoft) | Research-stage; backed by a published paper, no packaged product |
-| Detection / control validation | Atomic Red Team for technique-level tests; breach-and-attack-simulation (BAS) platforms; purple-teaming to confirm a detection fires on a real technique | Atomic Red Team is OSS and free; BAS is commercial; both GA |
+| Technique-level validation | Atomic Red Team technique-level tests | OSS, free and GA |
+| Attack-simulation validation | Breach-and-attack-simulation (BAS) platforms | Commercial and GA |
+| Purple-team validation | Purple-teaming to confirm a detection fires on a real technique | Team practice |
 | Deception detections | Canaries and honeytokens keyed to TTPs, including deception against AI-powered attackers, feeding detections ([[detection-deception-engineering-orbie-talk\|Orbie]]'s deception half) | Canary/honeytoken tooling is GA; AI-attacker-keyed deception is emerging practice |
 | AI-application threat surface | [[mitre-atlas\|MITRE ATLAS]] as the threat model the in-house GenAI-application detections map against — [[prompt-injection\|prompt injection]], jailbreaks, RAG exfiltration, agent hijack | GA reference; the monitored AI app is a distinct asset class because its attacks rarely leave traditional signatures |
+| AI-tooling rule packs | Open Sigma, YARA and Suricata rules for AI attack classes and agent behaviour on hosts, mapped to ATLAS and OWASP — [[ai-dfir-toolkit\|depalmar/ai-dfir-toolkit]] ([coverage overview](https://github.com/depalmar/ai-dfir-toolkit/blob/1a5963d9225d3577d4500f3e1ec8a1f0b8664b3b/README.md#coverage-overview)) | Single-maintainer OSS; validation is the repository's own [15-case test suite](https://github.com/depalmar/ai-dfir-toolkit/blob/1a5963d9225d3577d4500f3e1ec8a1f0b8664b3b/README.md#testing) |
+| Coding-agent telemetry hunts | Hunts over Claude Code OpenTelemetry events: sensitive paths keyed on the decision event, accepted calls with no result, auto-approvals against policy, silent clients — [[following-the-ai-audit-trail-talk\|Following the AI Audit Trail]] ([slide A10](https://github.com/DarwinSec/bsides-nyc-2026/blob/39be1d7fdb1a210203fe1ebf67b6c32533d49f1c/Following_the_AI_Audit_Trail_BSides_NYC_2026.pdf)) | Starting hunts, not alerts, from a pipeline vendor's talk (Monad, October 2026); field names change between client releases |
 | Internal agent-fleet threat surface | Infrastructure detections keyed to the organization's own agents as actor: writes to shared build and package infrastructure from analysis identities, encoded payloads in artifact names, technique reuse across unrelated runs (see [[offensive-agent-collective\|offensive agent collective]]) | Emerging; one published incident supplies the content, and the underlying registry, proxy, and cache telemetry is conventional, though it rarely carries the workload identity the rules need |
 
 The load-bearing shift is from byte-signature matching against vendor libraries to **intent matching authored from live telemetry**. [[detection-deception-engineering-orbie-talk|Orbie]] shows authoring: an agent drafting rules from honeypot data, where the tooling's domain knowledge beats model choice. [[syara-semantic-detection-talk|SYARA]] shows intent matching for natural-language threats with a cheap layer gating the expensive LLM to keep cost survivable at scale, and [[binaryshield-ai-fingerprints-talk|BinaryShield]] extends detection from one service to a privacy-preserving sharing layer. Validation — Atomic Red Team, BAS, purple-teaming — is what turns authored coverage into confirmed coverage, and is the D3/D6 mechanism behind safely raising authoring autonomy.

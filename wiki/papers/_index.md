@@ -6,7 +6,7 @@ updated: 2026-11-18
 tags: [domain, papers]
 status: seed
 subdomain_of: ""
-page_count: 101
+page_count: 102
 ---
 
 # Papers Index
@@ -54,6 +54,7 @@ One summary page per research paper, vendor whitepaper, or industry survey. Sour
 - [[emerging-cybersecurity-practices-for-agentic-ai-applications|Emerging Cybersecurity Practices for Agentic AI Applications]] — Source: Anton Goncharov, original research (March 2026).
 - [[fbi-artex-flash-2026-11|FBI ARTEX FLASH Advisory]] — Source:...
 - [[first-vulnerability-forecast-2026|FIRST Vulnerability Forecast]] — Source: [FIRST — Vulnerability Forecast for 2026](https://www.first.org/blog/20260211-vulnerability-forecast-2026) (2026-02-11).
+- [[following-the-ai-audit-trail-talk|Following the AI Audit Trail]] — Source:...
 - [[gartner-mq-enterprise-ai-coding-agents-2026|Gartner MQ for Enterprise AI Coding Agents]] — Source: Gartner press release,...
 - [[genai-endpoint-observability-talk|GenAI Endpoint Observability for Detection Engineers]] — A practitioner talk by Mika Ayenson, who leads Threat Research and Detection Engineering at Elastic, delivered at the March 2026 Unprompt...
 - [[glass-box-security-talk|Glass-Box Security: Interpretability for AI Defense]] — Source: Unprompted Conference 2026, Stage 2 Lecture 10 (Carl Hurd, Starseer).

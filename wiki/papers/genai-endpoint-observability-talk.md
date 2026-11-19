@@ -3,7 +3,7 @@ type: talk
 title: "GenAI Endpoint Observability for Detection Engineers"
 address: c-000169
 created: 2026-06-02
-updated: 2026-07-31
+updated: 2026-10-21
 tags:
   - papers
   - talks
@@ -32,11 +32,18 @@ related:
   - "[[perplexity-numbat-agent-security|Numbat Agent Security Suite]]"
   - "[[glass-box-security|Glass-Box Security]]"
   - "[[nist-ai-800-4|NIST AI 800-4]]"
+  - "[[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]]"
 sources:
   - "[[unprompted-conference-march-2026|Unprompted Conference (March 2026)]]"
   - https://unpromptedcon.org/#
   - ".raw/talks/2026-03-03_Mika-Ayenson_GenAI-Endpoint-Observability_transcript.md"
   - ".raw/talks/2026-03-03_Mika-Ayenson_GenAI-Endpoint-Observability_slides.pdf"
+verified: 2026-10-21
+verified_against:
+  - ".raw/talks/2026-03-03_Mika-Ayenson_GenAI-Endpoint-Observability_transcript.md"
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
+verified_findings: 0
+verified_note: "pass-inserted sentence verified against transcript intent-attribution passage and deck slide A6; older sources not reopened"
 ---
 
 # GenAI Endpoint Observability for Detection Engineers
@@ -96,7 +103,7 @@ OpenTelemetry matters here as a common lexicon. Without it, a detection engineer
 
 ### Capabilities unlocked by native fields
 
-[Claude Code](https://docs.claude.com/en/docs/claude-code/monitoring-usage) already ships OpenTelemetry natively and is the named exception; other tools are catching up. With native fields, an analyst can attribute an action to its parent process, the tool name (for example Cursor), whether the user approved it, the provider, the prompt, the model's reasoning, and any guardrail or refusal event — and pull all of it into one coherent story rather than inferring it from a process tree.
+[Claude Code](https://docs.claude.com/en/docs/claude-code/monitoring-usage) already ships OpenTelemetry natively and is the named exception; other tools are catching up. With native fields, an analyst can attribute an action to its parent process, the tool name (for example Cursor), whether the user approved it, the provider, the prompt, the model's reasoning, and any guardrail or refusal event — and pull all of it into one coherent story rather than inferring it from a process tree. [[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]] pairs that agent-side approval record with the EDR record of the effect when reconstructing one tool call.
 
 ## Industry Gaps to Close Natively
 

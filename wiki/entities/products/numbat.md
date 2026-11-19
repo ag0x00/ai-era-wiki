@@ -4,7 +4,7 @@ entity_type: product
 title: "Numbat"
 address: c-000250
 created: 2026-07-31
-updated: 2026-09-17
+updated: 2026-10-21
 tags:
   - products
   - open-source
@@ -32,9 +32,15 @@ related:
   - "[[claude-code-security|Claude Code Security]]"
   - "[[adr-agentic-detection-system|ADR — Agentic Detection for Enterprise AI]]"
   - "[[genai-endpoint-observability-talk|GenAI Endpoint Observability]]"
+  - "[[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]]"
 sources:
   - "https://research.perplexity.ai/articles/securing-agents-across-perplexity%E2%80%99s-client-endpoints-with-numbat"
   - ".raw/articles/perplexity-numbat-agent-security-suite-2026-07-31.md"
+verified: 2026-10-21
+verified_against:
+  - ".raw/articles/perplexity-numbat-agent-security-suite-2026-07-31.md"
+verified_findings: 0
+verified_note: "pass-inserted sentence verified against the session-artifacts section and the practice page; older sources not reopened"
 ---
 
 # Numbat
@@ -45,7 +51,7 @@ Open-source agent security suite from [[perplexity|Perplexity]], distributed as 
 
 ## Function
 
-Numbat attaches to an agent harness at three points. Hooks provide real-time detection, and the pre-action variety can block an action before it executes. Session artifacts, read directly from the harness dot-directory under `$HOME` and normalized to NDJSON timelines by `numbat scan`, provide retrospective forensics — including for sessions that ran before Numbat was installed. OTLP telemetry, received locally by `numbat collect`, supplies fleet monitoring signals that hooks and artifacts do not carry.
+Numbat attaches to an agent harness at three points. Hooks provide real-time detection, and the pre-action variety can block an action before it executes. Session artifacts, read directly from the harness dot-directory under `$HOME` and normalized to NDJSON timelines by `numbat scan`, provide retrospective forensics — including for sessions that ran before Numbat was installed. [[coding-agent-investigation-evidence|Coding-Agent Investigation Evidence]] uses this route as one fallback when client telemetry was off during the session under investigation. OTLP telemetry, received locally by `numbat collect`, supplies fleet monitoring signals that hooks and artifacts do not carry.
 
 Detection content ships as 52 built-in rules across 11 behavior categories, written as CEL expressions over normalized events, together with multi-step sequence detections for secret access, exfiltration, privilege escalation, and lateral movement. Operators add rules and tests without modifying Numbat's source.
 

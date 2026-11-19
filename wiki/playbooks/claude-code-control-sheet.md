@@ -27,6 +27,7 @@ related:
   - "[[agentic-ai-security-cmm-d7-observability|CMM D7: Observability and Detection]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]]"
   - "[[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]"
+  - "[[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]"
 sources:
   - "https://code.claude.com/docs/en/feature-availability"
   - "https://code.claude.com/docs/en/managed-settings"
@@ -49,7 +50,7 @@ sources:
 verified: 2026-10-27
 verified_against: []
 verified_findings: 0
-verified_note: "Whole-page D8 integration and current official Anthropic documentation check; no archived source opened."
+verified_note: "Whole-page D8 integration and current official Anthropic documentation check; no archived source opened. The C07 approval-source sentences merged afterward from the Salazar ingest were verified on 2026-10-21 against the talk slides."
 ---
 
 # Claude Code Control Sheet
@@ -171,7 +172,7 @@ For each model, hosting, harness, or ability supplier, retain a route-scoped sec
 
 **Mechanism and proof.** On supported clients, Claude Code can emit `tool_decision`, `permission_mode_changed`, and `managed_settings_resolved` events. Detail flags determine whether tool arguments and MCP names appear; enabling them can also expose sensitive content. Claude Code emits raw events, while the SIEM must correlate sessions and alert. [Monitoring's event schema and explicit SIEM boundary](https://code.claude.com/docs/en/monitoring-usage) govern the design. Where that stream is unavailable or insufficient, use host, provider, CI, code-host, and target-service records.
 
-**Test.** Cause a denied action, a policy-source change, a hook timeout, and a permitted write. Find their identities and outcomes in the organization's store, trigger the alert, revoke the principal or route, and verify the next call fails.
+**Test.** Cause a denied action, a policy-source change, a hook timeout, and a permitted write. Find their identities and outcomes in the organization's store, trigger the alert, revoke the principal or route, and verify the next call fails. Query each denied action by its `tool_decision` event, because a rejected call produces a decision and never a `tool_result`. Record the client version beside each approval: on v2.1.300 the `config` source covers both an auto-mode classifier approval and a configured rule, so `source` alone does not show which one approved the call, and v2.1.301 adds `classifier_verdict` and `permission_mode` to tell them apart ([[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]).
 
 ## Shape-specific controls
 
@@ -263,4 +264,4 @@ Selected controls trace to directly testable criteria in the [[agentic-ai-securi
 - [[agentic-ai-security-cmm-d8-supply-chain|CMM D8: Engineering and Supply Assurance]]: C02's fleet and review records bear on D8-HARNESS and D8-HARNESS-REVIEW; C05's source and scan records bear on D8-ABILITY-SOURCE and D8-ABILITY-SCAN. The route inventory, supplier assessment, and release packet bear on D8-VERSION, D8-SUPPLIER, D8-DESIGN, D8-IMPLEMENT, D8-TEST, and D8-RELEASE only where the stated customer and supplier evidence exists. C06's supplier-held prompt check needs a scoped assertion for D8-PROMPT-SECRETS. A settings file or test pack alone does not establish a domain result.
 - [[agentic-ai-security-cmm-d9-operations|CMM D9: Operations and Human Factors]]: C07's timeout path bears on D9-GUARD-RUNBOOK.
 
-Anthropic's [feature-availability matrix](https://code.claude.com/docs/en/feature-availability) and the cited settings, permissions, sandbox, cloud, CI, monitoring, and data-usage pages are capability references, not deployment attestations. Version-specific behavior reflects the linked documentation on 2026-10-27; the installed build and provider route govern the final test.
+Anthropic's [feature-availability matrix](https://code.claude.com/docs/en/feature-availability) and the cited settings, permissions, sandbox, cloud, CI, monitoring, and data-usage pages are capability references, not deployment attestations. Version-specific behavior reflects the linked documentation on 2026-10-27, and the C07 approval-source detail reflects v2.1.300 captures from 2026-10-15; the installed build and provider route govern the final test.

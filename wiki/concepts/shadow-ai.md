@@ -2,7 +2,7 @@
 type: concept
 title: "Shadow AI"
 created: 2026-05-01
-updated: 2026-08-31
+updated: 2026-10-21
 tags:
   - concepts
   - shadow-ai
@@ -27,8 +27,16 @@ related:
   - "[[non-human-identity]]"
   - "[[mcp-security]]"
   - "[[cyera-agent-guardian-release]]"
+  - "[[ai-dfir-toolkit]]"
 sources:
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
+verified: 2026-10-21
+verified_against:
+  - ".raw/articles/ai-dfir-toolkit-2026-10-21.md"
+  - ".raw/articles/ai-dfir-toolkit-artifact-catalog-2026-10-21.md"
+  - ".raw/articles/knostic-ai-data-security-2026-05-01.md"
+verified_findings: 0
+verified_note: "pass-inserted text verified; Scale figures re-sourced to live deep links and corrected; Knostic grepped for 75/78 only; older sources not reopened"
 ---
 
 # Shadow AI
@@ -37,14 +45,15 @@ sources:
 
 ## Scale
 
-The 75% / 78% figures are typically cited via Knostic, but the **primary source is Microsoft's [Work Trend Index 2025](https://www.microsoft.com/en-us/worklab/work-trend-index)**. The wiki should cite Microsoft directly rather than the downstream vendor. Independently corroborated:
+The 75% and 78% figures that the [[ai-data-security|AI Data Security]] article from Knostic repeats come from Microsoft's [2024 Work Trend Index Annual Report](https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part): 75% of knowledge workers use AI at work, and 78% of AI users bring their own AI tools to work. Independent surveys agree on the direction:
 
-- **[[stanford-hai|Stanford HAI AI Index 2025]]**: 78% business AI adoption (up from 55% in 2023); methodology disclosed; cross-year comparable
-- **McKinsey State of AI (Nov 2025)**: 88% of orgs use AI in ≥1 function; only 6% are "high performers" (n=1,993, 105 countries)
-- **BCG "Build for the Future 2025"**: 72% regular use; **only 13% have AI agents in production** vs 56% experimenting; the agentic-vs-GenAI gap is load-bearing
-- **IBM Cost of a Data Breach 2025**: 20% of orgs experienced shadow-AI breaches; cost \$670K above average
+- **[[stanford-hai|Stanford HAI]] AI Index 2025**: 78% of organizations reported using AI in 2024, up from 55% the year before ([AI Index 2025, takeaway 3](https://hai.stanford.edu/ai-index/2025-ai-index-report)).
+- **McKinsey, *The state of AI in 2025* (November 2025)**: 88% of respondents report regular AI use in at least one business function, from 1,993 participants in 105 nations ([McKinsey survey](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025)).
+- **McKinsey AI high performers**: about 6% of respondents report both an EBIT impact of 5% or more from AI and significant value from it ([McKinsey survey](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025)).
+- **BCG, *AI at Work 2025* (June 2025)**: 72% of respondents use AI regularly, and 13% say AI agents are integrated into their workflows ([BCG press release](https://www.bcg.com/press/26june2025-beyond-ai-adoption-full-potential)).
+- **IBM Cost of a Data Breach 2025**: one in five organizations (20%) reported a breach due to shadow AI, and organizations with high levels of shadow AI saw average breach costs \$670,000 higher than those with little or none ([IBM press release](https://newsroom.ibm.com/2025-07-30-ibm-report-13-of-organizations-reported-breaches-of-ai-models-or-applications,-97-of-which-reported-lacking-proper-ai-access-controls)).
 
-Directional agreement: rate is high enough that "block all unsanctioned AI" is impractical. The agentic deployment lag (BCG's 13% in production) is the wiki's CMM "L1 Initial" anchor.
+Use is widespread enough that blocking all unsanctioned AI is impractical. Agent deployment trails general use: 13% of BCG's respondents report agents integrated into their workflows against 72% who use AI regularly ([BCG press release](https://www.bcg.com/press/26june2025-beyond-ai-adoption-full-potential)).
 
 See [[source-triangulation-audit-2026-05-02|Source Triangulation Audit 2026-05-02]] §Claim 2 for full triangulation.
 
@@ -78,7 +87,7 @@ The Knostic article frames mitigation as a triad:
 Mature implementations add:
 
 - **Sanctioned alternatives provided proactively.** If users have a sanctioned tool that does what they need, BYOAI rates drop.
-- **Discovery via [[ai-spm|AI-SPM]].** Inventory production-grade AI assets, including locally installed MCP servers and IDE extensions. Cyera Endpoint, described in [[cyera-agent-guardian-release|the Cyera Agent Guardian release]], is a vendor example of this discovery extended to desktop agent harnesses, naming Claude Code, Cowork and ChatGPT Desktop among them, and not only IDE extensions.
+- **Discovery via [[ai-spm|AI-SPM]].** Inventory production-grade AI assets, including locally installed MCP servers and IDE extensions. Cyera Endpoint, described in [[cyera-agent-guardian-release|the Cyera Agent Guardian release]], is a vendor example of this discovery extended to desktop agent harnesses, naming Claude Code, Cowork and ChatGPT Desktop among them, and not only IDE extensions. The open [[ai-dfir-toolkit|depalmar/ai-dfir-toolkit]] catalog publishes install, configuration and credential paths for [51 AI tools](https://github.com/depalmar/ai-dfir-toolkit/blob/1a5963d9225d3577d4500f3e1ec8a1f0b8664b3b/artifacts/README.md#contents) as a collection-target list, with an osquery pack that answers which hosts run a given tool; its README states that an agent's presence on an endpoint is not an incident.
 - **Knowledge-layer controls** ([[oversharing-controls|Oversharing Controls for AI Search]]) to limit damage when sanctioned AI is misused for unsanctioned data.
 
 ## Distinction from Sanctioned AI

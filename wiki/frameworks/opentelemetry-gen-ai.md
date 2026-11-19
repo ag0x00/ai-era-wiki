@@ -2,7 +2,7 @@
 type: framework
 title: "OpenTelemetry gen_ai.* Semantic Conventions"
 created: 2026-05-03
-updated: 2026-09-29
+updated: 2026-10-21
 tags:
   - frameworks
   - observability
@@ -23,10 +23,12 @@ related:
   - "[[nist-ai-800-4]]"
   - "[[agentic-ai-security-cmm-d7-observability]]"
   - "[[agentic-ai-security-cmm-d9-operations]]"
-verified: 2026-09-29
-verified_against: []
+  - "[[following-the-ai-audit-trail-talk]]"
+verified: 2026-10-21
+verified_against:
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Reviewed current OpenTelemetry GenAI repository docs, semantic conventions changelog and current CMM criteria; no archived source opened."
+verified_note: "Pass-inserted D7-SPANS-PIN example verified against the deck and re-framed to D7's removal-catching test via the version record; no level change; older sources not reopened."
 ---
 
 # OpenTelemetry gen_ai.* Semantic Conventions
@@ -68,7 +70,7 @@ The application must add and preserve a resolvable agent, session and accountabl
 ## In the RA / CMM
 
 - **RA evidence path:** Correlated traces from the model, retrieval mediator, action gateway, and agent runtime reach an evidence store outside the agent's write authority. OTel is one transport and schema choice.
-- **CMM D7 L3:** See [[agentic-ai-security-cmm-d7-observability|D7]] for D7-SPANS, which requires correlated traces on applicable paths. OTel GenAI spans are one implementation. D7-SPANS-HELD requires searchable or exportable records; D7-SPANS-PIN requires version records or a compatibility contract with a field-compatibility test.
+- **CMM D7 L3:** See [[agentic-ai-security-cmm-d7-observability|D7]] for D7-SPANS, which requires correlated traces on applicable paths. OTel GenAI spans are one implementation. D7-SPANS-HELD requires searchable or exportable records; D7-SPANS-PIN requires version records or a compatibility contract with a field-compatibility test. Coding-agent clients change their event fields between releases. Claude Code 2.1.301 added `classifier_verdict` and `permission_mode`, which separate an auto-mode classifier approval from a configured rule, and 2.1.300 records both under one `config` source ([[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]). A detection that depends on those fields therefore needs the client version record, because every client still on 2.1.300 emits neither.
 - **CMM [[agentic-ai-security-cmm-d9-operations|D9]] L3:** Instrumented guardrail spans can contribute to D9-GUARD-LATENCY and D9-GUARD-COST series for each agent. Token counts alone do not establish guardrail cost without a pricing method and attribution.
 
 ## See also

@@ -6,7 +6,7 @@ updated: 2026-11-18
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 72
+page_count: 73
 ---
 
 # Products Index
@@ -24,6 +24,7 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[agentgateway|AgentGateway]] — Sources: [AgentGateway (repo)](https://github.com/agentgateway/agentgateway)
 - [[agentshield|AgentShield]] — Sources: [GitHub — `affaan-m/agentshield`](https://github.com/affaan-m/agentshield) ·...
 - [[ai-deep-sast|ai-deep-sast]] — Sources: [GitHub — cisco-open/ai-deep-sast](https://github.com/cisco-open/ai-deep-sast) · OSS AI Security Harness Comparison.
+- [[ai-dfir-toolkit|depalmar/ai-dfir-toolkit]] — Sources: [GitHub — depalmar/ai-dfir-toolkit](https://github.com/depalmar/ai-dfir-toolkit) ·...
 - [[angr|angr]] — Open-source multi-modal binary-analysis framework ([angr.io](https://angr.io/)), written by Yan Shoshitaishvili during his graduate work...
 - [[anthropic-sandbox-runtime|Anthropic Sandbox Runtime]] — Repository: [anthropic-experimental/sandbox-runtime](https://github.com/anthropic-experimental/sandbox-runtime)
 - [[artex|ARTEX]] — Sources:...

@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Claude Code"
 created: 2026-09-17
-updated: 2026-09-24
+updated: 2026-10-21
 tags:
   - entities
   - products
@@ -40,6 +40,7 @@ related:
   - "[[cursor-ide|Cursor]]"
   - "[[mexican-government-ai-breach|Mexican Government Multi-Agency AI-Assisted Breach]]"
   - "[[gtg-1002-ai-orchestrated-espionage|GTG-1002: AI-Orchestrated Espionage Campaign]]"
+  - "[[following-the-ai-audit-trail-talk|Following the AI Audit Trail]]"
 sources:
   - "https://github.com/anthropics/claude-code"
   - "https://code.claude.com/docs/en/monitoring-usage"
@@ -53,10 +54,11 @@ sources:
   - "https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/"
   - "https://www.manifold.security/blog/ai-coding-agents-git-hijack"
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
-verified: 2026-09-24
-verified_against: []
+verified: 2026-10-21
+verified_against:
+  - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Diff-scoped 2026-09-24: l.67 cloud entry points gain the Slack mention and [^surfaces] extended, checked against the saved cloud, claude-tag and slack docs (item 8). V5's whole-page read earlier today, the GitSpawn raw among its sources, left nothing open."
+verified_note: "Pass-inserted pointer sentence verified against slide 5 and slide-text extraction; older sources not reopened."
 ---
 
 # Claude Code
@@ -79,7 +81,7 @@ Four roles matter here.
 
 **As offensive tooling.** Two catalogued campaigns drove the agent against third-party targets: [[gtg-1002-ai-orchestrated-espionage|GTG-1002]], where it orchestrated reconnaissance and intrusion across roughly thirty targets, and the [[mexican-government-ai-breach|Mexican government multi-agency breach]], where it carried about 75 percent of the operator's remote command execution.
 
-[[claude-code-control-sheet|Claude Code Control Sheet]] maps the harness's configurable controls to criteria in all nine domains of the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]], with the evidence an assessor collects for each, and [[securing-agentic-coding|Securing Agentic Coding]] catalogs the same controls by reference-architecture plane.
+[[claude-code-control-sheet|Claude Code Control Sheet]] maps the harness's configurable controls to criteria in all nine domains of the [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]], with the evidence an assessor collects for each, and [[securing-agentic-coding|Securing Agentic Coding]] catalogs the same controls by reference-architecture plane. [[following-the-ai-audit-trail-talk|Following the AI Audit Trail]] reads the harness's OpenTelemetry events as investigative evidence: what they record about a tool call and its approval, and which questions need audit, transcript or endpoint records instead.
 
 ## Security Record
 
