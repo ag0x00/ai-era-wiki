@@ -2,7 +2,7 @@
 type: overview
 title: "Enterprise Security in the Agentic AI Era"
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-10-14
 tags: [overview, agentic-ai, enterprise-security, ai-and-security, landing]
 status: developing
 origin: produced
@@ -14,10 +14,10 @@ scope_axis:
 permalink: "/"
 aliases:
   - index
-verified: 2026-09-29
+verified: 2026-10-14
 verified_against: []
 verified_findings: 0
-verified_note: "Whole page read for RA/CMM consistency; six-plane and score-cap descriptions removed, Novee date checked against the reporting source; other field synthesis retains prior verification."
+verified_note: "Whole page read; coding-agent summary checked against live Devin, Microsoft, Manifold, and Anthropic primary sources; reachable archived sources were not reopened for this page."
 ---
 ## About
 
@@ -28,7 +28,7 @@ It synthesizes primary sources (frameworks, standards, peer-reviewed papers, ven
 ## On this page
 
 - [Anchor deliverables](#anchor-deliverables): the reference architectures, maturity models, playbooks, and theses the rest cross-references.
-- [State of the field, mid-2026](#state-of-the-field-mid-2026): the shifts that set the operational ground, grouped by mechanism.
+- [State of the field, 2026](#state-of-the-field-2026): the shifts that set the operational ground, grouped by mechanism.
 - [Securing AI](#i-securing-ai): deploying and red-teaming AI systems safely.
 - [AI for defense](#ii-ai-for-defense): defenders using AI for detection, response, and vulnerability discovery.
 - [AI for offense](#iii-ai-for-offense): attackers using AI to exploit at machine speed.
@@ -71,7 +71,7 @@ It synthesizes primary sources (frameworks, standards, peer-reviewed papers, ven
 - [[gemini-enterprise-control-sheet|Gemini Enterprise Control Sheet]]: a separate control route for the Google Cloud employee app, its data stores, and its agents.
 - [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]]: control and evidence decisions for customer-built agents on Gemini Enterprise Agent Platform.
 
-## State of the field, mid-2026
+## State of the field, 2026
 
 Three shifts set the operational ground.
 
@@ -85,15 +85,11 @@ OpenAI's Black Hat reconstruction of the [[openai-hugging-face-agent-incident|Op
 
 The [[taiwan-ai-agent-government-intrusion|Taiwan AI-agent government intrusion]] is the deliberately constructed counterpart, disclosed August 2026 by [[dream-security|Dream Security]] and confirmed by Taiwan's government the next day: up to eight lettered sub-agents on [[hermes-agent|Hermes]] and [[openclaw|OpenClaw]] coordinated through a purpose-built shared workspace across twelve attack waves, with a human operator choosing the target.[^dreamtw] The OpenAI–Hugging Face incident had no operator; this campaign kept one, as [[gtg-1002-ai-orchestrated-espionage|GTG-1002]] did, though GTG-1002 relayed every sub-agent result through its operator and this campaign did not. What has not yet been observed is a deliberately built collective that runs without one.
 
-### Securing generative code today needs controls across multiple deployment shapes
+### Coding-agent controls follow the action path
 
-Generative coding runs in five deployment shapes: interactive local, sandboxed autonomous local, delegated cloud, CI-runner and fleet. Each shape moves the point where a human can see an action before it runs, so no single control point covers all five. Three 2026 findings show the cost of a missing shape-specific control:
+Coding agents can start from a developer request, a resident service, or a repository event. The decision loop and tool worker may have different owners: [Devin Outposts](https://docs.devin.ai/cloud/outposts/overview) plans in Devin's cloud while commands and repository work run on customer machines. Assess the trigger's principal, the worker's reach, and when review can stop an effect. A later diff review cannot undo a secret read or network transfer. In [Microsoft's lab test of a since-patched CI flaw](https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/), issue or pull-request content steered a runner's file-read tool to a model key.
 
-- [[guardfall-shell-injection-audit|GuardFall Shell-Injection Audit]] drove ten of eleven surveyed open-source coding agents into arbitrary shell execution through injected content the agents read, such as a README, a Makefile or an MCP server's response ([Adversa AI](https://adversa.ai/blog/opensource-ai-coding-agents-shell-injection-vulnerability/)).
-- Microsoft Defender researchers took a model API key **out of a CI workflow** through a prompt injection in issue or pull-request content ([Microsoft Security](https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/)), as [[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]] records.
-- [[gemini-cli-workspace-trust-rce|Gemini CLI Workspace-Trust RCE]] (CVSS 10.0) let headless Gemini CLI run commands from an attacker-supplied configuration directory before the harness sandbox started, ahead of every runtime control.[^gemini]
-
-Gartner forecasts that more than 65% of agentic-coding teams will treat the IDE as optional by 2027.[^ide] If the forecast holds, most teams lose the reviewing developer that most control designs assume. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] defines the shapes, [[securing-agentic-coding|Securing Agentic Coding]] catalogs their controls, and [[claude-code-control-sheet|Claude Code Control Sheet]] grades one harness against the maturity model.
+Recent disclosures expose two timing gaps. In the [[gitspawn-coding-agent-git-config-rce|GitSpawn]] Claude Code cases, background Git commands could execute configuration from a repository delivered as files with its `.git` directory before the workspace-trust prompt. Clone and fetch do not carry that payload ([Manifold Security](https://www.manifold.security/blog/ai-coding-agents-git-hijack)). [Anthropic's October advisory](https://github.com/anthropics/claude-code/security/advisories/GHSA-5j29-h97v-84ch) describes a shared-workspace symlink race between permission check and file write, fixed in version 2.1.129. Contain startup helpers and tool paths within the worker boundary, revalidate paths at write time, and bind credentials, egress policy, and action records to each worker and initiating principal. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] explains the recurring risks and practices. [[securing-agentic-coding|Securing Agentic Coding]] catalogs controls, and [[claude-code-control-sheet|Claude Code Control Sheet]] tests one harness.
 
 ### Industrialized discovery has collapsed time-to-exploit, on the strength of the harness over the model
 
@@ -187,7 +183,7 @@ The threat side is no longer hypothetical. [[gtg-1002-ai-orchestrated-espionage|
 **Start here:**
 
 - [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]]: the threat-model thesis.
-- [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]: the five shapes and where the security boundary sits in each.
+- [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]]: coding-agent risk scenarios and emerging practices, organized by trigger, review point, tool worker, and enforcement owner.
 - [[secure-sdlc-framework-stack-2026|Secure-SDLC Framework Stack for 2026]]: the layered composition recommendation.
 - [[mythos-ready-security-program|Mythos-ready Security Program]]: the CISO playbook (ten-question triage, thirteen-row risk register, eleven-row priority actions, ninety-day plan).
 - [[zero-day-clock|Zero Day Clock]]: the empirical time-to-exploit-collapse anchor.
@@ -211,8 +207,6 @@ For wiki conventions and the writing register, see [[conventions|Wiki Convention
 [^xbow]: [XBOW — Mythos for Offensive Security: XBOW's Evaluation](https://xbow.com/blog/mythos-offensive-security-xbow-evaluation), 2026-05-12. 42% false-negative reduction versus Opus 4.6 without source access, 55% with source access.
 [^meltdown]: [Securing Agents Across Perplexity's Client Endpoints with Numbat](https://research.perplexity.ai/articles/securing-agents-across-perplexity%E2%80%99s-client-endpoints-with-numbat), Perplexity Research, 2026-07. Summarized at [[perplexity-numbat-agent-security|Numbat Agent Security Suite]].
 [^bhinc]: Michael Dalton and Eric Wallace, [*The 'Breaking' News: The OpenAI–Hugging Face Incident*](https://www.youtube.com/watch?v=87DyyMV0kCY), Black Hat USA 2026, 2026-08-06. Summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]]; incident record at [[openai-hugging-face-agent-incident|OpenAI–Hugging Face Agent Incident]]. Timeline 2026-05-08 to 2026-07-19; four zero-days; dataset-worker pod to multi-cluster admin in under 13 hours.
-[^gemini]: [GitHub Advisory Database — GHSA-wpqr-6v78-jr5g](https://github.com/advisories/GHSA-wpqr-6v78-jr5g), 2026-04-24, CVSS 10.0. Headless Gemini CLI automatically trusted the workspace folder when loading configuration and environment variables; `--yolo` separately suppressed the fine-grained tool allowlist. The pre-sandbox execution ordering is stated by the reporting researcher at [Novee Security](https://novee.security/blog/google-gemini-cli-rce-vulnerability-cvss-10-critical-security-advisory/), 2026-04-29.
-[^ide]: [Gartner — The Market for Enterprise AI Coding Agents Is Entering a New Phase of Expansion and Competitive Realignment](https://www.gartner.com/en/newsroom/press-releases/2026-05-20-gartner-says-the-market-for-enterprise-ai-coding-agents-is-entering-a-new-phase-of-expansion-and-competitive-realignment), 2026-05-20. Share of agentic-coding engineering teams forecast to treat the IDE as optional by 2027.
 [^dreamtw]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12; Ben Blanchard and Raphael Satter, [Taiwan says it was targeted last month in AI-driven hacking campaign](https://www.reuters.com/world/china/taiwan-says-it-was-targeted-last-month-ai-driven-hacking-campaign-2026-08-13/), Reuters, 2026-08-13. Summarized at [[dream-taiwan-multi-agent-ai-attack|the source summary]]; incident record at [[taiwan-ai-agent-government-intrusion|Taiwan AI-Agent Government Intrusion]].
 [^asukeynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). Linux-kernel counts are unprivileged-user local privilege escalations, triaged by the lab and not externally verified. See [[vulnerability-research-agentic-age-keynote|the talk summary]].
 [^tir]: Anthropic, [*Threat Intelligence Report: August 2025*](https://www-cdn.anthropic.com/b2a76c6f6992465c09a6f2fce282f6c0cea8c200.pdf), pp. 4–17. At least 17 organizations in roughly one month; ransomware tiers at \$400, \$800, and \$1,200. Summarized at [[anthropic-threat-intelligence-reports|Anthropic Threat Intelligence Reports]], [[gtg-2002-vibe-hacking-extortion|Vibe-Hacking Extortion Campaign]], and [[gtg-5004-no-code-ransomware|No-Code Ransomware Operation]].

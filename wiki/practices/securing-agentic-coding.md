@@ -81,13 +81,16 @@ sources:
   - https://github.com/advisories/GHSA-wpqr-6v78-jr5g
   - https://novee.security/blog/google-gemini-cli-rce-vulnerability-cvss-10-critical-security-advisory/
   - https://www.manifold.security/blog/ai-coding-agents-git-hijack
+  - .raw/articles/ai-coding-agents-git-hijack-2026-09-17.md
   - https://semgrep.dev/blog/2026/comparing-open-source-ai-code-security-harnesses
   - "[[.raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md]]"
 verified: 2026-10-21
 verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
+  - ".raw/articles/semgrep-comparing-oss-ai-code-security-harnesses-2026-08-31.md"
   - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Pass-inserted observability text verified against the BSides NYC 2026 deck (rasterized and text layer); 'confirms' re-stated as 'supports' and the content-enabled scope fixed; older sources not reopened."
+verified_note: "Two reads merged. 2026-10-21: pass-inserted observability text verified against the BSides NYC 2026 deck (rasterized and text layer); 'confirms' re-stated as 'supports' and the content-enabled scope fixed. 2026-10-14: changed cross-links and the no-RA-capability grouping checked against the GitSpawn and Semgrep raws and current Anthropic documentation. No open findings."
 ---
 
 # Securing Agentic Coding
@@ -102,7 +105,7 @@ The organizing claim is a ranking. **Controls that constrain the process outrank
 
 ## Applicability
 
-The practice applies whenever an agentic coding harness reads a repository. Which controls carry the load depends on the deployment shape, and [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] defines the five shapes for a deployment that is not plainly interactive.
+The practice applies whenever an agentic coding harness reads a repository. Which controls carry the load depends on the trigger, decision loop, tool worker, review point, and enforcement owner traced in [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]].
 
 ## The Control Catalog
 
@@ -246,14 +249,16 @@ Neither analytics API substitutes for that stream. Contribution metrics are Team
 
 ### Controls with no RA capability
 
-Nine rows anchor to a CMM domain and to no RA capability, in three groups that place the gap differently.
+Nine rows anchor to a CMM domain and to no RA capability, in four groups that place the gap differently.
 
 **Properties of a control.** `failIfUnavailable` and `allowUnsandboxedCommands`, `allowManagedReadPathsOnly` and `allowManagedDomainsOnly`, and `ConfigChange` auditing decide whether an existing capability fails closed, whether a local scope can widen it, and whether a change to it is visible. The RA has no slot for such properties, and the omission reaches every plane, since each has controls that can be disabled locally or that degrade to a warning when a dependency is missing.
 
 > [!gap] The RA has no representation for fail-closed and lockdown properties
 > A capability row records that a control exists, not that it holds when its dependency is absent or that a lower scope cannot relax it. The omission reaches every plane of the RA, the coding shape's included. Resolving it means either a per-capability property column or a cross-cutting section, a choice made against the RA as a whole.
 
-**Process-environment hygiene.** `sandbox.credentials` deny entries, `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` and per-workflow token scoping contain a credential already inside the agent's process. The RA's Identity plane assumes the credential proxy pattern, where the credential never enters the process, and has no row for one that has. A local harness inherits the developer's shell environment, so the hygiene controls carry the load there.
+**Process-environment hygiene.** `sandbox.credentials` deny entries and `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` contain a credential already inside the agent's process. The RA's Identity plane assumes the credential proxy pattern, where the credential never enters the process, and has no row for one that has. A local harness inherits the developer's shell environment, so the hygiene controls carry the load there.
+
+**Egress inspection.** TLS-terminating inspection extends the RA's destination filter by checking a connection after TLS termination. The RA names permitted routes but leaves inspection depth to [[agentic-ai-security-cmm-d5-egress-network|D5 Egress and Network]], so the TLS row has a CMM coordinate and no RA capability.
 
 **Shape-specific artifacts.** Pinning a session to a known Anthropic organization, excluding untrusted input from CI triggers, and the first-party analytics APIs follow from how this product is licensed, triggered and instrumented, so they belong in a catalog and stay out of a reference architecture.
 
@@ -290,7 +295,7 @@ Each step removes a dependency on a weaker layer. OS enforcement holds however a
 
 **Code quality sits outside the catalog.** Every control above governs what the agent may *do*, and whether its code is correct is bounded by review capacity, which the [[microsoft-cli-coding-agent-adoption-study|Microsoft CLI Coding Agent Adoption Study]] suggests is already the binding constraint. One practitioner pattern governs what the agent is told before it writes: the MCP server in [[injecting-security-context-vibe-coding-talk|Injecting Security Context During Vibe Coding]] retrieves the ticket, the architecture document, the applicable OWASP cheat sheets and the organization's standards into the prompt, then verifies the generated code against the same requirements. It belongs to no plane because it constrains generation, and it carries that placement's enforcement weakness: the agent calls the server because the tool description persuaded it to, which the speaker, Gupta, states does not happen every time.
 
-**Two instruments transfer across harnesses, and each covers part of the catalog.** [[numbat|Numbat]] attaches to hooks, session artifacts and OTLP across several harnesses behind one interface, which narrows the gap for observability and blocking, while the harness-native identity, sandboxing and egress rows have no cross-harness equivalent. A control delivered over MCP, such as the pattern above, is portable because every product in this market ships MCP support as a condition of entry. For a fleet whose majority runs a harness whose keys the catalog does not carry, the catalog specifies the harness the organization can configure, and the two portable instruments give partial cover for the rest, each weaker than the harness-native rows it stands in for.
+**Two instruments transfer across harnesses, and each covers part of the catalog.** [[numbat|Numbat]] attaches to hooks, session artifacts and OTLP across several harnesses behind one interface, which narrows the gap for observability and blocking, while the harness-native identity, sandboxing and egress rows have no cross-harness equivalent. A control delivered over MCP, such as the pattern above, can transfer to a harness that exposes MCP, subject to that host's tool admission and identity rules. For a fleet whose majority runs a harness whose keys the catalog does not carry, the catalog specifies the harness the organization can configure, and the two portable instruments give partial cover for the rest, each weaker than the harness-native rows it stands in for.
 
 ## Promotion Path
 

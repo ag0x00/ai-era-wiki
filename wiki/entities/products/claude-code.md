@@ -49,6 +49,9 @@ sources:
   - "https://code.claude.com/docs/en/slack"
   - "https://code.claude.com/docs/en/desktop"
   - "https://code.claude.com/docs/en/sandbox-environments"
+  - "https://code.claude.com/docs/en/platforms"
+  - "https://code.claude.com/docs/en/self-hosted-environments"
+  - "https://code.claude.com/docs/en/github-actions"
   - "https://claude.com/docs/cowork/overview"
   - "https://api.npmjs.org/downloads/point/2026-07-28:2026-08-27/@anthropic-ai/claude-code"
   - "https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/"
@@ -56,9 +59,10 @@ sources:
   - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
 verified: 2026-10-21
 verified_against:
+  - ".raw/articles/ai-coding-agents-git-hijack-2026-09-17.md"
   - ".raw/talks/2026-10-17_Darwin-Salazar_Following-the-AI-Audit-Trail_slides.pdf"
 verified_findings: 0
-verified_note: "Pass-inserted pointer sentence verified against slide 5 and slide-text extraction; older sources not reopened."
+verified_note: "Two reads merged. 2026-10-21: pass-inserted audit-trail pointer sentence verified against slide 5 and slide-text extraction. 2026-10-14: worker-surface and CI-runner actor claims checked against Anthropic documentation, GitSpawn raw reopened. No open findings."
 ---
 
 # Claude Code
@@ -67,7 +71,7 @@ verified_note: "Pass-inserted pointer sentence verified against slide 5 and slid
 
 [[anthropic|Anthropic]]'s agentic coding harness, published on npm as `@anthropic-ai/claude-code` and wrapped for continuous integration by a first-party GitHub Action. [[manifold-security|Manifold Security]] cites over 77 million npm downloads across the 31 days ending [2026-08-27](https://api.npmjs.org/downloads/point/2026-07-28:2026-08-27/@anthropic-ai/claude-code) for the package, the only distribution figure it gives for any agent in its [[gitspawn-coding-agent-git-config-rce|GitSpawn]] set; the count bounds distribution rather than installed base, because it includes mirrors, re-installs and continuous-integration fetches.[^npm]
 
-The harness runs on the developer's machine from a terminal, the VS Code and JetBrains extensions, or the Desktop app's Local and WSL environments, on a remote machine the developer manages through the Desktop app's SSH environment, and as a cloud session started from claude.ai/code, the Claude mobile app, the Desktop app's Cloud environment, `claude --cloud`, a routine or an `@Claude` mention in Slack.[^surfaces] Sessions on the developer's machine or over SSH belong to the two local shapes of [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], and every cloud-session entry point to its delegated cloud shape.
+The harness runs on the developer's machine from a terminal, the VS Code and JetBrains extensions, or the Desktop app's Local and WSL environments, on a remote machine the developer manages through the Desktop app's SSH environment, and as a cloud session started from claude.ai/code, the Claude mobile app, the Desktop app's Cloud environment, `claude --cloud`, a routine or an `@Claude` mention in Slack.[^surfaces] The client surface does not locate the worker: [Remote Control](https://code.claude.com/docs/en/platforms#work-when-you-are-away-from-your-terminal) can reach a local process, Anthropic-hosted cloud sessions run in Anthropic's environment, and [self-hosted cloud sessions](https://code.claude.com/docs/en/self-hosted-environments) start a Claude Code process on a customer runner. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] traces the resulting enforcement owner.
 
 The coding agent is distinct from [[claude-code-security|Claude Code Security]], a separate Anthropic product that reads and reasons about codebases for vulnerability discovery. It is also distinct from [[claude-cowork|Claude Cowork]], which runs the same agentic architecture for knowledge work inside Claude Desktop and loads the skills and plugins enabled for the member's claude.ai account, because Cowork [does not read the Claude Code CLI's `~/.claude` directory on the machine](https://claude.com/docs/cowork/overview). The configuration tree below is therefore the coding agent's alone.
 
@@ -77,7 +81,7 @@ Four roles matter here.
 
 **As an enforcement surface.** Claude Code exposes hooks that run in path around tool calls, and Uber's [[adr-agentic-detection-system|ADR]] deployment uses them for real-time blocking of high-severity credential leakage while its sensor reconstructs sessions from the local caches the harness writes. [[inline-gateway-vs-runtime-instrumentation|Inline Gateway vs Runtime Instrumentation]] carries the architectural argument that deployment settles.
 
-**As a CI-runner agent.** The GitHub Action places the harness in the CI-runner variant of [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]], where no human is positioned to see an action before it executes. Microsoft Defender researchers extracted a model API key from that shape through a prompt injection in issue or pull-request content, which drove the unsandboxed Read tool to `/proc/self/environ` past a shell-only sandbox boundary ([[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]]). The harness's documentation states which repository content a headless run uses before a folder is trusted, which [[agentic-ai-security-cmm-d4-runtime-guardrails|CMM D4: Runtime and Guardrails]] reads as this harness's answer to the question of when isolation starts.
+**As a CI-runner agent.** A GitHub Action can start an unattended worker from a repository event. Current [Claude Code Action actor checks](https://code.claude.com/docs/en/github-actions#who-can-trigger-runs) constrain which issue and pull-request events start it, with documented exceptions for allowed non-writers and bot actors; a later merge review cannot stop a command that already ran. [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] distinguishes the trigger gate from the review point. In a historical test with non-write users allowed, Microsoft Defender researchers extracted a model API key through a prompt injection that drove the unsandboxed Read tool to `/proc/self/environ` past a shell-only sandbox boundary. Anthropic [patched the file-read path in version 2.1.128 on 2026-05-05](https://www.microsoft.com/en-us/security/blog/2026/06/05/securing-ci-cd-in-agentic-world-claude-code-github-action-case/) ([[claude-code-github-action-credential-exposure|Claude Code GitHub Action Credential Exposure]]). The harness's [folder-trust documentation](https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder) states which repository content a headless run may use before trust; [[claude-code-control-sheet|Claude Code Control Sheet]] separately tests whether isolation starts before such content executes.
 
 **As offensive tooling.** Two catalogued campaigns drove the agent against third-party targets: [[gtg-1002-ai-orchestrated-espionage|GTG-1002]], where it orchestrated reconnaissance and intrusion across roughly thirty targets, and the [[mexican-government-ai-breach|Mexican government multi-agency breach]], where it carried about 75 percent of the operator's remote command execution.
 

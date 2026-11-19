@@ -47,10 +47,11 @@ sources:
   - "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
   - "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/"
   - "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/"
+  - "https://github.com/anthropics/claude-code/security/advisories/GHSA-5j29-h97v-84ch"
 verified: 2026-10-27
 verified_against: []
 verified_findings: 0
-verified_note: "Whole-page D8 integration and current official Anthropic documentation check; no archived source opened. The C07 approval-source sentences merged afterward from the Salazar ingest were verified on 2026-10-21 against the talk slides."
+verified_note: "Whole-page D8 integration and current official Anthropic documentation check; no archived source opened. The C07 approval-source sentences merged afterward from the Salazar ingest were verified on 2026-10-21 against the talk slides. The C04 symlink-advisory sentences and test step merged from the generative-coding refresh were checked on 2026-10-14 against the GHSA-5j29-h97v-84ch advisory and current sandbox documentation."
 ---
 
 # Claude Code Control Sheet
@@ -128,9 +129,9 @@ Reconcile the complete enrolled device and runner population by configuration cl
 
 **Enforcer.** The host, container, cloud, or CI operator owns whole-runtime isolation and network policy; Claude Code may add a narrower shell boundary.
 
-**Mechanism and proof.** Capture a running process and mount profile, allowed domains, DNS or proxy rules, credential mounts, and CPU, memory, time, and teardown limits. Claude Code's built-in sandbox covers Bash, PowerShell, and Monitor child processes, not built-in Read/Edit, hooks, MCP servers, or the parent process. It uses Seatbelt on macOS and bubblewrap on Linux/WSL2; native Windows does not have that built-in sandbox. A passing built-in sandbox test therefore proves only the covered tool path. [Sandbox scope and operating-system support](https://code.claude.com/docs/en/sandboxing) fix this boundary.
+**Mechanism and proof.** Capture a running process and mount profile, allowed domains, DNS or proxy rules, credential mounts, and CPU, memory, time, and teardown limits. Claude Code's built-in sandbox covers Bash, PowerShell, and Monitor child processes, not built-in Read/Edit, hooks, MCP servers, or the parent process. It uses Seatbelt on macOS and bubblewrap on Linux/WSL2; native Windows does not have that built-in sandbox. A passing built-in sandbox test therefore proves only the covered tool path. [Sandbox scope and operating-system support](https://code.claude.com/docs/en/sandboxing) fix this boundary. Anthropic's [2026-10-05 advisory](https://github.com/anthropics/claude-code/security/advisories/GHSA-5j29-h97v-84ch) describes a write-time symlink race in versions before 2.1.129, patched in 2.1.129. The test below probes write-time binding in a shared workspace, including after the product patch.
 
-**Test.** Attempt a forbidden file read and write through both shell and built-in tools, an unauthorized MCP or hook connection, a network call, and a sandbox escape or unsandboxed retry. Collect the denial from the component that actually blocks each path.
+**Test.** Attempt a forbidden read and write through shell and built-in tools, an unauthorized MCP or hook connection, a network call, and an unsandboxed retry. In a shared workspace, change a permitted target to a symlink between approval and write; record the write-time denial or outer filesystem confinement. Collect the denial from the component that actually blocks each path.
 
 ### C05 — Govern untrusted inputs and extensions
 

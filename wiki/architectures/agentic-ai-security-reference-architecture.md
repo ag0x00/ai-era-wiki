@@ -2,7 +2,7 @@
 type: architecture
 title: "Agentic AI Security Reference Architecture"
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-10-14
 tags:
   - architectures
   - reference-architecture
@@ -51,14 +51,15 @@ sources:
   - "https://owaspai.org/go/testing/"
   - "https://owaspai.org/go/encodemodeloutput/"
   - "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations"
+  - "https://docs.devin.ai/cloud/outposts/overview"
 primary_documents:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
-verified: 2026-09-29
+verified: 2026-10-14
 verified_against: []
 verified_findings: 0
-verified_note: "Targeted refund-path and control-boundary check against live NIST and OWASP guidance; no archived source opened. Other source claims remain outside this pass."
+verified_note: "Coding-agent topology change checked against current Devin documentation; historical framework claims retain prior verification."
 ---
 
 # Agentic AI Security Reference Architecture
@@ -401,11 +402,11 @@ These shapes change the topology and evidence owner. They do not inherit the exa
 | Shape | Topology and control change | Evidence and owner change |
 |---|---|---|
 | Read-only assistant | Remove the refund write path, approval service, and refund credential. Keep entitlement, model routing, output controls, and audit. | Data owner proves answer-time entitlement. Application team proves the absence of a write route. |
-| Local coding agent | Run on a managed workstation or isolated runner. Confine before reading repository configuration. Mediate file, command, Git, and network actions. | Endpoint or runner owner supplies isolation and policy evidence. Repository owner supplies configuration and dependency admission records. |
+| Coding agent | Locate the trigger, decision loop, and tool worker separately. Confine the worker before it reads repository configuration, including when a vendor loop directs a customer runner. | The worker operator proves isolation and effective egress policy; the policy author supplies the governing decision and its version. |
 | Vendor-managed suite | The vendor may hold model, runtime, policy, and tool path. Customer configuration bounds reach but may not be an in-path enforcement point. | Customer obtains vendor boundary and audit evidence, tests tenant settings, and records unavailable evidence as an assessment limit. |
 | Multi-agent system | Give each agent a separate identity and scope. Route messages through an authenticated broker; validate schema and delegation without expanding authority. | Broker owner retains per-hop decisions and correlation. Incident response must reconstruct the chain across agents. |
 
-The [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] page details coding-agent placement and approval differences. The [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]] traces the read, synthesis, and action threats of employee assistants across in-suite, enterprise-app, and desktop placements; the Gemini control sheets specify customer-operated controls on two of those routes. In a vendor-managed suite, an assessor should distinguish controls the customer can test from provider assertions or contractual commitments. A missing provider trace cannot be replaced by a customer diagram.
+The [[generative-coding-deployment-shape-2026|Generative Coding Deployment Shapes]] page traces coding-agent triggers, decision loops, workers, review points, and enforcement owners. [Devin Outposts](https://docs.devin.ai/cloud/outposts/overview) illustrates a vendor decision loop directing a customer-operated worker. The [[productivity-assistant-deployment-shape|Productivity Assistant Deployment Shape]] traces the read, synthesis, and action threats of employee assistants across in-suite, enterprise-app, and desktop placements; the Gemini control sheets specify customer-operated controls on two of those routes. In a vendor-managed suite, an assessor should distinguish controls the customer can test from provider assertions or contractual commitments. A missing provider trace cannot be replaced by a customer diagram.
 
 Where a multi-agent broker uses [[a2a-protocol|A2A Protocol (Agent-to-Agent)]], its task and message interfaces carry the exchange; broker authentication, per-hop authorization, and correlation records remain deployment controls.
 
