@@ -20,6 +20,7 @@ audience: "Enterprise security architects, AI platform owners, internal assessor
 related:
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[agentic-ai-security-cmm-measurement-protocol]]"
+  - "[[agentic-ai-security-cmm-dependency-rules]]"
   - "[[agentic-ai-security-cmm-crosswalk]]"
   - "[[cybersecurity-cmms-exemplars]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
@@ -80,6 +81,177 @@ Levels are **cumulative within each domain**. L1 describes an observed state and
 An absent control on an existing path is **not met**, not inapplicable. A missing record may make a condition unanswerable when the activity could have occurred. The assessor states what was inspected and what remains unknown. Evidence confidence is a separate finding about coverage, freshness, independence, and test depth. A level with limited confidence must say why. Confidence does not silently change the level. Applicable L5 outcomes are intended to be implementable in a present deployment. A criterion requiring months of operating history cannot be claimed before that history exists, even if its control was released recently.
 
 ## Domain map
+
+### Evidence relationships and operating feedback
+
+Solid arrows show selected evidence support between domains. The dashed path returns operating findings to risk and release decisions. Each domain retains its own assessment result; arrows set neither a fixed order nor a level cap. The [[agentic-ai-security-cmm-dependency-rules|CMM: Evidence Prerequisites and Dependencies]] records the criterion-level claims and failure tests.
+
+<div role="region" aria-label="Scrollable CMM domain relationship diagram" tabindex="0" style="overflow-x:auto;overflow-y:hidden">
+<svg xmlns="http://www.w3.org/2000/svg" class="cmm-domain-map" width="1400" height="1150" viewBox="0 0 1400 1150" role="img" aria-labelledby="cmm-domain-map-title cmm-domain-map-desc" font-family="Inter,Helvetica,Arial,sans-serif" style="display:block;width:1400px;max-width:none;height:auto;color:var(--text-normal,var(--dark,var(--map-fg-fallback,#20262b)));--map-bg:var(--background-primary,var(--light,var(--map-bg-fallback,#ffffff)));--map-accent:var(--interactive-accent,var(--secondary,var(--map-accent-fallback,#526d7c)))">
+  <title id="cmm-domain-map-title">Evidence relationships and operating feedback across nine CMM domains</title>
+  <desc id="cmm-domain-map-desc">Nine full-name domain cards keep separate assessment results. Solid arrows show selected evidence support. D1 approves release risk for D8 decisions. D2 identifies the actor for D3. D3 permits actions examined by D4 and bounds D5 task egress. D6 classifies data for D4 restricted-data egress after an untrusted-content risk signal. D4 supplies runtime test results to D8 release. D4, D5, and D6 feed production records to D7. D7 alerts D9. Dashed feedback from D9 returns operating findings to D1 risk and D8 release decisions. Arrows neither impose an assessment order nor transfer maturity levels.</desc>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .cmm-domain-map:root {
+        --map-fg-fallback: #e8ecef;
+        --map-bg-fallback: #172126;
+        --map-accent-fallback: #adc9d5;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="cmm-map-solid-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor" opacity="0.68"/></marker>
+    <marker id="cmm-map-feedback-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="currentColor" style="fill:var(--map-accent)"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="1150" fill="#ffffff" style="fill:var(--map-bg)"/>
+  <!-- Solid paths carry evidence toward the claim it helps establish. -->
+  <path d="M396 190H1004" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M396 460H519" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M881 460H1004" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M700 546V644" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M1240 644V546" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M1140 374V276" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M1024 546V575H930V860H700" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M700 816V860" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1090 816V860H930" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M700 860V914" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <path d="M881 1000H1004" fill="none" stroke="currentColor" stroke-opacity="0.64" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cmm-map-solid-arrow)"/>
+  <!-- Dashed paths return operating findings to risk and release owners. -->
+  <path d="M1366 1000H1380V45H250" fill="none" stroke="currentColor" style="stroke:var(--map-accent)" stroke-width="2.8" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M250 45V104" fill="none" stroke="currentColor" style="stroke:var(--map-accent)" stroke-width="2.8" stroke-dasharray="8 6" marker-end="url(#cmm-map-feedback-arrow)"/>
+  <path d="M1200 45V104" fill="none" stroke="currentColor" style="stroke:var(--map-accent)" stroke-width="2.8" stroke-dasharray="8 6" marker-end="url(#cmm-map-feedback-arrow)"/>
+  <!-- Labels sit above paths on a theme-matched backing. -->
+  <rect x="606" y="153" width="220" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="716" y="175" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">approves release risk</text>
+  <rect x="392" y="424" width="130" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="457" y="446" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">identifies actor</text>
+  <rect x="877" y="424" width="130" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="942" y="446" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">permits action</text>
+  <rect x="709" y="574" width="172" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="795" y="596" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">bounds task egress</text>
+  <rect x="1019" y="605" width="209" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="1123.5" y="627" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">classifies restricted data</text>
+  <rect x="890" y="304" width="240" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="1010" y="326" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">supplies runtime test results</text>
+  <rect x="711" y="821" width="210" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="816" y="843" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">feeds production records</text>
+  <rect x="877" y="964" width="132" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="943" y="986" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:currentColor;paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">alerts operators</text>
+  <rect x="594" y="9" width="235" height="29" rx="4" fill="none" style="fill:var(--map-bg)"/>
+  <text x="711.5" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" style="fill:var(--map-accent);paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">returns operating findings</text>
+  <!-- Every card retains its full official domain name and a brief scope description. -->
+  <g id="cmm-map-d1">
+    <rect x="40" y="110" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="58" y="127" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="79" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D1</text>
+    <text x="60" y="178" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Governance and Accountability</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="60" y="210">Named authorities approve deployments </tspan>
+      <tspan x="60" y="230">and own their residual security risk.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d8">
+    <rect x="1010" y="110" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="1028" y="127" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="1049" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D8</text>
+    <text x="1030" y="178" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Engineering and Supply Assurance</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="1030" y="210">Release gates verify assembled agents </tspan>
+      <tspan x="1030" y="230">against test results and supplier evidence.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d2">
+    <rect x="40" y="380" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="58" y="397" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="79" y="415" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D2</text>
+    <text x="60" y="448" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Identity and Authorization</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="60" y="480">Every agent action resolves to a </tspan>
+      <tspan x="60" y="500">verified principal with bounded grants.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d3">
+    <rect x="525" y="380" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="543" y="397" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="564" y="415" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D3</text>
+    <text x="545" y="448" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Control and Least-Agency</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="545" y="480">External policy decides whether a </tspan>
+      <tspan x="545" y="500">proposed action may run within task scope.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d4">
+    <rect x="1010" y="380" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="1028" y="397" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="1049" y="415" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D4</text>
+    <text x="1030" y="448" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Runtime and Guardrails</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="1030" y="480">Runtime checks screen untrusted context, </tspan>
+      <tspan x="1030" y="500">constrain code, and hold unsafe effects.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d5">
+    <rect x="525" y="650" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="543" y="667" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="564" y="685" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D5</text>
+    <text x="545" y="718" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Egress and Network</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="545" y="750">Gateway decisions confine model, </tspan>
+      <tspan x="545" y="770">tool, and peer traffic to permitted routes.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d6">
+    <rect x="1010" y="650" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="1028" y="667" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="1049" y="685" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D6</text>
+    <text x="1030" y="718" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Data, Memory and RAG</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="1030" y="750">Data classes shape disclosure. </tspan>
+      <tspan x="1030" y="770">Retrieval checks source rights. </tspan>
+      <tspan x="1030" y="790">Memory stays partitioned.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d7">
+    <rect x="525" y="920" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="543" y="937" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="564" y="955" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D7</text>
+    <text x="545" y="988" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Observability and Detection</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="545" y="1020">Joined traces reconstruct agent actions </tspan>
+      <tspan x="545" y="1040">and support targeted production alerts.</tspan>
+    </text>
+  </g>
+  <g id="cmm-map-d9">
+    <rect x="1010" y="920" width="350" height="160" rx="10" fill="none" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.5" style="fill:var(--map-bg)"/>
+    <rect x="1028" y="937" width="42" height="25" rx="5" fill="none" stroke="currentColor" stroke-opacity="0.72" stroke-width="1.2" style="fill:var(--map-bg)"/>
+    <text x="1049" y="955" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">D9</text>
+    <text x="1030" y="988" font-size="18" font-weight="700" fill="currentColor" style="paint-order:stroke fill;stroke:var(--map-bg);stroke-width:4px;stroke-linejoin:round">Operations and Human Factors</text>
+    <text font-size="16" fill="currentColor" opacity="0.86">
+      <tspan x="1030" y="1020">Operators review approvals, respond </tspan>
+      <tspan x="1030" y="1040">to incidents, and close findings </tspan>
+      <tspan x="1030" y="1060">through control changes.</tspan>
+    </text>
+  </g>
+</svg>
+</div>
+
+*Generated image. Source: this CMM. Illustrator: Anton Goncharov using Codex (GPT-6 Sol).*
+
+[Open the SVG at full size](agentic-ai-security-cmm-domain-relationships.svg).
+
+**Text description**
+
+- D1 approves release risk for D8's decision.
+- D2 identifies the actor for D3's action decision.
+- D3 permits actions that D4 examines at runtime.
+- D3 bounds the task scope D5 enforces on egress.
+- D6 classifies data for D4-CONTEXT's restricted-data egress decision after an untrusted-content risk signal.
+- D4 supplies runtime test results for D8's release decision.
+- D4, D5, and D6 feed production records to D7 for reconstruction.
+- D7 alerts D9 operators for response.
+- Dashed feedback returns D9 operating findings to D1 risk decisions and D8 release changes.
+
+Beyond these arrows, D1's approved boundaries inform D3 policy, while D2 caller identity supports D5 task egress and D7 attribution.
 
 | Domain deep dive | Assessment decision | Lead evidence owner | Applicability boundary |
 |---|---|---|---|
@@ -522,7 +694,7 @@ A dependent criterion is met only when its own outcome can be shown. Record an u
 
 - D2 identity and human attribution supporting D3 delegation checks and D7 action attribution. If identity cannot be resolved, the affected D3 or D7 test fails or remains unanswerable on its own terms.
 - A trusted task scope and mediated decision from D3 supporting D5-TASK-EGRESS. A destination rule that sees only a bearer credential cannot establish an agent-task-destination decision.
-- D6 corpus entitlement and origin supporting an interpretation of D4 grounding and D7 retrieval traces. A grounded answer may still expose content the asker was not entitled to retrieve.
+- D6 classification supporting D4-CONTEXT's restricted-data egress decision after an untrusted-content risk signal. D6 retrieval and memory events support D7 reconstruction. A grounded answer may still expose content the asker was not entitled to retrieve.
 - D8-DESIGN, D8-IMPLEMENT, D8-TEST, and D1 risk authority feeding the exact-version D8-RELEASE decision. A release missing a material test or authorized exception cannot claim that gate.
 - An actual multi-cloud proxy topology making D5-FEDERATE and D5-FEDERATE-RECONCILE applicable; a real cross-agent propagation path making D7-CASCADE applicable. Their absence is recorded, not presumed.
 

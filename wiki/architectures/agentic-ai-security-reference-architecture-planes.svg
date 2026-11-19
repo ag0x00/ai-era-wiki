@@ -1,140 +1,224 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
-  <title id="title">Trust boundaries and flows in the reference agent deployment</title>
-  <desc id="description">A support analyst enters an organization-operated cloud tenant. An isolated agent reaches internal case state and documents through a retrieval mediator, a vendor model through a model gateway, and an external refund provider through an action gateway. The gateway requests scoped access from the credential broker, receives it, and uses it for the approved provider write. Policy, approval, release admission, and an independent evidence store sit outside the agent process. Dashed outlines mark lower-trust text and external providers.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" class="ra-planes" width="1400" height="1500" viewBox="0 0 1400 1500" role="img" aria-labelledby="ra-planes-title ra-planes-desc">
+  <title id="ra-planes-title">Enforcement components and trust boundaries in the refund-agent reference deployment</title>
+  <desc id="ra-planes-desc">A support analyst starts a scoped task through identity and session service. Release admission permits the isolated runtime to start. The runtime retrieves internal case and policy sources through a mediator and consults an external model through the model gateway. A model-influenced refund proposal crosses the action enforcement boundary into the action gateway. The policy service decides whether the action is permitted. The gateway enforces that decision, binds the analyst's exact-action approval, and uses gateway-only credential access for a write to the external refund provider. The gateway records the result in an independent evidence store. Solid outer outline marks the organization-operated tenant; dashed boxes mark lower-trust content and external providers. Request arrows move right or down. Responses are omitted and treated as data.</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10Z" fill="#275985"/>
-    </marker>
-    <marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10Z" fill="#697786"/>
+    <marker id="ra-planes-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="var(--ra-stroke)"/>
     </marker>
     <style>
-      text{font-family:Arial,Helvetica,sans-serif;fill:#152a3b}
-      .heading{font-size:29px;font-weight:700}
-      .sub{font-size:17px;fill:#4c6475}
-      .zone{font-size:18px;font-weight:700;letter-spacing:.3px}
-      .name{font-size:20px;font-weight:700}
-      .detail{font-size:15px;fill:#4c6475}
-      .edge-label{font-size:14px;font-weight:700;fill:#275985}
-      .tenant{fill:#f5f9fc;stroke:#315c7c;stroke-width:2.5}
-      .outside{fill:#fff8ef;stroke:#b77939;stroke-width:2.5;stroke-dasharray:9 6}
-      .content{fill:#fff8ef;stroke:#b77939;stroke-width:2;stroke-dasharray:8 5}
-      .box{fill:#fff;stroke:#7994a8;stroke-width:2}
-      .gate{fill:#e9f3fa;stroke:#46789b;stroke-width:2}
-      .record{fill:#edf4ed;stroke:#648464;stroke-width:2}
-      .flow{fill:none;stroke:#275985;stroke-width:3;marker-end:url(#arrow)}
-      .flow-muted{fill:none;stroke:#697786;stroke-width:2.5;stroke-dasharray:6 5;marker-end:url(#arrow-muted)}
+      .ra-planes {
+        --ra-paper:#ffffff;
+        --ra-zone:#f7f8f9;
+        --ra-card:#ffffff;
+        --ra-ink:#1a252e;
+        --ra-muted:#4d5a64;
+        --ra-stroke:#566571;
+        --ra-border:#9ba8b1;
+        --ra-support:#687781;
+        font-family:Inter,Helvetica,Arial,sans-serif
+      }
+      @media (prefers-color-scheme:dark) {
+        .ra-planes {
+          --ra-paper:#15191d;
+          --ra-zone:#1c2227;
+          --ra-card:#252c32;
+          --ra-ink:#edf1f3;
+          --ra-muted:#c0c9ce;
+          --ra-stroke:#b2bec6;
+          --ra-border:#82919b;
+          --ra-support:#9cabb4
+        }
+      }
+      [saved-theme="light"] .ra-planes,.theme-light .ra-planes {
+        --ra-paper:#ffffff;
+        --ra-zone:#f7f8f9;
+        --ra-card:#ffffff;
+        --ra-ink:#1a252e;
+        --ra-muted:#4d5a64;
+        --ra-stroke:#566571;
+        --ra-border:#9ba8b1;
+        --ra-support:#687781
+      }
+      [saved-theme="dark"] .ra-planes,.theme-dark .ra-planes {
+        --ra-paper:#15191d;
+        --ra-zone:#1c2227;
+        --ra-card:#252c32;
+        --ra-ink:#edf1f3;
+        --ra-muted:#c0c9ce;
+        --ra-stroke:#b2bec6;
+        --ra-border:#82919b;
+        --ra-support:#9cabb4
+      }
+      .ra-planes .authority {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3
+      }
+      .ra-planes .external-name {
+        font-size:19px
+      }
+      .ra-planes .proposal-label {
+        font-size:14px
+      }
+      .ra-planes .authority-name {
+        fill:var(--ra-ink);
+        font-size:18px;
+        font-weight:700
+      }
+      .ra-planes .paper {
+        fill:var(--ra-paper)
+      }
+      .ra-planes .tenant {
+        fill:var(--ra-zone);
+        stroke:var(--ra-border);
+        stroke-width:2.5
+      }
+      .ra-planes .card {
+        fill:var(--ra-card);
+        stroke:var(--ra-stroke);
+        stroke-width:2
+      }
+      .ra-planes .lower-trust {
+        fill:var(--ra-card);
+        stroke:var(--ra-border);
+        stroke-width:2.5;
+        stroke-dasharray:9 7
+      }
+      .ra-planes .zone-name {
+        fill:var(--ra-muted);
+        font-size:20px;
+        font-weight:700;
+        letter-spacing:.2px
+      }
+      .ra-planes .name {
+        fill:var(--ra-ink);
+        font-size:23px;
+        font-weight:700
+      }
+      .ra-planes .detail {
+        fill:var(--ra-muted);
+        font-size:17px
+      }
+      .ra-planes .flow {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        marker-end:url(#ra-planes-arrow)
+      }
+      .ra-planes .support-flow {
+        fill:none;
+        stroke:var(--ra-support);
+        stroke-width:2.5;
+        stroke-dasharray:7 6;
+        stroke-linecap:round;
+        marker-end:url(#ra-planes-arrow)
+      }
+      .ra-planes .spine {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3;
+        stroke-linecap:round
+      }
+      .ra-planes .edge-label {
+        fill:var(--ra-ink);
+        font-size:17px;
+        font-weight:600;
+        paint-order:stroke;
+        stroke:var(--ra-zone);
+        stroke-width:10px;
+        stroke-linejoin:round
+      }
+      .ra-planes .outer-label {
+        stroke:var(--ra-paper)
+      }
     </style>
   </defs>
-
-  <rect width="1600" height="900" fill="#fff"/>
-  <text class="heading" x="42" y="50">Reference deployment: support agent with refund authority</text>
-  <text class="sub" x="42" y="78">Arrows show permitted paths. Each gateway makes a separate decision.</text>
-
-  <rect class="tenant" x="255" y="112" width="980" height="736" rx="22"/>
-  <text class="zone" x="286" y="146">Organization-operated cloud tenant</text>
-
-  <rect class="outside" x="1272" y="150" width="286" height="173" rx="18"/>
-  <text class="zone" x="1294" y="183">Model provider</text>
-  <text class="detail" x="1294" y="217">Outside tenant</text>
-  <text class="detail" x="1294" y="244">Receives selected context</text>
-  <text class="detail" x="1294" y="271">Returns proposals as data</text>
-
-  <rect class="outside" x="1272" y="503" width="286" height="169" rx="18"/>
-  <text class="zone" x="1294" y="536">Refund provider</text>
-  <text class="detail" x="1294" y="570">Outside tenant</text>
-  <text class="detail" x="1294" y="597">Accepts approved writes</text>
-  <text class="detail" x="1294" y="624">Returns uncertain or final state</text>
-
-  <rect class="box" x="36" y="205" width="170" height="114" rx="13"/>
-  <text class="name" x="55" y="246">Support</text>
-  <text class="name" x="55" y="270">analyst</text>
-  <text class="detail" x="55" y="296">Human initiator</text>
-
-  <rect class="gate" x="298" y="194" width="200" height="120" rx="13"/>
-  <text class="name" x="316" y="236">Identity and</text>
-  <text class="name" x="316" y="262">session</text>
-  <text class="detail" x="316" y="290">User + scoped task</text>
-
-  <rect class="box" x="554" y="194" width="230" height="120" rx="13"/>
-  <text class="name" x="573" y="236">Isolated agent</text>
-  <text class="name" x="573" y="262">runtime</text>
-  <text class="detail" x="573" y="290">No direct secrets or API path</text>
-
-  <rect class="gate" x="847" y="194" width="250" height="120" rx="13"/>
-  <text class="name" x="867" y="236">Model gateway</text>
-  <text class="detail" x="867" y="266">Route + context limit</text>
-  <text class="detail" x="867" y="290">Provider record</text>
-
-  <rect class="content" x="286" y="526" width="241" height="142" rx="17"/>
-  <text class="zone" x="305" y="560">Internal sources</text>
-  <text class="detail" x="305" y="588">Current case fields</text>
-  <text class="detail" x="305" y="616">Refund policy text</text>
-  <text class="detail" x="305" y="640">Lower-trust instructions</text>
-
-  <rect class="gate" x="298" y="379" width="214" height="114" rx="13"/>
-  <text class="name" x="316" y="420">Retrieval</text>
-  <text class="name" x="316" y="445">mediator</text>
-  <text class="detail" x="316" y="472">Entitlement per record</text>
-
-  <rect class="gate" x="554" y="379" width="230" height="114" rx="13"/>
-  <text class="name" x="573" y="420">Policy service</text>
-  <text class="detail" x="573" y="452">Fresh action decision</text>
-  <text class="detail" x="573" y="475">Versioned rules</text>
-
-  <rect class="gate" x="847" y="379" width="250" height="114" rx="13"/>
-  <text class="name" x="867" y="420">Action gateway</text>
-  <text class="detail" x="867" y="452">Schema + policy + approval</text>
-  <text class="detail" x="867" y="475">Only refund API route</text>
-
-  <rect class="gate" x="554" y="539" width="230" height="118" rx="13"/>
-  <text class="name" x="573" y="581">Approval service</text>
-  <text class="detail" x="573" y="610">Exact action facts</text>
-  <text class="detail" x="573" y="633">Single-use approval</text>
-
-  <rect class="gate" x="847" y="539" width="250" height="118" rx="13"/>
-  <text class="name" x="867" y="581">Credential broker</text>
-  <text class="detail" x="867" y="610">Issues access to gateway</text>
-  <text class="detail" x="867" y="633">Scoped to provider</text>
-
-  <rect class="record" x="298" y="715" width="294" height="87" rx="13"/>
-  <text class="name" x="317" y="749">Release admission</text>
-  <text class="detail" x="317" y="777">Image + config before startup</text>
-
-  <rect class="record" x="720" y="715" width="377" height="87" rx="13"/>
-  <text class="name" x="740" y="749">Independent evidence store</text>
-  <text class="detail" x="740" y="777">Task-linked decisions and outcomes</text>
-
-  <path class="flow" d="M206 260H298"/>
-  <path class="flow" d="M498 260H554"/>
-  <path class="flow" d="M784 260H847"/>
-  <path class="flow" d="M1097 260H1272"/>
-  <text class="edge-label" x="1114" y="246">Minimized context</text>
-
-  <path class="flow" d="M620 314V345H405V379"/>
-  <text class="edge-label" x="420" y="363">Query / chunks</text>
-  <path class="flow" d="M405 493V526"/>
-  <path class="flow" d="M512 462H554"/>
-
-  <path class="flow" d="M738 314V350H972V379"/>
-  <text class="edge-label" x="820" y="344">Refund proposal</text>
-  <path class="flow" d="M847 437H784"/>
-  <text class="edge-label" x="787" y="425">Decide</text>
-  <path class="flow" d="M784 598H813V463H847"/>
-  <text class="edge-label" x="692" y="526">Approval</text>
-  <path class="flow" d="M972 493V539" marker-start="url(#arrow)"/>
-  <path class="flow" d="M1097 437H1190V587H1272"/>
-  <text class="edge-label" x="1127" y="426">Approved write</text>
-
-  <path class="flow-muted" d="M592 758H533V332H669V314"/>
-  <text class="detail" x="316" y="695">Admit before run</text>
-  <path class="flow-muted" d="M972 657V715"/>
-  <path class="flow-muted" d="M1097 463H1165V685H1070V715"/>
-  <text class="detail" x="770" y="693">Correlated events</text>
-
-  <line x1="40" y1="864" x2="94" y2="864" stroke="#275985" stroke-width="3" marker-end="url(#arrow)"/>
-  <text class="detail" x="110" y="870">Permitted flow</text>
-  <rect x="290" y="851" width="36" height="22" class="outside" rx="4"/>
-  <text class="detail" x="341" y="870">External or lower-trust boundary</text>
-  <text class="detail" x="892" y="870">Responses return as untrusted data</text>
+  <rect class="paper" width="1400" height="1500"/>
+  <rect class="tenant" x="175" y="25" width="990" height="1450" rx="20"/>
+  <text class="zone-name" x="220" y="60">Organization-operated tenant</text>
+  <rect class="authority" x="780" y="870" width="320" height="440" rx="18"/>
+  <text class="authority-name" x="805" y="905">Action enforcement boundary</text>
+  <!-- Solid arrows trace three mediated requests. Dashed arrows carry supporting controls and evidence. -->
+  <path class="flow" d="M170 262H220"/>
+  <path class="flow" d="M415 262H470"/>
+  <path class="support-flow" d="M580 155V215"/>
+  <path class="spine" d="M580 310V980"/>
+  <path class="flow" d="M580 420H790"/>
+  <path class="flow" d="M922 470V500"/>
+  <path class="flow" d="M580 700H790"/>
+  <path class="flow" d="M1055 700H1210"/>
+  <path class="flow" d="M580 980H815"/>
+  <path class="support-flow" d="M525 1035H815"/>
+  <path class="support-flow" d="M525 1130H815"/>
+  <path class="support-flow" d="M525 1225H815"/>
+  <path class="flow" d="M1075 1110H1210"/>
+  <path class="support-flow" d="M945 1265V1360"/>
+  <!-- The tenant contains the runtime, mediators, action controls, and independent evidence. -->
+  <rect class="card" x="20" y="215" width="150" height="95" rx="12"/>
+  <text class="name" x="38" y="255">Support</text>
+  <text class="name" x="38" y="283">analyst</text>
+  <rect class="card" x="220" y="215" width="195" height="95" rx="12"/>
+  <text class="name" x="238" y="252">Identity and</text>
+  <text class="name" x="238" y="279">session service</text>
+  <text class="detail" x="238" y="302">Binds a scoped task</text>
+  <rect class="card" x="450" y="70" width="265" height="85" rx="12"/>
+  <text class="name" x="470" y="108">Release admission</text>
+  <text class="detail" x="470" y="135">Checks build and config</text>
+  <rect class="card" x="470" y="215" width="220" height="95" rx="12"/>
+  <text class="name" x="489" y="253">Isolated agent</text>
+  <text class="name" x="489" y="280">runtime</text>
+  <text class="detail" x="489" y="302">Uses mediated routes</text>
+  <rect class="card" x="790" y="370" width="265" height="100" rx="12"/>
+  <text class="name" x="810" y="413">Retrieval mediator</text>
+  <text class="detail" x="810" y="444">Checks each entitlement</text>
+  <rect class="lower-trust" x="790" y="500" width="265" height="85" rx="12"/>
+  <text class="name" x="810" y="535">Internal sources</text>
+  <text class="detail" x="810" y="563">Case state; policy text</text>
+  <rect class="card" x="790" y="650" width="265" height="100" rx="12"/>
+  <text class="name" x="810" y="693">Model gateway</text>
+  <text class="detail" x="810" y="723">Limits route and context</text>
+  <rect class="lower-trust" x="1210" y="650" width="170" height="100" rx="12"/>
+  <text class="name external-name" x="1226" y="682">Model</text>
+  <text class="name external-name" x="1226" y="705">provider</text>
+  <text class="detail" x="1226" y="732">Outside tenant</text>
+  <rect class="card" x="265" y="995" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1028">Policy service</text>
+  <text class="detail" x="284" y="1055">Decides a fresh permit</text>
+  <rect class="card" x="265" y="1090" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1123">Approval service</text>
+  <text class="detail" x="284" y="1150">Analyst approves exact refund</text>
+  <rect class="card" x="265" y="1185" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1218">Credential broker</text>
+  <text class="detail" x="284" y="1245">Issues gateway-only access</text>
+  <rect class="card" x="815" y="940" width="260" height="325" rx="12"/>
+  <text class="name" x="835" y="983">Action gateway</text>
+  <text class="detail" x="835" y="1017">Validates proposal</text>
+  <text class="detail" x="835" y="1054">Checks current permit</text>
+  <text class="detail" x="835" y="1091">Binds analyst approval</text>
+  <text class="detail" x="835" y="1128">Uses scoped access</text>
+  <text class="detail" x="835" y="1165">Issues approved write</text>
+  <rect class="lower-trust" x="1210" y="1060" width="170" height="100" rx="12"/>
+  <text class="name external-name" x="1226" y="1092">Refund</text>
+  <text class="name external-name" x="1226" y="1115">provider</text>
+  <text class="detail" x="1226" y="1142">Outside tenant</text>
+  <rect class="card" x="815" y="1360" width="260" height="80" rx="12"/>
+  <text class="name" x="835" y="1394">Independent</text>
+  <text class="name" x="835" y="1420">evidence store</text>
+  <!-- Verb-led labels sit above arrows with a halo that preserves legibility. -->
+  <text class="edge-label" x="181" y="246">Start</text>
+  <text class="edge-label" x="422" y="246">Bind</text>
+  <text class="edge-label" x="601" y="195">Admit</text>
+  <text class="edge-label" x="630" y="403">Retrieve</text>
+  <text class="edge-label" x="945" y="491">Read sources</text>
+  <text class="edge-label" x="635" y="683">Consult</text>
+  <text class="edge-label" x="1094" y="683">Send</text>
+  <text class="edge-label proposal-label" x="585" y="941">Submit proposal</text>
+  <text class="edge-label proposal-label" x="585" y="961">based on model output</text>
+  <text class="edge-label" x="611" y="1018">Decide</text>
+  <text class="edge-label" x="570" y="1113">Bind analyst approval</text>
+  <text class="edge-label" x="613" y="1208">Issue access</text>
+  <text class="edge-label" x="1103" y="1093">Write</text>
+  <text class="edge-label" x="964" y="1334">Record</text>
 </svg>

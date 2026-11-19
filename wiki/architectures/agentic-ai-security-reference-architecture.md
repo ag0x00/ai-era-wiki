@@ -22,6 +22,7 @@ components:
   - model-gateway
   - policy-service
   - action-gateway
+  - approval-service
   - credential-broker
   - evidence-store
   - release-admission
@@ -88,9 +89,236 @@ These properties depend on administrative controls outside the agent process. A 
 
 ## Logical components and trust boundaries
 
-![Context and trust boundaries for the reference deployment](agentic-ai-security-reference-architecture-planes.svg)
+<div role="region" aria-label="Reference architecture component map; scroll horizontally to inspect" tabindex="0" style="overflow-x:auto;">
+<svg xmlns="http://www.w3.org/2000/svg" class="ra-planes" width="1400" height="1500" viewBox="0 0 1400 1500" role="img" aria-labelledby="ra-planes-title ra-planes-desc">
+  <title id="ra-planes-title">Enforcement components and trust boundaries in the refund-agent reference deployment</title>
+  <desc id="ra-planes-desc">A support analyst starts a scoped task through identity and session service. Release admission permits the isolated runtime to start. The runtime retrieves internal case and policy sources through a mediator and consults an external model through the model gateway. A model-influenced refund proposal crosses the action enforcement boundary into the action gateway. The policy service decides whether the action is permitted. The gateway enforces that decision, binds the analyst's exact-action approval, and uses gateway-only credential access for a write to the external refund provider. The gateway records the result in an independent evidence store. Solid outer outline marks the organization-operated tenant; dashed boxes mark lower-trust content and external providers. Request arrows move right or down. Responses are omitted and treated as data.</desc>
+  <defs>
+    <marker id="ra-planes-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="var(--ra-stroke)"/>
+    </marker>
+    <style>
+      .ra-planes {
+        --ra-paper:#ffffff;
+        --ra-zone:#f7f8f9;
+        --ra-card:#ffffff;
+        --ra-ink:#1a252e;
+        --ra-muted:#4d5a64;
+        --ra-stroke:#566571;
+        --ra-border:#9ba8b1;
+        --ra-support:#687781;
+        font-family:Inter,Helvetica,Arial,sans-serif
+      }
+      @media (prefers-color-scheme:dark) {
+        .ra-planes {
+          --ra-paper:#15191d;
+          --ra-zone:#1c2227;
+          --ra-card:#252c32;
+          --ra-ink:#edf1f3;
+          --ra-muted:#c0c9ce;
+          --ra-stroke:#b2bec6;
+          --ra-border:#82919b;
+          --ra-support:#9cabb4
+        }
+      }
+      [saved-theme="light"] .ra-planes,.theme-light .ra-planes {
+        --ra-paper:#ffffff;
+        --ra-zone:#f7f8f9;
+        --ra-card:#ffffff;
+        --ra-ink:#1a252e;
+        --ra-muted:#4d5a64;
+        --ra-stroke:#566571;
+        --ra-border:#9ba8b1;
+        --ra-support:#687781
+      }
+      [saved-theme="dark"] .ra-planes,.theme-dark .ra-planes {
+        --ra-paper:#15191d;
+        --ra-zone:#1c2227;
+        --ra-card:#252c32;
+        --ra-ink:#edf1f3;
+        --ra-muted:#c0c9ce;
+        --ra-stroke:#b2bec6;
+        --ra-border:#82919b;
+        --ra-support:#9cabb4
+      }
+      .ra-planes .authority {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3
+      }
+      .ra-planes .external-name {
+        font-size:19px
+      }
+      .ra-planes .proposal-label {
+        font-size:14px
+      }
+      .ra-planes .authority-name {
+        fill:var(--ra-ink);
+        font-size:18px;
+        font-weight:700
+      }
+      .ra-planes .paper {
+        fill:var(--ra-paper)
+      }
+      .ra-planes .tenant {
+        fill:var(--ra-zone);
+        stroke:var(--ra-border);
+        stroke-width:2.5
+      }
+      .ra-planes .card {
+        fill:var(--ra-card);
+        stroke:var(--ra-stroke);
+        stroke-width:2
+      }
+      .ra-planes .lower-trust {
+        fill:var(--ra-card);
+        stroke:var(--ra-border);
+        stroke-width:2.5;
+        stroke-dasharray:9 7
+      }
+      .ra-planes .zone-name {
+        fill:var(--ra-muted);
+        font-size:20px;
+        font-weight:700;
+        letter-spacing:.2px
+      }
+      .ra-planes .name {
+        fill:var(--ra-ink);
+        font-size:23px;
+        font-weight:700
+      }
+      .ra-planes .detail {
+        fill:var(--ra-muted);
+        font-size:17px
+      }
+      .ra-planes .flow {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        marker-end:url(#ra-planes-arrow)
+      }
+      .ra-planes .support-flow {
+        fill:none;
+        stroke:var(--ra-support);
+        stroke-width:2.5;
+        stroke-dasharray:7 6;
+        stroke-linecap:round;
+        marker-end:url(#ra-planes-arrow)
+      }
+      .ra-planes .spine {
+        fill:none;
+        stroke:var(--ra-stroke);
+        stroke-width:3;
+        stroke-linecap:round
+      }
+      .ra-planes .edge-label {
+        fill:var(--ra-ink);
+        font-size:17px;
+        font-weight:600;
+        paint-order:stroke;
+        stroke:var(--ra-zone);
+        stroke-width:10px;
+        stroke-linejoin:round
+      }
+      .ra-planes .outer-label {
+        stroke:var(--ra-paper)
+      }
+    </style>
+  </defs>
+  <rect class="paper" width="1400" height="1500"/>
+  <rect class="tenant" x="175" y="25" width="990" height="1450" rx="20"/>
+  <text class="zone-name" x="220" y="60">Organization-operated tenant</text>
+  <rect class="authority" x="780" y="870" width="320" height="440" rx="18"/>
+  <text class="authority-name" x="805" y="905">Action enforcement boundary</text>
+  <!-- Solid arrows trace three mediated requests. Dashed arrows carry supporting controls and evidence. -->
+  <path class="flow" d="M170 262H220"/>
+  <path class="flow" d="M415 262H470"/>
+  <path class="support-flow" d="M580 155V215"/>
+  <path class="spine" d="M580 310V980"/>
+  <path class="flow" d="M580 420H790"/>
+  <path class="flow" d="M922 470V500"/>
+  <path class="flow" d="M580 700H790"/>
+  <path class="flow" d="M1055 700H1210"/>
+  <path class="flow" d="M580 980H815"/>
+  <path class="support-flow" d="M525 1035H815"/>
+  <path class="support-flow" d="M525 1130H815"/>
+  <path class="support-flow" d="M525 1225H815"/>
+  <path class="flow" d="M1075 1110H1210"/>
+  <path class="support-flow" d="M945 1265V1360"/>
+  <!-- The tenant contains the runtime, mediators, action controls, and independent evidence. -->
+  <rect class="card" x="20" y="215" width="150" height="95" rx="12"/>
+  <text class="name" x="38" y="255">Support</text>
+  <text class="name" x="38" y="283">analyst</text>
+  <rect class="card" x="220" y="215" width="195" height="95" rx="12"/>
+  <text class="name" x="238" y="252">Identity and</text>
+  <text class="name" x="238" y="279">session service</text>
+  <text class="detail" x="238" y="302">Binds a scoped task</text>
+  <rect class="card" x="450" y="70" width="265" height="85" rx="12"/>
+  <text class="name" x="470" y="108">Release admission</text>
+  <text class="detail" x="470" y="135">Checks build and config</text>
+  <rect class="card" x="470" y="215" width="220" height="95" rx="12"/>
+  <text class="name" x="489" y="253">Isolated agent</text>
+  <text class="name" x="489" y="280">runtime</text>
+  <text class="detail" x="489" y="302">Uses mediated routes</text>
+  <rect class="card" x="790" y="370" width="265" height="100" rx="12"/>
+  <text class="name" x="810" y="413">Retrieval mediator</text>
+  <text class="detail" x="810" y="444">Checks each entitlement</text>
+  <rect class="lower-trust" x="790" y="500" width="265" height="85" rx="12"/>
+  <text class="name" x="810" y="535">Internal sources</text>
+  <text class="detail" x="810" y="563">Case state; policy text</text>
+  <rect class="card" x="790" y="650" width="265" height="100" rx="12"/>
+  <text class="name" x="810" y="693">Model gateway</text>
+  <text class="detail" x="810" y="723">Limits route and context</text>
+  <rect class="lower-trust" x="1210" y="650" width="170" height="100" rx="12"/>
+  <text class="name external-name" x="1226" y="682">Model</text>
+  <text class="name external-name" x="1226" y="705">provider</text>
+  <text class="detail" x="1226" y="732">Outside tenant</text>
+  <rect class="card" x="265" y="995" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1028">Policy service</text>
+  <text class="detail" x="284" y="1055">Decides a fresh permit</text>
+  <rect class="card" x="265" y="1090" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1123">Approval service</text>
+  <text class="detail" x="284" y="1150">Analyst approves exact refund</text>
+  <rect class="card" x="265" y="1185" width="260" height="80" rx="12"/>
+  <text class="name" x="284" y="1218">Credential broker</text>
+  <text class="detail" x="284" y="1245">Issues gateway-only access</text>
+  <rect class="card" x="815" y="940" width="260" height="325" rx="12"/>
+  <text class="name" x="835" y="983">Action gateway</text>
+  <text class="detail" x="835" y="1017">Validates proposal</text>
+  <text class="detail" x="835" y="1054">Checks current permit</text>
+  <text class="detail" x="835" y="1091">Binds analyst approval</text>
+  <text class="detail" x="835" y="1128">Uses scoped access</text>
+  <text class="detail" x="835" y="1165">Issues approved write</text>
+  <rect class="lower-trust" x="1210" y="1060" width="170" height="100" rx="12"/>
+  <text class="name external-name" x="1226" y="1092">Refund</text>
+  <text class="name external-name" x="1226" y="1115">provider</text>
+  <text class="detail" x="1226" y="1142">Outside tenant</text>
+  <rect class="card" x="815" y="1360" width="260" height="80" rx="12"/>
+  <text class="name" x="835" y="1394">Independent</text>
+  <text class="name" x="835" y="1420">evidence store</text>
+  <!-- Verb-led labels sit above arrows with a halo that preserves legibility. -->
+  <text class="edge-label" x="181" y="246">Start</text>
+  <text class="edge-label" x="422" y="246">Bind</text>
+  <text class="edge-label" x="601" y="195">Admit</text>
+  <text class="edge-label" x="630" y="403">Retrieve</text>
+  <text class="edge-label" x="945" y="491">Read sources</text>
+  <text class="edge-label" x="635" y="683">Consult</text>
+  <text class="edge-label" x="1094" y="683">Send</text>
+  <text class="edge-label proposal-label" x="585" y="941">Submit proposal</text>
+  <text class="edge-label proposal-label" x="585" y="961">based on model output</text>
+  <text class="edge-label" x="611" y="1018">Decide</text>
+  <text class="edge-label" x="570" y="1113">Bind analyst approval</text>
+  <text class="edge-label" x="613" y="1208">Issue access</text>
+  <text class="edge-label" x="1103" y="1093">Write</text>
+  <text class="edge-label" x="964" y="1334">Record</text>
+</svg>
+</div>
 
-The solid boundary in the diagram encloses services the organization operates. Dashed boundaries mark content and services whose output must be validated on entry. The action gateway requests scoped API access from the credential broker. The broker returns it to the gateway, which uses it to authenticate the approved write to the refund provider. An internal document may be access controlled and still carry hostile instructions. An authenticated response from the refund provider establishes its network origin under the agreed protocol; it does not make response text an instruction to the agent.
+*Generated image. Source: Agentic AI Security Reference Architecture (this page). Illustrator: Anton Goncharov using Codex (GPT-6 Sol).* [Open the full-size SVG](agentic-ai-security-reference-architecture-planes.svg).
+
+The outer outline encloses organization-operated services. Dashed boxes identify lower-trust content or providers outside the tenant. The inner outline marks the action enforcement boundary. A model-influenced proposal enters the gateway as data. The policy service decides whether the action is permitted. The gateway validates the proposal and enforces that decision. The approval service binds the analyst’s confirmation of the exact refund facts. It cannot approve on the analyst’s behalf. The gateway requests scoped API access from the credential broker and uses that access for the approved write. The arrow to the independent evidence store represents task-linked records from all mediators. Return arrows are omitted for legibility. Retrieved text, model output, and refund API responses return as data. An internal document may be access controlled and still carry hostile instructions. An authenticated response from the refund provider establishes its network origin under the agreed protocol; it does not make response text an instruction to the agent.
 
 | Component | Operator | Enforceable responsibility |
 |---|---|---|
