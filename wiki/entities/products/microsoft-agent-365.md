@@ -3,7 +3,7 @@ type: entity
 entity_type: product
 title: "Microsoft Agent 365"
 created: 2026-09-18
-updated: 2026-09-18
+updated: 2026-10-06
 tags:
   - products
   - identity
@@ -46,6 +46,7 @@ related:
   - "[[agentic-cmm-vs-standards-validation]]"
   - "[[standards-review-microsoft-zt4ai-2026-Q2]]"
   - "[[agent-catalog]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "https://www.microsoft.com/en-us/microsoft-agent-365"
   - "https://learn.microsoft.com/en-us/microsoft-agent-365/overview"
@@ -62,23 +63,17 @@ sources:
   - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
   - ".raw/articles/appsecsanta-onyx-security-review-2026-2026-09-18.md"
   - ".raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md"
-verified: 2026-09-18
+  - ".raw/articles/google-cloud-agent-registry-manual-registration-2026-10-06.md"
+  - ".raw/articles/aws-agent-registry-sync-records-2026-10-06.md"
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/appsecsanta-onyx-security-review-2026-2026-09-18.md"
-  - ".raw/articles/cordum-2026-agentic-control-plane-buying-guide-2026-09-18.md"
-  - ".raw/articles/datadog-entra-agent-id-blueprint-blast-radius-2026-09-18.md"
+  - ".raw/articles/aws-agent-registry-sync-records-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-manual-registration-2026-10-06.md"
   - ".raw/articles/microsoft-agent-365-general-availability-2026-09-18.md"
-  - ".raw/articles/microsoft-agent-365-learn-overview-2026-09-18.md"
   - ".raw/articles/microsoft-agent-365-product-page-2026-09-18.md"
-  - ".raw/articles/microsoft-agent-365-sdk-overview-2026-09-18.md"
-  - ".raw/articles/microsoft-agent-365-service-description-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-agent-id-design-patterns-2026-09-18.md"
-  - ".raw/articles/microsoft-windows-365-cloud-pc-agent-pools-2026-09-18.md"
-  - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
-  - ".raw/articles/ragnar-heil-agent-365-limitations-2026-09-18.md"
-  - ".raw/articles/techtarget-m365-e7-ai-governance-prices-critiques-2026-09-18.md"
+  - ".raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md"
 verified_findings: 0
-verified_note: "GA agent-type coverage rewritten: Heil and Microsoft's announcement disagree and both now stand on the page. Cloud PC quotation made verbatim; See also folded into body prose. The agent-registry Learn page was verified live at the time and has since been clipped to .raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md."
+verified_note: "Registry ZIP intake, Unmanaged agents counter and pricing checked against the Microsoft captures; Google and AWS Card-by-URL intake now cited to its own captures instead of the Microsoft registry page."
 ---
 
 # Microsoft Agent 365
@@ -111,7 +106,7 @@ The Frontier program continued after general availability as the channel for cap
 
 ### Reach over agents built elsewhere
 
-Microsoft states that Agent 365 "works with agents built on Microsoft platforms and with agents built or acquired from third-party sources", and names three mechanisms that bring such an agent under management.[^a365-five] An agent published through Microsoft 365 channels with an Entra Agent ID appears in the registry automatically, and others "require additional registration steps".[^pricing] Registry sync pulls agents and their metadata from platforms Agent 365 does not manage, through connectors for AWS Bedrock and Google Cloud that are in public preview.[^ga] The Agent 365 SDK connects an agent the organization already owns and runs.[^sdk]
+Microsoft states that Agent 365 "works with agents built on Microsoft platforms and with agents built or acquired from third-party sources", and names three mechanisms that bring such an agent under management.[^a365-five] An agent published through Microsoft 365 channels with an Entra Agent ID appears in the registry automatically, and others "require additional registration steps".[^pricing] Registry sync pulls agents and their metadata from platforms Agent 365 does not manage, through connectors for AWS Bedrock and Google Cloud that are in public preview.[^ga] The Agent 365 SDK connects an agent the organization already owns and runs.[^sdk] A custom agent enters the registry as an uploaded ZIP package of manifest and configuration files, and the registry page describes no import of A2A Agent Cards.[^registry] The Google Cloud and AWS agent registries both import a Card from its URL.[^g-man][^aws-sync] The registry summary counts "Unmanaged agents", defined as agents "created or managed outside of Agent 365, without its risk protection and observability".[^registry] [[shadow-agent-admission-control|Shadow Agent Admission Control]] compares this intake with the Google Cloud and AWS registries, and uses the unmanaged-agent count as a reconciliation input for [[shadow-automation|Shadow Automation]].
 
 The SDK names the runtimes it supports: LangChain, Microsoft Agent Framework, Semantic Kernel, the OpenAI Agents SDK, the Claude Agent SDK, and custom code, hosted on Azure, AWS, Google Cloud or on premises.[^sdk] Two conditions narrow that reach in practice. An agent reaches management only when an administrator onboards it through the SDK, which needs an Agent 365 licence as well as the agent vendor's own, and detection alone does not enrol a discovered shadow agent.[^heil] Microsoft also disclaims third-party MCP servers, which it classes as Non-Microsoft Products used at the customer's own risk.[^registry]
 
@@ -144,6 +139,8 @@ Among the other entrants the vault carries, [[crowdstrike-agentic-identity-provi
 [^a365-control-plane]: Microsoft, [*Microsoft Agent 365 service description*](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-agent-365/microsoft-agent-365), retrieved 2026-09-18, and [*Microsoft Agent 365*](https://www.microsoft.com/en-us/microsoft-agent-365) (product page title and FAQ), retrieved 2026-09-18. Local copies: `.raw/articles/microsoft-agent-365-service-description-2026-09-18.md`, `.raw/articles/microsoft-agent-365-product-page-2026-09-18.md`.
 [^a365-five]: Microsoft, [*Microsoft Agent 365*](https://www.microsoft.com/en-us/microsoft-agent-365), Capabilities section, and [*Microsoft Agent 365 service description*](https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-agent-365/microsoft-agent-365), Management Console column and Intune feature rows, both retrieved 2026-09-18.
 [^registry]: Microsoft, [*Agent registry in the Microsoft 365 admin center*](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-registry), retrieved 2026-09-18. Names the Agent Registry surface, marks the Microsoft Graph API for Agent Registry and Agent Details as preview, lists the ten risk types with their severities, and states the third-party-tool disclaimer. Local copy: `.raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md`.
+[^g-man]: Google Cloud, [*Use manual registration*](https://docs.cloud.google.com/agent-registry/manual-registration), Agent Registry, retrieved 2026-10-06. Local copy: `.raw/articles/google-cloud-agent-registry-manual-registration-2026-10-06.md`.
+[^aws-sync]: AWS, [*Synchronize records from external sources*, Synchronize from an A2A agent card](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-sync-records.html), retrieved 2026-10-06. Local copy: `.raw/articles/aws-agent-registry-sync-records-2026-10-06.md`.
 [^ga]: Microsoft Security Blog, [*Microsoft Agent 365, now generally available, expands capabilities and integrations*](https://www.microsoft.com/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/) (2026-05-01), retrieved 2026-09-18. Local copy: `.raw/articles/microsoft-agent-365-general-availability-2026-09-18.md`.
 [^pricing]: Microsoft, [*Microsoft Agent 365*](https://www.microsoft.com/en-us/microsoft-agent-365), Plans and Pricing and FAQ sections, retrieved 2026-09-18. List prices are per user per month on annual commitment, in US dollars.
 [^entra-what-is]: Microsoft, [*What is Microsoft Entra Agent ID?*](https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id), retrieved 2026-09-18, for the add-on route and the licensing gate on Entra security features.

@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D8: Engineering and Supply Assurance"
 address: c-000129
 created: 2026-05-25
-updated: 2026-10-27
+updated: 2026-11-19
 tags:
   - maturity-models
   - cmm
@@ -211,6 +211,6 @@ Operating cost comes from advisory triage, repeated scans, supplier reassessment
 
 ## Sources and material limits
 
-[NIST SSDF](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf) supplies software design, review, test, and release practices; its [AI profile](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218A.pdf) addresses AI-specific assets and provenance. The [OWASP AI Exchange supply-chain](https://owaspai.org/go/supplychainmanage/), [secure development](https://owaspai.org/docs/1_general_controls/#sec-dev-program), and [agentic testing](https://owaspai.org/docs/5_testing/#agentic-ai-security-testing) sections inform the component and release checks. [SLSA build requirements](https://slsa.dev/spec/v1.2/build-requirements) support the provenance levels. These sources do not require the AAI-S CMM's exact level assignments. An AI-BOM, signature, scan, or model document is evidence about one property, not a substitute for the assembled deployment's security test and release decision.
+[NIST SSDF](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf) supplies software design, review, test, and release practices; its [AI profile](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218A.pdf) addresses AI-specific assets and provenance. The [OWASP AI Exchange supply-chain](https://owaspai.org/go/supplychainmanage/), [secure development](https://owaspai.org/docs/1_general_controls/#sec-dev-program), and [agentic testing](https://owaspai.org/docs/5_testing/#agentic-ai-security-testing) sections inform the component and release checks. [SLSA build requirements](https://slsa.dev/spec/v1.2/build-requirements) support the provenance levels. These sources do not require the AAI-S CMM's exact level assignments. An AI-BOM, signature, scan, or model document is evidence about one property, not a substitute for the assembled deployment's security test and release decision. The Exchange's testing guidance also names adversarial supply-chain scenarios, such as a substituted model variant or a tampered tool implementation. D8-VERIFY refuses a component whose identity or integrity check fails, and D8-TEST covers such a scenario when the deployment's design risks select it. [[owasp-ai-exchange|OWASP AI Exchange]] compares the Exchange's test paths with these criteria.
 
 The [A2A specification](https://github.com/a2aproject/A2A/blob/main/docs/specification.md#84-agent-card-signing) defines optional Agent Card signatures. It does not define general message signatures; D8-A2A-SIGN-TEST grades a release test of card verification, while D5 grades runtime enforcement.

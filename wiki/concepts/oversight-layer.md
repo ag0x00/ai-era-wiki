@@ -2,7 +2,7 @@
 type: concept
 title: "Oversight Layer (PDP + PEP for Agentic AI)"
 created: 2026-05-01
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - concepts
   - oversight-layer
@@ -36,10 +36,11 @@ related:
 sources:
   - "https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-162.pdf"
   - "https://owaspai.org/go/oversight/"
-verified: 2026-09-29
+  - "https://owaspai.org/go/agenticaioverview/"
+verified: 2026-10-06
 verified_against: []
 verified_findings: 0
-verified_note: "Current OWASP AI Exchange oversight control and NIST ABAC guide checked 2026-09-29."
+verified_note: "Whole page read. The new OWASP sentence lacked an antecedent and cited the oversight control for a statement the Exchange's agentic AI overview makes (checked in the archived security overview, which the manifest does not map here); re-worded and cited /go/agenticaioverview/."
 ---
 
 # Oversight Layer (PDP + PEP for Agentic AI)
@@ -74,7 +75,7 @@ A supplier console that shows only alerts proves observation, not enforcement. W
 
 ## Framework mapping
 
-The NIST terms describe *functions*, not mandatory boxes or products. A PDP and PEP may share one service. Several PEPs may consult one PDP. [[nist-sp-800-162|NIST SP 800-162]] defines their ABAC roles. [[guardian-agent|Guardian Agent]] and [[sentinels-and-operatives|Sentinels and Operatives]] are adjacent product or analyst terms. Those labels alone identify no NIST function. The implementation path determines whether one applies.
+The NIST terms describe *functions*, not mandatory boxes or products. A PDP and PEP may share one service. Several PEPs may consult one PDP. [[nist-sp-800-162|NIST SP 800-162]] defines their ABAC roles. [[guardian-agent|Guardian Agent]] and [[sentinels-and-operatives|Sentinels and Operatives]] are adjacent product or analyst terms. Those labels alone identify no NIST function. The implementation path determines whether one applies. For multi-agent systems, the [[owasp-ai-exchange|OWASP AI Exchange]] places inter-agent enforcement at the message bus or orchestrator rather than in agent prompts ([agentic AI overview](https://owaspai.org/go/agenticaioverview/)).
 
 ## CMM use
 
@@ -93,4 +94,5 @@ The NIST terms describe *functions*, not mandatory boxes or products. A PDP and 
 
 - [nvlpubs.nist.gov](https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-162.pdf)
 - [owaspai.org](https://owaspai.org/go/oversight/)
+- [owaspai.org](https://owaspai.org/go/agenticaioverview/)
 <!-- /sources -->

@@ -2,7 +2,7 @@
 type: paper
 title: "AI Coding Agent Governance"
 created: 2026-04-30
-updated: 2026-09-25
+updated: 2026-10-06
 tags:
   - papers
   - agentic-ai
@@ -20,7 +20,7 @@ source_url: "https://www.knostic.ai/blog/ai-coding-agent-governance"
 archived_copy: ".raw/articles/knostic-ai-coding-agent-governance-2026-04-30.md"
 no_public_url: ""
 key_claim: "Coding-agent governance is structurally distinct from security: security prevents harm; governance defines authority and accountability via four components — first-class agent identity, scoped access, change-approval workflow, and audit-by-default — operationalized in a 3-phase rollout (visibility → policy → enforcement)."
-methodology: "Industry/vendor opinion piece grounded in IBM X-Force 2025 Threat Intelligence Index, Cloudera 2025 enterprise AI agent survey (96% expansion), and Security Buzz / DevSecOps reporting (63% deploy code daily). Anchored to NIST AI RMF (Phase 1), OWASP GenAI Top 10 (Phase 2), and Google SAIF (Phase 3)."
+methodology: "Industry/vendor opinion piece grounded in IBM X-Force 2025 Threat Intelligence Index, Cloudera 2025 enterprise AI agent survey (96% expansion), and Security Buzz DevSecOps reporting (code deployed daily or faster). Anchored to NIST AI RMF (Phase 1), OWASP GenAI Top 10 (Phase 2), and Google SAIF (Phase 3)."
 contradicts: []
 supports:
   - "[[agentic-ai-security-cmm-2026]]"
@@ -52,6 +52,11 @@ aliases:
   - papers/knostic-ai-coding-agent-governance
   - knostic-ai-coding-agent-governance
 
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/knostic-ai-coding-agent-governance-2026-04-30.md"
+verified_findings: 0
+verified_note: "Three 63% corrections checked against the Knostic capture and a fetched Security Buzz text (not archived in .raw); rest of page not re-read."
 ---
 
 # AI Coding Agent Governance (Knostic, 2025–2026)
@@ -68,7 +73,7 @@ Vendor-published opinion piece. Grounded in three external data points and three
 
 - **IBM X-Force 2025 Threat Intelligence Index** — hidden, unmanaged AI agents introduced without security or compliance review, operating outside policy visibility.
 - **Cloudera 2025 — *The Future of Enterprise AI Agents*** — 96% of enterprises plan to expand AI agent use over the next 12 months; ~50% targeting org-wide rollout.
-- **Security Buzz / DevSecOps Hits AI-Fueled Reality Check (2025)** — 63% of organizations deploy code daily or faster, creating pace mismatch with governance.
+- **Security Buzz / DevSecOps Hits AI-Fueled Reality Check (2025)** — Knostic cites it for "63% of organizations deploy code daily or faster". [The linked article](https://securitybuzz.com/cybersecurity-news/devsecops-hits-ai-fueled-reality-check/) reports that DevSecOps teams deploy "daily or even faster" with no share attached; its 63% counts respondents who say AI improves their ability to write more secure code.
 - Frameworks invoked: [[nist-ai-rmf|NIST AI RMF]] (visibility / monitoring / traceability), [[owasp-llm-top-10|OWASP GenAI / LLM Top 10]] (approvals / guardrails), [[google-saif|Google SAIF]] (detect-and-respond / automate defenses).
 
 ## Notable Findings
@@ -81,7 +86,7 @@ Security controls are the firewall / EDR layer. Governance is identity, roles, p
 
 ### 2. Shadow automation is the dominant organizational risk
 
-Engineering teams adopt coding agents faster than governance teams can review them. Developers spin up their own agents without formal review. The pace mismatch (63% daily deploys vs. quarterly governance review cadence) widens the gap. See [[shadow-automation|Shadow Automation]].
+Engineering teams adopt coding agents faster than governance teams can review them. Developers spin up their own agents without formal review. The post locates the risk in DevSecOps pipelines, where code ships daily or faster and review falls further behind. See [[shadow-automation|Shadow Automation]].
 
 ### 3. Four required components
 
@@ -142,7 +147,7 @@ This was the user's primary reason for ingesting. Comparison against [[agentic-a
 - **Cumulative levels with floor rule** (CMMC lesson) — Knostic phasing is sequential but not cumulative-graded.
 - **ID-tagged evidence** (`ASI##` / AIVSS / `AML.T####` / CVE) — Knostic has no equivalent.
 - **Standards crosswalk** ([[agentic-ai-security-cmm-crosswalk|Agentic AI Security CMM — Standards Crosswalk Matrix]]) — Knostic name-checks NIST AI RMF / OWASP / SAIF but doesn't map controls.
-- **Measurement protocol** ([[agentic-ai-security-cmm-measurement-protocol|Agentic AI Security CMM — Measurement Protocol (Assessor's Handbook)]]) — Knostic has no assessor handbook.
+- **Measurement protocol** ([[agentic-ai-security-cmm-measurement-protocol|CMM: Measurement Protocol (Assessor's Handbook)]]) — the handbook gives an interview script, an artifact checklist and a verdict record for each criterion. Knostic's three phases set out what to implement and in what order.
 - **Six-plane reference architecture** ([[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]) — Knostic governance components fit into 2–3 of the 6 planes; the architecture is broader.
 - **Lethal Trifecta**, **CFI** (cognitive file integrity), **credential proxy**, **runtime AI-BOM** — load-bearing primitives Knostic doesn't address.
 

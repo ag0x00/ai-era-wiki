@@ -3,7 +3,7 @@ type: practice
 title: "NHI Governance for AI Agents"
 address: c-000189
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - practices
   - identity
@@ -31,13 +31,24 @@ related:
   - "[[owasp-state-of-agentic-ai-security-governance]]"
   - "[[falcon-guardian]]"
   - "[[agentdesktop]]"
+  - "[[spiffe]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
   - "[[what-are-non-human-identities]]"
-verified: 2026-09-29
-verified_against: []
+  - "[[.raw/articles/google-cloud-agent-registry-register-agents-2026-10-06.md]]"
+  - "[[.raw/articles/aws-agent-registry-sync-records-2026-10-06.md]]"
+  - "[[.raw/articles/spiffe-spire-concepts-2026-10-06.md]]"
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/aws-agent-registry-sync-records-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-register-agents-2026-10-06.md"
+  - ".raw/articles/nist-nccoe-software-ai-agent-identity-authorization-concept-paper-2026-10-06.md"
+  - ".raw/articles/oasis-what-are-non-human-identities-2026-04-30.md"
+  - ".raw/articles/spiffe-spire-concepts-2026-10-06.md"
+  - ".raw/papers/securing-the-autonomous-future.md"
 verified_findings: 0
-verified_note: "Current Microsoft identity documentation and CMM criteria checked; archived source set was not verified in full."
+verified_note: "Registry, SPIRE and NCCoE lines checked; Oasis quote verbatim; Microsoft and Okta product claims not re-read this pass."
 ---
 
 # NHI Governance for AI Agents
@@ -66,7 +77,7 @@ verified_note: "Current Microsoft identity documentation and CMM criteria checke
 Enumerate every service account, API key, JWT, OAuth token, and certificate assigned to agents, and tag each with owning agent, purpose, creation date, and expiry. Two refinements distinguish a mature inventory:
 
 - **Distinguish coupled from decoupled credentials** ([[identity-credential-coupling|identity-credential coupling]]). Coupled classes (SAS tokens, storage access keys, SaaS API keys) rotate as identity rotation and need a separate migration track.
-- **Find the agents that were never enrolled.** Shadow-agent discovery is now a platform feature at three vantage points: [[microsoft-agent-365|the Agent Registry]] and [[okta-for-ai-agents|Okta Agent Discovery]] surface agents from identity telemetry, [[falcon-guardian|CrowdStrike Falcon Guardian]] enumerates them from endpoint process telemetry, and [[agentdesktop|agentdesktop]] reads the harness configuration on a developer's machine. The last two reach agents that authenticate to no directory. Ungoverned agents at developer pace are the [[shadow-automation|shadow automation]] problem.
+- **Find the agents that were never enrolled.** Shadow-agent discovery is now a platform feature at three vantage points: [[microsoft-agent-365|the Agent Registry]] and [[okta-for-ai-agents|Okta Agent Discovery]] surface agents from identity telemetry, [[falcon-guardian|CrowdStrike Falcon Guardian]] enumerates them from endpoint process telemetry, and [[agentdesktop|agentdesktop]] reads the harness configuration on a developer's machine. The last two reach agents that authenticate to no directory. The agent registries of [Google Cloud](https://docs.cloud.google.com/agent-registry/register-agents) and [AWS](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-sync-records.html) register agents automatically only on their own runtimes and take others through manual registration, including import from an Agent Card URL, and [SPIRE](https://spiffe.io/docs/latest/spire-about/spire-concepts/) issues an identity only to a workload that matches a registration entry; [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses both to refuse agents that were never enrolled. Ungoverned agents at developer pace are the [[shadow-automation|shadow automation]] problem.
 
 ### 2. Adopt workload identity for internal calls — D2 L2 to L3
 
@@ -84,7 +95,7 @@ For external service access (SaaS APIs, external MCP servers), retrieve short-li
 
 ### 5. Attribute actions to an agent and owner — D2 L3 (audit at D7)
 
-Log each action alongside the agent identity and its triggering context (human instruction or autonomous decision). This feeds [[agent-observability|Agent Observability]] and forensic attribution. The accountability record also needs a named human owner. [Microsoft Entra Agent ID sponsorship](https://learn.microsoft.com/en-us/entra/agent-id/manage-agent-identities-admin) is one implementation: its lifecycle workflow can transfer sponsorship to a departing sponsor's manager. [[microsoft-agent-365|Microsoft Agent 365]] writes agent activity to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The NIST CAISI Concept Paper explores OAuth 2.1 / OIDC extensions for delegation-chain capture at the protocol layer. A [[tenuo-warrant|warrant]] can carry such a chain cryptographically.
+Log each action alongside the agent identity and its triggering context (human instruction or autonomous decision). This feeds [[agent-observability|Agent Observability]] and forensic attribution. The accountability record also needs a named human owner. [Microsoft Entra Agent ID sponsorship](https://learn.microsoft.com/en-us/entra/agent-id/manage-agent-identities-admin) is one implementation: its lifecycle workflow can transfer sponsorship to a departing sponsor's manager. [[microsoft-agent-365|Microsoft Agent 365]] writes agent activity to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The NIST NCCoE concept paper on software and AI agent identity, a February 2026 draft, names access delegation as a potential focus area and lists OAuth 2.0/2.1 and its extensions among the standards its project is considering ([NCCoE concept paper](https://www.nccoe.nist.gov/sites/default/files/2026-02/accelerating-the-adoption-of-software-and-ai-agent-identity-and-authorization-concept-paper.pdf)). A [[tenuo-warrant|warrant]] can carry the delegation chain in a signed token.
 
 ### 6. Automate rotation and revocation — D2 L4
 

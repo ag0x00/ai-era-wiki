@@ -2,7 +2,7 @@
 type: framework
 title: "MITRE ATLAS"
 created: 2026-04-30
-updated: 2026-10-21
+updated: 2026-11-19
 tags:
   - frameworks
   - mitre
@@ -45,6 +45,7 @@ related:
   - "[[gtg-1002-ai-orchestrated-espionage]]"
   - "[[capability-floor-collapse]]"
   - "[[ai-dfir-toolkit]]"
+  - "[[agent-message-structure-manipulation]]"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://red.anthropic.com/2026/attack-navigator/"
@@ -109,7 +110,7 @@ Cross-mapping to OWASP ASI Top 10 now covers all 10 of 10 categories.
 - No technique models agent-to-agent trust exploitation or cascading multi-agent failure (the closest, `AML.T0061` LLM Prompt Self-Replication, models prompt propagation through a data channel, not a trust chain).
 - A harmonization effort naming ATLAS as a target is announced and unpublished as of 2026-08-17: the [[owasp-ai-exchange|OWASP AI Exchange]]'s roadmap lists a workstream, led by Rob van der Veer and Yuvaraj, mapping the Exchange to ATLAS and other taxonomies before summer 2026 ([`/go/roadmap/`](https://owaspai.org/go/roadmap/)). No mapping is published, so this page asserts nothing about its content.
 
-The four claims above are stated falsifiably and survived an adversarial second pass in [[standards-review-mitre-atlas-2026-Q2|the MITRE ATLAS 2026-Q2 review]] (claim on multi-agent coverage narrowed after a partial refutation).
+The four claims above are stated falsifiably and survived an adversarial second pass in [[standards-review-mitre-atlas-2026-Q2|the MITRE ATLAS 2026-Q2 review]] (claim on multi-agent coverage narrowed after a partial refutation). Among the techniques listed on this page, none names [[agent-message-structure-manipulation|Agent Message Structure Manipulation]], the forgery or alteration of structured messages between agents, tools and orchestrators that the OWASP AI Exchange treats as a distinct input threat.
 
 The [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] adds three technique-level gaps that the bullets above do not cover, plus one boundary the framework draws correctly.[^bh]
 
@@ -137,8 +138,8 @@ The boundary case runs the other way. The post-RCE legs of the chain — local p
 ## Mapping to the Agentic AI Security CMM and Reference Architecture
 
 - **CMM domains touched:** D2–D8, strongest on D4 (Runtime & Guardrails), D6 (Data, Memory & RAG), and D8 (Supply Chain & AI-BOM). D9 (Operations & Human Factors) is thin; D1 (Governance & Accountability) has no coverage. ATLAS supplies the threat model, not graded defensive criteria.
-- **RA planes touched:** Identity, Control, Runtime, Egress, Data, Observability.
-- Control-level detail and the full technique/mitigation crosswalk: [[standards-review-mitre-atlas-2026-Q2|the MITRE ATLAS 2026-Q2 review]] and the [[agentic-ai-security-cmm-crosswalk|Standards Crosswalk]].
+- **RA placement:** [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] maps the ATLAS techniques, by ASI category, to a component or trust boundary of the reference architecture.
+- Control-level detail and the full technique/mitigation crosswalk: [[standards-review-mitre-atlas-2026-Q2|the MITRE ATLAS 2026-Q2 review]] and the archived [[agentic-ai-security-cmm-crosswalk|Standards Crosswalk]].
 
 ## Key Techniques (Agentic Focus)
 

@@ -2,7 +2,7 @@
 type: concept
 title: "AI Agent Catalog"
 created: 2026-05-01
-updated: 2026-09-30
+updated: 2026-10-06
 tags:
   - concepts
   - agent-catalog
@@ -38,6 +38,8 @@ related:
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
   - "[[agentic-ai-security-cmm-d2-identity]]"
+  - "[[a2a-protocol]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "https://www.wiz.io/blog/introducing-wiz-ai-app"
   - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
@@ -53,11 +55,16 @@ sources:
   - "https://www.wiz.io/blog/wiz-ai-spm-secures-ai-agents"
   - "https://www.paloaltonetworks.com/prisma/prisma-ai-runtime-security"
   - "https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store"
-verified: 2026-09-30
+  - "https://docs.cloud.google.com/agent-registry/release-notes"
+  - "https://docs.cloud.google.com/agent-registry/register-agents"
+  - "https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/"
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
-verified_findings: 0
-verified_note: "Wiz AI-APP row checked against the full launch article; inherited Gartner and other sources were not reread."
+  - ".raw/articles/aws-agent-registry-generally-available-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-register-agents-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-release-notes-2026-10-06.md"
+verified_findings: 1
+verified_note: "Read scoped to the two new registry rows and open issue 1; Google row corrected (skill governance in Preview, opt-in runtimes). Open (low): 'only on their own runtimes' for AWS rests on the GA notice's silence. Gartner and other inherited sources not reread."
 ---
 
 # AI Agent Catalog
@@ -135,6 +142,8 @@ None of the tools below is documented, in its cited source, as covering all four
 |---|---|
 | [[microsoft-agent-365\|Microsoft Agent 365]] | A single, centralized registry of an organization's agents, including partner agents deployed from the Microsoft 365 admin center[^ms] |
 | [[okta-for-ai-agents\|Okta for AI Agents]] | Cross-platform agent identity registry, generally available since April 2026[^okta] |
+| Google Cloud Agent Registry | Catalog of agents and MCP servers that registers agents on supported Google Cloud runtimes in the same project, by default or through an opt-in deployment step, and takes other agents by A2A Card URL or JSON. Generally available since 2026-06-18; skill governance in Preview since 2026-07-23[^gcp-registry] |
+| AWS Agent Registry | Catalog that detects agents on AgentCore runtime and gateways and takes other records by manual entry or URL sync, generally available since 2026-08-31[^aws-registry] |
 | Astrix Security | Agent identity and access governance, listed among the Market Guide's agent identity vendors[^mg-vendors] |
 | [[falcon-guardian\|Falcon Guardian]] | Endpoint-resident discovery of known and shadow agents on Windows and macOS, recording who deployed each and its security status[^falcon] |
 | [[ping-enterprise-personal-agent-access\|Ping Enterprise Personal Agent Access]] | Personal-agent discovery including shadow AI, each session linked to the user and the device that started it[^ping] |
@@ -181,7 +190,7 @@ D2's levels grade neither a risk-score methodology nor discovery of agents outsi
 
 ## Open issues
 
-1. **Cross-platform discovery coverage.** A platform export can reveal an agent identity missing from the D2-REGISTRY graph. The catalog needs a comparison procedure for each identity platform the deployment uses; federation alone does not prove the graph is complete.
+1. **Cross-platform discovery coverage.** A platform export can reveal an agent identity missing from the D2-REGISTRY graph. The catalog needs a comparison procedure for each identity platform the deployment uses; federation alone does not prove the graph is complete. [[shadow-agent-admission-control|Shadow Agent Admission Control]] sets out one procedure, which reconciles registry entries and issued workload identities against identity-provider, endpoint, desktop and egress telemetry, because the Google Cloud and AWS registries register agents automatically only on their own runtimes.
 2. **Shadow agent fingerprinting.** The Market Guide expects organizations to use metadata when agents declare no identity.[^mg-iam] Model, tool, and output metadata can support investigation, but a fingerprint is not a verified identity.
 3. **Skill and MCP-server inventory.** The components an agent consumes are a separate inventory problem. See [[mcp-security|MCP Security]].
 
@@ -201,6 +210,8 @@ D2's levels grade neither a risk-score methodology nor discovery of agents outsi
 [^talk]: Gartner webinar, *Scaling Agentic AI: A Leadership Guide for CIOs*, procurement segment. The recording has no public landing page; the transcript is archived in the vault.
 [^ms]: Microsoft, [Microsoft Agent 365 overview](https://learn.microsoft.com/en-us/microsoft-agent-365/overview). The Market Guide's Note 7 describes Agent 365 as in preview at its publication and ties its controls to agents, native or third party, registered with Microsoft Entra ID.
 [^okta]: Okta, [Okta for AI Agents is now generally available](https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/), 2026-04-29.
+[^gcp-registry]: Google Cloud, [Agent Registry release notes](https://docs.cloud.google.com/agent-registry/release-notes), entries of 2026-06-18 and 2026-07-23, and [Register agents](https://docs.cloud.google.com/agent-registry/register-agents), retrieved 2026-10-06.
+[^aws-registry]: AWS, [AWS Agent Registry for centralized agent discovery and governance is now generally available](https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/), 2026-08-31.
 [^falcon]: CrowdStrike, [CrowdStrike Unveils Falcon Guardian to Secure AI Agents Where They Execute](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-unveils-falcon-guardian-ai-agent-security/), 2026-09-01.
 [^ping]: Ping Identity, [Ping Identity Secures Claude Personal Agents From Discovery to Action](https://press.pingidentity.com/2026-09-01-Ping-Identity-Secures-Claude-Personal-Agents-From-Discovery-to-Action), 2026-09-01.
 [^agentdesktop]: Solo.io, [Introducing agentdesktop](https://www.solo.io/blog/introducing-agentdesktop), 2026-09-03.
@@ -224,4 +235,7 @@ D2's levels grade neither a risk-score methodology nor discovery of agents outsi
 - [wiz.io](https://www.wiz.io/blog/wiz-ai-spm-secures-ai-agents)
 - [paloaltonetworks.com](https://www.paloaltonetworks.com/prisma/prisma-ai-runtime-security)
 - [cyera.com](https://www.cyera.com/blog/new-from-cyera-ai-security-for-every-agent-assistant-and-data-store)
+- [docs.cloud.google.com](https://docs.cloud.google.com/agent-registry/release-notes)
+- [docs.cloud.google.com](https://docs.cloud.google.com/agent-registry/register-agents)
+- [aws.amazon.com](https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/)
 <!-- /sources -->

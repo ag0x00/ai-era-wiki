@@ -3,7 +3,7 @@ type: concept
 title: "Non-Human Identity (NHI)"
 address: c-000187
 created: 2026-04-30
-updated: 2026-11-18
+updated: 2026-11-19
 tags:
   - concepts
   - identity
@@ -46,6 +46,8 @@ related:
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
   - "[[agent-catalog]]"
+  - "[[spiffe]]"
+  - "[[shadow-agent-admission-control]]"
   - "[[storm-0940-artex-connectwise]]"
   - "[[microsoft-storm-0940-artex]]"
   - "[[gtig-artex-and-friends]]"
@@ -80,7 +82,7 @@ A non-human identity is a principal assigned to software, such as a workload, se
 | Authorized session | What task scope and expiry does the current grant cover? Can it be reused on another route? |
 | Represented human | Who started the task, or who owns an event-driven run? Does the downstream decision preserve that relationship? |
 
-A service account can be a principal. Its password is a credential. A [SPIFFE ID](https://spiffe.io/docs/latest/spiffe-specs/spiffe-id/) names a workload identity. An SVID is a verifiable document that presents it. A shared workload identity does not distinguish agents that run under the same workload. An API key may identify only an application or account, even when one agent happens to hold it. The authenticated name must be checked against the agent inventory before an action is attributed to that agent.
+A service account can be a principal. Its password is a credential. A [SPIFFE ID](https://spiffe.io/docs/latest/spiffe-specs/spiffe-id/) names a workload identity ([[spiffe|SPIFFE / SPIRE]]). An SVID is a verifiable document that presents it. A shared workload identity does not distinguish agents that run under the same workload. An API key may identify only an application or account, even when one agent happens to hold it. The authenticated name must be checked against the agent inventory before an action is attributed to that agent. An agent absent from that inventory is a case of [[shadow-automation|Shadow Automation]].
 
 ## Lifecycle and delegation
 
@@ -103,6 +105,8 @@ A short-lived credential limits exposure but does not establish least privilege.
 | Dedicated agent principal with a managed credential | The agent can authenticate under its own name. | Other workloads must not be able to use the same material or assume the same role. |
 | Attested workload identity | [SPIRE](https://spiffe.io/docs/latest/spire-about/spire-concepts/) can attest a workload and deliver an SVID through its Workload API. | The workload boundary may contain several agents; attestation alone does not authorize a task. |
 | Credential broker or proxy | The agent requests an action while the broker holds the downstream secret. | The broker must bind its decision and logs to the agent's task authority and accountable owner. |
+
+SPIRE issues an SVID only to a workload that matches a registration entry, so its entries also serve as an inventory of registered workloads. [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses that property to refuse agents that were never registered, and records in each registry entry which agents share a workload identity.
 
 The [Wiz report on a Microsoft AI research repository](https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers) documents a broadly scoped storage access token exposed through a public link. It illustrates the consequence of credential scope and disclosure; it is not evidence of an autonomous agent compromise.
 

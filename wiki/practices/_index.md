@@ -6,7 +6,7 @@ updated: 2026-10-21
 tags: [domain, practices]
 status: seed
 subdomain_of: ""
-page_count: 25
+page_count: 26
 ---
 
 # Emerging Best Practices Index
@@ -39,6 +39,7 @@ Controls, playbooks, and patterns that are converging across vendors but not yet
 - [[rag-hardening|RAG Hardening]]
 - [[securing-agentic-coding|Securing Agentic Coding]]
 - [[securing-ai-talking-points|Securing AI: Talking Points]] — A four-point briefing outline for an AI security pitch / customer conversation.
+- [[shadow-agent-admission-control|Shadow Agent Admission Control]] — Shadow agent admission control makes registration the only route by which an AI agent obtains a working identity and a callable endpoint,...
 - [[supply-chain-security-for-agents|Supply Chain Security for Agentic AI]]
 - [[vulnops-implementation-roadmap|VulnOps Implementation Roadmap (Enterprise)]] — VulnOps names the function; this page is how an enterprise team builds it.
 

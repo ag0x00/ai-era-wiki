@@ -3,7 +3,7 @@ type: maturity-model
 title: "Agentic SOC CMM D4 Identity and Action Authority"
 address: c-000204
 created: 2026-06-03
-updated: 2026-06-23
+updated: 2026-10-06
 tags:
   - maturity-models
   - cmm
@@ -32,6 +32,15 @@ sources:
   - "[[agentic-soc-reference-architecture]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[plan-validate-execute]]"
+  - "[[agent-identity-architecture]]"
+  - "[[.raw/articles/google-cloud-iam-agent-identity-overview-2026-10-06.md]]"
+  - "[[.raw/articles/cncf-spiffe-spire-graduation-2026-10-06.md]]"
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/cncf-spiffe-spire-graduation-2026-10-06.md"
+  - ".raw/articles/google-cloud-iam-agent-identity-overview-2026-10-06.md"
+verified_findings: 1
+verified_note: "Status and L4 cost cells checked (Entra GA also against microsoft-entra-agent-id-whats-new-2026-09-18); levels unchanged. Open (low): the per-agent identity status cell gives no status for the AWS primitive its first column lists."
 ---
 
 # Agentic SOC CMM D4 Identity and Action Authority
@@ -53,7 +62,7 @@ The controls are identity primitives, policy engines, and approval workflows. Mo
 
 | Layer | What ships today | Status (mid-2026) |
 |---|---|---|
-| Per-agent identity | [[non-human-identity\|NHI]] platforms and workload identity: [[spiffe\|SPIFFE]]/SPIRE workload SVIDs; Microsoft Entra Agent ID; cloud agent-identity primitives (AWS, GCP). Each agent traces to a human owner field | Entra Agent ID and the hyperscaler agent-identity primitives are GA; SPIFFE/SPIRE is mature and open. See [[agent-identity-architecture\|AI Agent Identity Architecture]] |
+| Per-agent identity | [[non-human-identity\|NHI]] platforms and workload identity: [[spiffe\|SPIFFE]]/SPIRE workload SVIDs; Microsoft Entra Agent ID; cloud agent-identity primitives (AWS, GCP). Each agent traces to a human owner field | Entra Agent ID is GA, Google's SPIFFE-based Agent Identity states no launch stage in its IAM overview, and SPIFFE/SPIRE is a CNCF-graduated open-source project. See [[agent-identity-architecture\|AI Agent Identity Architecture]] |
 | Scoped, revocable authority | OAuth 2.1 token exchange and capability/scoped tokens; per-agent RBAC; time-bounded elevation (JIT) and revocation. Per-task capability tokens remain early-stage | OAuth 2.1 delegation is GA; per-task tokens are pre-GA, an OSS primitive only |
 | Policy-as-code enforcement | [[cedar\|Cedar]] and OPA/Rego at a [[oversight-layer\|policy decision point]] outside the model context; typed tool contracts; the [[plan-validate-execute\|plan-validate-execute]] gate ([[hooking-coding-agents-with-cedar-talk\|Cedar as a deterministic reference monitor]]) | GA; Cedar and OPA are production policy engines, applied to agent tool calls as a pattern rather than a single product |
 | Response-authority tiers | SOAR / response-platform approval workflows realize the auto / propose / approve / block tiers and pre-authorized containment with named blast-radius limits and a human override path | GA in mainstream SOAR; the per-action authority *tiering* over agents is configuration, not a shipped agent-governance feature |
@@ -97,7 +106,7 @@ The cost driver is configuration and change-control labor, not licensing. The id
 |---|---|---|---|
 | L2 | ~0 (agent identity within an existing tenant; SOAR approval workflow already licensed) | ~0.25 FTE to issue per-agent identities, assign owners, scope initial permissions, and set a coarse auto/approve split | Deterministic; low recurring cost once scoped |
 | L3 | ~0 to low (policy engine such as Cedar/OPA is open; response-platform tiering is configuration) | ~0.5 FTE recurring: author and maintain authority tiers and blast-radius limits, the decision-rights matrices, and the override/rollback paths | The labor is policy authorship and upkeep, not tool spend |
-| L4 | metrics/identity-attestation tooling where not already present | board/program metrics on authority coverage and override rates; SoD across agents; permission reaping; change-control review | The dominant cost is governance labor over a larger fleet |
+| L4 | metrics/identity-attestation tooling where not already present | Board and program metrics on authority coverage and override rates, segregation of duties across agents, permission reaping, and change-control review | The dominant cost is governance labor over a larger fleet |
 | L5 | per-task token tooling where it exists (pre-GA) | continuous tuning of tiers and limits from operational evidence, kept under audit | Highest where fleet size and blast radius are largest |
 
 D4 spend is identity and policy configuration labor, paid down once and maintained, not a licensing line. Because the enforcement is deterministic and exhaustively testable, the recurring cost is change-control discipline rather than the evaluation treadmill that drives the cost of the probabilistic domains.

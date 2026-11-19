@@ -3,7 +3,7 @@ type: paper
 title: "Entra Agent ID: Security and Governance Model"
 address: c-000132
 created: 2026-05-25
-updated: 2026-09-18
+updated: 2026-10-06
 tags:
   - papers
   - identity
@@ -29,14 +29,12 @@ sources:
   - "https://learn.microsoft.com/en-us/entra/id-governance/agent-id-governance-overview"
   - "[[.raw/articles/microsoft-entra-agent-id-security-for-ai-2026-05-25.md]]"
   - "[[.raw/articles/microsoft-entra-agent-id-governance-2026-05-25.md]]"
-verified: 2026-09-18
+verified: 2026-10-06
 verified_against:
   - ".raw/articles/microsoft-entra-agent-id-governance-2026-05-25.md"
   - ".raw/articles/microsoft-entra-agent-id-security-for-ai-2026-05-25.md"
-  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-conditional-access-for-agents-2026-09-18.md"
 verified_findings: 0
-verified_note: "Four dated notes checked against both the May 2026 clips and the current-Learn clips they cite; each separates the two. Narrator phrase removed from the taxonomy note."
+verified_note: "Custom-security-attribute deployment returned to the Conditional Access bullet the split had detached it from; Entra Internet Access licensing completed; agent-sprawl sentence rewritten without narrator."
 ---
 
 # Microsoft Entra Agent ID — Security & Governance Model (Microsoft Learn, 2026)
@@ -63,7 +61,8 @@ Agent ID introduces four directory objects: the **agent identity blueprint** (a 
 
 ## Zero Trust controls
 
-- **Conditional Access for agents** evaluates agent context and risk before granting access, across all three patterns; **Microsoft Managed Policies** provide a baseline that blocks high-risk agents; policies deploy at scale via custom security attributes. As of 2026-09-18, [current documentation](https://learn.microsoft.com/en-us/entra/agent-id/whats-new-agent-id) instead ships this as a named Conditional Access template, *Block access for high-risk agent identities*, that an administrator deploys rather than a policy Microsoft applies as a baseline; see [[microsoft-entra-agent-id|Microsoft Entra Agent ID]].
+- **Conditional Access for agents** evaluates agent context and risk before granting access, across all three patterns, and its policies deploy at scale through custom security attributes.
+- **Microsoft Managed Policies** provide a baseline that blocks high-risk agents. As of 2026-09-18, [current documentation](https://learn.microsoft.com/en-us/entra/agent-id/whats-new-agent-id) instead ships this as a named Conditional Access template, *Block access for high-risk agent identities*, that an administrator deploys rather than a policy Microsoft applies as a baseline; see [[microsoft-entra-agent-id|Microsoft Entra Agent ID]].
 - **ID Protection for agents** flags anomalous agent activity, derives agent identity risk (from user risk and the agent's own actions), feeds risk signals to Conditional Access, and supports automatic remediation of compromised agents.
 - **Global Secure Access** ("Secure Web and AI Gateway for agents") adds network-layer controls: logging agent network activity, web categorization for APIs and MCP servers, file-type upload/download policies, threat-intelligence blocking, and prompt-injection detection — the [[agentic-ai-security-cmm-d5-egress-network|D5 egress]] network leg.
 
@@ -77,11 +76,18 @@ The governance model treats agent identities like human identities:
 
 ## Agent sprawl
 
-The security doc names **agent sprawl** — the uncontrolled expansion of agents without visibility, management, or lifecycle controls — as the governance challenge that motivates the model. It emerges from business units creating agents without IT oversight (shadow AI), temporary agents that persist, and permissions that are never reviewed. This is Microsoft's framing of the same proliferation risk the wiki tracks as [[shadow-automation|shadow automation]], and the sponsor-plus-blueprint model is the proposed control.
+The security doc names **agent sprawl** — the uncontrolled expansion of agents without visibility, management, or lifecycle controls — as the governance challenge that motivates the model. It emerges from business units creating agents without IT oversight (shadow AI), temporary agents that persist, and permissions that are never reviewed. Agent sprawl is wider than [[shadow-automation|Shadow Automation]], which covers only the unsanctioned agents, and the sponsor-plus-blueprint model is Microsoft's proposed control for all three causes.
 
 ## Licensing
 
-The security features require Microsoft 365 E5, or these Entra SKUs individually: **Conditional Access for agents** needs Entra ID P1; **ID Protection for agents** needs Entra ID P2; **ID Governance for agents** needs Entra ID P1; **network controls** need Entra Internet Access (in the Entra Suite). Agent ID itself is available to all Entra customers; Agent 365 cross-M365 operation needs a per-user Agent 365 license. For an E5 incumbent the security and governance features carry near-zero incremental licensing — consistent with the [[agentic-ai-security-cmm-d2-identity|D2]] cost finding. As of 2026-09-18, [current documentation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/agent-id) states that Conditional Access for agents also requires a per-user [[microsoft-agent-365|Microsoft Agent 365]] license, with enforcement of that requirement described as forthcoming; that pending change would withdraw the near-zero-incremental-cost finding above for an E5 incumbent who has not already licensed Agent 365. See [[microsoft-entra-agent-id|Microsoft Entra Agent ID]] for the current requirement.
+The security features require Microsoft 365 E5, or these Entra SKUs individually:
+
+- **Conditional Access for agents** needs Entra ID P1.
+- **ID Protection for agents** needs Entra ID P2.
+- **ID Governance for agents** needs Entra ID P1.
+- **Network controls** need Entra Internet Access, included in the Entra Suite or licensed separately.
+
+Agent ID itself is available to all Entra customers; Agent 365 cross-M365 operation needs a per-user Agent 365 license. For an E5 incumbent the security and governance features carry near-zero incremental licensing — consistent with the [[agentic-ai-security-cmm-d2-identity|D2]] cost finding. As of 2026-09-18, [current documentation](https://learn.microsoft.com/en-us/entra/identity/conditional-access/agent-id) states that Conditional Access for agents also requires a per-user [[microsoft-agent-365|Microsoft Agent 365]] license, with enforcement of that requirement described as forthcoming; that pending change would withdraw the near-zero-incremental-cost finding above for an E5 incumbent who has not already licensed Agent 365. See [[microsoft-entra-agent-id|Microsoft Entra Agent ID]] for the current requirement.
 
 ## Cross-product reach
 

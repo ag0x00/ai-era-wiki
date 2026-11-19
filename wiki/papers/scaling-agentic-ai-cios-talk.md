@@ -2,7 +2,7 @@
 type: talk
 title: "Scaling Agentic AI: A Leadership Guide for CIOs"
 created: 2026-05-01
-updated: 2026-05-01
+updated: 2026-10-06
 tags:
   - papers
   - talks
@@ -41,6 +41,11 @@ related:
   - "[[gartner]]"
 sources:
   - "[[.raw/talks/scaling-agentic-ai-cios-2026-05-01.md]]"
+verified: 2026-10-06
+verified_against:
+  - ".raw/talks/scaling-agentic-ai-cios-2026-05-01.md"
+verified_findings: 0
+verified_note: "Callout-to-prose conversions, Cunningham attribution and shadow-AI table row checked against the transcript; Ward Cunningham fact checked on Wikipedia; rest of page not re-read."
 ---
 
 # Scaling Agentic AI: A Leadership Guide for CIOs
@@ -77,8 +82,7 @@ The webinar is one of [[gartner|Gartner]]'s public-facing CIO sessions, streamed
 
 Option B is also already in motion: Gartner data shows **AI investment jumped 52% outside the IT budget last year**. The talk's argument: *delaying option A is pretending option B isn't already the default*.
 
-> [!note] Time pressure: the human-parity line
-> Brandon cites Gartner research showing AI crossed the **[[human-parity-line|human parity line]]** in December 2025 — the threshold at which human judges prefer AI's output as often as they do industry professionals' across 1,320 tasks in 42 job roles spanning the nine industries that contribute most to US GDP. This is *the* time-pressure argument the talk uses to justify acting now rather than later.
+**The human-parity line sets the time pressure.** Brandon cites Gartner research showing AI crossed the **[[human-parity-line|human parity line]]** in December 2025 — the threshold at which human judges prefer AI's output as often as they do industry professionals' across 1,320 tasks in 42 job roles spanning the nine industries that contribute most to US GDP. This is *the* time-pressure argument the talk uses to justify acting now rather than later.
 
 ## The five-CXO playbook (the heart of the talk)
 
@@ -90,8 +94,7 @@ CFOs care about **cost optimization across the enterprise**. The lead-in: 52% AI
 2. Set **token-budget thresholds per use case** to prevent runaway spend.
 3. Use chargeback visibility to identify **multi-agent system harmonization** opportunities.
 
-> [!example] Multi-agent harmonization (Brandon's example)
-> Marketing deploys agentic AI for trade-promotion / digital-marketing / experience-management automation. Supply chain deploys agentic AI for demand-forecasting / inventory management. **Without harmonization, marketing creates demand shockwaves the supply chain cannot absorb → stockouts, dissatisfied customers.** Visibility from the chargeback layer surfaces the coupling. This is the operating-model analogue of the security-architecture concern about cross-agent emergent behavior.
+**Brandon illustrates harmonization with a hypothetical.** Marketing uses agentic AI to automate trade promotion, digital marketing and experience management. Supply chain uses agentic AI for demand forecasting and inventory management. **Without harmonization, marketing can create demand shockwaves the supply chain cannot absorb → stockouts, dissatisfied customers.** Visibility from the chargeback layer surfaces the coupling. This is the operating-model analogue of the security-architecture concern about cross-agent emergent behavior.
 
 This play is the conceptual seed of [[agent-token-chargeback|Agent Token Chargeback]].
 
@@ -149,10 +152,11 @@ Brandon's plays:
 - **Ring-fence time for learning** — protect 1 hour/week × 12 weeks for AI-literacy COPs.
 - **Distribute the kill switch** to every team member ("[[distributed-kill-switch|one-vote veto]]"), not just the CIO.
 
-> [!example] CHRO case studies cited
-> - **Vizient** — empathy maps for Gen-AI-era job redesign; engaged employees in co-creating the future-state journey, leveraging the **Cunningham effect** (post slightly the wrong answer → engagement spikes; named for Wikipedia co-founder John Cunningham, though Brandon attributes it).
-> - **Minter Ellison** (Australian law firm) — ring-fenced 1h/week × 12 weeks for AI-literacy COPs; outcomes good enough that the firm uses it as a talent-attraction story on its website.
-> - **Luyan Industries** (China, automotive electronics) — gave **every team member a "one-vote veto"**: any employee can stop a project or agentic workflow in its tracks. Source for [[distributed-kill-switch|Distributed Kill Switch]].
+Brandon gives two case studies for the CHRO play and adds a third in the Q&A:
+
+- **Vizient** — empathy maps for Gen-AI-era job redesign; engaged employees in co-creating the future-state journey, leveraging the **Cunningham effect** (post slightly the wrong answer → engagement spikes). Brandon credits "John Cunningham, the founder of Wikipedia", but the adage, [Cunningham's Law](https://en.wikipedia.org/wiki/Ward_Cunningham#Cunningham%27s_Law), is named for Ward Cunningham, inventor of the wiki.
+- **Minter Ellison** (Australian law firm) — ring-fenced 1h/week × 12 weeks for AI-literacy COPs; outcomes good enough that the firm uses it as a talent-attraction story on its website.
+- **Luyan Industries** (China, automotive electronics) — gave **every team member a "one-vote veto"**: any employee can stop a project or agentic workflow in its tracks. Source for [[distributed-kill-switch|Distributed Kill Switch]].
 
 ## Closing synthesis
 
@@ -189,7 +193,7 @@ Across all five plays, the common move is to **push accountability and ownership
 | [[guardian-agents-market-guide\|Gartner Market Guide for Guardian Agents (Feb 2026)]] | Same publisher; this talk is the *organizational* counterpart to the controls-side Market Guide |
 | [[guardian-agent-metagovernance\|Guardian Agent Metagovernance (Guards for the Guardians)]] | This talk fills the *organizational metagovernance* layer the Market Guide left implicit |
 | [[agent-catalog\|AI Agent Catalog]] | Sharpens the catalog from security inventory primitive → procurement coordination primitive |
-| [[shadow-ai\|Shadow AI]] / [[shadow-automation\|Shadow Automation]] | Adds the 67%-of-employees-use-personal-AI stat + comply-or-explain framing |
+| [[shadow-ai\|Shadow AI]] / [[shadow-automation\|Shadow Automation]] | The 67% personal-AI figure measures shadow AI; Shadow Automation adopts the comply-or-explain posture and the procurement chokepoint |
 | [[decision-rights\|Decision Rights for AI Agents]] | The council *is* the cross-functional decision-rights body for agentic AI portfolio decisions |
 | [[least-agency-principle\|Least Agency Principle]] | The "distributed kill switch" / one-vote-veto pattern operationalizes block-tier decisions across non-IT staff |
 | [[ai-trism\|Gartner AI TRiSM]] | Talk fits squarely in TRiSM's "operationalize" guidance (the part the standards have least to say about) |

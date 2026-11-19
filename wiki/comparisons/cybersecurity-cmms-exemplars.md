@@ -2,7 +2,7 @@
 type: comparison
 title: "Cybersecurity CMM Exemplars and Design Lessons"
 created: 2026-04-30
-updated: 2026-06-22
+updated: 2026-10-06
 tags:
   - comparisons
   - maturity-models
@@ -24,6 +24,12 @@ sources:
   - "https://csrc.nist.gov/Projects/cybersecurity-framework"
   - "https://dodcio.defense.gov/CMMC/"
   - "https://www.sei.cmu.edu/our-work/cybermaturity/"
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/nist-nccoe-software-ai-agent-identity-authorization-concept-paper-2026-10-06.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+verified_findings: 1
+verified_note: "Only the NCCoE and CoSAI citation line checked; open: exemplar facts (BSIMM 130 firms, AIUC-1, ISO 42001 bodies) rest on homepage sources, a wiki-conform ask."
 ---
 
 # Cybersecurity CMM Exemplars and Design Lessons
@@ -113,7 +119,7 @@ CSF 2.0 uses **4 Tiers** (not levels): Partial (1) → Risk Informed (2) → Rep
 
 **Adoption signal:** voluntary but pervasive — referenced in U.S. federal acquisitions, state AI laws, and used as the default control catalogue for U.S. enterprise security programs.
 
-**Design lesson:** **Govern at the center** is the right architectural move for an AI-CMM in 2026. Agentic AI introduces new identity, accountability, and oversight requirements (NIST CAISI Concept Paper, Feb 2026; CoSAI Principles April 2026) that don't fit neatly into any IPDRR phase — they cut across all of them.
+**Design lesson:** **Govern at the center** is the right architectural move for an AI-CMM in 2026. Agentic AI introduces new identity, accountability, and oversight requirements ([NIST NCCoE concept paper](https://www.nccoe.nist.gov/sites/default/files/2026-02/accelerating-the-adoption-of-software-and-ai-agent-identity-and-authorization-concept-paper.pdf), Feb 2026; CoSAI Principles for Secure-by-Design Agentic Systems, Feb 2026) that don't fit neatly into any IPDRR phase — they cut across all of them.
 
 ## Comparative structure
 

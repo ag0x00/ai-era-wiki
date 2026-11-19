@@ -2,7 +2,7 @@
 type: framework
 title: "CSA MAESTRO / CSA Agentic Trust Framework"
 created: 2026-04-30
-updated: 2026-09-16
+updated: 2026-10-06
 origin: aggregated
 tags:
   - frameworks
@@ -35,6 +35,7 @@ related:
   - "[[threat-modeling-for-ai]]"
   - "[[threat-taxonomy-reconciliation]]"
   - "[[precize-agentic-ai-top10]]"
+  - "[[agent-message-structure-manipulation]]"
 primary_documents:
   - title: "Agentic AI Threat Modeling Framework: MAESTRO"
     url: "https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro"
@@ -52,20 +53,19 @@ primary_documents:
     scope_in_wiki: "Element definitions; maturity-level autonomy/oversight table; demotion rule"
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
-verified: 2026-09-16
-verified_against:
-  - ".raw/articles/owasp-genai-crosswalk-2026-09-16.md"
-verified_findings: 2
-verified_note: "Incident-layer paragraph and the retired first-unified-mapping claim; removed an unsubstantiated absence claim about CSA material and an unsourced CSA review-process assertion."
+verified: 2026-10-06
+verified_against: []
+verified_findings: 0
+verified_note: "Whole page read; the MAESTRO absence bullet was corrected against the live CSA MAESTRO blog (Multi-Agent Pattern, Communication Channel Attack), re-read 2026-10-06; no archived copy exists."
 ---
 
 # CSA MAESTRO / CSA Agentic Trust Framework
 
-This page covers two Cloud Security Alliance agentic-security publications. **MAESTRO** (Multi-Agent Environment, Security, Threat, Risk, and Outcome)[^maestro] is a seven-layer threat-modeling framework published February 6, 2025; it partitions an agentic system into layers and enumerates threats per layer and across layers. The **CSA Agentic Trust Framework** (ATF v1.0, February 2, 2026)[^atf] applies Zero Trust governance to autonomous AI agents: five core elements answer five trust questions, four maturity levels grade earned autonomy, and five promotion gates govern advancement between levels. MAESTRO models threats; it defines no controls. ATF governs agent autonomy through levels and gates; it does not grade controls the way a maturity model does. The structure, layer names, and gate names below are verified against the primary sources by [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 standards review]].
+This page covers two Cloud Security Alliance agentic-security publications. **MAESTRO** (Multi-Agent Environment, Security, Threat, Risk, and Outcome)[^maestro] is a seven-layer threat-modeling framework published February 6, 2025. It partitions an agentic system into layers and enumerates threats per layer and across layers. The **CSA Agentic Trust Framework** (ATF v1.0, February 2, 2026)[^atf] applies Zero Trust governance to autonomous AI agents: five core elements answer five trust questions, four maturity levels grade earned autonomy, and five promotion gates govern advancement between levels. MAESTRO models threats and defines no controls. ATF governs agent autonomy through levels and gates and does not grade controls the way a maturity model does. The structure, layer names, and gate names below are verified against the primary sources by [[standards-review-csa-maestro-atf-2026-Q2|the 2026-Q2 standards review]].
 
 **CSAI Foundation** (March 23, 2026): a 501(c)(3) spun from CSA with six strategic programs including an AI Risk Observatory and "Valid-AI-ted" AI-driven audit engine. These are organizational initiatives outside MAESTRO and ATF.
 
-The [[precize-agentic-ai-top10|Precize Top 10 for Agentic AI Vulnerability]] ([first published February 2025](https://github.com/precize/Agentic-AI-Top10-Vulnerability), the same month as MAESTRO) states its own purpose as "the core for OWASP and CSA Red teaming work" — a claim recorded, with its single-author-group limits, on that page. No citation from CSA acknowledging the repository as an input has been located in this pass; the temporal proximity to MAESTRO's own February 2025 publication is consistent with the claim but does not establish it.
+The [[precize-agentic-ai-top10|Precize Top 10 for Agentic AI Vulnerability]] ([first published February 2025](https://github.com/precize/Agentic-AI-Top10-Vulnerability), the same month as MAESTRO) states its own purpose as "the core for OWASP and CSA Red teaming work" — a claim recorded, with its single-author-group limits, on that page. No CSA citation acknowledging the repository as an input has been located; the temporal proximity to MAESTRO's own February 2025 publication is consistent with the claim but does not establish it.
 
 ## MAESTRO: Seven-Layer Threat Model
 
@@ -144,6 +144,7 @@ This table scores ATF against its five **elements** rather than the promotion ga
 
 - **Newest framework**: limited operational validation
 - Supply chain (ASI04) has no coverage in either MAESTRO (named as a cross-layer threat only) or ATF
+- MAESTRO's multi-agent pattern names a communication channel attack, interception of messages between agents and injection of malicious data into the channel.[^maestro] It names no threat to tool responses or single-agent flows, both of which [[agent-message-structure-manipulation|Agent Message Structure Manipulation]] includes as the OWASP AI Exchange defines it
 - Promotion gates name criteria categories without measurable thresholds
 - No certifiable standard, guidance only
 - The AI Controls Matrix expansion is a roadmap item awaiting delivery
@@ -153,13 +154,20 @@ This table scores ATF against its five **elements** rather than the promotion ga
 - [[csa|Cloud Security Alliance]] (publisher)
 - [[owasp-agentic-ai-top-10|OWASP Top 10 for Agentic Applications (ASI Top 10)]] — risk taxonomy that ATF is designed to govern
 - [[nist-ai-rmf|NIST AI Risk Management Framework (AI RMF)]] — governance complement; NIST RMF provides the federal baseline, ATF addresses agentic specifics
-- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — MAESTRO Layer 2 (Data Operations) maps to **D6**; Layer 1 (Foundation Models) and Layer 3 (Agent Frameworks) map to **D4**; Layer 4 (Deployment and Infrastructure) and Layer 7 (Agent Ecosystem) map to **D5**; Layer 5 (Evaluation and Observability) maps to **D7**; the Layer 3 supply-chain threat maps to **D8**. ATF maps through its five **elements**: Identity to D2, Behavior to D4/D7, Data Governance to D6, Segmentation to D3/D5, and Incident Response to D9. The four maturity levels and five promotion gates inform **D3** (gates name criteria categories without thresholds, see CMM)
+- [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]] — MAESTRO layers and ATF elements map to CMM domains:
+  - MAESTRO Layer 2 (Data Operations) maps to **D6**.
+  - Layer 1 (Foundation Models) and Layer 3 (Agent Frameworks) map to **D4**.
+  - Layer 4 (Deployment and Infrastructure) and Layer 7 (Agent Ecosystem) map to **D5**.
+  - Layer 5 (Evaluation and Observability) maps to **D7**.
+  - The Layer 3 supply-chain threat maps to **D8**.
+  - ATF maps through its five **elements**: Identity to D2, Behavior to D4/D7, Data Governance to D6, Segmentation to D3/D5, and Incident Response to D9.
+  - The four ATF maturity levels and five promotion gates inform **D3** (gates name criteria categories without thresholds, see CMM).
 - [[standards-review-csa-maestro-atf-2026-Q2|CSA MAESTRO and ATF Standards Review]] — primary-source verification of layer/element/gate names and the gate-to-element correction
 - [[threat-modeling-for-ai|Threat Modeling for AI]] — uses MAESTRO as the layered-decomposition lens; [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] maps the seven layers alongside the ASI, T-code, and ATLAS taxonomies
 
 ## Notes
 
-[^maestro]: [CSA — Agentic AI Threat Modeling Framework: MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro), retrieved 2026-06-22. Acronym: Multi-Agent Environment, Security, Threat, Risk, and Outcome. Layers: L1 Foundation Models, L2 Data Operations, L3 Agent Frameworks, L4 Deployment and Infrastructure, L5 Evaluation and Observability, L6 Security and Compliance, L7 Agent Ecosystem.
+[^maestro]: [CSA — Agentic AI Threat Modeling Framework: MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro), retrieved 2026-06-22. Acronym: Multi-Agent Environment, Security, Threat, Risk, and Outcome. Layers: L1 Foundation Models, L2 Data Operations, L3 Agent Frameworks, L4 Deployment and Infrastructure, L5 Evaluation and Observability, L6 Security and Compliance, L7 Agent Ecosystem. Multi-Agent Pattern, re-read 2026-10-06: "Communication Channel Attack: An attacker intercepts messages between AI agents", with an example scenario in which an attacker "injects malicious data into the communication channel".
 [^atf]: [CSA — The Agentic Trust Framework: Zero Trust Governance for AI Agents](https://cloudsecurityalliance.org/blog/2026/02/02/the-agentic-trust-framework-zero-trust-governance-for-ai-agents), retrieved 2026-06-22. Five elements: Identity, Behavior, Data Governance, Segmentation, Incident Response. Five gates: Performance, Security Validation, Business Value, Incident Record, Governance Sign-off. Four levels: Intern, Junior, Senior, Principal.
 [^atfgh]: [agentic-trust-framework — massivescale-ai (GitHub)](https://github.com/massivescale-ai/agentic-trust-framework), retrieved 2026-06-22. NIST SP 800-207 Zero Trust basis; demotion-to-Intern on critical incident.
 

@@ -5,7 +5,7 @@ vendor: "[[crowdstrike|CrowdStrike]]"
 title: "Falcon Guardian"
 address: c-000347
 created: 2026-09-10
-updated: 2026-09-10
+updated: 2026-10-06
 tags:
   - products
   - endpoint
@@ -32,12 +32,17 @@ related:
   - "[[guardian-agent]]"
   - "[[nhi-governance-for-agents]]"
   - "[[agent-observability]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-unveils-falcon-guardian-ai-agent-security/"
   - "https://www.crowdstrike.com/en-us/blog/falcon-guardian-defines-next-generation-of-ai-security/"
   - "https://ir.crowdstrike.com/news-releases/news-release-details/crowdstrike-unveils-falcon-guardian-secure-ai-agents-where-they/"
   - "https://nand-research.com/crowdstrike-falcon-guardian-ai-agent-security-at-the-endpoint/"
   - "https://forkast.news/crowdstrike-falcon-guardian-makes-the-endpoint-the-enforcement-layer-for-ai-agents/"
+verified: 2026-10-06
+verified_against: []
+verified_findings: 1
+verified_note: "Diff-scoped 2026-10-06 to §Availability and forthcoming components: live-fetched CrowdStrike product blog and NAND Research (not archived); AI gateway now dated pre-beta, GA Q4 2026 per the blog, NAND gives no date. Earlier full read 2026-10-06 stands. Open: the redact/encrypt/block data control appears in none of the sources read (IR release unreachable)."
 ---
 
 # Falcon Guardian
@@ -46,11 +51,11 @@ sources:
 
 ## Identity and role
 
-[[crowdstrike|CrowdStrike]] announced Falcon Guardian on September 1, 2026 at Fal.Con 2026 in Las Vegas, its AI Detection and Response (AIDR) product for securing autonomous AI agents at runtime. It runs as an extension of the existing Falcon sensor on Windows, macOS, and Linux endpoints, so a customer already running Falcon needs no new agent deployment to adopt it. Falcon Guardian supersedes the prior Falcon AIDR branding as CrowdStrike's current agent-security product.
+[[crowdstrike|CrowdStrike]] announced Falcon Guardian on September 1, 2026 at Fal.Con 2026 in Las Vegas, its AI Detection and Response (AIDR) product for securing autonomous AI agents at runtime. It runs as an extension of the existing Falcon sensor, so a customer already running Falcon needs no new agent deployment to adopt it. The press release and NAND Research name Windows and macOS endpoints for agent discovery, and the product blog names Windows, macOS and Linux. Falcon Guardian supersedes the prior Falcon AIDR branding as CrowdStrike's current agent-security product.
 
 ## Discovery and runtime detection
 
-Falcon Guardian discovers known and [[shadow-automation|shadow]] AI agents across managed endpoints, tracking each agent's deployment source, user identity, and security status — building the kind of endpoint-resident [[agent-catalog|agent inventory]] that governance programs otherwise assemble by hand. It establishes causal chains linking a user prompt to the agent's skill use, tool calls, and [[mcp-security|MCP]] server invocations, then traces those chains through to the downstream system actions the agent executes on the user's behalf. On top of that correlation it runs runtime threat detection — prompt injection and other attacks on the agent, and malicious agent behavior — reconstructing the full execution chain and the blast radius of a detected event, and applies runtime controls to redact, encrypt, or block sensitive data identified in an agent's interactions before it leaves the endpoint. This causal, session-level reconstruction places Falcon Guardian in the [[agent-observability|agent observability]] practice area, applied specifically to the endpoint vantage point.
+Falcon Guardian discovers known and [[shadow-automation|shadow]] AI agents across managed endpoints, tracking each agent's deployment source, user identity, and security status — building the kind of endpoint-resident [[agent-catalog|agent inventory]] that governance programs otherwise assemble by hand. [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses endpoint discovery of this kind as a reconciliation source, because the sensor observes an agent whether or not its owner registered it. Falcon Guardian establishes causal chains linking a user prompt to the agent's skill use, tool calls, and [[mcp-security|MCP]] server invocations, then traces those chains through to the downstream system actions the agent executes on the user's behalf. On top of that correlation it runs runtime threat detection — prompt injection and other attacks on the agent, and malicious agent behavior — reconstructing the full execution chain and the blast radius of a detected event, and applies runtime controls to redact, encrypt, or block sensitive data identified in an agent's interactions before it leaves the endpoint. This causal, session-level reconstruction places Falcon Guardian in the [[agent-observability|agent observability]] practice area, applied specifically to the endpoint vantage point.
 
 CrowdStrike claims 99% detection efficacy against prompt attacks at a response latency under 100 milliseconds. Both figures reach this page through NAND Research's write-up of the launch, which reports them as CrowdStrike's claim rather than as its own measurement; neither the press release nor the product blog states either number, and no methodology or bypass corpus accompanies them.[^nand]
 
@@ -60,7 +65,7 @@ Falcon Guardian lets security teams define which AI agent types may run on a man
 
 ## Availability and forthcoming components
 
-CrowdStrike has not disclosed a general availability date or pricing for Falcon Guardian. Two components are announced but not yet shipping. The product blog says Falcon Guardian "will soon include a native AI gateway capability, offering a new centralized control point for enterprise AI traffic," and attaches no date; NAND Research lists the same gateway among the capabilities that are forthcoming rather than available at launch, also without a date. Falcon Complete for Guardian, a 24/7 managed detection and response service for AI agents, is stated for later in Q3 2026.
+NAND Research reports that CrowdStrike disclosed no pricing and no general availability date for Falcon Guardian's endpoint capabilities. Two components are announced but not yet shipping. The product blog says Falcon Guardian "will soon include a native AI gateway capability, offering a new centralized control point for enterprise AI traffic," and dates it: the gateway "is currently pre-beta and will go to GA next quarter (Q4)", which places general availability in Q4 2026. NAND Research lists the same gateway among the components not available at launch and gives it no date. Falcon Complete for Guardian, a 24/7 managed detection and response service for AI agents, is stated for later in Q3 2026.
 
 ## Notable statements
 

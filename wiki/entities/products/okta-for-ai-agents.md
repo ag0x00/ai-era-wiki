@@ -4,7 +4,7 @@ entity_type: product
 title: "Okta for AI Agents"
 homepage: "https://www.okta.com"
 created: 2026-05-03
-updated: 2026-09-23
+updated: 2026-10-06
 tags:
   - products
   - identity
@@ -29,14 +29,16 @@ related:
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentic-ai-security-ra-gaps]]"
   - "[[agent-catalog]]"
+  - "[[shadow-agent-admission-control]]"
+  - "[[shadow-automation]]"
 sources:
   - "https://www.okta.com/resources/whitepaper/managing-ai-agents-with-okta/"
   - "https://www.okta.com/blog/ai/okta-for-ai-agents-general-availability/"
   - "https://auth0.com/blog/auth0-for-ai-agents-generally-available/"
-verified: 2026-09-18
+verified: 2026-10-06
 verified_against: []
-verified_findings: 1
-verified_note: "Read against the Okta GA announcement of 2026-04-29 cited in the body and the vault's own correction history in wiki/meta/log-archive.md; no archived document opened. Removed the residual clause naming Auth0 as the only GA product in the line. Open: agent-catalog and CMM D2 still carry the retracted Early Access / FY27 status"
+verified_findings: 0
+verified_note: "Read the live Okta GA blog (2026-04-29) on 2026-10-06; Agent Discovery row narrowed to what the blog states: import of known agents and shadow-agent detection from OAuth consent grants in managed Chrome browsers."
 ---
 
 # Okta for AI Agents
@@ -56,9 +58,12 @@ Okta for AI Agents extends Okta's existing IAM platform (Universal Directory, Wo
 | **Agent enrollment and registration** | Agents are registered in Okta's Universal Directory with typed metadata: agent name, owning human principal, deployment context, tool scopes |
 | **OAuth 2.1 delegation** | Agents obtain scoped, short-lived tokens via standard OAuth 2.1 flows; human-authorized delegation with scope constraints |
 | **Lifecycle management** | Create, suspend, rotate, and revoke agent identities programmatically; integrates with provisioning workflows |
-| **Agent discovery** | Okta Agent Discovery identifies and catalogs agents running in an environment, including shadow agents not explicitly registered |
+| **Agent import** | Known agents are imported from configured apps, the Okta Integration Network and prebuilt platform integrations[^okta-ga] |
+| **Shadow agent detection** | New OAuth consent grants in managed Chrome browsers, enriched with user context; other browsers announced as forthcoming[^okta-ga] |
 | **NHI governance** | Extends Okta's NHI security controls (credential rotation, access reviews, orphaned-identity detection) to agent identities |
 | **Policy integration** | Integrates with Okta's policy engine for adaptive MFA step-up, risk-based access decisions, and least-privilege enforcement |
+
+Because shadow-agent detection reads OAuth consent grants, it finds [[shadow-automation|Shadow Automation]] that acts with a user's delegated access from a managed browser. [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses it as an identity-provider source: the practice compares the agents Okta reports with registry entries and issued workload identities, and closes each unmatched agent by registration or removal.
 
 ## Relation to the RA Identity plane
 

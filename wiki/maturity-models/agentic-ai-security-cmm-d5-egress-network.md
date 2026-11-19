@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D5: Egress and Network"
 address: c-000127
 created: 2026-05-25
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - maturity-models
   - cmm
@@ -51,6 +51,7 @@ related:
   - "[[claude-cowork]]"
   - "[[agentic-ai-security-reference-architecture]]"
   - "[[cmm-stress-test-canadian-fi-google-2026-09]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization
   - https://a2a-protocol.org/latest/specification
@@ -60,13 +61,12 @@ sources:
   - https://owaspai.org/go/oversight/
   - https://owaspai.org/go/supplychainmanage/
   - https://owaspai.org/go/testing/
-verified: 2026-09-29
+  - "[[.raw/articles/google-cloud-gemini-enterprise-register-a2a-agent-2026-10-06.md]]"
+verified: 2026-10-06
 verified_against:
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
-  - ".raw/papers/owasp-ai-exchange-runtime-appsec-threats-2026-08-18.md"
-  - ".raw/papers/owasp-ai-exchange-testing-2026-08-19.md"
+  - ".raw/articles/google-cloud-gemini-enterprise-register-a2a-agent-2026-10-06.md"
 verified_findings: 0
-verified_note: "Final source recheck after approved rewrite; MCP and A2A normative text checked live; no open findings."
+verified_note: "Diff-scoped: Implementation-drivers Agent Gateway bypass sentence; no level row or criterion changed; rest of page not re-read."
 ---
 
 # CMM D5: Egress and Network
@@ -175,7 +175,7 @@ D5-GATEWAY-AUTHZ needs the calling identity graded in D2. D5-TASK-EGRESS also ne
 
 ## Implementation and effort drivers
 
-Start with the route inventory and transitive reach. An agent-aware gateway is useful only if model, tool, child-process, and internal paths cannot bypass it. The operator then tests from each workload position, including a local MCP server process. Per-agent ceilings and tool-scoped credentials add counter and issuance operations. MCP definition approval and vulnerability response add continuing inventory and review work. L5 adds direct-route refusal, task expiry, relay controls, and reconciliation only for applicable topologies. An agent-adjacent proxy can implement these outcomes, but deployment of a sidecar beside every agent is not a maturity condition. Strong network containment still permits a harmful action at an approved destination. D3 grades its authorization and D6 grades the data it carries.
+Start with the route inventory and transitive reach. An agent-aware gateway is useful only if model, tool, child-process, and internal paths cannot bypass it. A registration route can bypass it as well: [Gemini Enterprise](https://docs.cloud.google.com/gemini/enterprise/docs/register-and-manage-an-a2a-agent) states that traffic to an A2A agent registered there from its Card, a Preview feature, does not go through Agent Gateway. [[shadow-agent-admission-control|Shadow Agent Admission Control]] tests each registered route and issues the peer identity that D5-A2A-AUTH checks only to registered agents. The operator then tests from each workload position, including a local MCP server process. Per-agent ceilings and tool-scoped credentials add counter and issuance operations. MCP definition approval and vulnerability response add continuing inventory and review work. L5 adds direct-route refusal, task expiry, relay controls, and reconciliation only for applicable topologies. An agent-adjacent proxy can implement these outcomes, but deployment of a sidecar beside every agent is not a maturity condition. Strong network containment still permits a harmful action at an approved destination. D3 grades its authorization and D6 grades the data it carries.
 
 ## Sources and material limits
 

@@ -2,7 +2,7 @@
 type: paper
 title: "AI Security Standards: Agentic Threats Outpace Frameworks"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - papers
   - ai-security
@@ -46,6 +46,12 @@ related:
 sources:
   - "[[.raw/papers/ai-security-standards-in-q1-2026.md]]"
   - "https://www.iso.org/standard/44546.html"
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/nist-nccoe-software-ai-agent-identity-authorization-concept-paper-2026-10-06.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
+verified_findings: 0
+verified_note: "CAISI initiative launch and concept-paper attribution corrected against source and NCCoE capture; other sections spot-checked."
 ---
 
 # AI Security Standards in Q1 2026: Agentic Threats Outpace Frameworks
@@ -54,7 +60,7 @@ sources:
 
 ## Key Claim
 
-Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MITRE ATLAS 84 techniques, Microsoft ZT4AI 700+ controls, CoSAI MCP taxonomy — but **enforcement remains entirely absent**. No framework mandates platform-level security enforcement, verifiable agent identity, or a validated AI-BOM. Enterprises that are fully compliant with every published standard can still rely entirely on bypassable prompt-level guardrails. The open-source ecosystem (LlamaFirewall, AgentGateway, credential proxies) has answered questions that standards bodies have not yet asked.
+Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MITRE ATLAS 84 techniques, Microsoft ZT4AI 700+ controls, CoSAI MCP taxonomy — but **enforcement remains absent**. No framework mandates platform-level security enforcement, verifiable agent identity, or a validated AI-BOM. Enterprises that are fully compliant with every published standard can still rely entirely on bypassable prompt-level guardrails. The open-source ecosystem (LlamaFirewall, AgentGateway, credential proxies) has answered questions that standards bodies have not yet asked.
 
 ## Methodology
 
@@ -67,7 +73,7 @@ Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MIT
 
 ### Framework activity (Q1 2026)
 
-- **NIST** published AI 800-3, AI 800-4, IR 8605A (COSAiS annotated outline), and launched **CAISI** (February 17, 2026) — the first U.S. government program explicitly targeting agentic AI standards. AI RMF 1.0 remains unchanged; no 2.0 draft exists.
+- **NIST** published AI 800-3, AI 800-4, IR 8605A (COSAiS annotated outline), and, through its Center for AI Standards and Innovation (CAISI), launched the **AI Agent Standards Initiative** (February 17, 2026) — the first U.S. government program explicitly targeting agentic AI standards. AI RMF 1.0 remains unchanged; no 2.0 draft exists.
 - **MITRE ATLAS** jumped from 66 to **84 techniques across 16 tactics** in two quarterly updates (v5.3.0 January, v5.4.0 February). New agentic techniques include "Publish Poisoned AI Agent Tool" and "Escape to Host."
 - **OWASP** published the [[owasp-agentic-ai-top-10|Agentic Applications Top 10]] (ASI Top 10, December 2025), AIVSS v0.8 (March 19, 2026 — extends CVSS 4.0 with agentic amplification factors), and a Practical Guide for Secure MCP Server Development.
 - **CoSAI** published Model Context Protocol (MCP) Security (2026-01-20), Agentic Identity and Access Management (2026-04-17), Principles for Secure-by-Design Agentic Systems, and onboarded Meta as a Premier Sponsor. Now 40+ industry partners. The deliverable dates and titles were reconciled in [[standards-review-saif-cosai-2026-Q2|the 2026-Q2 SAIF/CoSAI standards review]], which also flagged the "40 threats / 12 categories" MCP figure as not re-verifiable.
@@ -111,7 +117,7 @@ Q1 2026 delivered unprecedented framework productivity — OWASP ASI Top 10, MIT
 
 1. **Platform-level vs. prompt-level enforcement** — The most critical architectural blind spot. No framework distinguishes or mandates enforcement at the platform layer (below the model). Prompt-level guardrails are definitionally bypassable by prompt injection. Production implementations (Google ADK `before_model_callback`, LlamaFirewall, AgentGateway) demonstrate the pattern; no standard requires it.
 
-2. **Agent identity** — Only 22% of organizations treat AI agents as independent, identity-bearing entities (Gravitee, February 2026). Machine-to-human identity ratio is 82:1 (CyberArk, 2025). No published standard defines minimum identity requirements. NIST CAISI's Agent Identity and Authorization Concept Paper acknowledges the gap but has no shipped guidance. Okta for AI Agents GA: April 30, 2026.
+2. **Agent identity** — Only 22% of organizations treat AI agents as independent, identity-bearing entities (Gravitee, February 2026). Machine-to-human identity ratio is 82:1 (CyberArk, 2025). No published standard defines minimum identity requirements. The NIST concept paper on software and AI agent identity and authorization, which the source attributes to the CAISI program and which [NCCoE published](https://www.nccoe.nist.gov/sites/default/files/2026-02/accelerating-the-adoption-of-software-and-ai-agent-identity-and-authorization-concept-paper.pdf), acknowledges the gap but has no shipped guidance. Okta for AI Agents GA: April 30, 2026.
 
 3. **AI-BOM pre-standardization** — No ratified standard. Parallel efforts: OWASP AIBOM Generator (CycloneDX), SPDX 3.0 AI/ML extensions, IBM Granite 4.0 disclosures. EU AI Act Article 11/Annex IV effectively mandates AI-BOM-like documentation for high-risk systems but no standard defines what that means.
 

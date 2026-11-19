@@ -3,7 +3,7 @@ type: concept
 title: "Agent Message Structure Manipulation"
 address: c-000299
 created: 2026-08-18
-updated: 2026-08-18
+updated: 2026-10-06
 tags:
   - concepts
   - agentic-ai
@@ -29,9 +29,16 @@ related:
   - "[[owasp-agentic-ai-top-10]]"
   - "[[csa-maestro]]"
   - "[[mitre-atlas]]"
+  - "[[agentic-ai-security-ra-gaps]]"
 sources:
   - "[[.raw/papers/owasp-ai-exchange-threats-through-use-2026-08-18.md]]"
   - "https://owaspai.org/go/agentmessagestructuremanipulation/"
+  - "https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro"
+verified: 2026-10-06
+verified_against:
+  - ".raw/papers/owasp-ai-exchange-threats-through-use-2026-08-18.md"
+verified_findings: 0
+verified_note: "Whole page read against the OWASP threats-through-use §2.2.3 entry (A2A spec §8.4 also opened). Fixed the stale RA Egress-plane and gap-9 description, the MAESTRO no-equivalent claim (MAESTRO multi-agent pattern names a communication channel attack; live CSA blog re-read 2026-10-06), and an editorial sentence inside the Exchange's example list. K5 confirmed."
 ---
 
 # Agent Message Structure Manipulation
@@ -51,7 +58,7 @@ The Exchange states that the threat reaches **single agentic flows** as well as 
 The Exchange gives four, spanning multi-agent and single-agent shapes:[^aix-amsm]
 
 1. **Agent impersonation on a weakly authenticated channel.** The attacker injects forged messages that change the arguments of a downstream tool call.
-2. **A malicious tool response.** The response is valid JSON with manipulated field values — task ID, recipient, file path — and the orchestrator treats it as ground truth. The planner functions correctly throughout; the failure is data integrity.
+2. **A malicious tool response.** The response is valid JSON with manipulated field values — task ID, recipient, file path — and the orchestrator treats it as ground truth and executes the wrong action.
 3. **Single-agent RAG pipeline.** Poisoned structured metadata in a retrieved document chunk alters routing and parameter binding, with no second agent and no injection prose involved.
 4. **LLM-to-LLM prompt infection.** One corrupted message propagates through a conversation graph over multiple hops.
 
@@ -66,7 +73,7 @@ Four stated impacts, reachable even where every visible user prompt is benign:[^
 
 ## Controls
 
-Three of the Exchange's named controls are specific to the message fabric, and one is a framing rule that governs all of them.[^aix-amsm] The entry also routes to general input-threat and least-privilege controls specified in sections this wiki has not yet summarized.
+Three of the Exchange's named controls are specific to the message fabric, and one is a framing rule that governs all of them.[^aix-amsm] The entry also routes to general input-threat and least-privilege controls, which [[owasp-ai-exchange|the OWASP AI Exchange page]] summarizes.
 
 | Control | What it establishes |
 |---|---|
@@ -95,7 +102,7 @@ Four wiki pages hold adjacent material, and the division is deliberate.
 | [[multi-agent-runtime-security\|Multi-Agent Runtime Security]] | Detection, containment doctrine, and cross-agent forensics |
 | [[prompt-injection-containment\|Prompt Injection Containment]] | The containment stack and the Exchange's seven layers of protection |
 
-The [[agentic-ai-security-reference-architecture|reference architecture]]'s Egress plane holds the channel-securing controls — A2A signed Agent Cards, inter-agent path blocking, MCP runtime authorization — and records the content-validation half as an unfilled gap, since no listed reference implementation emits evidence for full-chain delegation scope or boundary schema validation.
+The [[agentic-ai-security-reference-architecture|reference architecture]]'s multi-agent adaptation routes messages through an authenticated broker and requires schema validation and delegation without authority expansion. Item 9 of [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] records that full-chain delegation validation with scope non-expansion has no identified generally available reference implementation in the sources read, and that A2A through v1.0.0 defines no delegation token or chain validation.
 
 ## Limits
 
@@ -104,7 +111,7 @@ The [[agentic-ai-security-reference-architecture|reference architecture]]'s Egre
 - **The Exchange states no detection method for the single-agent case.** Example 3 arrives through the same retrieval path the application is built on, and the controls named above sit at message boundaries an in-process RAG pipeline may not have.
 
 > [!gap] Single-source extraction
-> This page rests on one primary source: the OWASP AI Exchange's threat entry.[^aix-amsm] No other taxonomy the wiki tracks names message-structure manipulation as a distinct threat category. The nearest is [[owasp-agentic-ai-top-10|ASI07]], insecure inter-agent communication, which covers interception, spoofing, replay, and downgrade on agent-to-agent channels and is scoped to those channels, so it reaches neither the orchestrator's routing metadata nor the single-agent tool loop this entry includes. [[csa-maestro|CSA MAESTRO]] and [[mitre-atlas|MITRE ATLAS]] carry no named equivalent. The examples, impacts, and controls above are the Exchange's, and the corroboration a second primary would supply does not yet exist. Independent evidence of exploitation in the wild is also absent: the Exchange's four examples are constructed rather than incident-derived.
+> This page rests on one primary source: the OWASP AI Exchange's threat entry.[^aix-amsm] No other taxonomy the wiki tracks names message-structure manipulation as a distinct threat category. The nearest is [[owasp-agentic-ai-top-10|ASI07]], insecure inter-agent communication, which covers interception, spoofing, replay, and downgrade on agent-to-agent channels and is scoped to those channels, so it reaches neither the orchestrator's routing metadata nor the single-agent tool loop this entry includes. [[csa-maestro|CSA MAESTRO]]'s multi-agent pattern names a communication channel attack, in which an attacker intercepts messages between agents or injects malicious data into the channel, and so covers the inter-agent case; it names no threat to tool responses or to a single-agent flow.[^maestro-mas] The [[mitre-atlas|MITRE ATLAS]] techniques the wiki lists include no named equivalent. The examples, impacts, and controls above are the Exchange's, and no second primary source yet corroborates the tool-response and single-agent cases. Independent evidence of exploitation in the wild is also absent: the Exchange's four examples are constructed rather than incident-derived.
 
 ## Cross-references
 
@@ -112,10 +119,20 @@ The [[agentic-ai-security-reference-architecture|reference architecture]]'s Egre
 - [[indirect-prompt-injection|Indirect prompt injection]] — the sibling threat, separated by target
 - [[orchestration-hijacking|Orchestration hijacking]] — planner-side manipulation and the delegation confused deputy
 - [[multi-agent-runtime-security|Multi-Agent Runtime Security]] — detection and forensics, where message authenticity is a distinct requirement from log integrity
-- [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] §Egress plane — the controls and gap 9
-- [[a2a-protocol|A2A Protocol]] — the inter-agent transport whose signing covers the channel and not the content
+- [[agentic-ai-security-reference-architecture|Agentic AI Security RA]] — the multi-agent adaptation's broker, schema validation and delegation controls
+- [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — item 9, message-fabric integrity below the transport
+- [[a2a-protocol|A2A Protocol]] — the inter-agent protocol whose optional signatures cover the Agent Card, not the messages
 - [[prompt-injection|Prompt injection]] — the parent concept
 
 ## Notes
 
 [^aix-amsm]: [OWASP AI Exchange — Agent message structure manipulation](https://owaspai.org/go/agentmessagestructuremanipulation/), retrieved 2026-08-18. The threat definition and manipulated field set; the input-threat category line; the stated distinction from indirect prompt injection by target; the statement that the threat applies to single agentic flows as well as multi-agent systems; the four examples; the impact set; channel integrity through signing, mutual TLS, and replay protection; signed delegation tokens with full-chain validation and scope non-expansion; deny-by-default schema validation at tool and message boundaries; the untrusted-input framing including single-agent tool loops; and the multi-agent layer note on emergent collective behaviour.
+[^maestro-mas]: [CSA — Agentic AI Threat Modeling Framework: MAESTRO](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro), 2025-02-06, retrieved 2026-10-06, Multi-Agent Pattern: "Communication Channel Attack: An attacker intercepts messages between AI agents", with the example threat scenario of an attacker who "injects malicious data into the communication channel".
+
+<!-- sources:auto -->
+## Sources
+
+- [Agent Message Structure Manipulation](https://owaspai.org/go/agentmessagestructuremanipulation/)
+- [owaspai.org](https://owaspai.org/docs/2_threats_through_use)
+- [cloudsecurityalliance.org](https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro)
+<!-- /sources -->

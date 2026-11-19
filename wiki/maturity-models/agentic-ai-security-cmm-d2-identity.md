@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D2: Identity and Authorization"
 address: c-000137
 created: 2026-05-25
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - maturity-models
   - cmm
@@ -47,19 +47,23 @@ related:
   - "[[claude-cowork]]"
   - "[[agentic-ai-security-cmm-d1-governance]]"
   - "[[agentic-ai-security-cmm-d8-supply-chain]]"
+  - "[[shadow-agent-admission-control]]"
+  - "[[spiffe]]"
+  - "[[shadow-automation]]"
 sources:
   - "[[agentic-cmm-regulated-fi-stress-test]]"
   - "[[identity-credential-coupling]]"
   - "[[.raw/articles/microsoft-entra-agent-identities-overview-2026-09-18.md]]"
   - "[[.raw/articles/microsoft-entra-agent-id-what-is-2026-09-18.md]]"
   - "[[.raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md]]"
-verified: 2026-09-29
+  - "[[.raw/articles/google-cloud-iam-agent-identity-overview-2026-10-06.md]]"
+  - "[[.raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md]]"
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/microsoft-entra-agent-id-what-is-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-agent-identities-overview-2026-09-18.md"
+  - ".raw/articles/google-cloud-iam-agent-identity-overview-2026-10-06.md"
+  - ".raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md"
 verified_findings: 0
-verified_note: "Checked current OWASP identity/least-privilege guidance and vendor documentation; other archived sources remain outside this targeted read."
+verified_note: "Diff-scoped: reconciliation sentence (also checked against the 2026-10-06 Google and AWS registry captures) and the SPIFFE sentence, reordered so 'Their coverage' keeps its antecedent; no level row or criterion changed; rest of page not re-read."
 ---
 
 # Agentic AI Security CMM — D2 Identity and Authorization
@@ -141,7 +145,7 @@ An internal retrieval assistant with no external action can have few credential 
 
 A useful sample starts at an action in the downstream service. The assessor follows its agent principal to the identity provider, the delegating human or owner, and the credential or broker that made the call. A later sample tests the same link after task closure and another after an owner transfer. The records can reside in different systems, but their identifiers and timestamps must join without relying on a label the model supplied. A platform screenshot showing an agent name without the downstream authorization record does not establish the complete trace.
 
-For a multi-platform deployment, the registry's identity graph must account for the principals the agents actually use on each platform. A sampled platform export can expose an identity missing from the graph. A scheduled reconciliation job is one way to find it, while an operator-controlled comparison with recorded disposition can serve the same assessment purpose. The criterion grades completeness and maintenance of the graph, not a particular exchange protocol. Supplier-held components still need a named responsible operator and product-specific evidence for the portions the customer cannot inspect directly.
+For a multi-platform deployment, the registry's identity graph must account for the principals the agents actually use on each platform. A sampled platform export can expose an identity missing from the graph. A scheduled reconciliation job is one way to find it, while an operator-controlled comparison with recorded disposition can serve the same assessment purpose. [[shadow-agent-admission-control|Shadow Agent Admission Control]] describes such a job across SPIRE registration entries and the Google Cloud, AWS and Microsoft agent registries, each of which registers agents automatically only on its vendor's own runtimes or surfaces, and [[shadow-automation|Shadow Automation]] lists the discovery sources that reach agents outside them. The criterion grades completeness and maintenance of the graph, not a particular exchange protocol. Supplier-held components still need a named responsible operator and product-specific evidence for the portions the customer cannot inspect directly.
 
 ## Implementation and effort drivers
 
@@ -151,4 +155,4 @@ Revocation tests have operational cost because they interrupt a real production-
 
 ## Sources and limits
 
-The [OWASP Agentic AI threat and mitigation guide](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) and [OWASP model access control](https://owaspai.org/go/modelaccesscontrol/) anchor identity, mutual authentication, and delegated access. [Microsoft Entra Agent ID identity guidance](https://learn.microsoft.com/en-us/entra/agent-id/agent-identities), [AWS AgentCore workload identities](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-agent-identities.html), and [Google Agent Identity](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview) document identity paths. Their coverage and license terms must be checked for the assessed deployment. [Microsoft's agent registry guidance](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-registry) illustrates a deployable registry. Cross-platform reconciliation remains the organization's integration responsibility where the deployment spans identity platforms. Authentication establishes the actor. The [OWASP AI Exchange least-privilege control](https://owaspai.org/go/leastmodelprivilege/) also calls for task- and user-bound authorization at the action boundary. D3, D4, and D5 assess other parts of that path.
+The [OWASP Agentic AI threat and mitigation guide](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/) and [OWASP model access control](https://owaspai.org/go/modelaccesscontrol/) anchor identity, mutual authentication, and delegated access. [Microsoft Entra Agent ID identity guidance](https://learn.microsoft.com/en-us/entra/agent-id/agent-identities), [AWS AgentCore workload identities](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-agent-identities.html), and [Google Agent Identity](https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview) document identity paths. Their coverage and license terms must be checked for the assessed deployment. Google's agent identities are SPIFFE-based, and [[spiffe|SPIFFE / SPIRE]] describes the workload attestation and registration entries on which D2-IDENTITY-ATTEST evidence can rest. [Microsoft's agent registry guidance](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-registry) illustrates a deployable registry. Cross-platform reconciliation remains the organization's integration responsibility where the deployment spans identity platforms. Authentication establishes the actor. The [OWASP AI Exchange least-privilege control](https://owaspai.org/go/leastmodelprivilege/) also calls for task- and user-bound authorization at the action boundary. D3, D4, and D5 assess other parts of that path.

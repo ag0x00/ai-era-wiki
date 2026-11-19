@@ -5,7 +5,7 @@ vendor: "[[solo-io|Solo.io]]"
 title: "agentdesktop"
 address: c-000350
 created: 2026-09-10
-updated: 2026-09-10
+updated: 2026-10-06
 tags:
   - products
   - open-source
@@ -30,11 +30,16 @@ related:
   - "[[nhi-governance-for-agents]]"
   - "[[credential-proxy-pattern]]"
   - "[[agentic-ai-security-cmm-2026]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "https://www.solo.io/blog/introducing-agentdesktop"
   - "https://www.globenewswire.com/news-release/2026/09/03/3355961/0/en/solo-io-extends-agentic-governance-to-the-desktop-with-agentdesktop.html"
   - "https://techstrong.ai/articles/solo-io-pushes-agentic-ai-governance-to-the-desktop-with-open-source-agentdesktop/"
   - "https://github.com/agentdesktop-dev/agentdesktop"
+verified: 2026-10-06
+verified_against: []
+verified_findings: 0
+verified_note: "Read the live Solo.io blog, the GitHub README and Techstrong coverage on 2026-10-06 (GlobeNewswire only through a summarizer). MCP authorized/unauthorized enforcement claim replaced with the inventory-only behaviour the blog and README state."
 ---
 
 # agentdesktop
@@ -47,7 +52,7 @@ sources:
 
 ## Governance mechanisms
 
-agentdesktop discovers every agent harness and every MCP server registered in a harness's configuration, building an endpoint-level [[agent-catalog|inventory]] that surfaces [[shadow-automation|shadow]] agent usage a fleet-wide security team otherwise cannot see. It translates centrally declared policy into each harness's own native configuration format — sandbox filesystem and network restrictions expressed the way Claude Code or Codex natively understands them, not as OS-level rules — which distinguishes it from conventional mobile device management. It treats MCP servers as first-class policy objects, distinguishing authorized sources from unauthorized ones and enforcing that distinction at the point a harness would otherwise connect to one.
+agentdesktop discovers every agent harness and every MCP server registered in a harness's configuration, building an endpoint-level [[agent-catalog|inventory]] that surfaces [[shadow-automation|shadow]] agent usage a fleet-wide security team otherwise cannot see. It translates centrally declared policy into each harness's own native configuration format — sandbox filesystem and network restrictions expressed the way Claude Code or Codex natively understands them, not as OS-level rules — which distinguishes it from conventional mobile device management. It inventories the MCP servers and skills each harness declares without collecting their command arguments, environment variables or headers, and Solo.io states that MCP connections "are inventoried but are not automatically proxied through agentgateway".[^solo-blog] [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses this harness inventory as a reconciliation source, because a desktop agent can reach a SaaS API with the developer's delegated token without crossing a receiver that refuses unregistered callers.
 
 ## Identity, credentials, and observability
 
@@ -60,3 +65,5 @@ agentdesktop runs in two modes. Standalone mode provides local governance on a s
 ## Notable statements
 
 Idit Levine, founder and CEO, Solo.io, on the sprawl the product addresses: "Every organization is struggling with AI agents and tooling sprawl. We at Solo.io are no different." On where agents now run: "Laptops and desktops are the first real production environment for AI agents."
+
+[^solo-blog]: Solo.io, [*Introducing agentdesktop*](https://www.solo.io/blog/introducing-agentdesktop), retrieved 2026-10-06; the inventory scope is in the [project README](https://github.com/agentdesktop-dev/agentdesktop), Core capabilities.

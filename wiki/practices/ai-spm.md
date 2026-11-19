@@ -2,7 +2,7 @@
 type: practice
 title: "AI Security Posture Management (AI-SPM)"
 created: 2026-05-01
-updated: 2026-09-30
+updated: 2026-10-06
 tags:
   - practices
   - posture-management
@@ -28,6 +28,8 @@ related:
   - "[[security-controls-for-ai-stacks]]"
   - "[[agentic-ai-security-cmm-2026]]"
   - "[[standards-review-eu-ai-act-2026-Q2]]"
+  - "[[shadow-agent-admission-control]]"
+  - "[[shadow-automation]]"
 sources:
   - "[[.raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md]]"
   - "https://onyx.security/platform"
@@ -36,13 +38,10 @@ sources:
   - "[[.raw/articles/introducing-wiz-ai-app-2026-09-30.md]]"
   - "[[.raw/articles/knostic-ai-data-security-2026-05-01.md]]"
   - "https://www.knostic.ai/blog/ai-data-security"
-verified: 2026-09-30
-verified_against:
-  - ".raw/articles/introducing-wiz-ai-app-2026-09-30.md"
-  - ".raw/articles/knostic-ai-data-security-2026-05-01.md"
-  - ".raw/articles/onyx-platform-secure-ai-control-plane-2026-05-03.md"
+verified: 2026-10-06
+verified_against: []
 verified_findings: 0
-verified_note: "Wiz, Knostic and Onyx archives reviewed in this pass; added PA posture linkage against live Cortex AI-SPM docs, including license and region limits."
+verified_note: "This pass changed only two See Also entries pointing at vault pages; both checked against shadow-automation and shadow-agent-admission-control. Body last verified against archives 2026-09-30."
 ---
 
 # AI Security Posture Management (AI-SPM)
@@ -145,6 +144,8 @@ The category is not yet stable. Treat product comparisons as tentative.
 - [[ai-bom|AI-BOM: AI Bill of Materials]]: paired static inventory
 - [[guardian-agent|Guardian Agent]]: agent-asset-level counterpart to this infrastructure-asset discipline
 - [[agent-observability|Agent Observability]]: runtime telemetry that feeds posture checks
+- [[shadow-automation|Shadow Automation]]: agents deployed without registration, for which AI-SPM's cloud view is one discovery source
+- [[shadow-agent-admission-control|Shadow Agent Admission Control]]: uses the AI-SPM inventory of cloud AI services as one reconciliation source for agents missing from the agent registry
 - [[security-controls-for-ai-stacks|Security Controls for AI Stacks]] §Observability layer
 - [[agentic-ai-security-cmm-2026|Agentic AI Security Capability Maturity Model]]: D7 Observability capability
 

@@ -2,7 +2,7 @@
 type: gap
 title: "Agentic AI Security RA Gaps"
 created: 2026-09-18
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - gaps
   - reference-architecture
@@ -37,6 +37,8 @@ related:
   - "[[kimi-k3-sandbox-escape]]"
   - "[[agent-sandbox-isolation-landscape]]"
   - "[[agentic-ai-threat-classes-2026]]"
+  - "[[spiffe]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "[[.raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md]]"
   - "[[.raw/papers/owasp-ai-exchange-testing-2026-08-19.md]]"
@@ -47,20 +49,32 @@ sources:
   - "https://code.claude.com/docs/en/sandbox-environments"
   - "https://registry.npmjs.org/-/npm/v1/attestations/@modelcontextprotocol%2fserver-filesystem@2026.8.31"
   - "https://docs.npmjs.com/generating-provenance-statements"
-verified: 2026-09-29
+  - "[[.raw/articles/google-cloud-agent-registry-register-agents-2026-10-06.md]]"
+  - "[[.raw/articles/google-cloud-agent-registry-manual-registration-2026-10-06.md]]"
+  - "[[.raw/articles/aws-agent-registry-generally-available-2026-10-06.md]]"
+  - "[[.raw/articles/aws-agent-registry-sync-records-2026-10-06.md]]"
+  - "[[.raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md]]"
+  - "[[.raw/articles/a2a-protocol-agent-discovery-2026-10-06.md]]"
+  - "[[.raw/articles/ietf-draft-ietf-wimse-aims-00-2026-10-06.md]]"
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/microsoft-entra-agent-id-owners-sponsors-managers-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
-  - ".raw/papers/owasp-ai-exchange-development-time-threats-2026-08-19.md"
+  - ".raw/articles/a2a-protocol-agent-discovery-2026-10-06.md"
+  - ".raw/articles/a2a-protocol-specification-v1-0-0-2026-10-06.md"
+  - ".raw/articles/aws-agent-registry-generally-available-2026-10-06.md"
+  - ".raw/articles/aws-agent-registry-sync-records-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-manual-registration-2026-10-06.md"
+  - ".raw/articles/google-cloud-agent-registry-register-agents-2026-10-06.md"
+  - ".raw/articles/ietf-draft-ietf-wimse-aims-00-2026-10-06.md"
+  - ".raw/articles/microsoft-agent-registry-admin-center-2026-09-18.md"
 verified_findings: 0
-verified_note: "Revised RA/D8 placement, development controls, and Entra succession checked; Novee and AI-BOM claims checked live; other product findings retain dated source scope."
+verified_note: "Diff-scoped: item 13 and the scope sentences; items 1-12 not re-read this pass. 'Community Card scanners exist' rests on search-result titles only."
 ---
 
 # Agentic AI Security RA Gaps
 
-This register follows twelve implementation and scope questions raised by the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]. The revised architecture now states a concrete trust-boundary design for a single agent, including startup confinement, separated policy and credential roles, independent audit, and release admission. Some items below therefore identify missing implementation evidence rather than an omitted architectural decision. The [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] now provides an Agent Platform control procedure; it does not replace the reference architecture.
+This register follows thirteen implementation and scope questions raised by the [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]]. The revised architecture now states a concrete trust-boundary design for a single agent, including startup confinement, separated policy and credential roles, independent audit, and release admission. Some items below therefore identify missing implementation evidence rather than an omitted architectural decision. The [[google-cloud-agentic-security-profile|Google Cloud Agentic Security Profile]] now provides an Agent Platform control procedure; it does not replace the reference architecture.
 
-Items 1 to 11 compare a boundary outcome with shipped controls as of September 2026. Item 12 places development-time security in the architecture's admission and release path. Product status and scope claims retain their dated sources; the current architecture is the source for the logical component names.
+Items 1 to 11 compare a boundary outcome with shipped controls as of September 2026, and item 13 does the same for agent admission as of October 2026. Item 12 places development-time security in the architecture's admission and release path. Product status and scope claims retain their dated sources; the current architecture is the source for the logical component names.
 
 Two gaps turn on a mechanism a vendor shipped under a heading other than security. Entra Agent ID ships lifecycle workflow templates that can transfer an agent's sponsorship when its sponsor leaves, once deployed, and revoke nothing (gap 7), and the AWS Well-Architected Agentic AI Lens puts consumption anomaly detection in its cost pillar and routes the alert to the team that owns the agent, while the same lens's security pillar detects cross-agent anomalies over message rates and topology and over no cost metric (gap 10). A control filed under governance or cost reaches the operator who reads that pillar and stays invisible to the security review that would look for it.
 
@@ -135,6 +149,18 @@ The [[owasp-ai-exchange|OWASP AI Exchange]] identifies sensitive training and te
 
 The AWS Well-Architected Agentic AI Lens names no development-environment capability in its agent-specific security set and instructs readers to use it alongside the base framework.[^awslens-scope-ra] The base framework's application-security section does cover design, build, test and dependency management.[^aws-appsec-ra] That division supports treating development security as a release-path obligation without inventing a separate agent runtime service.
 
+### 13. Agent admission across registries and runtimes
+
+The architecture attaches a workload identity to an agent after release admission and loads only admitted configuration at startup, which governs every agent built through the release path. An agent created outside that path meets the boundary only at a registry or at a receiver that refuses it, and the shipped registries enrol agents through their owners or their own runtimes. Google Cloud Agent Registry registers agents automatically on Google runtimes within one project and takes others by manual registration, an A2A agent by its Agent Card URL or JSON. AWS Agent Registry detects agents on AgentCore runtime and gateways and takes others by manual entry or URL. Microsoft's Agent Registry lists agents from Microsoft surfaces and uploaded packages.[^agent-registries-ra] A2A defines Card publication and three discovery routes, and its discovery guide states that the specification "does not prescribe a standard API for curated registries".[^a2a-registry-ra] [[shadow-agent-admission-control|Shadow Agent Admission Control]] combines SPIRE registration entries, registry intake and receiver refusal with independent telemetry, and leaves these questions open:
+
+- **Registry interoperability.** A2A has not standardized a registry API, so an enterprise that runs agents on several clouds writes one intake per registry.
+- **Cross-registry reconciliation.** The sources read describe no procedure that compares the Google, AWS and Microsoft registries with an enterprise's SPIRE registration entries.
+- **Discovery by probing.** The registries read find agents on their own runtimes or by an entered URL; none describes probing endpoints for Agent Cards that no one has registered. Community Card scanners exist and were not assessed.
+- **Agents sharing one workload.** A SPIFFE ID names a workload, and the sources read give no attestation method that separates several agents inside it.
+- **Agents that call no enterprise receiver.** A desktop agent that uses a person's delegated token against a SaaS API, and automation built into a SaaS product, reach their targets without crossing a receiver that could refuse them.
+- **Production evidence.** The sources read name no end-user organization that runs SPIFFE identities for its own agents in production.
+- **Standards progress.** draft-ietf-wimse-aims-00, the WIMSE working group's AI identity draft, was a WG Document at "I-D Exists" on 2026-10-06.[^aims-ra]
+
 ## Related
 
 - Gapped artifact: [[agentic-ai-security-reference-architecture|Agentic AI Security Reference Architecture]] — the logical components and trust boundaries each item is measured against.
@@ -190,3 +216,6 @@ The AWS Well-Architected Agentic AI Lens names no development-environment capabi
 [^awslens-scope-ra]: [AWS Well-Architected — Agentic AI Lens](https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html), published 2026-06-10, retrieved 2026-09-18. The lens states that it extends the AWS Well-Architected Framework with best practices specific to agentic AI systems and that it is intended to be used alongside that framework.
 [^aws-appsec-ra]: [AWS Well-Architected — Security pillar, Application security](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/application-security.html), retrieved 2026-09-18 (page undated). Application security is defined as the overall process of how an organization designs, builds and tests the security properties of the workloads it develops; the implementation guidelines cover organization and culture, security of the pipeline, security in the pipeline, and dependency management; the eight best practices are application-security training, automated testing throughout the development and release lifecycle, regular penetration testing, code reviews, centralized services for packages and dependencies, programmatic software deployment, regular assessment of the security properties of the pipelines, and a program embedding security ownership in workload teams.
 [^218a-devenv-ra]: [NIST — SP 800-218A, Secure Software Development Practices for Generative AI and Dual-Use Foundation Models](https://csrc.nist.gov/pubs/sp/800/218/a/final), final July 2024, retrieved 2026-09-18. Three tasks over the development environment are both high-priority and net-new to the Profile, tagged `[Not part of SSDF 1.1]` in Table 1: continuous monitoring of software development environments (`PO.5.3`), protection of training, testing, fine-tuning and aligning data (`PS.1.2`), and protection of model weights and configuration parameters (`PS.1.3`). They are not the whole of the surface. Table 1 assigns High priority to 21 of its 48 tasks, `PO.5.1` (separate and protect each environment involved in software development) among them. No successor publication or 2026 revision was found.
+[^agent-registries-ra]: Google Cloud, [Register agents](https://docs.cloud.google.com/agent-registry/register-agents) and [Use manual registration](https://docs.cloud.google.com/agent-registry/manual-registration); AWS, [AWS Agent Registry is now generally available](https://aws.amazon.com/about-aws/whats-new/2026/08/aws-agent-registry-generally-available/), 2026-08-31, and [Synchronize records from external sources](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/registry-sync-records.html); Microsoft, [Manage agent registry in Microsoft 365 admin center](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/agent-registry), ms.date 2026-09-21. All retrieved 2026-10-06.
+[^a2a-registry-ra]: A2A Project, [Agent Discovery in A2A](https://a2a-protocol.org/latest/topics/agent-discovery/) and [specification §8.2](https://a2a-protocol.org/latest/specification/#82-discovery-mechanisms), version 1.0.0, retrieved 2026-10-06.
+[^aims-ra]: IETF Datatracker, [draft-ietf-wimse-aims](https://datatracker.ietf.org/doc/draft-ietf-wimse-aims/), revision 00 of 2026-09-15, read 2026-10-06.

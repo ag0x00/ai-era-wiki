@@ -2,7 +2,7 @@
 type: paper
 title: "Non-Human Identities"
 created: 2026-04-30
-updated: 2026-09-25
+updated: 2026-10-06
 tags:
   - papers
   - non-human-identity
@@ -19,7 +19,7 @@ venue: "Oasis Security blog"
 source_url: "https://www.oasis.security/blog/what-are-non-human-identities"
 archived_copy: ".raw/articles/oasis-what-are-non-human-identities-2026-04-30.md"
 no_public_url: ""
-key_claim: "NHIs are not human identities at scale — they are a different governance class. Legacy IAM (HR-driven joiner/mover/leaver) and PAM (credential storage without usage context) fail for NHIs because NHIs are decentralized, developer-created, lack ownership, scale 45–100×, and authenticate without MFA. Securing them requires six purpose-built strategies: least privilege by default, ownership and accountability, automated rotation, behavioral monitoring, dev-lifecycle integration, and Zero Trust alignment."
+key_claim: "NHIs are not human identities at scale — they are a different governance class. Legacy IAM (HR-driven joiner/mover/leaver) and PAM (credential storage without usage context) fail for NHIs because NHIs are decentralized, developer-created, lack ownership, outnumber human identities 45:1 on average (up to 100:1), and authenticate without MFA. Securing them requires six purpose-built strategies: least privilege by default, ownership and accountability, automated rotation, behavioral monitoring, dev-lifecycle integration, and Zero Trust alignment."
 methodology: "Industry/vendor opinion piece grounded in Rubrik Zero Labs (45:1 NHI-to-human ratio), arxiv 2503.18255 (machine identity 50K→250K per enterprise 2021–2025, 400% growth), IBM 2025 Cost of a Data Breach Report ($4.44M global / $10.22M US average; explicit recommendation for NHI controls), and three real-world incidents (Microsoft SAS token / 38TB; CircleCI OAuth; Mercedes-Benz service accounts)."
 contradicts: []
 supports:
@@ -47,6 +47,12 @@ aliases:
   - papers/oasis-what-are-non-human-identities
   - oasis-what-are-non-human-identities
 
+verified: 2026-10-06
+verified_against:
+  - ".raw/articles/nist-nccoe-software-ai-agent-identity-authorization-concept-paper-2026-10-06.md"
+  - ".raw/articles/oasis-what-are-non-human-identities-2026-04-30.md"
+verified_findings: 2
+verified_note: "Open: 'eleven types' heading over a twelve-row table; SVID added to the machine-identity row is not in the source. Gap Analysis section is wiki-meta commentary, a wiki-voice ask."
 ---
 
 # What Are Non-Human Identities? (Oasis Security)
@@ -55,7 +61,7 @@ aliases:
 
 ## Key Claim
 
-NHIs are a structurally different governance class from human identities. The mismatch is not just terminological: HR-driven IAM and credential-storage-focused PAM cannot govern decentralized, developer-created, ownerless identities that scale 45–100× faster than humans. **Securing NHIs requires purpose-built strategies, not retrofits.**
+NHIs are a structurally different governance class from human identities. HR-driven IAM and credential-storage-focused PAM cannot govern decentralized, developer-created, ownerless identities that outnumber human users 45 to 1 on average and up to 100 to 1 in some organizations. **Securing NHIs requires purpose-built strategies, not retrofits.**
 
 ## Methodology
 
@@ -85,13 +91,13 @@ Vendor blog (Oasis Security positioning piece) grounded in:
 | Personal Access Token (PAT) | Developer-generated, often long-lived |
 | SAS Token (Azure) | Time-limited, granular |
 
-### 2. Identity-credential coupling (sharper than current wiki framing)
+### 2. Identity-credential coupling
 
-> "Special considerations arise in scenarios where identities are inseparable from the authentication string, as seen in Storage account access keys, Shared Access Signatures (SAS) tokens, and API keys for SaaS applications like Snowflake."
+> "Special considerations arise in scenarios where identities are inseparable from the authentication string, as seen in Storage account access keys, Shared Access Signatures (SAS) tokens, and API keys for Software as a Service (SaaS) applications like Snowflake."
 
-Where the credential **is** the identity, rotation is identity rotation. The [[credential-proxy-pattern|Credential Proxy Pattern for AI Agents]] cannot separate what is structurally inseparable; some workflows must rotate-as-identity-rotation. See new concept: [[identity-credential-coupling|Identity-Credential Coupling]].
+Where the credential **is** the identity, rotation is identity rotation. The [[credential-proxy-pattern|Credential Proxy Pattern for AI Agents]] cannot separate what is structurally inseparable; some workflows must rotate-as-identity-rotation. See [[identity-credential-coupling|Identity-Credential Coupling]].
 
-### 3. Why human-identity controls fail for NHIs
+### 3. Structural differences from human identities
 
 Eight structural differences:
 
@@ -99,7 +105,7 @@ Eight structural differences:
 |---|---|---|
 | Centralization | IT-managed, single source of truth | Decentralized, created by developers, citizen-developers, IT, infrastructure-as-code |
 | Ownership | Tied to individual | Shared across teams / apps; often unowned |
-| Scale | Linear with org headcount | 10–100× human count, growing exponentially |
+| Scale | Linear with org headcount | 10–50× human count, growing exponentially |
 | Rate of change | HR-driven (joiner/mover/leaver) | Code-pace (per commit / per deploy) |
 | Provisioning | IT-mediated | Developer-driven, often invisible to IT |
 | Secret expiration | Frequent password rotation | Often never rotated; sometimes no expiration |
@@ -108,7 +114,7 @@ Eight structural differences:
 
 **Implication**: when an attacker gets a service-account secret, there is no MFA challenge or SSO step to stop them.
 
-### 4. Why legacy IAM and PAM fail
+### 4. Legacy IAM and PAM limits
 
 - **IAM**: built around HR-driven joiner/mover/leaver lifecycle events. NHIs don't have HR events — they have code commits and deploys. Ownership assignment, certification, and deprovisioning are extremely difficult.
 - **PAM**: stores secrets in a vault but lacks usage context — what does the secret connect to, is it still required, what depends on it. Without that context, rotation is operationally risky and least-privilege is unenforceable.
@@ -167,7 +173,7 @@ Eight structural differences:
 
 **Strengths.** Sharpest published treatment of why HR-driven IAM fails for NHIs. Clear identity-credential-coupling articulation. Concrete incident anchors. Six-pillar strategy maps cleanly to existing CMM domains.
 
-**Weaknesses.** Vendor blog: Oasis Security is positioned as the answer; technical implementation depth is thin. No discussion of agent-specific NHI concerns (e.g., NHIs created by AI agents themselves, MCP server identities, A2A cryptographic identity). No engagement with NIST CAISI Concept Paper (Feb 2026) on AI agent identity. No mention of platform-vs-prompt enforcement.
+**Weaknesses.** Vendor blog: Oasis Security is positioned as the answer; technical implementation depth is thin. No discussion of agent-specific NHI concerns (e.g., NHIs created by AI agents themselves, MCP server identities, A2A cryptographic identity). No engagement with the [NIST NCCoE concept paper](https://www.nccoe.nist.gov/sites/default/files/2026-02/accelerating-the-adoption-of-software-and-ai-agent-identity-and-authorization-concept-paper.pdf) (Feb 2026) on AI agent identity. No mention of platform-vs-prompt enforcement.
 
 ## Relations
 

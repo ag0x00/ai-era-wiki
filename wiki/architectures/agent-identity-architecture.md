@@ -3,7 +3,7 @@ type: architecture
 title: "AI Agent Identity Architecture"
 address: c-000188
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - architectures
   - identity
@@ -47,19 +47,24 @@ related:
   - "[[crowdstrike-agentic-identity-provider]]"
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agent-catalog]]"
+  - "[[spiffe]]"
+  - "[[a2a-protocol]]"
+  - "[[shadow-agent-admission-control]]"
 sources:
   - "[[securing-the-autonomous-future]]"
   - "[[openai-hugging-face-agent-incident]]"
+  - "[[.raw/articles/microsoft-entra-workload-identity-federation-spiffe-spire-2026-10-06.md]]"
 coined_by:
   - "[[insight-partners]]"
-verified: 2026-09-29
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/microsoft-entra-agent-id-owners-sponsors-managers-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-agent-id-whats-new-2026-09-18.md"
-  - ".raw/articles/microsoft-entra-conditional-access-for-agents-2026-09-18.md"
+  - ".raw/articles/google-cloud-iam-agent-identity-overview-2026-10-06.md"
+  - ".raw/articles/microsoft-entra-workload-identity-federation-spiffe-spire-2026-10-06.md"
+  - ".raw/articles/nist-nccoe-software-ai-agent-identity-authorization-concept-paper-2026-10-06.md"
+  - ".raw/articles/spiffe-spire-adopters-2026-10-06.md"
   - ".raw/papers/securing-the-autonomous-future.md"
 verified_findings: 0
-verified_note: "Identity model, sponsorship, agent Conditional Access, and revised CMM/RA placement checked; product landscape claims outside these sources remain dated."
+verified_note: "SPIFFE layer, GCP Agent Identity stage, Entra WIF and NCCoE delegation lines checked against captures; product landscape rows outside these sources remain dated."
 ---
 
 # AI Agent Identity Architecture
@@ -83,7 +88,7 @@ AI agents must authenticate to and be authorized for services inside and outside
 
 Two design problems sit underneath: a **principal problem** (every agent needs a verifiable identity and accountable owner) and an **authority problem** (a verified identity can carry workload-wide ambient authority, wider than a task needs). Identity and credential layers address the first; a task-scoped authorization decision addresses the second. A capability token is one way to carry that decision.
 
-[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] frames this as the policy anchor for the architecture: [[non-human-identity|NHI]] is the authentication primitive (a valid credential at session start), while Agent Identity is the governance layer that attests provenance, intent, and authority continuously and governs behavior at each action. The architecture defends against the corresponding threats in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]]: Privilege Compromise (T3), Identity Spoofing and Impersonation (T9), and Insecure Inter-Agent Protocol Abuse (T16), the last exercised at the MCP and A2A boundaries where agent identity is presented to other parties.
+[[owasp-state-of-agentic-ai-security-governance|OWASP's State of Agentic AI Security and Governance]] frames this as the policy anchor for the architecture: [[non-human-identity|NHI]] is the authentication primitive (a valid credential at session start), while Agent Identity is the governance layer that attests provenance, intent, and authority continuously and governs behavior at each action. The architecture defends against the corresponding threats in [[owasp-agentic-ai-threats-mitigations|OWASP Agentic AI Threats and Mitigations]]: Privilege Compromise (T3), Identity Spoofing and Impersonation (T9), and Insecure Inter-Agent Protocol Abuse (T16), the last exercised at the MCP and [[a2a-protocol|A2A Protocol (Agent-to-Agent)]] boundaries where agent identity is presented to other parties.
 
 ## Two identity models
 
@@ -95,13 +100,13 @@ The agent acts **on behalf of a human user** using that user's scoped access tok
 
 The agent holds a **unique identity** and authenticates independently to carry out tasks. Infrastructure agents, RPA-style workflows, and AI-employee scenarios require this model. Governance is harder here, because identity sprawl runs fast and credentials may be ephemeral. Entra Agent ID calls this the **autonomous** pattern (own identity, client-credentials flow) and defines a third, hybrid shape as well — an agent paired 1:1 with its own user account (mailbox, Teams), for cases where the agent must appear as a directory user.
 
-Enterprises today lean toward delegated access for productivity use cases. The balance is expected to shift toward autonomous agents as AI-native workflows mature. The platform-native identity products that shipped in 2026 support both models from a single directory object.
+Enterprises today lean toward delegated access for productivity use cases. Insight Partners expects the balance to shift toward autonomous agents as AI-native workflows mature. Entra Agent ID and Google Cloud's [Agent Identity](https://docs.cloud.google.com/iam/docs/agent-identity-overview) each let one agent identity act either on its own authority or on behalf of a user.
 
 ## Layers
 
 ### SPIFFE / SPIRE workload identity foundation
 
-[[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. Enterprises already run SPIFFE/SPIRE for machine-to-machine workload identity, and the platform-native agent identities build on it: GCP Agent Identity issues SPIFFE-based IDs directly. SPIFFE also closes the **Credential Zero** problem. An agent must authenticate *to* a vault or IdP before it can retrieve any further credential, and a SPIFFE Verifiable Identity Document (SVID) provisioned at deploy time carries that first authentication without a pre-stored secret.
+[[spiffe|SPIFFE]] (Secure Production Identity Framework for Everyone) and SPIRE provide cryptographically verifiable identities to workloads — agents, orchestrators, vector stores, LLM endpoints — without static secrets. SPIRE's [adopters file](https://github.com/spiffe/spire/blob/main/ADOPTERS.md) names end users with notable contributions, among them Bloomberg, ByteDance, GitHub, Netflix and Uber. Among the platform agent identities, Google's Agent Identity issues each agent a SPIFFE ID and a 24-hour X.509 certificate ([Google Cloud — Agent Identity overview](https://docs.cloud.google.com/iam/docs/agent-identity-overview)), while Microsoft Entra accepts SPIRE JWT-SVIDs through Workload ID federation, a feature separate from Entra Agent ID ([Microsoft Learn — Federate SPIFFE/SPIRE workloads](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-spiffe-spire)). [[spiffe|SPIFFE / SPIRE]] covers the issuers and relying parties, and [[shadow-agent-admission-control|Shadow Agent Admission Control]] uses SPIRE registration entries to refuse agents that were never registered. SPIFFE also closes the **Credential Zero** problem. An agent must authenticate *to* a vault or IdP before it can retrieve any further credential, and a SPIFFE Verifiable Identity Document (SVID) provisioned at deploy time carries that first authentication without a pre-stored secret.
 
 SPIFFE/SPIRE establishes *who* a workload is. An **authorization layer** ([[#Authorization policy layer]] below) defines *what* an authenticated agent may do. A task binding, held in a token, session or trusted gateway, bounds *which task* the grant covers.
 
@@ -119,17 +124,17 @@ Identity-based authorization can be **ambient**: a verified agent carries its wo
 
 ### Action-to-identity trace
 
-Every action is recorded against the identity that took it and the context that triggered it (human instruction versus autonomous decision). Entra Agent ID **sponsors** — who can be groups as well as named individuals — are accountable for each agent, lifecycle workflow templates can transfer sponsorship to a manager or cosponsor when a sponsor changes role or leaves once an administrator deploys them, [[microsoft-agent-365|Microsoft Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The remaining standards gap is capturing the *delegation chain* — who instructed the agent — at the protocol level rather than only in audit logs. The NIST CAISI Concept Paper takes it up in its OAuth 2.1 / OIDC extensions for agents, and the warrant's embedded delegation chain satisfies it cryptographically.
+Every action is recorded against the identity that took it and the context that triggered it (human instruction versus autonomous decision). Entra Agent ID **sponsors** — who can be groups as well as named individuals — are accountable for each agent, lifecycle workflow templates can transfer sponsorship to a manager or cosponsor when a sponsor changes role or leaves once an administrator deploys them, [[microsoft-agent-365|Microsoft Agent 365]] writes the trail to Purview, and the Anthropic Compliance API attributes Claude-generated actions to a deployment identity. The remaining standards gap is capturing the *delegation chain* — who instructed the agent — at the protocol level rather than only in audit logs. The NIST NCCoE concept paper on software and AI agent identity, a February 2026 draft, names access delegation as a potential focus area and lists OAuth 2.0/2.1 and its extensions among the standards its project is considering ([NCCoE concept paper](https://www.nccoe.nist.gov/sites/default/files/2026-02/accelerating-the-adoption-of-software-and-ai-agent-identity-and-authorization-concept-paper.pdf)). The [[tenuo-warrant|Tenuo Warrant]] embeds the delegation chain in the token, and a verifier checks that chain locally.
 
 ## Platform-native landscape
 
-Per-agent identity moved from emerging to **GA platform-native on all three hyperscalers** during 2026, displacing the earlier picture in which only specialist PAM/NHI vendors served the case:
+Per-agent identity moved from emerging to **platform-native on all three hyperscalers** during 2026, displacing the earlier picture in which only specialist PAM/NHI vendors served the case:
 
 | Capability | Status (mid-2026) | Reference implementations |
 |---|---|---|
 | Per-agent identity | GA platform-native; also the security-platform row below | [[microsoft-entra-agent-id\|Entra Agent ID]] (GA Apr 2026) |
 | Per-agent identity | GA platform-native | AWS Bedrock AgentCore identities |
-| Per-agent identity | GA platform-native | GCP Agent Identity (SPIFFE-based) |
+| Per-agent identity | Platform-native; launch stage not stated in Google's IAM overview | GCP Agent Identity (SPIFFE-based) |
 | Per-agent identity | Open source | [[spiffe\|SPIFFE/SPIRE]] |
 | Per-agent identity | GA security platform | [[okta-for-ai-agents\|Okta for AI Agents]] (GA 2026-04-29) |
 | Credential-less / vault | GA platform-native | Azure Managed Identities |

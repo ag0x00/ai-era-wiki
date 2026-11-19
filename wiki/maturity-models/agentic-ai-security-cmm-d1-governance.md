@@ -3,7 +3,7 @@ type: maturity-model
 title: "CMM D1: Governance and Accountability"
 address: c-000136
 created: 2026-05-24
-updated: 2026-09-29
+updated: 2026-10-06
 tags:
   - maturity-models
   - cmm
@@ -60,11 +60,10 @@ sources:
   - "[[aiuc-1-critical-evaluation]]"
   - "[[iso-iec-42001]]"
   - "[[nist-ai-rmf]]"
-verified: 2026-09-29
-verified_against:
-  - ".raw/papers/owasp-ai-exchange-general-controls-2026-08-19.md"
+verified: 2026-10-06
+verified_against: []
 verified_findings: 0
-verified_note: "Read the archived OWASP AI Exchange general controls, current NIST and AIUC assurance references, and prior CMM review; repaired third-party assurance scope and certification link."
+verified_note: "Diff-scoped read of the 2026-10-06 Implementation-drivers bullet against wiki/concepts/shadow-automation.md §Discovery sources; no level row or criterion changed; the rest of the page was not re-read."
 ---
 
 # Agentic AI Security CMM — D1 Governance and Accountability
@@ -158,7 +157,7 @@ The initial work establishes policy and decision ownership, then reconciles the 
 
 - risk-body meetings and minutes;
 - production-approval condition tracking;
-- shadow-agent discovery and disposition;
+- shadow-agent discovery across the sources [[shadow-automation|Shadow Automation]] lists, and disposition of each finding;
 - publication review.
 
 The L4 crosswalk needs revision ownership and an independent readiness assessor. L5 adds recurring assurance, board attestations, and a full year of operating history. The organization chooses its target from exposure, autonomy, and the cost of evidence. A low-action deployment can rationally target less than a write-capable external service, provided the investment report records the residual risk and accountable decision.

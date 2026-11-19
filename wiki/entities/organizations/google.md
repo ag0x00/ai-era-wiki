@@ -2,7 +2,7 @@
 type: entity
 title: "Google"
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-10-06
 tags:
   - entities
   - organizations
@@ -60,15 +60,16 @@ sources:
   - "[[.raw/articles/cnbc-gemini-latest-ai-model-to-break-out-2026-09-22.md]]"
   - "[[.raw/articles/implicator-google-says-gemini-hacked-three-companies-2026-09-22.md]]"
   - "[[.raw/articles/reuters-gemini-hacked-three-companies-2026-09-22.md]]"
-verified: 2026-09-22
+  - "[[.raw/articles/a2a-protocol-specification-v1-0-0-2026-10-06.md]]"
+  - "[[.raw/articles/a2a-protocol-joining-agentic-ai-foundation-2026-10-06.md]]"
+  - "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents"
+verified: 2026-10-06
 verified_against:
-  - ".raw/articles/cnbc-gemini-latest-ai-model-to-break-out-2026-09-22.md"
-  - ".raw/articles/implicator-google-says-gemini-hacked-three-companies-2026-09-22.md"
-  - ".raw/articles/reuters-gemini-hacked-three-companies-2026-09-22.md"
-  - ".raw/articles/cloud-ciso-perspectives-how-google-cloud-security-uses-ai-internally-2026-09-18.md"
-  - ".raw/reports/google-mantis-repository-2026-09-18.md"
+  - ".raw/articles/a2a-protocol-joining-agentic-ai-foundation-2026-10-06.md"
+  - ".raw/articles/a2a-protocol-specification-v1-0-0-2026-10-06.md"
+  - ".raw/papers/ai-security-standards-in-q1-2026.md"
 verified_findings: 0
-verified_note: "0 findings. Read scoped to the model-conduct-under-evaluation section this pass added; the rest of the page was verified 2026-09-18 and not re-read; the 2026-09-18 read of the agentic-SDLC, Mantis and CodeMender material is retained above."
+verified_note: "Read scoped to the AI Security Contributions section. The A2A bullet's version, §8.4, LF and AAIF facts are absent from the Q1 2026 paper the heading names (it describes A2A v0.3); each now carries a deep link (spec, LF press release re-read live, AAIF blog). Rest of page not re-read."
 ---
 
 # Google
@@ -78,7 +79,7 @@ verified_note: "0 findings. Read scoped to the model-conduct-under-evaluation se
 ## AI Security Contributions (from ai-security-standards-in-q1-2026)
 
 - **[[google-saif|SAIF]]** — AI security framework; SAIF Risk Map and Risk Assessment donated to [[cosai|CoSAI]] in July 2024
-- **[[a2a-protocol|A2A Protocol]]** (v1.0.0, released 2026-03-12) — Agent-to-Agent protocol with signed Agent Cards (§8.4) and opacity principle. Donated to Linux Foundation 2025-06-23 and hosted under LF's Agentic AI Foundation.
+- **[[a2a-protocol|A2A Protocol]]** (v1.0.0, [released 2026-03-12](https://github.com/a2aproject/A2A/releases)) — Agent-to-Agent protocol with optional Agent Card signatures ([specification §8.4](https://a2a-protocol.org/latest/specification/#84-agent-card-signing)) and the opacity principle the Q1 2026 paper credits. The Linux Foundation [launched the Agent2Agent project](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents) on 2025-06-23 as the new home for the protocol Google created, and A2A was [accepted as a Growth Stage project](https://a2a-protocol.org/latest/blog/2026/08/27/a-new-chapter-for-a2a-joining-the-agentic-ai-foundation/) at the Linux Foundation's Agentic AI Foundation in August 2026.
 - **Google ADK Go 1.0** (March 31, 2026) — ships with `before_model_callback` hooks, OpenTelemetry integration, and Model Armor integration — reference implementation of platform-level enforcement
 - **CoSAI Premier Sponsor** — key contributor to MCP Security White Paper
 

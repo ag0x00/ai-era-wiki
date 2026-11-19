@@ -5,7 +5,7 @@ vendor: "[[crowdstrike|CrowdStrike]]"
 title: "CrowdStrike Agentic Identity Provider"
 address: c-000348
 created: 2026-09-10
-updated: 2026-09-10
+updated: 2026-10-06
 tags:
   - products
   - identity
@@ -34,6 +34,10 @@ sources:
   - "https://www.crowdstrike.com/en-us/blog/crowdstrike-announces-agentic-identity-provider/"
   - "https://siliconangle.com/2026/09/02/crowdstrike-gives-ai-agents-an-identity-provider-parallel-soc-investigations-and-package-blocking/"
   - "https://www.msspalert.com/brief/crowdstrike-introduces-agentic-identity-provider-for-ai-agents"
+verified: 2026-10-06
+verified_against: []
+verified_findings: 1
+verified_note: "Diff-scoped 2026-10-06 to §Positioning alongside existing identity providers: opened the archived blog capture .raw/articles/crowdstrike-agentic-identity-provider-2026-09-18.md (the page's sources: list it by URL only) and the live press release; 1 medium fixed (Okta/Entra AWS items re-attributed to the Extending Modern Privileged Access section), 1 low fixed ('complementary' positioning in neither source, replaced with the press release's 'authority for AI agents'). Open low: the Okta and Entra links target agent products, not the AWS privileged-access integration. Rest of page not re-verified."
 ---
 
 # CrowdStrike Agentic Identity Provider
@@ -52,7 +56,7 @@ The Agentic IdP answers "who are you" for an agent; CrowdStrike's separately ann
 
 ## Positioning alongside existing identity providers
 
-CrowdStrike frames the product as necessary because traditional identity providers, built for human authentication and fixed service-account and workload-identity models, do not extend cleanly to agents that delegate tasks to sub-agents and act without a human present at each step. CrowdStrike positions the Agentic IdP as complementary to existing identity infrastructure. The announcement blog places both of its named coexistence points in AWS: CrowdStrike shipped modern privileged access for AWS through [[okta-for-ai-agents|Okta]] earlier in 2026, and now extends that AWS privileged-access support to tenants using [[microsoft-entra-agent-id|Microsoft Entra]].
+CrowdStrike frames the product as necessary because traditional identity providers represent agents as service accounts, API keys and workload identities, which the press release calls "static models never meant for identities that take autonomous action on behalf of users and delegate to sub-agents." The press release positions the Agentic IdP as "the authority for AI agents."[^idp-pr] The [[okta-for-ai-agents|Okta]] and [[microsoft-entra-agent-id|Microsoft Entra]] items in the announcement blog belong to its separate privileged-access section, "Extending Modern Privileged Access Everywhere Work Happens": CrowdStrike announced modern privileged access for AWS through Okta earlier in 2026, and the blog extends that support to AWS environments that use Microsoft Entra.[^idp-blog]
 
 ## Availability
 
@@ -61,3 +65,7 @@ The announcement carries CrowdStrike's standing caveat that "any unreleased serv
 ## Notable statements
 
 Scott Kriz, General Manager of Continuous Identity at CrowdStrike: "Securing AI agents demands solutions built for how they operate. Traditional identity providers break the moment an agent acts on its own. Agentic IdP is the identity provider for AI agents."
+
+[^idp-blog]: [CrowdStrike — CrowdStrike Announces Agentic Identity Provider](https://www.crowdstrike.com/en-us/blog/crowdstrike-announces-agentic-identity-provider/), September 2, 2026, cloud infrastructure item under "Extending Modern Privileged Access Everywhere Work Happens".
+
+[^idp-pr]: [CrowdStrike — Agentic Identity Provider press release](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-agentic-identity-provider-foundation-for-ai-agent-identity-security/), September 2, 2026.

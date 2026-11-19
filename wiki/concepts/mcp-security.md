@@ -2,7 +2,7 @@
 type: concept
 title: "MCP Security"
 created: 2026-04-30
-updated: 2026-09-22
+updated: 2026-10-06
 tags:
   - concepts
   - mcp
@@ -35,10 +35,10 @@ related:
   - "[[agent-catalog]]"
 sources:
   - "[[.raw/papers/securing-the-autonomous-future.md]]"
-verified: 2026-09-22
+verified: 2026-10-06
 verified_against: []
 verified_findings: 0
-verified_note: "ATHF occurrence line read against .raw/articles/agentic-threat-hunting-framework-2026-09-22.md; 1 low fixed; rest of page not re-verified"
+verified_note: "Diff-scoped 2026-10-06 to §5 MCP Governance at Scale (vendor paragraph) only: read live-fetched Solo.io agentdesktop blog and README, JFrog AgentSecOps release and Agent Guard blog, CrowdStrike Falcon Guardian press release and blog; 1 high, 2 medium, 2 low fixed (agentdesktop enforcement claim re-attributed to inventory-only, allow/deny count, JFrog call-time contrast, 'shipped', unscoped absence). Rest of page not re-verified."
 ---
 
 # MCP Security
@@ -103,7 +103,7 @@ Enterprise estates will accumulate many MCP server registrations. Required capab
 - Periodic permission reviews (analogous to OAuth token auditing)
 - Incident response playbooks for rogue MCP server scenarios
 
-Three products shipped against these capabilities in the first week of September 2026, each at a different point in the path. [[jfrog|JFrog]] indexes MCP servers in an [[artifactory|Artifactory]] registry and applies semantic analysis to the Markdown files, skill scripts and instruction sets a server carries, blocking one it judges malicious at package-resolution time rather than at call time. [[agentdesktop|agentdesktop]] discovers every MCP server registered in an agent's local configuration and treats each as a policy object, separating authorized sources from unauthorized ones on the developer's own machine. [[falcon-guardian|Falcon Guardian]] records MCP server invocations inside the causal chain it reconstructs from a user prompt to the downstream system action. Inventory and per-server allow/deny now have named implementations at three layers; periodic permission review and rogue-server incident response are named by none of the three.
+Three vendors announced products against these capabilities in the first week of September 2026. [[jfrog|JFrog]] acts at two points. Its AI Asset Scanning indexes MCP servers in an [[artifactory|Artifactory]] registry and applies semantic analysis to the Markdown files, skill scripts and instruction sets a server carries, blocking one it judges malicious before it reaches a developer's workstation. Its Agent Guard shows an authenticated developer's agent only the MCP servers a project admin approved, and a hook in VS Code and Cursor denies any MCP tool call routed around it. [[agentdesktop|agentdesktop]] inventories the MCP servers and skills registered in each harness's local configuration without collecting their command arguments, environment variables or headers, and Solo.io states that those connections are inventoried but not automatically proxied through its agentgateway. [[falcon-guardian|Falcon Guardian]] records MCP server invocations inside the causal chain it reconstructs from a user prompt to the downstream system action. Its permit-and-block control applies to agent types, and CrowdStrike places MCP policy in an AI gateway that its product blog describes as pre-beta, with general availability planned for Q4 2026. Inventory therefore has named implementations at the registry and in the harness configuration, and of the three only JFrog's Agent Guard enforces a per-server allow or deny decision. The three launch announcements name no periodic permission review and no incident-response playbook for a rogue MCP server; the nearest is Falcon Guardian's causal investigation, which blocks malicious agent behavior and compromised assets at runtime.[^sept-mcp]
 
 ## Relationship to Existing Controls
 
@@ -146,6 +146,8 @@ The last two threat rows read differently against such a server. Unauthenticated
 - [[agentshield|AgentShield]] — open-source static scanner with 23 MCP-specific rules (high-risk server types, `npx -y` typosquat surface, hardcoded secrets in env config, remote SSE/HTTP transports, shell metacharacters in args, sensitive-file args, `0.0.0.0` binding, missing timeouts, `autoApprove`) and a `--supply-chain[-online]` provenance mode; provenance-aware `runtimeConfidence` separates `mcp.json` / `.claude/mcp.json` / `.claude.json` (active runtime) from `mcp-configs/` / `config/mcp/` (template-example catalogs)
 
 [^exposure]: Alfredo Oliveira and David Fiser, [*Update on Exposed MCP Servers: The Threat Widens to the Cloud*](https://www.trendmicro.com/vinfo/us/security/news/vulnerabilities-and-exploits/update-on-exposed-mcp-servers-the-threat-widens-to-the-cloud), Trend Micro, 2026-04-28, updating the 492-server count from their 2025-07-16 scan. The three measurement families are separated on [[mcp-exposure-measurements|MCP Exposure Measurements]].
+
+[^sept-mcp]: JFrog, [*JFrog Embeds Security into the Agentic Workforce*](https://jfrog.com/press-room/jfrog-embeds-security-into-the-agentic-workforce/), 2026-09-02, and [*Agent Guard: Control AI Assets Before They Become Shadow AI*](https://jfrog.com/blog/agent-guard-control-ai-assets-before-they-become-shadow-ai/); Solo.io, [*Introducing agentdesktop*](https://www.solo.io/blog/introducing-agentdesktop), and the [agentdesktop README](https://github.com/agentdesktop-dev/agentdesktop), Core capabilities; CrowdStrike, [*Falcon Guardian Defines the Next Generation of AI Security*](https://www.crowdstrike.com/en-us/blog/falcon-guardian-defines-next-generation-of-ai-security/), 2026-09-01. All retrieved 2026-10-06.
 
 [^adr]: §3.1 *Observability: The ADR Sensor*, [arXiv:2605.17380](https://arxiv.org/abs/2605.17380): the rejected LLM/MCP gateway alternative (host changes, streaming incompatibility, partial context) and the cache-parsing sensor that reconstructs the full causal chain.
 
