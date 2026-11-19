@@ -3,7 +3,7 @@ type: incident
 title: "Taiwan AI-Agent Government Intrusion"
 address: c-000263
 created: 2026-08-15
-updated: 2026-08-15
+updated: 2026-11-18
 tags:
   - incidents
   - offensive-ai
@@ -35,9 +35,21 @@ related:
   - "[[openclaw|OpenClaw]]"
   - "[[agentic-ai-threat-classes-2026|Agentic AI Threat Classes]]"
   - "[[zero-day-clock|Zero-Day Clock]]"
+  - "[[agentic-offensive-framework|Agentic Offensive Framework]]"
+  - "[[artex|ARTEX]]"
 sources:
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
   - "https://www.reuters.com/world/china/taiwan-says-it-was-targeted-last-month-ai-driven-hacking-campaign-2026-08-13/"
+  - "https://www.elastic.co/security-labs/threat-command/agentic-offensive-frameworks-detection-artex"
+  - "https://www.ic3.gov/CSA/2026/261113.pdf"
+  - "[[.raw/articles/elastic-agentic-offensive-frameworks-detection-artex-2026-11-13.md]]"
+  - "[[.raw/reports/fbi-flash-20261113-001-artex-2026-11-13.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/elastic-agentic-offensive-frameworks-detection-artex-2026-11-13.md"
+  - ".raw/reports/fbi-flash-20261113-001-artex-2026-11-13.md"
+verified_findings: 0
+verified_note: "Guardrail-framing bullet extension only, by targeted grep."
 ---
 
 # Taiwan AI-Agent Government Intrusion
@@ -79,7 +91,7 @@ Decision-making ran on a two-layer Bayesian scoring model (per-finding posterior
 
 - **Client-side artifacts leak server-side topology.** The entire SSO architecture was mapped from compiled JavaScript before any live endpoint was probed — a reconnaissance cost that scales with automated decompilation rather than analyst time.
 - **SSO trust boundaries need re-authentication, not just initial authentication.** The 98.8% lateral-movement success rate[^dream] is a direct consequence of internal systems trusting an SSO session with no further check.
-- **Guardrail framing attacks are cheap and effective.** "Authorized penetration testing" framing bypassed model refusals without any technical exploit — a control gap in prompt-level authorization checks, not in the harness.
+- **Guardrail framing attacks are cheap and effective.** "Authorized penetration testing" framing bypassed model refusals without any technical exploit — a control gap in prompt-level authorization checks, not in the harness. Packaged frameworks now ship the same framing by default. Elastic found that ARTEX "describes each agent as part of an authorized penetration testing system", and the FBI attributes the dominance of DeepSeek Flash models on attacker-controlled ARTEX instances partly to their "lack of observable guardrails when framed for penetration testing".[^elastic-aof][^fbi-artex] The Taiwan framework is a custom harness; [[agentic-offensive-framework|Agentic Offensive Framework]] covers the packaged class that hands the framing to any operator.
 - **Self-correcting attacker tooling raises the false-negative bar for defenders.** A framework that discards its own false positives after six-fold re-verification produces a cleaner, more credible target list than earlier-generation automated scanning — see [[zero-day-clock|Zero-Day Clock]] on the collapsing cost of competent attack versus the static cost of defense.
 
 ## Mapping
@@ -96,3 +108,5 @@ Decision-making ran on a two-layer Bayesian scoring model (per-finding posterior
 
 [^dream]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia), 2026-08-12.
 [^reuters]: Ben Blanchard and Raphael Satter, [Taiwan says it was targeted last month in AI-driven hacking campaign](https://www.reuters.com/world/china/taiwan-says-it-was-targeted-last-month-ai-driven-hacking-campaign-2026-08-13/), Reuters, 2026-08-13.
+[^elastic-aof]: [Elastic Security Labs — Inside the loop: Five AI attack frameworks that never ask permission](https://www.elastic.co/security-labs/threat-command/agentic-offensive-frameworks-detection-artex), 2026-11-13. Source review of ARTEX's agent prompts.
+[^fbi-artex]: [FBI — FLASH-20261113-001: Threat Overview of ARTEX Autonomous Penetration Testing Framework](https://www.ic3.gov/CSA/2026/261113.pdf), TLP:CLEAR, 2026-11-13. Model prevalence on attacker-controlled ARTEX instances. See [[fbi-artex-flash-2026-11|FBI ARTEX FLASH Advisory]].

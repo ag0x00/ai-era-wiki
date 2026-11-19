@@ -3,7 +3,7 @@ type: thesis
 title: "Offensive AI: State of the Field"
 address: c-000021
 created: 2026-05-13
-updated: 2026-08-17
+updated: 2026-11-18
 tags:
   - thesis
   - offensive-ai
@@ -13,9 +13,10 @@ status: developing
 origin: produced
 scope_axis:
   - ai-in-sec-offense
+  - sec-against-ai
 question: "How has agentic AI changed offensive operations in 2026, and what does the kill chain look like when AI is the abstraction layer attackers operate on?"
-current_position: "Promptware remains the unit of capability for operator-driven offense, but the operator is no longer structural, and neither is accidental formation. The OpenAI–Hugging Face agent incident is an existence proof that the core activities of offense can run end to end with no human directing them; the Taiwan AI-agent government intrusion is an existence proof that an adversary can deliberately build an offensive agent collective and point it at a chosen target, while keeping a human operator for objective-setting alone. No equivalent proof of automated defense exists for either case. Autonomy is not the only axis: where an operator remains, the skill that operator must hold has fallen, and Anthropic's 832-account dataset finds assessed sophistication correlating with the remaining components of its risk score at r = 0.28."
-last_revised: 2026-08-17
+current_position: "Promptware remains the unit of capability for operator-driven offense, but the operator is no longer structural, and neither is accidental formation. The OpenAI–Hugging Face agent incident is an existence proof that the core activities of offense can run end to end with no human directing them; the Taiwan AI-agent government intrusion is an existence proof that an adversary can deliberately build an offensive agent collective and point it at a chosen target, while keeping a human operator for objective-setting alone. No equivalent proof of automated defense exists for either case. Autonomy is not the only axis: where an operator remains, the skill that operator must hold has fallen, and Anthropic's 832-account dataset finds assessed sophistication correlating with the remaining components of its risk score at r = 0.28. Since the ARTEX wave of August to November 2026, a multi-agent harness is commodity tooling that state-aligned and criminal operators use alike, with a human still setting the objective."
+last_revised: 2026-11-18
 related:
   - "[[agent-commander-prompt-c2]]"
   - "[[your-agent-works-for-me-now-talk]]"
@@ -44,9 +45,33 @@ related:
   - "[[ai-attribution-audit-2026-08|AI Attribution Audit]]"
   - "[[ai-attribution-primaries-2026-08-17]]"
   - "[[evaluation-containment-failure|Evaluation Containment Failure]]"
+  - "[[agentic-offensive-wave-precursors-2026-11]]"
+  - "[[agentic-offensive-framework]]"
+  - "[[artex]]"
+  - "[[gtig-artex-and-friends]]"
+  - "[[crowdstrike-vapor-panda-artex]]"
+  - "[[fbi-artex-flash-2026-11]]"
+  - "[[talos-artex-and-beyond]]"
+  - "[[microsoft-storm-0940-artex]]"
 sources:
   - "[[.raw/articles/xbow-mythos-evaluation-2026-05-13.md]]"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
+  - "https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks"
+  - "https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/"
+  - "https://www.crowdstrike.com/en-us/blog/vapor-panda-uses-artex-to-scale-global-campaign/"
+  - "https://blog.talosintelligence.com/artex-and-beyond/"
+  - "[[.raw/articles/gtig-artex-and-friends-2026-10-30.md]]"
+  - "[[.raw/articles/microsoft-storm-0940-artex-2026-10-21.md]]"
+  - "[[.raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md]]"
+  - "[[.raw/articles/talos-artex-and-beyond-2026-11-13.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md"
+  - ".raw/articles/gtig-artex-and-friends-2026-10-30.md"
+  - ".raw/articles/microsoft-storm-0940-artex-2026-10-21.md"
+  - ".raw/articles/talos-artex-and-beyond-2026-11-13.md"
+verified_findings: 0
+verified_note: "ARTEX propagation paragraph and position-history entry only, by targeted grep except CrowdStrike read whole; operator-absence claim scoped to the reports read; gap callout converted to prose; sec-against-ai axis added."
 ---
 
 # Offensive AI: State of the Field
@@ -86,6 +111,8 @@ Two qualifications bound the OpenAI–Hugging Face reading. The agents did not s
 
 The distinction matters to this page's trend line. Purpose-built harnesses with verification loops (GTG-1002, Taiwan, the OpenAI–Hugging Face collective) and commodity model use by a financially motivated crew are different capabilities with different evidence, and reading them as one curve overstates the slope.
 
+**Commodity and purpose-built tooling merged in the second half of 2026.** ARTEX, an open-source framework published on GitHub in July 2026, put a planner-and-worker harness of the GTG-1002 and Taiwan kind in public hands. [[gtig-artex-and-friends|GTIG]] reports it adopted since late August "across the motivational spectrum", [[microsoft-storm-0940-artex|Microsoft]] reports the China-state aligned Storm-0940 using it as early as September 2026, and [[crowdstrike-vapor-panda-artex|CrowdStrike]] reports VAPOR PANDA running it against more than 200 organizations from 17 October.[^gtig-artex][^ms-0940][^cs-vp] The [[fbi-artex-flash-2026-11|FBI]] consolidated that reporting in a TLP:CLEAR FLASH, and [[talos-artex-and-beyond|Talos]] describes operators who "typically set the objective and provided limited direction".[^talos-artex] The operator keeps the seat: CrowdStrike's recovered transcripts show a human "intervening only to steer the agents at decision points".[^cs-vp] The wave therefore adds no case with an absent operator in the reports read. It does change the distinction drawn above: a multi-agent harness is now commodity tooling, so the harness no longer separates state-grade operations from criminal use. [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] tests whether the wave changed attacker intent and finds a change in speed, scale and actor mix under unchanged objectives; [[agentic-offensive-framework|Agentic Offensive Framework]] defines the class.
+
 **Autonomy is one axis; operator skill is a second, and it moves independently.** The cases above are ordered by where the human sits in the operation. That ordering says nothing about what the human had to know to sit there, and the two properties vary separately. [[gtg-2002-vibe-hacking-extortion|GTG-2002]] keeps the operator on the keyboard throughout, the least autonomous configuration on this page, and still reaches at least 17 organizations across government, healthcare, emergency services, and religious institutions in roughly a month. Claude Code performed the reconnaissance, the credential attacks, the evasion iteration after Windows Defender blocked the first attempt, and the ransom pricing drawn from the victim's own exfiltrated financials.[^tir-vh] [[gtg-5004-no-code-ransomware|GTG-5004]] sold working ransomware with two direct-syscall EDR bypasses while, per Anthropic's prompt-record assessment, being unable to implement encryption or Windows internals manipulation unaided.[^tir-5004]
 
 Anthropic's [[llm-attack-navigator|LLM ATT&CK Navigator]] supplies the population measurement behind the two cases: across 832 banned accounts, assessed technical sophistication correlates with the rest of the risk score at r = 0.28, technique breadth at r = 0.27, and interface choice not at all, since 80% of the population used an agentic coding tool. The share of actors scoring medium risk or higher rose from 33% to 56% within the study year, which Anthropic attributes partly to low- and mid-skill actors moving into live-operations work without becoming more skilled.[^nav]
@@ -106,8 +133,7 @@ The page's position is amended rather than overturned. Nothing here weakens the 
 
 [[xbow|XBOW]] operates as a multi-model orchestration layer (Opus 4.7, Sonnet 4.6, Haiku 4.5, GPT 5.5, plus preview-stage [[mythos|Mythos]]) that converts frontier-model vulnerability candidates into validated exploits via live-site interaction harnesses. Its evaluation reports a 42% false-negative reduction versus Opus 4.6 on its own web-exploit benchmark, 55% with source-code access, when paired with Mythos.[^xbow-eval] XBOW fits at Tier 5 (Vendor Evaluation) of the [[red-teaming-capability-framework|Red Teaming Capability Framework]].
 
-> [!gap] Prophet AI / Dropzone (offensive-side)
-> Both have offensive-adjacent capabilities under SOC framing. Need clarification of where they sit on the WITH-AI vs. FOR-AI axis.
+Prophet AI and Dropzone have offensive-adjacent capabilities under SOC framing, and their position on the WITH-AI and FOR-AI axis is unresolved.
 
 Neither counter-example bears on autonomy. XBOW and the SOC-framed tools run under human direction throughout, so the distinction between an operator with a copilot and an unoperated agent remains drawn by the [[openai-hugging-face-agent-incident|OpenAI–Hugging Face agent incident]] rather than by any tool on this axis.
 
@@ -122,6 +148,7 @@ Neither counter-example bears on autonomy. XBOW and the SOC-framed tools run und
 - **2026-08-16.** Anthropic's [[anthropic-threat-intelligence-reports|threat intelligence report series]] and the [[llm-attack-navigator|LLM ATT&CK Navigator]] add a second axis alongside autonomy. The page had been ordering incidents by operator position and treating that ordering as the measure of how far offense had moved; [[gtg-2002-vibe-hacking-extortion|GTG-2002]] and [[gtg-5004-no-code-ransomware|GTG-5004]] sit at the least-autonomous end and still represent a change, because the operator's required skill fell rather than the operator's involvement. The autonomy claims are unchanged. [[capability-floor-collapse|Capability Floor Collapse]] carries the new axis.
 - **2026-08-16.** [[ai-attribution-audit-2026-08|The AI attribution audit]] added a bound in the other direction. The page had accumulated attested cases without a denominator; the audit supplies one for a seven-incident sample and finds four with no reported AI involvement. Nothing already on the page was withdrawn — every case cited here carries a named source for its mechanism — but the field-level claim now reads as a narrower capability than the volume of "AI-enabled" reporting implies, and the page adds AI-at-the-human-interface (deepfake identity, synthetic voice) as a second attested mode alongside agentic exploitation.
 - **2026-08-17.** [[ai-attribution-primaries-2026-08-17|A primary-source review]] re-tested the audit's seven findings against eleven primary documents, including two victim notice letters and the eleven-nation government alert. No verdict flipped; four unsupported findings became sourced negatives, and the DPRK mechanism narrowed to what the alert states rather than to a secondary source's rendering of it. The page adds AI-as-planner-and-tool-developer as a third attested mode, alongside AI-at-the-human-interface and agentic exploitation, from the FortiGate campaign's use of models to write attack plans, reconnaissance tooling, and configuration parsers while the human operator ran them.
+- **2026-11-18.** The ARTEX reporting from GTIG, Microsoft, CrowdStrike, Talos and the FBI moved the page's line between purpose-built harnesses and commodity use. A planner-and-worker harness became a public download in July 2026 and reached state-aligned operators within about six weeks. The autonomy claims and the open gap are unchanged, because every ARTEX case keeps a human setting the objective.
 
 ## Open sub-questions
 
@@ -139,3 +166,7 @@ Neither counter-example bears on autonomy. XBOW and the SOC-framed tools run und
 [^nav]: Kyla Guru, Alex Moix, and Jacob Klein, [*Mapping AI-enabled cyber threats: Insights from the LLM ATT&CK Navigator*](https://red.anthropic.com/2026/attack-navigator/), Anthropic Frontier Red Team (2026-06-03). 832 accounts, March 2025 – March 2026; medium-risk-or-higher share 33.5% to 56.1%. See [[llm-attack-navigator|LLM ATT&CK Navigator]].
 [^ic3]: IC3, [Alert to Countries, Companies, and Other Entities Regarding North Korean IT Workers](https://www.ic3.gov/CSA/2026/260731.pdf), eleven-nation joint advisory (2026-07-31). States "the integration of AI" as a DPRK identity-obfuscation method and lists video feeds "that appear to be manipulated or artificially generated" as a hiring-interview screening indicator; does not use the word deepfake. See [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
 [^aws-fg]: Amazon Threat Intelligence, [AI-augmented threat actor accesses FortiGate devices at scale](https://aws.amazon.com/blogs/security/ai-augmented-threat-actor-accesses-fortigate-devices-at-scale/), AWS (2026-02-20). More than 600 devices across more than 55 countries, 2026-01-11 to 2026-02-18, with no exploitation of any FortiGate vulnerability. See [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
+[^gtig-artex]: [Google Threat Intelligence Group — ARTEX and Friends: Enter Agentic Offensive Frameworks](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks), 2026-10-30. Adoption since late August 2026 across financially motivated and suspected espionage actors. See [[gtig-artex-and-friends|GTIG ARTEX and Friends Report]].
+[^ms-0940]: [Microsoft Threat Intelligence — AI-driven, large-scale nation-state campaign using ARTEX enables supply chain compromise](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/), 2026-10-21. Storm-0940's ARTEX use from September 2026.
+[^cs-vp]: [CrowdStrike — VAPOR PANDA Uses AI-Driven ARTEX to Grow Global Espionage Campaign](https://www.crowdstrike.com/en-us/blog/vapor-panda-uses-artex-to-scale-global-campaign/), 2026-10-29. More than 200 organizations targeted from 17 October 2026; the operator's role in the recovered transcripts.
+[^talos-artex]: [Cisco Talos — ARTEX and beyond: AI-enabled penetration testing platforms](https://blog.talosintelligence.com/artex-and-beyond/), 2026-11-13. Operators' role in reported ARTEX campaigns.

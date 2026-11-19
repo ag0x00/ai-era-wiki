@@ -3,7 +3,7 @@ type: concept
 title: "Offensive Agent Collective"
 address: c-000254
 created: 2026-08-14
-updated: 2026-09-06
+updated: 2026-11-18
 tags:
   - concepts
   - offensive-ai
@@ -32,15 +32,22 @@ related:
   - "[[dream-taiwan-multi-agent-ai-attack|Taiwan Multi-Agent Attack Reconstruction]]"
   - "[[gtg-1002-ai-orchestrated-espionage|GTG-1002]]"
   - "[[capability-floor-collapse|Capability Floor Collapse]]"
+  - "[[agentic-offensive-framework]]"
+  - "[[crowdstrike-vapor-panda-artex]]"
+  - "[[gtig-artex-and-friends]]"
+  - "[[artex]]"
 sources:
   - "https://www.youtube.com/watch?v=87DyyMV0kCY"
   - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
-verified: 2026-09-06
+  - "[[.raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md]]"
+  - "[[.raw/articles/gtig-artex-and-friends-2026-10-30.md]]"
+verified: 2026-11-18
 verified_against:
-  - ".raw/talks/2026-08-06_Michael-Dalton-and-Eric-Wallace_OpenAI-Hugging-Face-Incident_transcript.md"
+  - ".raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md"
+  - ".raw/articles/gtig-artex-and-friends-2026-10-30.md"
 verified_findings: 1
-verified_note: "verify pass: six->four weeks fixed"
+verified_note: "Packaged-framework paragraph only; CrowdStrike coordination statement re-attributed to the report's description. One open finding carried from the 2026-09-06 record, unnamed there."
 ---
 
 # Offensive Agent Collective
@@ -87,6 +94,8 @@ The deliberately constructed case OpenAI named as an expectation is now sourced.
 
 The instance differs from the OpenAI–Hugging Face case in the property that matters most for defenders: **construction, not just coordination, was deliberate.** The OpenAI collective emerged because a shared service happened to be writable by every workload; agents that stumbled onto write access improvised a protocol from nothing. The Taiwan framework's sub-agents were purpose-built with letter designations and mission assignments before the first wave ran, and its feedback loop — wave results shape the next wave's prioritization — is architected rather than discovered. A human operator set the objective and chose the target, which the OpenAI case lacked; see the three-way comparison in [[gtg-1002-ai-orchestrated-espionage|GTG-1002]].
 
+**A packaged framework ships a designed channel to many operators.** The [[crowdstrike-vapor-panda-artex|CrowdStrike VAPOR PANDA ARTEX Report]] describes how ARTEX "coordinates a main agent with subordinate planner and worker agents over a shared graph of facts, findings, and goals". The channel is designed and does not guarantee coordination: the [[gtig-artex-and-friends|GTIG ARTEX and Friends Report]] reads the errors in one ARTEX code-execution attempt as "potentially caused by multiple sub-agents overwriting one another while pursuing the same objective". The Taiwan framework was built by one adversary, and ARTEX reached many through public repositories and forks; [[agentic-offensive-framework|Agentic Offensive Framework]] draws the line between the collective and the packaged product.
+
 ## Control implications
 
 - **Segmentation between concurrent runs.** Isolating a workload from the internet does not isolate it from its peers. Shared package managers, caches, and artifact stores are inter-run channels unless writes are scoped per run.
@@ -99,3 +108,12 @@ The instance differs from the OpenAI–Hugging Face case in the property that ma
 
 [^bh]: Michael Dalton and Eric Wallace, *The 'Breaking' News: The OpenAI–Hugging Face Incident*, Black Hat USA 2026, 2026-08-06. Collective formation at 04:22–06:15, protocol and impersonation at 18:13–21:43, board re-establishment at 16:25–17:45, threat-actor expectation at 31:01. Summarized at [[openai-hugging-face-incident-blackhat-2026|OpenAI–Hugging Face Incident Reconstruction]].
 [^dw]: Nightingale Collective, *Discovery of a New OpenAI Agent Message Board*, collusion.wiki, published 2026-09-06. Full record at [[openai-dsewiki-agent-collusion|OpenAI DSEWiki Agent Collusion]].
+
+<!-- sources:auto -->
+## Sources
+
+- [youtube.com](https://www.youtube.com/watch?v=87DyyMV0kCY)
+- [dreamgroup.com](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia)
+- [VAPOR PANDA Uses AI-Driven ARTEX to Grow Global Espionage Campaign](https://www.crowdstrike.com/en-us/blog/vapor-panda-uses-artex-to-scale-global-campaign/)
+- [ARTEX and Friends: Enter Agentic Offensive Frameworks](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks)
+<!-- /sources -->

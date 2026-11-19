@@ -3,7 +3,7 @@ type: concept
 title: "Non-Human Identity (NHI)"
 address: c-000187
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-11-18
 tags:
   - concepts
   - identity
@@ -46,15 +46,25 @@ related:
   - "[[ping-enterprise-personal-agent-access]]"
   - "[[agentdesktop]]"
   - "[[agent-catalog]]"
+  - "[[storm-0940-artex-connectwise]]"
+  - "[[microsoft-storm-0940-artex]]"
+  - "[[gtig-artex-and-friends]]"
+  - "[[agentic-offensive-framework]]"
+  - "[[agentic-offensive-wave-precursors-2026-11]]"
 sources:
   - "https://owasp.org/www-project-non-human-identities-top-10/"
   - "https://spiffe.io/docs/latest/spiffe-specs/spiffe-id/"
   - "https://spiffe.io/docs/latest/spire-about/spire-concepts/"
   - "https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers"
-verified: 2026-09-29
-verified_against: []
+  - "https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/"
+  - "[[.raw/articles/microsoft-storm-0940-artex-2026-10-21.md]]"
+  - "[[.raw/articles/gtig-artex-and-friends-2026-10-30.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/gtig-artex-and-friends-2026-10-30.md"
+  - ".raw/articles/microsoft-storm-0940-artex-2026-10-21.md"
 verified_findings: 0
-verified_note: "Current SPIFFE and SPIRE documentation plus primary Wiz incident report checked 2026-09-29."
+verified_note: "Storm-0940 ConnectWise paragraph only, by targeted grep."
 ---
 
 # Non-Human Identity (NHI)
@@ -96,6 +106,8 @@ A short-lived credential limits exposure but does not establish least privilege.
 
 The [Wiz report on a Microsoft AI research repository](https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers) documents a broadly scoped storage access token exposed through a public link. It illustrates the consequence of credential scope and disclosure; it is not evidence of an autonomous agent compromise.
 
+The [[storm-0940-artex-connectwise|Storm-0940 ARTEX Supply-Chain Campaign]] shows the consequence for a multi-tenant application principal. Agents acting for the actor authenticated as compromised ConnectWise application identities, which customer tenants had already consented to, so no user sign-in took place. Microsoft warns that credentials the agents added "can remain active as a backdoor even after the original compromised application is mediated", and its guidance reviews each tenant's audit records by application ID before cleanup; the [[microsoft-storm-0940-artex|Microsoft Storm-0940 ARTEX Report]] carries the steps. Against the [[agentic-offensive-framework|Agentic Offensive Framework]] class, the [[gtig-artex-and-friends|GTIG ARTEX and Friends Report]] states the general rule: replace long-lived secrets with short-lived and tightly scoped credentials, and treat service principals and API keys with the rigor applied to privileged human accounts. [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] lists third-party consent review among the changes the ARTEX wave makes urgent.
+
 ## Assessment use
 
 [[agentic-ai-security-cmm-d2-identity|CMM D2]] owns principal and credential governance, including task binding. [[agentic-ai-security-cmm-d3-control-least-agency|D3]] owns the call-time authorization decision even when the principal is valid. [[agentic-ai-security-cmm-d7-observability|D7]] owns the action record that attributes a call to an agent and accountable human. The [[agentic-ai-security-reference-architecture|Reference Architecture]] places identity issuance and credential use at different trust boundaries; neither a certificate nor a vendor's “agent identity” label substitutes for evidence of the deployed principal and its effective grants.
@@ -107,4 +119,6 @@ The [Wiz report on a Microsoft AI research repository](https://www.wiz.io/blog/3
 - [spiffe.io](https://spiffe.io/docs/latest/spiffe-specs/spiffe-id/)
 - [spiffe.io](https://spiffe.io/docs/latest/spire-about/spire-concepts/)
 - [wiz.io](https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers)
+- [microsoft.com](https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/)
+- [ARTEX and Friends: Enter Agentic Offensive Frameworks](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks)
 <!-- /sources -->

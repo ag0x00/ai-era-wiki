@@ -2,11 +2,11 @@
 type: domain
 title: "Incidents"
 created: 2026-04-30
-updated: 2026-09-22
+updated: 2026-11-18
 tags: [domain, incidents]
 status: developing
 subdomain_of: ""
-page_count: 31
+page_count: 32
 ---
 
 # Incidents Index
@@ -107,6 +107,7 @@ No incident page is currently maintained as a rolling tally. [[mcp-cves-q1-2026|
 - [[prt-scan-supply-chain-campaign|prt-scan CI/CD Supply-Chain Campaign]]
 - [[sandworm-mode-npm-worm|SANDWORM_MODE npm Worm: AI Toolchain Poisoning]]
 - [[slack-ai-private-channel-exfiltration|Slack AI Private-Channel Data Exfiltration]]
+- [[storm-0940-artex-connectwise|Storm-0940 ARTEX Supply-Chain Campaign]] — In October 2026 the actor Microsoft tracks as Storm-0940 used the ARTEX agentic penetration testing framework to turn a compromise of Con...
 - [[taiwan-ai-agent-government-intrusion|Taiwan AI-Agent Government Intrusion]] — A deliberately constructed multi-agent AI framework — up to eight lettered sub-agents orchestrated on Hermes and OpenClaw — ran a near-au...
 - [[unit-42-prompt-injection-observations|Unit 42 In-the-Wild Prompt Injection Observations]]
 

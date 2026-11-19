@@ -2,11 +2,11 @@
 type: domain
 title: "Concepts"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-11-18
 tags: [domain, concepts]
 status: seed
 subdomain_of: ""
-page_count: 91
+page_count: 92
 ---
 
 # Concepts Index
@@ -26,6 +26,7 @@ Domain concepts that don't fit neatly into a framework, architecture, or practic
 - [[agent-memory-isolation|Agent Memory Isolation]]
 - [[agent-message-structure-manipulation|Agent Message Structure Manipulation]] — An attacker forges, replays, or alters the structured messages passing between agents, tools, and orchestration layers, changing task par...
 - [[agentic-ai-threat-classes-2026|Agentic AI Threat Classes]] — This register helps an architect select tests for a defined deployment shape.
+- [[agentic-offensive-framework|Agentic Offensive Framework]] — An agentic offensive framework is a packaged, reusable tool in which large language model (LLM) agents plan and run an intrusion against...
 - [[agents-rule-of-two|Agents Rule of Two]] — The Agents Rule of Two states that within a single session an agent should hold no more than two of three properties:...
 - [[ai-agent-layered-council|AI Agent Layered Council]] — The AI Agent Layered Council is a Gartner-coined organizing primitive for co-led scaling of agentic AI across the C-suite.
 - [[ai-agent-management-platform|AI Agent Management Platform (AMP)]] — An AI Agent Management Platform (AMP) is a unified interface to securely manage, monitor, govern, acquire, organize, and generate analyti...

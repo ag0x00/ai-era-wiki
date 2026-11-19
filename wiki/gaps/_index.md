@@ -2,11 +2,11 @@
 type: domain
 title: "Gaps and Open Questions"
 created: 2026-04-30
-updated: 2026-09-29
+updated: 2026-11-18
 tags: [domain, gaps]
 status: seed
 subdomain_of: ""
-page_count: 13
+page_count: 14
 ---
 
 # Gaps Index
@@ -17,6 +17,7 @@ Open questions, unresolved contradictions, research that's been flagged but not 
 
 
 - [[agentic-ai-security-ra-gaps|Agentic AI Security RA Gaps]] — This register follows twelve implementation and scope questions raised by the Agentic AI Security Reference Architecture.
+- [[agentic-offensive-wave-open-questions|Agentic Offensive Wave Open Questions]] — This page tracks the questions that Agentic Offensive Wave Precursors could not settle from the sources it read.
 - [[agentic-ra-open-design-questions|Agentic AI Security RA: Open Implementation Questions]] — Six implementation questions that the Agentic AI Security Reference Architecture does not prescribe.
 - [[cmm-known-limitations|CMM Known Limitations (current state)]] — The Agentic AI Security Capability Maturity Model defines the domain criteria, and the CMM: Measurement Protocol (Assessor's Handbook) de...
 - [[comprehensive-agentic-ai-security-landscape-2026|Agentic AI Security Startup Landscape]]

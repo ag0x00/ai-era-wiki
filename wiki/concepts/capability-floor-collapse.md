@@ -3,7 +3,7 @@ type: concept
 title: "Capability Floor Collapse"
 address: c-000289
 created: 2026-08-16
-updated: 2026-08-17
+updated: 2026-11-18
 tags:
   - concepts
   - offensive-ai
@@ -33,11 +33,29 @@ related:
   - "[[gtg-1002-ai-orchestrated-espionage]]"
   - "[[offensive-agent-collective]]"
   - "[[ai-attribution-primaries-2026-08-17]]"
+  - "[[agentic-offensive-wave-precursors-2026-11]]"
+  - "[[agentic-offensive-framework]]"
+  - "[[gtig-artex-and-friends]]"
+  - "[[fbi-artex-flash-2026-11]]"
+  - "[[crowdstrike-vapor-panda-artex]]"
 sources:
   - "[[.raw/reports/anthropic-threat-intelligence-report-2025-08.pdf]]"
   - "[[.raw/articles/anthropic-llm-attack-navigator-2026-06-03.md]]"
   - "https://www.verizon.com/business/resources/reports/2026-dbir-data-breach-investigations-report.pdf"
   - "https://red.anthropic.com/2026/attack-navigator/"
+  - "https://www.anthropic.com/threat-intelligence-report-september-2026"
+  - "[[.raw/articles/anthropic-countering-misuse-ai-2026-09.md]]"
+  - "[[.raw/articles/gtig-artex-and-friends-2026-10-30.md]]"
+  - "[[.raw/reports/fbi-flash-20261113-001-artex-2026-11-13.md]]"
+  - "[[.raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/anthropic-countering-misuse-ai-2026-09.md"
+  - ".raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md"
+  - ".raw/articles/gtig-artex-and-friends-2026-10-30.md"
+  - ".raw/reports/fbi-flash-20261113-001-artex-2026-11-13.md"
+verified_findings: 0
+verified_note: "Motivation-floor bound rewrite only, by targeted grep; footnote section name corrected."
 ---
 
 # Capability Floor Collapse
@@ -85,7 +103,7 @@ Four limits keep the claim narrow enough to be useful.
 
 **The floor is set by the least-safeguarded model an actor can reach.** Every case here ended in an account ban, and Anthropic's responses were per-pattern classifiers, request-level cyber safeguards, and detection for malware generation.[^nav-safeguards] The floor is therefore a property of the deployment surface rather than of model capability in the abstract, and it moves when safeguards, open-weight availability, or verification programs move.
 
-**A skill floor is not a motivation floor.** The bound on the population that can now run these operations is the population that wants to. Nothing in the evidence speaks to whether that second population is growing.
+**A skill floor is not a motivation floor.** The bound on the population that can now run these operations is the population that wants to. Anthropic's September 2026 report states that the main distinguishing feature between criminal and state-sponsored actors "is no longer sophistication but intent", and that lower costs make "previously marginal targets viable".[^anth-2609] That evidence speaks to which targets a motivated actor now attacks, and it does not show the motivated population growing. The ARTEX reporting fits the same reading. [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] finds a change in target selection under unchanged objectives once the [[agentic-offensive-framework|Agentic Offensive Framework]] class reached state-aligned and criminal operators. The novice-user statements in the [[gtig-artex-and-friends|GTIG ARTEX and Friends Report]] and the [[fbi-artex-flash-2026-11|FBI ARTEX FLASH Advisory]] describe the tools' design rather than an observed operator, and the [[crowdstrike-vapor-panda-artex|CrowdStrike VAPOR PANDA ARTEX Report]] places an established state adversary in the objective-setting row, so the middle-right cell stays unsourced.
 
 **No defender-side counterpart is sourced.** The evidence describes attacker floors falling. The wiki carries no equivalent measurement showing that the minimum skill needed to *defend* an estate has fallen by a comparable amount, which leaves this as the second unmatched asymmetry alongside the automated-offense-without-automated-defense claim on [[offensive-ai-state-of-the-field|Offensive AI: State of the Field]].
 
@@ -128,3 +146,15 @@ Four limits keep the claim narrow enough to be useful.
 [^nav-safeguards]: Ibid., "How we are using the Navigator to inform our safeguards": classifier and probe updates, request-level cyber safeguards on the most capable models, and the Cyber Verification Program for dual-use defensive practitioners.
 
 [^dbir-novelty]: Verizon Business, [*2026 Data Breach Investigations Report*](https://www.verizon.com/business/resources/reports/2026-dbir-data-breach-investigations-report.pdf), GenAI section: AI-assisted malware carried a median of 55 known prior examples performing the same function, and under 2.5% of observations involved uncommon techniques with one or fewer prior examples. Summary at [[verizon-dbir-2026|Verizon DBIR 2026]].
+[^anth-2609]: [Anthropic — Countering misuse of AI: September 2026](https://www.anthropic.com/threat-intelligence-report-september-2026), September 2026, covering activity disrupted from December 2025 to August 2026. "Prevailing trends" section of the cyber operations case studies.
+
+<!-- sources:auto -->
+## Sources
+
+- [Mapping AI-enabled cyber threats: Insights from the LLM ATT&CK Navigator](https://red.anthropic.com/2026/attack-navigator/)
+- [verizon.com](https://www.verizon.com/business/resources/reports/2026-dbir-data-breach-investigations-report.pdf)
+- [anthropic.com](https://www.anthropic.com/threat-intelligence-report-september-2026)
+- [ARTEX and Friends: Enter Agentic Offensive Frameworks](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks)
+- [Threat Overview of ARTEX Autonomous Penetration Testing Framework (FLASH-20261113-001)](https://www.ic3.gov/CSA/2026/261113.pdf)
+- [VAPOR PANDA Uses AI-Driven ARTEX to Grow Global Espionage Campaign](https://www.crowdstrike.com/en-us/blog/vapor-panda-uses-artex-to-scale-global-campaign/)
+<!-- /sources -->

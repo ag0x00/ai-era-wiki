@@ -3,7 +3,7 @@ type: paper
 title: "Anthropic Threat Intelligence Reports"
 address: c-000285
 created: 2026-08-16
-updated: 2026-08-16
+updated: 2026-11-18
 tags:
   - papers
   - threat-intel
@@ -35,10 +35,18 @@ related:
   - "[[offensive-ai-state-of-the-field]]"
   - "[[agentic-ai-threat-classes-2026]]"
   - "[[verizon-dbir-2026]]"
+  - "[[agentic-offensive-wave-precursors-2026-11]]"
 sources:
   - "[[.raw/reports/anthropic-threat-intelligence-report-2025-08.pdf]]"
   - "https://www-cdn.anthropic.com/b2a76c6f6992465c09a6f2fce282f6c0cea8c200.pdf"
   - "https://red.anthropic.com/2026/attack-navigator/"
+  - "https://www.anthropic.com/threat-intelligence-report-september-2026"
+  - "[[.raw/articles/anthropic-countering-misuse-ai-2026-09.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/anthropic-countering-misuse-ai-2026-09.md"
+verified_findings: 0
+verified_note: "September 2026 edition row, series sentence and economic-reading paragraph only."
 ---
 
 # Anthropic Threat Intelligence Reports
@@ -51,7 +59,7 @@ Model-vendor abuse telemetry is an evidence class of its own. A vendor sees the 
 
 ## Series and editions
 
-Anthropic publishes these as a continuing series and states the intent to keep doing so.[^tir-exec] The wiki tracks four artifacts in the line, of which the first two are the same reporting cadence and the third and fourth are its analytic products.
+Anthropic publishes these as a continuing series and states the intent to keep doing so.[^tir-exec] The wiki tracks five artifacts in the line. The August 2025 and September 2026 editions and the GTG-1002 disclosure are the reporting cadence, and the Navigator and the DBIR contribution are its analytic products.
 
 | Edition | Date | Contents | Wiki page |
 |---|---|---|---|
@@ -59,8 +67,11 @@ Anthropic publishes these as a continuing series and states the intent to keep d
 | GTG-1002 disclosure | Nov 2025 | The first reported AI-orchestrated espionage campaign, published as a standalone report rather than a series edition | [[gtg-1002-ai-orchestrated-espionage\|GTG-1002: AI-Orchestrated Espionage Campaign]] |
 | LLM ATT&CK Navigator | Jun 2026 | A year of banned-account telemetry mapped to MITRE ATT&CK, plus the ARiES scoring methodology | [[llm-attack-navigator\|LLM ATT&CK Navigator]] |
 | Verizon DBIR 2026 contribution | 2026 | Eleven months of the Navigator dataset, published inside a third-party breach report | [[verizon-dbir-2026\|Verizon DBIR 2026]] |
+| Countering misuse of AI: September 2026 | Sep 2026 | Activity disrupted from December 2025 to August 2026 across seven harm areas | [[agentic-offensive-wave-precursors-2026-11\|Agentic Offensive Wave Precursors]] |
 
 The August 2025 edition and the Navigator draw on overlapping populations: the Navigator's window opens in March 2025, five months before the report, and both rest on accounts banned under the same Usage Policy enforcement pipeline.
+
+The September 2026 edition states the series' economic reading most directly. AI autonomy compresses the cost side of attacker returns "while leaving potential payoffs largely unchanged", and the main distinguishing feature between criminal and state-sponsored actors "is no longer sophistication but intent".[^tir-2609] [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] uses both statements to test whether the ARTEX wave changed attacker intent.
 
 ## Case studies in the August 2025 edition
 
@@ -121,3 +132,4 @@ A ninth case, synthetic-identity services, is listed in the report but its body 
 [^tir-fraud]: Ibid., "AI-enhanced fraud", pp. 21–26.
 [^tir-mitigations]: Ibid., mitigation paragraphs at pp. 10, 14, and 17.
 [^nav-dbir]: Kyla Guru, Alex Moix, and Jacob Klein, [*Mapping AI-enabled cyber threats: Insights from the LLM ATT&CK Navigator*](https://red.anthropic.com/2026/attack-navigator/), Anthropic Frontier Red Team, 2026-06-03, footnote 1: "For the DBIR, we provided analysis of 11 months of threat actor data, and rounded this out to 12 months for this report."
+[^tir-2609]: Anthropic, [*Countering misuse of AI: September 2026*](https://www.anthropic.com/threat-intelligence-report-september-2026), September 2026, "Prevailing trends" section of the cyber operations case studies. Covers activity disrupted from December 2025 to August 2026.

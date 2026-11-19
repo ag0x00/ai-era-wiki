@@ -3,7 +3,7 @@ type: paper
 title: "LLM ATT&CK Navigator"
 address: c-000288
 created: 2026-08-16
-updated: 2026-08-16
+updated: 2026-11-18
 tags:
   - papers
   - threat-intel
@@ -39,11 +39,19 @@ related:
   - "[[offensive-ai-state-of-the-field]]"
   - "[[mitre]]"
   - "[[anthropic]]"
+  - "[[crowdstrike-vapor-panda-artex]]"
+  - "[[agentic-offensive-framework]]"
 sources:
   - "[[.raw/articles/anthropic-llm-attack-navigator-2026-06-03.md]]"
   - "[[.raw/articles/anthropic-ai-enabled-cyber-threats-mitre-attack-2026-06-03.md]]"
   - "https://red.anthropic.com/2026/attack-navigator/"
   - "https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack"
+  - "[[.raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md]]"
+verified: 2026-11-18
+verified_against:
+  - ".raw/articles/crowdstrike-vapor-panda-artex-2026-10-29.md"
+verified_findings: 0
+verified_note: "CrowdStrike relation bullet only."
 ---
 
 # LLM ATT&CK Navigator
@@ -136,6 +144,7 @@ Three observations follow for the wiki's taxonomy pages.
 - **Extends** [[mitre-atlas|MITRE ATLAS]] — adds an externally-argued gap in the sibling framework, and clarifies which of the two catalogs should carry agentic-orchestration coverage.
 - **Extends** [[threat-taxonomy-reconciliation|Threat Taxonomy Reconciliation]] — a candidate eighth taxonomy for the crosswalk, structured as cross-cutting categories rather than a catalog.
 - **Tempers** [[verizon-dbir-2026|Verizon DBIR 2026]] — establishes shared provenance for the GenAI half of that report.
+- **Illustrated by** [[crowdstrike-vapor-panda-artex|CrowdStrike VAPOR PANDA ARTEX Report]] — CrowdStrike maps VAPOR PANDA's use of ARTEX to T1588.007 (Obtain Capabilities: Artificial Intelligence), which records that an agentic framework was obtained and leaves unrecorded how far it ran unattended, the missing dimension this report names.
 
 ## See also
 

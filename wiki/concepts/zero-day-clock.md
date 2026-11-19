@@ -3,7 +3,7 @@ type: concept
 title: "Zero Day Clock"
 address: c-000070
 created: 2026-05-15
-updated: 2026-08-31
+updated: 2026-11-18
 tags:
   - concepts
   - zero-day-clock
@@ -39,6 +39,8 @@ related:
   - "[[llm-attack-navigator|LLM ATT&CK Navigator]]"
   - "[[autonomous-code-security-google-talk|Autonomous Code Security at Google]]"
   - "[[cybergym|CyberGym Benchmark]]"
+  - "[[agentic-offensive-wave-precursors-2026-11]]"
+  - "[[agentic-offensive-framework]]"
 sources:
   - "[[.raw/articles/zero-day-clock-the-collapse-2026-05-25.md]]"
   - "[[.raw/articles/zero-day-clock-call-to-action-2026-05-25.md]]"
@@ -46,18 +48,27 @@ sources:
   - "[[anthropic-glasswing-initial-update|Glasswing initial update]]"
   - "https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia"
   - "https://www.cybergym.io/cybergym/"
+  - "https://ellio.tech/en/blog/wp2shell-in-the-wild-under-48-hours-from-patch-to-mass-exploitation/"
+  - "https://www.slcyber.io/blog/wp2shell-discovering-one-of-2026s-biggest-zero-days-and-the-future-of-exposure-management"
+  - "https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks"
+  - "[[.raw/articles/ellio-wp2shell-patch-to-mass-exploitation-2026-07-21.md]]"
+  - "[[.raw/articles/slcyber-wp2shell-exposure-management-2026-08-19.md]]"
+  - "[[.raw/articles/gtig-artex-and-friends-2026-10-30.md]]"
+  - "[[.raw/articles/wordpress-7-0-2-security-release-2026-07-17.md]]"
 homepage: "https://zerodayclock.com"
 coined_by:
   - "[[sysdig]]"
-verified: 2026-08-31
+verified: 2026-11-18
 verified_against:
   - ".raw/articles/anthropic-glasswing-initial-update-2026-05-22.md"
-  - ".raw/articles/cybergym-benchmark-2026-08-31.md"
-  - ".raw/articles/zero-day-clock-call-to-action-2026-05-25.md"
-  - ".raw/articles/zero-day-clock-the-collapse-2026-05-25.md"
+  - ".raw/articles/ellio-wp2shell-patch-to-mass-exploitation-2026-07-21.md"
+  - ".raw/articles/gtig-artex-and-friends-2026-10-30.md"
+  - ".raw/articles/moak-how-it-works-2026-04-09.md"
+  - ".raw/articles/slcyber-wp2shell-exposure-management-2026-08-19.md"
+  - ".raw/articles/wordpress-7-0-2-security-release-2026-07-17.md"
   - ".raw/papers/mythos-ready-csa-sans-unprompted-v1.0-2026-04-12.pdf"
 verified_findings: 1
-verified_note: "CyberGym block read against the cybergym-benchmark raw doc: 969-day and 431-project figures exact; 'four of them the same bug' restated as four of GPT-5's overlapping with GPT-4.1's. Other sources not read."
+verified_note: "wp2shell paragraph (ELLIO by targeted grep only), Glasswing and MOAK bullets, briefing caveat; MOAK claims corrected to the source. One open finding carried from the 2026-08-31 record, unnamed there; rest of page not re-read."
 ---
 
 # Zero Day Clock
@@ -88,11 +99,7 @@ The clock frames the current state as a structural inversion. An exploit is crea
 
 ## Measurement scope of the curve
 
-> [!quote] Caveat, per the Mythos-ready briefing
-> "It is worth noting that the historical collapse in time-to-exploit has not yet produced a proportional increase in the impact of exploitation. Many of the most consequential incidents of recent years involved credential abuse, social engineering, or supply chain compromise rather than zero-day exploitation. The Zero Day Clock trend is a leading indicator of where attacker capability is heading, not a direct measure of current damage."
-> — [[mythos-ready-briefing|Mythos-ready briefing]], Appendix A
-
-The clock measures where attacker capability is heading. Current losses are still dominated by credential abuse, social engineering, and supply chain compromise. The argument is that AI-driven capability eventually flows into the impact channel; the clock is the leading indicator of when.
+The [[mythos-ready-briefing|Mythos-ready briefing]] bounds the curve in its Appendix A: "the historical collapse in time-to-exploit has not yet produced a proportional increase in the impact of exploitation", and it names credential abuse, social engineering and supply chain compromise as the routes of the most consequential recent incidents. The clock therefore measures where attacker capability is heading, and the briefing calls it "a leading indicator", not "a direct measure of current damage". The argument is that AI-driven capability eventually flows into the impact channel; the clock is the leading indicator of when.
 
 Four further caveats bound the reading:
 
@@ -118,11 +125,13 @@ A parallel, adversary-side case makes the same point without CVEs at all. In the
 
 - **It is the empirical basis for the window-of-exposure argument** in the [[sdlc-in-the-ai-attacker-era|SDLC in the AI-Attacker Era]] thesis and Risk #1 / Risk #9 of the [[mythos-ready-security-program|Mythos-ready playbook]]. The same claim was previously argued through vendor executive quotes; the clock supplies measured figures.
 - **It is the motivation for [[vulnops|VulnOps]].** When the median exploit arrives on or before disclosure, periodic vulnerability management — a quarterly pen test plus patch-as-CVE-arrives — is structurally outmatched. VulnOps is the continuous response to a continuous-discovery, continuous-exploitation environment.
-- **It pairs with the remediation-side lag.** The clock measures attacker-side TTE; the [[anthropic-glasswing-initial-update|Glasswing funnel]] (6,202 estimated high/critical found, 75 patched) measures defender-side discovery-to-patch lag. The two curves define the window of exposure, and they are diverging — the operational case for VulnOps. As Glasswing puts it, the constraint has moved from finding vulnerabilities to verifying, disclosing, and patching them.
-- **MOAK supplies the mechanism.** [[moak-how-it-works|MOAK's five-agent pipeline]] autonomously exploits 174 of 178 CISA KEVs (97.8%) within hours of disclosure, with Claude Opus 4.6 reaching 98% on post-knowledge-cutoff KEVs. The clock documents that exploitation now precedes or coincides with disclosure; MOAK demonstrates how — no human bottleneck in the exploit-derivation loop.
+- **It pairs with the remediation-side lag.** The clock measures attacker-side TTE; the [[anthropic-glasswing-initial-update|Glasswing funnel]] (6,202 estimated high/critical found, 75 of the 530 reported patched)[^glasswing] measures defender-side discovery-to-patch lag. The two curves define the window of exposure, and they are diverging — the operational case for VulnOps. As Glasswing puts it, the constraint has moved from finding vulnerabilities to verifying, disclosing, and patching them.
+- **MOAK supplies the mechanism.** [[moak-how-it-works|MOAK's five-agent pipeline]] autonomously exploited 174 of the 178 CISA KEVs it tested (97.8%), at the same rate on KEVs disclosed after the models' knowledge cutoffs, and now runs on newly disclosed CVEs as they appear.[^moak] The clock documents that exploitation now precedes or coincides with disclosure; MOAK demonstrates how — no human bottleneck in the exploit-derivation loop.
 - **The queue in front of the clock may stop being sortable.** [[autonomous-code-security-google-talk|Heather Adkins argued at [un]prompted in March 2026]] that agentic frameworks are close to finding every vulnerability in every system, and that CVSS will therefore stop being meaningful as a ranking instrument. The clock measures how fast exploitation follows disclosure; her claim is about whether the disclosures in front of it can still be ordered by severity.
 
 Corroborating the trend from outside the clock's own dataset: VulnCheck reported that, of 159 vulnerabilities first observed exploited in Q1 2025, 28.3% had exploitation evidence within a day of disclosure — nearly one in three.[^vulncheck] Rapid7's 2026 Cyber Threat Landscape Report, on a separate dataset, found confirmed exploitation of newly disclosed high/critical vulnerabilities up 105% year over year (to 146 in 2025) and mean time-to-exploit down from 61.0 to 28.5 days.[^rapid7] The Rapid7 figure is a mean and the clock's is a median; the gap is expected, because a near-zero median with a multi-week mean describes a right-skewed distribution — most exploited flaws are weaponized at or before disclosure, while a slow-exploited tail lifts the mean.
+
+**wp2shell dates one instance of the patch-as-advisory mechanism.** WordPress fixed an AI-discovered pre-authentication chain in core on 17 July 2026. ELLIO's deception network of 700 sensors recorded the first probe the next morning and mass exploitation by 19 July, and CISA listed the chain in its KEV catalog on 21 July.[^wp2shell] The measurement comes from one sensor network, so it dates the start of exploitation and does not measure its reach. [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] sets the case beside the July 2026 release of ARTEX, whose [[agentic-offensive-framework|Agentic Offensive Framework]] class shortens a different interval: GTIG reports one cluster moving from its first compromised account to deep system access in around four hours, a span that starts after the clock stops.[^gtig-artex]
 
 **The clock measures the interval, not the population holding it.** Every figure on this page is a time: days from disclosure to exploitation, hours from KEV publication to a working exploit. Anthropic's vendor telemetry measures the orthogonal quantity, which is who is now able to hold the clock at all — [[gtg-5004-no-code-ransomware|GTG-5004]] shipped ransomware with two direct-syscall EDR bypasses while, per Anthropic's assessment of the prompt record, being unable to implement any of its components unaided, and across 832 banned accounts assessed technical sophistication correlates with the remaining components of Anthropic's risk score at r = 0.28.[^floor] A collapsing interval and a collapsing entry qualification compound: the exposure window is defined by the fastest adversary, and the population able to move at that speed is no longer bounded by how many people can write the exploit. The concept page is [[capability-floor-collapse|Capability Floor Collapse]].
 
@@ -167,13 +176,22 @@ Demand 4 stands: it retires one property class rather than delivering a clean co
 [^dream-taiwan]: Dream Research Labs, [Taiwan Multi-Agent Attack Reconstruction](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia) (2026-08-12). See [[dream-taiwan-multi-agent-ai-attack|the source summary]] and [[taiwan-ai-agent-government-intrusion|the incident record]].
 [^aws-fg]: Amazon Threat Intelligence, [AI-augmented threat actor accesses FortiGate devices at scale](https://aws.amazon.com/blogs/security/ai-augmented-threat-actor-accesses-fortigate-devices-at-scale/), AWS (2026-02-20). More than 600 devices across more than 55 countries, 2026-01-11 to 2026-02-18, with no exploitation of any FortiGate vulnerability. See [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]].
 [^cybergym-site]: UC Berkeley RDI, [CyberGym](https://www.cybergym.io/cybergym/) (fetched 2026-08-31). Published at ICLR 2026, [OpenReview `2YvbLQEdYt`](https://openreview.net/forum?id=2YvbLQEdYt); preprint [arXiv:2506.02548](https://arxiv.org/abs/2506.02548). Local copy: `.raw/articles/cybergym-benchmark-2026-08-31.md`.
+[^wp2shell]: [ELLIO Threat Research Lab — wp2shell in the Wild: From Patch to Mass Exploitation in Under 48 hours](https://ellio.tech/en/blog/wp2shell-in-the-wild-under-48-hours-from-patch-to-mass-exploitation/), 2026-07-21, measured on ELLIO's 700 sensors; and [Searchlight Cyber — wp2shell: Discovering One of 2026's Biggest Zero-Days](https://www.slcyber.io/blog/wp2shell-discovering-one-of-2026s-biggest-zero-days-and-the-future-of-exposure-management), 2026-08-19, for the AI-assisted discovery and the KEV listing on 21 July.
+[^glasswing]: [Anthropic — Project Glasswing: An initial update](https://www.anthropic.com/research/glasswing-initial-update), 2026-05-22. 6,202 estimated high- or critical-severity vulnerabilities out of 23,019; 75 of the 530 high or critical bugs reported patched, 65 with public advisories. See [[anthropic-glasswing-initial-update|Project Glasswing: Initial Update]].
+[^moak]: [MOAK — How Does MOAK Work?](https://moak.ai/#moak), 2026-04-09. 174 of 178 container-testable KEVs exploited, the same rate after the models' knowledge cutoffs, and live operation on newly disclosed CVEs. See [[moak-how-it-works|MOAK: Autonomous AI Exploit Pipeline]].
+[^gtig-artex]: [Google Threat Intelligence Group — ARTEX and Friends: Enter Agentic Offensive Frameworks](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks), 2026-10-30. UNC7228's first-compromised-account-to-deep-access interval, from Wiz research.
 
 <!-- sources:auto -->
 ## Sources
 
 - [The Collapse — Zero Day Clock](https://zerodayclock.com/collapse)
 - [Call to Action — Zero Day Clock](https://zerodayclock.com/call-to-action)
+- [dreamgroup.com](https://www.dreamgroup.com/blog/inside-a-multi-agent-ai-framework-used-to-compromise-government-entities-in-asia)
+- [cybergym.io](https://www.cybergym.io/cybergym/)
+- [ellio.tech](https://ellio.tech/en/blog/wp2shell-in-the-wild-under-48-hours-from-patch-to-mass-exploitation/)
+- [slcyber.io](https://www.slcyber.io/blog/wp2shell-discovering-one-of-2026s-biggest-zero-days-and-the-future-of-exposure-management)
+- [cloud.google.com](https://cloud.google.com/blog/topics/threat-intelligence/artex-and-friends-enter-agentic-offensive-frameworks)
+- [WordPress 7.0.2 Release](https://wordpress.org/news/2026/07/wordpress-7-0-2-release/)
 - [Zero Day Clock](https://zerodayclock.com)
 <!-- /sources -->
-
 [^asu-keynote]: Yan Shoshitaishvili, *Keynote: Vulnerability Research in the Agentic Age*, [Black Hat USA 2026](https://www.youtube.com/watch?v=VNYe3Cnk5Pw) (2026-08-06). See [[vulnerability-research-agentic-age-keynote|the talk summary]].

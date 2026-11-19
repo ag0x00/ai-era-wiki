@@ -2,11 +2,11 @@
 type: domain
 title: "Reviews"
 created: 2026-05-29
-updated: 2026-09-24
+updated: 2026-11-18
 tags: [domain, reviews]
 status: seed
 subdomain_of: ""
-page_count: 19
+page_count: 20
 ---
 
 # Reviews Index
@@ -19,6 +19,7 @@ Point-in-time assessments: immutable dated snapshots. Per-standard reviews, vali
 - [[agent-runtime-protection-canvass-2026-09|Agent Runtime Protection Market Canvass]] — Assessed 2026-09-16: twenty-one products in the independent AI agent runtime-protection and guardian-agent category, graded from vendor d...
 - [[agentic-cmm-regulated-fi-stress-test|Agentic AI CMM: Regulated-FI Stress Test]] — A worked adoption pass over the Agentic AI Security CMM and the Reference Architecture from the perspective of a regulated, single-vendor...
 - [[agentic-cmm-vs-standards-validation|Agentic AI CMM vs Adopted Standards Validation]] — Superseded — navigation: this is the 2026-04-30 first-pass snapshot.
+- [[agentic-offensive-wave-precursors-2026-11|Agentic Offensive Wave Precursors]] — This review tests one reading of the ARTEX wave against its sources: that tooling released in July 2026 led attackers to ClickFix, phishi...
 - [[ai-attribution-audit-2026-08|AI Attribution Audit]] — Seven cyber incidents circulating as a June–July 2026 "AI-enabled" cluster were each checked twice: once to confirm the incident happened...
 - [[ai-attribution-primaries-2026-08-17|AI Attribution Primary-Source Review]] — Seven cyber incidents circulated as a June–July 2026 "AI-enabled" cluster were assessed on 2026-08-16 against vendor research posts, wire...
 - [[cmm-calibration-stress-test-2026|CMM Calibration Stress Test: Cumulative-Floor Rule]] — Closes peer-review-readiness §3: *"L4 → L5 calibration suspect; cumulative-floor rule un-stress-tested.

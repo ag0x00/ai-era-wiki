@@ -2,11 +2,11 @@
 type: domain
 title: "Products"
 created: 2026-04-30
-updated: 2026-09-30
+updated: 2026-11-18
 tags: [domain, entities, products]
 status: seed
 subdomain_of: "[[wiki/entities/_index|Entities]]"
-page_count: 70
+page_count: 72
 ---
 
 # Products Index
@@ -26,6 +26,7 @@ Vendor tools, platforms, agentic-AI products, model offerings, security-tooling 
 - [[ai-deep-sast|ai-deep-sast]] — Sources: [GitHub — cisco-open/ai-deep-sast](https://github.com/cisco-open/ai-deep-sast) · OSS AI Security Harness Comparison.
 - [[angr|angr]] — Open-source multi-modal binary-analysis framework ([angr.io](https://angr.io/)), written by Yan Shoshitaishvili during his graduate work...
 - [[anthropic-sandbox-runtime|Anthropic Sandbox Runtime]] — Repository: [anthropic-experimental/sandbox-runtime](https://github.com/anthropic-experimental/sandbox-runtime)
+- [[artex|ARTEX]] — Sources:...
 - [[artifactory|JFrog Artifactory]] — JFrog Artifactory is a universal artifact repository and caching proxy from JFrog ([product page](https://jfrog.com/artifactory/)), deplo...
 - [[autogen|AutoGen]] — Sources: [AutoGen (repo)](https://github.com/microsoft/autogen) · [AutoGen docs](https://microsoft.github.io/autogen) · Unit 42 — AI Agen...
 - [[big-sleep|Big Sleep (Google Project Zero + DeepMind)]] — Sources: [Project Zero — From Naptime to Big Sleep (Oct 2024)](https://projectzero.google/2024/10/from-naptime-to-big-sleep.html) ·...
